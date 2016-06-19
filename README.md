@@ -16,7 +16,7 @@ ASP.NET Core CMS Engine
 - Create a SQL database named weapsy.dev
 - Run install-full.sql script (in scripts folder)
 - Open the Weapsy.sln solution in Visual Studio 2015
-- Run it (click on F5)
+- Run it (click on F5). Note: there could be an internal server error the first time the app runs. In case that happens just refresh the page, I'm working on fixing the issue.
 - Login using these credentials:
   - email: admin@default.com
   - password: Ab1234567!
