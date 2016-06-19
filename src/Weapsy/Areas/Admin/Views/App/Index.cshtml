@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Weapsy.Reporting.Apps.AppAdminListModel>
+@inject IHtmlLocalizer<Weapsy.Resources.Areas.Admin.App> AppLocalizer
+
+@{
+    ViewBag.Title = AppLocalizer["Title_Index"];
+}
+
+@section scripts{
+    <script src="~/lib/Sortable/Sortable.js"></script>
+    <script src="~/js/admin/apps/index.js"></script>
+}
+
+<div class="page-header">
+    <h1>@AppLocalizer["Title_Index"]</h1>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>@AppLocalizer["Grid_Name"]</th>
+            <th>@AppLocalizer["Grid_Description"]</th>
+            <th class="text-center">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var app in Model)
+    {
+        <tr>
+            <td>@app.Name</td>
+            <td>@app.Description</td>
+            <td class="text-center">
+                <a href="/admin/app/edit/@app.Id" class="glyphicon glyphicon-edit options" title="@SharedLocalizer["Button_Edit"]"></a>
+                <a href="#" class="glyphicon glyphicon-remove options delete-app" data-toggle="modal" data-target="#confirm-delete" data-id="@app.Id" title="@SharedLocalizer["Button_Delete"]"></a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    <a href="@Url.Action("Create", "App", new { area = "Admin" })" class="btn btn-primary" title="@AppLocalizer["Button_NewApp_Title"]">@AppLocalizer["Button_NewApp"]</a>
+</div>
+
+@await Html.PartialAsync("_ConfirmDelete")

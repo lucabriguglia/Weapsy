@@ -1,0 +1,79 @@
+﻿using System;
+using System.Linq;
+using Weapsy.Domain.Model.Themes;
+using ThemeDbEntity = Weapsy.Domain.Data.Entities.Theme;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+
+namespace Weapsy.Domain.Data.Repositories
+{
+    public class ThemeRepository : IThemeRepository
+    {
+        private readonly WeapsyDbContext _context;
+        private readonly DbSet<ThemeDbEntity> _entities;
+        private readonly IMapper _mapper;
+
+        public ThemeRepository(WeapsyDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _entities = context.Set<ThemeDbEntity>();
+            _mapper = mapper;
+        }
+
+        public Theme GetById(Guid id)
+        {
+            var dbEntity = _entities.FirstOrDefault(x => x.Id.Equals(id));
+            return dbEntity != null ? _mapper.Map<Theme>(dbEntity) : null;
+        }
+
+        public Theme GetByName(string name)
+        {
+            var dbEntity = _entities.FirstOrDefault(x => x.Name == name);
+            return dbEntity != null ? _mapper.Map<Theme>(dbEntity) : null;
+        }
+
+        public Theme GetByFolder(string folder)
+        {
+            var dbEntity = _entities.FirstOrDefault(x => x.Folder == folder);
+            return dbEntity != null ? _mapper.Map<Theme>(dbEntity) : null;
+        }
+
+        public ICollection<Theme> GetAll()
+        {
+            var dbEntities = _entities
+                .Where(x => x.Status != ThemeStatus.Deleted)
+                .OrderBy(x => x.SortOrder)
+                .ToList();
+            return _mapper.Map<ICollection<Theme>>(dbEntities);
+        }
+
+        public int GetThemesCount()
+        {
+            return _entities.Where(x => x.Status != ThemeStatus.Deleted).Count();
+        }
+
+        public void Create(Theme theme)
+        {
+            _entities.Add(_mapper.Map<ThemeDbEntity>(theme));
+            _context.SaveChanges();
+        }
+
+        public void Update(Theme theme)
+        {
+            var entity = _entities.FirstOrDefault(x => x.Id.Equals(theme.Id));
+            entity = _mapper.Map(theme, entity);
+            _context.SaveChanges();
+        }
+
+        public void Update(IEnumerable<Theme> themes)
+        {
+            foreach (var theme in themes)
+            {
+                var entity = _entities.FirstOrDefault(x => x.Id.Equals(theme.Id));
+                entity = _mapper.Map(theme, entity);
+            }
+            _context.SaveChanges();
+        }
+    }
+}

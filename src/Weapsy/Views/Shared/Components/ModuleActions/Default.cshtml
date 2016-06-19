@@ -1,0 +1,44 @@
+﻿@model Weapsy.Reporting.Pages.ModuleModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <ul class="nav module-actions module-data" data-module-id="@Model.Id" data-module-edit-url="@Model.ModuleType.EditUrl">
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="glyphicon glyphicon-collapse-down" title="Module Actions"></a>
+            <ul class="dropdown-menu">
+                @if (!string.IsNullOrWhiteSpace(Model.ModuleType.EditUrl))
+                {
+                    <li>
+                        @if (Model.ModuleType.EditType == Weapsy.Domain.Model.ModuleTypes.EditType.Modal)
+                        {
+                            <a href="#" class="module-edit" data-toggle="modal" data-target="#modal-admin" title="Edit">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                <span>Edit</span>
+                            </a>
+                        }
+                        else if (Model.ModuleType.EditType == Weapsy.Domain.Model.ModuleTypes.EditType.Page)
+                        {
+                            <a href="@Model.ModuleType.EditUrl" class="module-edit" title="Edit">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                <span>Edit</span>
+                            </a>
+                        }
+                    </li>
+                }
+                <li>
+                    <a href="#" class="module-settings" data-toggle="modal" data-target="#modal-admin" title="Settings">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="module-remove" title="Remove">
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <span>Remove</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>  
+}

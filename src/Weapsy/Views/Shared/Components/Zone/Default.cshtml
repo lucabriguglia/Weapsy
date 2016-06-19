@@ -1,0 +1,6 @@
+﻿@model Weapsy.Reporting.Pages.ZoneModel
+
+@foreach (var module in Model.Modules)
+{
+    @await Component.InvokeAsync("Module", new { model = module })
+}

@@ -1,0 +1,62 @@
+﻿#control-panel {
+    display: table;
+    height: 100%;
+    position: absolute;
+    width: 180px;
+    padding: 10px;
+    margin: 0;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    background-color: #eee;
+    border-right: 1px solid #ddd;
+}
+
+.handle {
+    cursor: move;
+}
+
+.placeholder {
+    outline: 1px dashed #286090;
+    background-color: #e4ecf3;
+    padding: 10px;
+    margin: 8px 2px;
+    min-height: 50px;
+}
+
+.moduleType {
+    /*cursor: move;*/
+    width: 180px;
+    margin: 0 0 5px;
+}
+
+.zone.edit-mode {
+    border:1px dotted #ccc;
+    padding:10px 10px 0;
+    min-height: 50px;
+    list-style-type: none;
+}
+
+.module {
+    margin-bottom:20px;
+}
+
+.module-bar .module-actions {
+    float: right;
+}
+
+.module-actions {
+    width: 15px;
+}
+
+.module-actions > li > a {
+    padding: 0;
+}
+
+.modal.modal-admin .modal-dialog {
+    width: 90%;
+}
+
+.modal-backdrop.fade.in:nth-child(2){
+    z-index: 1060 !important;
+}

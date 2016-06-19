@@ -1,0 +1,37 @@
+﻿@model Weapsy.Reporting.Languages.LanguageAdminModel
+
+<div class="form-group has-feedback">
+    <label for="name" class="col-md-2 control-label">Name</label>
+    <div class="col-md-4">
+        <input id="originalName" type="hidden" value="@Model.Name">
+        <input id="name" name="name" type="text" class="form-control" placeholder="Enter Name" value="@Model.Name">
+        <i class="form-control-feedback glyphicon"></i>
+    </div>
+    <div class="col-md-6 help-block">
+        <label id="name-error" for="name" class="text-danger" style="display:none;"></label>
+    </div>
+</div>
+
+<div class="form-group has-feedback">
+    <label for="url" class="col-md-2 control-label">Culture</label>
+    <div class="col-md-4">
+        <input id="originalCultureName" type="hidden" value="@Model.CultureName">
+        <input id="cultureName" name="cultureName" type="text" class="form-control" placeholder="Enter Culture Name" value="@Model.CultureName">
+        <i class="form-control-feedback glyphicon"></i>
+    </div>
+    <div class="col-md-6 help-block">
+        <label id="cultureName-error" for="url" class="text-danger" style="display:none;"></label>
+    </div>
+</div>
+
+<div class="form-group has-feedback">
+    <label for="url" class="col-md-2 control-label">Url</label>
+    <div class="col-md-4">
+        <input id="originalUrl" type="hidden" value="@Model.Url">
+        <input id="url" name="url" type="text" class="form-control" placeholder="Enter Url" value="@Model.Url">
+        <i class="form-control-feedback glyphicon"></i>
+    </div>
+    <div class="col-md-6 help-block">
+        <label id="url-error" for="url" class="text-danger" style="display:none;"></label>
+    </div>
+</div>

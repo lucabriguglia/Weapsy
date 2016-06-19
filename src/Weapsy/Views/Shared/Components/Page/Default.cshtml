@@ -1,0 +1,13 @@
+﻿@model Weapsy.Reporting.Pages.PageViewModel
+
+<div id="page" data-page-id="@Model.Page.Id" class="clearfix">
+    <div class="col-md-12 zone" data-zone-name="Content">
+        @await Component.InvokeAsync("Zone", new { model = Model.Zone("Content") })
+    </div>
+    <div class="col-md-6 zone" data-zone-name="Left">
+        @await Component.InvokeAsync("Zone", new { model = Model.Zone("Left") } )
+    </div>
+    <div class="col-md-6 zone" data-zone-name="Right">
+        @await Component.InvokeAsync("Zone", new { model = Model.Zone("Right") })
+    </div>
+</div>

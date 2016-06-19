@@ -1,0 +1,41 @@
+﻿using System;
+using System.Threading.Tasks;
+using Weapsy.Core.Caching;
+using Weapsy.Core.Domain;
+using Weapsy.Domain.Model.Menus.Events;
+
+namespace Weapsy.Reporting.Data.EventHandlers
+{
+    public class MenuEventsHandler : 
+        IEventHandler<MenuCreated>,
+        IEventHandler<MenuItemsReordered>,
+        IEventHandler<MenuDeleted>        
+    {
+        private readonly ICacheManager _cacheManager;
+
+        public MenuEventsHandler(ICacheManager cacheManager)
+        {
+            _cacheManager = cacheManager;
+        }
+
+        public async Task Handle(MenuCreated @event)
+        {
+            await ClearCache(@event.SiteId, @event.Name);
+        }
+
+        public async Task Handle(MenuItemsReordered @event)
+        {
+            await ClearCache(@event.SiteId, @event.Name);
+        }
+
+        public async Task Handle(MenuDeleted @event)
+        {
+            await ClearCache(@event.SiteId, @event.Name);
+        }
+
+        private Task ClearCache(Guid siteId, string name)
+        {
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.MENU_CACHE_KEY, siteId, name)));
+        }
+    }
+}

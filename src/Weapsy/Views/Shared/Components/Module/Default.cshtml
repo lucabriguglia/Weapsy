@@ -1,0 +1,27 @@
+﻿@model Weapsy.Reporting.Pages.ModuleModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+<div id="@Model.Id" class="panel panel-default module" data-module-id="@Model.Id">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="panel-heading">
+            <div class="panel-title">
+                <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
+                <span class="pull-right">@await Component.InvokeAsync("ModuleActions", new { model = Model })</span>                
+            </div>
+        </div>
+    }
+    @*<div>
+    @Model.Title
+    </div>*@
+    <div class="panel-body">
+        @if (Model.ModuleType.ViewType == Weapsy.Domain.Model.ModuleTypes.ViewType.ViewComponent)
+        {
+            @await Component.InvokeAsync(Model.ModuleType.ViewName, new { model = Model })
+        }
+        else if (Model.ModuleType.ViewType == Weapsy.Domain.Model.ModuleTypes.ViewType.View)
+        {
+            // partial view
+        }
+    </div>
+</div>

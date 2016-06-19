@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Weapsy.Reporting.Pages.PageAdminListModel>
+
+@{
+    ViewBag.Title = Localizer["Title"];
+}
+
+@section scripts{
+    <script src="~/js/admin/pages/index.js"></script>   
+}
+
+<div class="page-header">
+    <h1>@Localizer["Title"]</h1>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Url</th>
+            <th class="text-center">Active</th>
+            <th class="text-center">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var page in Model)
+    {
+        <tr>
+            <td>@page.Name</td>
+            <td>@page.Url</td>
+            <td class="text-center"><input type="checkbox" @(page.Status == Weapsy.Domain.Model.Pages.PageStatus.Active ? "checked=\"checked\"" : "") disabled="disabled" /></td>
+            <td class="text-center">
+                <a href="/admin/page/edit/@page.Id" class="glyphicon glyphicon-edit options" title="Edit"></a>
+                <a href="#" class="glyphicon glyphicon-remove options delete-page" data-toggle="modal" data-target="#confirm-delete" data-id="@page.Id" title="Delete"></a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    <a href="@Url.Action("Create", "Page", new { area = "Admin" })" class="btn btn-primary" title="New Page">New Page</a>
+</div>
+
+@await Html.PartialAsync("_ConfirmDelete")
