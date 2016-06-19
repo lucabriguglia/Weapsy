@@ -1,4 +1,4 @@
-# Weapsy
+# Weapsy (alpha)
 ASP.NET Core CMS Engine
 
 How to run Weapsy:
