@@ -7,3 +7,6 @@ How to run Weapsy:
 - Run install-full.sql script (in scripts folder)
 - Open the Weapsy.sln solution in Visual Studio 2015
 - Run it (click on F5)
+- Login using these credentials:
+  - email: admin@default.com
+  - password: Ab1234567!
