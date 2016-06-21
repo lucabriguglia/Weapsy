@@ -9,6 +9,6 @@ namespace Weapsy.Domain.Model.Sites.Events
         public string Title { get; set; }
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
-        public IList<SiteLocalisation> SiteLocalisations { get; set; } = new List<SiteLocalisation>();
+        public IEnumerable<SiteLocalisation> SiteLocalisations { get; set; } = new List<SiteLocalisation>();
     }
 }

@@ -22,9 +22,18 @@ namespace Weapsy.Domain.Model.Sites
         public Guid PageTemplateId { get; private set; }
         public Guid ModuleTemplateId { get; private set; }
         public SiteStatus Status { get; set; }
-        public IList<SiteLocalisation> SiteLocalisations { get; private set; } = new List<SiteLocalisation>();
 
-        public Site(){}
+        private readonly IList<SiteLocalisation> _siteLocalisations;
+        public IEnumerable<SiteLocalisation> SiteLocalisations
+        {
+            get { return _siteLocalisations; }
+            private set { }
+        }
+
+        public Site()
+        {
+            _siteLocalisations = new List<SiteLocalisation>();
+        }
 
         private Site(CreateSite cmd) : base(cmd.Id)
         {
@@ -75,7 +84,7 @@ namespace Weapsy.Domain.Model.Sites
             MetaDescription = cmd.MetaDescription;
             MetaKeywords = cmd.MetaKeywords;
 
-            SiteLocalisations.Clear();
+            _siteLocalisations.Clear();
 
             foreach (var localisation in cmd.SiteLocalisations)
             {
@@ -95,7 +104,7 @@ namespace Weapsy.Domain.Model.Sites
             if (SiteLocalisations.FirstOrDefault(x => x.LanguageId == localisation.LanguageId) != null)
                 throw new Exception("Language already added.");
 
-            SiteLocalisations.Add(localisation);
+            _siteLocalisations.Add(localisation);
         }
 
         public void Close()

@@ -75,7 +75,7 @@ namespace Weapsy.Domain.Data.Repositories
             _context.SaveChanges();
         }
 
-        private void UpdateMenuItems(IList<MenuItem> menuItems)
+        private void UpdateMenuItems(IEnumerable<MenuItem> menuItems)
         {
             foreach (var menuItem in menuItems)
             {

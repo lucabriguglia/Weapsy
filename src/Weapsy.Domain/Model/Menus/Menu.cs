@@ -13,9 +13,18 @@ namespace Weapsy.Domain.Model.Menus
         public Guid SiteId { get; private set; }
         public string Name { get; private set; }
         public MenuStatus Status { get; private set; }
-        public IList<MenuItem> MenuItems { get; private set; } = new List<MenuItem>();
 
-        public Menu(){}
+        private readonly IList<MenuItem> _menuItems;
+        public IEnumerable<MenuItem> MenuItems
+        {
+            get { return _menuItems; }
+            private set { }
+        }
+        
+        public Menu()
+        {
+            _menuItems = new List<MenuItem>();
+        }
 
         private Menu(CreateMenu cmd) : base(cmd.Id)
         {
@@ -53,7 +62,7 @@ namespace Weapsy.Domain.Model.Menus
 
             var sortOrder = MenuItems.Where(x => x.ParentId == Guid.Empty).Count() + 1;
 
-            MenuItems.Add(new MenuItem(cmd, sortOrder));
+            _menuItems.Add(new MenuItem(cmd, sortOrder));
 
             AddEvent(new MenuItemAdded
             {

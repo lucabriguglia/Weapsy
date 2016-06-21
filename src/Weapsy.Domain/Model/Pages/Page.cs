@@ -22,11 +22,34 @@ namespace Weapsy.Domain.Model.Pages
         public Guid? ThemeId { get; private set; }
         public Guid? PageTemplateId { get; private set; }
         public Guid? ModuleTemplateId { get; private set; }
-        public IList<PageLocalisation> PageLocalisations { get; private set; } = new List<PageLocalisation>();
-        public IList<PageModule> PageModules { get; private set; } = new List<PageModule>();
-        public IList<Permission> Permissions { get; private set; } = new List<Permission>();
 
-        public Page(){}
+        private readonly IList<PageLocalisation> _pageLocalisations;
+        public IEnumerable<PageLocalisation> PageLocalisations
+        {
+            get { return _pageLocalisations; }
+            private set { }
+        }
+
+        private readonly IList<PageModule> _pageModules;
+        public IEnumerable<PageModule> PageModules
+        {
+            get { return _pageModules; }
+            private set { }
+        }
+
+        private readonly IList<Permission> _permisisons;
+        public IEnumerable<Permission> Permissions
+        {
+            get { return _permisisons; }
+            private set { }
+        }
+
+        public Page()
+        {
+            _pageLocalisations = new List<PageLocalisation>();
+            _pageModules = new List<PageModule>();
+            _permisisons = new List<Permission>();
+        }
 
         private Page(CreatePage cmd) : base(cmd.Id)
         {
@@ -83,7 +106,7 @@ namespace Weapsy.Domain.Model.Pages
             MetaDescription = cmd.MetaDescription;
             MetaKeywords = cmd.MetaKeywords;
 
-            PageLocalisations.Clear();
+            _pageLocalisations.Clear();
 
             foreach (var localisation in cmd.PageLocalisations)
             {
@@ -104,7 +127,7 @@ namespace Weapsy.Domain.Model.Pages
             if (PageLocalisations.FirstOrDefault(x => x.LanguageId == localisation.LanguageId) != null)
                 throw new Exception("Language already added.");
 
-            PageLocalisations.Add(localisation);
+            _pageLocalisations.Add(localisation);
         }
 
         public void AddModule(AddPageModule cmd, IValidator<AddPageModule> validator)
@@ -132,7 +155,7 @@ namespace Weapsy.Domain.Model.Pages
                 });
             }
 
-            PageModules.Add(pageModule);
+            _pageModules.Add(pageModule);
 
             AddEvent(new PageModuleAdded
             {

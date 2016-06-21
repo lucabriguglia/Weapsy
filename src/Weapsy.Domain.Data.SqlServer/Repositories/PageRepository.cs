@@ -93,7 +93,7 @@ namespace Weapsy.Domain.Data.Repositories
             _context.SaveChanges();
         }
 
-        private void UpdatePageLocalisations(IList<PageLocalisation> pageLocalisations)
+        private void UpdatePageLocalisations(IEnumerable<PageLocalisation> pageLocalisations)
         {
             //foreach (var item in _pageLocalisations.Where(x => x.PageId == page.Id))
             //{
@@ -126,7 +126,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageModules(IList<PageModule> pageModules)
+        private void UpdatePageModules(IEnumerable<PageModule> pageModules)
         {
             foreach (var pageModule in pageModules)
             {
