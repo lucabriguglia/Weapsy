@@ -18,8 +18,6 @@ The second one is going to be the Blog app.
 - JavaScript, jQuery, KnockoutJS/Angular 2
 - Entity Framework Core
 - SQL Server
-- DDD
-- CQRS
 
 # How to run on local
 
