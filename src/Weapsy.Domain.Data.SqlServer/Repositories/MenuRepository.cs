@@ -102,7 +102,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        public void UpdateMenuItemLocalisations(ICollection<MenuItemLocalisation> menuItemLocalisations)
+        public void UpdateMenuItemLocalisations(IEnumerable<MenuItemLocalisation> menuItemLocalisations)
         {
             foreach (var menuItemLocalisation in menuItemLocalisations)
             {

@@ -155,7 +155,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageModuleLocalisations(ICollection<PageModuleLocalisation> pageModuleLocalisations)
+        private void UpdatePageModuleLocalisations(IEnumerable<PageModuleLocalisation> pageModuleLocalisations)
         {
             foreach (var pageModuleLocalisation in pageModuleLocalisations)
             {
