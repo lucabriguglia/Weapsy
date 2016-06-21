@@ -1,4 +1,4 @@
-# Weapsy (alpha)
+# Weapsy
 ASP.NET Core CMS
 
 # Technology
@@ -13,10 +13,10 @@ ASP.NET Core CMS
 
 # How to run on local
 
-- Create a SQL database named weapsy.dev
+- Create a SQL database (weapsy.dev)
 - Run install-full.sql script (in scripts folder)
 - Open the Weapsy.sln solution in Visual Studio 2015
-- Run it (click on F5). _Note: there could be an internal server error the first time the app runs. In case that happens just refresh the page, I'm working on fixing the issue._
+- Run (F5 or Ctrl+F5). _Note: there could be an internal server error the first time the app runs. In case that happens just refresh the page, I'm working on fixing the issue._
 - Login using these credentials:
   - email: admin@default.com
   - password: Ab1234567!
