@@ -28,3 +28,7 @@ The second one is going to be the Blog app.
 - Login using these credentials:
   - email: admin@default.com
   - password: Ab1234567!
+
+# Roadmap
+
+https://github.com/weapsy/Weapsy/wiki/Roadmap
