@@ -24,6 +24,9 @@ namespace Weapsy.Core.Caching
 			if (data == null)
 				return;
 
+            if (IsSet(key))
+                return;
+
             var memoryCacheEntryOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds(cacheTime));
 
             _memoryCache.Set(key, data, memoryCacheEntryOptions);
@@ -31,9 +34,7 @@ namespace Weapsy.Core.Caching
 
         public bool IsSet(string key)
         {
-            //return Cache.Contains(key);
-
-            throw new NotImplementedException();
+            return _memoryCache.Get(key) != null;
         }
 
         public void Remove(string key)
