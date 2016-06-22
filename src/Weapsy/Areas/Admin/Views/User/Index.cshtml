@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+@section scripts{
+    <script src="~/js/admin/users/index.js"></script>
+}
+
+<div class="page-header">
+    <h1>Users</h1>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td class="text-center">
+                    <a href="/admin/user/edit/@user.Id" class="glyphicon glyphicon-edit options" title="Edit"></a>
+                    <a href="#" class="glyphicon glyphicon-remove options delete-user" data-toggle="modal" data-target="#confirm-delete" data-id="@user.Id" title="Delete"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href="@Url.Action("Create", "User", new { area = "Admin" })" class="btn btn-primary" title="New User">New User</a>
+</div>
+
+@await Html.PartialAsync("_ConfirmDelete")

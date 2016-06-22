@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -21,7 +22,8 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            var model = _roleManager.Roles.ToList();
+            return View(model);
         }
     }
 }

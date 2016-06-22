@@ -1,0 +1,39 @@
+﻿@model ApplicationUser
+
+@{
+    ViewBag.Title = "Edit User";
+}
+
+@section scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/admin/users/shared.js"></script>
+    <script src="~/js/admin/users/edit.js"></script>   
+}
+
+<div class="page-header">
+    <h1>Edit User</h1>
+</div>
+
+<form id="editUserForm" name="editUserForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/User/Update" data-ajax-loading="#savingUser" data-ajax-success="weapsy.admin.users.redirectToIndex" class="form-horizontal validate-form" role="form">
+    <input type="hidden" id="id" name="id" value="@Model.Id" />
+
+    @await Html.PartialAsync("_User")
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="save" type="submit" class="btn btn-primary" title="Save">Save</button>
+            <a id="deletePage" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" title="Delete">Delete</a>
+            <a href="@Url.Action("Index", "User", new { area = "Admin" })" class="btn btn-default" title="Cancel">Cancel</a>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <span id="savingUser" style="display:none;">
+                Saving...
+            </span>
+        </div>
+    </div>
+</form>
+
+@await Html.PartialAsync("_ConfirmDelete")
