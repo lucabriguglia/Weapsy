@@ -9,7 +9,7 @@ An app can display content through modules or pages.
 The first app included is the Text app used to create html modules.
 The second one is going to be the Blog app.
 
-**Project explained**: https://github.com/weapsy/Weapsy/wiki/Project-Explained
+**Wiki**: https://github.com/weapsy/Weapsy/wiki
 
 # Technology
 
