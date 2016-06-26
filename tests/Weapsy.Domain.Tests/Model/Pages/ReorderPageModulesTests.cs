@@ -52,7 +52,7 @@ namespace Weapsy.Domain.Tests.Pages
                         Name = "Header",
                         Modules = new List<Guid>
                         {
-                            page.PageModules[0].ModuleId
+                            page.PageModules.FirstOrDefault().ModuleId
                         }
                     },
                     new ReorderPageModules.Zone
@@ -60,9 +60,9 @@ namespace Weapsy.Domain.Tests.Pages
                         Name = "Content",
                         Modules = new List<Guid>
                         {
-                            page.PageModules[2].ModuleId,
-                            page.PageModules[3].ModuleId,
-                            page.PageModules[1].ModuleId
+                            page.PageModules.Skip(2).FirstOrDefault().ModuleId,
+                            page.PageModules.Skip(3).FirstOrDefault().ModuleId,
+                            page.PageModules.Skip(1).FirstOrDefault().ModuleId
                         }
                     },
                     new ReorderPageModules.Zone
@@ -70,8 +70,8 @@ namespace Weapsy.Domain.Tests.Pages
                         Name = "Footer",
                         Modules = new List<Guid>
                         {
-                            page.PageModules[4].ModuleId,
-                            page.PageModules[5].ModuleId
+                            page.PageModules.Skip(4).FirstOrDefault().ModuleId,
+                            page.PageModules.Skip(5).FirstOrDefault().ModuleId
                         }
                     }
                 }
@@ -88,13 +88,13 @@ namespace Weapsy.Domain.Tests.Pages
         [Test]
         public void Should_set_new_zone_for_moved_module()
         {
-            Assert.AreEqual("Content", page.PageModules[1].Zone);
+            Assert.AreEqual("Content", page.PageModules.Skip(1).FirstOrDefault().Zone);
         }
 
         [Test]
         public void Should_set_new_sort_order_for_moved_module()
         {
-            Assert.AreEqual(3, page.PageModules[1].SortOrder);
+            Assert.AreEqual(3, page.PageModules.Skip(1).FirstOrDefault().SortOrder);
         }
 
         [Test]

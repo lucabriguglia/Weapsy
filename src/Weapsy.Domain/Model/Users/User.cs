@@ -7,13 +7,24 @@ namespace Weapsy.Domain.Model.Users
 {
     public class User : AggregateRoot
     {
+        public string Email { get; private set; }
+        public string UserName { get; private set; }
+        public UserStatus Status { get; private set; }
+
         public User(){}
 
         private User(CreateUser cmd) : base(cmd.Id)
         {
+            Email = cmd.Email;
+            UserName = cmd.UserName;
+            Status = UserStatus.Active;
+
             AddEvent(new UserCreated
             {
-                AggregateRootId = Id
+                AggregateRootId = Id,
+                Email = Email,
+                UserName = UserName,
+                Status = Status
             });
         }
 

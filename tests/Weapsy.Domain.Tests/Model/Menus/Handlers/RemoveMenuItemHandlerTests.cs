@@ -7,6 +7,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using Weapsy.Domain.Model.Menus.Handlers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Weapsy.Domain.Tests.Menus.Handlers
 {
@@ -78,7 +79,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
             var command = new RemoveMenuItem
             {
                 MenuId = menu.Id,
-                MenuItemId = menu.MenuItems[0].Id
+                MenuItemId = menu.MenuItems.FirstOrDefault().Id
             };
 
             var menuRepositoryMock = new Mock<IMenuRepository>();

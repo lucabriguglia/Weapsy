@@ -99,12 +99,6 @@ namespace Weapsy.Domain.Tests.Pages
         }
 
         [Test]
-        public void Should_set_localisations()
-        {
-            Assert.AreEqual(command.PageLocalisations.Count, page.PageLocalisations.Count);
-        }
-
-        [Test]
         public void Should_set_localisation_page_id()
         {
             Assert.AreEqual(page.Id, page.PageLocalisations.FirstOrDefault().PageId);

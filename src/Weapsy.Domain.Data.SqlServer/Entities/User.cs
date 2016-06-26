@@ -1,12 +1,13 @@
 ﻿using System;
-using Weapsy.Core.Domain;
+using Weapsy.Domain.Model.Users;
 
-namespace Weapsy.Domain.Model.Users.Commands
+namespace Weapsy.Domain.Data.Entities
 {
-    public class CreateUser : ICommand
+    public class User : IDbEntity
     {
         public Guid Id { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
+        public UserStatus Status { get; set; }
     }
 }

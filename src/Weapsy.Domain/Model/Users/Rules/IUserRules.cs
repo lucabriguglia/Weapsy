@@ -7,6 +7,7 @@ namespace Weapsy.Domain.Model.Users.Rules
     {
         bool DoesUserExist(Guid id);
         bool IsUserIdUnique(Guid id);
-        bool IsUserNameUnique(string name);
+        bool IsUserNameUnique(string name, Guid userId = new Guid());
+        bool IsUserEmailUnique(string email, Guid userId = new Guid());
     }
 }

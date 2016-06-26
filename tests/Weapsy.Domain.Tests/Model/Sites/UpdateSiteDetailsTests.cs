@@ -79,12 +79,6 @@ namespace Weapsy.Domain.Tests.Sites
         }
 
         [Test]
-        public void Should_set_localisations()
-        {
-            Assert.AreEqual(command.SiteLocalisations.Count, site.SiteLocalisations.Count);
-        }
-
-        [Test]
         public void Should_set_localisation_language_id()
         {
             Assert.AreEqual(command.SiteLocalisations[0].LanguageId, site.SiteLocalisations.FirstOrDefault().LanguageId);
