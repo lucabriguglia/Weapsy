@@ -46,7 +46,25 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(ApplicationUser model)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(Edit), model);
+            }
+            var result = await _userManager.UpdateAsync(model);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            AddErrors(result);
+            return View(nameof(Edit), model);
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
         }
     }
 }
