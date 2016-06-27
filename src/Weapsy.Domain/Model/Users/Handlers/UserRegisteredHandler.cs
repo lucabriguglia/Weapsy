@@ -1,23 +1,28 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Weapsy.Core.Dispatcher;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Users;
+using Weapsy.Domain.Model.Users.Commands;
 using Weapsy.Domain.Model.Users.Events;
 
-namespace Weapsy.Domain.Model.User.Handlers
+namespace Weapsy.Domain.Model.Users.Handlers
 {
     public class UserRegisteredHandler : IEventHandler<UserRegistered>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly ICommandSender _commandSender;
 
-        public UserRegisteredHandler(IUserRepository userRepository)
+        public UserRegisteredHandler(ICommandSender commandSender)
         {
-            _userRepository = userRepository;
+            _commandSender = commandSender;
         }
 
-        public Task Handle(UserRegistered @event)
+        public async Task Handle(UserRegistered @event)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => _commandSender.Send<CreateUser, User>(new CreateUser
+            {
+                Id = @event.AggregateRootId,
+                Email = @event.Email,
+                UserName = @event.UserName
+            }));
         }
     }
 }
