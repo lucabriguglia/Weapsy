@@ -1,4 +1,4 @@
-﻿/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 19/06/2016 14:07:26 ******/
+﻿/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -13,7 +13,7 @@ CREATE TABLE [dbo].[__EFMigrationsHistory](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[App]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[App]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -31,7 +31,7 @@ CREATE TABLE [dbo].[App](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetRoleClaims]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[AspNetRoleClaims]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -48,7 +48,7 @@ CREATE TABLE [dbo].[AspNetRoleClaims](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -65,7 +65,7 @@ CREATE TABLE [dbo].[AspNetRoles](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -82,7 +82,7 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,7 +100,7 @@ CREATE TABLE [dbo].[AspNetUserLogins](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -116,7 +116,7 @@ CREATE TABLE [dbo].[AspNetUserRoles](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -144,7 +144,7 @@ CREATE TABLE [dbo].[AspNetUsers](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[AspNetUserTokens]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[AspNetUserTokens]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,7 +163,7 @@ CREATE TABLE [dbo].[AspNetUserTokens](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[DomainAggregate]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[DomainAggregate]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -182,7 +182,7 @@ CREATE TABLE [dbo].[DomainAggregate](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[DomainEvent]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[DomainEvent]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -206,7 +206,7 @@ CREATE TABLE [dbo].[DomainEvent](
 GO
 SET ANSI_PADDING OFF
 GO
-/****** Object:  Table [dbo].[Language]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[Language]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -226,7 +226,7 @@ CREATE TABLE [dbo].[Language](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Menu]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[Menu]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,7 +243,7 @@ CREATE TABLE [dbo].[Menu](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[MenuItem]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[MenuItem]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -266,7 +266,7 @@ CREATE TABLE [dbo].[MenuItem](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[MenuItemLocalisation]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[MenuItemLocalisation]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -284,7 +284,7 @@ CREATE TABLE [dbo].[MenuItemLocalisation](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Module]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[Module]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -302,7 +302,7 @@ CREATE TABLE [dbo].[Module](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[ModuleType]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[ModuleType]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -325,7 +325,7 @@ CREATE TABLE [dbo].[ModuleType](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Page]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[Page]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -350,7 +350,7 @@ CREATE TABLE [dbo].[Page](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[PageLocalisation]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[PageLocalisation]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -370,7 +370,7 @@ CREATE TABLE [dbo].[PageLocalisation](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[PageModule]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[PageModule]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -390,7 +390,7 @@ CREATE TABLE [dbo].[PageModule](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[PageModuleLocalisation]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[PageModuleLocalisation]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -407,7 +407,7 @@ CREATE TABLE [dbo].[PageModuleLocalisation](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Site]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[Site]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -433,7 +433,7 @@ CREATE TABLE [dbo].[Site](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[SiteLocalisation]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[SiteLocalisation]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -452,7 +452,7 @@ CREATE TABLE [dbo].[SiteLocalisation](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[TextLocalisation]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[TextLocalisation]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -469,7 +469,7 @@ CREATE TABLE [dbo].[TextLocalisation](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[TextModule]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[TextModule]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -485,7 +485,7 @@ CREATE TABLE [dbo].[TextModule](
 ) ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[TextVersion]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[TextVersion]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -503,7 +503,7 @@ CREATE TABLE [dbo].[TextVersion](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
-/****** Object:  Table [dbo].[Theme]    Script Date: 19/06/2016 14:07:26 ******/
+/****** Object:  Table [dbo].[Theme]    Script Date: 29/06/2016 18:14:03 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -516,6 +516,22 @@ CREATE TABLE [dbo].[Theme](
 	[Status] [int] NOT NULL,
 	[SortOrder] [int] NOT NULL,
  CONSTRAINT [PK_Theme] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 29/06/2016 18:14:03 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Email] [nvarchar](256) NOT NULL,
+	[UserName] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
