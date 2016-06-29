@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>5b6e53c6-852a-4a30-87e4-bb6ae28398ed</ProjectGuid>
+    <ProjectGuid>9cecace1-9a84-4e9f-8bc7-6c8fa9f00c64</ProjectGuid>
     <RootNamespace>Weapsy.Domain</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
