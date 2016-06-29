@@ -17,17 +17,10 @@ namespace Weapsy.Domain.Model.Menus
         public string Text { get; private set; }
         public string Title { get; private set; }
         public MenuItemStatus Status { get; private set; }
-
-        private readonly IList<MenuItemLocalisation> _menuItemLocalisations;
-        public IEnumerable<MenuItemLocalisation> MenuItemLocalisations
-        {
-            get { return _menuItemLocalisations; }
-            private set { }
-        }
+        public ICollection<MenuItemLocalisation> MenuItemLocalisations { get; private set; }
 
         public MenuItem()
         {
-            _menuItemLocalisations = new List<MenuItemLocalisation>();
         }
 
         public MenuItem(AddMenuItem cmd, int sortOrder) : base(cmd.MenuItemId)
@@ -55,7 +48,7 @@ namespace Weapsy.Domain.Model.Menus
             Text = cmd.Text;
             Title = cmd.Title;
 
-            _menuItemLocalisations.Clear();
+            MenuItemLocalisations.Clear();
 
             foreach (var item in cmd.MenuItemLocalisations)
             {
@@ -68,7 +61,7 @@ namespace Weapsy.Domain.Model.Menus
             if (MenuItemLocalisations.FirstOrDefault(x => x.LanguageId == languageId) != null)
                 throw new Exception("Language already added.");
 
-            _menuItemLocalisations.Add(new MenuItemLocalisation(Id, languageId, text, title));
+            MenuItemLocalisations.Add(new MenuItemLocalisation(Id, languageId, text, title));
         }
 
         public void Reorder(Guid parentId, int sortOrder)

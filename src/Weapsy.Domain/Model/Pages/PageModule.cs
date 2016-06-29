@@ -15,17 +15,10 @@ namespace Weapsy.Domain.Model.Pages
         //public Guid ModuleTemplateId { get; private set; }
         public int SortOrder { get; private set; }
         public PageModuleStatus Status { get; private set; }
-
-        private readonly IList<PageModuleLocalisation> _pageModuleLocalisations;
-        public IEnumerable<PageModuleLocalisation> PageModuleLocalisations
-        {
-            get { return _pageModuleLocalisations; }
-            private set { }
-        }
+        public ICollection<PageModuleLocalisation> PageModuleLocalisations { get; private set; }
 
         public PageModule()
         {
-            _pageModuleLocalisations = new List<PageModuleLocalisation>();
         }
 
         public PageModule(Guid pageId, Guid id, Guid moduleId, string title, string zone, int sortOrder) : base(id)
@@ -42,7 +35,7 @@ namespace Weapsy.Domain.Model.Pages
         {
             Title = cmd.Title;
 
-            _pageModuleLocalisations.Clear();
+            PageModuleLocalisations.Clear();
 
             foreach (var localisation in cmd.PageModuleLocalisations)
             {
@@ -55,7 +48,7 @@ namespace Weapsy.Domain.Model.Pages
             if (PageModuleLocalisations.FirstOrDefault(x => x.LanguageId == languageId) != null)
                 throw new Exception("Language already added.");
 
-            _pageModuleLocalisations.Add(new PageModuleLocalisation
+            PageModuleLocalisations.Add(new PageModuleLocalisation
             {
                 PageModuleId = Id,
                 LanguageId = languageId,
