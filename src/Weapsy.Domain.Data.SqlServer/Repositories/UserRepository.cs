@@ -22,10 +22,6 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public User GetById(Guid id)
         {
-            using (var ctx = new WeapsyDbContext())
-            {
-                
-            }
             var dbEntity = _entities.FirstOrDefault(x => x.Id.Equals(id));
             return dbEntity != null ? _mapper.Map<User>(dbEntity) : null;
         }
