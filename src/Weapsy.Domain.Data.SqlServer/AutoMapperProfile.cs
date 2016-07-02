@@ -20,6 +20,8 @@ using PageModuleDbEntity = Weapsy.Domain.Data.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.Entities.PageModuleLocalisation;
 using SiteDbEntity = Weapsy.Domain.Data.Entities.Site;
 using ThemeDbEntity = Weapsy.Domain.Data.Entities.Theme;
+using UserDbEntity = Weapsy.Domain.Data.Entities.User;
+using Weapsy.Domain.Model.Users;
 
 namespace Weapsy.Domain.Data
 {
@@ -43,28 +45,31 @@ namespace Weapsy.Domain.Data
             CreateMap<MenuItemLocalisationDbEntity, MenuItemLocalisation>().ConstructUsing(x => new MenuItemLocalisation());
 
             CreateMap<Module, ModuleDbEntity>();
-            CreateMap<ModuleDbEntity, Module>().ConstructUsing((x => new Module()));
+            CreateMap<ModuleDbEntity, Module>().ConstructUsing(x => new Module());
 
             CreateMap<ModuleType, ModuleTypeDbEntity>();
-            CreateMap<ModuleTypeDbEntity, ModuleType>().ConstructUsing((x => new ModuleType()));
+            CreateMap<ModuleTypeDbEntity, ModuleType>().ConstructUsing(x => new ModuleType());
 
             CreateMap<Page, PageDbEntity>();
-            CreateMap<PageDbEntity, Page>().ConstructUsing((x => new Page()));
+            CreateMap<PageDbEntity, Page>().ConstructUsing(x => new Page());
 
             CreateMap<PageLocalisation, PageLocalisationDbEntity>();
-            CreateMap<PageLocalisationDbEntity, PageLocalisation>().ConstructUsing((x => new PageLocalisation()));
+            CreateMap<PageLocalisationDbEntity, PageLocalisation>().ConstructUsing(x => new PageLocalisation());
 
             CreateMap<PageModule, PageModuleDbEntity>();
-            CreateMap<PageModuleDbEntity, PageModule>().ConstructUsing((x => new PageModule()));
+            CreateMap<PageModuleDbEntity, PageModule>().ConstructUsing(x => new PageModule());
 
             CreateMap<PageModuleLocalisation, PageModuleLocalisationDbEntity>();
-            CreateMap<PageModuleLocalisationDbEntity, PageModuleLocalisation>().ConstructUsing((x => new PageModuleLocalisation()));
+            CreateMap<PageModuleLocalisationDbEntity, PageModuleLocalisation>().ConstructUsing(x => new PageModuleLocalisation());
 
             CreateMap<Site, SiteDbEntity>();
-            CreateMap<SiteDbEntity, Site>().ConstructUsing((x => new Site()));
+            CreateMap<SiteDbEntity, Site>().ConstructUsing(x => new Site());
 
             CreateMap<Theme, ThemeDbEntity>();
-            CreateMap<ThemeDbEntity, Theme>().ConstructUsing((x => new Theme()));
+            CreateMap<ThemeDbEntity, Theme>().ConstructUsing(x => new Theme());
+
+            CreateMap<User, UserDbEntity>();
+            CreateMap<UserDbEntity, User>().ConstructUsing(x => new User());
         }
     }
 }
