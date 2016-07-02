@@ -74,48 +74,9 @@ namespace Weapsy.Domain.Data
             builder.Entity<Theme>()
                 .ToTable("Theme");
 
-            //var assembly = Assembly.GetExecutingAssembly();
-
-            //var allTypes = assembly.GetTypes()
-            //    .Where(t => t.BaseType != null && t.BaseType.IsGenericType).ToArray();
-
-            //var configTypes = allTypes.Where(t => t.BaseType != null && t.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeBuilder<>));
-
-            //foreach (var type in configTypes)
-            //{
-            //    dynamic configurationInstance = Activator.CreateInstance(type);
-            //    builder.Configurations.Add(configurationInstance);
-            //}
-
-            //var entityTypes = allTypes.Where(t => t.IsClass && t.GetInterface(typeof(IEntity).FullName) != null);
-
-            //foreach (var type in entityTypes)
-            //{
-            //    MethodInfo method = builder.GetType().GetMethod("Entity");
-            //    method = method.MakeGenericMethod(type);
-            //    method.Invoke(builder, null);
-            //}
+            builder.Entity<User>()
+                .ToTable("User");
         }
-
-        //public override int SaveChanges()
-        //{
-        //    var domainEventEntities = ChangeTracker.Entries<IEntity>()
-        //        .Select(po => po.Entity)
-        //        .Where(po => po.Events.Any())
-        //        .ToArray();
-
-        //    foreach (var entity in domainEventEntities)
-        //    {
-        //        var events = entity.Events.ToArray();
-        //        entity.Events.Clear();
-        //        foreach (var domainEvent in events)
-        //        {
-        //            _dispatcher.Dispatch(domainEvent);
-        //        }
-        //    }
-
-        //    return base.SaveChanges();
-        //}
 
         public new DbSet<T> Set<T>() where T : class, IDbEntity
         {
