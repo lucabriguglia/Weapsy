@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Data.Entities
+﻿namespace Weapsy.Domain.Data.SqlServer.Entities
 {
     public interface IDbEntity
     {

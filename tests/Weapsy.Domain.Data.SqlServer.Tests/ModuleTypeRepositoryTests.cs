@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
-using Weapsy.Domain.Data.Repositories;
+using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Tests.Factories;
-using ModuleTypeDbEntity = Weapsy.Domain.Data.Entities.ModuleType;
+using ModuleTypeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.ModuleType;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests
 {

@@ -2,10 +2,10 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using Weapsy.Domain.Data.Repositories;
+using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Model.Languages;
 using Weapsy.Tests.Factories;
-using LanguageDbEntity = Weapsy.Domain.Data.Entities.Language;
+using LanguageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Language;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests
 {

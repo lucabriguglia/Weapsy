@@ -3,12 +3,12 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Weapsy.Domain.Data.Repositories;
+using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Model.Pages;
 using Weapsy.Tests.Factories;
-using PageDbEntity = Weapsy.Domain.Data.Entities.Page;
-using PageModuleDbEntity = Weapsy.Domain.Data.Entities.PageModule;
-using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.Entities.PageModuleLocalisation;
+using PageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Page;
+using PageModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModule;
+using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModuleLocalisation;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests
 {

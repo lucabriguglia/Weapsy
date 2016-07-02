@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Linq;
-using Weapsy.Domain.Model.Pages;
-using PageDbEntity = Weapsy.Domain.Data.Entities.Page;
-using PageLocalisationDbEntity = Weapsy.Domain.Data.Entities.PageLocalisation;
-using PageModuleDbEntity = Weapsy.Domain.Data.Entities.PageModule;
-using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.Entities.PageModuleLocalisation;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Model.Pages;
+using PageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Page;
+using PageLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageLocalisation;
+using PageModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModule;
+using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModuleLocalisation;
 
-namespace Weapsy.Domain.Data.Repositories
+namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
     public class PageRepository : IPageRepository
     {

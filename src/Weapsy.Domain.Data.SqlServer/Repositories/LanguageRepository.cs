@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Linq;
-using Weapsy.Domain.Model.Languages;
-using LanguageDbEntity = Weapsy.Domain.Data.Entities.Language;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Model.Languages;
+using LanguageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Language;
 
-namespace Weapsy.Domain.Data.Repositories
+namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
     public class LanguageRepository : ILanguageRepository
     {

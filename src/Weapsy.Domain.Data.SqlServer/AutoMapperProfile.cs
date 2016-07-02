@@ -1,29 +1,29 @@
 ﻿using AutoMapper;
 using Weapsy.Domain.Model.Apps;
-using Weapsy.Domain.Model.Menus;
 using Weapsy.Domain.Model.Languages;
+using Weapsy.Domain.Model.Menus;
 using Weapsy.Domain.Model.Modules;
 using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Domain.Model.Pages;
 using Weapsy.Domain.Model.Sites;
 using Weapsy.Domain.Model.Themes;
-using AppDbEntity = Weapsy.Domain.Data.Entities.App;
-using LanguageDbEntity = Weapsy.Domain.Data.Entities.Language;
-using MenuDbEntity = Weapsy.Domain.Data.Entities.Menu;
-using MenuItemDbEntity = Weapsy.Domain.Data.Entities.MenuItem;
-using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.Entities.MenuItemLocalisation;
-using ModuleDbEntity = Weapsy.Domain.Data.Entities.Module;
-using ModuleTypeDbEntity = Weapsy.Domain.Data.Entities.ModuleType;
-using PageDbEntity = Weapsy.Domain.Data.Entities.Page;
-using PageLocalisationDbEntity = Weapsy.Domain.Data.Entities.PageLocalisation;
-using PageModuleDbEntity = Weapsy.Domain.Data.Entities.PageModule;
-using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.Entities.PageModuleLocalisation;
-using SiteDbEntity = Weapsy.Domain.Data.Entities.Site;
-using ThemeDbEntity = Weapsy.Domain.Data.Entities.Theme;
-using UserDbEntity = Weapsy.Domain.Data.Entities.User;
 using Weapsy.Domain.Model.Users;
+using AppDbEntity = Weapsy.Domain.Data.SqlServer.Entities.App;
+using LanguageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Language;
+using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
+using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
+using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;
+using ModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Module;
+using ModuleTypeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.ModuleType;
+using PageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Page;
+using PageLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageLocalisation;
+using PageModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModule;
+using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModuleLocalisation;
+using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
+using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
+using UserDbEntity = Weapsy.Domain.Data.SqlServer.Entities.User;
 
-namespace Weapsy.Domain.Data
+namespace Weapsy.Domain.Data.SqlServer
 {
     public class AutoMapperProfile : Profile
     {

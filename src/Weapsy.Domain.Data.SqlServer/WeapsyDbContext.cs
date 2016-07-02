@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
 using Weapsy.Core.Configuration;
-using Weapsy.Domain.Data.Entities;
+using Weapsy.Domain.Data.SqlServer.Entities;
 
-namespace Weapsy.Domain.Data
+namespace Weapsy.Domain.Data.SqlServer
 {
     public class WeapsyDbContext : DbContext
     {

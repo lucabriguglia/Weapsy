@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Linq;
-using Weapsy.Domain.Model.Menus;
-using MenuDbEntity = Weapsy.Domain.Data.Entities.Menu;
-using MenuItemDbEntity = Weapsy.Domain.Data.Entities.MenuItem;
-using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.Entities.MenuItemLocalisation;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Model.Menus;
+using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
+using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
+using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;
 
-namespace Weapsy.Domain.Data.Repositories
+namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
     public class MenuRepository : IMenuRepository
     {

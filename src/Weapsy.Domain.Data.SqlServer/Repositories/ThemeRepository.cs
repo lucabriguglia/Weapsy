@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Linq;
-using Weapsy.Domain.Model.Themes;
-using ThemeDbEntity = Weapsy.Domain.Data.Entities.Theme;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Model.Themes;
+using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
 
-namespace Weapsy.Domain.Data.Repositories
+namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
     public class ThemeRepository : IThemeRepository
     {

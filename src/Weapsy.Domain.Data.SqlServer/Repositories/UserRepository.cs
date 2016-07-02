@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Weapsy.Domain.Model.Users;
-using UserDbEntity = Weapsy.Domain.Data.Entities.User;
-using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Model.Users;
+using UserDbEntity = Weapsy.Domain.Data.SqlServer.Entities.User;
 
-namespace Weapsy.Domain.Data.Repositories
+namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -22,6 +22,10 @@ namespace Weapsy.Domain.Data.Repositories
 
         public User GetById(Guid id)
         {
+            using (var ctx = new WeapsyDbContext())
+            {
+                
+            }
             var dbEntity = _entities.FirstOrDefault(x => x.Id.Equals(id));
             return dbEntity != null ? _mapper.Map<User>(dbEntity) : null;
         }
@@ -48,7 +52,7 @@ namespace Weapsy.Domain.Data.Repositories
         public void Update(User user)
         {
             var dbEntity = _entities.FirstOrDefault(x => x.Id.Equals(user.Id));
-            dbEntity = _mapper.Map(user, dbEntity);
+            _mapper.Map(user, dbEntity);
             _context.SaveChanges();
         }
     }

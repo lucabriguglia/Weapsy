@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using PageStatus = Weapsy.Domain.Model.Pages.PageStatus;
 
-namespace Weapsy.Domain.Data.Entities
+namespace Weapsy.Domain.Data.SqlServer.Entities
 {
     public class Page : IDbEntity
     {

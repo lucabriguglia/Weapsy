@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Domain.Model.Users;
 
-namespace Weapsy.Domain.Data.Entities
+namespace Weapsy.Domain.Data.SqlServer.Entities
 {
     public class User : IDbEntity
     {

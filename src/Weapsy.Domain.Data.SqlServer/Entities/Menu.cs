@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Weapsy.Domain.Model.Menus;
 
-namespace Weapsy.Domain.Data.Entities
+namespace Weapsy.Domain.Data.SqlServer.Entities
 {
     public class Menu : IDbEntity
     {

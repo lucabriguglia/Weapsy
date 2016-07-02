@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Linq;
-using Weapsy.Domain.Model.Apps;
-using AppDbEntity = Weapsy.Domain.Data.Entities.App;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Model.Apps;
+using AppDbEntity = Weapsy.Domain.Data.SqlServer.Entities.App;
 
-namespace Weapsy.Domain.Data.Repositories
+namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
     public class AppRepository : IAppRepository
     {

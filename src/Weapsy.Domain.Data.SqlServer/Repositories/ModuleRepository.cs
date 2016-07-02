@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Linq;
-using Weapsy.Domain.Model.Modules;
-using ModuleDbEntity = Weapsy.Domain.Data.Entities.Module;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Model.Modules;
+using ModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Module;
 
-namespace Weapsy.Domain.Data.Repositories
+namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
     public class ModuleRepository : IModuleRepository
     {
