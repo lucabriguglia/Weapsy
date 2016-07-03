@@ -38,7 +38,9 @@ namespace Weapsy.Api
         public async Task<IActionResult> Get(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
-            if (role == null) return NotFound();
+            if (role == null)
+                return NotFound();
+
             return Ok(role);
         }
 
@@ -47,7 +49,9 @@ namespace Weapsy.Api
         public async Task<IActionResult> GetByName(string name)
         {
             var role = await _roleManager.FindByNameAsync(name);
-            if (role == null) return NotFound();
+            if (role == null)
+                return NotFound();
+
             return Ok(role);
         }
 
@@ -56,8 +60,11 @@ namespace Weapsy.Api
         public async Task<IActionResult> Post(string name)
         {
             var role = new IdentityRole(name);
+
             var result = await _roleManager.CreateAsync(role);
-            if (result.Succeeded) return Ok(string.Empty);
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
             throw new Exception(GetErrors(result));
         }
 
@@ -65,7 +72,9 @@ namespace Weapsy.Api
         public async Task<IActionResult> Put([FromBody]IdentityRole model)
         {
             var result = await _roleManager.UpdateAsync(model);
-            if (result.Succeeded) return Ok(string.Empty);
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
             throw new Exception(GetErrors(result));
         }
 
@@ -74,9 +83,13 @@ namespace Weapsy.Api
         public async Task<IActionResult> Delete(string name)
         {
             var role = await _roleManager.FindByNameAsync(name);
-            if (role == null) return NotFound();
+            if (role == null)
+                return NotFound();
+
             var result = await _roleManager.DeleteAsync(role);
-            if (result.Succeeded) return Ok(string.Empty);
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
             throw new Exception(GetErrors(result));
         }
 
