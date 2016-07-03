@@ -104,7 +104,7 @@ namespace Weapsy
 
             var autoMapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new Domain.Data.AutoMapperProfile());
+                cfg.AddProfile(new Domain.Data.SqlServer.AutoMapperProfile());
                 cfg.AddProfile(new Reporting.Data.AutoMapperProfile());
                 cfg.AddProfile(new Apps.Text.Data.SqlServer.AutoMapperProfile());
             });
