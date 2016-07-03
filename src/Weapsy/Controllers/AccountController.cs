@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Core.Dispatcher;
 using Weapsy.Domain.Model.Users.Events;
 using System;
+using FluentValidation;
+using Weapsy.Domain.Model.Users.Commands;
+using Weapsy.Domain.Model.Users;
 
 namespace Weapsy.Controllers
 {
@@ -26,6 +29,8 @@ namespace Weapsy.Controllers
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private readonly IEventPublisher _eventPublisher;
+        private readonly IUserRepository _userRepository;
+        private readonly IValidator<CreateUser> _validator;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -34,7 +39,9 @@ namespace Weapsy.Controllers
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher, 
+            IUserRepository userRepository, 
+            IValidator<CreateUser> validator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,6 +50,8 @@ namespace Weapsy.Controllers
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
             _eventPublisher = eventPublisher;
+            _userRepository = userRepository;
+            _validator = validator;
         }
 
         //
@@ -117,12 +126,23 @@ namespace Weapsy.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    _eventPublisher.Publish(new UserRegistered
+                    //_eventPublisher.Publish(new UserRegistered
+                    //{
+                    //    AggregateRootId = new Guid(user.Id),
+                    //    Email = user.Email,
+                    //    UserName = user.UserName
+                    //});
+
+                    var command = new CreateUser
                     {
-                        AggregateRootId = new Guid(user.Id),
+                        Id = new Guid(user.Id),
                         Email = user.Email,
                         UserName = user.UserName
-                    });
+                    };
+
+                    var newUser = Weapsy.Domain.Model.Users.User.CreateNew(command, _validator);
+
+                    _userRepository.Create(newUser);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link

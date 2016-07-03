@@ -4,7 +4,6 @@ using Weapsy.Core.DependencyResolver;
 using Weapsy.Core.Dispatcher;
 using Weapsy.Core.Domain;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Model.Sites.Handlers;
 using Weapsy.Domain.Model.Sites.Rules;
 using Weapsy.Domain.Model.Sites.Validators;
@@ -26,10 +25,13 @@ using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.Data.Apps;
 using Weapsy.Reporting.Apps;
 using Weapsy.Domain.Data;
+using Weapsy.Domain.Data.SqlServer;
+using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Reporting.Data.Modules;
 using Weapsy.Reporting.Modules;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Data.Themes;
+using Weapsy.Domain.Model.Users.Handlers;
 
 namespace Weapsy.DependencyConfigurator
 {
@@ -51,6 +53,7 @@ namespace Weapsy.DependencyConfigurator
             builder.RegisterAssemblyTypes(typeof(SiteRules).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRules<>));
             builder.RegisterAssemblyTypes(typeof(SiteRepository).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRepository<>));
             builder.RegisterAssemblyTypes(typeof(SiteEventsHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandler<>));
+            builder.RegisterAssemblyTypes(typeof(UserRegisteredHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandler<>));
 
             builder.RegisterType<LanguageSortOrderGenerator>().As<ILanguageSortOrderGenerator>();
 
