@@ -19,6 +19,10 @@ body {
     width: 100%;
 }
 
+.body-content {
+    padding-bottom: 20px;
+}
+
 /*.container
 {
     display:table;
