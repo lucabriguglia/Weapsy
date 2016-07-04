@@ -11,6 +11,12 @@ The second one is going to be the Blog app.
 
 **Wiki**: https://github.com/weapsy/Weapsy/wiki
 
+# Prerequisites
+
+- Visual Studio 2015 Update 3
+- .NET Core 1.0 for Visual Studio (https://www.microsoft.com/net/core#windows)
+- SQL Server
+
 # Technology
 
 - C#
@@ -23,7 +29,7 @@ The second one is going to be the Blog app.
 
 - Create a SQL database (weapsy.dev)
 - Run install-full.sql script (in scripts folder)
-- Open the Weapsy.sln solution in Visual Studio 2015
+- Open the Weapsy.sln solution in Visual Studio
 - Run (F5 or Ctrl+F5). _Note: there could be an internal server error the first time the app runs. In case that happens just refresh the page, I'm working on fixing the issue._
 - Login using these credentials:
   - email: admin@default.com
