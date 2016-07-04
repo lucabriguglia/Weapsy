@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Weapsy.Core.Caching;
 using Weapsy.Domain.Model.Languages;
 using Weapsy.Reporting.Languages;
 
-namespace Weapsy.Reporting.Data.Languages
+namespace Weapsy.Reporting.Data.Default.Languages
 {
     public class LanguageFacade : ILanguageFacade
     {
@@ -26,7 +26,7 @@ namespace Weapsy.Reporting.Data.Languages
 
         public IEnumerable<LanguageViewModel> GetAllActive(Guid siteId)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.LANGUAGES_CACHE_KEY, siteId), () =>
+            return _cacheManager.Get(string.Format(CacheKeys.LanguagesCacheKey, siteId), () =>
             {
                 var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
                 return _mapper.Map<IEnumerable<LanguageViewModel>>(languages);

@@ -6,7 +6,7 @@ using Weapsy.Domain.Model.Languages;
 using Weapsy.Domain.Model.Modules;
 using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Domain.Model.Pages;
-using Weapsy.Reporting.Data.Pages;
+using Weapsy.Reporting.Data.Default.Pages;
 using Weapsy.Reporting.Pages;
 
 namespace Weapsy.Reporting.Data.Default.Tests
@@ -14,15 +14,15 @@ namespace Weapsy.Reporting.Data.Default.Tests
     [TestFixture]
     public class PageFacadeTests
     {
-        private IPageFacade sut;
-        private Guid siteId;
-        private Guid pageId;
+        private IPageFacade _sut;
+        private Guid _siteId;
+        private Guid _pageId;
 
         [SetUp]
         public void Setup()
         {
-            siteId = Guid.NewGuid();
-            pageId = Guid.NewGuid();
+            _siteId = Guid.NewGuid();
+            _pageId = Guid.NewGuid();
 
             var pageRepositoryMock = new Mock<IPageRepository>();
             var languageRepositoryMock = new Mock<ILanguageRepository>();
@@ -33,7 +33,7 @@ namespace Weapsy.Reporting.Data.Default.Tests
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<PageAdminModel>(It.IsAny<Page>())).Returns(new PageAdminModel());
 
-            sut = new PageFacade(pageRepositoryMock.Object, 
+            _sut = new PageFacade(pageRepositoryMock.Object, 
                 languageRepositoryMock.Object,
                 moduleRepositoryMock.Object,
                 moduleTypeRepositoryMock.Object,

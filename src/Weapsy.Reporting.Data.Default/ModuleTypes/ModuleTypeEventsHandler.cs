@@ -3,7 +3,7 @@ using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
 using Weapsy.Domain.Model.ModuleTypes.Events;
 
-namespace Weapsy.Reporting.Data.EventHandlers
+namespace Weapsy.Reporting.Data.Default.ModuleTypes
 {
     public class ModuleTypeEventsHandler : 
         IEventHandler<ModuleTypeCreated>,
@@ -28,7 +28,7 @@ namespace Weapsy.Reporting.Data.EventHandlers
 
         private Task ClearCache()
         {
-            return Task.Run(() => _cacheManager.Remove(CacheKeys.MODULE_TYPES_CACHE_KEY));
+            return Task.Run(() => _cacheManager.Remove(CacheKeys.ModuleTypesCacheKey));
         }
     }
 }

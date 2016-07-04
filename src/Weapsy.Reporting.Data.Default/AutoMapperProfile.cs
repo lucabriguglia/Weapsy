@@ -12,7 +12,7 @@ using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
 
-namespace Weapsy.Reporting.Data
+namespace Weapsy.Reporting.Data.Default
 {
     public class AutoMapperProfile : Profile
     {

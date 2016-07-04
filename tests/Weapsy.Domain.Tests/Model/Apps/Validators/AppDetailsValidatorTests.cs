@@ -12,15 +12,15 @@ namespace Weapsy.Domain.Tests.Apps.Validators
     [TestFixture]
     public class AppDetailsValidatorTests
     {
-        private AppDetails command;
-        private AppDetailsValidator<AppDetails> validator;
-        private Mock<IAppRules> appRulesMock;
-        private Mock<ISiteRules> siteRulesMock;
+        private AppDetails _command;
+        private AppDetailsValidator<AppDetails> _validator;
+        private Mock<IAppRules> _appRulesMock;
+        private Mock<ISiteRules> _siteRulesMock;
 
         [SetUp]
         public void SetUp()
         {
-            command = new AppDetails
+            _command = new AppDetails
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -28,17 +28,17 @@ namespace Weapsy.Domain.Tests.Apps.Validators
                 Folder = "Folder"
             };
 
-            appRulesMock = new Mock<IAppRules>();
-            appRulesMock.Setup(x => x.IsAppIdUnique(command.Id)).Returns(true);
+            _appRulesMock = new Mock<IAppRules>();
+            _appRulesMock.Setup(x => x.IsAppIdUnique(_command.Id)).Returns(true);
 
-            validator = new AppDetailsValidator<AppDetails>(appRulesMock.Object);
+            _validator = new AppDetailsValidator<AppDetails>(_appRulesMock.Object);
         }
 
         [Test]
         public void Should_have_validation_error_when_app_name_is_empty()
         {
-            command.Name = string.Empty;
-            validator.ShouldHaveValidationErrorFor(x => x.Name, command);
+            _command.Name = string.Empty;
+            _validator.ShouldHaveValidationErrorFor(x => x.Name, _command);
         }
 
         [Test]
@@ -46,17 +46,17 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         {
             var name = "";
             for (int i = 0; i < 101; i++) name += i;
-            command.Name = name;
-            validator.ShouldHaveValidationErrorFor(x => x.Name, command);
+            _command.Name = name;
+            _validator.ShouldHaveValidationErrorFor(x => x.Name, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_app_name_is_not_unique()
         {
-            appRulesMock = new Mock<IAppRules>();
-            appRulesMock.Setup(x => x.IsAppNameUnique(command.Name, Guid.Empty)).Returns(false);
-            validator = new AppDetailsValidator<AppDetails>(appRulesMock.Object);
-            validator.ShouldHaveValidationErrorFor(x => x.Name, command);
+            _appRulesMock = new Mock<IAppRules>();
+            _appRulesMock.Setup(x => x.IsAppNameUnique(_command.Name, Guid.Empty)).Returns(false);
+            _validator = new AppDetailsValidator<AppDetails>(_appRulesMock.Object);
+            _validator.ShouldHaveValidationErrorFor(x => x.Name, _command);
         }
 
         [Test]
@@ -64,15 +64,15 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         {
             var description = "";
             for (int i = 0; i < 4001; i++) description += i;
-            command.Description = description;
-            validator.ShouldHaveValidationErrorFor(x => x.Description, command);
+            _command.Description = description;
+            _validator.ShouldHaveValidationErrorFor(x => x.Description, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_app_folder_is_empty()
         {
-            command.Folder = string.Empty;
-            validator.ShouldHaveValidationErrorFor(x => x.Folder, command);
+            _command.Folder = string.Empty;
+            _validator.ShouldHaveValidationErrorFor(x => x.Folder, _command);
         }
 
         [Test]
@@ -80,26 +80,26 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         {
             var folder = "";
             for (int i = 0; i < 101; i++) folder += i;
-            command.Folder = folder;
-            validator.ShouldHaveValidationErrorFor(x => x.Folder, command);
+            _command.Folder = folder;
+            _validator.ShouldHaveValidationErrorFor(x => x.Folder, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_app_folder_is_not_unique()
         {
-            appRulesMock = new Mock<IAppRules>();
-            appRulesMock.Setup(x => x.IsAppFolderUnique(command.Folder, Guid.Empty)).Returns(false);
-            validator = new AppDetailsValidator<AppDetails>(appRulesMock.Object);
-            validator.ShouldHaveValidationErrorFor(x => x.Folder, command);
+            _appRulesMock = new Mock<IAppRules>();
+            _appRulesMock.Setup(x => x.IsAppFolderUnique(_command.Folder, Guid.Empty)).Returns(false);
+            _validator = new AppDetailsValidator<AppDetails>(_appRulesMock.Object);
+            _validator.ShouldHaveValidationErrorFor(x => x.Folder, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_app_folder_is_not_valid()
         {
-            appRulesMock = new Mock<IAppRules>();
-            appRulesMock.Setup(x => x.IsAppFolderValid(command.Folder)).Returns(false);
-            validator = new AppDetailsValidator<AppDetails>(appRulesMock.Object);
-            validator.ShouldHaveValidationErrorFor(x => x.Folder, command);
+            _appRulesMock = new Mock<IAppRules>();
+            _appRulesMock.Setup(x => x.IsAppFolderValid(_command.Folder)).Returns(false);
+            _validator = new AppDetailsValidator<AppDetails>(_appRulesMock.Object);
+            _validator.ShouldHaveValidationErrorFor(x => x.Folder, _command);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Weapsy.Apps.Text.Reporting.Data.Default
 
         public string GetContent(Guid moduleId)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.TEXT_MODULE_CACHE_KEY, moduleId), () =>
+            return _cacheManager.Get(string.Format(CacheKeys.TextModuleCacheKey, moduleId), () =>
             {
                 var textModule = _textRepository.GetByModuleId(moduleId);
 

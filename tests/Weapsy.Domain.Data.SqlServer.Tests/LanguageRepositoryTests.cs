@@ -12,10 +12,10 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     [TestFixture]
     public class LanguageRepositoryTests
     {
-        private ILanguageRepository sut;
-        private Guid siteId;
-        private Guid languageId1;
-        private Guid languageId2;
+        private ILanguageRepository _sut;
+        private Guid _siteId;
+        private Guid _languageId1;
+        private Guid _languageId2;
 
         [SetUp]
         public void SetUp()
@@ -24,15 +24,15 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             optionsBuilder.UseInMemoryDatabase();
             var dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
-            siteId = Guid.NewGuid();
-            languageId1 = Guid.NewGuid();
-            languageId2 = Guid.NewGuid();
+            _siteId = Guid.NewGuid();
+            _languageId1 = Guid.NewGuid();
+            _languageId2 = Guid.NewGuid();
 
             dbContext.Set<LanguageDbEntity>().AddRange(
                 new LanguageDbEntity
                 {
-                    SiteId = siteId,
-                    Id = languageId1,
+                    SiteId = _siteId,
+                    Id = _languageId1,
                     Name = "Language Name 1",
                     CultureName = "ab1",
                     Url = "ab1",
@@ -40,8 +40,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 },
                 new LanguageDbEntity
                 {
-                    SiteId = siteId,
-                    Id = languageId2,
+                    SiteId = _siteId,
+                    Id = _languageId2,
                     Name = "Language Name 2",
                     CultureName = "ab2",
                     Url = "ab2",
@@ -59,69 +59,69 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             mapperMock.Setup(x => x.Map<LanguageDbEntity>(Moq.It.IsAny<Language>())).Returns(new LanguageDbEntity());
             mapperMock.Setup(x => x.Map<Language>(Moq.It.IsAny<LanguageDbEntity>())).Returns(new Language());
 
-            sut = new LanguageRepository(dbContext, mapperMock.Object);
+            _sut = new LanguageRepository(dbContext, mapperMock.Object);
         }
 
         [Test]
         public void Should_return_language_by_id_only()
         {
-            var actual = sut.GetById(languageId1);
+            var actual = _sut.GetById(_languageId1);
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_language_by_id()
         {
-            var actual = sut.GetById(siteId, languageId1);
+            var actual = _sut.GetById(_siteId, _languageId1);
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_language_by_name()
         {
-            var actual = sut.GetByName(siteId, "Language Name 1");
+            var actual = _sut.GetByName(_siteId, "Language Name 1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_language_by_culture_name()
         {
-            var actual = sut.GetByCultureName(siteId, "ab1");
+            var actual = _sut.GetByCultureName(_siteId, "ab1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_language_by_url()
         {
-            var actual = sut.GetByUrl(siteId, "ab1");
+            var actual = _sut.GetByUrl(_siteId, "ab1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_languages_count()
         {
-            var actual = sut.GetLanguagesCount(siteId);
+            var actual = _sut.GetLanguagesCount(_siteId);
             Assert.AreEqual(2, actual);
         }
 
         [Test]
         public void Should_return_active_languages_count()
         {
-            var actual = sut.GetActiveLanguagesCount(siteId);
+            var actual = _sut.GetActiveLanguagesCount(_siteId);
             Assert.AreEqual(1, actual);
         }
 
         [Test]
         public void Should_return_languages_id_list()
         {
-            var actual = sut.GetLanguagesIdList(siteId);
-            Assert.AreEqual(new List<Guid> { languageId1, languageId2 }, actual);
+            var actual = _sut.GetLanguagesIdList(_siteId);
+            Assert.AreEqual(new List<Guid> { _languageId1, _languageId2 }, actual);
         }
 
         [Test]
         public void Should_return_all_languages()
         {
-            var actual = sut.GetAll(siteId);
+            var actual = _sut.GetAll(_siteId);
             Assert.AreEqual(2, actual.Count);
         }
 
@@ -130,9 +130,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var newLanguage = LanguageFactory.Language();
 
-            sut.Create(newLanguage);
+            _sut.Create(newLanguage);
 
-            var actual = sut.GetById(siteId, newLanguage.Id);
+            var actual = _sut.GetById(_siteId, newLanguage.Id);
 
             Assert.NotNull(actual);
         }
@@ -142,11 +142,11 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var newLanguageName = "New Language Name 1";
 
-            var languageToUpdate = LanguageFactory.Language(siteId, languageId1, newLanguageName, "en", "en");
+            var languageToUpdate = LanguageFactory.Language(_siteId, _languageId1, newLanguageName, "en", "en");
 
-            sut.Update(languageToUpdate);
+            _sut.Update(languageToUpdate);
 
-            var updatedLanguage = sut.GetById(siteId, languageId1);
+            var updatedLanguage = _sut.GetById(_siteId, _languageId1);
 
             Assert.AreEqual(newLanguageName, updatedLanguage.Name);
         }
@@ -157,13 +157,13 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             var newLanguageName1 = "New Language Name 1";
             var newLanguageName2 = "New Language Name 2";
 
-            var languageToUpdate1 = LanguageFactory.Language(siteId, languageId1, newLanguageName1, "ab1", "ab1");
-            var languageToUpdate2 = LanguageFactory.Language(siteId, languageId2, newLanguageName2, "ab2", "ab2");
+            var languageToUpdate1 = LanguageFactory.Language(_siteId, _languageId1, newLanguageName1, "ab1", "ab1");
+            var languageToUpdate2 = LanguageFactory.Language(_siteId, _languageId2, newLanguageName2, "ab2", "ab2");
 
-            sut.Update(new List<Language> { languageToUpdate1, languageToUpdate2 });
+            _sut.Update(new List<Language> { languageToUpdate1, languageToUpdate2 });
 
-            var updatedLanguage1 = sut.GetById(siteId, languageId1);
-            var updatedLanguage2 = sut.GetById(siteId, languageId2);
+            var updatedLanguage1 = _sut.GetById(_siteId, _languageId1);
+            var updatedLanguage2 = _sut.GetById(_siteId, _languageId2);
 
             Assert.AreEqual(newLanguageName1, updatedLanguage1.Name);
             Assert.AreEqual(newLanguageName2, updatedLanguage2.Name);

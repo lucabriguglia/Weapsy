@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Weapsy.Core.Caching;
 using Weapsy.Domain.Model.Apps;
 using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes;
 
-namespace Weapsy.Reporting.Data.ModuleTypes
+namespace Weapsy.Reporting.Data.Default.ModuleTypes
 {
     public class ModuleTypeFacade : IModuleTypeFacade
     {
@@ -54,7 +54,7 @@ namespace Weapsy.Reporting.Data.ModuleTypes
 
         public IEnumerable<ModuleTypeControlPanelModel> GetControlPanelModel()
         {
-            return _cacheManager.Get(CacheKeys.MODULE_TYPES_CACHE_KEY, () =>
+            return _cacheManager.Get(CacheKeys.ModuleTypesCacheKey, () =>
             {
                 var moduleTypes = _moduleTypeRepository.GetAll();
                 var result = new List<ModuleTypeControlPanelModel>();

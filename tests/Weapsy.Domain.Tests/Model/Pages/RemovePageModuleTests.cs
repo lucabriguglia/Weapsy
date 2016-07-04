@@ -13,91 +13,91 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class RemovePageModuleTests
     {
-        private Guid moduleId;
-        private Page page;
-        private RemovePageModule command;
-        private Mock<IValidator<RemovePageModule>> validatorMock;
-        private PageModuleRemoved @event;
-        private PageModule pageModule;
+        private Guid _moduleId;
+        private Page _page;
+        private RemovePageModule _command;
+        private Mock<IValidator<RemovePageModule>> _validatorMock;
+        private PageModuleRemoved _event;
+        private PageModule _pageModule;
 
         [SetUp]
         public void Setup()
         {
-            moduleId = Guid.NewGuid();
+            _moduleId = Guid.NewGuid();
             var addPageModuleCommand = new AddPageModule
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
-                ModuleId = moduleId,
+                ModuleId = _moduleId,
                 Id = Guid.NewGuid(),
                 Title = "Title",
                 Zone = "Zone"
             };
             var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
             addPageModuleValidatorMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
-            page = new Page();
-            page.AddModule(addPageModuleCommand, addPageModuleValidatorMock.Object);
-            pageModule = page.PageModules.FirstOrDefault(x => x.ModuleId == moduleId);
-            command = new RemovePageModule
+            _page = new Page();
+            _page.AddModule(addPageModuleCommand, addPageModuleValidatorMock.Object);
+            _pageModule = _page.PageModules.FirstOrDefault(x => x.ModuleId == _moduleId);
+            _command = new RemovePageModule
             {
                 SiteId = addPageModuleCommand.SiteId,
                 PageId = addPageModuleCommand.PageId,
-                ModuleId = moduleId,
+                ModuleId = _moduleId,
             };
-            validatorMock = new Mock<IValidator<RemovePageModule>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            page.RemoveModule(command, validatorMock.Object);
-            @event = page.Events.OfType<PageModuleRemoved>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<RemovePageModule>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _page.RemoveModule(_command, _validatorMock.Object);
+            _event = _page.Events.OfType<PageModuleRemoved>().SingleOrDefault();
         }
 
         [Test]
         public void Should_call_validator()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_remove_module()
         {
-            Assert.AreEqual(PageModuleStatus.Deleted, pageModule.Status);
+            Assert.AreEqual(PageModuleStatus.Deleted, _pageModule.Status);
         }
 
         [Test]
         public void Should_add_page_module_removed_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_site_id_in_page_module_removed_event()
         {
-            Assert.AreEqual(page.SiteId, @event.SiteId);
+            Assert.AreEqual(_page.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_page_id_in_page_module_removed_event()
         {
-            Assert.AreEqual(page.Id, @event.AggregateRootId);
+            Assert.AreEqual(_page.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_module_id_in_page_module_removed_event()
         {
-            Assert.AreEqual(pageModule.ModuleId, @event.ModuleId);
+            Assert.AreEqual(_pageModule.ModuleId, _event.ModuleId);
         }
 
         [Test]
         public void Should_set_page_module_id_in_page_module_removed_event()
         {
-            Assert.AreEqual(pageModule.Id, @event.PageModuleId);
+            Assert.AreEqual(_pageModule.Id, _event.PageModuleId);
         }
 
         [Test]
         public void Should_throw_exception_if_module_does_not_exist()
         {
-            validatorMock = new Mock<IValidator<RemovePageModule>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            Assert.Throws<Exception>(() => page.RemoveModule(command, validatorMock.Object));
+            _validatorMock = new Mock<IValidator<RemovePageModule>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            Assert.Throws<Exception>(() => _page.RemoveModule(_command, _validatorMock.Object));
         }
     }
 }

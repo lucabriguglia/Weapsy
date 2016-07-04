@@ -4,7 +4,7 @@ using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
 using Weapsy.Domain.Model.Languages.Events;
 
-namespace Weapsy.Reporting.Data.EventHandlers
+namespace Weapsy.Reporting.Data.Default.Languages
 {
     public class LanguageEventsHandler : 
         IEventHandler<LanguageCreated>,
@@ -35,7 +35,7 @@ namespace Weapsy.Reporting.Data.EventHandlers
 
         private Task ClearCache(Guid siteId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.LANGUAGES_CACHE_KEY, siteId)));
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.LanguagesCacheKey, siteId)));
         }
     }
 }

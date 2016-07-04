@@ -13,15 +13,15 @@ namespace Weapsy.Domain.Tests.Languages
     [TestFixture]
     public class UpdateLanguageDetailsTests
     {
-        private UpdateLanguageDetails command;
-        private Mock<IValidator<UpdateLanguageDetails>> validatorMock;
-        private Language language;
-        private LanguageDetailsUpdated @event;
+        private UpdateLanguageDetails _command;
+        private Mock<IValidator<UpdateLanguageDetails>> _validatorMock;
+        private Language _language;
+        private LanguageDetailsUpdated _event;
 
         [SetUp]
         public void Setup()
         {
-            command = new UpdateLanguageDetails
+            _command = new UpdateLanguageDetails
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -29,71 +29,71 @@ namespace Weapsy.Domain.Tests.Languages
                 CultureName = "aa-bb",
                 Url = "url"
             };            
-            validatorMock = new Mock<IValidator<UpdateLanguageDetails>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            language = new Language();
-            language.UpdateDetails(command, validatorMock.Object);
-            @event = language.Events.OfType<LanguageDetailsUpdated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<UpdateLanguageDetails>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _language = new Language();
+            _language.UpdateDetails(_command, _validatorMock.Object);
+            _event = _language.Events.OfType<LanguageDetailsUpdated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_name()
         {
-            Assert.AreEqual(command.Name, language.Name);
+            Assert.AreEqual(_command.Name, _language.Name);
         }
 
         [Test]
         public void Should_set_culture_name()
         {
-            Assert.AreEqual(command.CultureName, language.CultureName);
+            Assert.AreEqual(_command.CultureName, _language.CultureName);
         }
 
         [Test]
         public void Should_set_url()
         {
-            Assert.AreEqual(command.Url, language.Url);
+            Assert.AreEqual(_command.Url, _language.Url);
         }
 
         [Test]
         public void Should_add_language_details_updated_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_language_details_updated_event()
         {
-            Assert.AreEqual(language.Id, @event.AggregateRootId);
+            Assert.AreEqual(_language.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_language_details_updated_event()
         {
-            Assert.AreEqual(language.SiteId, @event.SiteId);
+            Assert.AreEqual(_language.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_name_in_language_details_updated_event()
         {
-            Assert.AreEqual(language.Name, @event.Name);
+            Assert.AreEqual(_language.Name, _event.Name);
         }
 
         [Test]
         public void Should_set_culture_name_in_language_details_updated_event()
         {
-            Assert.AreEqual(language.CultureName, @event.CultureName);
+            Assert.AreEqual(_language.CultureName, _event.CultureName);
         }
 
         [Test]
         public void Should_set_url_in_language_details_updated_event()
         {
-            Assert.AreEqual(language.Url, @event.Url);
+            Assert.AreEqual(_language.Url, _event.Url);
         }
     }
 }

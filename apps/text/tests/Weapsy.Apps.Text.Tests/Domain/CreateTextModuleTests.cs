@@ -13,97 +13,97 @@ namespace Weapsy.Apps.Text.Domain.Tests
     [TestFixture]
     public class CreateTextModuleTests
     {
-        private CreateTextModule command;
-        private Mock<IValidator<CreateTextModule>> validatorMock;
-        private TextModule textModule;
-        private TextModuleCreated @event;
+        private CreateTextModule _command;
+        private Mock<IValidator<CreateTextModule>> _validatorMock;
+        private TextModule _textModule;
+        private TextModuleCreated _event;
 
         [SetUp]
         public void Setup()
         {
-            command = new CreateTextModule
+            _command = new CreateTextModule
             {
                 SiteId = Guid.NewGuid(),
                 ModuleId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Content = "Content"
             };
-            validatorMock = new Mock<IValidator<CreateTextModule>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            textModule = TextModule.CreateNew(command, validatorMock.Object);
-            @event = textModule.Events.OfType<TextModuleCreated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<CreateTextModule>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _textModule = TextModule.CreateNew(_command, _validatorMock.Object);
+            _event = _textModule.Events.OfType<TextModuleCreated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_module_id()
         {
-            Assert.AreEqual(command.ModuleId, textModule.ModuleId);
+            Assert.AreEqual(_command.ModuleId, _textModule.ModuleId);
         }
 
         [Test]
         public void Should_set_id()
         {
-            Assert.AreEqual(command.Id, textModule.Id);
+            Assert.AreEqual(_command.Id, _textModule.Id);
         }
 
         [Test]
         public void Should_set_status_to_active()
         {
-            Assert.AreEqual(TextModuleStatus.Active, textModule.Status);
+            Assert.AreEqual(TextModuleStatus.Active, _textModule.Status);
         }
 
         [Test]
         public void Should_set_version_content()
         {
-            Assert.AreEqual(command.Content, textModule.TextVersions[0].Content);
+            Assert.AreEqual(_command.Content, _textModule.TextVersions[0].Content);
         }
 
         [Test]
         public void Should_set_version_status_to_published()
         {
-            Assert.AreEqual(TextVersionStatus.Published, textModule.TextVersions[0].Status);
+            Assert.AreEqual(TextVersionStatus.Published, _textModule.TextVersions[0].Status);
         }
 
         [Test]
         public void Should_add_text_module_created_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_text_module_created_event()
         {
-            Assert.AreEqual(textModule.Id, @event.AggregateRootId);
+            Assert.AreEqual(_textModule.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_text_module_created_event()
         {
-            Assert.AreEqual(command.SiteId, @event.SiteId);
+            Assert.AreEqual(_command.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_module_id_in_text_module_created_event()
         {
-            Assert.AreEqual(textModule.ModuleId, @event.ModuleId);
+            Assert.AreEqual(_textModule.ModuleId, _event.ModuleId);
         }
 
         [Test]
         public void Should_set_version_id_in_text_module_created_event()
         {
-            Assert.AreEqual(textModule.TextVersions[0].Id, @event.VersionId);
+            Assert.AreEqual(_textModule.TextVersions[0].Id, _event.VersionId);
         }
 
         [Test]
         public void Should_set_content_in_text_module_created_event()
         {
-            Assert.AreEqual(textModule.TextVersions[0].Content, @event.Content);
+            Assert.AreEqual(_textModule.TextVersions[0].Content, _event.Content);
         }
     }
 }

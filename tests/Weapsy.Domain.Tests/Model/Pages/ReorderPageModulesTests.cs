@@ -14,9 +14,9 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class ReorderPageModulesTests
     {
-        private ReorderPageModules command;
-        private Page page;
-        private PageModulesReordered @event;
+        private ReorderPageModules _command;
+        private Page _page;
+        private PageModulesReordered _event;
 
         [SetUp]
         public void Setup()
@@ -32,19 +32,19 @@ namespace Weapsy.Domain.Tests.Pages
             var createPageValidatorMock = new Mock<IValidator<CreatePage>>();
             createPageValidatorMock.Setup(x => x.Validate(createPageCommand)).Returns(new ValidationResult());
 
-            page = Page.CreateNew(createPageCommand, createPageValidatorMock.Object);
+            _page = Page.CreateNew(createPageCommand, createPageValidatorMock.Object);
 
-            page.AddModule(new PageModule(page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Header", 1));
-            page.AddModule(new PageModule(page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Header", 2));
-            page.AddModule(new PageModule(page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", 1));
-            page.AddModule(new PageModule(page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", 2));
-            page.AddModule(new PageModule(page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Footer", 1));
-            page.AddModule(new PageModule(page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Footer", 2));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Header", 1));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Header", 2));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", 1));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", 2));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Footer", 1));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Footer", 2));
 
-            command = new ReorderPageModules
+            _command = new ReorderPageModules
             {
-                SiteId = page.SiteId,
-                PageId = page.Id,
+                SiteId = _page.SiteId,
+                PageId = _page.Id,
                 Zones = new List<ReorderPageModules.Zone>
                 {
                     new ReorderPageModules.Zone
@@ -52,7 +52,7 @@ namespace Weapsy.Domain.Tests.Pages
                         Name = "Header",
                         Modules = new List<Guid>
                         {
-                            page.PageModules.FirstOrDefault().ModuleId
+                            _page.PageModules.FirstOrDefault().ModuleId
                         }
                     },
                     new ReorderPageModules.Zone
@@ -60,9 +60,9 @@ namespace Weapsy.Domain.Tests.Pages
                         Name = "Content",
                         Modules = new List<Guid>
                         {
-                            page.PageModules.Skip(2).FirstOrDefault().ModuleId,
-                            page.PageModules.Skip(3).FirstOrDefault().ModuleId,
-                            page.PageModules.Skip(1).FirstOrDefault().ModuleId
+                            _page.PageModules.Skip(2).FirstOrDefault().ModuleId,
+                            _page.PageModules.Skip(3).FirstOrDefault().ModuleId,
+                            _page.PageModules.Skip(1).FirstOrDefault().ModuleId
                         }
                     },
                     new ReorderPageModules.Zone
@@ -70,58 +70,58 @@ namespace Weapsy.Domain.Tests.Pages
                         Name = "Footer",
                         Modules = new List<Guid>
                         {
-                            page.PageModules.Skip(4).FirstOrDefault().ModuleId,
-                            page.PageModules.Skip(5).FirstOrDefault().ModuleId
+                            _page.PageModules.Skip(4).FirstOrDefault().ModuleId,
+                            _page.PageModules.Skip(5).FirstOrDefault().ModuleId
                         }
                     }
                 }
             };
 
             var validatorMock = new Mock<IValidator<ReorderPageModules>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
+            validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
-            page.ReorderPageModules(command, validatorMock.Object);
+            _page.ReorderPageModules(_command, validatorMock.Object);
 
-            @event = page.Events.OfType<PageModulesReordered>().SingleOrDefault();
+            _event = _page.Events.OfType<PageModulesReordered>().SingleOrDefault();
         }
 
         [Test]
         public void Should_set_new_zone_for_moved_module()
         {
-            Assert.AreEqual("Content", page.PageModules.Skip(1).FirstOrDefault().Zone);
+            Assert.AreEqual("Content", _page.PageModules.Skip(1).FirstOrDefault().Zone);
         }
 
         [Test]
         public void Should_set_new_sort_order_for_moved_module()
         {
-            Assert.AreEqual(3, page.PageModules.Skip(1).FirstOrDefault().SortOrder);
+            Assert.AreEqual(3, _page.PageModules.Skip(1).FirstOrDefault().SortOrder);
         }
 
         [Test]
         public void Should_add_page_modules_reordered_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_page_modules_reordered_event()
         {
-            Assert.AreEqual(page.Id, @event.AggregateRootId);
+            Assert.AreEqual(_page.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_page_modules_reordered_event()
         {
-            Assert.AreEqual(page.SiteId, @event.SiteId);
+            Assert.AreEqual(_page.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_throw_exception_if_menu_item_does_not_exist()
         {
-            command.Zones.FirstOrDefault().Modules.Add(Guid.NewGuid());
+            _command.Zones.FirstOrDefault().Modules.Add(Guid.NewGuid());
             var validatorMock = new Mock<IValidator<ReorderPageModules>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            Assert.Throws<Exception>(() => page.ReorderPageModules(command, validatorMock.Object));
+            validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            Assert.Throws<Exception>(() => _page.ReorderPageModules(_command, validatorMock.Object));
         }
     }
 }

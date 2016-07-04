@@ -15,23 +15,23 @@ namespace Weapsy.Domain.Tests.Menus
     [TestFixture]
     public class UpdateMenuItemTests
     {
-        private Menu menu;
-        private UpdateMenuItem command;
-        private Mock<IValidator<UpdateMenuItem>> validatorMock;
-        private MenuItem menuItem;
-        private MenuItemLocalisation firstMenuItemLocalisation;
-        private MenuItemUpdated @event;
+        private Menu _menu;
+        private UpdateMenuItem _command;
+        private Mock<IValidator<UpdateMenuItem>> _validatorMock;
+        private MenuItem _menuItem;
+        private MenuItemLocalisation _firstMenuItemLocalisation;
+        private MenuItemUpdated _event;
 
         [SetUp]
         public void Setup()
         {
-            menu = new Menu();
+            _menu = new Menu();
 
             var menuItemId = Guid.NewGuid();
 
             var addMenuItemCommand = new AddMenuItem
             {
-                SiteId = menu.SiteId,
+                SiteId = _menu.SiteId,
                 MenuId = Guid.NewGuid(),
                 MenuItemId = menuItemId,
                 MenuItemType = MenuItemType.Link,
@@ -59,12 +59,12 @@ namespace Weapsy.Domain.Tests.Menus
             var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItem>>();
             addMenuItemValidatorMock.Setup(x => x.Validate(addMenuItemCommand)).Returns(new ValidationResult());
 
-            menu.AddMenuItem(addMenuItemCommand, addMenuItemValidatorMock.Object);
+            _menu.AddMenuItem(addMenuItemCommand, addMenuItemValidatorMock.Object);
 
-            command = new UpdateMenuItem
+            _command = new UpdateMenuItem
             {
-                SiteId = menu.SiteId,
-                MenuId = menu.Id,
+                SiteId = _menu.SiteId,
+                MenuId = _menu.Id,
                 MenuItemId = menuItemId,
                 MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
                 {
@@ -83,131 +83,131 @@ namespace Weapsy.Domain.Tests.Menus
                 }
             };
 
-            validatorMock = new Mock<IValidator<UpdateMenuItem>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
+            _validatorMock = new Mock<IValidator<UpdateMenuItem>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
-            menu.UpdateMenuItem(command, validatorMock.Object);
+            _menu.UpdateMenuItem(_command, _validatorMock.Object);
 
-            menuItem = menu.MenuItems.FirstOrDefault(c => c.Id == command.MenuItemId);
+            _menuItem = _menu.MenuItems.FirstOrDefault(c => c.Id == _command.MenuItemId);
 
-            firstMenuItemLocalisation = menuItem.MenuItemLocalisations.FirstOrDefault();
+            _firstMenuItemLocalisation = _menuItem.MenuItemLocalisations.FirstOrDefault();
 
-            @event = menu.Events.OfType<MenuItemUpdated>().SingleOrDefault();
+            _event = _menu.Events.OfType<MenuItemUpdated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_menu_item_localisations()
         {
-            Assert.AreEqual(command.MenuItemLocalisations.Count(), menuItem.MenuItemLocalisations.Count());
+            Assert.AreEqual(_command.MenuItemLocalisations.Count(), _menuItem.MenuItemLocalisations.Count());
         }
 
         [Test]
         public void Should_set_localisation_language_id()
         {
-            Assert.AreEqual(command.MenuItemLocalisations[0].LanguageId, firstMenuItemLocalisation.LanguageId);
+            Assert.AreEqual(_command.MenuItemLocalisations[0].LanguageId, _firstMenuItemLocalisation.LanguageId);
         }
 
         [Test]
         public void Should_set_localisation_menu_item_id()
         {
-            Assert.AreEqual(command.MenuItemId, firstMenuItemLocalisation.MenuItemId);
+            Assert.AreEqual(_command.MenuItemId, _firstMenuItemLocalisation.MenuItemId);
         }
 
         [Test]
         public void Should_set_localisation_text()
         {
-            Assert.AreEqual(command.MenuItemLocalisations[0].Text, firstMenuItemLocalisation.Text);
+            Assert.AreEqual(_command.MenuItemLocalisations[0].Text, _firstMenuItemLocalisation.Text);
         }
 
         [Test]
         public void Should_set_localisation_title()
         {
-            Assert.AreEqual(command.MenuItemLocalisations[0].Title, firstMenuItemLocalisation.Title);
+            Assert.AreEqual(_command.MenuItemLocalisations[0].Title, _firstMenuItemLocalisation.Title);
         }
 
         [Test]
         public void Should_add_menu_item_added_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_menu_item_added_event()
         {
-            Assert.AreEqual(menu.Id, @event.AggregateRootId);
+            Assert.AreEqual(_menu.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_menu_item_added_event()
         {
-            Assert.AreEqual(command.SiteId, @event.SiteId);
+            Assert.AreEqual(_command.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_menu_item_id_in_menu_item_added_event()
         {
-            Assert.AreEqual(menuItem.Id, @event.MenuItem.Id);
+            Assert.AreEqual(_menuItem.Id, _event.MenuItem.Id);
         }
 
         [Test]
         public void Should_set_link_in_menu_item_added_event()
         {
-            Assert.AreEqual(menuItem.MenuItemType, @event.MenuItem.MenuItemType);
+            Assert.AreEqual(_menuItem.MenuItemType, _event.MenuItem.MenuItemType);
         }
 
         [Test]
         public void Should_set_page_id_in_menu_item_added_event()
         {
-            Assert.AreEqual(menuItem.PageId, @event.MenuItem.PageId);
+            Assert.AreEqual(_menuItem.PageId, _event.MenuItem.PageId);
         }
 
         [Test]
         public void Should_set_parent_id_in_menu_item_added_event()
         {
-            Assert.AreEqual(menuItem.ParentId, @event.MenuItem.ParentId);
+            Assert.AreEqual(_menuItem.ParentId, _event.MenuItem.ParentId);
         }
 
         [Test]
         public void Should_set_sort_order_in_menu_item_added_event()
         {
-            Assert.AreEqual(menuItem.SortOrder, @event.MenuItem.SortOrder);
+            Assert.AreEqual(_menuItem.SortOrder, _event.MenuItem.SortOrder);
         }
 
         [Test]
         public void Should_set_localisations_in_menu_item_added_event()
         {
-            Assert.AreEqual(menuItem.MenuItemLocalisations, @event.MenuItem.MenuItemLocalisations);
+            Assert.AreEqual(_menuItem.MenuItemLocalisations, _event.MenuItem.MenuItemLocalisations);
         }
 
         [Test]
         public void Should_throw_exception_if_menu_item_does_not_exist()
         {
-            command = new UpdateMenuItem
+            _command = new UpdateMenuItem
             {
                 MenuItemId = Guid.NewGuid(),
             };
-            Assert.Throws<Exception>(() => menu.UpdateMenuItem(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _menu.UpdateMenuItem(_command, _validatorMock.Object));
         }
 
         [Test]
         public void Should_throw_exception_if_menu_item_is_deleted()
         {
-            var menuItem = menu.MenuItems.FirstOrDefault(x => x.Id == command.MenuItemId);
+            var menuItem = _menu.MenuItems.FirstOrDefault(x => x.Id == _command.MenuItemId);
             typeof(MenuItem).GetTypeInfo().GetProperty("MenuItemStatus").SetValue(menuItem, MenuItemStatus.Deleted);
-            Assert.Throws<Exception>(() => menu.UpdateMenuItem(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _menu.UpdateMenuItem(_command, _validatorMock.Object));
         }
 
         [Test]
         public void Should_throw_exception_if_menu_item_localisation_already_exists()
         {
             var languageId = Guid.NewGuid();
-            command.MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+            _command.MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
             {
                 new MenuItemDetails.MenuItemLocalisation
                 {
@@ -222,7 +222,7 @@ namespace Weapsy.Domain.Tests.Menus
                     Title = "Title 2"
                 }
             };
-            Assert.Throws<Exception>(() => menu.UpdateMenuItem(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _menu.UpdateMenuItem(_command, _validatorMock.Object));
         }
     }
 }

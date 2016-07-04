@@ -11,9 +11,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     [TestFixture]
     public class SiteRepositoryTests
     {
-        private ISiteRepository sut;
-        private Guid siteId1;
-        private Guid siteId2;
+        private ISiteRepository _sut;
+        private Guid _siteId1;
+        private Guid _siteId2;
 
         [SetUp]
         public void SetUp()
@@ -22,13 +22,13 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             optionsBuilder.UseInMemoryDatabase();
             var dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
-            siteId1 = Guid.NewGuid();
-            siteId2 = Guid.NewGuid();
+            _siteId1 = Guid.NewGuid();
+            _siteId2 = Guid.NewGuid();
 
             dbContext.Set<SiteDbEntity>().AddRange(
                 new SiteDbEntity
                 {
-                    Id = siteId1,
+                    Id = _siteId1,
                     Name = "Name 1",
                     Title = "Title 1",
                     Url = "Url 1",
@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 },
                 new SiteDbEntity
                 {
-                    Id = siteId2,
+                    Id = _siteId2,
                     Name = "Name 2",
                     Title = "Title 2",
                     Url = "Url 2",
@@ -54,34 +54,34 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             mapperMock.Setup(x => x.Map<SiteDbEntity>(Moq.It.IsAny<Site>())).Returns(new SiteDbEntity());
             mapperMock.Setup(x => x.Map<Site>(Moq.It.IsAny<SiteDbEntity>())).Returns(new Site());
 
-            sut = new SiteRepository(dbContext, mapperMock.Object);
+            _sut = new SiteRepository(dbContext, mapperMock.Object);
         }
 
         [Test]
         public void Should_return_site_by_id()
         {
-            var actual = sut.GetById(siteId1);
+            var actual = _sut.GetById(_siteId1);
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_site_by_name()
         {
-            var actual = sut.GetByName("Name 1");
+            var actual = _sut.GetByName("Name 1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_site_by_url()
         {
-            var actual = sut.GetByUrl("Url 1");
+            var actual = _sut.GetByUrl("Url 1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_all_sites()
         {
-            var actual = sut.GetAll();
+            var actual = _sut.GetAll();
             Assert.AreEqual(2, actual.Count);
         }
 
@@ -90,9 +90,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var newSite = SiteFactory.Site(Guid.NewGuid(), "Name 3");
 
-            sut.Create(newSite);
+            _sut.Create(newSite);
 
-            var actual = sut.GetById(newSite.Id);
+            var actual = _sut.GetById(newSite.Id);
 
             Assert.NotNull(actual);
         }
@@ -102,11 +102,11 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var newSiteName = "New Title 1";
 
-            var siteToUpdate = SiteFactory.Site(siteId1, newSiteName);
+            var siteToUpdate = SiteFactory.Site(_siteId1, newSiteName);
 
-            sut.Update(siteToUpdate);
+            _sut.Update(siteToUpdate);
 
-            var updatedSite = sut.GetById(siteId1);
+            var updatedSite = _sut.GetById(_siteId1);
 
             Assert.AreEqual(newSiteName, updatedSite.Title);
         }

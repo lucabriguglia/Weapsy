@@ -107,14 +107,14 @@ namespace Weapsy.Domain.Tests.Sites.Validators
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
             var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
-            var Title = "";
-            for (int i = 0; i < 251; i++) Title += i;
+            var title = "";
+            for (int i = 0; i < 251; i++) title += i;
 
             validator.ShouldHaveValidationErrorFor(x => x.Title, new UpdateSiteDetails
             {
                 SiteId = Guid.NewGuid(),
                 Url = "url",
-                Title = Title,
+                Title = title,
                 MetaDescription = string.Empty,
                 MetaKeywords = string.Empty
             });

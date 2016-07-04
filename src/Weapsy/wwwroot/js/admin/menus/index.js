@@ -1,12 +1,12 @@
 ﻿weapsy.admin.menus = weapsy.admin.menus || {};
 
 weapsy.admin.menus = (function ($, ko) {
-    function menu(data) {
+    function Menu(data) {
         this.id = ko.observable(data.id);
         this.name = ko.observable(data.name);
     }
 
-    function menuItem(data) {
+    function MenuItem(data) {
         this.id = ko.observable(data.id);
         this.parentId = ko.observable(data.parentId);
         this.text = ko.observable(data.text);
@@ -26,7 +26,7 @@ weapsy.admin.menus = (function ($, ko) {
 
         self.loadMenu = function () {
             $.getJSON("/api/menu/admin", function (data) {
-                var mappedMenus = $.map(data, function (item) { return new menu(item) });
+                var mappedMenus = $.map(data, function (item) { return new Menu(item) });
                 self.menus(mappedMenus);
                 if (self.menus().length > 0)
                 {
@@ -46,7 +46,7 @@ weapsy.admin.menus = (function ($, ko) {
             var menuItems = [];
             $.each(data, function () {
                 var currentDataItem = this;
-                var newMenuItem = new menuItem(currentDataItem);
+                var newMenuItem = new MenuItem(currentDataItem);
                 if (currentDataItem.menuItems.length > 0)
                 {
                     newMenuItem.menuItems.push.apply(newMenuItem.menuItems, mapMenuItems(currentDataItem.menuItems));

@@ -4,7 +4,7 @@ using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
 using Weapsy.Domain.Model.Pages.Events;
 
-namespace Weapsy.Reporting.Data.EventHandlers
+namespace Weapsy.Reporting.Data.Default.Pages
 {
     public class PageEventsHandler : 
         IEventHandler<PageCreated>,
@@ -66,12 +66,12 @@ namespace Weapsy.Reporting.Data.EventHandlers
 
         private Task ClearPageCache(Guid siteId, Guid pageId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.PAGE_CACHE_KEY, siteId, pageId)));
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.PageCacheKey, siteId, pageId)));
         }
 
         private Task ClearMenuCache(Guid siteId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.MENU_CACHE_KEY, siteId, "Main")));
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main")));
         }
     }
 }

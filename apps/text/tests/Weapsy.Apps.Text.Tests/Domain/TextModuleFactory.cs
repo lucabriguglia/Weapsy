@@ -10,7 +10,7 @@ namespace Weapsy.Apps.Text.Tests.Domain
 {
     public static class TextModuleFactory
     {
-        private static Mock<IValidator<AddVersion>> addVersionValidatorMock;
+        private static Mock<IValidator<AddVersion>> _addVersionValidatorMock;
 
         public static TextModule Get()
         {
@@ -48,10 +48,10 @@ namespace Weapsy.Apps.Text.Tests.Domain
                 }
             };
 
-            addVersionValidatorMock = new Mock<IValidator<AddVersion>>();
-            addVersionValidatorMock.Setup(x => x.Validate(addVersionCommand)).Returns(new ValidationResult());
+            _addVersionValidatorMock = new Mock<IValidator<AddVersion>>();
+            _addVersionValidatorMock.Setup(x => x.Validate(addVersionCommand)).Returns(new ValidationResult());
 
-            textModule.AddVersion(addVersionCommand, addVersionValidatorMock.Object);
+            textModule.AddVersion(addVersionCommand, _addVersionValidatorMock.Object);
 
             return textModule;
         }

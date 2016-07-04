@@ -13,80 +13,80 @@ namespace Weapsy.Domain.Tests.Themes
     [TestFixture]
     public class UpdateThemeDetailsTests
     {
-        private UpdateThemeDetails command;
-        private Mock<IValidator<UpdateThemeDetails>> validatorMock;
-        private Theme theme;
-        private ThemeDetailsUpdated @event;
+        private UpdateThemeDetails _command;
+        private Mock<IValidator<UpdateThemeDetails>> _validatorMock;
+        private Theme _theme;
+        private ThemeDetailsUpdated _event;
 
         [SetUp]
         public void Setup()
         {
-            command = new UpdateThemeDetails
+            _command = new UpdateThemeDetails
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Description = "Description",
                 Folder = "folder"
             };            
-            validatorMock = new Mock<IValidator<UpdateThemeDetails>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            theme = new Theme();
-            theme.UpdateDetails(command, validatorMock.Object);
-            @event = theme.Events.OfType<ThemeDetailsUpdated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<UpdateThemeDetails>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _theme = new Theme();
+            _theme.UpdateDetails(_command, _validatorMock.Object);
+            _event = _theme.Events.OfType<ThemeDetailsUpdated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_name()
         {
-            Assert.AreEqual(command.Name, theme.Name);
+            Assert.AreEqual(_command.Name, _theme.Name);
         }
 
         [Test]
         public void Should_set_description()
         {
-            Assert.AreEqual(command.Description, theme.Description);
+            Assert.AreEqual(_command.Description, _theme.Description);
         }
 
         [Test]
         public void Should_set_folder()
         {
-            Assert.AreEqual(command.Folder, theme.Folder);
+            Assert.AreEqual(_command.Folder, _theme.Folder);
         }
 
         [Test]
         public void Should_add_theme_details_updated_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_theme_details_updated_event()
         {
-            Assert.AreEqual(theme.Id, @event.AggregateRootId);
+            Assert.AreEqual(_theme.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_name_in_theme_details_updated_event()
         {
-            Assert.AreEqual(theme.Name, @event.Name);
+            Assert.AreEqual(_theme.Name, _event.Name);
         }
 
         [Test]
         public void Should_set_description_in_theme_details_updated_event()
         {
-            Assert.AreEqual(theme.Description, @event.Description);
+            Assert.AreEqual(_theme.Description, _event.Description);
         }
 
         [Test]
         public void Should_set_folder_in_theme_details_updated_event()
         {
-            Assert.AreEqual(theme.Folder, @event.Folder);
+            Assert.AreEqual(_theme.Folder, _event.Folder);
         }
     }
 }

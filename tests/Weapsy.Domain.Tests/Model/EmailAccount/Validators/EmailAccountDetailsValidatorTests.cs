@@ -12,15 +12,15 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
     [TestFixture]
     public class EmailAccountDetailsValidatorTests
     {
-        private EmailAccountDetails command;
-        private EmailAccountDetailsValidator<EmailAccountDetails> validator;
-        private Mock<IEmailAccountRules> emailAccountRulesMock;
-        private Mock<ISiteRules> siteRulesMock;
+        private EmailAccountDetails _command;
+        private EmailAccountDetailsValidator<EmailAccountDetails> _validator;
+        private Mock<IEmailAccountRules> _emailAccountRulesMock;
+        private Mock<ISiteRules> _siteRulesMock;
 
         [SetUp]
         public void SetUp()
         {
-            command = new EmailAccountDetails
+            _command = new EmailAccountDetails
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -34,36 +34,36 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
                 Ssl = true
             };
 
-            emailAccountRulesMock = new Mock<IEmailAccountRules>();
-            emailAccountRulesMock.Setup(x => x.IsEmailAccountIdUnique(command.Id)).Returns(true);
+            _emailAccountRulesMock = new Mock<IEmailAccountRules>();
+            _emailAccountRulesMock.Setup(x => x.IsEmailAccountIdUnique(_command.Id)).Returns(true);
 
-            siteRulesMock = new Mock<ISiteRules>();
-            siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(true);
+            _siteRulesMock = new Mock<ISiteRules>();
+            _siteRulesMock.Setup(x => x.DoesSiteExist(_command.SiteId)).Returns(true);
 
-            validator = new EmailAccountDetailsValidator<EmailAccountDetails>(emailAccountRulesMock.Object, siteRulesMock.Object);
+            _validator = new EmailAccountDetailsValidator<EmailAccountDetails>(_emailAccountRulesMock.Object, _siteRulesMock.Object);
         }
 
         [Test]
         public void Should_have_validation_error_when_site_id_is_empty()
         {
-            command.SiteId = Guid.Empty;
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
+            _command.SiteId = Guid.Empty;
+            _validator.ShouldHaveValidationErrorFor(x => x.SiteId, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_site_does_not_exist()
         {
-            siteRulesMock = new Mock<ISiteRules>();
-            siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(false);
-            validator = new EmailAccountDetailsValidator<EmailAccountDetails>(emailAccountRulesMock.Object, siteRulesMock.Object);
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
+            _siteRulesMock = new Mock<ISiteRules>();
+            _siteRulesMock.Setup(x => x.DoesSiteExist(_command.SiteId)).Returns(false);
+            _validator = new EmailAccountDetailsValidator<EmailAccountDetails>(_emailAccountRulesMock.Object, _siteRulesMock.Object);
+            _validator.ShouldHaveValidationErrorFor(x => x.SiteId, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_address_is_empty()
         {
-            command.Address = string.Empty;
-            validator.ShouldHaveValidationErrorFor(x => x.Address, command);
+            _command.Address = string.Empty;
+            _validator.ShouldHaveValidationErrorFor(x => x.Address, _command);
         }
 
         [Test]
@@ -71,24 +71,24 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
         {
             var address = "";
             for (int i = 0; i < 251; i++) address += i;
-            command.Address = address;
-            validator.ShouldHaveValidationErrorFor(x => x.Address, command);
+            _command.Address = address;
+            _validator.ShouldHaveValidationErrorFor(x => x.Address, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_address_is_not_valid()
         {
-            command.Address = "address";
-            validator.ShouldHaveValidationErrorFor(x => x.Address, command);
+            _command.Address = "address";
+            _validator.ShouldHaveValidationErrorFor(x => x.Address, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_address_is_not_unique()
         {
-            emailAccountRulesMock = new Mock<IEmailAccountRules>();
-            emailAccountRulesMock.Setup(x => x.IsEmailAccountAddressUnique(command.SiteId, command.Address, Guid.Empty)).Returns(false);
-            validator = new EmailAccountDetailsValidator<EmailAccountDetails>(emailAccountRulesMock.Object, siteRulesMock.Object);
-            validator.ShouldHaveValidationErrorFor(x => x.Address, command);
+            _emailAccountRulesMock = new Mock<IEmailAccountRules>();
+            _emailAccountRulesMock.Setup(x => x.IsEmailAccountAddressUnique(_command.SiteId, _command.Address, Guid.Empty)).Returns(false);
+            _validator = new EmailAccountDetailsValidator<EmailAccountDetails>(_emailAccountRulesMock.Object, _siteRulesMock.Object);
+            _validator.ShouldHaveValidationErrorFor(x => x.Address, _command);
         }
 
         [Test]
@@ -96,15 +96,15 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
         {
             var displayName = "";
             for (int i = 0; i < 101; i++) displayName += i;
-            command.DisplayName = displayName;
-            validator.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
+            _command.DisplayName = displayName;
+            _validator.ShouldHaveValidationErrorFor(x => x.DisplayName, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_host_is_empty()
         {
-            command.Host = string.Empty;
-            validator.ShouldHaveValidationErrorFor(x => x.Host, command);
+            _command.Host = string.Empty;
+            _validator.ShouldHaveValidationErrorFor(x => x.Host, _command);
         }
 
         [Test]
@@ -112,23 +112,23 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
         {
             var host = "";
             for (int i = 0; i < 251; i++) host += i;
-            command.Host = host;
-            validator.ShouldHaveValidationErrorFor(x => x.Host, command);
+            _command.Host = host;
+            _validator.ShouldHaveValidationErrorFor(x => x.Host, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_port_is_empty()
         {
-            command.Port = default(int);
-            validator.ShouldHaveValidationErrorFor(x => x.Port, command);
+            _command.Port = default(int);
+            _validator.ShouldHaveValidationErrorFor(x => x.Port, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_username_is_empty_and_default_credentials_is_false()
         {
-            command.DefaultCredentials = false;
-            command.UserName = string.Empty;
-            validator.ShouldHaveValidationErrorFor(x => x.UserName, command);
+            _command.DefaultCredentials = false;
+            _command.UserName = string.Empty;
+            _validator.ShouldHaveValidationErrorFor(x => x.UserName, _command);
         }
 
         [Test]
@@ -136,17 +136,17 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
         {
             var username = "";
             for (int i = 0; i < 251; i++) username += i;
-            command.DefaultCredentials = false;
-            command.UserName = username;
-            validator.ShouldHaveValidationErrorFor(x => x.UserName, command);
+            _command.DefaultCredentials = false;
+            _command.UserName = username;
+            _validator.ShouldHaveValidationErrorFor(x => x.UserName, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_password_is_empty_and_default_credentials_is_false()
         {
-            command.DefaultCredentials = false;
-            command.Password = string.Empty;
-            validator.ShouldHaveValidationErrorFor(x => x.Password, command);
+            _command.DefaultCredentials = false;
+            _command.Password = string.Empty;
+            _validator.ShouldHaveValidationErrorFor(x => x.Password, _command);
         }
 
         [Test]
@@ -154,9 +154,9 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
         {
             var password = "";
             for (int i = 0; i < 251; i++) password += i;
-            command.DefaultCredentials = false;
-            command.Password = password;
-            validator.ShouldHaveValidationErrorFor(x => x.Password, command);
+            _command.DefaultCredentials = false;
+            _command.Password = password;
+            _validator.ShouldHaveValidationErrorFor(x => x.Password, _command);
         }
     }
 }

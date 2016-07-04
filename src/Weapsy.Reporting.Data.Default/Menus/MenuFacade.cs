@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Weapsy.Core.Caching;
 using Weapsy.Domain.Model.Languages;
 using Weapsy.Domain.Model.Menus;
 using Weapsy.Domain.Model.Pages;
 using Weapsy.Reporting.Menus;
 
-namespace Weapsy.Reporting.Data.Menus
+namespace Weapsy.Reporting.Data.Default.Menus
 {
     public class MenuFacade : IMenuFacade
     {
@@ -34,7 +34,7 @@ namespace Weapsy.Reporting.Data.Menus
 
         public async Task<MenuViewModel> GetByNameAsync(Guid siteId, string name)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.MENU_CACHE_KEY, siteId, name), () =>
+            return _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, siteId, name), () =>
             {
                 var menu = _menuRepository.GetByName(siteId, name);
 

@@ -11,9 +11,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     [TestFixture]
     public class ModuleTypeRepositoryTests
     {
-        private IModuleTypeRepository sut;
-        private Guid moduleTypeId1;
-        private Guid moduleTypeId2;
+        private IModuleTypeRepository _sut;
+        private Guid _moduleTypeId1;
+        private Guid _moduleTypeId2;
 
         [SetUp]
         public void SetUp()
@@ -22,13 +22,13 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             optionsBuilder.UseInMemoryDatabase();
             var dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
-            moduleTypeId1 = Guid.NewGuid();
-            moduleTypeId2 = Guid.NewGuid();
+            _moduleTypeId1 = Guid.NewGuid();
+            _moduleTypeId2 = Guid.NewGuid();
 
             dbContext.Set<ModuleTypeDbEntity>().AddRange(
                 new ModuleTypeDbEntity
                 {
-                    Id = moduleTypeId1,
+                    Id = _moduleTypeId1,
                     Name = "Name 1",
                     Title = "Title 1",
                     Description = "Description 1",
@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 },
                 new ModuleTypeDbEntity
                 {
-                    Id = moduleTypeId2,
+                    Id = _moduleTypeId2,
                     Name = "Name 2",
                     Title = "Title 2",
                     Description = "Description 2",
@@ -54,27 +54,27 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             mapperMock.Setup(x => x.Map<ModuleTypeDbEntity>(Moq.It.IsAny<ModuleType>())).Returns(new ModuleTypeDbEntity());
             mapperMock.Setup(x => x.Map<ModuleType>(Moq.It.IsAny<ModuleTypeDbEntity>())).Returns(new ModuleType());
 
-            sut = new ModuleTypeRepository(dbContext, mapperMock.Object);
+            _sut = new ModuleTypeRepository(dbContext, mapperMock.Object);
         }
 
         [Test]
         public void Should_return_module_type_by_id()
         {
-            var actual = sut.GetById(moduleTypeId1);
+            var actual = _sut.GetById(_moduleTypeId1);
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_module_type_by_name()
         {
-            var actual = sut.GetByName("Name 1");
+            var actual = _sut.GetByName("Name 1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_all_moduleTypes()
         {
-            var actual = sut.GetAll();
+            var actual = _sut.GetAll();
             Assert.AreEqual(2, actual.Count);
         }
 
@@ -83,9 +83,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var newModuleType = ModuleTypeFactory.ModuleType(Guid.NewGuid(), "Name 3", "Title 3", "Description 3");
 
-            sut.Create(newModuleType);
+            _sut.Create(newModuleType);
 
-            var actual = sut.GetById(newModuleType.Id);
+            var actual = _sut.GetById(newModuleType.Id);
 
             Assert.NotNull(actual);
         }
@@ -97,9 +97,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             var moduleTypeToUpdate = ModuleTypeFactory.ModuleType(Guid.NewGuid(), "Name 1", newModuleTypeTitle, "Description 1");
 
-            sut.Update(moduleTypeToUpdate);
+            _sut.Update(moduleTypeToUpdate);
 
-            var updatedModuleType = sut.GetById(moduleTypeId1);
+            var updatedModuleType = _sut.GetById(_moduleTypeId1);
 
             Assert.AreEqual(newModuleTypeTitle, updatedModuleType.Title);
         }

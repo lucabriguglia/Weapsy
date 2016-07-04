@@ -13,71 +13,71 @@ namespace Weapsy.Domain.Tests.Sites
     [TestFixture]
     public class CreateSiteTests
     {
-        private CreateSite command;
-        private Mock<IValidator<CreateSite>> validatorMock;
-        private Site site;
-        private SiteCreated @event;
+        private CreateSite _command;
+        private Mock<IValidator<CreateSite>> _validatorMock;
+        private Site _site;
+        private SiteCreated _event;
 
         [SetUp]
         public void Setup()
         {
-            command = new CreateSite
+            _command = new CreateSite
             {
                 Id = Guid.NewGuid(),
                 Name = "Name"
             };
-            validatorMock = new Mock<IValidator<CreateSite>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            site = Site.CreateNew(command, validatorMock.Object);
-            @event = site.Events.OfType<SiteCreated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<CreateSite>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _site = Site.CreateNew(_command, _validatorMock.Object);
+            _event = _site.Events.OfType<SiteCreated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_id()
         {
-            Assert.AreEqual(command.Id, site.Id);
+            Assert.AreEqual(_command.Id, _site.Id);
         }
 
         [Test]
         public void Should_set_name()
         {
-            Assert.AreEqual(command.Name, site.Name);
+            Assert.AreEqual(_command.Name, _site.Name);
         }
 
         [Test]
         public void Should_set_status_to_active()
         {
-            Assert.AreEqual(SiteStatus.Active, site.Status);
+            Assert.AreEqual(SiteStatus.Active, _site.Status);
         }
 
         [Test]
         public void Should_add_site_created_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_site_created_event()
         {
-            Assert.AreEqual(site.Id, @event.AggregateRootId);
+            Assert.AreEqual(_site.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_name_in_site_created_event()
         {
-            Assert.AreEqual(site.Name, @event.Name);
+            Assert.AreEqual(_site.Name, _event.Name);
         }
 
         [Test]
         public void Should_set_status_in_site_created_event()
         {
-            Assert.AreEqual(site.Status, @event.Status);
+            Assert.AreEqual(_site.Status, _event.Status);
         }
     }
 }

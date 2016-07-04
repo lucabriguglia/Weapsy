@@ -5,6 +5,6 @@ namespace Weapsy.Reporting.Users
 {
     public interface IUserFacade
     {
-        Task<UserDto> GeById(Guid Id);        
+        Task<UserDto> GeById(Guid id);        
     }
 }

@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Weapsy.Core.Caching;
 using Weapsy.Domain.Model.Themes;
 using Weapsy.Reporting.Themes;
 
-namespace Weapsy.Reporting.Data.Themes
+namespace Weapsy.Reporting.Data.Default.Themes
 {
     public class ThemeFacade : IThemeFacade
     {

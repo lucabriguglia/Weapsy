@@ -13,21 +13,21 @@ namespace Weapsy.Domain.Tests.Languages
     [TestFixture]
     public class ReorderLanguageTests
     {
-        private Language language;
-        private Guid languageId;
-        private int newSortOrder;
-        private LanguageReordered @event;
+        private Language _language;
+        private Guid _languageId;
+        private int _newSortOrder;
+        private LanguageReordered _event;
 
         [SetUp]
         public void Setup()
         {
-            languageId = Guid.NewGuid();
-            newSortOrder = 1;
+            _languageId = Guid.NewGuid();
+            _newSortOrder = 1;
 
             var command = new CreateLanguage
             {
                 SiteId = Guid.NewGuid(),
-                Id = languageId,
+                Id = _languageId,
                 Name = "My Language",
                 CultureName = "aa-bb",
                 Url = "url"
@@ -39,41 +39,41 @@ namespace Weapsy.Domain.Tests.Languages
             var sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();
             sortOrderGeneratorMock.Setup(x => x.GenerateNextSortOrder(command.SiteId)).Returns(2);
 
-            language = Language.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
+            _language = Language.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
             
-            language.Reorder(newSortOrder);
+            _language.Reorder(_newSortOrder);
 
-            @event = language.Events.OfType<LanguageReordered>().SingleOrDefault();
+            _event = _language.Events.OfType<LanguageReordered>().SingleOrDefault();
         }
 
         [Test]
         public void Should_set_sort_order()
         {
-            Assert.AreEqual(newSortOrder, language.SortOrder);
+            Assert.AreEqual(_newSortOrder, _language.SortOrder);
         }
 
         [Test]
         public void Should_add_language_reordered_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_language_reordered_event()
         {
-            Assert.AreEqual(language.Id, @event.AggregateRootId);
+            Assert.AreEqual(_language.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_language_reordered_event()
         {
-            Assert.AreEqual(language.SiteId, @event.SiteId);
+            Assert.AreEqual(_language.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_sort_order_in_language_reordered_event()
         {
-            Assert.AreEqual(language.SortOrder, @event.SortOrder);
+            Assert.AreEqual(_language.SortOrder, _event.SortOrder);
         }
 
         [Test]
@@ -81,13 +81,13 @@ namespace Weapsy.Domain.Tests.Languages
         {
             var deleteLanguageCommand = new DeleteLanguage
             {
-                SiteId = language.SiteId,
-                Id = language.Id
+                SiteId = _language.SiteId,
+                Id = _language.Id
             };
             var deleteLanguageValidatorMock = new Mock<IValidator<DeleteLanguage>>();
             deleteLanguageValidatorMock.Setup(x => x.Validate(deleteLanguageCommand)).Returns(new ValidationResult());
-            language.Delete(deleteLanguageCommand, deleteLanguageValidatorMock.Object);
-            Assert.Throws<Exception>(() => language.Reorder(1));
+            _language.Delete(deleteLanguageCommand, deleteLanguageValidatorMock.Object);
+            Assert.Throws<Exception>(() => _language.Reorder(1));
         }
     }
 }

@@ -13,16 +13,16 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class AddPageModuleTests
     {
-        private AddPageModule command;
-        private Mock<IValidator<AddPageModule>> validatorMock;
-        private Page page;
-        private PageModuleAdded @event;
-        private PageModule pageModule;
+        private AddPageModule _command;
+        private Mock<IValidator<AddPageModule>> _validatorMock;
+        private Page _page;
+        private PageModuleAdded _event;
+        private PageModule _pageModule;
 
         [SetUp]
         public void Setup()
         {
-            command = new AddPageModule
+            _command = new AddPageModule
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -32,117 +32,117 @@ namespace Weapsy.Domain.Tests.Pages
                 Zone = "Zone",
                 SortOrder = 1
             };
-            validatorMock = new Mock<IValidator<AddPageModule>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            page = new Page();
-            page.AddModule(command, validatorMock.Object);
-            @event = page.Events.OfType<PageModuleAdded>().SingleOrDefault();
-            pageModule = page.PageModules.FirstOrDefault(x => x.Id == command.Id);
+            _validatorMock = new Mock<IValidator<AddPageModule>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _page = new Page();
+            _page.AddModule(_command, _validatorMock.Object);
+            _event = _page.Events.OfType<PageModuleAdded>().SingleOrDefault();
+            _pageModule = _page.PageModules.FirstOrDefault(x => x.Id == _command.Id);
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_add_module()
         {
-            Assert.IsNotNull(pageModule);
+            Assert.IsNotNull(_pageModule);
         }
 
         [Test]
         public void Should_set_title()
         {
-            Assert.AreEqual(command.Title, pageModule.Title);
+            Assert.AreEqual(_command.Title, _pageModule.Title);
         }
 
         [Test]
         public void Should_set_zone()
         {
-            Assert.AreEqual(command.Zone, pageModule.Zone);
+            Assert.AreEqual(_command.Zone, _pageModule.Zone);
         }
 
         [Test]
         public void Should_set_sort_order()
         {
-            Assert.AreEqual(command.SortOrder, pageModule.SortOrder);
+            Assert.AreEqual(_command.SortOrder, _pageModule.SortOrder);
         }
 
         [Test]
         public void Should_set_status_to_active()
         {
-            Assert.AreEqual(PageModuleStatus.Active, pageModule.Status);
+            Assert.AreEqual(PageModuleStatus.Active, _pageModule.Status);
         }
 
         [Test]
         public void Should_add_page_module_added_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_site_id_in_page_module_added_event()
         {
-            Assert.AreEqual(page.SiteId, @event.SiteId);
+            Assert.AreEqual(_page.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_page_id_in_page_module_added_event()
         {
-            Assert.AreEqual(page.Id, @event.AggregateRootId);
+            Assert.AreEqual(_page.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_module_id_in_page_module_added_event()
         {
-            Assert.AreEqual(pageModule.ModuleId, @event.ModuleId);
+            Assert.AreEqual(_pageModule.ModuleId, _event.ModuleId);
         }
 
         [Test]
         public void Should_set_page_module_id_in_page_module_added_event()
         {
-            Assert.AreEqual(pageModule.Id, @event.AggregateRootId);
+            Assert.AreEqual(_pageModule.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_title_in_page_module_added_event()
         {
-            Assert.AreEqual(pageModule.Title, @event.Title);
+            Assert.AreEqual(_pageModule.Title, _event.Title);
         }
 
         [Test]
         public void Should_set_zone_in_page_module_added_event()
         {
-            Assert.AreEqual(pageModule.Zone, @event.Zone);
+            Assert.AreEqual(_pageModule.Zone, _event.Zone);
         }
 
         [Test]
         public void Should_set_zsort_order_in_page_module_added_event()
         {
-            Assert.AreEqual(pageModule.SortOrder, @event.SortOrder);
+            Assert.AreEqual(_pageModule.SortOrder, _event.SortOrder);
         }
 
         [Test]
         public void Should_set_status_in_page_module_added_event()
         {
-            Assert.AreEqual(pageModule.Status, @event.PageModuleStatus);
+            Assert.AreEqual(_pageModule.Status, _event.PageModuleStatus);
         }
 
         [Test]
         public void Should_set_reordered_modules_in_page_module_added_event()
         {
-            command.ModuleId = Guid.NewGuid();
-            page.AddModule(command, validatorMock.Object);
-            @event = page.Events.OfType<PageModuleAdded>().FirstOrDefault(x => x.ModuleId == command.ModuleId);
-            Assert.NotNull(@event.ReorderedModules.FirstOrDefault(x => x.ModuleId == pageModule.ModuleId));
+            _command.ModuleId = Guid.NewGuid();
+            _page.AddModule(_command, _validatorMock.Object);
+            _event = _page.Events.OfType<PageModuleAdded>().FirstOrDefault(x => x.ModuleId == _command.ModuleId);
+            Assert.NotNull(_event.ReorderedModules.FirstOrDefault(x => x.ModuleId == _pageModule.ModuleId));
         }
 
         [Test]
         public void Should_throw_exception_if_module_is_already_added()
         {
-            Assert.Throws<Exception>(() => page.AddModule(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _page.AddModule(_command, _validatorMock.Object));
         }
     }
 }

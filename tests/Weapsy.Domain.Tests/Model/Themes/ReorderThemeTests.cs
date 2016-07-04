@@ -13,20 +13,20 @@ namespace Weapsy.Domain.Tests.Themes
     [TestFixture]
     public class ReorderThemeTests
     {
-        private Theme theme;
-        private Guid themeId;
-        private int newSortOrder;
-        private ThemeReordered @event;
+        private Theme _theme;
+        private Guid _themeId;
+        private int _newSortOrder;
+        private ThemeReordered _event;
 
         [SetUp]
         public void Setup()
         {
-            themeId = Guid.NewGuid();
-            newSortOrder = 1;
+            _themeId = Guid.NewGuid();
+            _newSortOrder = 1;
 
             var command = new CreateTheme
             {
-                Id = themeId,
+                Id = _themeId,
                 Name = "Name",
                 Description = "Description",
                 Folder = "Folder"
@@ -38,42 +38,42 @@ namespace Weapsy.Domain.Tests.Themes
             var sortOrderGeneratorMock = new Mock<IThemeSortOrderGenerator>();
             sortOrderGeneratorMock.Setup(x => x.GenerateNextSortOrder()).Returns(2);
 
-            theme = Theme.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
+            _theme = Theme.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
             
-            theme.Reorder(newSortOrder);
+            _theme.Reorder(_newSortOrder);
 
-            @event = theme.Events.OfType<ThemeReordered>().SingleOrDefault();
+            _event = _theme.Events.OfType<ThemeReordered>().SingleOrDefault();
         }
 
         [Test]
         public void Should_set_sort_order()
         {
-            Assert.AreEqual(newSortOrder, theme.SortOrder);
+            Assert.AreEqual(_newSortOrder, _theme.SortOrder);
         }
 
         [Test]
         public void Should_add_theme_reordered_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_theme_reordered_event()
         {
-            Assert.AreEqual(theme.Id, @event.AggregateRootId);
+            Assert.AreEqual(_theme.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_sort_order_in_theme_reordered_event()
         {
-            Assert.AreEqual(theme.SortOrder, @event.SortOrder);
+            Assert.AreEqual(_theme.SortOrder, _event.SortOrder);
         }
 
         [Test]
         public void Should_throw_exception_if_theme_is_deleted()
         {
-            theme.Delete();
-            Assert.Throws<Exception>(() => theme.Reorder(1));
+            _theme.Delete();
+            Assert.Throws<Exception>(() => _theme.Reorder(1));
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Weapsy.Domain.Model.Apps;
 using Weapsy.Reporting.Apps;
 
-namespace Weapsy.Reporting.Data.Apps
+namespace Weapsy.Reporting.Data.Default.Apps
 {
     public class AppFacade : IAppFacade
     {

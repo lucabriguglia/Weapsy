@@ -1,7 +1,7 @@
 ﻿weapsy.admin.menuItem = weapsy.admin.menuItem || {};
 
 weapsy.admin.menuItem = (function ($, ko) {
-    function menu(data) {
+    function Menu(data) {
         this.id = ko.observable(data.id);
         this.name = ko.observable(data.name);
     }
@@ -13,19 +13,19 @@ weapsy.admin.menuItem = (function ($, ko) {
         this.menuItems = ko.observableArray([]);
     }
 
-    function menuItemLocalisation(data) {
+    function MenuItemLocalisation(data) {
         this.languageId = ko.observable(data.languageId);
         this.languageName = ko.observable(data.languageName);
         this.text = ko.observable(data.text);
         this.title = ko.observable(data.title);
     }
 
-    function page(data) {
+    function Page(data) {
         this.id = data.id;
         this.name = data.name;
     }
 
-    function language(data) {
+    function Language(data) {
         this.id = data.id;
         this.name = data.name;
     }
@@ -59,13 +59,13 @@ weapsy.admin.menuItem = (function ($, ko) {
         self.loadMenu = function () {
             $.getJSON("/api/menu/admin", function (data) {
                 if (data.length > 0)
-                    self.menu(new menu(data[0]));
+                    self.menu(new Menu(data[0]));
             });
         }
 
         self.loadPages = function () {
             $.getJSON("/api/page", function (data) {
-                var mappedPages = $.map(data, function (item) { return new page(item) });
+                var mappedPages = $.map(data, function (item) { return new Page(item) });
                 self.pages(mappedPages);
                 self.loadLanguages();
             });
@@ -73,7 +73,7 @@ weapsy.admin.menuItem = (function ($, ko) {
 
         self.loadLanguages = function () {
             $.getJSON("/api/language", function (data) {
-                var mappedLanguages = $.map(data, function (item) { return new language(item) });
+                var mappedLanguages = $.map(data, function (item) { return new Language(item) });
                 self.languages(mappedLanguages);
                 var id = weapsy.utils.getUrlParameterByName("id");
                 if (id)
@@ -95,7 +95,7 @@ weapsy.admin.menuItem = (function ($, ko) {
 
             $.each(self.languages(), function () {
                 var item = this;
-                self.menuItemLocalisations.push(new menuItemLocalisation({
+                self.menuItemLocalisations.push(new MenuItemLocalisation({
                     languageId: item.id,
                     languageName: item.name,
                     text: '',
@@ -119,7 +119,7 @@ weapsy.admin.menuItem = (function ($, ko) {
 
                 self.menuItemLocalisations([]);
 
-                var mappedLocalisations = $.map(data.menuItemLocalisations, function (item) { return new menuItemLocalisation(item) });
+                var mappedLocalisations = $.map(data.menuItemLocalisations, function (item) { return new MenuItemLocalisation(item) });
                 self.menuItemLocalisations(mappedLocalisations);
 
                 self.showEditForm(true);

@@ -14,16 +14,16 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class UpdatePageModuleDetailsTests
     {
-        private UpdatePageModuleDetails command;
-        private Mock<IValidator<UpdatePageModuleDetails>> validatorMock;
-        private Page page;
-        private PageModule pageModule;
-        private PageModuleDetailsUpdated @event;
+        private UpdatePageModuleDetails _command;
+        private Mock<IValidator<UpdatePageModuleDetails>> _validatorMock;
+        private Page _page;
+        private PageModule _pageModule;
+        private PageModuleDetailsUpdated _event;
 
         [SetUp]
         public void Setup()
         {
-            page = new Page();
+            _page = new Page();
 
             var siteId = Guid.NewGuid();
             var pageId = Guid.NewGuid();
@@ -40,9 +40,9 @@ namespace Weapsy.Domain.Tests.Pages
             };
             var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
             addPageModuleValidatorMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
-            page.AddModule(addPageModuleCommand, addPageModuleValidatorMock.Object);
+            _page.AddModule(addPageModuleCommand, addPageModuleValidatorMock.Object);
 
-            command = new UpdatePageModuleDetails
+            _command = new UpdatePageModuleDetails
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -57,74 +57,74 @@ namespace Weapsy.Domain.Tests.Pages
                     }
                 }
             };
-            validatorMock = new Mock<IValidator<UpdatePageModuleDetails>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());            
-            page.UpdateModule(command, validatorMock.Object);
-            pageModule = page.PageModules.FirstOrDefault(x => x.ModuleId == moduleId);
-            @event = page.Events.OfType<PageModuleDetailsUpdated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<UpdatePageModuleDetails>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());            
+            _page.UpdateModule(_command, _validatorMock.Object);
+            _pageModule = _page.PageModules.FirstOrDefault(x => x.ModuleId == moduleId);
+            _event = _page.Events.OfType<PageModuleDetailsUpdated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_title()
         {
-            Assert.AreEqual(command.Title, pageModule.Title);
+            Assert.AreEqual(_command.Title, _pageModule.Title);
         }
 
         [Test]
         public void Should_set_localisation_language_id()
         {
-            Assert.AreEqual(command.PageModuleLocalisations[0].LanguageId, pageModule.PageModuleLocalisations.FirstOrDefault().LanguageId);
+            Assert.AreEqual(_command.PageModuleLocalisations[0].LanguageId, _pageModule.PageModuleLocalisations.FirstOrDefault().LanguageId);
         }
 
         [Test]
         public void Should_set_localisation_title()
         {
-            Assert.AreEqual(command.PageModuleLocalisations[0].Title, pageModule.PageModuleLocalisations.FirstOrDefault().Title);
+            Assert.AreEqual(_command.PageModuleLocalisations[0].Title, _pageModule.PageModuleLocalisations.FirstOrDefault().Title);
         }
 
         [Test]
         public void Should_add_page_module_details_updated_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_site_id_in_page_module_details_updated_event()
         {
-            Assert.AreEqual(page.SiteId, @event.SiteId);
+            Assert.AreEqual(_page.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_id_in_page_module_details_updated_event()
         {
-            Assert.AreEqual(page.Id, @event.AggregateRootId);
+            Assert.AreEqual(_page.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_page_module_in_page_module_details_updated_event()
         {
-            Assert.AreEqual(pageModule, @event.PageModule);
+            Assert.AreEqual(_pageModule, _event.PageModule);
         }
 
         [Test]
         public void Should_throw_exception_if_language_is_already_added_to_page_module_localisations()
         {
             var languageId = Guid.NewGuid();
-            command.PageModuleLocalisations.Add(new UpdatePageModuleDetails.PageModuleLocalisation
+            _command.PageModuleLocalisations.Add(new UpdatePageModuleDetails.PageModuleLocalisation
             {
                 LanguageId = languageId
             });
-            command.PageModuleLocalisations.Add(new UpdatePageModuleDetails.PageModuleLocalisation
+            _command.PageModuleLocalisations.Add(new UpdatePageModuleDetails.PageModuleLocalisation
             {
                 LanguageId = languageId
             });
-            Assert.Throws<Exception>(() => page.UpdateModule(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _page.UpdateModule(_command, _validatorMock.Object));
         }
     }
 }

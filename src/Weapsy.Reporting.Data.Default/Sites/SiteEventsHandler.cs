@@ -4,7 +4,7 @@ using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
 using Weapsy.Domain.Model.Sites.Events;
 
-namespace Weapsy.Reporting.Data.EventHandlers
+namespace Weapsy.Reporting.Data.Default.Sites
 {
     public class SiteEventsHandler : 
         IEventHandler<SiteCreated>,
@@ -29,7 +29,7 @@ namespace Weapsy.Reporting.Data.EventHandlers
 
         private Task ClearCache(Guid siteId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.SITE_SETTINGS_CACHE_KEY, siteId)));
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.SiteSettingsCacheKey, siteId)));
         }
     }
 }

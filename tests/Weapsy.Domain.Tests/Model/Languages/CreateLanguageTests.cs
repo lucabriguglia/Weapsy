@@ -13,16 +13,16 @@ namespace Weapsy.Domain.Tests.Languages
     [TestFixture]
     public class CreateLanguageTests
     {
-        private CreateLanguage command;
-        private Mock<IValidator<CreateLanguage>> validatorMock;
-        private Mock<ILanguageSortOrderGenerator> sortOrderGeneratorMock;
-        private Language language;
-        private LanguageCreated @event;
+        private CreateLanguage _command;
+        private Mock<IValidator<CreateLanguage>> _validatorMock;
+        private Mock<ILanguageSortOrderGenerator> _sortOrderGeneratorMock;
+        private Language _language;
+        private LanguageCreated _event;
 
         [SetUp]
         public void Setup()
         {
-            command = new CreateLanguage
+            _command = new CreateLanguage
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -30,108 +30,108 @@ namespace Weapsy.Domain.Tests.Languages
                 CultureName = "aa-bb",
                 Url = "url"
             };            
-            validatorMock = new Mock<IValidator<CreateLanguage>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();
-            sortOrderGeneratorMock.Setup(x => x.GenerateNextSortOrder(command.SiteId)).Returns(4);
-            language = Language.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
-            @event = language.Events.OfType<LanguageCreated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<CreateLanguage>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();
+            _sortOrderGeneratorMock.Setup(x => x.GenerateNextSortOrder(_command.SiteId)).Returns(4);
+            _language = Language.CreateNew(_command, _validatorMock.Object, _sortOrderGeneratorMock.Object);
+            _event = _language.Events.OfType<LanguageCreated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_id()
         {
-            Assert.AreEqual(command.Id, language.Id);
+            Assert.AreEqual(_command.Id, _language.Id);
         }
 
         [Test]
         public void Should_set_site_id()
         {
-            Assert.AreEqual(command.SiteId, language.SiteId);
+            Assert.AreEqual(_command.SiteId, _language.SiteId);
         }
 
         [Test]
         public void Should_set_name()
         {
-            Assert.AreEqual(command.Name, language.Name);
+            Assert.AreEqual(_command.Name, _language.Name);
         }
 
         [Test]
         public void Should_set_culture_name()
         {
-            Assert.AreEqual(command.CultureName, language.CultureName);
+            Assert.AreEqual(_command.CultureName, _language.CultureName);
         }
 
         [Test]
         public void Should_set_url()
         {
-            Assert.AreEqual(command.Url, language.Url);
+            Assert.AreEqual(_command.Url, _language.Url);
         }
 
         [Test]
         public void Should_call_sort_order_generator()
         {
-            sortOrderGeneratorMock.Verify(x => x.GenerateNextSortOrder(command.SiteId));
+            _sortOrderGeneratorMock.Verify(x => x.GenerateNextSortOrder(_command.SiteId));
         }
 
         [Test]
         public void Should_set_sort_order()
         {
-            Assert.AreEqual(4, language.SortOrder);
+            Assert.AreEqual(4, _language.SortOrder);
         }
 
         [Test]
         public void Should_set_status_to_hidden()
         {
-            Assert.AreEqual(LanguageStatus.Hidden, language.Status);
+            Assert.AreEqual(LanguageStatus.Hidden, _language.Status);
         }
 
         [Test]
         public void Should_add_language_created_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_language_created_event()
         {
-            Assert.AreEqual(language.Id, @event.AggregateRootId);
+            Assert.AreEqual(_language.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_language_created_event()
         {
-            Assert.AreEqual(language.SiteId, @event.SiteId);
+            Assert.AreEqual(_language.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_name_in_language_created_event()
         {
-            Assert.AreEqual(language.Name, @event.Name);
+            Assert.AreEqual(_language.Name, _event.Name);
         }
 
         [Test]
         public void Should_set_culture_name_in_language_created_event()
         {
-            Assert.AreEqual(language.CultureName, @event.CultureName);
+            Assert.AreEqual(_language.CultureName, _event.CultureName);
         }
 
         [Test]
         public void Should_set_url_in_language_created_event()
         {
-            Assert.AreEqual(language.Url, @event.Url);
+            Assert.AreEqual(_language.Url, _event.Url);
         }
 
         [Test]
         public void Should_set_status_in_language_created_event()
         {
-            Assert.AreEqual(language.Status, @event.Status);
+            Assert.AreEqual(_language.Status, _event.Status);
         }
     }
 }

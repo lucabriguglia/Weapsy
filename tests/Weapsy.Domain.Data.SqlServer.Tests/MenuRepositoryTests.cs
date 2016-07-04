@@ -15,13 +15,13 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     [TestFixture]
     public class MenuRepositoryTests
     {
-        private IMenuRepository sut;
-        private Guid siteId;
-        private Guid menuId1;
-        private Guid menuId2;
-        private Guid menuItemId1;
-        private Guid menuItemId2;
-        private Guid language1;
+        private IMenuRepository _sut;
+        private Guid _siteId;
+        private Guid _menuId1;
+        private Guid _menuId2;
+        private Guid _menuItemId1;
+        private Guid _menuItemId2;
+        private Guid _language1;
 
         [SetUp]
         public void SetUp()
@@ -30,39 +30,39 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             optionsBuilder.UseInMemoryDatabase();
             var dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
-            siteId = Guid.NewGuid();
-            menuId1 = Guid.NewGuid();
-            menuId2 = Guid.NewGuid();
-            menuItemId1 = Guid.NewGuid();
-            menuItemId2 = Guid.NewGuid();
-            language1 = Guid.NewGuid();
+            _siteId = Guid.NewGuid();
+            _menuId1 = Guid.NewGuid();
+            _menuId2 = Guid.NewGuid();
+            _menuItemId1 = Guid.NewGuid();
+            _menuItemId2 = Guid.NewGuid();
+            _language1 = Guid.NewGuid();
 
             dbContext.Set<MenuDbEntity>().AddRange(
                 new MenuDbEntity
                 {
-                    SiteId = siteId,
-                    Id = menuId1,
+                    SiteId = _siteId,
+                    Id = _menuId1,
                     Name = "Menu 1",
                     Status = MenuStatus.Active,
                     MenuItems = new List<MenuItemDbEntity>
                     {
                         new MenuItemDbEntity
                         {
-                            MenuId = menuId1,
-                            Id = menuItemId1,
+                            MenuId = _menuId1,
+                            Id = _menuItemId1,
                             Text = "Menu Item 1",
                             Status = MenuItemStatus.Active,
                             MenuItemLocalisations = new List<MenuItemLocalisationDbEntity>
                             {
                                 new MenuItemLocalisationDbEntity
                                 {
-                                    MenuItemId = menuItemId1,
-                                    LanguageId = language1,
+                                    MenuItemId = _menuItemId1,
+                                    LanguageId = _language1,
                                     Text = "Menu Item 1 Localisation 1"
                                 },
                                 new MenuItemLocalisationDbEntity
                                 {
-                                    MenuItemId = menuItemId1,
+                                    MenuItemId = _menuItemId1,
                                     LanguageId = Guid.NewGuid(),
                                     Text = "Menu Item 1 Localisation 2"
                                 }
@@ -70,8 +70,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                         },
                         new MenuItemDbEntity
                         {
-                            MenuId = menuId1,
-                            Id = menuItemId2,
+                            MenuId = _menuId1,
+                            Id = _menuItemId2,
                             Text = "Menu Item 2",
                             Status = MenuItemStatus.Deleted
                         }
@@ -79,8 +79,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 },
                 new MenuDbEntity
                 {
-                    SiteId = siteId,
-                    Id = menuId2,
+                    SiteId = _siteId,
+                    Id = _menuId2,
                     Name = "Menu 2",
                     Status = MenuStatus.Active
                 },
@@ -96,62 +96,62 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             mapperMock.Setup(x => x.Map<MenuDbEntity>(Moq.It.IsAny<Menu>())).Returns(new MenuDbEntity());
             mapperMock.Setup(x => x.Map<Menu>(Moq.It.IsAny<MenuDbEntity>())).Returns(new Menu());
 
-            sut = new MenuRepository(dbContext, mapperMock.Object);
+            _sut = new MenuRepository(dbContext, mapperMock.Object);
         }
 
         [Test]
         public void Should_return_menu_by_id_only()
         {
-            var actual = sut.GetById(menuId1);
+            var actual = _sut.GetById(_menuId1);
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_menu_by_id_only_with_no_deleted_menu_items()
         {
-            var actual = sut.GetById(menuId1);
+            var actual = _sut.GetById(_menuId1);
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_menu_by_id()
         {
-            var actual = sut.GetById(siteId, menuId1);
+            var actual = _sut.GetById(_siteId, _menuId1);
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_menu_by_id_with_no_deleted_menu_items()
         {
-            var actual = sut.GetById(siteId, menuId1);
+            var actual = _sut.GetById(_siteId, _menuId1);
             Assert.AreEqual(0, actual.MenuItems.Where(x => x.Status == MenuItemStatus.Deleted).Count());
         }
 
         [Test]
         public void Should_return_menu_by_name()
         {
-            var actual = sut.GetByName(siteId, "Menu 1");
+            var actual = _sut.GetByName(_siteId, "Menu 1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_menu_by_name_with_no_deleted_menu_items()
         {
-            var actual = sut.GetByName(siteId, "Menu 1");
+            var actual = _sut.GetByName(_siteId, "Menu 1");
             Assert.AreEqual(0, actual.MenuItems.Where(x => x.Status == MenuItemStatus.Deleted).Count());
         }
 
         [Test]
         public void Should_return_all_menus()
         {
-            var actual = sut.GetAll(siteId);
+            var actual = _sut.GetAll(_siteId);
             Assert.AreEqual(2, actual.Count);
         }
 
         [Test]
         public void Should_return_all_menus_with_no_deleted_menu_items()
         {
-            var actual = sut.GetAll(siteId);
+            var actual = _sut.GetAll(_siteId);
             foreach (var item in actual)
                 Assert.AreEqual(0, item.MenuItems.Where(x => x.Status == MenuItemStatus.Deleted).Count());        
         }
@@ -159,11 +159,11 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         [Test]
         public void Should_save_new_menu()
         {
-            var newMenu = MenuFactory.Menu(siteId, Guid.NewGuid(), "Menu 3", "Item", "");
+            var newMenu = MenuFactory.Menu(_siteId, Guid.NewGuid(), "Menu 3", "Item", "");
 
-            sut.Create(newMenu);
+            _sut.Create(newMenu);
 
-            var actual = sut.GetById(siteId, newMenu.Id);
+            var actual = _sut.GetById(_siteId, newMenu.Id);
 
             Assert.NotNull(actual);
         }
@@ -175,11 +175,11 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             var newMenuItemText = "New Menu Item 1";
             var newMenuItemLocalisationText = "New Menu Item 1 Localisation 1";
 
-            var menuToUpdate = MenuFactory.Menu(siteId, Guid.NewGuid(), newMenuName, newMenuItemText, newMenuItemLocalisationText);
+            var menuToUpdate = MenuFactory.Menu(_siteId, Guid.NewGuid(), newMenuName, newMenuItemText, newMenuItemLocalisationText);
 
-            sut.Update(menuToUpdate);
+            _sut.Update(menuToUpdate);
 
-            var updatedMenu = sut.GetById(siteId, menuId1);
+            var updatedMenu = _sut.GetById(_siteId, _menuId1);
             var updatedMenuItem = updatedMenu.MenuItems.FirstOrDefault();
             var updatedMenuItemLocalisation = updatedMenuItem.MenuItemLocalisations.FirstOrDefault();
 

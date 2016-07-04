@@ -4,7 +4,7 @@ using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
 using Weapsy.Domain.Model.Menus.Events;
 
-namespace Weapsy.Reporting.Data.EventHandlers
+namespace Weapsy.Reporting.Data.Default.Menus
 {
     public class MenuEventsHandler : 
         IEventHandler<MenuCreated>,
@@ -35,7 +35,7 @@ namespace Weapsy.Reporting.Data.EventHandlers
 
         private Task ClearCache(Guid siteId, string name)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.MENU_CACHE_KEY, siteId, name)));
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name)));
         }
     }
 }

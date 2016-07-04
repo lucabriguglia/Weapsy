@@ -1,12 +1,12 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Weapsy.Core.Caching;
 using Weapsy.Domain.Model.Languages;
 using Weapsy.Domain.Model.Sites;
 using Weapsy.Reporting.Sites;
 
-namespace Weapsy.Reporting.Data.Sites
+namespace Weapsy.Reporting.Data.Default.Sites
 {
     public class SiteFacade : ISiteFacade
     {

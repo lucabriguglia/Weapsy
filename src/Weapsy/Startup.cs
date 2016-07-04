@@ -105,7 +105,7 @@ namespace Weapsy
             var autoMapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new Domain.Data.SqlServer.AutoMapperProfile());
-                cfg.AddProfile(new Reporting.Data.AutoMapperProfile());
+                cfg.AddProfile(new Reporting.Data.Default.AutoMapperProfile());
                 cfg.AddProfile(new Apps.Text.Data.SqlServer.AutoMapperProfile());
             });
 
@@ -120,8 +120,8 @@ namespace Weapsy
             var container = builder.Build();
 
             // ===== Temporary ===== //
-            AppInstallationService = container.Resolve<IAppInstallationService>();
-            SiteInstallationService = container.Resolve<ISiteInstallationService>();
+            _appInstallationService = container.Resolve<IAppInstallationService>();
+            _siteInstallationService = container.Resolve<ISiteInstallationService>();
             AppRepository = container.Resolve<IAppRepository>();
             SiteRepository = container.Resolve<ISiteRepository>();
             PageFacade = container.Resolve<IPageFacade>();
@@ -254,7 +254,7 @@ namespace Weapsy
         {
             if (AppRepository.GetByName("Text") == null)
             {
-                AppInstallationService.InstallDefaultApps();
+                _appInstallationService.InstallDefaultApps();
             }
         }
 
@@ -262,7 +262,7 @@ namespace Weapsy
         {
             if (SiteRepository.GetByName("Default") == null)
             {
-                SiteInstallationService.InstallDefaultSite();
+                _siteInstallationService.InstallDefaultSite();
             }
         }
 
@@ -292,8 +292,8 @@ namespace Weapsy
             }
         }
 
-        private static IAppInstallationService AppInstallationService;
-        private static ISiteInstallationService SiteInstallationService;
+        private static IAppInstallationService _appInstallationService;
+        private static ISiteInstallationService _siteInstallationService;
         private static IAppRepository AppRepository { get; set; }
         private static ISiteRepository SiteRepository { get; set; }
         private static IPageFacade PageFacade { get; set; }

@@ -295,8 +295,8 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
-            var Title = "";
-            for (int i = 0; i < 251; i++) Title += i;
+            var title = "";
+            for (int i = 0; i < 251; i++) title += i;
 
             validator.ShouldHaveValidationErrorFor(x => x.Title, new PageDetails
             {
@@ -304,7 +304,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Url = "url",
-                Title = Title,
+                Title = title,
                 MetaDescription = string.Empty,
                 MetaKeywords = string.Empty
             });

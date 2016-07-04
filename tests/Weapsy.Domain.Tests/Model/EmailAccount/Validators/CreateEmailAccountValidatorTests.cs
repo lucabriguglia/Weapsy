@@ -12,15 +12,15 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
     [TestFixture]
     public class CreateEmailAccountValidatorTests
     {
-        private CreateEmailAccount command;
-        private CreateEmailAccountValidator validator;
-        private Mock<IEmailAccountRules> emailAccountRulesMock;
-        private Mock<ISiteRules> siteRulesMock;
+        private CreateEmailAccount _command;
+        private CreateEmailAccountValidator _validator;
+        private Mock<IEmailAccountRules> _emailAccountRulesMock;
+        private Mock<ISiteRules> _siteRulesMock;
 
         [SetUp]
         public void SetUp()
         {
-            command = new CreateEmailAccount
+            _command = new CreateEmailAccount
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -34,29 +34,29 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Validators
                 Ssl = true
             };
 
-            emailAccountRulesMock = new Mock<IEmailAccountRules>();
-            emailAccountRulesMock.Setup(x => x.IsEmailAccountIdUnique(command.Id)).Returns(true);
+            _emailAccountRulesMock = new Mock<IEmailAccountRules>();
+            _emailAccountRulesMock.Setup(x => x.IsEmailAccountIdUnique(_command.Id)).Returns(true);
 
-            siteRulesMock = new Mock<ISiteRules>();
-            siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(true);
+            _siteRulesMock = new Mock<ISiteRules>();
+            _siteRulesMock.Setup(x => x.DoesSiteExist(_command.SiteId)).Returns(true);
 
-            validator = new CreateEmailAccountValidator(emailAccountRulesMock.Object, siteRulesMock.Object);
+            _validator = new CreateEmailAccountValidator(_emailAccountRulesMock.Object, _siteRulesMock.Object);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_id_is_empty()
         {
-            command.Id = Guid.Empty;
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
+            _command.Id = Guid.Empty;
+            _validator.ShouldHaveValidationErrorFor(x => x.Id, _command);
         }
 
         [Test]
         public void Should_have_validation_error_when_email_account_id_already_exists()
         {
-            emailAccountRulesMock = new Mock<IEmailAccountRules>();
-            emailAccountRulesMock.Setup(x => x.IsEmailAccountIdUnique(command.Id)).Returns(false);
-            validator = new CreateEmailAccountValidator(emailAccountRulesMock.Object, siteRulesMock.Object);
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
+            _emailAccountRulesMock = new Mock<IEmailAccountRules>();
+            _emailAccountRulesMock.Setup(x => x.IsEmailAccountIdUnique(_command.Id)).Returns(false);
+            _validator = new CreateEmailAccountValidator(_emailAccountRulesMock.Object, _siteRulesMock.Object);
+            _validator.ShouldHaveValidationErrorFor(x => x.Id, _command);
         }
     }
 }

@@ -13,35 +13,35 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class HidePageTests
     {
-        private Page page;
-        private Mock<IValidator<HidePage>> validatorMock;
-        private HidePage command;
-        private PageHidden @event;
+        private Page _page;
+        private Mock<IValidator<HidePage>> _validatorMock;
+        private HidePage _command;
+        private PageHidden _event;
 
         [SetUp]
         public void SetUp()
         {
-            page = new Page();
-            command = new HidePage();
+            _page = new Page();
+            _command = new HidePage();
 
-            validatorMock = new Mock<IValidator<HidePage>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
+            _validatorMock = new Mock<IValidator<HidePage>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
-            page.Hide(command, validatorMock.Object);
+            _page.Hide(_command, _validatorMock.Object);
 
-            @event = page.Events.OfType<PageHidden>().SingleOrDefault();
+            _event = _page.Events.OfType<PageHidden>().SingleOrDefault();
         }
 
         [Test]
         public void Should_call_validator()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_throw_exception_when_already_hidden()
         {
-            Assert.Throws<Exception>(() => page.Hide(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _page.Hide(_command, _validatorMock.Object));
         }
 
         [Test]
@@ -49,40 +49,40 @@ namespace Weapsy.Domain.Tests.Pages
         {
             var deletePageCommand = new DeletePage
             {
-                SiteId = page.SiteId,
-                Id = page.Id
+                SiteId = _page.SiteId,
+                Id = _page.Id
             };
 
             var deletePageValidatorMock = new Mock<IValidator<DeletePage>>();
             deletePageValidatorMock.Setup(x => x.Validate(deletePageCommand)).Returns(new ValidationResult());
 
-            page.Delete(deletePageCommand, deletePageValidatorMock.Object);
+            _page.Delete(deletePageCommand, deletePageValidatorMock.Object);
 
-            Assert.Throws<Exception>(() => page.Hide(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _page.Hide(_command, _validatorMock.Object));
         }
 
         [Test]
         public void Should_set_page_status_to_hidden()
         {
-            Assert.AreEqual(true, page.Status == PageStatus.Hidden);
+            Assert.AreEqual(true, _page.Status == PageStatus.Hidden);
         }
 
         [Test]
         public void Should_add_page_hidden_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_page_hidden_event()
         {
-            Assert.AreEqual(page.Id, @event.AggregateRootId);
+            Assert.AreEqual(_page.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_page_hidden_event()
         {
-            Assert.AreEqual(page.SiteId, @event.SiteId);
+            Assert.AreEqual(_page.SiteId, _event.SiteId);
         }
     }
 }

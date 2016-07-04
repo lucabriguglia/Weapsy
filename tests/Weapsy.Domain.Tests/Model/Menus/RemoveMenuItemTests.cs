@@ -15,15 +15,15 @@ namespace Weapsy.Domain.Tests.Menus
     [TestFixture]
     public class RemoveMenuItemTests
     {
-        private Menu menu;
-        private RemoveMenuItem command;
-        private MenuItemRemoved @event;
-        private Mock<IValidator<RemoveMenuItem>> validatorMock;
+        private Menu _menu;
+        private RemoveMenuItem _command;
+        private MenuItemRemoved _event;
+        private Mock<IValidator<RemoveMenuItem>> _validatorMock;
 
         [SetUp]
         public void Setup()
         {
-            menu = new Menu();
+            _menu = new Menu();
 
             var addMenuItemCommand = new AddMenuItem
             {
@@ -55,70 +55,70 @@ namespace Weapsy.Domain.Tests.Menus
             var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItem>>();
             addMenuItemValidatorMock.Setup(x => x.Validate(addMenuItemCommand)).Returns(new ValidationResult());
 
-            menu.AddMenuItem(addMenuItemCommand, addMenuItemValidatorMock.Object);
+            _menu.AddMenuItem(addMenuItemCommand, addMenuItemValidatorMock.Object);
 
-            command = new RemoveMenuItem
+            _command = new RemoveMenuItem
             {
-                MenuId = menu.Id,
+                MenuId = _menu.Id,
                 MenuItemId = addMenuItemCommand.MenuItemId
             };
 
-            validatorMock = new Mock<IValidator<RemoveMenuItem>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
+            _validatorMock = new Mock<IValidator<RemoveMenuItem>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
-            menu.RemoveMenuItem(command, validatorMock.Object);
+            _menu.RemoveMenuItem(_command, _validatorMock.Object);
 
-            @event = menu.Events.OfType<MenuItemRemoved>().SingleOrDefault();
+            _event = _menu.Events.OfType<MenuItemRemoved>().SingleOrDefault();
         }
 
         [Test]
         public void Should_remove_menu_item()
         {
-            Assert.AreEqual(MenuItemStatus.Deleted, menu.MenuItems.FirstOrDefault(x => x.Id == command.MenuItemId).Status);
+            Assert.AreEqual(MenuItemStatus.Deleted, _menu.MenuItems.FirstOrDefault(x => x.Id == _command.MenuItemId).Status);
         }
 
         [Test]
         public void Should_add_menu_item_removed_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_menu_item_removed_event()
         {
-            Assert.AreEqual(menu.Id, @event.AggregateRootId);
+            Assert.AreEqual(_menu.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_menu_item_removed_event()
         {
-            Assert.AreEqual(menu.SiteId, @event.SiteId);
+            Assert.AreEqual(_menu.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_menu_item_in_menu_item_removed_event()
         {
-            Assert.AreEqual(command.MenuItemId, @event.MenuItemId);
+            Assert.AreEqual(_command.MenuItemId, _event.MenuItemId);
         }
 
         [Test]
         public void Should_throw_exception_if_menu_item_does_not_exist()
         {
-            command = new RemoveMenuItem
+            _command = new RemoveMenuItem
             {
-                MenuId = menu.Id,
+                MenuId = _menu.Id,
                 MenuItemId = Guid.NewGuid()
             };
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            Assert.Throws<Exception>(() => menu.RemoveMenuItem(command, validatorMock.Object));
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            Assert.Throws<Exception>(() => _menu.RemoveMenuItem(_command, _validatorMock.Object));
         }
 
         [Test]
         public void Should_throw_exception_if_menu_item_is_deleted()
         {
-            var menuItem = menu.MenuItems.FirstOrDefault(x => x.Id == command.MenuItemId);
+            var menuItem = _menu.MenuItems.FirstOrDefault(x => x.Id == _command.MenuItemId);
             typeof(MenuItem).GetTypeInfo().GetProperty("MenuItemStatus").SetValue(menuItem, MenuItemStatus.Deleted);
-            Assert.Throws<Exception>(() => menu.RemoveMenuItem(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _menu.RemoveMenuItem(_command, _validatorMock.Object));
         }
     }
 }

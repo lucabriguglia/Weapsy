@@ -29,7 +29,7 @@ namespace Weapsy.Apps.Text.Data.SqlServer
 
         private Task ClearCache(Guid moduleId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.TEXT_MODULE_CACHE_KEY, moduleId)));
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId)));
         }
     }
 }

@@ -11,9 +11,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     [TestFixture]
     public class ThemeRepositoryTests
     {
-        private IThemeRepository sut;
-        private Guid themeId1;
-        private Guid themeId2;
+        private IThemeRepository _sut;
+        private Guid _themeId1;
+        private Guid _themeId2;
 
         [SetUp]
         public void SetUp()
@@ -22,13 +22,13 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             optionsBuilder.UseInMemoryDatabase();
             var dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
-            themeId1 = Guid.NewGuid();
-            themeId2 = Guid.NewGuid();
+            _themeId1 = Guid.NewGuid();
+            _themeId2 = Guid.NewGuid();
 
             dbContext.Set<ThemeDbEntity>().AddRange(
                 new ThemeDbEntity
                 {
-                    Id = themeId1,
+                    Id = _themeId1,
                     Name = "Name 1",
                     Description = "Description 1",
                     Folder = "Folder 1",
@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 },
                 new ThemeDbEntity
                 {
-                    Id = themeId2,
+                    Id = _themeId2,
                     Name = "Name 2",
                     Description = "Description 2",
                     Folder = "Folder 2",
@@ -54,34 +54,34 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             mapperMock.Setup(x => x.Map<ThemeDbEntity>(Moq.It.IsAny<Theme>())).Returns(new ThemeDbEntity());
             mapperMock.Setup(x => x.Map<Theme>(Moq.It.IsAny<ThemeDbEntity>())).Returns(new Theme());
 
-            sut = new ThemeRepository(dbContext, mapperMock.Object);
+            _sut = new ThemeRepository(dbContext, mapperMock.Object);
         }
 
         [Test]
         public void Should_return_theme_by_id()
         {
-            var actual = sut.GetById(themeId1);
+            var actual = _sut.GetById(_themeId1);
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_theme_by_name()
         {
-            var actual = sut.GetByName("Name 1");
+            var actual = _sut.GetByName("Name 1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_theme_by_folder()
         {
-            var actual = sut.GetByFolder("Folder 1");
+            var actual = _sut.GetByFolder("Folder 1");
             Assert.NotNull(actual);
         }
 
         [Test]
         public void Should_return_all_themes()
         {
-            var actual = sut.GetAll();
+            var actual = _sut.GetAll();
             Assert.AreEqual(2, actual.Count);
         }
 
@@ -89,7 +89,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         [Ignore("No idea why count is 10 instead of 2")]
         public void Should_return_themes_count()
         {
-            var actual = sut.GetThemesCount();
+            var actual = _sut.GetThemesCount();
             Assert.AreEqual(2, actual);
         }
 
@@ -98,9 +98,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var newTheme = ThemeFactory.Theme(Guid.NewGuid(), "Name 3", "Description 3", "Folder 3");
 
-            sut.Create(newTheme);
+            _sut.Create(newTheme);
 
-            var actual = sut.GetById(newTheme.Id);
+            var actual = _sut.GetById(newTheme.Id);
 
             Assert.NotNull(actual);
         }
@@ -112,9 +112,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             var themeToUpdate = ThemeFactory.Theme(Guid.NewGuid(), "Name 1", newThemeDescription, "Folder 1");
 
-            sut.Update(themeToUpdate);
+            _sut.Update(themeToUpdate);
 
-            var updatedTheme = sut.GetById(themeId1);
+            var updatedTheme = _sut.GetById(_themeId1);
 
             Assert.AreEqual(newThemeDescription, updatedTheme.Description);
         }

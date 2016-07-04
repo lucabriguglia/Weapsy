@@ -13,10 +13,10 @@ namespace Weapsy.Domain.Tests.EmailAccounts
     [TestFixture]
     public class DeleteEmailAccountTests
     {
-        private EmailAccount emailAccount;
-        private Mock<IValidator<DeleteEmailAccount>> validatorMock;
-        private DeleteEmailAccount command;
-        private EmailAccountDeleted @event;
+        private EmailAccount _emailAccount;
+        private Mock<IValidator<DeleteEmailAccount>> _validatorMock;
+        private DeleteEmailAccount _command;
+        private EmailAccountDeleted _event;
 
         [SetUp]
         public void SetUp()
@@ -36,56 +36,56 @@ namespace Weapsy.Domain.Tests.EmailAccounts
             };
             var createEmailAccountValidatorMock = new Mock<IValidator<CreateEmailAccount>>();
             createEmailAccountValidatorMock.Setup(x => x.Validate(createEmailAccountCommand)).Returns(new ValidationResult());
-            emailAccount = EmailAccount.CreateNew(createEmailAccountCommand, createEmailAccountValidatorMock.Object);
+            _emailAccount = EmailAccount.CreateNew(createEmailAccountCommand, createEmailAccountValidatorMock.Object);
 
-            command = new DeleteEmailAccount
+            _command = new DeleteEmailAccount
             {
-                SiteId = emailAccount.SiteId,
-                Id = emailAccount.Id
+                SiteId = _emailAccount.SiteId,
+                Id = _emailAccount.Id
             };
 
-            validatorMock = new Mock<IValidator<DeleteEmailAccount>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
+            _validatorMock = new Mock<IValidator<DeleteEmailAccount>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
-            emailAccount.Delete(command, validatorMock.Object);
+            _emailAccount.Delete(_command, _validatorMock.Object);
 
-            @event = emailAccount.Events.OfType<EmailAccountDeleted>().SingleOrDefault();
+            _event = _emailAccount.Events.OfType<EmailAccountDeleted>().SingleOrDefault();
         }
 
         [Test]
         public void Should_call_validator()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_throw_exception_when_already_deleted()
         {
-            Assert.Throws<Exception>(() => emailAccount.Delete(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _emailAccount.Delete(_command, _validatorMock.Object));
         }
 
         [Test]
         public void Should_set_email_account_status_to_deleted()
         {
-            Assert.AreEqual(true, emailAccount.Status == EmailAccountStatus.Deleted);
+            Assert.AreEqual(true, _emailAccount.Status == EmailAccountStatus.Deleted);
         }
 
         [Test]
         public void Should_add_email_account_deleted_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_email_account_deleted_event()
         {
-            Assert.AreEqual(emailAccount.Id, @event.AggregateRootId);
+            Assert.AreEqual(_emailAccount.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_site_id_in_email_account_deleted_event()
         {
-            Assert.AreEqual(emailAccount.SiteId, @event.SiteId);
+            Assert.AreEqual(_emailAccount.SiteId, _event.SiteId);
         }
     }
 }

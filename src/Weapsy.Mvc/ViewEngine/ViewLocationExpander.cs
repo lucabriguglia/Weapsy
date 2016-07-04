@@ -6,18 +6,18 @@ namespace Weapsy.Mvc.ViewEngine
 {
     public class WeapsyViewLocationExpander : IViewLocationExpander
     {
-        private const string THEME_KEY = "theme";
+        private const string ThemeKey = "theme";
 
         public void PopulateValues(ViewLocationExpanderContext context)
         {
             string theme = "Default" /*WeapsyGlobal.Current.Theme.Folder*/;
-            context.Values[THEME_KEY] = theme;
+            context.Values[ThemeKey] = theme;
         }
 
         public IEnumerable<string> ExpandViewLocations(ViewLocationExpanderContext context, IEnumerable<string> viewLocations)
         {
             string theme = null;
-            if (context.Values.TryGetValue(THEME_KEY, out theme))
+            if (context.Values.TryGetValue(ThemeKey, out theme))
             {
                 viewLocations = new[] 
                 {

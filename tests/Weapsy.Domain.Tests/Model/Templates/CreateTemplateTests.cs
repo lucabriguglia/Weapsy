@@ -13,97 +13,97 @@ namespace Weapsy.Domain.Tests.Templates
     [TestFixture]
     public class CreateTemplateTests
     {
-        private CreateTemplate command;
-        private Mock<IValidator<CreateTemplate>> validatorMock;
-        private Template template;
-        private TemplateCreated @event;
+        private CreateTemplate _command;
+        private Mock<IValidator<CreateTemplate>> _validatorMock;
+        private Template _template;
+        private TemplateCreated _event;
 
         [SetUp]
         public void Setup()
         {
-            command = new CreateTemplate
+            _command = new CreateTemplate
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Description = "Description",
                 ViewName = "ViewName"
             };            
-            validatorMock = new Mock<IValidator<CreateTemplate>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            template = Template.CreateNew(command, validatorMock.Object);
-            @event = template.Events.OfType<TemplateCreated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<CreateTemplate>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _template = Template.CreateNew(_command, _validatorMock.Object);
+            _event = _template.Events.OfType<TemplateCreated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_id()
         {
-            Assert.AreEqual(command.Id, template.Id);
+            Assert.AreEqual(_command.Id, _template.Id);
         }
 
         [Test]
         public void Should_set_name()
         {
-            Assert.AreEqual(command.Name, template.Name);
+            Assert.AreEqual(_command.Name, _template.Name);
         }
 
         [Test]
         public void Should_set_description()
         {
-            Assert.AreEqual(command.Description, template.Description);
+            Assert.AreEqual(_command.Description, _template.Description);
         }
 
         [Test]
         public void Should_set_viewName()
         {
-            Assert.AreEqual(command.ViewName, template.ViewName);
+            Assert.AreEqual(_command.ViewName, _template.ViewName);
         }
 
         [Test]
         public void Should_set_status_to_hidden()
         {
-            Assert.AreEqual(TemplateStatus.Hidden, template.Status);
+            Assert.AreEqual(TemplateStatus.Hidden, _template.Status);
         }
 
         [Test]
         public void Should_add_template_created_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_template_created_event()
         {
-            Assert.AreEqual(template.Id, @event.AggregateRootId);
+            Assert.AreEqual(_template.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_name_in_template_created_event()
         {
-            Assert.AreEqual(template.Name, @event.Name);
+            Assert.AreEqual(_template.Name, _event.Name);
         }
 
         [Test]
         public void Should_set_description_in_template_created_event()
         {
-            Assert.AreEqual(template.Description, @event.Description);
+            Assert.AreEqual(_template.Description, _event.Description);
         }
 
         [Test]
         public void Should_set_view_name_in_template_created_event()
         {
-            Assert.AreEqual(template.ViewName, @event.ViewName);
+            Assert.AreEqual(_template.ViewName, _event.ViewName);
         }
 
         [Test]
         public void Should_set_status_in_template_created_event()
         {
-            Assert.AreEqual(template.Status, @event.Status);
+            Assert.AreEqual(_template.Status, _event.Status);
         }
     }
 }

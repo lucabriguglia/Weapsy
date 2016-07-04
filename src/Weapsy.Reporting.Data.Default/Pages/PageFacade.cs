@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Weapsy.Core.Caching;
 using Weapsy.Domain.Model.Languages;
 using Weapsy.Domain.Model.Modules;
@@ -10,7 +10,7 @@ using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Domain.Model.Pages;
 using Weapsy.Reporting.Pages;
 
-namespace Weapsy.Reporting.Data.Pages
+namespace Weapsy.Reporting.Data.Default.Pages
 {
     public class PageFacade : IPageFacade
     {
@@ -38,7 +38,7 @@ namespace Weapsy.Reporting.Data.Pages
 
         public PageViewModel GetPageViewModel(Guid siteId, Guid pageId)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.PAGE_CACHE_KEY, siteId, pageId), () =>
+            return _cacheManager.Get(string.Format(CacheKeys.PageCacheKey, siteId, pageId), () =>
             {
                 var page = _pageRepository.GetById(siteId, pageId);
 
@@ -175,7 +175,7 @@ namespace Weapsy.Reporting.Data.Pages
             foreach (var language in languages)
             {
                 var url = string.Empty;
-                var Title = string.Empty;
+                var title = string.Empty;
                 var metaDescription = string.Empty;
                 var metaKeywords = string.Empty;
 
@@ -186,7 +186,7 @@ namespace Weapsy.Reporting.Data.Pages
                 if (existingLocalisation != null)
                 {
                     url = existingLocalisation.Url;
-                    Title = existingLocalisation.Title;
+                    title = existingLocalisation.Title;
                     metaDescription = existingLocalisation.MetaDescription;
                     metaKeywords = existingLocalisation.MetaKeywords;
                 }
@@ -197,7 +197,7 @@ namespace Weapsy.Reporting.Data.Pages
                     LanguageId = language.Id,
                     LanguageName = language.Name,
                     Url = url,
-                    Title = Title,
+                    Title = title,
                     MetaDescription = metaDescription,
                     MetaKeywords = metaKeywords
                 });

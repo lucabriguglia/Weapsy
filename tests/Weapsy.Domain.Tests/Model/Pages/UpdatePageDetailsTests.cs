@@ -14,16 +14,16 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class UpdatePageDetailsTests
     {
-        private UpdatePageDetails command;
-        private Mock<IValidator<UpdatePageDetails>> validatorMock;
-        private Page page;
-        private PageDetailsUpdated @event;
+        private UpdatePageDetails _command;
+        private Mock<IValidator<UpdatePageDetails>> _validatorMock;
+        private Page _page;
+        private PageDetailsUpdated _event;
 
         [SetUp]
         public void Setup()
         {
             var pageId = Guid.NewGuid();
-            command = new UpdatePageDetails
+            _command = new UpdatePageDetails
             {
                 SiteId = Guid.NewGuid(),
                 Id = pageId,
@@ -44,146 +44,146 @@ namespace Weapsy.Domain.Tests.Pages
                     }
                 }
             };
-            validatorMock = new Mock<IValidator<UpdatePageDetails>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            page = new Page();
-            page.UpdateDetails(command, validatorMock.Object);
-            @event = page.Events.OfType<PageDetailsUpdated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<UpdatePageDetails>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _page = new Page();
+            _page.UpdateDetails(_command, _validatorMock.Object);
+            _event = _page.Events.OfType<PageDetailsUpdated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_name()
         {
-            Assert.AreEqual(command.Name, page.Name);
+            Assert.AreEqual(_command.Name, _page.Name);
         }
 
         [Test]
         public void Should_set_url()
         {
-            Assert.AreEqual(command.Url, page.Url);
+            Assert.AreEqual(_command.Url, _page.Url);
         }
 
         [Test]
         public void Should_set_head_title()
         {
-            Assert.AreEqual(command.Title, page.Title);
+            Assert.AreEqual(_command.Title, _page.Title);
         }
 
         [Test]
         public void Should_set_meta_description()
         {
-            Assert.AreEqual(command.MetaDescription, page.MetaDescription);
+            Assert.AreEqual(_command.MetaDescription, _page.MetaDescription);
         }
 
         [Test]
         public void Should_set_meta_keywords()
         {
-            Assert.AreEqual(command.MetaKeywords, page.MetaKeywords);
+            Assert.AreEqual(_command.MetaKeywords, _page.MetaKeywords);
         }
 
         [Test]
         public void Should_set_localisation_language_id()
         {
-            Assert.AreEqual(command.PageLocalisations[0].LanguageId, page.PageLocalisations.FirstOrDefault().LanguageId);
+            Assert.AreEqual(_command.PageLocalisations[0].LanguageId, _page.PageLocalisations.FirstOrDefault().LanguageId);
         }
 
         [Test]
         public void Should_set_localisation_url()
         {
-            Assert.AreEqual(command.PageLocalisations[0].Url, page.PageLocalisations.FirstOrDefault().Url);
+            Assert.AreEqual(_command.PageLocalisations[0].Url, _page.PageLocalisations.FirstOrDefault().Url);
         }
 
         [Test]
         public void Should_set_localisation_head_title()
         {
-            Assert.AreEqual(command.PageLocalisations[0].Title, page.PageLocalisations.FirstOrDefault().Title);
+            Assert.AreEqual(_command.PageLocalisations[0].Title, _page.PageLocalisations.FirstOrDefault().Title);
         }
 
         [Test]
         public void Should_set_localisation_meta_description()
         {
-            Assert.AreEqual(command.PageLocalisations[0].MetaDescription, page.PageLocalisations.FirstOrDefault().MetaDescription);
+            Assert.AreEqual(_command.PageLocalisations[0].MetaDescription, _page.PageLocalisations.FirstOrDefault().MetaDescription);
         }
 
         [Test]
         public void Should_set_localisation_meta_keywords()
         {
-            Assert.AreEqual(command.PageLocalisations[0].MetaKeywords, page.PageLocalisations.FirstOrDefault().MetaKeywords);
+            Assert.AreEqual(_command.PageLocalisations[0].MetaKeywords, _page.PageLocalisations.FirstOrDefault().MetaKeywords);
         }
 
         [Test]
         public void Should_add_page_details_updated_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_site_id_in_page_details_updated_event()
         {
-            Assert.AreEqual(page.SiteId, @event.SiteId);
+            Assert.AreEqual(_page.SiteId, _event.SiteId);
         }
 
         [Test]
         public void Should_set_id_in_page_details_updated_event()
         {
-            Assert.AreEqual(page.Id, @event.AggregateRootId);
+            Assert.AreEqual(_page.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_name_in_page_details_updated_event()
         {
-            Assert.AreEqual(page.Name, @event.Name);
+            Assert.AreEqual(_page.Name, _event.Name);
         }
 
         [Test]
         public void Should_set_url_in_page_details_updated_event()
         {
-            Assert.AreEqual(page.Url, @event.Url);
+            Assert.AreEqual(_page.Url, _event.Url);
         }
 
         [Test]
         public void Should_set_head_title_in_page_details_updated_event()
         {
-            Assert.AreEqual(page.Title, @event.Title);
+            Assert.AreEqual(_page.Title, _event.Title);
         }
 
         [Test]
         public void Should_set_meta_description_in_page_details_updated_event()
         {
-            Assert.AreEqual(page.MetaDescription, @event.MetaDescription);
+            Assert.AreEqual(_page.MetaDescription, _event.MetaDescription);
         }
 
         [Test]
         public void Should_set_meta_keywords_in_page_details_updated_event()
         {
-            Assert.AreEqual(page.MetaKeywords, @event.MetaKeywords);
+            Assert.AreEqual(_page.MetaKeywords, _event.MetaKeywords);
         }
 
         [Test]
         public void Should_set_page_localisations_in_page_details_updated_event()
         {
-            Assert.AreEqual(page.PageLocalisations, @event.PageLocalisations);
+            Assert.AreEqual(_page.PageLocalisations, _event.PageLocalisations);
         }
 
         [Test]
         public void Should_throw_exception_if_language_is_already_added_to_page_localisations()
         {
             var languageId = Guid.NewGuid();
-            command.PageLocalisations.Add(new PageDetails.PageLocalisation
+            _command.PageLocalisations.Add(new PageDetails.PageLocalisation
             {
                 LanguageId = languageId
             });
-            command.PageLocalisations.Add(new PageDetails.PageLocalisation
+            _command.PageLocalisations.Add(new PageDetails.PageLocalisation
             {
                 LanguageId = languageId
             });
-            Assert.Throws<Exception>(() => page.UpdateDetails(command, validatorMock.Object));
+            Assert.Throws<Exception>(() => _page.UpdateDetails(_command, _validatorMock.Object));
         }
     }
 }

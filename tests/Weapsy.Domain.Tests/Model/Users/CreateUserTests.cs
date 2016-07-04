@@ -13,84 +13,84 @@ namespace Weapsy.Domain.Tests.Users
     [TestFixture]
     public class CreateUserTests
     {
-        private CreateUser command;
-        private Mock<IValidator<CreateUser>> validatorMock;
-        private User user;
-        private UserCreated @event;
+        private CreateUser _command;
+        private Mock<IValidator<CreateUser>> _validatorMock;
+        private User _user;
+        private UserCreated _event;
 
         [SetUp]
         public void Setup()
         {
-            command = new CreateUser
+            _command = new CreateUser
             {
                 Id = Guid.NewGuid(),
                 Email = "my@email.com",
                 UserName = "my"
             };
-            validatorMock = new Mock<IValidator<CreateUser>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
-            user = User.CreateNew(command, validatorMock.Object);
-            @event = user.Events.OfType<UserCreated>().SingleOrDefault();
+            _validatorMock = new Mock<IValidator<CreateUser>>();
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
+            _user = User.CreateNew(_command, _validatorMock.Object);
+            _event = _user.Events.OfType<UserCreated>().SingleOrDefault();
         }
 
         [Test]
         public void Should_validate_command()
         {
-            validatorMock.Verify(x => x.Validate(command));
+            _validatorMock.Verify(x => x.Validate(_command));
         }
 
         [Test]
         public void Should_set_id()
         {
-            Assert.AreEqual(command.Id, user.Id);
+            Assert.AreEqual(_command.Id, _user.Id);
         }
 
         [Test]
         public void Should_set_email()
         {
-            Assert.AreEqual(command.Email, user.Email);
+            Assert.AreEqual(_command.Email, _user.Email);
         }
 
         [Test]
         public void Should_set_user_name()
         {
-            Assert.AreEqual(command.UserName, user.UserName);
+            Assert.AreEqual(_command.UserName, _user.UserName);
         }
 
         [Test]
         public void Should_set_status_to_active()
         {
-            Assert.AreEqual(UserStatus.Active, user.Status);
+            Assert.AreEqual(UserStatus.Active, _user.Status);
         }
 
         [Test]
         public void Should_add_user_created_event()
         {
-            Assert.IsNotNull(@event);
+            Assert.IsNotNull(_event);
         }
 
         [Test]
         public void Should_set_id_in_user_created_event()
         {
-            Assert.AreEqual(user.Id, @event.AggregateRootId);
+            Assert.AreEqual(_user.Id, _event.AggregateRootId);
         }
 
         [Test]
         public void Should_set_email_in_user_created_event()
         {
-            Assert.AreEqual(user.Email, @event.Email);
+            Assert.AreEqual(_user.Email, _event.Email);
         }
 
         [Test]
         public void Should_set_user_name_in_user_created_event()
         {
-            Assert.AreEqual(user.UserName, @event.UserName);
+            Assert.AreEqual(_user.UserName, _event.UserName);
         }
 
         [Test]
         public void Should_set_status_in_user_created_event()
         {
-            Assert.AreEqual(user.Status, @event.Status);
+            Assert.AreEqual(_user.Status, _event.Status);
         }
     }
 }

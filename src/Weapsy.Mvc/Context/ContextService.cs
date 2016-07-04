@@ -19,15 +19,15 @@ namespace Weapsy.Mvc.Context
             _themeFacade = themeFacade;
         }
 
-        private const string CONTEXT_KEY = "Weapsy|SiteInfo";
+        private const string ContextKey = "Weapsy|SiteInfo";
 
         public SiteInfo GetCurrentSiteInfo()
         {
-            if (_httpContextAccessor.HttpContext.Items[CONTEXT_KEY] == null)
+            if (_httpContextAccessor.HttpContext.Items[ContextKey] == null)
             {
-                _httpContextAccessor.HttpContext.Items.Add(CONTEXT_KEY, GetSiteInfo());
+                _httpContextAccessor.HttpContext.Items.Add(ContextKey, GetSiteInfo());
             }
-            return (SiteInfo)_httpContextAccessor.HttpContext.Items[CONTEXT_KEY];
+            return (SiteInfo)_httpContextAccessor.HttpContext.Items[ContextKey];
         }
 
         private SiteInfo GetSiteInfo()

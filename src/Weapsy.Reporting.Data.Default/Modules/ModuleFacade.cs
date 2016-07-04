@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Weapsy.Reporting.Modules;
 
-namespace Weapsy.Reporting.Data.Modules
+namespace Weapsy.Reporting.Data.Default.Modules
 {
     public class ModuleFacade : IModuleFacade
     {
