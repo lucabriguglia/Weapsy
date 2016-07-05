@@ -19,6 +19,7 @@
 /// <reference path="js/admin/pages/edit.js" />
 /// <reference path="js/admin/pages/index.js" />
 /// <reference path="js/admin/pages/shared.js" />
+/// <reference path="js/admin/roles/index.js" />
 /// <reference path="js/admin/users/create.js" />
 /// <reference path="js/admin/users/edit.js" />
 /// <reference path="js/admin/users/index.js" />
