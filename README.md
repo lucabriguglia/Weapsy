@@ -38,3 +38,7 @@ The second one is going to be the Blog app.
 # Roadmap
 
 https://github.com/weapsy/Weapsy/wiki/Roadmap
+
+# How to contribute
+
+Please create issues to report bugs, suggest new functionalities, ask questions or just share your thoughts about the project. I will really appreciate your contribution, thanks.
