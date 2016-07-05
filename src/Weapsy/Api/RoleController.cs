@@ -79,10 +79,10 @@ namespace Weapsy.Api
         }
 
         [HttpDelete]
-        [Route("{name}")]
-        public async Task<IActionResult> Delete(string name)
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
-            var role = await _roleManager.FindByNameAsync(name);
+            var role = await _roleManager.FindByIdAsync(id);
             if (role == null)
                 return NotFound();
 

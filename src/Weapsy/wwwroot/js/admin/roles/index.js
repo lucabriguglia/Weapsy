@@ -9,7 +9,7 @@ weapsy.admin.roles = (function ($) {
 
     $('#confirmDelete').click(function () {
         $.ajax({
-            url: "/api/role/" + userIdToDelete,
+            url: "/api/role/" + roleIdToDelete,
             type: "DELETE"
         }).done(function () {
             $("#" + roleIdToDelete).remove();
