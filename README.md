@@ -21,7 +21,7 @@ The second one is going to be the Blog app.
 
 - C#
 - ASP.NET Core MVC and Web Api
-- JavaScript, jQuery, KnockoutJS/Angular 2
+- JavaScript, jQuery, KnockoutJS
 - Entity Framework Core
 - SQL Server
 
