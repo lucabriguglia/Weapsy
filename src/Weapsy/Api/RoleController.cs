@@ -7,18 +7,24 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using System.Linq;
+using Weapsy.Core.Dispatcher;
+using Weapsy.Domain.Model.Roles.Commands;
+using Weapsy.Domain.Model.Roles;
 
 namespace Weapsy.Api
 {
     [Route("api/[controller]")]
     public class RoleController : BaseAdminController
     {
+        private readonly ICommandSender _commandSender;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleController(RoleManager<IdentityRole> roleManager,
+        public RoleController(ICommandSender commandSender,
+            RoleManager<IdentityRole> roleManager,
             IContextService contextService)
             : base(contextService)
         {
+            _commandSender = commandSender;
             _roleManager = roleManager;
         }
 
@@ -59,13 +65,15 @@ namespace Weapsy.Api
         [Route("{name}")]
         public async Task<IActionResult> Post(string name)
         {
-            var role = new IdentityRole(name);
+            var command = new CreateRole
+            {
+                Id = Guid.NewGuid(),
+                Name = name
+            };
 
-            var result = await _roleManager.CreateAsync(role);
-            if (result.Succeeded)
-                return Ok(string.Empty);
+            await Task.Run(() => _commandSender.Send<CreateRole, Role>(command));
 
-            throw new Exception(GetErrors(result));
+            return Ok(string.Empty);
         }
 
         [HttpPut]
