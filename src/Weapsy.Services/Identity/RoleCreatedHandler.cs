@@ -6,7 +6,7 @@ using Weapsy.Domain.Model.Roles.Events;
 using System;
 using System.Text;
 
-namespace Weapsy.Domain.Model.Users.Handlers
+namespace Weapsy.Services.Identity
 {
     public class RoleCreatedHandler : IEventHandler<RoleCreated>
     {
