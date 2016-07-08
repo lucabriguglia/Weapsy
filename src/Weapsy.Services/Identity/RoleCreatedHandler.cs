@@ -5,16 +5,20 @@ using Weapsy.Core.Domain;
 using Weapsy.Domain.Model.Roles.Events;
 using System;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace Weapsy.Services.Identity
 {
     public class RoleCreatedHandler : IEventHandler<RoleCreated>
     {
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ILogger _logger;
 
-        public RoleCreatedHandler(RoleManager<IdentityRole> roleManager)
+        public RoleCreatedHandler(RoleManager<IdentityRole> roleManager, 
+            ILoggerFactory loggerFactory)
         {
             _roleManager = roleManager;
+            _logger = loggerFactory.CreateLogger<RoleCreatedHandler>();
         }
 
         public async Task Handle(RoleCreated @event)
@@ -28,10 +32,14 @@ namespace Weapsy.Services.Identity
             var identityResult = await _roleManager.CreateAsync(role);
 
             if (!identityResult.Succeeded)
-                throw new Exception(GetErrors(identityResult));
+            {
+                var errorMessage = GetErrorMessage(identityResult);
+                _logger.LogError(errorMessage);
+                throw new Exception(errorMessage);
+            }                
         }
 
-        private string GetErrors(IdentityResult result)
+        private string GetErrorMessage(IdentityResult result)
         {
             var builder = new StringBuilder();
 
