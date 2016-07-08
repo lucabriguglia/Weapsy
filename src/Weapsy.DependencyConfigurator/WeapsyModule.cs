@@ -30,6 +30,7 @@ using Weapsy.Reporting.Modules;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Data.Default.Themes;
 using Weapsy.Domain.Model.Users.Handlers;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.DependencyConfigurator
 {
@@ -52,6 +53,7 @@ namespace Weapsy.DependencyConfigurator
             builder.RegisterAssemblyTypes(typeof(SiteRepository).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IRepository<>));
             builder.RegisterAssemblyTypes(typeof(SiteEventsHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandler<>));
             builder.RegisterAssemblyTypes(typeof(UserRegisteredHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandler<>));
+            builder.RegisterAssemblyTypes(typeof(RoleCreatedHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandler<>));
 
             builder.RegisterType<LanguageSortOrderGenerator>().As<ILanguageSortOrderGenerator>();
 
@@ -65,12 +67,7 @@ namespace Weapsy.DependencyConfigurator
             builder.RegisterType<ModuleTypeFacade>().As<IModuleTypeFacade>();
             builder.RegisterType<PageFacade>().As<IPageFacade>();
             builder.RegisterType<SiteFacade>().As<ISiteFacade>();
-            builder.RegisterType<ThemeFacade>().As<IThemeFacade>();
-
-            //Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-
-            //builder.RegisterAssemblyTypes(assemblies).As(typeof(IStartupTask));            
-            //builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(IQueryHandler<,>));                        
+            builder.RegisterType<ThemeFacade>().As<IThemeFacade>();                       
         }
     }
 }
