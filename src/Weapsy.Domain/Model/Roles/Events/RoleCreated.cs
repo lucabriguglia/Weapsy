@@ -1,8 +1,8 @@
 ﻿using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Roles
+namespace Weapsy.Domain.Model.Roles.Events
 {
-    public class Role : AggregateRoot
+    public class RoleCreated : Event
     {
         public string Name { get; set; }
     }
