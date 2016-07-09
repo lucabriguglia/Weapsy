@@ -11,5 +11,6 @@ namespace Weapsy.Domain.Model.Roles
         IEnumerable<Role> GetAll();
         void Create(Role role);
         void Update(Role role);
+        void Delete(Role role);
     }
 }

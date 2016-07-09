@@ -6,6 +6,9 @@ using Weapsy.Domain.Model.Roles.Events;
 using System;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using Weapsy.Core.Dispatcher;
+using Weapsy.Domain.Model.Roles.Commands;
+using Weapsy.Domain.Model.Roles;
 
 namespace Weapsy.Services.Identity
 {
@@ -13,12 +16,15 @@ namespace Weapsy.Services.Identity
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger _logger;
+        private readonly ICommandSender _commandSender;
 
         public RoleCreatedHandler(RoleManager<IdentityRole> roleManager, 
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ICommandSender commandSender)
         {
             _roleManager = roleManager;
             _logger = loggerFactory.CreateLogger<RoleCreatedHandler>();
+            _commandSender = commandSender;
         }
 
         public async Task Handle(RoleCreated @event)
@@ -35,7 +41,11 @@ namespace Weapsy.Services.Identity
             {
                 var errorMessage = GetErrorMessage(identityResult);
                 _logger.LogError(errorMessage);
-                throw new Exception(errorMessage);
+                _commandSender.Send<DestroyRole, Role>(new DestroyRole
+                {
+                    Id = @event.AggregateRootId,
+                    Name = @event.Name
+                });
             }                
         }
 
