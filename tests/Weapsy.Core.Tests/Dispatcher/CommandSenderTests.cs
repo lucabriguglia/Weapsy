@@ -5,6 +5,7 @@ using Weapsy.Core.Domain;
 using Weapsy.Core.DependencyResolver;
 using Weapsy.Core.Dispatcher;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace Weapsy.Core.Tests.Dispatcher
 {
@@ -17,8 +18,12 @@ namespace Weapsy.Core.Tests.Dispatcher
             var resolverMock = new Mock<IResolver>();
             var eventPublisherMock = new Mock<IEventPublisher>();
             var eventStoreMock = new Mock<IEventStore>();
+            var loggerFactoryMock = new Mock<ILoggerFactory>();
 
-            var commandSender = new CommandSender(resolverMock.Object, eventPublisherMock.Object, eventStoreMock.Object);
+            var commandSender = new CommandSender(resolverMock.Object, 
+                eventPublisherMock.Object, 
+                eventStoreMock.Object, 
+                loggerFactoryMock.Object);
 
             Assert.Throws<ArgumentNullException>(() => commandSender.Send<ICommand, IAggregateRoot>(null));
         }
@@ -29,8 +34,12 @@ namespace Weapsy.Core.Tests.Dispatcher
             var resolverMock = new Mock<IResolver>();
             var eventPublisherMock = new Mock<IEventPublisher>();
             var eventStoreMock = new Mock<IEventStore>();
+            var loggerFactoryMock = new Mock<ILoggerFactory>();
 
-            var commandSender = new CommandSender(resolverMock.Object, eventPublisherMock.Object, eventStoreMock.Object);
+            var commandSender = new CommandSender(resolverMock.Object,
+                eventPublisherMock.Object,
+                eventStoreMock.Object,
+                loggerFactoryMock.Object);
 
             Assert.Throws<Exception>(() => commandSender.Send<ICommand, IAggregateRoot>(new FakeCommand()));
         }
@@ -53,7 +62,12 @@ namespace Weapsy.Core.Tests.Dispatcher
 
             var eventStoreMock = new Mock<IEventStore>();
 
-            var commandSender = new CommandSender(resolverMock.Object, eventPublisherMock.Object, eventStoreMock.Object);
+            var loggerFactoryMock = new Mock<ILoggerFactory>();
+
+            var commandSender = new CommandSender(resolverMock.Object,
+                eventPublisherMock.Object,
+                eventStoreMock.Object,
+                loggerFactoryMock.Object);
 
             commandSender.Send<ICommand, IAggregateRoot>(fakeCommand);
 
