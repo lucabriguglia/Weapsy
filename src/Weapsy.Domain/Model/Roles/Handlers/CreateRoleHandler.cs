@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
@@ -19,7 +18,11 @@ namespace Weapsy.Domain.Model.Roles.Handlers
 
         public ICollection<IEvent> Handle(CreateRole command)
         {
-            throw new NotImplementedException();
+            var role = Role.CreateNew(command, _validator);
+
+            _roleRepository.Create(role);
+
+            return role.Events;
         }
     }
 }
