@@ -102,8 +102,8 @@ namespace Weapsy.Api
         }
 
         [HttpGet("{name}")]
-        [Route("isNameUnique")]
-        public async Task<IActionResult> IsNameUnique(string name)
+        [Route("isRoleNameUnique")]
+        public async Task<IActionResult> IsRoleNameUnique(string name)
         {
             var isNameUnique = await _roleManager.FindByNameAsync(name) == null;
             return Ok(isNameUnique);

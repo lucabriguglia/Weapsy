@@ -94,7 +94,6 @@ namespace Weapsy
             services.Configure<RazorViewEngineOptions>(options =>
             {
                 options.ViewLocationExpanders.Add(new WeapsyViewLocationExpander());
-                //options.FileProviders.Add(new CompositeFileProvider(new EmbeddedFileProvider(typeof(TextViewComponent).GetTypeInfo().Assembly, "Weapsy.Apps.Text")));
             });
 
             // Add application services.

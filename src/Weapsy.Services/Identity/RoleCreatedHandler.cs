@@ -35,18 +35,33 @@ namespace Weapsy.Services.Identity
                 Name = @event.Name
             };
 
-            var identityResult = await _roleManager.CreateAsync(role);
+            IdentityResult identityResult;
 
+            try
+            {
+                identityResult = await _roleManager.CreateAsync(role);
+            }
+            catch (Exception ex)
+            {
+                HandleError(@event, ex.Message);
+                throw;
+            }
+            
             if (!identityResult.Succeeded)
             {
                 var errorMessage = GetErrorMessage(identityResult);
-                _logger.LogError(errorMessage);
-                _commandSender.Send<DestroyRole, Role>(new DestroyRole
-                {
-                    Id = @event.AggregateRootId,
-                    Name = @event.Name
-                });
+                HandleError(@event, errorMessage);
             }                
+        }
+
+        private void HandleError(RoleCreated @event, string errorMessage)
+        {
+            _logger.LogError(errorMessage);
+            _commandSender.Send<DestroyRole, Role>(new DestroyRole
+            {
+                Id = @event.AggregateRootId,
+                Name = @event.Name
+            });
         }
 
         private string GetErrorMessage(IdentityResult result)

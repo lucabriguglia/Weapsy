@@ -5,6 +5,7 @@ using Weapsy.Domain.Model.Menus;
 using Weapsy.Domain.Model.Modules;
 using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Model.Roles;
 using Weapsy.Domain.Model.Sites;
 using Weapsy.Domain.Model.Themes;
 using Weapsy.Domain.Model.Users;
@@ -19,6 +20,7 @@ using PageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Page;
 using PageLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageLocalisation;
 using PageModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModuleLocalisation;
+using RoleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Role;
 using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
 using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
 using UserDbEntity = Weapsy.Domain.Data.SqlServer.Entities.User;
@@ -61,6 +63,9 @@ namespace Weapsy.Domain.Data.SqlServer
 
             CreateMap<PageModuleLocalisation, PageModuleLocalisationDbEntity>();
             CreateMap<PageModuleLocalisationDbEntity, PageModuleLocalisation>().ConstructUsing(x => new PageModuleLocalisation());
+
+            CreateMap<Role, RoleDbEntity>();
+            CreateMap<RoleDbEntity, Role>().ConstructUsing(x => new Role());
 
             CreateMap<Site, SiteDbEntity>();
             CreateMap<SiteDbEntity, Site>().ConstructUsing(x => new Site());
