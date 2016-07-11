@@ -18,12 +18,10 @@ namespace Weapsy.Core.Tests.Dispatcher
             var resolverMock = new Mock<IResolver>();
             var eventPublisherMock = new Mock<IEventPublisher>();
             var eventStoreMock = new Mock<IEventStore>();
-            var loggerFactoryMock = new Mock<ILoggerFactory>();
 
             var commandSender = new CommandSender(resolverMock.Object, 
                 eventPublisherMock.Object, 
-                eventStoreMock.Object, 
-                loggerFactoryMock.Object);
+                eventStoreMock.Object);
 
             Assert.Throws<ArgumentNullException>(() => commandSender.Send<ICommand, IAggregateRoot>(null));
         }
@@ -34,12 +32,10 @@ namespace Weapsy.Core.Tests.Dispatcher
             var resolverMock = new Mock<IResolver>();
             var eventPublisherMock = new Mock<IEventPublisher>();
             var eventStoreMock = new Mock<IEventStore>();
-            var loggerFactoryMock = new Mock<ILoggerFactory>();
 
             var commandSender = new CommandSender(resolverMock.Object,
                 eventPublisherMock.Object,
-                eventStoreMock.Object,
-                loggerFactoryMock.Object);
+                eventStoreMock.Object);
 
             Assert.Throws<Exception>(() => commandSender.Send<ICommand, IAggregateRoot>(new FakeCommand()));
         }
@@ -62,12 +58,9 @@ namespace Weapsy.Core.Tests.Dispatcher
 
             var eventStoreMock = new Mock<IEventStore>();
 
-            var loggerFactoryMock = new Mock<ILoggerFactory>();
-
             var commandSender = new CommandSender(resolverMock.Object,
                 eventPublisherMock.Object,
-                eventStoreMock.Object,
-                loggerFactoryMock.Object);
+                eventStoreMock.Object);
 
             commandSender.Send<ICommand, IAggregateRoot>(fakeCommand);
 
