@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Pages;
 using Weapsy.Mvc.Context;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
 
 namespace Weapsy.Controllers
 {
@@ -53,6 +55,18 @@ namespace Weapsy.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
+        }
+
         [Route("error/500")]
         public IActionResult Error()
         {
@@ -70,16 +84,5 @@ namespace Weapsy.Controllers
         {
             return View();
         }
-
-        //private async Task CheckIfDeafultSiteHasBeenInstalled()
-        //{
-        //    var site = await _siteFacade.GetSiteSettings("Default");
-
-        //    if (site == null)
-        //    {
-        //        _installationService.InstallDefaultSite();
-        //        Response.Redirect("/");
-        //    }
-        //}
     }
 }
