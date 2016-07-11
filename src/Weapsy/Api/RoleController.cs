@@ -65,15 +65,13 @@ namespace Weapsy.Api
         [Route("{name}")]
         public async Task<IActionResult> Post(string name)
         {
-            var command = new CreateRole
-            {
-                Id = Guid.NewGuid(),
-                Name = name
-            };
+            var role = new IdentityRole(name);
 
-            await Task.Run(() => _commandSender.Send<CreateRole, Role>(command));
+            var result = await _roleManager.CreateAsync(role);
+            if (result.Succeeded)
+                return Ok(string.Empty);
 
-            return Ok(string.Empty);
+            throw new Exception(GetErrors(result));
         }
 
         [HttpPut]
