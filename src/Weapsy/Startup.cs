@@ -168,6 +168,7 @@ namespace Weapsy
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             var site = SiteRepository.GetByName("Default");
+            var activeLanguages = LanguageFacade.GetAllActive(site.Id);
 
             app.UseMvc(routes =>
             {
@@ -198,6 +199,11 @@ namespace Weapsy
                             defaults: defaults,
                             constraints: constraints,
                             dataTokens: tokens);
+
+                        foreach (var language in activeLanguages)
+                        {
+                            //map localised pages
+                        }
                     }
                 }
 
@@ -206,26 +212,12 @@ namespace Weapsy
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //var supportedCultures = new[]
-            //{
-            //    new CultureInfo("en")
-            //};
-
-            //app.UseRequestLocalization(new RequestLocalizationOptions
-            //{
-            //    DefaultRequestCulture = new RequestCulture("en"),
-            //    // Formatting numbers, dates, etc.
-            //    SupportedCultures = supportedCultures,
-            //    // UI strings that we have localized.
-            //    SupportedUICultures = supportedCultures
-            //});
-
             var supportedCultures = new List<CultureInfo>();
             RequestCulture defaultRequestCulture;
 
             try
             {
-                foreach (var language in LanguageFacade.GetAllActive(site.Id))
+                foreach (var language in activeLanguages)
                     supportedCultures.Add(new CultureInfo(language.CultureName));
 
                 defaultRequestCulture = new RequestCulture(supportedCultures[0].Name);
@@ -239,14 +231,9 @@ namespace Weapsy
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = defaultRequestCulture,
-                // Formatting numbers, dates, etc.
                 SupportedCultures = supportedCultures,
-                // UI strings that we have localized.
                 SupportedUICultures = supportedCultures
             });
-
-            //var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            //app.UseRequestLocalization(locOptions.Value);
         }
 
         private void CheckIfDeafultAppsHaveBeenInstalled()
@@ -300,15 +287,4 @@ namespace Weapsy
         private static UserManager<ApplicationUser> UserManager { get; set; }
         private static RoleManager<IdentityRole> RoleManager { get; set; }
     }
-
-    //public class ReferencePluginAssemblyProvider : DefaultAssemblyProvider
-    //{
-    //    //NOTE: The DefaultAssemblyProvider uses ILibraryManager to do the library/assembly querying
-    //    public ReferencePluginAssemblyProvider(ILibraryManager libraryManager) : base(libraryManager)
-    //    {
-    //    }
-
-    //    protected override HashSet<string> ReferenceAssemblies
-    //        => new HashSet<string>(new[] { "Weapsy.Core" });
-    //}
 }
