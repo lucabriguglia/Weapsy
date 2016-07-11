@@ -230,6 +230,16 @@ namespace Weapsy.Domain.Model.Pages
             });
         }
 
+        public void SetPagePermissions()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetModulePermissions()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Activate(ActivatePage cmd, IValidator<ActivatePage> validator)
         {
             validator.ValidateCommand(cmd);

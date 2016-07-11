@@ -16,6 +16,7 @@ namespace Weapsy.Domain.Model.Pages
         public int SortOrder { get; private set; }
         public PageModuleStatus Status { get; private set; }
         public ICollection<PageModuleLocalisation> PageModuleLocalisations { get; private set; }
+        public ICollection<Permission> Permissions { get; private set; }
 
         public PageModule()
         {
