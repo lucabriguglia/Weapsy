@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Weapsy.Models;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 
@@ -11,9 +13,9 @@ namespace Weapsy.Api
     [Route("api/[controller]")]
     public class UserController : BaseAdminController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public UserController(UserManager<ApplicationUser> userManager,
+        public UserController(UserManager<IdentityUser> userManager,
             IContextService contextService)
             : base(contextService)
         {
@@ -23,24 +25,37 @@ namespace Weapsy.Api
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            throw new NotImplementedException();
+            if (_userManager.SupportsQueryableUsers)
+                return Ok(_userManager.Users.ToList());
+
+            return Ok(string.Empty);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post()
+        public async Task<IActionResult> Post(string email)
         {
-            throw new NotImplementedException();
+            var user = new IdentityUser { UserName = email, Email = email };
+            var result = await _userManager.CreateAsync(user);
+
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
+            throw new Exception(GetErrorMessage(result));
         }
 
         [HttpPut]
-        [Route("{id}/update")]
-        public async Task<IActionResult> UpdateDetails()
+        [Route("{id}/change-email")]
+        public async Task<IActionResult> ChangeEmail([FromBody]string email)
         {
             throw new NotImplementedException();
         }
@@ -57,6 +72,16 @@ namespace Weapsy.Api
         {
             var isEmailUnique = await _userManager.FindByEmailAsync(email) == null;
             return Ok(isEmailUnique);
+        }
+
+        private string GetErrorMessage(IdentityResult result)
+        {
+            var builder = new StringBuilder();
+
+            foreach (var error in result.Errors)
+                builder.AppendLine(error.Description);
+
+            return builder.ToString();
         }
     }
 }

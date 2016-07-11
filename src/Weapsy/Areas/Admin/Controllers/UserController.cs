@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace Weapsy.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : BaseAdminController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public UserController(UserManager<ApplicationUser> userManager,
+        public UserController(UserManager<IdentityUser> userManager,
             IContextService contextService)
             : base(contextService)
         {
@@ -32,7 +33,7 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(new ApplicationUser());
         }
 
-        public async Task<IActionResult> Save(ApplicationUser model)
+        public async Task<IActionResult> Save(IdentityUser model)
         {
             throw new NotImplementedException();
         }
@@ -40,11 +41,14 @@ namespace Weapsy.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var model = await _userManager.FindByIdAsync(id);
-            if (model == null) return NotFound();
+
+            if (model == null)
+                return NotFound();
+
             return View(model);
         }
 
-        public async Task<IActionResult> Update(ApplicationUser model)
+        public async Task<IActionResult> Update(IdentityUser model)
         {
             if (!ModelState.IsValid)
             {

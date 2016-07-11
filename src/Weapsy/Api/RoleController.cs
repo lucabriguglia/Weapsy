@@ -8,8 +8,6 @@ using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using System.Linq;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.Roles.Commands;
-using Weapsy.Domain.Model.Roles;
 
 namespace Weapsy.Api
 {
@@ -71,7 +69,7 @@ namespace Weapsy.Api
             if (result.Succeeded)
                 return Ok(string.Empty);
 
-            throw new Exception(GetErrors(result));
+            throw new Exception(GetErrorMessage(result));
         }
 
         [HttpPut]
@@ -81,7 +79,7 @@ namespace Weapsy.Api
             if (result.Succeeded)
                 return Ok(string.Empty);
 
-            throw new Exception(GetErrors(result));
+            throw new Exception(GetErrorMessage(result));
         }
 
         [HttpDelete]
@@ -96,7 +94,7 @@ namespace Weapsy.Api
             if (result.Succeeded)
                 return Ok(string.Empty);
 
-            throw new Exception(GetErrors(result));
+            throw new Exception(GetErrorMessage(result));
         }
 
         [HttpGet("{name}")]
@@ -107,13 +105,13 @@ namespace Weapsy.Api
             return Ok(isNameUnique);
         }
 
-        private string GetErrors(IdentityResult result)
+        private string GetErrorMessage(IdentityResult result)
         {
             var builder = new StringBuilder();
+
             foreach (var error in result.Errors)
-            {
                 builder.AppendLine(error.Description);
-            }
+
             return builder.ToString();
         }
     }
