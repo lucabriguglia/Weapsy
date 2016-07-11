@@ -14,7 +14,7 @@
     <h1>Edit User</h1>
 </div>
 
-<form id="editUserForm" name="editUserForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/User/Update" data-ajax-loading="#savingUser" class="form-horizontal validate-form" role="form">
+<form id="editUserForm" name="editUserForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="api/user" data-ajax-loading="#savingUser" class="form-horizontal validate-form" role="form">
     <input type="hidden" id="id" name="id" value="@Model.Id" />
     <input type="hidden" id="userName" name="userName" value="@Model.UserName" />
 

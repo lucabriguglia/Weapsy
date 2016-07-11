@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Weapsy.Models;
@@ -33,42 +32,13 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(new ApplicationUser());
         }
 
-        public async Task<IActionResult> Save(IdentityUser model)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IActionResult> Edit(string id)
         {
             var model = await _userManager.FindByIdAsync(id);
-
             if (model == null)
                 return NotFound();
 
             return View(model);
-        }
-
-        public async Task<IActionResult> Update(IdentityUser model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(nameof(Edit), model);
-            }
-            var result = await _userManager.UpdateAsync(model);
-            if (result.Succeeded)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            AddErrors(result);
-            return View(nameof(Edit), model);
-        }
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
         }
     }
 }

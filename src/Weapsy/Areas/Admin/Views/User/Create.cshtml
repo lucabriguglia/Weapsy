@@ -14,7 +14,7 @@
     <h1>Create New User</h1>
 </div>
 
-<form id="createUserForm" name="createUserForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="/Admin/User/Save" data-ajax-loading="#savingUser" data-ajax-success="weapsy.admin.users.redirectToIndex" class="form-horizontal validate-form" role="form">    
+<form id="createUserForm" name="createUserForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="api/user" data-ajax-loading="#savingUser" data-ajax-success="weapsy.admin.users.redirectToIndex" class="form-horizontal validate-form" role="form">    
     @await Html.PartialAsync("_User")
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
