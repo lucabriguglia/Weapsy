@@ -28,31 +28,35 @@ namespace Weapsy.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Guid pageId = RouteData.DataTokens.Keys.Count > 0 && RouteData.DataTokens["pageId"] != null
-                ? (Guid)RouteData.DataTokens["pageId"]
-                : Guid.Empty;
+            Guid pageId = GetIdFromRouteData("pageId");
+            Guid languageId = GetIdFromRouteData("languageId");
 
             if (pageId == Guid.Empty)
             {
-                // todo: load home page as set in site settings
+                // pageId = Site.HomePageId
                 var pages = await _pageFacade.GetAllForAdminAsync(SiteId);
                 var homePage = pages.FirstOrDefault(x => x.Name == "Home");
                 if (homePage != null)
                     pageId = homePage.Id;
             }
 
-            var viewModel = await Task.Run(() => _pageFacade.GetPageViewModel(SiteId, pageId));
+            var viewModel = await Task.Run(() => _pageFacade.GetPageViewModel(SiteId, pageId, languageId));
 
-            if (viewModel == null)
+            if (viewModel == null /* || user does not have permission (log event) */)
                 return NotFound();
-
-            // todo: check permissions (add method inside UserInfo)
 
             ViewBag.Title = viewModel.Page.Title;
             ViewBag.MetaDescription = viewModel.Page.MetaDescription;
             ViewBag.MetaKeywords = viewModel.Page.MetaKeywords;
 
             return View(viewModel);
+        }
+
+        private Guid GetIdFromRouteData(string key)
+        {
+            return RouteData.DataTokens.Keys.Count > 0 && RouteData.DataTokens[key] != null
+                ? (Guid)RouteData.DataTokens[key]
+                : Guid.Empty;
         }
 
         [HttpPost]

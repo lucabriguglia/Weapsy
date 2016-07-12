@@ -202,10 +202,10 @@ namespace Weapsy
 
                         foreach (var language in activeLanguages)
                         {
-                            if (tokens.ContainsKey("culture"))
-                                tokens.Remove("culture");
+                            if (tokens.ContainsKey("languageId"))
+                                tokens.Remove("languageId");
 
-                            tokens.Add("culture", language.CultureName);
+                            tokens.Add("languageId", language.LanguageId);
 
                             routes.MapRoute(
                                 name: $"{page.Name} - {language.Name}",

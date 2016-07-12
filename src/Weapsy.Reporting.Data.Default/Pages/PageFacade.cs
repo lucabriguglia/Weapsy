@@ -36,7 +36,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             _mapper = mapper;
         }
 
-        public PageViewModel GetPageViewModel(Guid siteId, Guid pageId)
+        public PageViewModel GetPageViewModel(Guid siteId, Guid pageId, Guid languageId = new Guid())
         {
             return _cacheManager.Get(string.Format(CacheKeys.PageCacheKey, siteId, pageId), () =>
             {
@@ -141,7 +141,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             return moduleModel;
         }
 
-        public PageViewModel GetPageViewModel(Guid siteId, string name)
+        public PageViewModel GetPageViewModel(Guid siteId, string name, Guid languageId = new Guid())
         {
             throw new NotImplementedException();
         }
