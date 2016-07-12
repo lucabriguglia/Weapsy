@@ -12,9 +12,9 @@ namespace Weapsy.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : BaseAdminController
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(UserManager<IdentityUser> userManager,
+        public UserController(UserManager<ApplicationUser> userManager,
             IContextService contextService)
             : base(contextService)
         {
