@@ -202,7 +202,17 @@ namespace Weapsy
 
                         foreach (var language in activeLanguages)
                         {
-                            //map localised pages
+                            if (tokens.ContainsKey("culture"))
+                                tokens.Remove("culture");
+
+                            tokens.Add("culture", language.CultureName);
+
+                            routes.MapRoute(
+                                name: $"{page.Name} - {language.Name}",
+                                template: $"{language.Url}/{page.Url}",
+                                defaults: defaults,
+                                constraints: constraints,
+                                dataTokens: tokens);
                         }
                     }
                 }
