@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Weapsy.Core.Dispatcher;
 using Weapsy.Mvc.Context;
@@ -35,11 +37,40 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(new IdentityRole());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Save(IdentityRole role)
+        {
+            var result = await _roleManager.CreateAsync(role);
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
+            throw new Exception(GetErrorMessage(result));
+        }
+
         public async Task<IActionResult> Edit(string id)
         {
             var model = await _roleManager.FindByIdAsync(id);
             if (model == null) return NotFound();
             return View(model);
+        }
+
+        public async Task<IActionResult> Update(IdentityRole role)
+        {
+            var result = await _roleManager.UpdateAsync(role);
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
+            throw new Exception(GetErrorMessage(result));
+        }
+
+        private string GetErrorMessage(IdentityResult result)
+        {
+            var builder = new StringBuilder();
+
+            foreach (var error in result.Errors)
+                builder.AppendLine(error.Description);
+
+            return builder.ToString();
         }
     }
 }
