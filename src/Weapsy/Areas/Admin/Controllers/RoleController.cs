@@ -50,12 +50,20 @@ namespace Weapsy.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var model = await _roleManager.FindByIdAsync(id);
-            if (model == null) return NotFound();
+            if (model == null)
+                return NotFound();
+
             return View(model);
         }
 
-        public async Task<IActionResult> Update(IdentityRole role)
+        public async Task<IActionResult> Update(IdentityRole model)
         {
+            var role = await _roleManager.FindByIdAsync(model.Id);
+            if (role == null)
+                return NotFound();
+
+            role.Name = model.Name;
+
             var result = await _roleManager.UpdateAsync(role);
             if (result.Succeeded)
                 return Ok(string.Empty);
