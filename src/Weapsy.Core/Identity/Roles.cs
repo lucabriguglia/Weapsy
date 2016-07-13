@@ -2,8 +2,8 @@
 {
     public enum Roles
     {
-        AllUsers = 0,
+        Everyone = 0,
         Registered = 1,
-        Unauthenticated = 2
+        Anonymous = 2
     }
 }
