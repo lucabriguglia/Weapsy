@@ -1,5 +1,5 @@
 ﻿@model Weapsy.Reporting.Pages.ModuleModel
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> SignInManager
 
 @if (SignInManager.IsSignedIn(User))
 {
