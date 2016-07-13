@@ -75,7 +75,7 @@ namespace Weapsy
             //services
             //    .AddScoped(p => new WeapsyDbContext(p.GetService<DbContextOptions<WeapsyDbContext>>()));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -125,7 +125,7 @@ namespace Weapsy
             SiteRepository = container.Resolve<ISiteRepository>();
             PageFacade = container.Resolve<IPageFacade>();
             LanguageFacade = container.Resolve<ILanguageFacade>();
-            UserManager = container.Resolve<UserManager<ApplicationUser>>();
+            UserManager = container.Resolve<UserManager<IdentityUser>>();
             RoleManager = container.Resolve<RoleManager<IdentityRole>>();
             // ==================== //
 
@@ -265,7 +265,7 @@ namespace Weapsy
         private async Task CheckIfAdminUserHasBeenCreated()
         {
             var adminEmail = "admin@default.com";
-            var adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail };
+            var adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail };
 
             var adminRoleName = "Administrator";
             var adminRole = new IdentityRole(adminRoleName);
@@ -294,7 +294,7 @@ namespace Weapsy
         private static ISiteRepository SiteRepository { get; set; }
         private static IPageFacade PageFacade { get; set; }
         private static ILanguageFacade LanguageFacade { get; set; }
-        private static UserManager<ApplicationUser> UserManager { get; set; }
+        private static UserManager<IdentityUser> UserManager { get; set; }
         private static RoleManager<IdentityRole> RoleManager { get; set; }
     }
 }
