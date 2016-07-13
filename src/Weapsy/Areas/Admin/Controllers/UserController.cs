@@ -20,13 +20,13 @@ namespace Weapsy.Areas.Admin.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var model = _userManager.Users.ToList();
             return View(model);
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View(new IdentityUser());
         }

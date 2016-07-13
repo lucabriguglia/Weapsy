@@ -23,7 +23,7 @@ namespace Weapsy.Api
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             if (_userManager.SupportsQueryableUsers)
                 return Ok(_userManager.Users.ToList());
@@ -60,10 +60,48 @@ namespace Weapsy.Api
             throw new NotImplementedException();
         }
 
+        [HttpPut]
+        [Route("{id}/add-to-role")]
+        public async Task<IActionResult> AddToRole(string id, [FromBody]string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
+            throw new Exception(GetErrorMessage(result));
+        }
+
+        [HttpPut]
+        [Route("{id}/remove-from-role")]
+        public async Task<IActionResult> RemoveFromRole(string id, [FromBody]string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            var result = await _userManager.RemoveFromRoleAsync(user, roleName);
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
+            throw new Exception(GetErrorMessage(result));
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+                return Ok(string.Empty);
+
+            throw new Exception(GetErrorMessage(result));
         }
 
         [HttpGet("{email}")]
