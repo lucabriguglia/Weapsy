@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Weapsy.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> SignInManager
+@inject UserManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
