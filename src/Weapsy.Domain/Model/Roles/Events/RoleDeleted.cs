@@ -2,7 +2,7 @@
 
 namespace Weapsy.Domain.Model.Roles.Events
 {
-    public class RoleDestroyed : Event
+    public class RoleDeleted : Event
     {
         public string Name { get; set; }
     }
