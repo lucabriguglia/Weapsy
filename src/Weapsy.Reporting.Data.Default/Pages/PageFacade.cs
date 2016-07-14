@@ -11,6 +11,7 @@ using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Domain.Model.Pages;
 using Weapsy.Reporting.Pages;
 using Microsoft.AspNetCore.Identity;
+using Weapsy.Core.Identity;
 
 namespace Weapsy.Reporting.Data.Default.Pages
 {
@@ -82,6 +83,12 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
             foreach (var roleId in roleIds)
             {
+                if (Enum.IsDefined(typeof(Roles), roleId))
+                {
+                    result.Add(Enum.GetName(typeof(Roles), roleId));
+                    continue;
+                }
+
                 var role = _roleManager.FindByIdAsync(roleId).Result;
                 if (role != null)
                     result.Add(role.Name);
