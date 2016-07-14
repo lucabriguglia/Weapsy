@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Moq;
 using NUnit.Framework;
 using System;
 using Weapsy.Core.Caching;
@@ -33,12 +35,15 @@ namespace Weapsy.Reporting.Data.Default.Tests
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<PageAdminModel>(It.IsAny<Page>())).Returns(new PageAdminModel());
 
+            var roleManagerMock = new Mock<RoleManager<IdentityRole>>();
+
             _sut = new PageFacade(pageRepositoryMock.Object, 
                 languageRepositoryMock.Object,
                 moduleRepositoryMock.Object,
                 moduleTypeRepositoryMock.Object,
                 cacheManagerMock.Object, 
-                mapperMock.Object);
+                mapperMock.Object,
+                roleManagerMock.Object);
         }
     }
 }

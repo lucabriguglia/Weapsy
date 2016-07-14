@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Weapsy.Core.Dispatcher;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
@@ -15,15 +16,15 @@ namespace Weapsy.Areas.Admin.Controllers
     public class RoleController : BaseAdminController
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly ICommandSender _commandSender;
+        private readonly IIdentityService _identityService;
 
         public RoleController(RoleManager<IdentityRole> roleManager,
-            ICommandSender commandSender,
+            IIdentityService identityService,
             IContextService contextService)
             : base(contextService)
         {
             _roleManager = roleManager;
-            _commandSender = commandSender;
+            _identityService = identityService;
         }
 
         public async Task<IActionResult> Index()
@@ -40,11 +41,8 @@ namespace Weapsy.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(IdentityRole role)
         {
-            var result = await _roleManager.CreateAsync(role);
-            if (result.Succeeded)
-                return Ok(string.Empty);
-
-            throw new Exception(GetErrorMessage(result));
+            await _identityService.CreateRole(role.Name);
+            return Ok(string.Empty);
         }
 
         public async Task<IActionResult> Edit(string id)

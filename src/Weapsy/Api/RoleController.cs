@@ -8,21 +8,22 @@ using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using System.Linq;
 using Weapsy.Core.Dispatcher;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Api
 {
     [Route("api/[controller]")]
     public class RoleController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
+        private readonly IIdentityService _identityService;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleController(ICommandSender commandSender,
+        public RoleController(IIdentityService identityService,
             RoleManager<IdentityRole> roleManager,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
+            _identityService = identityService;
             _roleManager = roleManager;
         }
 
@@ -62,11 +63,8 @@ namespace Weapsy.Api
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]IdentityRole role)
         {
-            var result = await _roleManager.CreateAsync(role);
-            if (result.Succeeded)
-                return Ok(string.Empty);
-
-            throw new Exception(GetErrorMessage(result));
+            await _identityService.CreateRole(role.Name);
+            return Ok(string.Empty);
         }
 
         [HttpPut]
