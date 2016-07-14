@@ -39,5 +39,14 @@ namespace Weapsy.Areas.Admin.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> Roles(string id)
+        {
+            var model = await _userManager.FindByIdAsync(id);
+            if (model == null)
+                return NotFound();
+
+            return View(model);
+        }
     }
 }
