@@ -14,7 +14,7 @@
     <h1>Create New Role</h1>
 </div>
 
-<form id="createRoleForm" name="createRoleForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="api/role" data-ajax-loading="#savingRole" data-ajax-success="weapsy.admin.roles.redirectToIndex" class="form-horizontal validate-form" role="form">    
+<form id="createRoleForm" name="createRoleForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="/Admin/Role/Save" data-ajax-loading="#savingRole" data-ajax-success="weapsy.admin.roles.redirectToIndex" class="form-horizontal validate-form" role="form">    
     @await Html.PartialAsync("_Role")
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

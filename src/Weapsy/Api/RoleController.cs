@@ -60,11 +60,8 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        [Route("{name}")]
-        public async Task<IActionResult> Post(string name)
+        public async Task<IActionResult> Post([FromBody]IdentityRole role)
         {
-            var role = new IdentityRole(name);
-
             var result = await _roleManager.CreateAsync(role);
             if (result.Succeeded)
                 return Ok(string.Empty);
@@ -75,7 +72,13 @@ namespace Weapsy.Api
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]IdentityRole model)
         {
-            var result = await _roleManager.UpdateAsync(model);
+            var role = await _roleManager.FindByIdAsync(model.Id);
+            if (role == null)
+                return NotFound();
+
+            role.Name = model.Name;
+
+            var result = await _roleManager.UpdateAsync(role);
             if (result.Succeeded)
                 return Ok(string.Empty);
 
