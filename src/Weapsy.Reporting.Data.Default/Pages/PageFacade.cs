@@ -60,8 +60,8 @@ namespace Weapsy.Reporting.Data.Default.Pages
                     Url = page.Url,
                     Title = page.Title,
                     MetaDescription = page.MetaDescription,
-                    MetaKeywords = page.MetaKeywords,
-                    ViewRoles = GetViewRoles(page)
+                    MetaKeywords = page.MetaKeywords/*,
+                    ViewRoles = GetViewRoles(page)*/
                 };
 
                 result.Page.Template = new PageTemplateModel
