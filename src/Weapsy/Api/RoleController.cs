@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -27,7 +26,7 @@ namespace Weapsy.Api
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             if (_roleManager.SupportsQueryableRoles)
             {
@@ -60,9 +59,9 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]IdentityRole role)
+        public async Task<IActionResult> Post([FromBody]IdentityRole model)
         {
-            await _identityService.CreateRole(role.Name);
+            await _identityService.CreateRole(model.Name);
             return Ok(string.Empty);
         }
 
