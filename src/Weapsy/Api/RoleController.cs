@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using System.Linq;
-using Weapsy.Core.Dispatcher;
 using Weapsy.Services.Identity;
 
 namespace Weapsy.Api
@@ -70,32 +69,16 @@ namespace Weapsy.Api
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]IdentityRole model)
         {
-            var role = await _roleManager.FindByIdAsync(model.Id);
-            if (role == null)
-                return NotFound();
-
-            role.Name = model.Name;
-
-            var result = await _roleManager.UpdateAsync(role);
-            if (result.Succeeded)
-                return Ok(string.Empty);
-
-            throw new Exception(GetErrorMessage(result));
+            await _identityService.UpdateRoleName(model.Id, model.Name);
+            return Ok(string.Empty);
         }
 
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var role = await _roleManager.FindByIdAsync(id);
-            if (role == null)
-                return NotFound();
-
-            var result = await _roleManager.DeleteAsync(role);
-            if (result.Succeeded)
-                return Ok(string.Empty);
-
-            throw new Exception(GetErrorMessage(result));
+            await _identityService.DeleteRole(id);
+            return Ok(string.Empty);
         }
 
         [HttpGet("{name}")]

@@ -25,6 +25,34 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
+        public async Task UpdateRoleName(string id, string name)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+
+            if (role == null)
+                throw new Exception("Role not found.");
+
+            role.Name = name;
+
+            var result = await _roleManager.UpdateAsync(role);
+
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
+        }
+
+        public async Task DeleteRole(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+
+            if (role == null)
+                throw new Exception("Role not found.");
+
+            var result = await _roleManager.DeleteAsync(role);
+
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
+        }
+
         private string GetErrorMessage(IdentityResult result)
         {
             var builder = new StringBuilder();
