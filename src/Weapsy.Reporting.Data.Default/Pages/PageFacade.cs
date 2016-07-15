@@ -77,7 +77,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
         private IList<string> GetViewRoles(Page page)
         {
-            var roleIds = page.Permissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
+            var roleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
 
             var result = new List<string>();
 

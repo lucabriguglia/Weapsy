@@ -55,7 +55,7 @@ namespace Weapsy.Api
 
         [HttpPut]
         [Route("{id}/change-email")]
-        public async Task<IActionResult> ChangeEmail([FromBody]string email)
+        public IActionResult ChangeEmail([FromBody]string email)
         {
             throw new NotImplementedException();
         }

@@ -24,7 +24,13 @@ namespace Weapsy.Domain.Model.Pages
         public Guid? ModuleTemplateId { get; private set; }
         public ICollection<PageLocalisation> PageLocalisations { get; private set; }
         public ICollection<PageModule> PageModules { get; private set; }
-        public ICollection<Permission> Permissions { get; private set; } = new List<Permission>();
+
+        private readonly IList<PagePermission> _pagePermissions;
+        public IEnumerable<PagePermission> PagePermissions
+        {
+            get { return _pagePermissions; }
+            private set { }
+        }
 
         public Page()
         {
@@ -230,9 +236,13 @@ namespace Weapsy.Domain.Model.Pages
             });
         }
 
-        public void SetPagePermissions()
+        public void SetPagePermissions(IEnumerable<PagePermission> permissions)
         {
-            throw new NotImplementedException();
+            _pagePermissions.Clear();
+
+            foreach (var permission in permissions)
+                if (_pagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId) == null)
+                    _pagePermissions.Add(permission);
         }
 
         public void SetModulePermissions()
