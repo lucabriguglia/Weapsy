@@ -16,7 +16,13 @@ namespace Weapsy.Domain.Model.Pages
         public int SortOrder { get; private set; }
         public PageModuleStatus Status { get; private set; }
         public ICollection<PageModuleLocalisation> PageModuleLocalisations { get; private set; }
-        public ICollection<PageModulePermission> PageModulePermissions { get; private set; } = new List<PageModulePermission>();
+
+        private readonly IList<PageModulePermission> _pageModulePermissions;
+        public IEnumerable<PageModulePermission> PageModulePermissions
+        {
+            get { return _pageModulePermissions; }
+            private set { }
+        }
 
         public PageModule()
         {
@@ -61,6 +67,15 @@ namespace Weapsy.Domain.Model.Pages
         {
             Zone = zone;
             SortOrder = sortOrder;
+        }
+
+        public void SetPermissions(IEnumerable<PageModulePermission> permissions)
+        {
+            _pageModulePermissions.Clear();
+
+            foreach (var permission in permissions)
+                if (_pageModulePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId) == null)
+                    _pageModulePermissions.Add(permission);
         }
 
         public void Delete()

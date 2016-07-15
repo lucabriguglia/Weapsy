@@ -245,9 +245,14 @@ namespace Weapsy.Domain.Model.Pages
                     _pagePermissions.Add(permission);
         }
 
-        public void SetModulePermissions()
+        public void SetModulePermissions(Guid pageModuleId, IEnumerable<PageModulePermission> permissions)
         {
-            throw new NotImplementedException();
+            var pageModule = PageModules.FirstOrDefault(x => x.ModuleId == pageModuleId);
+
+            if (pageModule == null || pageModule.Status == PageModuleStatus.Deleted)
+                throw new Exception("Page module not found.");
+
+            pageModule.SetPermissions(permissions);
         }
 
         public void Activate(ActivatePage cmd, IValidator<ActivatePage> validator)
