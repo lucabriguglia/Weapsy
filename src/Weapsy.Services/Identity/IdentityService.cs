@@ -69,7 +69,8 @@ namespace Weapsy.Services.Identity
                 if (role == Roles.Anonymous.ToString() && !user.Identity.IsAuthenticated)
                     return true;
 
-                return user.IsInRole(role);
+                if (user.IsInRole(role))
+                    return true;
             }
             return false;
         }
