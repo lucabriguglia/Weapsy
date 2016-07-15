@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Weapsy.Services.Identity
 {
@@ -7,5 +9,6 @@ namespace Weapsy.Services.Identity
         Task CreateRole(string name);
         Task UpdateRoleName(string id, string name);
         Task DeleteRole(string id);
+        bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles);
     }
 }

@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Security.Claims;
+using Weapsy.Core.Identity;
 
 namespace Weapsy.Services.Identity
 {
@@ -51,6 +54,24 @@ namespace Weapsy.Services.Identity
 
             if (!result.Succeeded)
                 throw new Exception(GetErrorMessage(result));
+        }
+
+        public bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles)
+        {
+            foreach (var role in roles)
+            {
+                if (role == Roles.Everyone.ToString())
+                    return true;
+
+                if (role == Roles.Registered.ToString() && user.Identity.IsAuthenticated)
+                    return true;
+
+                if (role == Roles.Anonymous.ToString() && !user.Identity.IsAuthenticated)
+                    return true;
+
+                return user.IsInRole(role);
+            }
+            return false;
         }
 
         private string GetErrorMessage(IdentityResult result)
