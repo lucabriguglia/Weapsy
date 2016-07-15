@@ -25,21 +25,21 @@ namespace Weapsy.Areas.Admin.Controllers
             _identityService = identityService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var model = _roleManager.Roles.ToList();
             return View(model);
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View(new IdentityRole());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(IdentityRole role)
+        public async Task<IActionResult> Save(IdentityRole model)
         {
-            await _identityService.CreateRole(role.Name);
+            await _identityService.CreateRole(model.Name);
             return Ok(string.Empty);
         }
 
