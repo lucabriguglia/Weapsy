@@ -6,56 +6,28 @@ weapsy.admin.userRoles = (function ($) {
     });
 
     function init() {
-        //$("#available-roles, #user-roles").sortable({
-        //    connectWith: ".role-group"
-        //}).disableSelection();
-
-        //$(".role").draggable({
-        //    connectToSortable: ".role-group",
-        //    helper: "clone",
-        //    revert: "invalid"
-        //});
-
         $("#available-roles, #user-roles").sortable({
             handle: ".handle",
             placeholder: "placeholder",
             connectWith: ".role-group",
             revert: true,
             stop: function (event, ui) {
-                var pageId = $("#page").attr("data-page-id");
+                var userId = $("#user-id").val();
+                var roleName = $(ui.item.context).attr("data-role-name");
+                var isAddingRoleToUser = $(ui.item.context).hasClass("available-role");
 
-                //var moduleTypeId = $(ui.item.context).attr("data-module-type-id");
+                var action = isAddingRoleToUser
+                    ? "add-to-role"
+                    : "remove-from-role";
 
-                //var command = {};
-
-                //var zones = [];
-                //$(".zone").each(function () {
-                //    var name = $(this).attr("data-zone-name");
-                //    var modules = [];
-                //    $(this).find(".module").each(function () {
-                //        var moduleId = $(this).attr("data-module-id");
-                //        modules.push(moduleId);
-                //    });
-                //    zones.push({
-                //        name: name, 
-                //        modules: modules
-                //    });
-                //});
-
-                //command = {
-                //    pageId: pageId,
-                //    zones: zones
-                //};
-
-                //$.ajax({
-                //    url: "/api/page/" + pageId + "/reorder-modules",
-                //    type: "PUT",
-                //    data: JSON.stringify(command),
-                //    dataType: 'json',
-                //    contentType: 'application/json'
-                //}).done(function () {
-                //});
-
+                $.ajax({
+                    url: "/api/user/" + userId + "/" + action,
+                    type: "PUT",
+                    data: JSON.stringify(roleName),
+                    dataType: 'json',
+                    contentType: 'application/json'
+                }).done(function () {
+                });
             }
         });
     }
