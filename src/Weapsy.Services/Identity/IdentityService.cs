@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Security.Claims;
 using Weapsy.Core.Identity;
+using System.Linq;
 
 namespace Weapsy.Services.Identity
 {
     public class IdentityService : IIdentityService
     {
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public IdentityService(RoleManager<IdentityRole> roleManager)
+        public IdentityService(UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
+            _userManager = userManager;
             _roleManager = roleManager;
         }
 
@@ -73,6 +77,26 @@ namespace Weapsy.Services.Identity
                     return true;
             }
             return false;
+        }
+
+        public async Task<UserRolesViewModel> GetUserRolesViewModel(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                return null;
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var availableRoles = _roleManager.Roles.Where(x => !userRoles.Contains(x.Name)).ToList();
+
+            var model = new UserRolesViewModel
+            {
+                User = user,
+                AvailableRoles = availableRoles,
+                UserRoles = userRoles
+            };
+
+            return model;
         }
 
         private string GetErrorMessage(IdentityResult result)

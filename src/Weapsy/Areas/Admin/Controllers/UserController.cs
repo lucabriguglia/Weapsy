@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
@@ -12,12 +13,18 @@ namespace Weapsy.Areas.Admin.Controllers
     public class UserController : BaseAdminController
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IIdentityService _identityService;
 
         public UserController(UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            IIdentityService identityService,
             IContextService contextService)
             : base(contextService)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
+            _identityService = identityService;
         }
 
         public IActionResult Index()
@@ -34,6 +41,7 @@ namespace Weapsy.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var model = await _userManager.FindByIdAsync(id);
+
             if (model == null)
                 return NotFound();
 
@@ -42,7 +50,8 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Roles(string id)
         {
-            var model = await _userManager.FindByIdAsync(id);
+            var model = await _identityService.GetUserRolesViewModel(id);
+
             if (model == null)
                 return NotFound();
 

@@ -9,6 +9,7 @@ namespace Weapsy.Services.Identity
         Task CreateRole(string name);
         Task UpdateRoleName(string id, string name);
         Task DeleteRole(string id);
+        Task<UserRolesViewModel> GetUserRolesViewModel(string id);
         bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles);
     }
 }

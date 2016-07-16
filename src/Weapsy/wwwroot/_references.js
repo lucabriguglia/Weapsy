@@ -26,6 +26,7 @@
 /// <reference path="js/admin/users/create.js" />
 /// <reference path="js/admin/users/edit.js" />
 /// <reference path="js/admin/users/index.js" />
+/// <reference path="js/admin/users/roles.js" />
 /// <reference path="js/admin/users/shared.js" />
 /// <reference path="js/app.js" />
 /// <reference path="js/control-panel.js" />

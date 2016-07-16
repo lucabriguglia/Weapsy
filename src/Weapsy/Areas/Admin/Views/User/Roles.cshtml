@@ -1,32 +1,27 @@
-﻿@model Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser
-
-@inject UserManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> UserManager
-@inject RoleManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole> RoleManager
+﻿@model Weapsy.Services.Identity.UserRolesViewModel
 
 @{
-    ViewBag.Title = "Roles";
+    ViewBag.Title = "User Roles";
 }
 
 @section scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    <script src="~/js/admin/users/shared.js"></script>
     <script src="~/js/admin/users/roles.js"></script>   
 }
 
 <div class="page-header">
-    <h1>User Roles (@Model.Email)</h1>
+    <h1>User Roles (@Model.User.Email)</h1>
 </div>
 
 <div class="col-md-3">
     <h3>Available Roles</h3>
-    <ul id="available-roles" class="list-group">
-        @foreach (var role in RoleManager.Roles.ToList())
-        {
-            <li class="list-group-item">
-                <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
-                <span>@role</span>
-            </li>
-        }
+    <ul id="available-roles" class="list-group role-group">
+    @foreach (var role in Model.AvailableRoles)
+    {
+        <li class="list-group-item available-role" data-role-name="@role.Name">
+            <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
+            <span>@role.Name</span>
+        </li>
+    }
     </ul>
 </div>
 
@@ -34,13 +29,13 @@
 
 <div class="col-md-3">
     <h3>User Roles</h3>
-    <ul id="user-roles" class="list-group">
-        @foreach (var role in await UserManager.GetRolesAsync(Model))
-        {
-            <li class="list-group-item">
-                <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
-                <span>@role</span>
-            </li>
-        }
+    <ul id="user-roles" class="list-group role-group">
+    @foreach (var role in Model.UserRoles)
+    {
+        <li class="list-group-item user-role" data-role-name="@role">
+            <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
+            <span>@role</span>
+        </li>
+    }
     </ul>
 </div>
