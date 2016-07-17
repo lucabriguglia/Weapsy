@@ -92,7 +92,6 @@ table {
 }
 
 .page-header {
-    /*margin-top: 25px;*/
 }
 
 .wrapper {
@@ -100,12 +99,6 @@ table {
     min-height: 920px;
     background-color: #fff;
     border-left :solid 1px #ddd;
-    /*display:table;
-    width: 100%;
-    margin-top: -50px;
-    padding-top: 50px;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;*/
 }
 
 @media(min-width:768px) {
@@ -132,4 +125,19 @@ table {
 
 .sidebar ul li {
     border-bottom: 1px solid #e7e7e7;
+}
+
+ .connected-list {
+    border: 1px solid #eee;
+    min-height: 50px;
+    padding: 10px;
+    list-style-type: none;
+  }
+
+ .placeholder {
+    outline: 1px dashed #286090;
+    background-color: #e4ecf3;
+    padding: 10px;
+    margin: 8px 2px;
+    min-height: 50px;
 }

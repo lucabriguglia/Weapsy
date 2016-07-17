@@ -8,9 +8,8 @@ weapsy.admin.userRoles = (function ($) {
     function init() {
         $("#available-roles, #user-roles").sortable({
             handle: ".handle",
+            connectWith: ".connected-list",
             placeholder: "placeholder",
-            connectWith: ".role-group",
-            revert: true,
             stop: function (event, ui) {
                 var userId = $("#user-id").val();
                 var roleName = $(ui.item.context).attr("data-role-name");
@@ -29,6 +28,6 @@ weapsy.admin.userRoles = (function ($) {
                 }).done(function () {
                 });
             }
-        });
+        }).disableSelection();
     }
 }(jQuery));

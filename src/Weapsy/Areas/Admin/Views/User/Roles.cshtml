@@ -16,7 +16,7 @@
 
 <div class="col-md-3">
     <h3>Available Roles</h3>
-    <ul id="available-roles" class="list-group role-group">
+    <ul id="available-roles" class="list-group connected-list">
     @foreach (var role in Model.AvailableRoles)
     {
         <li class="list-group-item available-role" data-role-name="@role.Name">
@@ -31,7 +31,7 @@
 
 <div class="col-md-3">
     <h3>User Roles</h3>
-    <ul id="user-roles" class="list-group role-group">
+    <ul id="user-roles" class="list-group connected-list">
     @foreach (var role in Model.UserRoles)
     {
         <li class="list-group-item user-role" data-role-name="@role">
