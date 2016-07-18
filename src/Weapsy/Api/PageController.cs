@@ -9,6 +9,7 @@ using Weapsy.Domain.Services.Modules.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Pages;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Api
 {
@@ -19,11 +20,13 @@ namespace Weapsy.Api
         private readonly ICommandSender _commandSender;
         private readonly IPageRules _pageRules;
         private readonly IPageRepository _pageRepository;
+        private readonly IIdentityService _identityService;
 
         public PageController(IPageFacade pageFacade,
             ICommandSender commandSender,
             IPageRules pageRules,
             IPageRepository pageRepository,
+            IIdentityService identityService,
             IContextService contextService)
             : base(contextService)
         {
@@ -31,6 +34,7 @@ namespace Weapsy.Api
             _commandSender = commandSender;
             _pageRules = pageRules;
             _pageRepository = pageRepository;
+            _identityService = identityService;
         }
 
         [HttpGet]
@@ -71,6 +75,7 @@ namespace Weapsy.Api
         public async Task<IActionResult> AddModule([FromBody] AddModule model)
         {
             model.SiteId = SiteId;
+            model.ViewPermissionRoleIds = await _identityService.GetDefaultModuleViewPermissionRoleIds();
             await Task.Run(() => _commandSender.Send<AddModule, Page>(model));
             return Ok(string.Empty);
         }
