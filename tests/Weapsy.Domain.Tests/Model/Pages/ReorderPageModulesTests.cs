@@ -34,12 +34,12 @@ namespace Weapsy.Domain.Tests.Pages
 
             _page = Page.CreateNew(createPageCommand, createPageValidatorMock.Object);
 
-            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Header", 1));
-            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Header", 2));
-            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", 1));
-            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", 2));
-            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Footer", 1));
-            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Footer", 2));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Header", 1, new List<string> { "1" }));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Header", 2, new List<string> { "1" }));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", 1, new List<string> { "1" }));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", 2, new List<string> { "1" }));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Footer", 1, new List<string> { "1" }));
+            _page.AddModule(new PageModule(_page.Id, Guid.NewGuid(), Guid.NewGuid(), "Title", "Footer", 2, new List<string> { "1" }));
 
             _command = new ReorderPageModules
             {

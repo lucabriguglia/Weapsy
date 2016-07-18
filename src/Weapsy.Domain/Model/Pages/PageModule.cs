@@ -22,7 +22,7 @@ namespace Weapsy.Domain.Model.Pages
         {
         }
 
-        public PageModule(Guid pageId, Guid id, Guid moduleId, string title, string zone, int sortOrder) : base(id)
+        public PageModule(Guid pageId, Guid id, Guid moduleId, string title, string zone, int sortOrder, List<string> viewPermissionRoleIds) : base(id)
         {
             PageId = pageId;
             ModuleId = moduleId;

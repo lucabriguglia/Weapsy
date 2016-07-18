@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
 namespace Weapsy.Domain.Model.Pages.Commands
@@ -12,5 +13,6 @@ namespace Weapsy.Domain.Model.Pages.Commands
         public string Title { get; set; }
         public string Zone { get; set; }
         public int SortOrder { get; set; }
+        public List<string> ViewPermissionRoleIds { get; set; }
     }
 }

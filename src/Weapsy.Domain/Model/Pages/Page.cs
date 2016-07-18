@@ -113,7 +113,7 @@ namespace Weapsy.Domain.Model.Pages
         {
             validator.ValidateCommand(cmd);
 
-            AddModule(new PageModule(cmd.PageId, cmd.Id, cmd.ModuleId, cmd.Title, cmd.Zone, cmd.SortOrder));
+            AddModule(new PageModule(cmd.PageId, cmd.Id, cmd.ModuleId, cmd.Title, cmd.Zone, cmd.SortOrder, cmd.ViewPermissionRoleIds));
         }
 
         public void AddModule(PageModule pageModule)
