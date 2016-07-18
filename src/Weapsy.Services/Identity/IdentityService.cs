@@ -60,6 +60,26 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
+        public async Task<UserRolesViewModel> GetUserRolesViewModel(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+                return null;
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var availableRoles = _roleManager.Roles.Where(x => !userRoles.Contains(x.Name)).ToList();
+
+            var model = new UserRolesViewModel
+            {
+                User = user,
+                AvailableRoles = availableRoles,
+                UserRoles = userRoles
+            };
+
+            return model;
+        }
+
         public bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles)
         {
             foreach (var role in roles)
@@ -79,24 +99,26 @@ namespace Weapsy.Services.Identity
             return false;
         }
 
-        public async Task<UserRolesViewModel> GetUserRolesViewModel(string id)
+        public async Task<IList<string>> GetDefaultPageViewPermissionRoleIds()
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var result = new List<string>();
 
-            if (user == null)
-                return null;
+            var adminRole = await _roleManager.FindByNameAsync(DefaultRoleNames.Administrator);
+            if (adminRole != null)
+                result.Add(adminRole.Id);
 
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var availableRoles = _roleManager.Roles.Where(x => !userRoles.Contains(x.Name)).ToList();
+            return result;
+        }
 
-            var model = new UserRolesViewModel
-            {
-                User = user,
-                AvailableRoles = availableRoles,
-                UserRoles = userRoles
-            };
+        public async Task<IList<string>> GetDefaultModuleViewPermissionRoleIds()
+        {
+            var result = new List<string>();
 
-            return model;
+            var adminRole = await _roleManager.FindByNameAsync(DefaultRoleNames.Administrator);
+            if (adminRole != null)
+                result.Add(adminRole.Id);
+
+            return result;
         }
 
         private string GetErrorMessage(IdentityResult result)

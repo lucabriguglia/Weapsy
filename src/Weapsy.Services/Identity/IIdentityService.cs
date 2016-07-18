@@ -11,5 +11,7 @@ namespace Weapsy.Services.Identity
         Task DeleteRole(string id);
         Task<UserRolesViewModel> GetUserRolesViewModel(string id);
         bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles);
+        Task<IList<string>> GetDefaultPageViewPermissionRoleIds();
+        Task<IList<string>> GetDefaultModuleViewPermissionRoleIds();
     }
 }
