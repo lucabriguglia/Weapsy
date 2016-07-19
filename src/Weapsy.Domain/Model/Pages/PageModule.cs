@@ -63,12 +63,12 @@ namespace Weapsy.Domain.Model.Pages
             SortOrder = sortOrder;
         }
 
-        public void SetPermissions(IEnumerable<PageModulePermission> permissions)
+        public void SetPermissions(IList<PageModulePermission> permissions)
         {
             PageModulePermissions.Clear();
 
             foreach (var permission in permissions)
-                if (PageModulePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId) == null)
+                if (PageModulePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
                     PageModulePermissions.Add(permission);
         }
 

@@ -230,23 +230,23 @@ namespace Weapsy.Domain.Model.Pages
             });
         }
 
-        public void SetPagePermissions(IEnumerable<PagePermission> permissions)
+        public void SetPagePermissions(SetPagePermissions cmd)
         {
             PagePermissions.Clear();
 
-            foreach (var permission in permissions)
-                if (PagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId) == null)
+            foreach (var permission in cmd.PagePermissions)
+                if (PagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
                     PagePermissions.Add(permission);
         }
 
-        public void SetModulePermissions(Guid pageModuleId, IEnumerable<PageModulePermission> permissions)
+        public void SetModulePermissions(SetPageModulePermissions cmd)
         {
-            var pageModule = PageModules.FirstOrDefault(x => x.ModuleId == pageModuleId);
+            var pageModule = PageModules.FirstOrDefault(x => x.ModuleId == cmd.PageModuleId);
 
             if (pageModule == null || pageModule.Status == PageModuleStatus.Deleted)
                 throw new Exception("Page module not found.");
 
-            pageModule.SetPermissions(permissions);
+            pageModule.SetPermissions(cmd.PageModulePermissions);
         }
 
         public void Activate(ActivatePage cmd, IValidator<ActivatePage> validator)
