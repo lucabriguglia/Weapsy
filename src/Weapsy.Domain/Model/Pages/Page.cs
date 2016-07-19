@@ -237,6 +237,13 @@ namespace Weapsy.Domain.Model.Pages
             foreach (var permission in cmd.PagePermissions)
                 if (PagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
                     PagePermissions.Add(permission);
+
+            AddEvent(new PagePermissionsSet
+            {
+                SiteId = SiteId,
+                AggregateRootId = Id,
+                PagePermissions = cmd.PagePermissions
+            });
         }
 
         public void SetModulePermissions(SetPageModulePermissions cmd)
@@ -247,6 +254,14 @@ namespace Weapsy.Domain.Model.Pages
                 throw new Exception("Page module not found.");
 
             pageModule.SetPermissions(cmd.PageModulePermissions);
+
+            AddEvent(new PageModulePermissionsSet
+            {
+                SiteId = SiteId,
+                AggregateRootId = Id,
+                PageModuleId = cmd.PageModuleId,
+                PageModulePermissions = cmd.PageModulePermissions
+            });
         }
 
         public void Activate(ActivatePage cmd, IValidator<ActivatePage> validator)
