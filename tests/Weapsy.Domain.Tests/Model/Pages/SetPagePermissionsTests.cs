@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Tests.Pages
         }
 
         [Test]
-        public void Should_set_permissions()
+        public void Should_set_page_permissions()
         {
             Assert.AreEqual(_command.PagePermissions, _page.PagePermissions);
         }

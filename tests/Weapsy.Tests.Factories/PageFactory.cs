@@ -15,8 +15,11 @@ namespace Weapsy.Tests.Factories
             return Page(Guid.NewGuid(), Guid.NewGuid(), "My Page");
         }
 
-        public static Page Page(Guid siteId, Guid id, string name)
+        public static Page Page(Guid siteId, Guid id, string name, Guid pageModuleId = new Guid())
         {
+            if (pageModuleId == Guid.Empty)
+                pageModuleId = Guid.NewGuid();
+
             var createCommand = new CreatePage
             {
                 SiteId = siteId,
@@ -49,7 +52,7 @@ namespace Weapsy.Tests.Factories
                 SiteId = siteId,
                 PageId = id,
                 ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
+                Id = pageModuleId,
                 Title = "Title",
                 Zone = "Zone",
                 SortOrder = 1
