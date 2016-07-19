@@ -99,6 +99,24 @@ namespace Weapsy.Api
         }
 
         [HttpPut]
+        [Route("{id}/set-permissions")]
+        public async Task<IActionResult> SetPermissions([FromBody] SetPagePermissions model)
+        {
+            model.SiteId = SiteId;
+            await Task.Run(() => _commandSender.Send<SetPagePermissions, Page>(model));
+            return Ok(string.Empty);
+        }
+
+        [HttpPut]
+        [Route("{id}/set-module-permissions")]
+        public async Task<IActionResult> SetModulePermissions([FromBody] SetPageModulePermissions model)
+        {
+            model.SiteId = SiteId;
+            await Task.Run(() => _commandSender.Send<SetPageModulePermissions, Page>(model));
+            return Ok(string.Empty);
+        }
+
+        [HttpPut]
         [Route("{id}/activate")]
         public async Task<IActionResult> Activate(Guid id)
         {
