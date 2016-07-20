@@ -82,6 +82,9 @@ namespace Weapsy.Services.Identity
 
         public bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles)
         {
+            if (user == null || roles == null)
+                return false;
+
             foreach (var role in roles)
             {
                 if (role == Roles.Everyone.ToString())
@@ -96,6 +99,7 @@ namespace Weapsy.Services.Identity
                 if (user.IsInRole(role))
                     return true;
             }
+
             return false;
         }
 

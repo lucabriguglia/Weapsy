@@ -16,7 +16,6 @@ namespace Weapsy.Controllers
         private readonly ISiteFacade _siteFacade;
         private readonly IPageFacade _pageFacade;
 
-
         public HomeController(ISiteFacade siteFacade, 
             IPageFacade pageFacade,
             IContextService contextService)
