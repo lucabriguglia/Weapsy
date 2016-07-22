@@ -18,7 +18,7 @@ namespace Weapsy.Domain.Model.Menus
         public string Title { get; private set; }
         public MenuItemStatus Status { get; private set; }
         public ICollection<MenuItemLocalisation> MenuItemLocalisations { get; private set; }
-        public ICollection<ViewPermission> ViewPermissions { get; private set; }
+        public ICollection<MenuItemPermission> MenuItemPermissions { get; private set; }
 
         public MenuItem()
         {
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Model.Menus
             SortOrder = sortOrder;
         }
 
-        public void SetViewPermisisons()
+        public void SetPermisisons(SetMenuItemPermissions cmd)
         {
             throw new NotImplementedException();
         }

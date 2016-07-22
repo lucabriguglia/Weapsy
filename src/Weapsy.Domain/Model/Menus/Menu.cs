@@ -167,6 +167,24 @@ namespace Weapsy.Domain.Model.Menus
             }
         }
 
+        public void SetMenuItemPermissions(SetMenuItemPermissions cmd)
+        {
+            var menuItem = MenuItems.FirstOrDefault(x => x.Id == cmd.MenuItemId);
+
+            if (menuItem == null)
+                throw new Exception("Menu item not found.");
+
+            menuItem.SetPermisisons(cmd);
+
+            Events.Add(new MenuItemPermissionsSet
+            {
+                SiteId = SiteId,
+                AggregateRootId = Id,
+                MenuItemId = cmd.MenuItemId,
+                MenuItemPermissions = cmd.MenuItemPermissions
+            });
+        }
+
         public void Delete()
         {
             if (Status == MenuStatus.Deleted)
