@@ -3,7 +3,7 @@
 
   "dependencies": {
     "FluentValidation": "6.4.0-beta1",
-    "Moq": "4.6.25-alpha",
+    "Moq": "4.6.36-alpha",
     "NETStandard.Library": "1.6.0",
     "Weapsy.Core": "1.0.0-*",
     "Weapsy.Domain": "1.0.0-*"
