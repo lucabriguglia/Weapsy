@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,12 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var model = _roleManager.Roles.ToList();
-            return View(model);
+            if (_roleManager.SupportsQueryableRoles)
+            {
+                var model = _roleManager.Roles.OrderBy(x => x.Name).ToList();
+                return View(model);
+            }
+            return View(new List<IdentityRole>());
         }
 
         public IActionResult Create()

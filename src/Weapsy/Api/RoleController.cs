@@ -30,7 +30,7 @@ namespace Weapsy.Api
         {
             if (_roleManager.SupportsQueryableRoles)
             {
-                var roles = _roleManager.Roles.ToList();
+                var roles = _roleManager.Roles.OrderBy(x => x.Name).ToList();
                 return Ok(roles);
             }
             return Ok(string.Empty);

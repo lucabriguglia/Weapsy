@@ -2,7 +2,7 @@
 
 weapsy.admin.languageIndex = (function ($) {
     $("#languages").sortable({
-        //placeholder: "ui-state-highlight",
+        placeholder: "placeholder",
         handle: ".handle",
         stop: function (event, ui) {
             var languages = [];
