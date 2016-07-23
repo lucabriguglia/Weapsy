@@ -1,15 +1,20 @@
-﻿#control-panel {
-    display: table;
-    height: 100%;
-    position: absolute;
-    width: 180px;
+﻿body {
+    padding-top: 170px;
+}
+
+#control-panel {
+    height: 120px;
     padding: 10px;
     margin: 0;
     left: 0;
     top: 0;
     z-index: 10000;
-    background-color: #eee;
-    border-right: 1px solid #ddd;
+    background-color: #444;
+    border-bottom: 1px solid #000;
+}
+
+.help {
+    color: #eee;
 }
 
 .handle {
@@ -26,7 +31,6 @@
 
 .moduleType {
     width: 180px;
-    margin: 0 0 5px;
 }
 
 .zone.edit-mode {

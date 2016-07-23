@@ -6,8 +6,8 @@ weapsy.controlPanel = (function ($) {
     });
 
     function init() {
-        var margin = $("#control-panel").css("width");
-        $("#modal-admin").css("margin-left", margin);
+        //var margin = $("#control-panel").css("width");
+        //$("#modal-admin").css("margin-left", margin);
         //$("#wrapper").css("margin-left", margin);
 
         $(".zone").addClass("edit-mode");

@@ -2,35 +2,38 @@
 
 @if (User.IsInRole("Administrator"))
 {
+    <link rel="stylesheet" href="~/css/control-panel.css" />
     <div id="control-panel" class="clearfix">
-        <div style="margin-bottom:20px; text-align:center; font-weight:bold;">Control Panel</div>
-        <div style="margin-bottom:10px;">Drag and drop modules into page's zones</div>
-        <ul id="moduleTypes" class="list-group">
-        @foreach (var moduleType in Model)
-        {
-            <li id="@moduleType.Id" class="list-group-item moduleType" data-module-type-id="@moduleType.Id" data-module-type-title="@moduleType.Title">
-                <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
-                <span>@moduleType.Title</span>
-            </li>
-        }
-        </ul>
-
-        @*<div>
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#Modules" data-toggle="tab">Modules</a>
-                </li>
+        <div class="container">
+            @*<div style="margin-bottom:20px; text-align:center; font-weight:bold;">Control Panel</div>*@
+            <div class="help" style="margin-bottom:10px;">Drag and drop modules into page zones</div>
+            <ul id="moduleTypes" class="list-group">
+                @foreach (var moduleType in Model)
+                {
+                    <li id="@moduleType.Id" class="list-group-item moduleType" data-module-type-id="@moduleType.Id" data-module-type-title="@moduleType.Title">
+                        <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
+                        <span>@moduleType.Title</span>
+                    </li>
+                }
             </ul>
-            <div class="tab-content">
-                <div id="Modules" class="tab-pane active">
-                    @foreach (var moduleType in Model)
-                    {
-                        <div class="panel panel-default text-center moduleType" data-module-type-id="@moduleType.Id" data-module-type-title="@moduleType.Title">
-                            <div class="panel-body">@moduleType.Title</div>
-                        </div>
-                    } 
-                </div>
-            </div>           
-        </div>*@
+        </div>
     </div>
 }
+
+@*<div>
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#Modules" data-toggle="tab">Modules</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="Modules" class="tab-pane active">
+            @foreach (var moduleType in Model)
+            {
+                <div class="panel panel-default text-center moduleType" data-module-type-id="@moduleType.Id" data-module-type-title="@moduleType.Title">
+                    <div class="panel-body">@moduleType.Title</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>*@
