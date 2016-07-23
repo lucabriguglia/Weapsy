@@ -61,6 +61,7 @@ namespace Weapsy.Domain.Model.Menus
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
+                Name = Name,
                 MenuItem = MenuItems.Single(x => x.Id == cmd.MenuItemId)
             });
         }
@@ -80,6 +81,7 @@ namespace Weapsy.Domain.Model.Menus
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
+                Name = Name,
                 MenuItem = menuItem
             });
         }
@@ -149,6 +151,7 @@ namespace Weapsy.Domain.Model.Menus
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
+                Name = Name,
                 MenuItemId = menuItemToRemove.Id
             });
         }

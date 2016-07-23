@@ -17,8 +17,8 @@ namespace Weapsy.Domain.Model.Menus
         public string Text { get; private set; }
         public string Title { get; private set; }
         public MenuItemStatus Status { get; private set; }
-        public ICollection<MenuItemLocalisation> MenuItemLocalisations { get; private set; }
-        public ICollection<MenuItemPermission> MenuItemPermissions { get; private set; }
+        public ICollection<MenuItemLocalisation> MenuItemLocalisations { get; private set; } = new List<MenuItemLocalisation>();
+        public ICollection<MenuItemPermission> MenuItemPermissions { get; private set; } = new List<MenuItemPermission>();
 
         public MenuItem()
         {
@@ -36,9 +36,7 @@ namespace Weapsy.Domain.Model.Menus
             Status = MenuItemStatus.Active;
 
             foreach (var item in cmd.MenuItemLocalisations)
-            {
                 AddLocalisation(item.LanguageId, item.Text, item.Title);
-            }
         }
 
         public void Update(UpdateMenuItem cmd)
@@ -52,9 +50,7 @@ namespace Weapsy.Domain.Model.Menus
             MenuItemLocalisations.Clear();
 
             foreach (var item in cmd.MenuItemLocalisations)
-            {
                 AddLocalisation(item.LanguageId, item.Text, item.Title);
-            }
         }
 
         private void AddLocalisation(Guid languageId, string text, string title)

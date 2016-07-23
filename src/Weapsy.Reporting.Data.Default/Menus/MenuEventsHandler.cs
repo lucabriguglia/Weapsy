@@ -8,6 +8,8 @@ namespace Weapsy.Reporting.Data.Default.Menus
 {
     public class MenuEventsHandler : 
         IEventHandler<MenuCreated>,
+        IEventHandler<MenuItemAdded>,
+        IEventHandler<MenuItemUpdated>,
         IEventHandler<MenuItemsReordered>,
         IEventHandler<MenuDeleted>        
     {
@@ -19,6 +21,16 @@ namespace Weapsy.Reporting.Data.Default.Menus
         }
 
         public async Task Handle(MenuCreated @event)
+        {
+            await ClearCache(@event.SiteId, @event.Name);
+        }
+
+        public async Task Handle(MenuItemAdded @event)
+        {
+            await ClearCache(@event.SiteId, @event.Name);
+        }
+
+        public async Task Handle(MenuItemUpdated @event)
         {
             await ClearCache(@event.SiteId, @event.Name);
         }

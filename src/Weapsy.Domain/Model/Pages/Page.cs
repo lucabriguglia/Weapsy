@@ -22,8 +22,8 @@ namespace Weapsy.Domain.Model.Pages
         public Guid? ThemeId { get; private set; }
         public Guid? PageTemplateId { get; private set; }
         public Guid? ModuleTemplateId { get; private set; }
-        public ICollection<PageLocalisation> PageLocalisations { get; private set; }
-        public ICollection<PageModule> PageModules { get; private set; }
+        public ICollection<PageLocalisation> PageLocalisations { get; private set; } = new List<PageLocalisation>();
+        public ICollection<PageModule> PageModules { get; private set; } = new List<PageModule>();
         public ICollection<PagePermission> PagePermissions { get; private set; } = new List<PagePermission>();
 
         public Page()

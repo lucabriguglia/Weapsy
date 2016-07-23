@@ -5,7 +5,7 @@ weapsy.utils = weapsy.utils || {};
 weapsy.utils = (function ($) {
     function showError(event, request, settings, thrownError) {
         var title =  "Error";
-        var message = "Something went wrong.";
+        var message = "";
 
         if (request.status === 0) {
             //alert("Not connect.n Verify Network.");
@@ -14,7 +14,8 @@ weapsy.utils = (function ($) {
         } else if (request.status === 400) {
             title = "Bad Request";
             var badRequestText = request.responseJSON;
-            if (badRequestText != null) message = badRequestText;
+            if (badRequestText != null)
+                message = badRequestText;
         } else if (request.status === 404) {
             //alert("Requested page not found. [404]");
             title = "Not Found";
@@ -28,8 +29,12 @@ weapsy.utils = (function ($) {
             //} else if (exception === 'abort') {
             //    alert('Ajax request aborted.');
             var errorText = $(request.responseText).filter(".titleerror").text();
-            if (errorText != null) message = errorText;
+            if (errorText != null)
+                message = errorText;
         }
+
+        if (message == "")
+            message = thrownError ? thrownError : "Something went wrong.";
 
         $("#error-title").text(title);
         $("#error-message").text(message);

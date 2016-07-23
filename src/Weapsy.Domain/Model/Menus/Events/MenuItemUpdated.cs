@@ -6,6 +6,7 @@ namespace Weapsy.Domain.Model.Menus.Events
     public class MenuItemUpdated : Event
     {
         public Guid SiteId { get; set; }
+        public string Name { get; set; }
         public MenuItem MenuItem { get; set; }
     }
 }
