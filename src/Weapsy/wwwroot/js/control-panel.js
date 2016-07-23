@@ -107,6 +107,15 @@ weapsy.controlPanel = (function ($) {
             $("#modal-body").load("/Admin/Module/Settings"/*, { pageId: pageId, moduleId: moduleId }*/);
         });
 
+        $('.module-permissions').click(function () {
+            $("#modal-title").empty();
+            $("#modal-body").empty();
+            var pageId = $("#page").attr("data-page-id");
+            var moduleId = $(this).closest(".module-data").attr("data-module-id");
+            $("#modal-title").text("Module Permissions");
+            $("#modal-body").load("/Admin/Module/Permissions"/*, { pageId: pageId, moduleId: moduleId }*/);
+        });
+
         $('.module-remove').click(function () {
             var pageId = $("#page").attr("data-page-id");
             var moduleId = $(this).closest(".module-data").attr("data-module-id");

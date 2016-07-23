@@ -22,7 +22,12 @@ namespace Weapsy.Areas.Admin.Controllers
             _commandSender = commandSender;
         }
 
-        public async Task<IActionResult> Settings()
+        public IActionResult Settings()
+        {
+            return View();
+        }
+
+        public IActionResult Permissions()
         {
             return View();
         }
