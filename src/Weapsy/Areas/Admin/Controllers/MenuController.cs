@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Menus;
 using Weapsy.Mvc.Context;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
@@ -21,8 +23,14 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await _menuFacade.GetAllForAdminAsync(SiteId);
-            return View(model);
+            //var allMenus = await _menuFacade.GetAllForAdminAsync(SiteId);
+            //if (allMenus.Count() > 0)
+            //{
+            //    var mainMenuId = allMenus.FirstOrDefault().Id;
+            //    var model = await _menuFacade.GetMenuItemsForAdminListAsync(SiteId, mainMenuId);
+            //    return View(model);
+            //}
+            return View(new List<MenuItemAdminListModel>());
         }
 
         public IActionResult Create()

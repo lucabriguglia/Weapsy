@@ -1,0 +1,20 @@
+﻿@model Weapsy.Reporting.Menus.MenuItemAdminListModel
+
+<li id="@Model.Id">
+    <div class="list-group-item">
+        <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
+        <span>@Model.Text</span>
+        <a href="/admin/menu/edit/@Model.Id" class="glyphicon glyphicon-edit options" title="Edit"></a>
+        <a href="#" class="glyphicon glyphicon-remove options delete-menuItem" data-toggle="modal" data-target="#confirm-delete" data-id="@Model.Id" title="Delete"></a>
+    </div>
+    @if (Model.MenuItems.Count() > 0)
+    {
+        <ol>
+            @foreach (var menuItem in Model.MenuItems)
+            {
+                @await Html.PartialAsync("_MenuItem.cshtml", menuItem)
+            }
+        </ol>
+    }
+</li>
+ 

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Weapsy.Reporting.Menus.MenuItemAdminListModel>
+
+@{
     ViewBag.Title = "Menu";
 }
 
@@ -12,6 +14,13 @@
     <div class="page-header">
         <h1>Menu</h1>
     </div>
+
+    @*<ol id="menuItems" class="list-group sortable">
+        @foreach (var menuItem in Model)
+        {
+            @await Html.PartialAsync("_MenuItem.cshtml", menuItem)
+        }
+    </ol>*@
 
     <ol id="menuItems" data-bind="template: { name: 'menuItem-template', foreach: menuItems }" class="list-group sortable"></ol>
 

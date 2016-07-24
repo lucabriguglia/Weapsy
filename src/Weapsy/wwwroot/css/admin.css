@@ -1,8 +1,8 @@
-﻿*
+﻿/**
 {
     margin:0;
     padding:0;
-}
+}*/
 
 html, body, .container
 {
@@ -17,10 +17,6 @@ body {
 
 .container {
     width: 100%;
-}
-
-.body-content {
-    padding-bottom: 20px;
 }
 
 /*.container
@@ -42,6 +38,7 @@ body {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-bottom: 20px;
     /*background-color: #fff;
     border-left:solid 1px #e7e7e7;*/
 }
