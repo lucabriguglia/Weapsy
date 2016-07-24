@@ -6,6 +6,7 @@ namespace Weapsy.Services.Identity
 {
     public interface IUserService
     {
+        Task<UsersViewModel> GetUsersViewModel(UsersQuery query);
         Task<UserRolesViewModel> GetUserRolesViewModel(string id);
         bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles);
     }

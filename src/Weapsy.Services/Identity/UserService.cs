@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Weapsy.Core.Identity;
 using System.Linq;
+using System;
 
 namespace Weapsy.Services.Identity
 {
@@ -19,6 +20,25 @@ namespace Weapsy.Services.Identity
         {
             _userManager = userManager;
             _roleManager = roleManager;
+        }
+
+        public async Task<UsersViewModel> GetUsersViewModel(UsersQuery query)
+        {
+            var totalRecords = _userManager.Users.Count();
+
+            var q = _userManager.Users
+                .Skip(query.StartIndex)
+                .Take(query.NumberOfUsers)
+                .OrderBy(x => x.Email);
+
+            var viewModel = new UsersViewModel
+            {
+                Users = q.ToList(),
+                TotalRecords = totalRecords,
+                NumberOfPages = (int)Math.Ceiling((double)totalRecords / query.NumberOfUsers)
+            };
+
+            return viewModel;
         }
 
         public async Task<UserRolesViewModel> GetUserRolesViewModel(string id)
