@@ -73,8 +73,8 @@ namespace Weapsy.Services.Identity
             var model = new UserRolesViewModel
             {
                 User = user,
-                AvailableRoles = availableRoles,
-                UserRoles = userRoles
+                AvailableRoles = availableRoles.OrderBy(x => x.Name).ToList(),
+                UserRoles = userRoles.OrderBy(x => x).ToList()
             };
 
             return model;
