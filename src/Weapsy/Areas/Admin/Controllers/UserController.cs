@@ -14,17 +14,20 @@ namespace Weapsy.Areas.Admin.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IIdentityService _identityService;
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
         public UserController(UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            IIdentityService identityService,
+            IUserService userService,
+            IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-            _identityService = identityService;
+            _userService = userService;
+            _roleService = roleService;
         }
 
         public IActionResult Index()
@@ -50,7 +53,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Roles(string id)
         {
-            var model = await _identityService.GetUserRolesViewModel(id);
+            var model = await _userService.GetUserRolesViewModel(id);
 
             if (model == null)
                 return NotFound();

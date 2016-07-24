@@ -13,10 +13,10 @@ namespace Weapsy.Api
     [Route("api/[controller]")]
     public class RoleController : BaseAdminController
     {
-        private readonly IIdentityService _identityService;
+        private readonly IRoleService _identityService;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleController(IIdentityService identityService,
+        public RoleController(IRoleService identityService,
             RoleManager<IdentityRole> roleManager,
             IContextService contextService)
             : base(contextService)

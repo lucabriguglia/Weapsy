@@ -20,13 +20,13 @@ namespace Weapsy.Api
         private readonly ICommandSender _commandSender;
         private readonly IPageRules _pageRules;
         private readonly IPageRepository _pageRepository;
-        private readonly IIdentityService _identityService;
+        private readonly IRoleService _identityService;
 
         public PageController(IPageFacade pageFacade,
             ICommandSender commandSender,
             IPageRules pageRules,
             IPageRepository pageRepository,
-            IIdentityService identityService,
+            IRoleService identityService,
             IContextService contextService)
             : base(contextService)
         {

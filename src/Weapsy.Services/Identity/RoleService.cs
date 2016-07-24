@@ -10,12 +10,12 @@ using System.Linq;
 
 namespace Weapsy.Services.Identity
 {
-    public class IdentityService : IIdentityService
+    public class RoleService : IRoleService
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public IdentityService(UserManager<IdentityUser> userManager,
+        public RoleService(UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;

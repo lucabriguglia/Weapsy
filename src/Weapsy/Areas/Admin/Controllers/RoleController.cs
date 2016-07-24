@@ -15,10 +15,10 @@ namespace Weapsy.Areas.Admin.Controllers
     public class RoleController : BaseAdminController
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IIdentityService _identityService;
+        private readonly IRoleService _identityService;
 
         public RoleController(RoleManager<IdentityRole> roleManager,
-            IIdentityService identityService,
+            IRoleService identityService,
             IContextService contextService)
             : base(contextService)
         {

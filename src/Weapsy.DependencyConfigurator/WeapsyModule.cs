@@ -59,7 +59,8 @@ namespace Weapsy.DependencyConfigurator
             builder.RegisterType<AppInstallationService>().As<IAppInstallationService>();
             builder.RegisterType<SiteInstallationService>().As<ISiteInstallationService>();
 
-            builder.RegisterType<IdentityService>().As<IIdentityService>();
+            builder.RegisterType<UserService>().As<IUserService>();
+            builder.RegisterType<RoleService>().As<IRoleService>();
 
             builder.RegisterType<AppFacade>().As<IAppFacade>();
             builder.RegisterType<LanguageFacade>().As<ILanguageFacade>();
