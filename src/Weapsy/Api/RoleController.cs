@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Mvc.Context;
@@ -13,15 +12,15 @@ namespace Weapsy.Api
     [Route("api/[controller]")]
     public class RoleController : BaseAdminController
     {
-        private readonly IRoleService _identityService;
+        private readonly IRoleService _roleService;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RoleController(IRoleService identityService,
+        public RoleController(IRoleService roleService,
             RoleManager<IdentityRole> roleManager,
             IContextService contextService)
             : base(contextService)
         {
-            _identityService = identityService;
+            _roleService = roleService;
             _roleManager = roleManager;
         }
 
@@ -61,14 +60,14 @@ namespace Weapsy.Api
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]IdentityRole model)
         {
-            await _identityService.CreateRole(model.Name);
+            await _roleService.CreateRole(model.Name);
             return Ok(string.Empty);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]IdentityRole model)
         {
-            await _identityService.UpdateRoleName(model.Id, model.Name);
+            await _roleService.UpdateRoleName(model.Id, model.Name);
             return Ok(string.Empty);
         }
 
@@ -76,7 +75,7 @@ namespace Weapsy.Api
         [Route("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await _identityService.DeleteRole(id);
+            await _roleService.DeleteRole(id);
             return Ok(string.Empty);
         }
 
@@ -86,16 +85,6 @@ namespace Weapsy.Api
         {
             var isNameUnique = await _roleManager.FindByNameAsync(name) == null;
             return Ok(isNameUnique);
-        }
-
-        private string GetErrorMessage(IdentityResult result)
-        {
-            var builder = new StringBuilder();
-
-            foreach (var error in result.Errors)
-                builder.AppendLine(error.Description);
-
-            return builder.ToString();
         }
     }
 }

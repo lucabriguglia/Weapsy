@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Api
 {
@@ -14,27 +13,39 @@ namespace Weapsy.Api
     public class UserController : BaseAdminController
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
 
         public UserController(UserManager<IdentityUser> userManager,
+            IUserService userService,
+            IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
             _userManager = userManager;
+            _userService = userService;
+            _roleService = roleService;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int startIndex, int numberOfUsers)
         {
-            if (_userManager.SupportsQueryableUsers)
-                return Ok(_userManager.Users.ToList());
+            var query = new UsersQuery
+            {
+                StartIndex = startIndex,
+                NumberOfUsers = numberOfUsers
+            };
 
-            return Ok(string.Empty);
+            var model = _userService.GetUsersViewModel(query);
+
+            return Ok(model);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
+
             if (user == null)
                 return NotFound();
 
@@ -44,13 +55,8 @@ namespace Weapsy.Api
         [HttpPost]
         public async Task<IActionResult> Post(string email)
         {
-            var user = new IdentityUser { UserName = email, Email = email };
-            var result = await _userManager.CreateAsync(user);
-
-            if (result.Succeeded)
-                return Ok(string.Empty);
-
-            throw new Exception(GetErrorMessage(result));
+            await _userService.CreateUser(email);
+            return Ok(string.Empty);
         }
 
         [HttpPut]
@@ -64,44 +70,23 @@ namespace Weapsy.Api
         [Route("{id}/add-to-role")]
         public async Task<IActionResult> AddToRole(string id, [FromBody]string roleName)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-                return NotFound();
-
-            var result = await _userManager.AddToRoleAsync(user, roleName);
-            if (result.Succeeded)
-                return Ok(string.Empty);
-
-            throw new Exception(GetErrorMessage(result));
+            await _userService.AddUserToRole(id, roleName);
+            return Ok(string.Empty);
         }
 
         [HttpPut]
         [Route("{id}/remove-from-role")]
         public async Task<IActionResult> RemoveFromRole(string id, [FromBody]string roleName)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-                return NotFound();
-
-            var result = await _userManager.RemoveFromRoleAsync(user, roleName);
-            if (result.Succeeded)
-                return Ok(string.Empty);
-
-            throw new Exception(GetErrorMessage(result));
+            await _userService.RemoveUserFromRole(id, roleName);
+            return Ok(string.Empty);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-                return NotFound();
-
-            var result = await _userManager.DeleteAsync(user);
-            if (result.Succeeded)
-                return Ok(string.Empty);
-
-            throw new Exception(GetErrorMessage(result));
+            await _userService.DeleteUser(id);
+            return Ok(string.Empty);
         }
 
         [HttpGet("{email}")]
@@ -110,16 +95,6 @@ namespace Weapsy.Api
         {
             var isEmailUnique = await _userManager.FindByEmailAsync(email) == null;
             return Ok(isEmailUnique);
-        }
-
-        private string GetErrorMessage(IdentityResult result)
-        {
-            var builder = new StringBuilder();
-
-            foreach (var error in result.Errors)
-                builder.AppendLine(error.Description);
-
-            return builder.ToString();
         }
     }
 }

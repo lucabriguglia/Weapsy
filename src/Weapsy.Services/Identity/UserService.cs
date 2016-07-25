@@ -22,8 +22,18 @@ namespace Weapsy.Services.Identity
             _roleManager = roleManager;
         }
 
-        public async Task<UsersViewModel> GetUsersViewModel(UsersQuery query)
+        public UsersViewModel GetUsersViewModel(UsersQuery query)
         {
+            if (!_userManager.SupportsQueryableUsers)
+            {
+                return new UsersViewModel
+                {
+                    Users = new List<IdentityUser>(),
+                    TotalRecords = 0,
+                    NumberOfPages = 0
+                };
+            }
+
             var totalRecords = _userManager.Users.Count();
 
             var q = _userManager.Users
@@ -82,6 +92,49 @@ namespace Weapsy.Services.Identity
             }
 
             return false;
+        }
+
+        public async Task CreateUser(string email)
+        {
+            var user = new IdentityUser { UserName = email, Email = email };
+
+            var result = await _userManager.CreateAsync(user);
+
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
+        }
+
+        public async Task AddUserToRole(string id, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                throw new Exception("User Not Found.");
+
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
+        }
+
+        public async Task RemoveUserFromRole(string id, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                throw new Exception("User Not Found.");
+
+            var result = await _userManager.RemoveFromRoleAsync(user, roleName);
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
+        }
+
+        public async Task DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                throw new Exception("User Not Found.");
+
+            var result = await _userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
         }
 
         private string GetErrorMessage(IdentityResult result)
