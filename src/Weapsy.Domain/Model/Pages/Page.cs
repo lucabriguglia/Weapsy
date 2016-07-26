@@ -99,6 +99,17 @@ namespace Weapsy.Domain.Model.Pages
                     MetaKeywords = localisation.MetaKeywords
                 });
             }
+
+            SetPermissions(cmd.PagePermissions);
+        }
+
+        private void SetPermissions(IEnumerable<PagePermission> pagePermissions)
+        {
+            PagePermissions.Clear();
+
+            foreach (var permission in pagePermissions)
+                if (PagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
+                    PagePermissions.Add(permission);
         }
 
         private void AddLocalisation(PageLocalisation localisation)
@@ -232,11 +243,7 @@ namespace Weapsy.Domain.Model.Pages
 
         public void SetPagePermissions(SetPagePermissions cmd)
         {
-            PagePermissions.Clear();
-
-            foreach (var permission in cmd.PagePermissions)
-                if (PagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
-                    PagePermissions.Add(permission);
+            SetPermissions(cmd.PagePermissions);
 
             AddEvent(new PagePermissionsSet
             {

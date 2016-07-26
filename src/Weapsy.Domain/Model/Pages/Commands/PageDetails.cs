@@ -14,10 +14,10 @@ namespace Weapsy.Domain.Model.Pages.Commands
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
         public List<PageLocalisation> PageLocalisations { get; set; } = new List<PageLocalisation>();
+        public List<PagePermission> PagePermissions { get; set; } = new List<PagePermission>();
 
         public class PageLocalisation
         {
-            //public Guid PageId { get; set; }
             public Guid LanguageId { get; set; }
             public string Url { get; set; }
             public string Title { get; set; }

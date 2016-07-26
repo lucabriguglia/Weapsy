@@ -42,6 +42,14 @@ namespace Weapsy.Domain.Tests.Pages
                         MetaDescription = "Meta Description",
                         MetaKeywords = "Meta Keywords"
                     }
+                },
+                PagePermissions = new List<PagePermission>
+                {
+                    new PagePermission
+                    {
+                        RoleId = Guid.NewGuid().ToString(),
+                        Type = PermissionType.View
+                    }
                 }
             };
             _validatorMock = new Mock<IValidator<CreatePage>>();
@@ -135,6 +143,18 @@ namespace Weapsy.Domain.Tests.Pages
         }
 
         [Test]
+        public void Should_set_permission_role_id()
+        {
+            Assert.AreEqual(_command.PagePermissions[0].RoleId, _page.PagePermissions.FirstOrDefault().RoleId);
+        }
+
+        [Test]
+        public void Should_set_permission_type()
+        {
+            Assert.AreEqual(_command.PagePermissions[0].Type, _page.PagePermissions.FirstOrDefault().Type);
+        }
+
+        [Test]
         public void Should_set_status_to_hidden()
         {
             Assert.AreEqual(PageStatus.Hidden, _page.Status);
@@ -192,6 +212,12 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_page_localisations_in_page_created_event()
         {
             Assert.AreEqual(_page.PageLocalisations, _event.PageLocalisations);
+        }
+
+        [Test]
+        public void Should_set_page_permissions_in_page_created_event()
+        {
+            Assert.AreEqual(_page.PagePermissions, _event.PagePermissions);
         }
 
         [Test]

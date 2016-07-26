@@ -13,5 +13,6 @@ namespace Weapsy.Domain.Model.Pages.Events
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
         public IEnumerable<PageLocalisation> PageLocalisations { get; set; }
+        public IEnumerable<PagePermission> PagePermissions { get; set; }
     }
 }
