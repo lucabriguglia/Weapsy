@@ -32,9 +32,9 @@ namespace Weapsy.Domain.Tests.Pages
                 Title = "Title",
                 MetaDescription = "Meta Description",
                 MetaKeywords = "Meta Keywords",
-                PageLocalisations = new List<PageDetails.PageLocalisation>
+                PageLocalisations = new List<PageLocalisation>
                 {
-                    new PageDetails.PageLocalisation
+                    new PageLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Url = "url",

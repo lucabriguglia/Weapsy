@@ -6,6 +6,7 @@ using Weapsy.Domain.Model.Pages.Commands;
 using Weapsy.Domain.Model.Pages.Validators;
 using Weapsy.Domain.Model.Pages.Rules;
 using Weapsy.Domain.Model.Languages.Rules;
+using Weapsy.Domain.Model.Pages;
 
 namespace Weapsy.Domain.Tests.Pages.Validators
 {
@@ -20,7 +21,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             languageRulesMock.Setup(x => x.DoesLanguageExist(It.IsAny<Guid>())).Returns(false);
             var validator = new PageLocalisationValidator(pageRulesMock.Object, languageRulesMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.LanguageId, new PageDetails.PageLocalisation
+            validator.ShouldHaveValidationErrorFor(x => x.LanguageId, new PageLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Url = "Url",
@@ -40,7 +41,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var url = "";
             for (int i = 0; i < 201; i++) url += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Url, new PageDetails.PageLocalisation
+            validator.ShouldHaveValidationErrorFor(x => x.Url, new PageLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Url = url,
@@ -61,7 +62,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var languageRulesMock = new Mock<ILanguageRules>();
             var validator = new PageLocalisationValidator(pageRulesMock.Object, languageRulesMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Url, new PageDetails.PageLocalisation
+            validator.ShouldHaveValidationErrorFor(x => x.Url, new PageLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Url = url,
@@ -81,7 +82,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var text = "";
             for (int i = 0; i < 251; i++) text += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Title, new PageDetails.PageLocalisation
+            validator.ShouldHaveValidationErrorFor(x => x.Title, new PageLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Url = "Url",
@@ -101,7 +102,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var text = "";
             for (int i = 0; i < 501; i++) text += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.MetaDescription, new PageDetails.PageLocalisation
+            validator.ShouldHaveValidationErrorFor(x => x.MetaDescription, new PageLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Url = "Url",
@@ -121,7 +122,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var text = "";
             for (int i = 0; i < 501; i++) text += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.MetaKeywords, new PageDetails.PageLocalisation
+            validator.ShouldHaveValidationErrorFor(x => x.MetaKeywords, new PageLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Url = "Url",

@@ -8,6 +8,7 @@ using Weapsy.Domain.Model.Pages.Rules;
 using Weapsy.Domain.Model.Sites.Rules;
 using FluentValidation;
 using Weapsy.Domain.Model.Languages.Rules;
+using Weapsy.Domain.Model.Pages;
 
 namespace Weapsy.Domain.Tests.Pages.Validators
 {
@@ -20,7 +21,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new CreatePageValidator(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Id, new CreatePage
@@ -42,7 +43,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new CreatePageValidator(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Id, new CreatePage

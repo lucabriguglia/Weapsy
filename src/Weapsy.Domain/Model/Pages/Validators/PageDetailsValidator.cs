@@ -14,12 +14,12 @@ namespace Weapsy.Domain.Model.Pages.Validators
         private readonly IPageRules _pageRules;
         private readonly ISiteRules _siteRules;
         private readonly ILanguageRules _languageRules;
-        private readonly IValidator<PageDetails.PageLocalisation> _localisationValidator;
+        private readonly IValidator<PageLocalisation> _localisationValidator;
 
         public PageDetailsValidator(IPageRules pageRules, 
             ISiteRules siteRules,
             ILanguageRules languageRules,
-            IValidator<PageDetails.PageLocalisation> localisationValidator)
+            IValidator<PageLocalisation> localisationValidator)
         {
             _pageRules = pageRules;
             _siteRules = siteRules;
@@ -92,7 +92,7 @@ namespace Weapsy.Domain.Model.Pages.Validators
             return !_pageRules.IsPageUrlReserved(url);
         }
 
-        private bool IncludeAllSupportedLanguages(PageDetails cmd, IEnumerable<PageDetails.PageLocalisation> pageLocalisations)
+        private bool IncludeAllSupportedLanguages(PageDetails cmd, IEnumerable<PageLocalisation> pageLocalisations)
         {
             return _languageRules.AreAllSupportedLanguagesIncluded(cmd.SiteId, pageLocalisations.Select(x => x.LanguageId));
         }

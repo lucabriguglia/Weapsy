@@ -32,9 +32,9 @@ namespace Weapsy.Domain.Tests.Pages
                 Title = "Title",
                 MetaDescription = "Meta Description",
                 MetaKeywords = "Meta Keywords",
-                PageLocalisations = new List<PageDetails.PageLocalisation>
+                PageLocalisations = new List<PageLocalisation>
                 {
-                    new PageDetails.PageLocalisation
+                    new PageLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Url = "url",
@@ -201,11 +201,11 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_throw_exception_if_language_is_already_added_to_page_localisations()
         {
             var languageId = Guid.NewGuid();
-            _command.PageLocalisations.Add(new PageDetails.PageLocalisation
+            _command.PageLocalisations.Add(new PageLocalisation
             {
                 LanguageId = languageId
             });
-            _command.PageLocalisations.Add(new PageDetails.PageLocalisation
+            _command.PageLocalisations.Add(new PageLocalisation
             {
                 LanguageId = languageId
             });

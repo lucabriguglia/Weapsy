@@ -11,7 +11,7 @@ namespace Weapsy.Domain.Model.Pages.Validators
         public UpdatePageDetailsValidator(IPageRules pageRules, 
             ISiteRules siteRules,
             ILanguageRules languageRules,
-            IValidator<PageDetails.PageLocalisation> localisationValidator)
+            IValidator<PageLocalisation> localisationValidator)
             : base(pageRules, siteRules, languageRules, localisationValidator)
         {
         }

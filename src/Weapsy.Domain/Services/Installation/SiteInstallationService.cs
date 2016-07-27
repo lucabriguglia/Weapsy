@@ -107,9 +107,9 @@ namespace Weapsy.Domain.Services.Installation
                 Id = homePageId,
                 Name = "Home",
                 Url = "home",
-                PageLocalisations = new List<PageDetails.PageLocalisation>
+                PageLocalisations = new List<PageLocalisation>
                 {
-                    new PageDetails.PageLocalisation
+                    new PageLocalisation
                     {
                         LanguageId = englishLanguageId
                     }

@@ -9,6 +9,7 @@ using Weapsy.Domain.Model.Sites.Rules;
 using FluentValidation;
 using Weapsy.Domain.Model.Languages.Rules;
 using System.Collections.Generic;
+using Weapsy.Domain.Model.Pages;
 
 namespace Weapsy.Domain.Tests.Pages.Validators
 {
@@ -26,7 +27,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
@@ -44,7 +45,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var siteRulesMock = new Mock<ISiteRules>();
             siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(false);
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
@@ -56,7 +57,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, new PageDetails
@@ -77,7 +78,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, new PageDetails
@@ -98,7 +99,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             var name = "";
@@ -127,7 +128,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, new PageDetails
@@ -154,7 +155,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, new PageDetails
@@ -172,7 +173,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Url, new PageDetails
@@ -193,7 +194,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             var url = "";
@@ -222,7 +223,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Url, new PageDetails
@@ -247,7 +248,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Url, new PageDetails
@@ -271,7 +272,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Url, new PageDetails
@@ -292,7 +293,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             var title = "";
@@ -316,7 +317,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             var metaDescription = "";
@@ -340,7 +341,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             var metaKeywords = "";
@@ -364,7 +365,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageDetails.PageLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             languageRulesMock.Setup(x => x.AreAllSupportedLanguagesIncluded(It.IsAny<Guid>(), It.IsAny<IEnumerable<Guid>>())).Returns(false);
             var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 

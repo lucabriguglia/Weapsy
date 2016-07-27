@@ -47,6 +47,7 @@ namespace Weapsy.Domain.Model.Pages
                 MetaDescription = MetaDescription,
                 MetaKeywords = MetaKeywords,
                 PageLocalisations = PageLocalisations,
+                PagePermissions = PagePermissions,
                 Status = Status
             });
         }
@@ -73,7 +74,8 @@ namespace Weapsy.Domain.Model.Pages
                 Title = Title,
                 MetaDescription = MetaDescription,
                 MetaKeywords = MetaKeywords,
-                PageLocalisations = PageLocalisations
+                PageLocalisations = PageLocalisations,
+                PagePermissions = PagePermissions
             });
         }
 
@@ -85,9 +87,15 @@ namespace Weapsy.Domain.Model.Pages
             MetaDescription = cmd.MetaDescription;
             MetaKeywords = cmd.MetaKeywords;
 
+            SetLocalisations(cmd.PageLocalisations);
+            SetPermissions(cmd.PagePermissions);
+        }
+
+        private void SetLocalisations(IEnumerable<PageLocalisation> pageLocalisations)
+        {
             PageLocalisations.Clear();
 
-            foreach (var localisation in cmd.PageLocalisations)
+            foreach (var localisation in pageLocalisations)
             {
                 AddLocalisation(new PageLocalisation
                 {
@@ -99,8 +107,6 @@ namespace Weapsy.Domain.Model.Pages
                     MetaKeywords = localisation.MetaKeywords
                 });
             }
-
-            SetPermissions(cmd.PagePermissions);
         }
 
         private void SetPermissions(IEnumerable<PagePermission> pagePermissions)
