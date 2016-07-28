@@ -20,6 +20,8 @@ namespace Weapsy.Reporting.Data.Default
         {
             CreateMap<App, AppAdminModel>();
             CreateMap<App, AppAdminListModel>();
+            CreateMap<EmailAccount, EmailAccountViewModel>();
+            CreateMap<EmailAccount, EmailAccountAdminModel>();
             CreateMap<Language, LanguageViewModel>();
             CreateMap<Language, LanguageAdminModel>();
             CreateMap<Menu, MenuAdminModel>();

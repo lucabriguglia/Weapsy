@@ -41,7 +41,8 @@ namespace Weapsy.Api
         public async Task<IActionResult> Get(Guid id)
         {
             var language = await _languageFacade.GetForAdminAsync(SiteId, id);
-            if (language == null) return NotFound();
+            if (language == null)
+                return NotFound();
             return Ok(language);
         }
 
