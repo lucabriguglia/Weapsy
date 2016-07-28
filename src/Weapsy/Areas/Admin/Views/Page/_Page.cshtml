@@ -1,123 +1,139 @@
 ﻿@model Weapsy.Reporting.Pages.PageAdminModel
 
-<div class="form-group has-feedback">
-    <label for="name" class="col-md-2 control-label">Name</label>
-    <div class="col-md-4">
-        <input id="originalName" type="hidden" value="@Model.Name" />
-        <input id="name" name="name" type="text" class="form-control" placeholder="Enter Name" value="@Model.Name">
-        <i class="form-control-feedback glyphicon"></i>
-    </div>
-    <div class="col-md-6 help-block">
-        <label id="name-error" for="name" class="text-danger" style="display:none;"></label>
-    </div>
-</div>
-
 <ul class="nav nav-tabs">
     <li class="active">
-        <a href="#Default" data-toggle="tab">Default</a>
+        <a href="#Details" data-toggle="tab">Details</a>
     </li>
-    @foreach (var pageLocalisation in Model.PageLocalisations)
-    {
-        <li>
-            <a href="#@pageLocalisation.LanguageName" data-toggle="tab">@pageLocalisation.LanguageName</a>
-        </li>
-    }
+    <li>
+        <a href="#Permissions" data-toggle="tab">Permissions</a>
+    </li>
 </ul>
 
-<div class="tab-content" style="margin:25px 0 35px;">
-    <div id="Default" class="tab-pane active">
+<div class="tab-content" style="margin:25px 0">
+    <div id="Details" class="tab-pane active">
         <div class="form-group has-feedback">
-            <label for="url" class="col-md-2 control-label">Url</label>
+            <label for="name" class="col-md-2 control-label">Name</label>
             <div class="col-md-4">
-                <input id="originalUrl" type="hidden" value="@Model.Url" />
-                <input id="url" name="url" type="text" class="form-control" placeholder="Enter Url" value="@Model.Url">
+                <input id="originalName" type="hidden" value="@Model.Name" />
+                <input id="name" name="name" type="text" class="form-control" placeholder="Enter Name" value="@Model.Name">
                 <i class="form-control-feedback glyphicon"></i>
             </div>
             <div class="col-md-6 help-block">
-                <label id="url-error" for="url" class="text-danger" style="display:none;"></label>
+                <label id="name-error" for="name" class="text-danger" style="display:none;"></label>
             </div>
         </div>
 
-        <div class="form-group has-feedback">
-            <label for="title" class="col-md-2 control-label">Title</label>
-            <div class="col-md-4">
-                <input id="title" name="Title" type="text" class="form-control validate-title" placeholder="Enter Title" value="@Model.Title">
-                <i class="form-control-feedback glyphicon"></i>
-            </div>
-            <div class="col-md-6 help-block">
-                <label id="title-error" for="Title" class="text-danger" style="display:none;"></label>
-            </div>
-        </div>
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#Default" data-toggle="tab">Default</a>
+            </li>
+            @foreach (var pageLocalisation in Model.PageLocalisations)
+            {
+                <li>
+                    <a href="#@pageLocalisation.LanguageName" data-toggle="tab">@pageLocalisation.LanguageName</a>
+                </li>
+            }
+        </ul>
 
-        <div class="form-group has-feedback">
-            <label for="metaDescription" class="col-md-2 control-label">Meta Description</label>
-            <div class="col-md-4">
-                <input id="metaDescription" name="metaDescription" type="text" class="form-control validate-meta-description" placeholder="Enter Meta Description" value="@Model.MetaDescription">
-                <i class="form-control-feedback glyphicon"></i>
-            </div>
-            <div class="col-md-6 help-block">
-                <label id="metaDescription-error" for="metaDescription" class="text-danger" style="display:none;"></label>
-            </div>
-        </div>
+        <div class="tab-content" style="margin:25px 0 35px;">
+            <div id="Default" class="tab-pane active">
+                <div class="form-group has-feedback">
+                    <label for="url" class="col-md-2 control-label">Url</label>
+                    <div class="col-md-4">
+                        <input id="originalUrl" type="hidden" value="@Model.Url" />
+                        <input id="url" name="url" type="text" class="form-control" placeholder="Enter Url" value="@Model.Url">
+                        <i class="form-control-feedback glyphicon"></i>
+                    </div>
+                    <div class="col-md-6 help-block">
+                        <label id="url-error" for="url" class="text-danger" style="display:none;"></label>
+                    </div>
+                </div>
 
-        <div class="form-group has-feedback">
-            <label for="metaKeywords" class="col-md-2 control-label">Meta Keywords</label>
-            <div class="col-md-4">
-                <input id="metaKeywords" name="metaKeywords" type="text" class="form-control validate-meta-keywords" placeholder="Enter Meta Keywords" value="@Model.MetaKeywords">
-                <i class="form-control-feedback glyphicon"></i>
+                <div class="form-group has-feedback">
+                    <label for="title" class="col-md-2 control-label">Title</label>
+                    <div class="col-md-4">
+                        <input id="title" name="Title" type="text" class="form-control validate-title" placeholder="Enter Title" value="@Model.Title">
+                        <i class="form-control-feedback glyphicon"></i>
+                    </div>
+                    <div class="col-md-6 help-block">
+                        <label id="title-error" for="Title" class="text-danger" style="display:none;"></label>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <label for="metaDescription" class="col-md-2 control-label">Meta Description</label>
+                    <div class="col-md-4">
+                        <input id="metaDescription" name="metaDescription" type="text" class="form-control validate-meta-description" placeholder="Enter Meta Description" value="@Model.MetaDescription">
+                        <i class="form-control-feedback glyphicon"></i>
+                    </div>
+                    <div class="col-md-6 help-block">
+                        <label id="metaDescription-error" for="metaDescription" class="text-danger" style="display:none;"></label>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback">
+                    <label for="metaKeywords" class="col-md-2 control-label">Meta Keywords</label>
+                    <div class="col-md-4">
+                        <input id="metaKeywords" name="metaKeywords" type="text" class="form-control validate-meta-keywords" placeholder="Enter Meta Keywords" value="@Model.MetaKeywords">
+                        <i class="form-control-feedback glyphicon"></i>
+                    </div>
+                    <div class="col-md-6 help-block">
+                        <label id="metaKeywords-error" for="metaKeywords" class="text-danger" style="display:none;"></label>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 help-block">
-                <label id="metaKeywords-error" for="metaKeywords" class="text-danger" style="display:none;"></label>
-            </div>
+            @for (int i = 0; i < Model.PageLocalisations.Count; i++)
+            {
+                <input asp-for="PageLocalisations[i].LanguageId" type="hidden" />
+                <div id="@Model.PageLocalisations[i].LanguageName" class="tab-pane">
+                    <div class="form-group has-feedback">
+                        <label asp-for="PageLocalisations[i].Url" class="col-md-2 control-label">Url</label>
+                        <div class="col-md-4">
+                            <input asp-for="PageLocalisations[i].Url" class="form-control validate-localisation-url" placeholder="Enter Url" />
+                            <i class="form-control-feedback glyphicon"></i>
+                        </div>
+                        <div class="col-md-6 help-block">
+                            <span asp-validation-for="PageLocalisations[i].Url" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label asp-for="PageLocalisations[i].Title" class="col-md-2 control-label">Title</label>
+                        <div class="col-md-4">
+                            <input asp-for="PageLocalisations[i].Title" class="form-control validate-title" placeholder="Enter Title" />
+                            <i class="form-control-feedback glyphicon"></i>
+                        </div>
+                        <div class="col-md-6 help-block">
+                            <span asp-validation-for="PageLocalisations[i].Title" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label asp-for="PageLocalisations[i].MetaDescription" class="col-md-2 control-label">Meta Description</label>
+                        <div class="col-md-4">
+                            <input asp-for="PageLocalisations[i].MetaDescription" class="form-control validate-meta-description" placeholder="Enter Meta Description" />
+                            <i class="form-control-feedback glyphicon"></i>
+                        </div>
+                        <div class="col-md-6 help-block">
+                            <span asp-validation-for="PageLocalisations[i].MetaDescription" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <label asp-for="PageLocalisations[i].MetaKeywords" class="col-md-2 control-label">Meta Keywords</label>
+                        <div class="col-md-4">
+                            <input asp-for="PageLocalisations[i].MetaKeywords" class="form-control validate-meta-keywords" placeholder="Enter Meta Keywords" />
+                            <i class="form-control-feedback glyphicon"></i>
+                        </div>
+                        <div class="col-md-6 help-block">
+                            <span asp-validation-for="PageLocalisations[i].MetaKeywords" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-    @for (int i = 0; i < Model.PageLocalisations.Count; i++)
-    {
-        <input asp-for="PageLocalisations[i].LanguageId" type="hidden" />
-        <div id="@Model.PageLocalisations[i].LanguageName" class="tab-pane">
-            <div class="form-group has-feedback">
-                <label asp-for="PageLocalisations[i].Url" class="col-md-2 control-label">Url</label>
-                <div class="col-md-4">
-                    <input asp-for="PageLocalisations[i].Url" class="form-control validate-localisation-url" placeholder="Enter Url" />
-                    <i class="form-control-feedback glyphicon"></i>
-                </div>
-                <div class="col-md-6 help-block">
-                    <span asp-validation-for="PageLocalisations[i].Url" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group has-feedback">
-                <label asp-for="PageLocalisations[i].Title" class="col-md-2 control-label">Title</label>
-                <div class="col-md-4">
-                    <input asp-for="PageLocalisations[i].Title" class="form-control validate-title" placeholder="Enter Title" />
-                    <i class="form-control-feedback glyphicon"></i>
-                </div>
-                <div class="col-md-6 help-block">
-                    <span asp-validation-for="PageLocalisations[i].Title" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group has-feedback">
-                <label asp-for="PageLocalisations[i].MetaDescription" class="col-md-2 control-label">Meta Description</label>
-                <div class="col-md-4">
-                    <input asp-for="PageLocalisations[i].MetaDescription" class="form-control validate-meta-description" placeholder="Enter Meta Description" />
-                    <i class="form-control-feedback glyphicon"></i>
-                </div>
-                <div class="col-md-6 help-block">
-                    <span asp-validation-for="PageLocalisations[i].MetaDescription" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group has-feedback">
-                <label asp-for="PageLocalisations[i].MetaKeywords" class="col-md-2 control-label">Meta Keywords</label>
-                <div class="col-md-4">
-                    <input asp-for="PageLocalisations[i].MetaKeywords" class="form-control validate-meta-keywords" placeholder="Enter Meta Keywords" />
-                    <i class="form-control-feedback glyphicon"></i>
-                </div>
-                <div class="col-md-6 help-block">
-                    <span asp-validation-for="PageLocalisations[i].MetaKeywords" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-    }
+    <div id="Permissions" class="tab-pane">
+        Permissions
+    </div>
 </div>
