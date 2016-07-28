@@ -32,13 +32,17 @@ namespace Weapsy.Api
         [HttpGet]
         public IActionResult Get()
         {
-            throw new NotImplementedException();
+            var emailAccounts = _emailAccountFacade.GetAll(SiteId);
+            return Ok(emailAccounts);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
-            throw new NotImplementedException();
+            var emailAccount = _emailAccountFacade.Get(SiteId, id);
+            if (emailAccount == null)
+                return NotFound();
+            return Ok(emailAccount);
         }
 
         [HttpPost]
@@ -76,20 +80,6 @@ namespace Weapsy.Api
         {
             var isEmailAccountAddressUnique = _emailAccountRules.IsEmailAccountAddressUnique(SiteId, email);
             return Ok(isEmailAccountAddressUnique);
-        }
-
-        [HttpGet]
-        [Route("{id}/admin-list")]
-        public IActionResult AdminList()
-        {
-            throw new NotImplementedException();
-        }
-
-        [HttpGet]
-        [Route("{id}/admin-edit")]
-        public IActionResult AdminEdit(Guid id)
-        {
-            throw new NotImplementedException();
         }
     }
 }
