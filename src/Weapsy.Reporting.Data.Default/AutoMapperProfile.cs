@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Weapsy.Domain.Model.Apps;
+using Weapsy.Domain.Model.EmailAccounts;
 using Weapsy.Domain.Model.Languages;
 using Weapsy.Domain.Model.Menus;
 using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Domain.Model.Pages;
 using Weapsy.Domain.Model.Sites;
 using Weapsy.Reporting.Apps;
+using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.ModuleTypes;
@@ -20,8 +22,8 @@ namespace Weapsy.Reporting.Data.Default
         {
             CreateMap<App, AppAdminModel>();
             CreateMap<App, AppAdminListModel>();
-            CreateMap<EmailAccount, EmailAccountViewModel>();
-            CreateMap<EmailAccount, EmailAccountAdminModel>();
+            CreateMap<EmailAccount, EmailAccountModel>();
+            CreateMap<EmailAccount, EmailAccountModel>();
             CreateMap<Language, LanguageViewModel>();
             CreateMap<Language, LanguageAdminModel>();
             CreateMap<Menu, MenuAdminModel>();
