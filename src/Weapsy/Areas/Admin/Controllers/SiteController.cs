@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -20,13 +21,26 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Edit");
         }
 
         public async Task<IActionResult> Edit()
         {
             var model = await _siteFacade.GetAdminModel(SiteId);
-            if (model == null) return NotFound();
+
+            if (model == null)
+                return NotFound();
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var model = await _siteFacade.GetAdminModel(id);
+
+            if (model == null)
+                return NotFound();
+
             return View(model);
         }
     }
