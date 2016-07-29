@@ -13,7 +13,7 @@ namespace Weapsy.Domain.Model.Menus
         public Guid SiteId { get; private set; }
         public string Name { get; private set; }
         public MenuStatus Status { get; private set; }
-        public ICollection<MenuItem> MenuItems { get; private set; }
+        public ICollection<MenuItem> MenuItems { get; private set; } = new List<MenuItem>();
         
         public Menu()
         {
