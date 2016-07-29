@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Weapsy.Reporting.EmailAccounts.EmailAccountModel>
+
+@{
+    ViewBag.Title = "Email Accounts";
+}
+
+@section scripts{
+    <script src="~/js/admin/emailAccounts/index.js"></script>
+}
+
+<div class="page-header">
+    <h1>Email Accounts</h1>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Address</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emailAccount in Model)
+        {
+            <tr>
+                <td>@emailAccount.Address</td>
+                <td class="text-center">
+                    <a href="/admin/emailAccount/edit/@emailAccount.Id" class="glyphicon glyphicon-edit options" title="Edit"></a>
+                    <a href="#" class="glyphicon glyphicon-remove options delete-emailAccount" data-toggle="modal" data-target="#confirm-delete" data-id="@emailAccount.Id" title="Delete"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a href="@Url.Action("Create", "EmailAccount", new { area = "Admin" })" class="btn btn-primary" title="New User">New Email Account</a>
+</div>
+
+@await Html.PartialAsync("_ConfirmDelete")

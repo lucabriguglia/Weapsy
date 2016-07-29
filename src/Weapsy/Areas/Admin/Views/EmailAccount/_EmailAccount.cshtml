@@ -1,0 +1,13 @@
+﻿@model Weapsy.Reporting.EmailAccounts.EmailAccountModel
+
+<div class="form-group has-feedback">
+    <label for="address" class="col-md-2 control-label">Address</label>
+    <div class="col-md-4">
+        <input id="originalAddress" type="hidden" value="@Model.Address" />
+        <input id="address" name="address" type="text" class="form-control" placeholder="Enter Address" value="@Model.Address">
+        <i class="form-control-feedback glyphicon"></i>
+    </div>
+    <div class="col-md-6 help-block">
+        <label id="address-error" for="address" class="text-danger" style="display:none;"></label>
+    </div>
+</div>

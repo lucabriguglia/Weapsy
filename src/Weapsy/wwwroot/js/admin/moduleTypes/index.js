@@ -8,7 +8,7 @@ weapsy.admin.moduleTypeIndex = (function ($) {
     });
 
     $('#confirmDelete').click(function () {
-        $('#deletingPage').show();
+        $('#deletingModuleType').show();
         $.ajax({
             url: "/api/moduleType/" + moduleTypeIdToDelete,
             type: "DELETE"

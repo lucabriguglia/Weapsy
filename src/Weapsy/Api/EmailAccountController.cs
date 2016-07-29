@@ -76,7 +76,7 @@ namespace Weapsy.Api
 
         [HttpGet("{name}")]
         [Route("IsEmailAccountAddressUnique")]
-        public IActionResult IsEmailAccountNameUnique(string email)
+        public IActionResult IsEmailAccountAddressUnique(string email)
         {
             var isEmailAccountAddressUnique = _emailAccountRules.IsEmailAccountAddressUnique(SiteId, email);
             return Ok(isEmailAccountAddressUnique);
