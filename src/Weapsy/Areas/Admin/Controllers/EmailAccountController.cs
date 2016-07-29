@@ -42,7 +42,7 @@ namespace Weapsy.Areas.Admin.Controllers
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
             await Task.Run(() => _commandSender.Send<CreateEmailAccount, EmailAccount>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         public IActionResult Edit(Guid id)
@@ -59,7 +59,7 @@ namespace Weapsy.Areas.Admin.Controllers
         {
             model.SiteId = SiteId;
             await Task.Run(() => _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
     }
 }

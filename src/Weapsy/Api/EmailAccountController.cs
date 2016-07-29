@@ -51,7 +51,7 @@ namespace Weapsy.Api
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
             await Task.Run(() => _commandSender.Send<CreateEmailAccount, EmailAccount>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
@@ -60,7 +60,7 @@ namespace Weapsy.Api
         {
             model.SiteId = SiteId;
             await Task.Run(() => _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
@@ -71,7 +71,7 @@ namespace Weapsy.Api
                 SiteId = SiteId,
                 Id = id
             }));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpGet("{name}")]

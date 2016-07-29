@@ -32,7 +32,7 @@ namespace Weapsy.Api
                 var roles = _roleManager.Roles.OrderBy(x => x.Name).ToList();
                 return Ok(roles);
             }
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpGet]
@@ -61,14 +61,14 @@ namespace Weapsy.Api
         public async Task<IActionResult> Post([FromBody]IdentityRole model)
         {
             await _roleService.CreateRole(model.Name);
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]IdentityRole model)
         {
             await _roleService.UpdateRoleName(model.Id, model.Name);
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpDelete]
@@ -76,7 +76,7 @@ namespace Weapsy.Api
         public async Task<IActionResult> Delete(string id)
         {
             await _roleService.DeleteRole(id);
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpGet("{name}")]

@@ -41,7 +41,7 @@ namespace Weapsy.Api
         {
             model.Id = Guid.NewGuid();
             await Task.Run(() => _commandSender.Send<CreateModuleType, ModuleType>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpGet("{name}")]

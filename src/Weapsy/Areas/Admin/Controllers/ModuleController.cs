@@ -42,7 +42,7 @@ namespace Weapsy.Areas.Admin.Controllers
         //{
         //    model.Id = Guid.NewGuid();
         //    await Task.Run(() => _commandSender.Send<CreateModule, Module>(model));
-        //    return Ok(string.Empty);
+        //    return new NoContentResult();
         //}
 
         //public async Task<IActionResult> Edit(Guid id)
@@ -55,7 +55,7 @@ namespace Weapsy.Areas.Admin.Controllers
         //public async Task<IActionResult> Update(UpdateModuleDetails model)
         //{
         //    await Task.Run(() => _commandSender.Send<UpdateModuleDetails, Module>(model));
-        //    return Ok(string.Empty);
+        //    return new NoContentResult();
         //}
     }
 }

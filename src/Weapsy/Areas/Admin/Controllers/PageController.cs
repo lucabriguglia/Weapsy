@@ -42,7 +42,7 @@ namespace Weapsy.Areas.Admin.Controllers
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
             await Task.Run(() => _commandSender.Send<CreatePage, Page>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         public async Task<IActionResult> Edit(Guid id)
@@ -56,7 +56,7 @@ namespace Weapsy.Areas.Admin.Controllers
         {
             model.SiteId = SiteId;
             await Task.Run(() => _commandSender.Send<UpdatePageDetails, Page>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
     }
 }

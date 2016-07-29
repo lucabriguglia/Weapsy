@@ -78,7 +78,7 @@ namespace Weapsy.Api
 
             await Task.Run(() => _commandSender.Send<AddMenuItem, Menu>(model));
 
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
@@ -88,7 +88,7 @@ namespace Weapsy.Api
             model.SiteId = SiteId;
             model.MenuId = id;
             await Task.Run(() => _commandSender.Send<UpdateMenuItem, Menu>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
@@ -97,7 +97,7 @@ namespace Weapsy.Api
         {
             var command = new ReorderMenuItems { SiteId = SiteId, Id = id, MenuItems = model };
             await Task.Run(() => _commandSender.Send<ReorderMenuItems, Menu>(command));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpDelete]
@@ -110,7 +110,7 @@ namespace Weapsy.Api
                 MenuId = id,
                 MenuItemId = itemId
             }));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpGet("{name}")]

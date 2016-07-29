@@ -45,7 +45,7 @@ namespace Weapsy.Areas.Admin.Controllers
         public async Task<IActionResult> Save(IdentityRole model)
         {
             await _identityService.CreateRole(model.Name);
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -60,7 +60,7 @@ namespace Weapsy.Areas.Admin.Controllers
         public async Task<IActionResult> Update(IdentityRole model)
         {
             await _identityService.UpdateRoleName(model.Id, model.Name);
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         private string GetErrorMessage(IdentityResult result)

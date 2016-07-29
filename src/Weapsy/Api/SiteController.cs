@@ -46,7 +46,7 @@ namespace Weapsy.Api
         {
             model.Id = Guid.NewGuid();
             await Task.Run(() => _commandSender.Send<CreateSite, Site>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
@@ -54,14 +54,14 @@ namespace Weapsy.Api
         public async Task<IActionResult> UpdateDetails([FromBody] UpdateSiteDetails model)
         {
             await Task.Run(() => _commandSender.Send<UpdateSiteDetails, Site>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await Task.Run(() => _commandSender.Send<DeleteSite, Site>(new DeleteSite { Id = id }));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpGet("{name}")]

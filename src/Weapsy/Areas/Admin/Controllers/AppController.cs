@@ -41,7 +41,7 @@ namespace Weapsy.Areas.Admin.Controllers
         {
             model.Id = Guid.NewGuid();
             await Task.Run(() => _commandSender.Send<CreateApp, App>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         public async Task<IActionResult> Edit(Guid id)
@@ -54,7 +54,7 @@ namespace Weapsy.Areas.Admin.Controllers
         public async Task<IActionResult> Update(UpdateAppDetails model)
         {
             await Task.Run(() => _commandSender.Send<UpdateAppDetails, App>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
     }
 }

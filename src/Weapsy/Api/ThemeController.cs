@@ -50,7 +50,7 @@ namespace Weapsy.Api
         {
             model.Id = Guid.NewGuid();
             await Task.Run(() => _commandSender.Send<CreateTheme, Theme>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
@@ -58,7 +58,7 @@ namespace Weapsy.Api
         public async Task<IActionResult> UpdateDetails([FromBody] UpdateThemeDetails model)
         {
             await Task.Run(() => _commandSender.Send<UpdateThemeDetails, Theme>(model));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
@@ -66,7 +66,7 @@ namespace Weapsy.Api
         public async Task<IActionResult> ReorderThemes([FromBody] List<Guid> model)
         {
             await Task.Run(() => _commandSender.Send<ReorderThemes, Theme>(new ReorderThemes { Themes = model }));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
@@ -74,7 +74,7 @@ namespace Weapsy.Api
         public async Task<IActionResult> Activate(Guid id)
         {
             await Task.Run(() => _commandSender.Send<ActivateTheme, Theme>(new ActivateTheme { Id = id }));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpPut]
@@ -82,14 +82,14 @@ namespace Weapsy.Api
         public async Task<IActionResult> Hide(Guid id)
         {
             await Task.Run(() => _commandSender.Send<HideTheme, Theme>(new HideTheme { Id = id }));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             await Task.Run(() => _commandSender.Send<DeleteTheme, Theme>(new DeleteTheme { Id = id }));
-            return Ok(string.Empty);
+            return new NoContentResult();
         }
 
         [HttpGet("{name}")]
