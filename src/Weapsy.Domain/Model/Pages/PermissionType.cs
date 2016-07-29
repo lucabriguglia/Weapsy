@@ -3,7 +3,6 @@
     public enum PermissionType
     {
         View = 1,
-        Edit = 2,
-        Delete = 3
+        Edit = 2
     }
 }
