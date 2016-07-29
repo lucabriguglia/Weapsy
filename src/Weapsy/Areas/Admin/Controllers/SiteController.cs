@@ -21,17 +21,17 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("Edit");
+            return RedirectToAction("Settings");
         }
 
-        public async Task<IActionResult> Edit()
+        public async Task<IActionResult> Settings()
         {
             var model = await _siteFacade.GetAdminModel(SiteId);
 
             if (model == null)
                 return NotFound();
 
-            return View(model);
+            return View("Edit", model);
         }
 
         public async Task<IActionResult> Edit(Guid id)
