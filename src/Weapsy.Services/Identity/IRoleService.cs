@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Weapsy.Services.Identity
@@ -10,5 +11,6 @@ namespace Weapsy.Services.Identity
         Task DeleteRole(string id);
         Task<IList<string>> GetDefaultPageViewPermissionRoleIds();
         Task<IList<string>> GetDefaultModuleViewPermissionRoleIds();
+        IList<IdentityRole> GetAllRoles();
     }
 }

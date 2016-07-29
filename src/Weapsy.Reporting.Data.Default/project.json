@@ -7,7 +7,8 @@
     "NETStandard.Library": "1.6.0",
     "Weapsy.Core": "1.0.0-*",
     "Weapsy.Domain": "1.0.0-*",
-    "Weapsy.Reporting": "1.0.0-*"
+    "Weapsy.Reporting": "1.0.0-*",
+    "Weapsy.Services": "1.0.0-*"
   },
 
   "frameworks": {

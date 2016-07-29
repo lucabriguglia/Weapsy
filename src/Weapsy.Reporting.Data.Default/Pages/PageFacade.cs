@@ -12,6 +12,7 @@ using Weapsy.Domain.Model.Pages;
 using Weapsy.Reporting.Pages;
 using Microsoft.AspNetCore.Identity;
 using Weapsy.Core.Identity;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Reporting.Data.Default.Pages
 {
@@ -24,6 +25,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IRoleService _roleService;
 
         public PageFacade(IPageRepository pageRepository, 
             ILanguageRepository languageRepository,
@@ -31,7 +33,8 @@ namespace Weapsy.Reporting.Data.Default.Pages
             IModuleTypeRepository moduleTypeRepository,
             ICacheManager cacheManager, 
             IMapper mapper,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IRoleService roleService)
         {
             _pageRepository = pageRepository;
             _languageRepository = languageRepository;
@@ -40,6 +43,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             _cacheManager = cacheManager;
             _mapper = mapper;
             _roleManager = roleManager;
+            _roleService = roleService;
         }
 
         public PageViewModel GetPageViewModel(Guid siteId, Guid pageId, Guid languageId = new Guid())
@@ -238,6 +242,19 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 {
                     LanguageId = language.Id,
                     LanguageName = language.Name
+                });
+            }
+
+            foreach (var role in _roleService.GetAllRoles())
+            {
+                bool selected = role.Id == ((int)Roles.Everyone).ToString();
+
+                result.PagePermissions.Add(new PagePermissionModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name,
+                    Type = PermissionType.View,
+                    Selected = selected
                 });
             }
 

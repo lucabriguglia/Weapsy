@@ -134,5 +134,21 @@ namespace Weapsy.Services.Identity
 
             return builder.ToString();
         }
+
+        public IList<IdentityRole> GetAllRoles()
+        {
+            var result = _roleManager.Roles.ToList();
+
+            var defaultRoles = Enum.GetValues(typeof(Roles)).Cast<Roles>();
+
+            foreach (var role in defaultRoles)
+                result.Add(new IdentityRole
+                {
+                    Id = ((int)role).ToString(),
+                    Name = role.ToString()
+                });
+
+            return result.OrderBy(x => x.Name).ToList();
+        }
     }
 }
