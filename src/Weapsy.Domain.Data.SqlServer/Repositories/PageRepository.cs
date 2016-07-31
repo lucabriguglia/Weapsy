@@ -8,6 +8,7 @@ using PageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Page;
 using PageLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageLocalisation;
 using PageModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModuleLocalisation;
+using PagePermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PagePermission;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
@@ -18,6 +19,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         private readonly DbSet<PageLocalisationDbEntity> _pageLocalisations;
         private readonly DbSet<PageModuleDbEntity> _pageModules;
         private readonly DbSet<PageModuleLocalisationDbEntity> _pageModuleLocalisations;
+        private readonly DbSet<PagePermissionDbEntity> _pagePermissions;
         private readonly IMapper _mapper;
 
         public PageRepository(WeapsyDbContext context, IMapper mapper)
@@ -27,41 +29,66 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             _pageLocalisations = context.Set<PageLocalisationDbEntity>();
             _pageModules = context.Set<PageModuleDbEntity>();
             _pageModuleLocalisations = context.Set<PageModuleLocalisationDbEntity>();
+            _pagePermissions = context.Set<PagePermissionDbEntity>();
             _mapper = mapper;
         }
 
         public Page GetById(Guid id)
         {
-            var dbEntity = _pages.Include(x => x.PageLocalisations).FirstOrDefault(x => x.Id == id);
+            var dbEntity = _pages
+                .Include(x => x.PageLocalisations)
+                .Include(x => x.PagePermissions)
+                .FirstOrDefault(x => x.Id == id);
+
             LoadPageModules(dbEntity);
+
             return dbEntity != null ? _mapper.Map<Page>(dbEntity) : null;
         }
 
         public Page GetById(Guid siteId, Guid id)
         {
-            var dbEntity = _pages.Include(x => x.PageLocalisations).FirstOrDefault(x => x.SiteId == siteId &&  x.Id == id);
+            var dbEntity = _pages
+                .Include(x => x.PageLocalisations)
+                .Include(x => x.PagePermissions)
+                .FirstOrDefault(x => x.SiteId == siteId &&  x.Id == id);
+
             LoadPageModules(dbEntity);
+
             return dbEntity != null ? _mapper.Map<Page>(dbEntity) : null;
         }
 
         public Page GetByName(Guid siteId, string name)
         {
-            var dbEntity = _pages.Include(x => x.PageLocalisations).FirstOrDefault(x => x.SiteId == siteId && x.Name == name);
+            var dbEntity = _pages
+                .Include(x => x.PageLocalisations)
+                .Include(x => x.PagePermissions)
+                .FirstOrDefault(x => x.SiteId == siteId && x.Name == name);
+
             LoadPageModules(dbEntity);
+
             return dbEntity != null ? _mapper.Map<Page>(dbEntity) : null;
         }
 
         public Page GetByUrl(Guid siteId, string url)
         {
-            var dbEntity = _pages.Include(x => x.PageLocalisations).FirstOrDefault(x => x.SiteId == siteId && x.Url == url);
+            var dbEntity = _pages
+                .Include(x => x.PageLocalisations)
+                .Include(x => x.PagePermissions)
+                .FirstOrDefault(x => x.SiteId == siteId && x.Url == url);
             LoadPageModules(dbEntity);
             return dbEntity != null ? _mapper.Map<Page>(dbEntity) : null;
         }
 
         public ICollection<Page> GetAll(Guid siteId)
         {
-            var dbEntities = _pages.Include(x => x.PageLocalisations).Where(x => x.SiteId == siteId).OrderBy(x => x.Name).ToList();
-            foreach (var dbEntity in dbEntities) LoadPageModules(dbEntity);
+            var dbEntities = _pages
+                .Include(x => x.PageLocalisations)
+                .Include(x => x.PagePermissions)
+                .Where(x => x.SiteId == siteId).OrderBy(x => x.Name).ToList();
+
+            foreach (var dbEntity in dbEntities)
+                LoadPageModules(dbEntity);
+
             return _mapper.Map<ICollection<Page>>(dbEntities);
         }
 
@@ -89,6 +116,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
             UpdatePageLocalisations(page.PageLocalisations);
             UpdatePageModules(page.PageModules);
+            UpdatePagePermissions(page.Id, page.PagePermissions);
 
             _context.SaveChanges();
         }
@@ -175,6 +203,33 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                     pageModuleLocalisationDbEntity.PageModuleId = pageModuleLocalisation.PageModuleId;
                     pageModuleLocalisationDbEntity.Title = pageModuleLocalisation.Title;
                 }
+            }
+        }
+
+        private void UpdatePagePermissions(Guid pageId, IEnumerable<PagePermission> pagePermissions)
+        {
+            var existingPagePermissionDbEntities = _pagePermissions.Where(x => x.PageId == pageId).ToList();
+
+            foreach (var pagePermissionDbEntity in existingPagePermissionDbEntities)
+            {
+                var pagePermission = pagePermissions
+                    .FirstOrDefault(x => x.PageId == pagePermissionDbEntity.PageId 
+                    && x.RoleId == pagePermissionDbEntity.RoleId 
+                    && x.Type == pagePermissionDbEntity.Type);
+
+                if (pagePermission == null)
+                    _pagePermissions.Remove(pagePermissionDbEntity);
+            }
+
+            foreach (var pagePermission in pagePermissions)
+            {
+                var existingPagePermissionDbEntity = existingPagePermissionDbEntities
+                    .FirstOrDefault(x => x.PageId == pagePermission.PageId 
+                    && x.RoleId == pagePermission.RoleId
+                    && x.Type == pagePermission.Type);
+
+                if (existingPagePermissionDbEntity == null)
+                    _pagePermissions.Add(_mapper.Map<PagePermissionDbEntity>(pagePermission));
             }
         }
 

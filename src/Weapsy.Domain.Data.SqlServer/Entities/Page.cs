@@ -19,6 +19,7 @@ namespace Weapsy.Domain.Data.SqlServer.Entities
 
         public ICollection<PageLocalisation> PageLocalisations { get; set; } = new HashSet<PageLocalisation>();
         public ICollection<PageModule> PageModules { get; set; } = new HashSet<PageModule>();
+        public ICollection<PagePermission> PagePermissions { get; set; } = new HashSet<PagePermission>();
 
         public virtual Site Site { get; set; }
     }

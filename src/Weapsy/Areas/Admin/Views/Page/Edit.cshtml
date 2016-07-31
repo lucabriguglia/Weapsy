@@ -20,7 +20,7 @@
     @await Html.PartialAsync("_Page")
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-12">
             <button id="save" type="submit" class="btn btn-primary" title="Save">Save</button>
             @if (Model.Status == Weapsy.Domain.Model.Pages.PageStatus.Hidden)
             {
@@ -36,7 +36,7 @@
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-12">
             <span id="savingPage" style="display:none;">
                 Saving...
             </span>

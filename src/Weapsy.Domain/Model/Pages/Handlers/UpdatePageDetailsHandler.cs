@@ -31,21 +31,6 @@ namespace Weapsy.Domain.Model.Pages.Handlers
             _pageRepository.Update(page);
 
             return page.Events;
-
-            return new List<IEvent>
-            {
-                new PageDetailsUpdated
-                {
-                    SiteId = page.SiteId,
-                    AggregateRootId = page.Id,
-                    Name = page.Name,
-                    Url = page.Url,
-                    Title = page.Title,
-                    MetaDescription = page.MetaDescription,
-                    MetaKeywords = page.MetaKeywords,
-                    PageLocalisations = page.PageLocalisations
-                }
-            };
         }
     }
 }

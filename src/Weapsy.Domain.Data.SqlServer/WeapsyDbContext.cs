@@ -21,6 +21,7 @@ namespace Weapsy.Domain.Data.SqlServer
         {
             if (ConnectionStrings != null && !string.IsNullOrEmpty(ConnectionStrings.DefaultConnection))
                 builder.UseSqlServer(ConnectionStrings.DefaultConnection);
+
             base.OnConfiguring(builder);
         }
 
@@ -63,6 +64,10 @@ namespace Weapsy.Domain.Data.SqlServer
             builder.Entity<PageModuleLocalisation>()
                 .ToTable("PageModuleLocalisation")
                 .HasKey(x => new { x.PageModuleId, x.LanguageId });
+
+            builder.Entity<PagePermission>()
+                .ToTable("PagePermission")
+                .HasKey(x => new { x.PageId, x.RoleId });
 
             builder.Entity<Site>()
                 .ToTable("Site");

@@ -115,7 +115,12 @@ namespace Weapsy.Domain.Model.Pages
 
             foreach (var permission in pagePermissions)
                 if (PagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
-                    PagePermissions.Add(permission);
+                    PagePermissions.Add(new PagePermission
+                    {
+                        PageId = Id,
+                        RoleId = permission.RoleId,
+                        Type = permission.Type
+                    });
         }
 
         private void AddLocalisation(PageLocalisation localisation)

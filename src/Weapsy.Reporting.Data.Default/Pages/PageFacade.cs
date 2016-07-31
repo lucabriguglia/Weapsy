@@ -227,6 +227,19 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 });
             }
 
+            foreach (var role in _roleService.GetAllRoles())
+            {
+                bool selected = page.PagePermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
+
+                result.PagePermissions.Add(new PagePermissionModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name,
+                    Type = PermissionType.View,
+                    Selected = selected
+                });
+            }
+
             return result;
         }
 
