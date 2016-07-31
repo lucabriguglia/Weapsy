@@ -9,6 +9,7 @@ using PageLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageLocal
 using PageModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModuleLocalisation;
 using PagePermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PagePermission;
+using PageModulePermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModulePermission;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
@@ -20,6 +21,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         private readonly DbSet<PageModuleDbEntity> _pageModules;
         private readonly DbSet<PageModuleLocalisationDbEntity> _pageModuleLocalisations;
         private readonly DbSet<PagePermissionDbEntity> _pagePermissions;
+        private readonly DbSet<PageModulePermissionDbEntity> _pageModulePermissions;
         private readonly IMapper _mapper;
 
         public PageRepository(WeapsyDbContext context, IMapper mapper)
@@ -30,6 +32,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             _pageModules = context.Set<PageModuleDbEntity>();
             _pageModuleLocalisations = context.Set<PageModuleLocalisationDbEntity>();
             _pagePermissions = context.Set<PagePermissionDbEntity>();
+            _pageModulePermissions = context.Set<PageModulePermissionDbEntity>();
             _mapper = mapper;
         }
 
@@ -171,6 +174,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                 {
                     //pageModuleDbEntity = _mapper.Map(pageModule, pageModuleDbEntity);
                     pageModuleDbEntity.Id = pageModule.Id;
+                    pageModuleDbEntity.InheritPermissions = pageModule.InheritPermissions;
                     pageModuleDbEntity.ModuleId = pageModule.ModuleId;
                     pageModuleDbEntity.PageId = pageModule.PageId;
                     pageModuleDbEntity.Status = pageModule.Status;
@@ -179,6 +183,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                     pageModuleDbEntity.Zone = pageModule.Zone;
 
                     UpdatePageModuleLocalisations(pageModule.PageModuleLocalisations);
+                    UpdatePageModulePermissions(pageModule.Id, pageModule.PageModulePermissions);
                 }
             }
         }
@@ -203,6 +208,33 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                     pageModuleLocalisationDbEntity.PageModuleId = pageModuleLocalisation.PageModuleId;
                     pageModuleLocalisationDbEntity.Title = pageModuleLocalisation.Title;
                 }
+            }
+        }
+
+        private void UpdatePageModulePermissions(Guid pageModuleId, IEnumerable<PageModulePermission> pageModulePermissions)
+        {
+            var existingPageModulePermissionDbEntities = _pageModulePermissions.Where(x => x.PageModuleId == pageModuleId).ToList();
+
+            foreach (var pageModulePermissionDbEntity in existingPageModulePermissionDbEntities)
+            {
+                var pageModulePermission = pageModulePermissions
+                    .FirstOrDefault(x => x.PageModuleId == pageModulePermissionDbEntity.PageModuleId
+                    && x.RoleId == pageModulePermissionDbEntity.RoleId
+                    && x.Type == pageModulePermissionDbEntity.Type);
+
+                if (pageModulePermission == null)
+                    _pageModulePermissions.Remove(pageModulePermissionDbEntity);
+            }
+
+            foreach (var pageModulePermission in pageModulePermissions)
+            {
+                var existingPageModulePermissionDbEntity = existingPageModulePermissionDbEntities
+                    .FirstOrDefault(x => x.PageModuleId == pageModulePermission.PageModuleId
+                    && x.RoleId == pageModulePermission.RoleId
+                    && x.Type == pageModulePermission.Type);
+
+                if (existingPageModulePermissionDbEntity == null)
+                    _pageModulePermissions.Add(_mapper.Map<PageModulePermissionDbEntity>(pageModulePermission));
             }
         }
 
@@ -239,6 +271,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             {
                 pageDbEntity.PageModules = _pageModules
                     .Include(y => y.PageModuleLocalisations)
+                    .Include(y => y.PageModulePermissions)
                     .Where(x => x.PageId == pageDbEntity.Id && x.Status != PageModuleStatus.Deleted)
                     .ToList();
             }

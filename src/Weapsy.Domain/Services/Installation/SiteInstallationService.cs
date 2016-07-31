@@ -119,7 +119,8 @@ namespace Weapsy.Domain.Services.Installation
                 {
                     new PagePermission
                     {
-                        RoleId = ((int)Roles.Everyone).ToString()
+                        RoleId = ((int)Roles.Everyone).ToString(),
+                        Type = PermissionType.View
                     }
                 }
             }, _createPageValidator);

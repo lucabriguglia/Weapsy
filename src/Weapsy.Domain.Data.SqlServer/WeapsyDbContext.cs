@@ -65,6 +65,10 @@ namespace Weapsy.Domain.Data.SqlServer
                 .ToTable("PageModuleLocalisation")
                 .HasKey(x => new { x.PageModuleId, x.LanguageId });
 
+            builder.Entity<PageModulePermission>()
+                .ToTable("PageModulePermission")
+                .HasKey(x => new { x.PageModuleId, x.RoleId });
+
             builder.Entity<PagePermission>()
                 .ToTable("PagePermission")
                 .HasKey(x => new { x.PageId, x.RoleId });

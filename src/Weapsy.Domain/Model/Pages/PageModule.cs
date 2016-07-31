@@ -15,6 +15,7 @@ namespace Weapsy.Domain.Model.Pages
         //public Guid ModuleTemplateId { get; private set; }
         public int SortOrder { get; private set; }
         public PageModuleStatus Status { get; private set; }
+        public bool InheritPermissions { get; private set; }
         public ICollection<PageModuleLocalisation> PageModuleLocalisations { get; private set; } = new List<PageModuleLocalisation>();
         public ICollection<PageModulePermission> PageModulePermissions { get; private set; } = new List<PageModulePermission>();
 
@@ -22,7 +23,7 @@ namespace Weapsy.Domain.Model.Pages
         {
         }
 
-        public PageModule(Guid pageId, Guid id, Guid moduleId, string title, string zone, int sortOrder, IList<string> viewPermissionRoleIds) : base(id)
+        public PageModule(Guid pageId, Guid id, Guid moduleId, string title, string zone, int sortOrder) : base(id)
         {
             PageId = pageId;
             ModuleId = moduleId;
@@ -30,6 +31,7 @@ namespace Weapsy.Domain.Model.Pages
             Zone = zone;
             SortOrder = sortOrder;
             Status = PageModuleStatus.Active;
+            InheritPermissions = true;
         }
 
         public void UpdateDetails(UpdatePageModuleDetails cmd)
@@ -39,9 +41,7 @@ namespace Weapsy.Domain.Model.Pages
             PageModuleLocalisations.Clear();
 
             foreach (var localisation in cmd.PageModuleLocalisations)
-            {
                 AddLocalisation(localisation.LanguageId, localisation.Title);
-            }
         }
 
         private void AddLocalisation(Guid languageId, string title)

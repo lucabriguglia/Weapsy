@@ -13,7 +13,9 @@ namespace Weapsy.Domain.Data.SqlServer.Entities
         public string Zone { get; set; }
         public int SortOrder { get; set; }
         public PageModuleStatus Status { get; set; }
+        public bool InheritPermissions { get; set; }
 
         public virtual ICollection<PageModuleLocalisation> PageModuleLocalisations { get; set; } = new List<PageModuleLocalisation>();
+        public virtual ICollection<PageModulePermission> PageModulePermissions { get; set; } = new List<PageModulePermission>();
     }
 }
