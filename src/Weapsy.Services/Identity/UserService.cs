@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Security.Claims;
 using Weapsy.Core.Identity;
 using System.Linq;
 using System;
+using System.Security.Principal;
 
 namespace Weapsy.Services.Identity
 {
@@ -71,7 +71,7 @@ namespace Weapsy.Services.Identity
             return model;
         }
 
-        public bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles)
+        public bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roles)
         {
             if (user == null || roles == null)
                 return false;

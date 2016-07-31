@@ -43,6 +43,7 @@ namespace Weapsy.Reporting.Pages
         public int SortOrder { get; set; }
         public ModuleTemplateModel Template { get; set; } = new ModuleTemplateModel();
         public ModuleTypeModel ModuleType { get; set; } = new ModuleTypeModel();
+        public IEnumerable<string> ViewRoles { get; set; }
     }
 
     public class ModuleTypeModel

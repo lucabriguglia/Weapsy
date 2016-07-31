@@ -46,6 +46,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             _roleService = roleService;
         }
 
+        // to be refactored before beta 1
         public PageViewModel GetPageViewModel(Guid siteId, Guid pageId, Guid languageId = new Guid())
         {
             return _cacheManager.Get(string.Format(CacheKeys.PageCacheKey, siteId, pageId), () =>
@@ -57,6 +58,9 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
                 var result = new PageViewModel();
 
+                var pageViewRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
+                var pageViewRoleNames = GetRoleNames(pageViewRoleIds);
+
                 result.Page = new PageModel
                 {
                     Id = page.Id,
@@ -65,7 +69,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                     Title = page.Title,
                     MetaDescription = page.MetaDescription,
                     MetaKeywords = page.MetaKeywords,
-                    ViewRoles = GetViewRoles(page)
+                    ViewRoles = pageViewRoleNames
                 };
 
                 result.Page.Template = new PageTemplateModel
@@ -73,16 +77,14 @@ namespace Weapsy.Reporting.Data.Default.Pages
                     ViewName = "Default"
                 };
 
-                result.Zones = GetZones(page);
+                result.Zones = GetZones(page, pageViewRoleNames);
 
                 return result;
             });
         }
 
-        private IList<string> GetViewRoles(Page page)
+        private IList<string> GetRoleNames(IEnumerable<string> roleIds)
         {
-            var roleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
-
             var result = new List<string>();
 
             foreach (var roleId in roleIds)
@@ -106,7 +108,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             return result;
         }
 
-        private ICollection<ZoneModel> GetZones(Page page)
+        private ICollection<ZoneModel> GetZones(Page page, IEnumerable<string> pageViewRoleNames)
         {
             var result = new List<ZoneModel>();
 
@@ -121,7 +123,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
                 foreach (var pageModule in zone.OrderBy(x => x.SortOrder))
                 {
-                    var moduleModel = BuildModuleModel(pageModule);
+                    var moduleModel = BuildModuleModel(pageModule, pageViewRoleNames);
 
                     if (moduleModel == null)
                         continue;
@@ -135,7 +137,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             return result;
         }
 
-        private ModuleModel BuildModuleModel(PageModule pageModule)
+        private ModuleModel BuildModuleModel(PageModule pageModule, IEnumerable<string> pageViewRoleNames)
         {
             var module = _moduleRepository.GetById(pageModule.ModuleId);
 
@@ -147,11 +149,24 @@ namespace Weapsy.Reporting.Data.Default.Pages
             if (moduleType == null)
                 return null;
 
+            IEnumerable<string> moduleViewRoleNames;
+
+            if (pageModule.InheritPermissions)
+            {
+                moduleViewRoleNames = pageViewRoleNames;
+            }
+            else
+            {
+                var moduleViewRoleIds = pageModule.PageModulePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
+                moduleViewRoleNames = GetRoleNames(moduleViewRoleIds);
+            } 
+
             var moduleModel = new ModuleModel
             {
                 Id = pageModule.ModuleId,
                 Title = pageModule.Title,
-                SortOrder = pageModule.SortOrder
+                SortOrder = pageModule.SortOrder,
+                ViewRoles = moduleViewRoleNames
             };
 
             moduleModel.ModuleType = new ModuleTypeModel
