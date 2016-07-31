@@ -87,10 +87,15 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
             foreach (var roleId in roleIds)
             {
-                if (Enum.IsDefined(typeof(Roles), roleId))
+                int id;
+
+                if (int.TryParse(roleId, out id))
                 {
-                    result.Add(Enum.GetName(typeof(Roles), roleId));
-                    continue;
+                    if (Enum.IsDefined(typeof(Roles), id))
+                    {
+                        result.Add(Enum.GetName(typeof(Roles), id));
+                        continue;
+                    }
                 }
 
                 var role = _roleManager.FindByIdAsync(roleId).Result;
@@ -260,7 +265,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
             foreach (var role in _roleService.GetAllRoles())
             {
-                bool selected = role.Id == ((int)Roles.Everyone).ToString();
+                bool selected = role.Name == DefaultRoleNames.Administrator;
 
                 result.PagePermissions.Add(new PagePermissionModel
                 {

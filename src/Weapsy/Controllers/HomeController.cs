@@ -8,6 +8,7 @@ using Weapsy.Reporting.Pages;
 using Weapsy.Mvc.Context;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Controllers
 {
@@ -15,14 +16,17 @@ namespace Weapsy.Controllers
     {
         private readonly ISiteFacade _siteFacade;
         private readonly IPageFacade _pageFacade;
+        private readonly IUserService _userService;
 
         public HomeController(ISiteFacade siteFacade, 
             IPageFacade pageFacade,
+            IUserService userService,
             IContextService contextService)
             : base(contextService)
         {
             _siteFacade = siteFacade;
             _pageFacade = pageFacade;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index()
@@ -41,7 +45,7 @@ namespace Weapsy.Controllers
 
             var viewModel = await Task.Run(() => _pageFacade.GetPageViewModel(SiteId, pageId, languageId));
 
-            if (viewModel == null /* || user does not have permission (log event) */)
+            if (viewModel == null || !_userService.IsUserAuthorized(User, viewModel.Page.ViewRoles))
                 return NotFound();
 
             ViewBag.Title = viewModel.Page.Title;

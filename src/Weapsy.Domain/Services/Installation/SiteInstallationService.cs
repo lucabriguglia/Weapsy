@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
+using Weapsy.Core.Identity;
 using Weapsy.Domain.Model.Languages;
 using Weapsy.Domain.Model.Languages.Commands;
 using Weapsy.Domain.Model.Menus;
@@ -112,6 +113,13 @@ namespace Weapsy.Domain.Services.Installation
                     new PageLocalisation
                     {
                         LanguageId = englishLanguageId
+                    }
+                },
+                PagePermissions = new List<PagePermission>
+                {
+                    new PagePermission
+                    {
+                        RoleId = ((int)Roles.Everyone).ToString()
                     }
                 }
             }, _createPageValidator);
