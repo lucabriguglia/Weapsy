@@ -4,7 +4,7 @@
     Layout = "";
 }
 
-<form id="editPageModuleForm" name="editPageModuleForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/Page/UpdateModule" data-ajax-loading="#savingModule" data-ajax-success="weapsy.admin.pages.redirectToIndex" class="form-horizontal validate-form" role="form">
+<form id="editPageModuleForm" name="editPageModuleForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/Page/UpdateModule" data-ajax-loading="#savingModule" data-ajax-success="weapsy.controlPanel.refresh" class="form-horizontal validate-form" role="form">
     <input type="hidden" id="pageId" name="pageId" value="@Model.PageId" />
     <input type="hidden" id="moduleId" name="moduleId" value="@Model.ModuleId" />
     <input type="hidden" id="pageModuleId" name="pageModuleId" value="@Model.PageModuleId" />
