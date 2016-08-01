@@ -37,9 +37,9 @@ namespace Weapsy.Services.Identity
             var totalRecords = _userManager.Users.Count();
 
             var q = _userManager.Users
+                .OrderBy(x => x.Email)
                 .Skip(query.StartIndex)
-                .Take(query.NumberOfUsers)
-                .OrderBy(x => x.Email);
+                .Take(query.NumberOfUsers);
 
             var viewModel = new UsersViewModel
             {
