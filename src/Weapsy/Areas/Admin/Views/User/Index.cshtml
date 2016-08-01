@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser>
+﻿@model Weapsy.Services.Identity.UsersViewModel
 
 @{
     ViewBag.Title = "Users";
@@ -20,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in Model)
+        @foreach (var user in Model.Users)
         {
             <tr>
                 <td>@user.Email</td>

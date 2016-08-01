@@ -32,7 +32,12 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var model = _userManager.Users.ToList();
+            var query = new UsersQuery
+            {
+                StartIndex = 0,
+                NumberOfUsers = 10
+            };
+            var model = _userService.GetUsersViewModel(query);
             return View(model);
         }
 
