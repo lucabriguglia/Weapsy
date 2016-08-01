@@ -6,69 +6,50 @@
     <script src="~/js/admin/users/index.js"></script>
 }
 
-<div class="page-header">
-    <h1>Users</h1>
-</div>
+<div style="display: none;" data-bind="visible: true">
+    <div class="page-header">
+        <h1>Users</h1>
+    </div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody data-bind="foreach: users">
-        <tr>
-            <td data-bind="text: email"></td>
-            <td class="text-center">
-                <a href="#" class="glyphicon glyphicon-edit options" title="Edit" data-bind="attr: { href: editUrl }"></a>
-                <a href="#" class="glyphicon glyphicon-lock options" title="Edit" data-bind="attr: { href: rolesUrl }"></a>
-                <a href="#" class="glyphicon glyphicon-remove options" title="Delete" data-bind="click: confirmUserToDelete" data-toggle="modal" data-target="#confirm-delete"></a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<div>
-    <ul class="pagination">
-        <li data-bind="css: { disabled: pageIndex() === 0 }">
-            <a href="#" data-bind="click: previousPage">Previous</a>
-        </li>
-        <!-- ko foreach: allPages -->
-        <li data-bind="css: { active: $data.pageNumber === (pageIndex() + 1) }">
-            <a href="#" data-bind="text: $data.pageNumber, click: function() { moveToPage($data.pageNumber - 1); }"></a>
-        </li>
-        <!-- /ko -->
-        <li data-bind="css: { disabled: pageIndex() === maxPageIndex() }">
-            <a href="#" data-bind="click: nextPage">Next</a>
-        </li>
-    </ul>
-</div>
-
-@*<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>&nbsp;</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model.Users)
-        {
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
             <tr>
-                <td>@user.Email</td>
+                <th>Email</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: users">
+            <tr>
+                <td data-bind="text: email"></td>
                 <td class="text-center">
-                    <a href="/admin/user/edit/@user.Id" class="glyphicon glyphicon-edit options" title="Edit"></a>
-                    <a href="/admin/user/roles/@user.Id" class="glyphicon glyphicon-lock options" title="Roles"></a>
-                    <a href="#" class="glyphicon glyphicon-remove options delete-user" data-toggle="modal" data-target="#confirm-delete" data-id="@user.Id" title="Delete"></a>
+                    <a href="#" class="glyphicon glyphicon-edit options" title="Edit" data-bind="attr: { href: editUrl }"></a>
+                    <a href="#" class="glyphicon glyphicon-lock options" title="Edit" data-bind="attr: { href: rolesUrl }"></a>
+                    <a href="#" class="glyphicon glyphicon-remove options" title="Delete" data-bind="click: confirmUserToDelete" data-toggle="modal" data-target="#confirm-delete"></a>
                 </td>
             </tr>
-        }
-    </tbody>
-</table>*@
+        </tbody>
+    </table>
 
-<div>
-    <a href="@Url.Action("Create", "User", new { area = "Admin" })" class="btn btn-primary" title="New User">New User</a>
+    <div>
+        <ul class="pagination">
+            <li data-bind="css: { disabled: pageIndex() === 0 }">
+                <a href="#" data-bind="click: previousPage">Previous</a>
+            </li>
+            <!-- ko foreach: allPages -->
+            <li data-bind="css: { active: $data.pageNumber === (pageIndex() + 1) }">
+                <a href="#" data-bind="text: $data.pageNumber, click: function() { moveToPage($data.pageNumber - 1); }"></a>
+            </li>
+            <!-- /ko -->
+            <li data-bind="css: { disabled: pageIndex() === maxPageIndex() }">
+                <a href="#" data-bind="click: nextPage">Next</a>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <a href="@Url.Action("Create", "User", new { area = "Admin" })" class="btn btn-primary" title="New User">New User</a>
+    </div>
+
+    @await Html.PartialAsync("_ConfirmDelete")
 </div>
 
-@await Html.PartialAsync("_ConfirmDelete")
