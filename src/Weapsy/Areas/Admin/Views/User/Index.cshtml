@@ -22,8 +22,8 @@
             <tr>
                 <td data-bind="text: email"></td>
                 <td class="text-center">
-                    <a href="#" class="glyphicon glyphicon-edit options" title="Edit" data-bind="attr: { href: editUrl }"></a>
-                    <a href="#" class="glyphicon glyphicon-lock options" title="Edit" data-bind="attr: { href: rolesUrl }"></a>
+                    @*<a href="#" class="glyphicon glyphicon-edit options" title="Edit" data-bind="attr: { href: editUrl }"></a>*@
+                    <a href="#" class="glyphicon glyphicon-lock options" title="Roles" data-bind="attr: { href: rolesUrl }"></a>
                     <a href="#" class="glyphicon glyphicon-remove options" title="Delete" data-bind="click: confirmUserToDelete" data-toggle="modal" data-target="#confirm-delete"></a>
                 </td>
             </tr>
@@ -46,9 +46,9 @@
         </ul>
     </div>
 
-    <div>
+    @*<div>
         <a href="@Url.Action("Create", "User", new { area = "Admin" })" class="btn btn-primary" title="New User">New User</a>
-    </div>
+    </div>*@
 
     @await Html.PartialAsync("_ConfirmDelete")
 </div>
