@@ -10,9 +10,10 @@
     <input type="hidden" id="pageModuleId" name="pageModuleId" value="@Model.PageModuleId" />
 
     <div class="form-group">
-        <label for="inheritPermissions" class="col-md-2 control-label">Inherit Permissions</label>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <input asp-for="InheritPermissions" type="checkbox" />
+            &nbsp;
+            <label for="inheritPermissions" class="ontrol-label">Inherit Permissions From Page</label>           
         </div>
     </div>
 
