@@ -13,6 +13,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
         IEventHandler<PageDetailsUpdated>,
         IEventHandler<PageHidden>,
         IEventHandler<PageModuleAdded>,
+        IEventHandler<PageModuleDetailsUpdated>,
         IEventHandler<PageModulesReordered>,
         IEventHandler<PageModuleRemoved>
     {
@@ -50,6 +51,11 @@ namespace Weapsy.Reporting.Data.Default.Pages
         }
 
         public async Task Handle(PageModuleAdded @event)
+        {
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+        }
+
+        public async Task Handle(PageModuleDetailsUpdated @event)
         {
             await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
