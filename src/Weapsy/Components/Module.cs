@@ -22,7 +22,7 @@ namespace Weapsy.Components
         public async Task<IViewComponentResult> InvokeAsync(ModuleModel model)
         {
             if (!_userService.IsUserAuthorized(User, model.ViewRoles))
-                return null;
+                return Content(string.Empty);
 
             var viewName = !string.IsNullOrEmpty(model.Template.ViewName)
                 ? model.Template.ViewName

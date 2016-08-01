@@ -6,7 +6,7 @@ using Weapsy.Domain.Model.Pages.Rules;
 
 namespace Weapsy.Domain.Model.Pages.Validators
 {
-    public class PageModuleLocalisationValidator : AbstractValidator<UpdatePageModuleDetails.PageModuleLocalisation>
+    public class PageModuleLocalisationValidator : AbstractValidator<PageModuleLocalisation>
     {
         private readonly IPageRules _pageRules;
         private readonly ILanguageRules _languageRules;

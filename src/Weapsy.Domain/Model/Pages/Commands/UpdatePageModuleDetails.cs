@@ -10,12 +10,8 @@ namespace Weapsy.Domain.Model.Pages.Commands
         public Guid PageId { get; set; }
         public Guid ModuleId { get; set; }
         public string Title { get; set; }
+        public bool InheritPermissions { get; set; }
         public List<PageModuleLocalisation> PageModuleLocalisations { get; set; } = new List<PageModuleLocalisation>();
-
-        public class PageModuleLocalisation
-        {
-            public Guid LanguageId { get; set; }
-            public string Title { get; set; }
-        }
+        public IList<PageModulePermission> PageModulePermissions { get; set; } = new List<PageModulePermission>();
     }
 }

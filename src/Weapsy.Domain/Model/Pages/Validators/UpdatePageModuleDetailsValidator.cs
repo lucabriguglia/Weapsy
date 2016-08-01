@@ -8,9 +8,9 @@ namespace Weapsy.Domain.Model.Pages.Validators
     public class UpdatePageModuleDetailsValidator : AbstractValidator<UpdatePageModuleDetails>
     {
         private readonly ISiteRules _siteRules;
-        private readonly IValidator<UpdatePageModuleDetails.PageModuleLocalisation> _localisationValidator;
+        private readonly IValidator<PageModuleLocalisation> _localisationValidator;
 
-        public UpdatePageModuleDetailsValidator(ISiteRules siteRules, IValidator<UpdatePageModuleDetails.PageModuleLocalisation> localisationValidator)
+        public UpdatePageModuleDetailsValidator(ISiteRules siteRules, IValidator<PageModuleLocalisation> localisationValidator)
         {
             _siteRules = siteRules;
             _localisationValidator = localisationValidator;

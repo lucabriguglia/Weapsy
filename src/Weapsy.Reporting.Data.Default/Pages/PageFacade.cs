@@ -164,6 +164,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             var moduleModel = new ModuleModel
             {
                 Id = pageModule.ModuleId,
+                PageModuleId = pageModule.Id,
                 Title = pageModule.Title,
                 SortOrder = pageModule.SortOrder,
                 ViewRoles = moduleViewRoleNames
@@ -283,6 +284,67 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 bool selected = role.Name == DefaultRoleNames.Administrator;
 
                 result.PagePermissions.Add(new PagePermissionModel
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name,
+                    Type = PermissionType.View,
+                    Selected = selected
+                });
+            }
+
+            return result;
+        }
+
+        public async Task<PageModuleAdminModel> GetModuleAdminModelAsync(Guid siteId, Guid pageId, Guid pageModuleId)
+        {
+            var page = _pageRepository.GetById(siteId, pageId);
+
+            if (page == null || page.Status == PageStatus.Deleted)
+                return null;
+
+            var pageModule = page.PageModules.FirstOrDefault(x => x.Id == pageModuleId);
+
+            if (pageModule == null || pageModule.Status == PageModuleStatus.Deleted)
+                return null;
+
+            var result = new PageModuleAdminModel
+            {
+                PageId = page.Id,
+                ModuleId = pageModule.ModuleId,
+                PageModuleId = pageModule.Id,
+                Title = pageModule.Title,
+                InheritPermissions = pageModule.InheritPermissions
+            };
+
+            var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
+
+            foreach (var language in languages)
+            {
+                var title = string.Empty;
+
+                var existingLocalisation = pageModule
+                    .PageModuleLocalisations
+                    .FirstOrDefault(x => x.LanguageId == language.Id);
+
+                if (existingLocalisation != null)
+                {
+                    title = existingLocalisation.Title;
+                }
+
+                result.PageModuleLocalisations.Add(new PageModuleLocalisationAdminModel
+                {
+                    PageModuleId = pageModule.Id,
+                    LanguageId = language.Id,
+                    LanguageName = language.Name,
+                    Title = title
+                });
+            }
+
+            foreach (var role in _roleService.GetAllRoles())
+            {
+                bool selected = pageModule.PageModulePermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
+
+                result.PageModulePermissions.Add(new PageModulePermissionModel
                 {
                     RoleId = role.Id,
                     RoleName = role.Name,

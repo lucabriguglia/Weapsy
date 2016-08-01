@@ -37,11 +37,36 @@ namespace Weapsy.Domain.Model.Pages
         public void UpdateDetails(UpdatePageModuleDetails cmd)
         {
             Title = cmd.Title;
+            InheritPermissions = cmd.InheritPermissions;
 
+            SetLocalisations(cmd.PageModuleLocalisations);
+            SetPermissions(cmd.PageModulePermissions);
+        }
+
+        private void SetLocalisations(List<PageModuleLocalisation> pageModuleLocalisations)
+        {
             PageModuleLocalisations.Clear();
 
-            foreach (var localisation in cmd.PageModuleLocalisations)
+            foreach (var localisation in pageModuleLocalisations)
                 AddLocalisation(localisation.LanguageId, localisation.Title);
+        }
+
+        public void SetPermissions(IList<PageModulePermission> permissions)
+        {
+            PageModulePermissions.Clear();
+
+            foreach (var permission in permissions)
+            {
+                if (PageModulePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
+                {
+                    PageModulePermissions.Add(new PageModulePermission
+                    {
+                        PageModuleId = Id,
+                        RoleId = permission.RoleId,
+                        Type = permission.Type
+                    });
+                }
+            }
         }
 
         private void AddLocalisation(Guid languageId, string title)
@@ -61,15 +86,6 @@ namespace Weapsy.Domain.Model.Pages
         {
             Zone = zone;
             SortOrder = sortOrder;
-        }
-
-        public void SetPermissions(IList<PageModulePermission> permissions)
-        {
-            PageModulePermissions.Clear();
-
-            foreach (var permission in permissions)
-                if (PageModulePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
-                    PageModulePermissions.Add(permission);
         }
 
         public void Delete()

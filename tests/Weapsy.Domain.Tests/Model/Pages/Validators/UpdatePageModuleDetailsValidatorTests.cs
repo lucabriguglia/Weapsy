@@ -6,6 +6,7 @@ using Weapsy.Domain.Model.Pages.Commands;
 using Weapsy.Domain.Model.Pages.Validators;
 using FluentValidation;
 using Weapsy.Domain.Model.Sites.Rules;
+using Weapsy.Domain.Model.Pages;
 
 namespace Weapsy.Domain.Tests.Pages.Validators
 {
@@ -21,7 +22,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             };
 
             var siteRulesMock = new Mock<ISiteRules>();
-            var localisationValidator = new Mock<IValidator<UpdatePageModuleDetails.PageModuleLocalisation>>();
+            var localisationValidator = new Mock<IValidator<PageModuleLocalisation>>();
             var validator = new UpdatePageModuleDetailsValidator(siteRulesMock.Object, localisationValidator.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
@@ -37,7 +38,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var siteRulesMock = new Mock<ISiteRules>();
             siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(false);
-            var localisationValidator = new Mock<IValidator<UpdatePageModuleDetails.PageModuleLocalisation>>();
+            var localisationValidator = new Mock<IValidator<PageModuleLocalisation>>();
             var validator = new UpdatePageModuleDetailsValidator(siteRulesMock.Object, localisationValidator.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
@@ -47,7 +48,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
         public void Should_have_error_when_page_title_is_too_long()
         {
             var siteRulesMock = new Mock<ISiteRules>();
-            var localisationValidator = new Mock<IValidator<UpdatePageModuleDetails.PageModuleLocalisation>>();
+            var localisationValidator = new Mock<IValidator<PageModuleLocalisation>>();
             var validator = new UpdatePageModuleDetailsValidator(siteRulesMock.Object, localisationValidator.Object);
 
             var title = "";

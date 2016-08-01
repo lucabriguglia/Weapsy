@@ -48,12 +48,21 @@ namespace Weapsy.Domain.Tests.Pages
                 PageId = pageId,
                 ModuleId = moduleId,
                 Title = "New Title",
-                PageModuleLocalisations = new List<UpdatePageModuleDetails.PageModuleLocalisation>
+                InheritPermissions = true,
+                PageModuleLocalisations = new List<PageModuleLocalisation>
                 {
-                    new UpdatePageModuleDetails.PageModuleLocalisation
+                    new PageModuleLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Title = "Title"
+                    }
+                },
+                PageModulePermissions = new List<PageModulePermission>
+                {
+                    new PageModulePermission
+                    {
+                        RoleId = "-1",
+                        Type = PermissionType.View
                     }
                 }
             };
@@ -77,6 +86,12 @@ namespace Weapsy.Domain.Tests.Pages
         }
 
         [Test]
+        public void Should_set_inherit_permissions()
+        {
+            Assert.AreEqual(_command.InheritPermissions, _pageModule.InheritPermissions);
+        }
+
+        [Test]
         public void Should_set_localisation_language_id()
         {
             Assert.AreEqual(_command.PageModuleLocalisations[0].LanguageId, _pageModule.PageModuleLocalisations.FirstOrDefault().LanguageId);
@@ -86,6 +101,18 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_localisation_title()
         {
             Assert.AreEqual(_command.PageModuleLocalisations[0].Title, _pageModule.PageModuleLocalisations.FirstOrDefault().Title);
+        }
+
+        [Test]
+        public void Should_set_permission_role_id()
+        {
+            Assert.AreEqual(_command.PageModulePermissions[0].RoleId, _pageModule.PageModulePermissions.FirstOrDefault().RoleId);
+        }
+
+        [Test]
+        public void Should_set_permission_type()
+        {
+            Assert.AreEqual(_command.PageModulePermissions[0].Type, _pageModule.PageModulePermissions.FirstOrDefault().Type);
         }
 
         [Test]
@@ -116,11 +143,11 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_throw_exception_if_language_is_already_added_to_page_module_localisations()
         {
             var languageId = Guid.NewGuid();
-            _command.PageModuleLocalisations.Add(new UpdatePageModuleDetails.PageModuleLocalisation
+            _command.PageModuleLocalisations.Add(new PageModuleLocalisation
             {
                 LanguageId = languageId
             });
-            _command.PageModuleLocalisations.Add(new UpdatePageModuleDetails.PageModuleLocalisation
+            _command.PageModuleLocalisations.Add(new PageModuleLocalisation
             {
                 LanguageId = languageId
             });

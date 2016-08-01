@@ -12,6 +12,7 @@ namespace Weapsy.Api
             CreateMap<PageAdminModel, CreatePage>().ForMember(x => x.PagePermissions, opt => opt.Ignore());
             CreateMap<PageLocalisationAdminModel, PageLocalisation>();
             CreateMap<PageAdminModel, UpdatePageDetails>().ForMember(x => x.PagePermissions, opt => opt.Ignore());
+            CreateMap<PageModuleAdminModel, UpdatePageModuleDetails>().ForMember(x => x.PageModulePermissions, opt => opt.Ignore());
         }
     }
 }

@@ -102,18 +102,9 @@ weapsy.controlPanel = (function ($) {
             $("#modal-title").empty();
             $("#modal-body").empty();
             var pageId = $("#page").attr("data-page-id");
-            var moduleId = $(this).closest(".module-data").attr("data-module-id");
+            var pageModuleId = $(this).closest(".module-data").attr("data-page-module-id");
             $("#modal-title").text("Module Settings");
-            $("#modal-body").load("/Admin/Module/Settings"/*, { pageId: pageId, moduleId: moduleId }*/);
-        });
-
-        $('.module-permissions').click(function () {
-            $("#modal-title").empty();
-            $("#modal-body").empty();
-            var pageId = $("#page").attr("data-page-id");
-            var moduleId = $(this).closest(".module-data").attr("data-module-id");
-            $("#modal-title").text("Module Permissions");
-            $("#modal-body").load("/Admin/Module/Permissions"/*, { pageId: pageId, moduleId: moduleId }*/);
+            $("#modal-body").load("/Admin/Page/EditModule", { pageId: pageId, pageModuleId: pageModuleId });
         });
 
         $('.module-remove').click(function () {

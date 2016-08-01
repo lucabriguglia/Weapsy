@@ -39,6 +39,7 @@ namespace Weapsy.Reporting.Pages
     public class ModuleModel
     {
         public Guid Id { get; set; }
+        public Guid PageModuleId { get; set; }
         public string Title { get; set; }
         public int SortOrder { get; set; }
         public ModuleTemplateModel Template { get; set; } = new ModuleTemplateModel();

@@ -47,7 +47,7 @@ namespace Weapsy.Areas.Admin.Controllers
             var command = _mapper.Map<CreatePage>(model);
             command.SiteId = SiteId;
             command.Id = Guid.NewGuid();
-            command.PagePermissions = GetSelectedPermissions(model.PagePermissions);
+            command.PagePermissions = GetSelectedPagePermissions(model.PagePermissions);
             await Task.Run(() => _commandSender.Send<CreatePage, Page>(command));
             return new NoContentResult();
         }
@@ -55,7 +55,10 @@ namespace Weapsy.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var model = await _pageFacade.GetAdminModelAsync(SiteId, id);
-            if (model == null) return NotFound();
+
+            if (model == null)
+                return NotFound();
+
             return View(model);
         }
 
@@ -63,24 +66,65 @@ namespace Weapsy.Areas.Admin.Controllers
         {
             var command = _mapper.Map<UpdatePageDetails>(model);
             command.SiteId = SiteId;
-            command.PagePermissions = GetSelectedPermissions(model.PagePermissions);
+            command.PagePermissions = GetSelectedPagePermissions(model.PagePermissions);
             await Task.Run(() => _commandSender.Send<UpdatePageDetails, Page>(command));
             return new NoContentResult();
         }
 
-        private List<PagePermission> GetSelectedPermissions(IList<PagePermissionModel> models)
+        private List<PagePermission> GetSelectedPagePermissions(IList<PagePermissionModel> models)
         {
             var result = new List<PagePermission>();
 
             foreach (var permission in models)
             {
                 if (permission.Selected)
+                {
                     result.Add(new PagePermission
                     {
                         PageId = permission.PageId,
                         RoleId = permission.RoleId,
                         Type = permission.Type
                     });
+                }
+            }
+
+            return result;
+        }
+
+        public async Task<IActionResult> EditModule(Guid pageId, Guid pageModuleId)
+        {
+            var model = await _pageFacade.GetModuleAdminModelAsync(SiteId, pageId, pageModuleId);
+
+            if (model == null)
+                return NotFound();
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> UpdateModule(PageModuleAdminModel model)
+        {
+            var command = _mapper.Map<UpdatePageModuleDetails>(model);
+            command.SiteId = SiteId;
+            command.PageModulePermissions = GetSelectedPageModulePermissions(model.PageModulePermissions);
+            await Task.Run(() => _commandSender.Send<UpdatePageModuleDetails, Page>(command));
+            return new NoContentResult();
+        }
+
+        private List<PageModulePermission> GetSelectedPageModulePermissions(IList<PageModulePermissionModel> models)
+        {
+            var result = new List<PageModulePermission>();
+
+            foreach (var permission in models)
+            {
+                if (permission.Selected)
+                {
+                    result.Add(new PageModulePermission
+                    {
+                        PageModuleId = permission.PageModuleId,
+                        RoleId = permission.RoleId,
+                        Type = permission.Type
+                    });
+                }
             }
 
             return result;

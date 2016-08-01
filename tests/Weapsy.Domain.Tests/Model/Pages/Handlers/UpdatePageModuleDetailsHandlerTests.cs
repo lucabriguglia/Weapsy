@@ -22,14 +22,14 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 PageId = Guid.NewGuid(),
                 ModuleId = Guid.NewGuid(),
                 Title = "Title",
-                PageModuleLocalisations = new List<UpdatePageModuleDetails.PageModuleLocalisation>
+                PageModuleLocalisations = new List<PageModuleLocalisation>
                 {
-                    new UpdatePageModuleDetails.PageModuleLocalisation
+                    new PageModuleLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Title = "Title"
                     },
-                    new UpdatePageModuleDetails.PageModuleLocalisation
+                    new PageModuleLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Title = "Title"
@@ -75,14 +75,14 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 PageId = pageId,
                 ModuleId = moduleId,
                 Title = "New Title",
-                PageModuleLocalisations = new List<UpdatePageModuleDetails.PageModuleLocalisation>
+                PageModuleLocalisations = new List<PageModuleLocalisation>
                 {
-                    new UpdatePageModuleDetails.PageModuleLocalisation
+                    new PageModuleLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Title = "Title"
                     },
-                    new UpdatePageModuleDetails.PageModuleLocalisation
+                    new PageModuleLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Title = "Title"
@@ -129,14 +129,14 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 PageId = pageId,
                 ModuleId = moduleId,
                 Title = "New Title",
-                PageModuleLocalisations = new List<UpdatePageModuleDetails.PageModuleLocalisation>
+                PageModuleLocalisations = new List<PageModuleLocalisation>
                 {
-                    new UpdatePageModuleDetails.PageModuleLocalisation
+                    new PageModuleLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Title = "Title"
                     },
-                    new UpdatePageModuleDetails.PageModuleLocalisation
+                    new PageModuleLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Title = "Title"

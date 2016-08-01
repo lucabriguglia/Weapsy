@@ -10,6 +10,7 @@ using Weapsy.Domain.Model.ModuleTypes;
 using Weapsy.Domain.Model.Pages;
 using Weapsy.Reporting.Data.Default.Pages;
 using Weapsy.Reporting.Pages;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Reporting.Data.Default.Tests
 {
@@ -36,6 +37,7 @@ namespace Weapsy.Reporting.Data.Default.Tests
             mapperMock.Setup(x => x.Map<PageAdminModel>(It.IsAny<Page>())).Returns(new PageAdminModel());
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>();
+            var roleServiceMock = new Mock<IRoleService>();
 
             _sut = new PageFacade(pageRepositoryMock.Object, 
                 languageRepositoryMock.Object,
@@ -43,7 +45,8 @@ namespace Weapsy.Reporting.Data.Default.Tests
                 moduleTypeRepositoryMock.Object,
                 cacheManagerMock.Object, 
                 mapperMock.Object,
-                roleManagerMock.Object);
+                roleManagerMock.Object,
+                roleServiceMock.Object);
         }
     }
 }

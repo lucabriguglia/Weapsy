@@ -11,5 +11,6 @@ namespace Weapsy.Reporting.Pages
         Task<IEnumerable<PageAdminListModel>> GetAllForAdminAsync(Guid siteId);
         Task<PageAdminModel> GetAdminModelAsync(Guid siteId, Guid pageId);
         Task<PageAdminModel> GetDefaultAdminModelAsync(Guid siteId);
+        Task<PageModuleAdminModel> GetModuleAdminModelAsync(Guid siteId, Guid pageId, Guid pageModuleId);
     }
 }
