@@ -30,6 +30,7 @@ using Weapsy.Domain.Model.Apps;
 using Weapsy.Domain.Model.Sites;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Weapsy
 {
@@ -212,10 +213,10 @@ namespace Weapsy
 
                             var url = page.Url;
 
-                            //var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+                            var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
 
-                            //if (pageLocalisation != null)
-                            //    url = !string.IsNullOrWhiteSpace(pageLocalisation.Url) ? pageLocalisation.Url : url;
+                            if (pageLocalisation != null)
+                                url = !string.IsNullOrWhiteSpace(pageLocalisation.Url) ? pageLocalisation.Url : url;
 
                             routes.MapRoute(
                                 name: $"{page.Name} - {language.Name}",
