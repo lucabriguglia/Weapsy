@@ -208,11 +208,18 @@ namespace Weapsy
                             if (tokens.ContainsKey("languageId"))
                                 tokens.Remove("languageId");
 
-                            tokens.Add("languageId", language.LanguageId);
+                            tokens.Add("languageId", language.Id);
+
+                            var url = page.Url;
+
+                            //var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+
+                            //if (pageLocalisation != null)
+                            //    url = !string.IsNullOrWhiteSpace(pageLocalisation.Url) ? pageLocalisation.Url : url;
 
                             routes.MapRoute(
                                 name: $"{page.Name} - {language.Name}",
-                                template: $"{language.Url}/{page.Url}",
+                                template: $"{language.Url}/{url}",
                                 defaults: defaults,
                                 constraints: constraints,
                                 dataTokens: tokens);

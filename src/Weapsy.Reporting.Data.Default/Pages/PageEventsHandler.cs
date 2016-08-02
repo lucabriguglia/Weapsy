@@ -72,7 +72,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
         private Task ClearPageCache(Guid siteId, Guid pageId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.PageCacheKey, siteId, pageId)));
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.PageCacheKey, siteId, pageId, Guid.Empty)));
         }
 
         private Task ClearMenuCache(Guid siteId)

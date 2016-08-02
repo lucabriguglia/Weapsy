@@ -49,14 +49,32 @@ namespace Weapsy.Reporting.Data.Default.Pages
             var pageViewRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
             var pageViewRoleNames = GetRoleNames(pageViewRoleIds);
 
+            var url = page.Url;
+            var title = page.Title;
+            var metaDescription = page.MetaDescription;
+            var metaKeywords = page.MetaKeywords;
+
+            if (languageId != Guid.Empty)
+            {
+                var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+
+                if (pageLocalisation != null)
+                {
+                    url = !string.IsNullOrWhiteSpace(pageLocalisation.Url) ? pageLocalisation.Url : url;
+                    title = !string.IsNullOrWhiteSpace(pageLocalisation.Title) ? pageLocalisation.Title : title;
+                    metaDescription = !string.IsNullOrWhiteSpace(pageLocalisation.MetaDescription) ? pageLocalisation.MetaDescription : metaDescription;
+                    metaKeywords = !string.IsNullOrWhiteSpace(pageLocalisation.MetaKeywords) ? pageLocalisation.MetaKeywords : metaKeywords;
+                }
+            }
+
             result.Page = new PageModel
             {
                 Id = page.Id,
                 Name = page.Name,
-                Url = page.Url,
-                Title = page.Title,
-                MetaDescription = page.MetaDescription,
-                MetaKeywords = page.MetaKeywords,
+                Url = url,
+                Title = title,
+                MetaDescription = metaDescription,
+                MetaKeywords = metaKeywords,
                 ViewRoles = pageViewRoleNames
             };
 

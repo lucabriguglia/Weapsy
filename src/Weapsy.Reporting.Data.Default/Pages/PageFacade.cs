@@ -53,7 +53,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
         public PageViewModel GetPageViewModel(Guid siteId, Guid pageId, Guid languageId = new Guid())
         {
-            return _cacheManager.Get(string.Format(CacheKeys.PageCacheKey, siteId, pageId), () =>
+            return _cacheManager.Get(string.Format(CacheKeys.PageCacheKey, siteId, pageId, languageId), () =>
             {
                 return _pageViewFactory.GetPageViewModel(siteId, pageId, languageId);
             });
