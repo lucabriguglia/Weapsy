@@ -17,7 +17,7 @@ namespace Weapsy.Components
             _menuFacade = menuFacade;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(string name, string view = "Default")
+        public async Task<IViewComponentResult> InvokeAsync(string name, string viewName = "Default")
         {
             var viewModel = await _menuFacade.GetByNameAsync(SiteId, name/*, SiteInfo.LanguageId*/);
             return View(viewModel);

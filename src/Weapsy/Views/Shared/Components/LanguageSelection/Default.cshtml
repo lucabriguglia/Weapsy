@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Weapsy.Reporting.Languages.LanguageViewModel>
+
+@if (Model.Count() > 1)
+{
+    <ul>
+        @foreach (var language in Model)
+        {
+            <li>
+                <a href="@language.Url" title="@language.Name">@language.Name</a>
+            </li>
+        }
+    </ul>
+}
