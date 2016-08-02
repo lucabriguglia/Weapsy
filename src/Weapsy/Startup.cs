@@ -211,12 +211,9 @@ namespace Weapsy
 
                             tokens.Add("languageId", language.Id);
 
-                            var url = page.Url;
-
                             var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
 
-                            if (pageLocalisation != null)
-                                url = !string.IsNullOrWhiteSpace(pageLocalisation.Url) ? pageLocalisation.Url : url;
+                            var url = pageLocalisation == null ? page.Url : pageLocalisation.Url;
 
                             routes.MapRoute(
                                 name: $"{page.Name} - {language.Name}",
