@@ -32,7 +32,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
             _mapper = mapper;
         }
 
-        public async Task<MenuViewModel> GetByNameAsync(Guid siteId, string name)
+        public async Task<MenuViewModel> GetByNameAsync(Guid siteId, string name, Guid languageId = new Guid())
         {
             return _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, siteId, name), () =>
             {
@@ -43,19 +43,32 @@ namespace Weapsy.Reporting.Data.Default.Menus
 
                 var menuModel = new MenuViewModel { Name = menu.Name };
 
-                menuModel.MenuItems = PopulateMenuItems(menu.MenuItems.Where(x => x.Status == MenuItemStatus.Active), Guid.Empty);
+                menuModel.MenuItems = PopulateMenuItems(menu.MenuItems.Where(x => x.Status == MenuItemStatus.Active), Guid.Empty, languageId);
 
                 return menuModel;
             });
         }
 
-        private List<MenuViewModel.MenuItem> PopulateMenuItems(IEnumerable<MenuItem> source, Guid parentId)
+        private List<MenuViewModel.MenuItem> PopulateMenuItems(IEnumerable<MenuItem> source, Guid parentId, Guid languageId)
         {
             var result = new List<MenuViewModel.MenuItem>();
 
             foreach (var menuItem in source.Where(x => x.ParentId == parentId).OrderBy(x => x.SortOrder).ToList())
             {
+                var text = menuItem.Text;
+                var title = menuItem.Title;
                 var url = "#";
+
+                if (languageId != Guid.Empty)
+                {
+                    var menuItemLocalisation = menuItem.MenuItemLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+
+                    if (menuItemLocalisation != null)
+                    {
+                        text = !string.IsNullOrWhiteSpace(menuItemLocalisation.Text) ? menuItemLocalisation.Text : text;
+                        title = !string.IsNullOrWhiteSpace(menuItemLocalisation.Title) ? menuItemLocalisation.Title : title;
+                    }
+                }
 
                 if (menuItem.MenuItemType == MenuItemType.Page)
                 {
@@ -73,12 +86,12 @@ namespace Weapsy.Reporting.Data.Default.Menus
 
                 var menuItemModel = new MenuViewModel.MenuItem
                 {
-                    Text = menuItem.Text,
-                    Title = menuItem.Title,
+                    Text = text,
+                    Title = title,
                     Url = url
                 };
 
-                menuItemModel.Children.AddRange(PopulateMenuItems(source, menuItem.Id));
+                menuItemModel.Children.AddRange(PopulateMenuItems(source, menuItem.Id, languageId));
 
                 result.Add(menuItemModel);
             }

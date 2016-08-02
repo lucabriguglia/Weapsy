@@ -10,5 +10,7 @@ namespace Weapsy.Mvc.Context
         public Guid ThemeId { get; set; }
         public string ThemeName { get; set; }
         public string ThemeFolder { get; set; }
+        public Guid LanguageId { get; set; }
+        public string LanguageCulture { get; set; }
     }
 }

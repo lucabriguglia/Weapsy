@@ -69,7 +69,10 @@ namespace Weapsy.DependencyConfigurator
             builder.RegisterType<ModuleTypeFacade>().As<IModuleTypeFacade>();
             builder.RegisterType<PageFacade>().As<IPageFacade>();
             builder.RegisterType<SiteFacade>().As<ISiteFacade>();
-            builder.RegisterType<ThemeFacade>().As<IThemeFacade>();                       
+            builder.RegisterType<ThemeFacade>().As<IThemeFacade>();
+
+            builder.RegisterType<PageViewFactory>().As<IPageViewFactory>();
+            builder.RegisterType<PageAdminFactory>().As<IPageAdminFactory>();
         }
     }
 }

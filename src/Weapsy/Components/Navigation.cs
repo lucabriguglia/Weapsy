@@ -19,7 +19,7 @@ namespace Weapsy.Components
 
         public async Task<IViewComponentResult> InvokeAsync(string name, string view = "Default")
         {
-            var viewModel = await _menuFacade.GetByNameAsync(SiteId, name);
+            var viewModel = await _menuFacade.GetByNameAsync(SiteId, name/*, SiteInfo.LanguageId*/);
             return View(viewModel);
         }
     }

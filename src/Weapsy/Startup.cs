@@ -103,6 +103,7 @@ namespace Weapsy
 
             var autoMapperConfig = new MapperConfiguration(cfg =>
             {
+                // temporary: all profiles will be added automatically 
                 cfg.AddProfile(new Api.AutoMapperProfile());
                 cfg.AddProfile(new Domain.Data.SqlServer.AutoMapperProfile());
                 cfg.AddProfile(new Reporting.Data.Default.AutoMapperProfile());
@@ -113,6 +114,7 @@ namespace Weapsy
 
             var builder = new ContainerBuilder();
 
+            // temporary: all modules will be added automatically 
             builder.RegisterModule(new WeapsyModule());
             builder.RegisterModule(new AutofacModule());
             builder.Populate(services);
