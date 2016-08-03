@@ -62,7 +62,6 @@ namespace Weapsy.Controllers
                 : Guid.Empty;
         }
 
-        [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(
