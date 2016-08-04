@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using System;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Themes;
+using Microsoft.AspNetCore.Localization;
 
 namespace Weapsy.Mvc.Context
 {
@@ -58,6 +61,10 @@ namespace Weapsy.Mvc.Context
 
         private LanguageInfo GetLanguageInfo()
         {
+            var requestedLanguageId = _httpContextAccessor.HttpContext.GetRouteValue(ContextKeys.LanguageKey);
+
+            var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+
             return new LanguageInfo();
         }
     }

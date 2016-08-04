@@ -31,8 +31,8 @@ namespace Weapsy.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Guid pageId = GetIdFromRouteData("pageId");
-            Guid languageId = GetIdFromRouteData("languageId");
+            Guid pageId = GetIdFromRouteData(ContextKeys.PageKey);
+            Guid languageId = GetIdFromRouteData(ContextKeys.LanguageKey);
 
             if (pageId == Guid.Empty)
             {
