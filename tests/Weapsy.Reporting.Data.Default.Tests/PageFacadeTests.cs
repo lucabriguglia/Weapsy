@@ -38,6 +38,8 @@ namespace Weapsy.Reporting.Data.Default.Tests
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>();
             var roleServiceMock = new Mock<IRoleService>();
+            var pageViewFactoryMock = new Mock<IPageViewFactory>();
+            var pageAdminFactoryMock = new Mock<IPageAdminFactory>();
 
             _sut = new PageFacade(pageRepositoryMock.Object, 
                 languageRepositoryMock.Object,
@@ -46,7 +48,9 @@ namespace Weapsy.Reporting.Data.Default.Tests
                 cacheManagerMock.Object, 
                 mapperMock.Object,
                 roleManagerMock.Object,
-                roleServiceMock.Object);
+                roleServiceMock.Object,
+                pageViewFactoryMock.Object,
+                pageAdminFactoryMock.Object);
         }
     }
 }

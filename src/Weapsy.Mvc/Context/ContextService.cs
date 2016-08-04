@@ -36,9 +36,29 @@ namespace Weapsy.Mvc.Context
 
             return new SiteInfo
             {
-                SiteId = site.Id,
-                SiteName = site.Name
+                Id = site.Id,
+                Name = site.Name
             };
+        }
+
+        private PageInfo GetPageInfo()
+        {
+            return new PageInfo();
+        }
+
+        private UserInfo GetUserInfo()
+        {
+            return new UserInfo();
+        }
+
+        private ThemeInfo GetThemeInfo()
+        {
+            return new ThemeInfo();
+        }
+
+        private LanguageInfo GetLanguageInfo()
+        {
+            return new LanguageInfo();
         }
     }
 }
