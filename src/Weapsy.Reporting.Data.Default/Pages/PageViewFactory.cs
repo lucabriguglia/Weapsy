@@ -37,6 +37,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             _roleService = roleService;
         }
 
+        // needs refactoring
         public PageViewModel GetPageViewModel(Guid siteId, Guid pageId, Guid languageId = new Guid())
         {
             var page = _pageRepository.GetById(siteId, pageId);
@@ -83,7 +84,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 ViewName = "Default"
             };
 
-            result.Zones = GetZones(page, pageViewRoleNames);
+            result.Zones = GetZones(page, pageViewRoleNames, languageId);
 
             return result;
         }
@@ -113,7 +114,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             return result;
         }
 
-        private ICollection<ZoneModel> GetZones(Page page, IEnumerable<string> pageViewRoleNames)
+        private ICollection<ZoneModel> GetZones(Page page, IEnumerable<string> pageViewRoleNames, Guid languageId)
         {
             var result = new List<ZoneModel>();
 
@@ -128,7 +129,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
                 foreach (var pageModule in zone.OrderBy(x => x.SortOrder))
                 {
-                    var moduleModel = BuildModuleModel(pageModule, pageViewRoleNames);
+                    var moduleModel = BuildModuleModel(pageModule, pageViewRoleNames, languageId);
 
                     if (moduleModel == null)
                         continue;
@@ -142,7 +143,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             return result;
         }
 
-        private ModuleModel BuildModuleModel(PageModule pageModule, IEnumerable<string> pageViewRoleNames)
+        private ModuleModel BuildModuleModel(PageModule pageModule, IEnumerable<string> pageViewRoleNames, Guid languageId)
         {
             var module = _moduleRepository.GetById(pageModule.ModuleId);
 
@@ -166,11 +167,25 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 moduleViewRoleNames = GetRoleNames(moduleViewRoleIds);
             }
 
+            var title = pageModule.Title;
+
+            if (languageId != Guid.Empty)
+            {
+                var pageModuleLocalisation = pageModule.PageModuleLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+
+                if (pageModuleLocalisation != null)
+                {
+                    title = !string.IsNullOrWhiteSpace(pageModuleLocalisation.Title) 
+                        ? pageModuleLocalisation.Title 
+                        : title;
+                }
+            }
+
             var moduleModel = new ModuleModel
             {
                 Id = pageModule.ModuleId,
                 PageModuleId = pageModule.Id,
-                Title = pageModule.Title,
+                Title = title,
                 SortOrder = pageModule.SortOrder,
                 ViewRoles = moduleViewRoleNames
             };
