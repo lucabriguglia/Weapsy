@@ -70,7 +70,7 @@ namespace Weapsy
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddDbContext<ApplicationDbContext>(options => 
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //services
@@ -179,7 +179,7 @@ namespace Weapsy
                 routes.MapRoute(
                     name: "area",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                
+
                 if (site != null)
                 {
                     foreach (var page in PageFacade.GetAllForAdminAsync(site.Id).Result)
@@ -195,7 +195,8 @@ namespace Weapsy
                         constraints.Add("data", @"[a-zA-Z0-9\-]*");
 
                         tokens.Add("namespaces", new[] { "Weapsy.Controllers" });
-                        tokens.Add("pageId", page.Id);
+                        tokens.Add(ContextKeys.PageKey, page.Id);
+                        //tokens.Add("languageId", default language id);
 
                         routes.MapRoute(
                             name: page.Name,
@@ -206,14 +207,16 @@ namespace Weapsy
 
                         foreach (var language in activeLanguages)
                         {
-                            if (tokens.ContainsKey("languageId"))
-                                tokens.Remove("languageId");
+                            if (tokens.ContainsKey(ContextKeys.LanguageKey))
+                                tokens.Remove(ContextKeys.LanguageKey);
 
-                            tokens.Add("languageId", language.Id);
+                            tokens.Add(ContextKeys.LanguageKey, language.Id);
 
                             var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
 
-                            var url = pageLocalisation == null ? page.Url : pageLocalisation.Url;
+                            var url = (pageLocalisation != null && !string.IsNullOrWhiteSpace(pageLocalisation.Url))
+                                ? pageLocalisation.Url 
+                                : page.Url;
 
                             routes.MapRoute(
                                 name: $"{page.Name} - {language.Name}",
