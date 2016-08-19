@@ -19,7 +19,7 @@ namespace Weapsy.Components
             _pageFacade = pageFacade;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(PageViewModel model)
+        public async Task<IViewComponentResult> InvokeAsync(Reporting.Pages.PageInfo model)
         {
             var viewName = !string.IsNullOrEmpty(model.Page.Template.ViewName)
                 ? model.Page.Template.ViewName

@@ -195,7 +195,7 @@ namespace Weapsy.Api
         [Route("{id}/view")]
         public async Task<IActionResult> ViewById(Guid id)
         {
-            var model = await Task.Run(() => _pageFacade.GetPageViewModel(SiteId, id));
+            var model = await Task.Run(() => _pageFacade.GetPageInfo(SiteId, id));
             if (model == null) return NotFound();
             return Ok(model);
         }
@@ -204,7 +204,7 @@ namespace Weapsy.Api
         [Route("{name}/view")]
         public async Task<IActionResult> ViewByName(string name)
         {
-            var model = await Task.Run(() => _pageFacade.GetPageViewModel(SiteId, name));
+            var model = await Task.Run(() => _pageFacade.GetPageInfo(SiteId, name));
             if (model == null) return NotFound();
             return Ok(model);
         }

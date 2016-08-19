@@ -43,7 +43,7 @@ namespace Weapsy.Controllers
                     pageId = homePage.Id;
             }
 
-            var viewModel = await Task.Run(() => _pageFacade.GetPageViewModel(SiteId, pageId, languageId));
+            var viewModel = await Task.Run(() => _pageFacade.GetPageInfo(SiteId, pageId, languageId));
 
             if (viewModel == null || !_userService.IsUserAuthorized(User, viewModel.Page.ViewRoles))
                 return NotFound();

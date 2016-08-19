@@ -6,8 +6,8 @@ namespace Weapsy.Reporting.Pages
 {
     public interface IPageFacade
     {
-        PageViewModel GetPageViewModel(Guid siteId, Guid pageId, Guid languageId = new Guid());
-        PageViewModel GetPageViewModel(Guid siteId, string name, Guid languageId = new Guid());
+        PageInfo GetPageInfo(Guid siteId, Guid pageId, Guid languageId = new Guid());
+        PageInfo GetPageInfo(Guid siteId, string name, Guid languageId = new Guid());
         Task<IEnumerable<PageAdminListModel>> GetAllForAdminAsync(Guid siteId);
         Task<PageAdminModel> GetAdminModelAsync(Guid siteId, Guid pageId);
         Task<PageAdminModel> GetDefaultAdminModelAsync(Guid siteId);

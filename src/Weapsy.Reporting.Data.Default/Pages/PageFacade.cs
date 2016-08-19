@@ -51,15 +51,15 @@ namespace Weapsy.Reporting.Data.Default.Pages
             _pageAdminFactory = pageAdminFactory;
         }
 
-        public PageViewModel GetPageViewModel(Guid siteId, Guid pageId, Guid languageId = new Guid())
+        public PageInfo GetPageInfo(Guid siteId, Guid pageId, Guid languageId = new Guid())
         {
-            return _cacheManager.Get(string.Format(CacheKeys.PageCacheKey, siteId, pageId, languageId), () =>
+            return _cacheManager.Get(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, languageId), () =>
             {
-                return _pageViewFactory.GetPageViewModel(siteId, pageId, languageId);
+                return _pageViewFactory.GetPageInfo(siteId, pageId, languageId);
             });
         }
 
-        public PageViewModel GetPageViewModel(Guid siteId, string name, Guid languageId = new Guid())
+        public PageInfo GetPageInfo(Guid siteId, string name, Guid languageId = new Guid())
         {
             throw new NotImplementedException();
         }

@@ -5,7 +5,7 @@ using Weapsy.Domain.Model.ModuleTypes;
 
 namespace Weapsy.Reporting.Pages
 {
-    public class PageViewModel
+    public class PageInfo
     {
         public PageModel Page { get; set; } = new PageModel();
         public ThemeModel Theme { get; set; } = new ThemeModel();

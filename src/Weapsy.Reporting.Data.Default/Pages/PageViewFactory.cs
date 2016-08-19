@@ -38,14 +38,14 @@ namespace Weapsy.Reporting.Data.Default.Pages
         }
 
         // needs refactoring
-        public PageViewModel GetPageViewModel(Guid siteId, Guid pageId, Guid languageId = new Guid())
+        public PageInfo GetPageInfo(Guid siteId, Guid pageId, Guid languageId = new Guid())
         {
             var page = _pageRepository.GetById(siteId, pageId);
 
             if (page == null || page.Status != PageStatus.Active)
                 return null;
 
-            var result = new PageViewModel();
+            var result = new PageInfo();
 
             var pageViewRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
             var pageViewRoleNames = GetRoleNames(pageViewRoleIds);
