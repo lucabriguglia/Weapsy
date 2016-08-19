@@ -24,12 +24,12 @@ namespace Weapsy.Reporting.Data.Default.Languages
             _mapper = mapper;
         }
 
-        public IEnumerable<LanguageViewModel> GetAllActive(Guid siteId)
+        public IEnumerable<LanguageInfo> GetAllActive(Guid siteId)
         {
             return _cacheManager.Get(string.Format(CacheKeys.LanguagesCacheKey, siteId), () =>
             {
                 var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
-                return _mapper.Map<IEnumerable<LanguageViewModel>>(languages);
+                return _mapper.Map<IEnumerable<LanguageInfo>>(languages);
             });
         }
 

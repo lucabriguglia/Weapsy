@@ -2,7 +2,7 @@
 
 namespace Weapsy.Reporting.Languages
 {
-    public class LanguageViewModel
+    public class LanguageInfo
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
