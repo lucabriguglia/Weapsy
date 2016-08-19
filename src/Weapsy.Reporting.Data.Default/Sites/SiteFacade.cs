@@ -26,14 +26,14 @@ namespace Weapsy.Reporting.Data.Default.Sites
             _mapper = mapper;
         }
 
-        public async Task<SiteSettings> GetSiteSettings(string name)
+        public async Task<SiteInfo> GetSiteInfo(string name)
         {
             var site = _siteRepository.GetByName(name);
 
             if (site == null || site.Status == SiteStatus.Deleted)
                 return null;
 
-            return _mapper.Map<SiteSettings>(site);
+            return _mapper.Map<SiteInfo>(site);
         }
 
         public async Task<SiteAdminModel> GetAdminModel(Guid id)

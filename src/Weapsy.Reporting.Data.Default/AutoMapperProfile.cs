@@ -33,7 +33,7 @@ namespace Weapsy.Reporting.Data.Default
             CreateMap<Page, PageAdminListModel>();
             CreateMap<PageLocalisation, PageLocalisationAdminListModel>();
             CreateMap<Site, SiteAdminModel>();
-            CreateMap<Site, SiteSettings>();
+            CreateMap<Site, SiteInfo>();
         }
     }
 }

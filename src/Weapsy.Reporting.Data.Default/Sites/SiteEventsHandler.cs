@@ -29,7 +29,7 @@ namespace Weapsy.Reporting.Data.Default.Sites
 
         private Task ClearCache(Guid siteId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.SiteSettingsCacheKey, siteId)));
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, siteId)));
         }
     }
 }

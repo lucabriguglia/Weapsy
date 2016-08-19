@@ -35,7 +35,7 @@ namespace Weapsy.Mvc.Context
 
         private SiteInfo GetSiteInfo()
         {
-            var site = _siteFacade.GetSiteSettings("Default").Result;
+            var site = _siteFacade.GetSiteInfo("Default").Result;
 
             return new SiteInfo
             {
