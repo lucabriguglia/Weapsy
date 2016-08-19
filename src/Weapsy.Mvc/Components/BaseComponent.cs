@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.Sites;
 
 namespace Weapsy.Mvc.Components
 {
@@ -13,7 +14,7 @@ namespace Weapsy.Mvc.Components
             _contextService = contextService;
         }
 
-        public SiteInfo SiteInfo => _contextService.GetCurrentSiteInfo();
+        public SiteInfo SiteInfo => _contextService.GetCurrentContextInfo().Site;
         public Guid SiteId => SiteInfo.Id;
     }
 }

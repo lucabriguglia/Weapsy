@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Weapsy.Reporting.Languages;
+using Weapsy.Reporting.Pages;
+using Weapsy.Reporting.Sites;
+using Weapsy.Reporting.Themes;
+using Weapsy.Reporting.Users;
 
 namespace Weapsy.Mvc.Context
 {
@@ -9,35 +13,5 @@ namespace Weapsy.Mvc.Context
         public UserInfo User { get; set; }
         public ThemeInfo Theme { get; set; }
         public LanguageInfo Language { get; set; }
-    }
-
-    public class SiteInfo
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class PageInfo
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class UserInfo
-    {
-        public Guid Id { get; set; }
-    }
-
-    public class ThemeInfo
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Folder { get; set; }
-    }
-
-    public class LanguageInfo
-    {
-        public Guid Id { get; set; }
-        public string Culture { get; set; }
     }
 }

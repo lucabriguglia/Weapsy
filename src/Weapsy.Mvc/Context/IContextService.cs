@@ -1,7 +1,9 @@
-﻿namespace Weapsy.Mvc.Context
+﻿using Weapsy.Reporting.Sites;
+
+namespace Weapsy.Mvc.Context
 {
     public interface IContextService
     {
-        SiteInfo GetCurrentSiteInfo();
+        ContextInfo GetCurrentContextInfo();
     }
 }

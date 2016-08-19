@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using System;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Themes;
 using Microsoft.AspNetCore.Localization;
+using Weapsy.Reporting.Languages;
 
 namespace Weapsy.Mvc.Context
 {
@@ -22,41 +22,29 @@ namespace Weapsy.Mvc.Context
             _themeFacade = themeFacade;
         }
 
-        private const string ContextKey = "Weapsy|SiteInfo";
+        private const string ContextInfoKey = "Weapsy|ContextInfo";
 
-        public SiteInfo GetCurrentSiteInfo()
+        public ContextInfo GetCurrentContextInfo()
         {
-            if (_httpContextAccessor.HttpContext.Items[ContextKey] == null)
+            if (_httpContextAccessor.HttpContext.Items[ContextInfoKey] == null)
             {
-                _httpContextAccessor.HttpContext.Items.Add(ContextKey, GetSiteInfo());
+                _httpContextAccessor.HttpContext.Items.Add(ContextInfoKey, GetContextInfo());
             }
-            return (SiteInfo)_httpContextAccessor.HttpContext.Items[ContextKey];
+            return (ContextInfo)_httpContextAccessor.HttpContext.Items[ContextInfoKey];
+        }
+
+        private ContextInfo GetContextInfo()
+        {
+            return new ContextInfo
+            {
+                Site = GetSiteInfo(),
+                Language = GetLanguageInfo()
+            };
         }
 
         private SiteInfo GetSiteInfo()
         {
-            var site = _siteFacade.GetSiteInfo("Default").Result;
-
-            return new SiteInfo
-            {
-                Id = site.Id,
-                Name = site.Name
-            };
-        }
-
-        private PageInfo GetPageInfo()
-        {
-            return new PageInfo();
-        }
-
-        private UserInfo GetUserInfo()
-        {
-            return new UserInfo();
-        }
-
-        private ThemeInfo GetThemeInfo()
-        {
-            return new ThemeInfo();
+            return _siteFacade.GetSiteInfo("Default").Result;
         }
 
         private LanguageInfo GetLanguageInfo()
