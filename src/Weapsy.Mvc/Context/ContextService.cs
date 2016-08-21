@@ -4,6 +4,9 @@ using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Themes;
 using Microsoft.AspNetCore.Localization;
 using Weapsy.Reporting.Languages;
+using Weapsy.Reporting.Pages;
+using System;
+using System.Linq;
 
 namespace Weapsy.Mvc.Context
 {
@@ -11,14 +14,20 @@ namespace Weapsy.Mvc.Context
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ISiteFacade _siteFacade;
+        private readonly IPageFacade _pageFacade;
+        private readonly ILanguageFacade _languageFacade;
         private readonly IThemeFacade _themeFacade;
 
         public ContextService(IHttpContextAccessor httpContextAccessor, 
             ISiteFacade siteFacade,
+            IPageFacade pageFacade,
+            ILanguageFacade languageFacade,
             IThemeFacade themeFacade)
         {
             _httpContextAccessor = httpContextAccessor;
             _siteFacade = siteFacade;
+            _pageFacade = pageFacade;
+            _languageFacade = languageFacade;
             _themeFacade = themeFacade;
         }
 
@@ -27,9 +36,8 @@ namespace Weapsy.Mvc.Context
         public ContextInfo GetCurrentContextInfo()
         {
             if (_httpContextAccessor.HttpContext.Items[ContextInfoKey] == null)
-            {
                 _httpContextAccessor.HttpContext.Items.Add(ContextInfoKey, GetContextInfo());
-            }
+
             return (ContextInfo)_httpContextAccessor.HttpContext.Items[ContextInfoKey];
         }
 
@@ -47,13 +55,37 @@ namespace Weapsy.Mvc.Context
             return _siteFacade.GetSiteInfo("Default").Result;
         }
 
+        private PageInfo GetPageInfo(Guid siteId)
+        {
+            Guid pageId = GetIdFromRouteData(ContextKeys.PageKey);
+            Guid languageId = GetIdFromRouteData(ContextKeys.LanguageKey);
+
+            if (pageId == Guid.Empty)
+            {
+                // pageId = Site.HomePageId
+                var pages = _pageFacade.GetAllForAdminAsync(siteId).Result;
+                var homePage = pages.FirstOrDefault(x => x.Name == "Home");
+                if (homePage != null)
+                    pageId = homePage.Id;
+            }
+
+            return _pageFacade.GetPageInfo(siteId, pageId, languageId);
+        }
+
         private LanguageInfo GetLanguageInfo()
         {
-            var requestedLanguageId = _httpContextAccessor.HttpContext.GetRouteValue(ContextKeys.LanguageKey);
+            var requestedLanguageId = GetIdFromRouteData(ContextKeys.LanguageKey);
 
             var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
             return new LanguageInfo();
+        }
+
+        private Guid GetIdFromRouteData(string key)
+        {
+            return _httpContextAccessor.HttpContext.GetRouteValue(key) != null
+                ? (Guid)_httpContextAccessor.HttpContext.GetRouteValue(key)
+                : Guid.Empty;
         }
     }
 }
