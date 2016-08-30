@@ -43,10 +43,15 @@ namespace Weapsy.Mvc.Context
 
         private ContextInfo GetContextInfo()
         {
+            var site = GetSiteInfo();
+            var language = GetLanguageInfo();
+            var page = GetPageInfo(site.Id, language.Id);
+
             return new ContextInfo
             {
-                Site = GetSiteInfo(),
-                Language = GetLanguageInfo()
+                Site = site,
+                Language = language,
+                Page = page
             };
         }
 
@@ -55,10 +60,9 @@ namespace Weapsy.Mvc.Context
             return _siteFacade.GetSiteInfo("Default").Result;
         }
 
-        private PageInfo GetPageInfo(Guid siteId)
+        private PageInfo GetPageInfo(Guid siteId, Guid languageId)
         {
             Guid pageId = GetIdFromRouteData(ContextKeys.PageKey);
-            Guid languageId = GetIdFromRouteData(ContextKeys.LanguageKey);
 
             if (pageId == Guid.Empty)
             {
@@ -76,9 +80,12 @@ namespace Weapsy.Mvc.Context
         {
             var requestedLanguageId = GetIdFromRouteData(ContextKeys.LanguageKey);
 
-            var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+            //var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
-            return new LanguageInfo();
+            return new LanguageInfo
+            {
+                Id = requestedLanguageId
+            };
         }
 
         private Guid GetIdFromRouteData(string key)

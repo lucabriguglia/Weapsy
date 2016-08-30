@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using System;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Pages;
@@ -31,35 +30,14 @@ namespace Weapsy.Controllers
 
         public async Task<IActionResult> Index()
         {
-            Guid pageId = GetIdFromRouteData(ContextKeys.PageKey);
-            Guid languageId = GetIdFromRouteData(ContextKeys.LanguageKey);
-
-            if (pageId == Guid.Empty)
-            {
-                // pageId = Site.HomePageId
-                var pages = await _pageFacade.GetAllForAdminAsync(SiteId);
-                var homePage = pages.FirstOrDefault(x => x.Name == "Home");
-                if (homePage != null)
-                    pageId = homePage.Id;
-            }
-
-            var viewModel = await Task.Run(() => _pageFacade.GetPageInfo(SiteId, pageId, languageId));
-
-            if (viewModel == null || !_userService.IsUserAuthorized(User, viewModel.Page.ViewRoles))
+            if (PageInfo == null || !_userService.IsUserAuthorized(User, PageInfo.Page.ViewRoles))
                 return NotFound();
 
-            ViewBag.Title = viewModel.Page.Title;
-            ViewBag.MetaDescription = viewModel.Page.MetaDescription;
-            ViewBag.MetaKeywords = viewModel.Page.MetaKeywords;
+            ViewBag.Title = PageInfo.Page.Title;
+            ViewBag.MetaDescription = PageInfo.Page.MetaDescription;
+            ViewBag.MetaKeywords = PageInfo.Page.MetaKeywords;
 
-            return View(viewModel);
-        }
-
-        private Guid GetIdFromRouteData(string key)
-        {
-            return RouteData.DataTokens.Keys.Count > 0 && RouteData.DataTokens[key] != null
-                ? (Guid)RouteData.DataTokens[key]
-                : Guid.Empty;
+            return View(PageInfo);
         }
 
         public IActionResult SetLanguage(string culture, string returnUrl)
