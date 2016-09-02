@@ -90,8 +90,8 @@ namespace Weapsy.Mvc.Context
 
         private Guid GetIdFromRouteData(string key)
         {
-            return _httpContextAccessor.HttpContext.GetRouteValue(key) != null
-                ? (Guid)_httpContextAccessor.HttpContext.GetRouteValue(key)
+            return _httpContextAccessor.HttpContext.GetRouteData().DataTokens[key] != null
+                ? (Guid)_httpContextAccessor.HttpContext.GetRouteData().DataTokens[key]
                 : Guid.Empty;
         }
     }
