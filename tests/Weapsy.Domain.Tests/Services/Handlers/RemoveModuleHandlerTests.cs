@@ -316,7 +316,7 @@ namespace Weapsy.Domain.Tests.Services.Handlers
 
             var moduleRepositoryMock = new Mock<IModuleRepository>();
             moduleRepositoryMock.Setup(x => x.GetCountByModuleId(command.ModuleId)).Returns(2);
-            moduleRepositoryMock.Setup(x => x.GetById(command.ModuleId)).Returns(new Module());
+            moduleRepositoryMock.Setup(x => x.GetById(command.SiteId, command.ModuleId)).Returns(new Module());
 
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
@@ -371,7 +371,7 @@ namespace Weapsy.Domain.Tests.Services.Handlers
 
             var moduleRepositoryMock = new Mock<IModuleRepository>();
             moduleRepositoryMock.Setup(x => x.GetCountByModuleId(command.ModuleId)).Returns(1);
-            moduleRepositoryMock.Setup(x => x.GetById(command.ModuleId)).Returns(new Module());
+            moduleRepositoryMock.Setup(x => x.GetById(command.SiteId, command.ModuleId)).Returns(new Module());
 
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);

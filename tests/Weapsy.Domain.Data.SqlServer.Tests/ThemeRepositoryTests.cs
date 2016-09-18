@@ -25,7 +25,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             _themeId1 = Guid.NewGuid();
             _themeId2 = Guid.NewGuid();
 
-            dbContext.Set<ThemeDbEntity>().AddRange(
+            dbContext.Set<ThemeDbEntity>().AddRange
+            (
                 new ThemeDbEntity
                 {
                     Id = _themeId1,
@@ -110,7 +111,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var newThemeDescription = "New Description 1";
 
-            var themeToUpdate = ThemeFactory.Theme(Guid.NewGuid(), "Name 1", newThemeDescription, "Folder 1");
+            var themeToUpdate = ThemeFactory.Theme(_themeId1, "Name 1", newThemeDescription, "Folder 1");
 
             _sut.Update(themeToUpdate);
 

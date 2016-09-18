@@ -36,10 +36,12 @@ namespace Weapsy.Domain.Services.Modules.Handlers
             //using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
             //{
                 var page = _pageRepository.GetById(cmd.SiteId, cmd.PageId);
-                if (page == null) throw new Exception("Page not found");
+                if (page == null)
+                    throw new Exception("Page not found");
 
                 var module = _moduleRepository.GetById(cmd.SiteId, cmd.ModuleId);
-                if (module == null) throw new Exception("Module not found");
+                if (module == null)
+                    throw new Exception("Module not found");
 
                 page.RemoveModule(new RemovePageModule
                 {
