@@ -4,6 +4,8 @@ using NUnit.Framework;
 using Weapsy.Domain.Model.Pages;
 using Weapsy.Domain.Model.Pages.Commands;
 using Weapsy.Domain.Model.Pages.Handlers;
+using Weapsy.Tests.Factories;
+using System.Collections.Generic;
 
 namespace Weapsy.Domain.Tests.Pages.Handlers
 {
@@ -33,13 +35,14 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var command = new SetPagePermissions
             {
                 SiteId = Guid.NewGuid(),
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                PagePermissions = new List<PagePermission>()
             };
 
-            var pageMock = new Mock<Page>();
+            var page = PageFactory.Page(command.SiteId, command.Id, "My Page");
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(pageMock.Object);
+            repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(page);
 
             var setPagePermissionsHandler = new SetPagePermissionsHandler(repositoryMock.Object);
 

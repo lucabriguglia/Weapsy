@@ -85,8 +85,8 @@ namespace Weapsy.Domain.Tests.Services.Handlers
             pageMock.Verify(x => x.RemoveModule(removePageModuleCommand, removePageModuleValidatorMock.Object));
         }
 
-        [Test]
         [Ignore("Non-virtual Member")]
+        [Test]       
         public void Should_update_page()
         {
             var command = new RemoveModule
@@ -217,8 +217,8 @@ namespace Weapsy.Domain.Tests.Services.Handlers
             moduleMock.Verify(x => x.Delete(deleteModuleCommand, deleteModuleValidatorMock.Object));
         }
 
-        [Test]
         [Ignore("Non-virtual Member")]
+        [Test]       
         public void Should_update_module_if_not_used_in_other_pages()
         {
             var siteId = Guid.NewGuid();

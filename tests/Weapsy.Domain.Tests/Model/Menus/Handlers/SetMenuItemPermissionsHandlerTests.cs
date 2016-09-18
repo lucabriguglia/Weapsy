@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Model.Menus;
 using Weapsy.Domain.Model.Menus.Commands;
 using Weapsy.Domain.Model.Menus.Handlers;
+using Weapsy.Tests.Factories;
 
 namespace Weapsy.Domain.Tests.Menus.Handlers
 {
@@ -33,13 +34,14 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
             var command = new SetMenuItemPermissions
             {
                 SiteId = Guid.NewGuid(),
-                MenuId = Guid.NewGuid()
+                MenuId = Guid.NewGuid(),
+                MenuItemId = Guid.NewGuid()
             };
 
-            var menuMock = new Mock<Menu>();
+            var menu = MenuFactory.Menu(command.SiteId, command.MenuId, "Name", "Item", "Item", command.MenuItemId);
 
             var repositoryMock = new Mock<IMenuRepository>();
-            repositoryMock.Setup(x => x.GetById(command.SiteId, command.MenuId)).Returns(menuMock.Object);
+            repositoryMock.Setup(x => x.GetById(command.SiteId, command.MenuId)).Returns(menu);
 
             var setMenuModulePermissionsHandler = new SetMenuItemPermissionsHandler(repositoryMock.Object);
 

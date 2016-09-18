@@ -69,7 +69,19 @@ namespace Weapsy.Domain.Model.Menus
 
         public void SetPermisisons(SetMenuItemPermissions cmd)
         {
-            throw new NotImplementedException();
+            MenuItemPermissions.Clear();
+
+            foreach (var permission in cmd.MenuItemPermissions)
+            {
+                if (MenuItemPermissions.FirstOrDefault(x => x.RoleId == permission.RoleId) == null)
+                {
+                    MenuItemPermissions.Add(new MenuItemPermission
+                    {
+                        MenuItemId = Id,
+                        RoleId = permission.RoleId
+                    });
+                }
+            }
         }
 
         public void Delete()
