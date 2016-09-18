@@ -118,18 +118,6 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         }
 
         [Test]
-        public void Should_have_error_when_module_type_edit_url_is_empty()
-        {
-            var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.EditUrl, new ModuleTypeDetails
-            {
-                EditUrl = string.Empty
-            });
-        }
-
-        [Test]
         public void Should_have_error_when_module_type_edit_url_is_too_long()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();

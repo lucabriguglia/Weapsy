@@ -22,7 +22,7 @@ namespace Weapsy.Domain.Model.Sites
         public Guid PageTemplateId { get; private set; }
         public Guid ModuleTemplateId { get; private set; }
         public SiteStatus Status { get; set; }
-        public ICollection<SiteLocalisation> SiteLocalisations { get; private set; }
+        public ICollection<SiteLocalisation> SiteLocalisations { get; private set; } = new List<SiteLocalisation>();
 
         public Site()
         {

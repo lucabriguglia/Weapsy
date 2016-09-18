@@ -35,7 +35,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
         }
 
         [Test]
-        public void Should_validate_command_and_save_new_email_account()
+        public void Should_validate_command_and_update_app()
         {
             var command = new UpdateAppDetails
             {
@@ -46,7 +46,8 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
             };
 
             var appRepositoryMock = new Mock<IAppRepository>();
-            appRepositoryMock.Setup(x => x.Create(It.IsAny<App>()));
+            appRepositoryMock.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new App());
+            appRepositoryMock.Setup(x => x.Update(It.IsAny<App>()));
 
             var validatorMock = new Mock<IValidator<UpdateAppDetails>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());

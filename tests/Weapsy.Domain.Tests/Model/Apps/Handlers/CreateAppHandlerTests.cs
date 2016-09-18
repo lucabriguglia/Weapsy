@@ -35,7 +35,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
         }
 
         [Test]
-        public void Should_validate_command_and_save_new_email_account()
+        public void Should_validate_command_and_save_new_app()
         {
             var command = new CreateApp
             {

@@ -32,6 +32,7 @@ namespace Weapsy.Domain.Tests.Pages
             {
                 SiteId = Guid.NewGuid(),
                 Id = pageId,
+                PageModuleId = pageModuleId,
                 PageModulePermissions = new List<PageModulePermission>
                 {
                     new PageModulePermission

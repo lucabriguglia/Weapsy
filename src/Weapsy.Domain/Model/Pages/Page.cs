@@ -270,7 +270,7 @@ namespace Weapsy.Domain.Model.Pages
 
         public void SetModulePermissions(SetPageModulePermissions cmd)
         {
-            var pageModule = PageModules.FirstOrDefault(x => x.ModuleId == cmd.PageModuleId);
+            var pageModule = PageModules.FirstOrDefault(x => x.Id == cmd.PageModuleId);
 
             if (pageModule == null || pageModule.Status == PageModuleStatus.Deleted)
                 throw new Exception("Page module not found.");
