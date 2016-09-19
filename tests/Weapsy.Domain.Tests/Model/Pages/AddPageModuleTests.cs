@@ -103,7 +103,7 @@ namespace Weapsy.Domain.Tests.Pages
         [Test]
         public void Should_set_page_module_id_in_page_module_added_event()
         {
-            Assert.AreEqual(_pageModule.Id, _event.AggregateRootId);
+            Assert.AreEqual(_pageModule.Id, _event.PageModuleId);
         }
 
         [Test]

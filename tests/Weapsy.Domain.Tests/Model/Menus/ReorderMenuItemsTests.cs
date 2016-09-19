@@ -167,7 +167,7 @@ namespace Weapsy.Domain.Tests.Menus
         public void Should_throw_exception_if_menu_item_is_deleted()
         {
             var menuItem = _menu.MenuItems.FirstOrDefault(x => x.Id == _command.MenuItems.FirstOrDefault().Id);
-            typeof(MenuItem).GetTypeInfo().GetProperty("MenuItemStatus").SetValue(menuItem, MenuItemStatus.Deleted);
+            typeof(MenuItem).GetTypeInfo().GetProperty("Status").SetValue(menuItem, MenuItemStatus.Deleted);
             var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
             validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             Assert.Throws<Exception>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));

@@ -199,7 +199,7 @@ namespace Weapsy.Domain.Tests.Menus
         public void Should_throw_exception_if_menu_item_is_deleted()
         {
             var menuItem = _menu.MenuItems.FirstOrDefault(x => x.Id == _command.MenuItemId);
-            typeof(MenuItem).GetTypeInfo().GetProperty("MenuItemStatus").SetValue(menuItem, MenuItemStatus.Deleted);
+            typeof(MenuItem).GetTypeInfo().GetProperty("Status").SetValue(menuItem, MenuItemStatus.Deleted);
             Assert.Throws<Exception>(() => _menu.UpdateMenuItem(_command, _validatorMock.Object));
         }
 
