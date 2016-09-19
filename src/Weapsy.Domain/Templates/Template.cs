@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Templates.Commands;
-using Weapsy.Domain.Model.Templates.Events;
+using Weapsy.Domain.Templates.Commands;
+using Weapsy.Domain.Templates.Events;
 
-namespace Weapsy.Domain.Model.Templates
+namespace Weapsy.Domain.Templates
 {
     public class Template : AggregateRoot
     {

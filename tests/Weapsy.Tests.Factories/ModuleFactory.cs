@@ -2,8 +2,8 @@
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
-using Weapsy.Domain.Model.Modules;
-using Weapsy.Domain.Model.Modules.Commands;
+using Weapsy.Domain.Modules;
+using Weapsy.Domain.Modules.Commands;
 
 namespace Weapsy.Tests.Factories
 {

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Themes;
+using Weapsy.Domain.Themes;
 using Weapsy.Reporting.Data.Default.Themes;
 using Weapsy.Reporting.Themes;
 

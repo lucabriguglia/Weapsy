@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using System;
-using Weapsy.Domain.Model.Languages.Rules;
-using Weapsy.Domain.Model.Menus.Commands;
+using Weapsy.Domain.Languages.Rules;
+using Weapsy.Domain.Menus.Commands;
 
-namespace Weapsy.Domain.Model.Menus.Validators
+namespace Weapsy.Domain.Menus.Validators
 {
     public class MenuItemLocalisationValidator : AbstractValidator<MenuItemDetails.MenuItemLocalisation>
     {

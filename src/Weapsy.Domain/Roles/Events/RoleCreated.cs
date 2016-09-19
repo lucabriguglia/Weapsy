@@ -1,6 +1,6 @@
 ﻿using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Roles.Events
+namespace Weapsy.Domain.Roles.Events
 {
     public class RoleCreated : Event
     {

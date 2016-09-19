@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Pages.Commands;
+using Weapsy.Domain.Pages.Commands;
 
-namespace Weapsy.Domain.Model.Pages
+namespace Weapsy.Domain.Pages
 {
     public class PageModule : Entity
     {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Apps.Text.Domain.Commands;
-using Weapsy.Domain.Model.Languages.Rules;
+using Weapsy.Domain.Languages.Rules;
 
 namespace Weapsy.Apps.Text.Domain.Model.Validators
 {

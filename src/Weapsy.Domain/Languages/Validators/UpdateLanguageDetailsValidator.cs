@@ -1,8 +1,8 @@
-﻿using Weapsy.Domain.Model.Languages.Commands;
-using Weapsy.Domain.Model.Languages.Rules;
-using Weapsy.Domain.Model.Sites.Rules;
+﻿using Weapsy.Domain.Languages.Commands;
+using Weapsy.Domain.Languages.Rules;
+using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Model.Languages.Validators
+namespace Weapsy.Domain.Languages.Validators
 {
     public class UpdateLanguageDetailsValidator : LanguageDetailsValidator<UpdateLanguageDetails>
     {

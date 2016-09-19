@@ -4,9 +4,9 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Pages;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Pages.Events;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Pages.Events;
 
 namespace Weapsy.Domain.Tests.Pages
 {

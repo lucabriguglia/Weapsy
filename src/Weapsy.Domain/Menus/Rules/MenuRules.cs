@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Weapsy.Domain.Model.Menus.Rules
+namespace Weapsy.Domain.Menus.Rules
 {
     public class MenuRules : IMenuRules
     {

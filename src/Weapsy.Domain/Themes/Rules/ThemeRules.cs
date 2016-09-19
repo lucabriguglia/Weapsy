@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Weapsy.Domain.Model.Themes.Rules
+namespace Weapsy.Domain.Themes.Rules
 {
     public class ThemeRules : IThemeRules
     {

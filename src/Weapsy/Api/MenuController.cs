@@ -4,11 +4,11 @@ using Weapsy.Mvc.Controllers;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Domain.Model.Menus.Commands;
-using Weapsy.Domain.Model.Menus;
+using Weapsy.Domain.Menus.Commands;
+using Weapsy.Domain.Menus;
 using Weapsy.Reporting.Menus;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.Menus.Rules;
+using Weapsy.Domain.Menus.Rules;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Api

@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using System;
-using Weapsy.Domain.Model.Apps;
-using Weapsy.Domain.Model.ModuleTypes;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
-using Weapsy.Domain.Model.Apps.Commands;
+using Weapsy.Domain.Apps;
+using Weapsy.Domain.ModuleTypes;
+using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Domain.Apps.Commands;
 
 namespace Weapsy.Domain.Services.Installation
 {

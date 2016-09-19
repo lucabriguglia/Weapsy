@@ -1,8 +1,8 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.EmailAccounts;
-using Weapsy.Domain.Model.EmailAccounts.Rules;
+using Weapsy.Domain.EmailAccounts;
+using Weapsy.Domain.EmailAccounts.Rules;
 
 namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Sites.Rules
+namespace Weapsy.Domain.Sites.Rules
 {
     public interface ISiteRules : IRules<Site>
     {

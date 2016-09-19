@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.EmailAccounts.Commands;
+using Weapsy.Domain.EmailAccounts.Commands;
 
-namespace Weapsy.Domain.Model.EmailAccounts.Handlers
+namespace Weapsy.Domain.EmailAccounts.Handlers
 {
     public class CreateEmailAccountHandler : ICommandHandler<CreateEmailAccount>
     {

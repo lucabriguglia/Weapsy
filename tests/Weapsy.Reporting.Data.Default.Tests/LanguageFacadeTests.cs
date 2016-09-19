@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Languages;
+using Weapsy.Domain.Languages;
 using Weapsy.Reporting.Data.Default.Languages;
 using Weapsy.Reporting.Languages;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.EmailAccounts.Events
+namespace Weapsy.Domain.EmailAccounts.Events
 {
     public class EmailAccountCreated : Event
     {

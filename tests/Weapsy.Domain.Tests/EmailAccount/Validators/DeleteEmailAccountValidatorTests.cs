@@ -2,9 +2,9 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.EmailAccounts.Commands;
-using Weapsy.Domain.Model.Sites.Rules;
-using Weapsy.Domain.Model.EmailAccounts.Validators;
+using Weapsy.Domain.EmailAccounts.Commands;
+using Weapsy.Domain.Sites.Rules;
+using Weapsy.Domain.EmailAccounts.Validators;
 
 namespace Weapsy.Domain.Tests.EmailAccounts.Validators
 {

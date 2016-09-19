@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Themes.Rules
+namespace Weapsy.Domain.Themes.Rules
 {
     public interface IThemeRules : IRules<Theme>
     {

@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Users
+﻿namespace Weapsy.Domain.Users
 {
     public enum UserStatus
     {

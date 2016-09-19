@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Themes;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.Themes.Rules;
-using Weapsy.Domain.Model.Themes.Commands;
-using Weapsy.Domain.Model.Themes;
+using Weapsy.Domain.Themes.Rules;
+using Weapsy.Domain.Themes.Commands;
+using Weapsy.Domain.Themes;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Api

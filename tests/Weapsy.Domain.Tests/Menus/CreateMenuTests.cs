@@ -4,9 +4,9 @@ using NUnit.Framework;
 using Moq;
 using FluentValidation;
 using FluentValidation.Results;
-using Weapsy.Domain.Model.Menus;
-using Weapsy.Domain.Model.Menus.Commands;
-using Weapsy.Domain.Model.Menus.Events;
+using Weapsy.Domain.Menus;
+using Weapsy.Domain.Menus.Commands;
+using Weapsy.Domain.Menus.Events;
 
 namespace Weapsy.Domain.Tests.Menus
 {

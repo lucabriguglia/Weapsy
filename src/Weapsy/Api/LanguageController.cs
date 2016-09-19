@@ -4,10 +4,10 @@ using Weapsy.Mvc.Controllers;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Languages;
-using Weapsy.Domain.Model.Languages.Commands;
-using Weapsy.Domain.Model.Languages;
+using Weapsy.Domain.Languages.Commands;
+using Weapsy.Domain.Languages;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.Languages.Rules;
+using Weapsy.Domain.Languages.Rules;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Api

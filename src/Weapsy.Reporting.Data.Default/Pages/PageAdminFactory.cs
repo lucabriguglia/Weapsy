@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Weapsy.Core.Identity;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 

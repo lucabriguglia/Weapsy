@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Templates.Commands;
+using Weapsy.Domain.Templates.Commands;
 using System;
 
-namespace Weapsy.Domain.Model.Templates.Handlers
+namespace Weapsy.Domain.Templates.Handlers
 {
     public class UpdateTemplateDetailsHandler : ICommandHandler<UpdateTemplateDetails>
     {

@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.ModuleTypes.Commands
+﻿namespace Weapsy.Domain.ModuleTypes.Commands
 {
     public class UpdateModuleTypeDetails : ModuleTypeDetails
     {

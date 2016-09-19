@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Menus.Commands;
+using Weapsy.Domain.Menus.Commands;
 
-namespace Weapsy.Domain.Model.Menus
+namespace Weapsy.Domain.Menus
 {
     public class MenuItem : Entity
     {

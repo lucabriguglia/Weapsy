@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentValidation;
-using Weapsy.Domain.Model.Sites.Commands;
-using Weapsy.Domain.Model.Sites.Rules;
+using Weapsy.Domain.Sites.Commands;
+using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Model.Sites.Validators
+namespace Weapsy.Domain.Sites.Validators
 {
     public class CreateSiteValidator : AbstractValidator<CreateSite>
     {

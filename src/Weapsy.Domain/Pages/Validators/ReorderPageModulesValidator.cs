@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using System;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Sites.Rules;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Model.Pages.Validators
+namespace Weapsy.Domain.Pages.Validators
 {
     public class ReorderPageModulesValidator : AbstractValidator<ReorderPageModules>
     {

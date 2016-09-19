@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Pages.Commands
+﻿namespace Weapsy.Domain.Pages.Commands
 {
     public class UpdatePageDetails : PageDetails
     {

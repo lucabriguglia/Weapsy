@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.EmailAccounts;
+using Weapsy.Domain.EmailAccounts;
 using Weapsy.Reporting.Data.Default.EmailAccounts;
 using Weapsy.Reporting.EmailAccounts;
 

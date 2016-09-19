@@ -1,7 +1,7 @@
 using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Languages.Events
+namespace Weapsy.Domain.Languages.Events
 {
     public class LanguageActivated : Event
     {

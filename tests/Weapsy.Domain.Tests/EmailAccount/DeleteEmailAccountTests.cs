@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.EmailAccounts;
-using Weapsy.Domain.Model.EmailAccounts.Events;
+using Weapsy.Domain.EmailAccounts;
+using Weapsy.Domain.EmailAccounts.Events;
 using System;
 using Moq;
-using Weapsy.Domain.Model.EmailAccounts.Commands;
+using Weapsy.Domain.EmailAccounts.Commands;
 using FluentValidation;
 using FluentValidation.Results;
 

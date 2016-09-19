@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Domain.Model.EmailAccounts;
+using Weapsy.Domain.EmailAccounts;
 
 namespace Weapsy.Reporting.EmailAccounts
 {

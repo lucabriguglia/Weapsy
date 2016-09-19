@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Weapsy.Domain.Model.Languages.Rules
+namespace Weapsy.Domain.Languages.Rules
 {
     public class LanguageRules : ILanguageRules
     {

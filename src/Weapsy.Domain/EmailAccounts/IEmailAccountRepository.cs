@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.EmailAccounts
+namespace Weapsy.Domain.EmailAccounts
 {
     public interface IEmailAccountRepository : IRepository<EmailAccount>
     {

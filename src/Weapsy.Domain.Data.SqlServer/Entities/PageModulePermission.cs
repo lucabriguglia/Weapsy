@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Pages;
 
 namespace Weapsy.Domain.Data.SqlServer.Entities
 {

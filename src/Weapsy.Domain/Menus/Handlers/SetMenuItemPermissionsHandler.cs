@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Menus.Commands;
+using Weapsy.Domain.Menus.Commands;
 using System;
 
-namespace Weapsy.Domain.Model.Menus.Handlers
+namespace Weapsy.Domain.Menus.Handlers
 {
     public class SetMenuItemPermissionsHandler : ICommandHandler<SetMenuItemPermissions>
     {

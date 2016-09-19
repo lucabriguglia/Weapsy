@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Themes.Commands;
+using Weapsy.Domain.Themes.Commands;
 
-namespace Weapsy.Domain.Model.Themes.Handlers
+namespace Weapsy.Domain.Themes.Handlers
 {
     public class HideThemeHandler : ICommandHandler<HideTheme>
     {

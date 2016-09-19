@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Templates.Commands;
+using Weapsy.Domain.Templates.Commands;
 
-namespace Weapsy.Domain.Model.Templates.Handlers
+namespace Weapsy.Domain.Templates.Handlers
 {
     public class DeleteTemplateHandler : ICommandHandler<DeleteTemplate>
     {

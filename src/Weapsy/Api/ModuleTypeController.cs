@@ -2,9 +2,9 @@
 using System;
 using System.Threading.Tasks;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.ModuleTypes;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
-using Weapsy.Domain.Model.ModuleTypes.Rules;
+using Weapsy.Domain.ModuleTypes;
+using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes.Rules;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.ModuleTypes;

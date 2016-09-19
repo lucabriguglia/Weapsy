@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Domain.Model.Modules.Rules
+namespace Weapsy.Domain.Modules.Rules
 {
     public class ModuleRules : IModuleRules
     {

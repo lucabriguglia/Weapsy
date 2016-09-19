@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Modules.Commands;
+using Weapsy.Domain.Modules.Commands;
 
-namespace Weapsy.Domain.Model.Modules.Handlers
+namespace Weapsy.Domain.Modules.Handlers
 {
     public class CreateModuleHandler : ICommandHandler<CreateModule>
     {

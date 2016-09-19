@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Pages.Commands;
+using Weapsy.Domain.Pages.Commands;
 
-namespace Weapsy.Domain.Model.Pages.Handlers
+namespace Weapsy.Domain.Pages.Handlers
 {
     public class SetPagePermissionsHandler : ICommandHandler<SetPagePermissions>
     {

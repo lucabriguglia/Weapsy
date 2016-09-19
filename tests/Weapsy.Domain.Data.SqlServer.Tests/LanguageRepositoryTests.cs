@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using Weapsy.Domain.Data.SqlServer.Repositories;
-using Weapsy.Domain.Model.Languages;
+using Weapsy.Domain.Languages;
 using Weapsy.Tests.Factories;
 using LanguageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Language;
 

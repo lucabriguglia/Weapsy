@@ -2,9 +2,9 @@
 using System;
 using System.Threading.Tasks;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.Pages;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Pages.Rules;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Pages.Rules;
 using Weapsy.Domain.Services.Modules.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;

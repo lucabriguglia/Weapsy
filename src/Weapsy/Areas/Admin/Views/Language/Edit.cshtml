@@ -22,11 +22,11 @@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <button id="save" type="submit" class="btn btn-primary" title="Save">Save</button>
-            @if (Model.Status == Weapsy.Domain.Model.Languages.LanguageStatus.Hidden)
+            @if (Model.Status == Weapsy.Domain.Languages.LanguageStatus.Hidden)
             {
                 <a id="activateLanguage" class="btn btn-primary" title="Activate">Activate</a>
             }
-            else if (Model.Status == Weapsy.Domain.Model.Languages.LanguageStatus.Active)
+            else if (Model.Status == Weapsy.Domain.Languages.LanguageStatus.Active)
             {
                 <a id="hideLanguage" class="btn btn-primary" title="Hide">Hide</a>
             }

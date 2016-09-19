@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Apps.Commands;
-using Weapsy.Domain.Model.Apps.Events;
+using Weapsy.Domain.Apps.Commands;
+using Weapsy.Domain.Apps.Events;
 
-namespace Weapsy.Domain.Model.Apps
+namespace Weapsy.Domain.Apps
 {
     public class App : AggregateRoot
     {

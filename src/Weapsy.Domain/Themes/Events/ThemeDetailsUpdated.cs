@@ -1,6 +1,6 @@
 ﻿using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Themes.Events
+namespace Weapsy.Domain.Themes.Events
 {
     public class ThemeDetailsUpdated : Event
     {

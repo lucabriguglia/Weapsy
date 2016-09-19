@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.EmailAccounts.Commands
+﻿namespace Weapsy.Domain.EmailAccounts.Commands
 {
     public class CreateEmailAccount : EmailAccountDetails
     {

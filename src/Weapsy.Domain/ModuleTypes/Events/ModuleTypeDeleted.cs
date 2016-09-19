@@ -1,6 +1,6 @@
 ﻿using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.ModuleTypes.Events
+namespace Weapsy.Domain.ModuleTypes.Events
 {
     public class ModuleTypeDeleted : Event
     {

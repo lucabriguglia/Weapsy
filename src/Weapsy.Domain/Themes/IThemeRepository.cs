@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Themes
+namespace Weapsy.Domain.Themes
 {
     public interface IThemeRepository : IRepository<Theme>
     {

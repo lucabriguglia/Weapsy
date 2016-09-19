@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Sites.Commands
+namespace Weapsy.Domain.Sites.Commands
 {
     public class UpdateSiteDetails : ICommand
     {

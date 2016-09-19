@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Users
+namespace Weapsy.Domain.Users
 {
     public interface IUserRepository : IRepository<User>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Menus
+namespace Weapsy.Domain.Menus
 {
     public class MenuItemPermission : ValueObject
     {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Apps;
-using Weapsy.Domain.Model.ModuleTypes;
+using Weapsy.Domain.Apps;
+using Weapsy.Domain.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes;
 
 namespace Weapsy.Reporting.Data.Default.ModuleTypes

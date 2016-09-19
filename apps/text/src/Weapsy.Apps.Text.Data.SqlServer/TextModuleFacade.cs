@@ -3,8 +3,8 @@ using System.Linq;
 using Weapsy.Apps.Text.Data.SqlServer;
 using Weapsy.Apps.Text.Domain;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Modules;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Modules;
 
 namespace Weapsy.Apps.Text.Reporting.Data.Default
 {

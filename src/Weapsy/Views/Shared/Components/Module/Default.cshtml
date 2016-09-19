@@ -15,11 +15,11 @@
     @Model.Title
     </div>*@
     <div class="panel-body">
-        @if (Model.ModuleType.ViewType == Weapsy.Domain.Model.ModuleTypes.ViewType.ViewComponent)
+        @if (Model.ModuleType.ViewType == Weapsy.Domain.ModuleTypes.ViewType.ViewComponent)
         {
             @await Component.InvokeAsync(Model.ModuleType.ViewName, new { model = Model })
         }
-        else if (Model.ModuleType.ViewType == Weapsy.Domain.Model.ModuleTypes.ViewType.View)
+        else if (Model.ModuleType.ViewType == Weapsy.Domain.ModuleTypes.ViewType.View)
         {
             // partial view
         }

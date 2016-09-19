@@ -4,9 +4,9 @@ using NUnit.Framework;
 using Moq;
 using FluentValidation;
 using FluentValidation.Results;
-using Weapsy.Domain.Model.ModuleTypes;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
-using Weapsy.Domain.Model.ModuleTypes.Events;
+using Weapsy.Domain.ModuleTypes;
+using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes.Events;
 
 namespace Weapsy.Domain.Tests.ModuleTypes
 {

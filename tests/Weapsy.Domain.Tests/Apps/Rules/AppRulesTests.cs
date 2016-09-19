@@ -1,8 +1,8 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Apps;
-using Weapsy.Domain.Model.Apps.Rules;
+using Weapsy.Domain.Apps;
+using Weapsy.Domain.Apps.Rules;
 
 namespace Weapsy.Domain.Tests.Apps.Handlers
 {

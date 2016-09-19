@@ -1,7 +1,7 @@
-﻿using Weapsy.Domain.Model.ModuleTypes.Commands;
-using Weapsy.Domain.Model.ModuleTypes.Rules;
+﻿using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes.Rules;
 
-namespace Weapsy.Domain.Model.ModuleTypes.Validators
+namespace Weapsy.Domain.ModuleTypes.Validators
 {
     public class UpdateModuleTypeDetailsValidator : ModuleTypeDetailsValidator<UpdateModuleTypeDetails>
     {

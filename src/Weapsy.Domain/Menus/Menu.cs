@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Menus.Commands;
-using Weapsy.Domain.Model.Menus.Events;
+using Weapsy.Domain.Menus.Commands;
+using Weapsy.Domain.Menus.Events;
 using System.Linq;
 
-namespace Weapsy.Domain.Model.Menus
+namespace Weapsy.Domain.Menus
 {
     public class Menu : AggregateRoot
     {

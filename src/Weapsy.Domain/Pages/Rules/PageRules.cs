@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Weapsy.Domain.Model.Pages.Rules
+namespace Weapsy.Domain.Pages.Rules
 {
     public class PageRules : IPageRules
     {

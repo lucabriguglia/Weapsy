@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Templates
+﻿namespace Weapsy.Domain.Templates
 {
     public enum TemplateStatus
     {

@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.ModuleTypes
+﻿namespace Weapsy.Domain.ModuleTypes
 {
     public enum ModuleTypeStatus
     {

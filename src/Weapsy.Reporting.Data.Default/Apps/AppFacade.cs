@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Weapsy.Domain.Model.Apps;
+using Weapsy.Domain.Apps;
 using Weapsy.Reporting.Apps;
 
 namespace Weapsy.Reporting.Data.Default.Apps

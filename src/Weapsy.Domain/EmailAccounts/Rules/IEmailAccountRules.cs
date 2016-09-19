@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.EmailAccounts.Rules
+namespace Weapsy.Domain.EmailAccounts.Rules
 {
     public interface IEmailAccountRules : IRules<EmailAccount>
     {

@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Mvc.Context;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
-using Weapsy.Domain.Model.ModuleTypes;
+using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes;
 
 namespace Weapsy.Areas.Admin.Controllers
 {

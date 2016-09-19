@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Modules.Commands
+namespace Weapsy.Domain.Modules.Commands
 {
     public class CreateModule : ICommand
     {

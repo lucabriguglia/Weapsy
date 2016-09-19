@@ -10,14 +10,14 @@
                 @if (!string.IsNullOrWhiteSpace(Model.ModuleType.EditUrl))
                 {
                     <li>
-                        @if (Model.ModuleType.EditType == Weapsy.Domain.Model.ModuleTypes.EditType.Modal)
+                        @if (Model.ModuleType.EditType == Weapsy.Domain.ModuleTypes.EditType.Modal)
                         {
                             <a href="#" class="module-edit" data-toggle="modal" data-target="#modal-admin" title="Edit">
                                 <i class="glyphicon glyphicon-edit"></i>
                                 <span>Edit</span>
                             </a>
                         }
-                        else if (Model.ModuleType.EditType == Weapsy.Domain.Model.ModuleTypes.EditType.Page)
+                        else if (Model.ModuleType.EditType == Weapsy.Domain.ModuleTypes.EditType.Page)
                         {
                             <a href="@Model.ModuleType.EditUrl" class="module-edit" title="Edit">
                                 <i class="glyphicon glyphicon-edit"></i>

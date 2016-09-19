@@ -2,9 +2,9 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Themes.Commands;
-using Weapsy.Domain.Model.Themes.Validators;
-using Weapsy.Domain.Model.Themes.Rules;
+using Weapsy.Domain.Themes.Commands;
+using Weapsy.Domain.Themes.Validators;
+using Weapsy.Domain.Themes.Rules;
 
 namespace Weapsy.Domain.Tests.Themes.Validators
 {

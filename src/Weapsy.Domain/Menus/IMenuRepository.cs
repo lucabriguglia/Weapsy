@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Menus
+namespace Weapsy.Domain.Menus
 {
     public interface IMenuRepository : IRepository<Menu>
     {

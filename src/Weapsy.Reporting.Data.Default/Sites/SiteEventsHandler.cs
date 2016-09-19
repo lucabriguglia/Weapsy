@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Sites.Events;
+using Weapsy.Domain.Sites.Events;
 
 namespace Weapsy.Reporting.Data.Default.Sites
 {

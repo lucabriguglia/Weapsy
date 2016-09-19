@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentValidation;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
-using Weapsy.Domain.Model.ModuleTypes.Rules;
-using Weapsy.Domain.Model.Apps.Rules;
+using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes.Rules;
+using Weapsy.Domain.Apps.Rules;
 
-namespace Weapsy.Domain.Model.ModuleTypes.Validators
+namespace Weapsy.Domain.ModuleTypes.Validators
 {
     public class CreateModuleTypeValidator : ModuleTypeDetailsValidator<CreateModuleType>
     {

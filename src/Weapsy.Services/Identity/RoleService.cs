@@ -87,13 +87,13 @@ namespace Weapsy.Services.Identity
 
             foreach (var role in roles)
             {
-                if (role == Roles.Everyone.ToString())
+                if (role == DefaultRoles.Everyone.ToString())
                     return true;
 
-                if (role == Roles.Registered.ToString() && user.Identity.IsAuthenticated)
+                if (role == DefaultRoles.Registered.ToString() && user.Identity.IsAuthenticated)
                     return true;
 
-                if (role == Roles.Anonymous.ToString() && !user.Identity.IsAuthenticated)
+                if (role == DefaultRoles.Anonymous.ToString() && !user.Identity.IsAuthenticated)
                     return true;
 
                 if (user.IsInRole(role))
@@ -139,7 +139,7 @@ namespace Weapsy.Services.Identity
         {
             var result = _roleManager.Roles.ToList();
 
-            var defaultRoles = Enum.GetValues(typeof(Roles)).Cast<Roles>();
+            var defaultRoles = Enum.GetValues(typeof(DefaultRoles)).Cast<DefaultRoles>();
 
             foreach (var role in defaultRoles)
                 result.Add(new IdentityRole

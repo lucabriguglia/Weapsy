@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 using Weapsy.Domain.Data.SqlServer.Repositories;
-using Weapsy.Domain.Model.Themes;
+using Weapsy.Domain.Themes;
 using Weapsy.Tests.Factories;
 using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
 

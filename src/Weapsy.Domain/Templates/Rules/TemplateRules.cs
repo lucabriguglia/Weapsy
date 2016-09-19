@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Weapsy.Domain.Model.Templates.Rules
+namespace Weapsy.Domain.Templates.Rules
 {
     public class TemplateRules : ITemplateRules
     {

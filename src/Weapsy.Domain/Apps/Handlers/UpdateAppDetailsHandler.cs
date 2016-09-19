@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Apps.Commands;
+using Weapsy.Domain.Apps.Commands;
 using System;
 
-namespace Weapsy.Domain.Model.Apps.Handlers
+namespace Weapsy.Domain.Apps.Handlers
 {
     public class UpdateAppDetailsHandler : ICommandHandler<UpdateAppDetails>
     {

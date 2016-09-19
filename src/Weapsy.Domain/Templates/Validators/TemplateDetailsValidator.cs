@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using Weapsy.Domain.Model.Templates.Commands;
-using Weapsy.Domain.Model.Templates.Rules;
+using Weapsy.Domain.Templates.Commands;
+using Weapsy.Domain.Templates.Rules;
 
-namespace Weapsy.Domain.Model.Templates.Validators
+namespace Weapsy.Domain.Templates.Validators
 {
     public class TemplateDetailsValidator<T> : AbstractValidator<T> where T : TemplateDetails
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Menus;
-using Weapsy.Domain.Model.Menus.Rules;
+using Weapsy.Domain.Menus;
+using Weapsy.Domain.Menus.Rules;
 
 namespace Weapsy.Domain.Tests.Menus.Handlers
 {

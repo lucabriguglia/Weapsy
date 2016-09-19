@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.ModuleTypes;
-using Weapsy.Domain.Model.ModuleTypes.Events;
+using Weapsy.Domain.ModuleTypes;
+using Weapsy.Domain.ModuleTypes.Events;
 using System;
 using Moq;
 using FluentValidation;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes.Commands;
 using FluentValidation.Results;
 
 namespace Weapsy.Domain.Tests.ModuleTypes

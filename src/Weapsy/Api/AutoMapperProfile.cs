@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Weapsy.Domain.Model.Pages;
-using Weapsy.Domain.Model.Pages.Commands;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Commands;
 using Weapsy.Reporting.Pages;
 
 namespace Weapsy.Api

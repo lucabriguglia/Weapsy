@@ -4,9 +4,9 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.EmailAccounts;
-using Weapsy.Domain.Model.EmailAccounts.Commands;
-using Weapsy.Domain.Model.EmailAccounts.Handlers;
+using Weapsy.Domain.EmailAccounts;
+using Weapsy.Domain.EmailAccounts.Commands;
+using Weapsy.Domain.EmailAccounts.Handlers;
 
 namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
 {

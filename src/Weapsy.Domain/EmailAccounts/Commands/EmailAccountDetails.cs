@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.EmailAccounts.Commands
+namespace Weapsy.Domain.EmailAccounts.Commands
 {
     public class EmailAccountDetails : ICommand
     {

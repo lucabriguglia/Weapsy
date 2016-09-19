@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Languages.Commands;
-using Weapsy.Domain.Model.Languages.Handlers;
-using Weapsy.Domain.Model.Sites.Rules;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Languages.Commands;
+using Weapsy.Domain.Languages.Handlers;
+using Weapsy.Domain.Sites.Rules;
 using System.Reflection;
 
 namespace Weapsy.Domain.Tests.Languages.Handlers

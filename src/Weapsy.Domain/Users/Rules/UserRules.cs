@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Domain.Model.Users.Rules
+namespace Weapsy.Domain.Users.Rules
 {
     public class UserRules : IUserRules
     {

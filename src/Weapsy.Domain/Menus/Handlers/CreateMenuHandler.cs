@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Menus.Commands;
+using Weapsy.Domain.Menus.Commands;
 
-namespace Weapsy.Domain.Model.Menus.Handlers
+namespace Weapsy.Domain.Menus.Handlers
 {
     public class CreateMenuHandler : ICommandHandler<CreateMenu>
     {

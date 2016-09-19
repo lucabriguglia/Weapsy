@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.EmailAccounts;
-using Weapsy.Domain.Model.EmailAccounts.Commands;
-using Weapsy.Domain.Model.EmailAccounts;
+using Weapsy.Domain.EmailAccounts.Commands;
+using Weapsy.Domain.EmailAccounts;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.EmailAccounts.Rules;
+using Weapsy.Domain.EmailAccounts.Rules;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Api

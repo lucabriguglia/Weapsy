@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Templates
+namespace Weapsy.Domain.Templates
 {
     public interface ITemplateRepository : IRepository<Template>
     {

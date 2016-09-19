@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Menus
+﻿namespace Weapsy.Domain.Menus
 {
     public enum MenuItemStatus
     {

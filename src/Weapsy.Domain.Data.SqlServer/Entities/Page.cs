@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using PageStatus = Weapsy.Domain.Model.Pages.PageStatus;
+using PageStatus = Weapsy.Domain.Pages.PageStatus;
 
 namespace Weapsy.Domain.Data.SqlServer.Entities
 {

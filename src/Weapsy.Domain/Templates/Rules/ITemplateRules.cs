@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Templates.Rules
+namespace Weapsy.Domain.Templates.Rules
 {
     public interface ITemplateRules : IRules<Template>
     {

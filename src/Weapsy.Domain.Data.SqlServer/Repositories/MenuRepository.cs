@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Domain.Model.Menus;
+using Weapsy.Domain.Menus;
 using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
 using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
 using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;

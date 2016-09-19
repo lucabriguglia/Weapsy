@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Weapsy.Domain.Model.Modules;
+using Weapsy.Domain.Modules;
 
-namespace Weapsy.Domain.Model.ModuleTypes.Rules
+namespace Weapsy.Domain.ModuleTypes.Rules
 {
     public class ModuleTypeRules : IModuleTypeRules
     {

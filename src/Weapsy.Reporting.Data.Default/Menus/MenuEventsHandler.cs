@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Menus.Events;
+using Weapsy.Domain.Menus.Events;
 
 namespace Weapsy.Reporting.Data.Default.Menus
 {

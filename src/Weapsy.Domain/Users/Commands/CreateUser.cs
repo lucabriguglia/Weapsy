@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Users.Commands
+namespace Weapsy.Domain.Users.Commands
 {
     public class CreateUser : ICommand
     {

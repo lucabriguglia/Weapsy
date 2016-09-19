@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Languages.Commands
+﻿namespace Weapsy.Domain.Languages.Commands
 {
     public class CreateLanguage : LanguageDetails
     {

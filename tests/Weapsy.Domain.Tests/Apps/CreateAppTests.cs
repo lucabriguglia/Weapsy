@@ -4,9 +4,9 @@ using NUnit.Framework;
 using Moq;
 using FluentValidation;
 using FluentValidation.Results;
-using Weapsy.Domain.Model.Apps;
-using Weapsy.Domain.Model.Apps.Commands;
-using Weapsy.Domain.Model.Apps.Events;
+using Weapsy.Domain.Apps;
+using Weapsy.Domain.Apps.Commands;
+using Weapsy.Domain.Apps.Events;
 
 namespace Weapsy.Domain.Tests.Apps
 {

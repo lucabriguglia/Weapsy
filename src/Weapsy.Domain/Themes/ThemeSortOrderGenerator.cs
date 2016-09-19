@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Themes
+﻿namespace Weapsy.Domain.Themes
 {
     public class ThemeSortOrderGenerator : IThemeSortOrderGenerator
     {

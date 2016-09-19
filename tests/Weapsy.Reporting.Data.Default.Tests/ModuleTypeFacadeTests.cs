@@ -2,8 +2,8 @@
 using NUnit.Framework;
 using System;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Apps;
-using Weapsy.Domain.Model.ModuleTypes;
+using Weapsy.Domain.Apps;
+using Weapsy.Domain.ModuleTypes;
 using Weapsy.Reporting.Data.Default.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes;
 

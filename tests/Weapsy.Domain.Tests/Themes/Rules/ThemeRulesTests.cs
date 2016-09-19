@@ -1,8 +1,8 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Themes;
-using Weapsy.Domain.Model.Themes.Rules;
+using Weapsy.Domain.Themes;
+using Weapsy.Domain.Themes.Rules;
 
 namespace Weapsy.Domain.Tests.Themes.Handlers
 {

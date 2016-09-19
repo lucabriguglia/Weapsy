@@ -4,9 +4,9 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Users;
-using Weapsy.Domain.Model.Users.Commands;
-using Weapsy.Domain.Model.Users.Handlers;
+using Weapsy.Domain.Users;
+using Weapsy.Domain.Users.Commands;
+using Weapsy.Domain.Users.Handlers;
 
 namespace Weapsy.Domain.Tests.Users.Handlers
 {

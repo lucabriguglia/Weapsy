@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Modules.Events
+namespace Weapsy.Domain.Modules.Events
 {
     public class ModuleDeleted : Event
     {

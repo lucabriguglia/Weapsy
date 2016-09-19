@@ -2,7 +2,7 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Languages.Rules;
+using Weapsy.Domain.Languages.Rules;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain.Model.Validators;
 

@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.EmailAccounts.Commands;
-using Weapsy.Domain.Model.EmailAccounts.Events;
+using Weapsy.Domain.EmailAccounts.Commands;
+using Weapsy.Domain.EmailAccounts.Events;
 
-namespace Weapsy.Domain.Model.EmailAccounts
+namespace Weapsy.Domain.EmailAccounts
 {
     public class EmailAccount : AggregateRoot
     {

@@ -4,9 +4,9 @@ using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Apps;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.Apps.Rules;
-using Weapsy.Domain.Model.Apps.Commands;
-using Weapsy.Domain.Model.Apps;
+using Weapsy.Domain.Apps.Rules;
+using Weapsy.Domain.Apps.Commands;
+using Weapsy.Domain.Apps;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Api

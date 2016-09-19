@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Languages.Commands
+namespace Weapsy.Domain.Languages.Commands
 {
     public class HideLanguage : ICommand
     {

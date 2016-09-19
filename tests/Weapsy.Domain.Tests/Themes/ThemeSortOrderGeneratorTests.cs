@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Moq;
-using Weapsy.Domain.Model.Themes;
+using Weapsy.Domain.Themes;
 
 namespace Weapsy.Domain.Tests.Themes
 {

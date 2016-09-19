@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
-using Weapsy.Domain.Model.ModuleTypes.Events;
+using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes.Events;
 
-namespace Weapsy.Domain.Model.ModuleTypes
+namespace Weapsy.Domain.ModuleTypes
 {
     public class ModuleType : AggregateRoot
     {

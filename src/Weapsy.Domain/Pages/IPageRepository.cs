@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Pages
+namespace Weapsy.Domain.Pages
 {
     public interface IPageRepository : IRepository<Page>
     {

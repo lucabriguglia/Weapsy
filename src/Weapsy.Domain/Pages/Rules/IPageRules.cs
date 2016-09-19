@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Pages.Rules
+namespace Weapsy.Domain.Pages.Rules
 {
     public interface IPageRules : IRules<Page>
     {

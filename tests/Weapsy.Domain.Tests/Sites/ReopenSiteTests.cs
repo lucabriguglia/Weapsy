@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Sites;
-using Weapsy.Domain.Model.Sites.Events;
+using Weapsy.Domain.Sites;
+using Weapsy.Domain.Sites.Events;
 using System;
 
 namespace Weapsy.Domain.Tests.Sites

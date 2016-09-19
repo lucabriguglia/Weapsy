@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Modules
+﻿namespace Weapsy.Domain.Modules
 {
     public enum ModuleStatus
     {

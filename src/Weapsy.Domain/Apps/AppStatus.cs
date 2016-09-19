@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Apps
+﻿namespace Weapsy.Domain.Apps
 {
     public enum AppStatus
     {

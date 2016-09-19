@@ -4,9 +4,9 @@ using NUnit.Framework;
 using Moq;
 using FluentValidation;
 using FluentValidation.Results;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Languages.Commands;
-using Weapsy.Domain.Model.Languages.Events;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Languages.Commands;
+using Weapsy.Domain.Languages.Events;
 
 namespace Weapsy.Domain.Tests.Languages
 {

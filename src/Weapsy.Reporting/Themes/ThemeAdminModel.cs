@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Domain.Model.Themes;
+using Weapsy.Domain.Themes;
 
 namespace Weapsy.Reporting.Themes
 {

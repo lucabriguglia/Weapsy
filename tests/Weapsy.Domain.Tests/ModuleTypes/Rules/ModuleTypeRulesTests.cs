@@ -1,9 +1,9 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.ModuleTypes;
-using Weapsy.Domain.Model.ModuleTypes.Rules;
-using Weapsy.Domain.Model.Modules;
+using Weapsy.Domain.ModuleTypes;
+using Weapsy.Domain.ModuleTypes.Rules;
+using Weapsy.Domain.Modules;
 
 namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Users.Rules
+namespace Weapsy.Domain.Users.Rules
 {
     public interface IUserRules : IRules<User>
     {

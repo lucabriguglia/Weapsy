@@ -2,9 +2,9 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Users.Commands;
-using Weapsy.Domain.Model.Users.Validators;
-using Weapsy.Domain.Model.Users.Rules;
+using Weapsy.Domain.Users.Commands;
+using Weapsy.Domain.Users.Validators;
+using Weapsy.Domain.Users.Rules;
 
 namespace Weapsy.Domain.Tests.Users.Validators
 {

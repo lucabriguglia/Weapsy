@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Pages
+namespace Weapsy.Domain.Pages
 {
     public class PageModulePermission : ValueObject
     {

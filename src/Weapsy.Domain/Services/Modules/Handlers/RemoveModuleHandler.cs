@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Modules;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Modules;
+using Weapsy.Domain.Pages;
 using Weapsy.Domain.Services.Modules.Commands;
 //using System.Transactions;
 using System;
 using FluentValidation;
-using Weapsy.Domain.Model.Modules.Commands;
-using Weapsy.Domain.Model.Pages.Commands;
+using Weapsy.Domain.Modules.Commands;
+using Weapsy.Domain.Pages.Commands;
 
 namespace Weapsy.Domain.Services.Modules.Handlers
 {

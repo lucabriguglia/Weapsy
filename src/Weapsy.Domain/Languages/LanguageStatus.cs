@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Languages
+﻿namespace Weapsy.Domain.Languages
 {
     public enum LanguageStatus
     {

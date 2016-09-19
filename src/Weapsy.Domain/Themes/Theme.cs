@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Themes.Commands;
-using Weapsy.Domain.Model.Themes.Events;
+using Weapsy.Domain.Themes.Commands;
+using Weapsy.Domain.Themes.Events;
 
-namespace Weapsy.Domain.Model.Themes
+namespace Weapsy.Domain.Themes
 {
     public class Theme : AggregateRoot
     {

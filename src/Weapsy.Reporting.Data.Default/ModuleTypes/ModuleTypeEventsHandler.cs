@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.ModuleTypes.Events;
+using Weapsy.Domain.ModuleTypes.Events;
 
 namespace Weapsy.Reporting.Data.Default.ModuleTypes
 {

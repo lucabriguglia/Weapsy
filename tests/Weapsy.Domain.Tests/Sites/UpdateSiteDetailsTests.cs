@@ -4,9 +4,9 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Sites;
-using Weapsy.Domain.Model.Sites.Commands;
-using Weapsy.Domain.Model.Sites.Events;
+using Weapsy.Domain.Sites;
+using Weapsy.Domain.Sites.Commands;
+using Weapsy.Domain.Sites.Events;
 using System.Collections.Generic;
 
 namespace Weapsy.Domain.Tests.Sites

@@ -2,9 +2,9 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Languages.Commands;
+using Weapsy.Domain.Languages.Commands;
 
-namespace Weapsy.Domain.Model.Languages.Handlers
+namespace Weapsy.Domain.Languages.Handlers
 {
     public class HideLanguageHandler : ICommandHandler<HideLanguage>
     {

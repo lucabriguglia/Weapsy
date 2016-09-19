@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Sites
+﻿namespace Weapsy.Domain.Sites
 {
     public enum SiteStatus
     {

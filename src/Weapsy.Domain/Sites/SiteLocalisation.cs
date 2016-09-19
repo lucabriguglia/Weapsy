@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Sites
+namespace Weapsy.Domain.Sites
 {
     public class SiteLocalisation : ValueObject
     {

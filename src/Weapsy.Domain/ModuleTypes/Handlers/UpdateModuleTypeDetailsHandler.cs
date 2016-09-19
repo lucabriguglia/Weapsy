@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes.Commands;
 using System;
 
-namespace Weapsy.Domain.Model.ModuleTypes.Handlers
+namespace Weapsy.Domain.ModuleTypes.Handlers
 {
     public class UpdateModuleTypeDetailsHandler : ICommandHandler<UpdateModuleTypeDetails>
     {

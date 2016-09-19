@@ -1,5 +1,5 @@
 using System;
-using Weapsy.Domain.Model.Languages;
+using Weapsy.Domain.Languages;
 
 namespace Weapsy.Domain.Data.SqlServer.Entities
 {

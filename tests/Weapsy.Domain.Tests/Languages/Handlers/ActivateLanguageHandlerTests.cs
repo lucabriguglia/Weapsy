@@ -1,9 +1,9 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Languages.Commands;
-using Weapsy.Domain.Model.Languages.Handlers;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Languages.Commands;
+using Weapsy.Domain.Languages.Handlers;
 using FluentValidation;
 using FluentValidation.Results;
 

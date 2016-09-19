@@ -4,11 +4,11 @@ using Weapsy.Core.DependencyResolver;
 using Weapsy.Core.Dispatcher;
 using Weapsy.Core.Domain;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Sites.Handlers;
-using Weapsy.Domain.Model.Sites.Rules;
-using Weapsy.Domain.Model.Sites.Validators;
+using Weapsy.Domain.Sites.Handlers;
+using Weapsy.Domain.Sites.Rules;
+using Weapsy.Domain.Sites.Validators;
 using Weapsy.Domain.Services.Installation;
-using Weapsy.Domain.Model.Languages;
+using Weapsy.Domain.Languages;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Pages;
@@ -29,7 +29,7 @@ using Weapsy.Reporting.Data.Default.Modules;
 using Weapsy.Reporting.Modules;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Data.Default.Themes;
-using Weapsy.Domain.Model.Users.Handlers;
+using Weapsy.Domain.Users.Handlers;
 using Weapsy.Services.Identity;
 
 namespace Weapsy.DependencyConfigurator

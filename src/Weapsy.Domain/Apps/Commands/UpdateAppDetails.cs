@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Apps.Commands
+﻿namespace Weapsy.Domain.Apps.Commands
 {
     public class UpdateAppDetails : AppDetails
     {

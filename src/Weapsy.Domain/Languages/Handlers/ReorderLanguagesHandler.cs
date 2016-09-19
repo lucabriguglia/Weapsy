@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Languages.Commands;
+using Weapsy.Domain.Languages.Commands;
 using System;
-using Weapsy.Domain.Model.Sites.Rules;
+using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Model.Languages.Handlers
+namespace Weapsy.Domain.Languages.Handlers
 {
     public class ReorderLanguagesHandler : ICommandHandler<ReorderLanguages>
     {

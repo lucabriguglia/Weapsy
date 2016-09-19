@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Languages
+namespace Weapsy.Domain.Languages
 {
     public interface ILanguageRepository : IRepository<Language>
     {

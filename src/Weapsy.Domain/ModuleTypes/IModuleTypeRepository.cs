@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.ModuleTypes
+namespace Weapsy.Domain.ModuleTypes
 {
     public interface IModuleTypeRepository : IRepository<ModuleType>
     {

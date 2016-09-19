@@ -1,8 +1,8 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Languages.Rules;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Languages.Rules;
 using System.Collections.Generic;
 
 namespace Weapsy.Domain.Tests.Languages.Handlers

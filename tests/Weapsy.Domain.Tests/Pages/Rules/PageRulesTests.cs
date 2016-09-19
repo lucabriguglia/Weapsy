@@ -1,8 +1,8 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Pages;
-using Weapsy.Domain.Model.Pages.Rules;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Rules;
 
 namespace Weapsy.Domain.Tests.Pages.Handlers
 {

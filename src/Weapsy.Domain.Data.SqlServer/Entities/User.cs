@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Domain.Model.Users;
+using Weapsy.Domain.Users;
 
 namespace Weapsy.Domain.Data.SqlServer.Entities
 {

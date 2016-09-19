@@ -2,17 +2,17 @@
 using System;
 using System.Collections.Generic;
 using Weapsy.Core.Identity;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Languages.Commands;
-using Weapsy.Domain.Model.Menus;
-using Weapsy.Domain.Model.Menus.Commands;
-using Weapsy.Domain.Model.Modules;
-using Weapsy.Domain.Model.Modules.Commands;
-using Weapsy.Domain.Model.ModuleTypes;
-using Weapsy.Domain.Model.Pages;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Sites;
-using Weapsy.Domain.Model.Sites.Commands;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Languages.Commands;
+using Weapsy.Domain.Menus;
+using Weapsy.Domain.Menus.Commands;
+using Weapsy.Domain.Modules;
+using Weapsy.Domain.Modules.Commands;
+using Weapsy.Domain.ModuleTypes;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Sites;
+using Weapsy.Domain.Sites.Commands;
 
 namespace Weapsy.Domain.Services.Installation
 {
@@ -119,7 +119,7 @@ namespace Weapsy.Domain.Services.Installation
                 {
                     new PagePermission
                     {
-                        RoleId = ((int)Roles.Everyone).ToString(),
+                        RoleId = ((int)DefaultRoles.Everyone).ToString(),
                         Type = PermissionType.View
                     }
                 }

@@ -11,11 +11,11 @@ using Weapsy.Models.AccountViewModels;
 using Weapsy.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Core.Dispatcher;
-using Weapsy.Domain.Model.Users.Events;
+using Weapsy.Domain.Users.Events;
 using System;
 using FluentValidation;
-using Weapsy.Domain.Model.Users.Commands;
-using Weapsy.Domain.Model.Users;
+using Weapsy.Domain.Users.Commands;
+using Weapsy.Domain.Users;
 
 namespace Weapsy.Controllers
 {
@@ -140,7 +140,7 @@ namespace Weapsy.Controllers
                         UserName = user.UserName
                     };
 
-                    var newUser = Weapsy.Domain.Model.Users.User.CreateNew(command, _validator);
+                    var newUser = Weapsy.Domain.Users.User.CreateNew(command, _validator);
 
                     _userRepository.Create(newUser);
 

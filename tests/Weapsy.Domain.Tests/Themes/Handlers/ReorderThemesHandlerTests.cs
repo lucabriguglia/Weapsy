@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Themes;
-using Weapsy.Domain.Model.Themes.Commands;
-using Weapsy.Domain.Model.Themes.Handlers;
+using Weapsy.Domain.Themes;
+using Weapsy.Domain.Themes.Commands;
+using Weapsy.Domain.Themes.Handlers;
 using System.Reflection;
 
 namespace Weapsy.Domain.Tests.Themes.Handlers

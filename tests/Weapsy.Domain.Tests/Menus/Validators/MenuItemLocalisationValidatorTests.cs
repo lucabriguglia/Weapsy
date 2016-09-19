@@ -2,9 +2,9 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Menus.Validators;
-using Weapsy.Domain.Model.Languages.Rules;
-using Weapsy.Domain.Model.Menus.Commands;
+using Weapsy.Domain.Menus.Validators;
+using Weapsy.Domain.Languages.Rules;
+using Weapsy.Domain.Menus.Commands;
 
 namespace Weapsy.Domain.Tests.Menus.Validators
 {

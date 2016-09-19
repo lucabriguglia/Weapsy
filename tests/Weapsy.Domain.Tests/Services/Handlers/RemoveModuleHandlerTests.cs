@@ -1,18 +1,18 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Pages;
 using Weapsy.Domain.Services.Modules.Commands;
 using Weapsy.Domain.Services.Modules.Handlers;
-using Weapsy.Domain.Model.Modules;
-using Weapsy.Domain.Model.Modules.Events;
-using Weapsy.Domain.Model.Pages.Events;
+using Weapsy.Domain.Modules;
+using Weapsy.Domain.Modules.Events;
+using Weapsy.Domain.Pages.Events;
 using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Modules.Commands;
-using Weapsy.Domain.Model.Modules.Rules;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Modules.Commands;
+using Weapsy.Domain.Modules.Rules;
 
 namespace Weapsy.Domain.Tests.Services.Handlers
 {

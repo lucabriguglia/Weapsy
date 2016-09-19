@@ -4,9 +4,9 @@ using NUnit.Framework;
 using Moq;
 using FluentValidation;
 using FluentValidation.Results;
-using Weapsy.Domain.Model.Themes;
-using Weapsy.Domain.Model.Themes.Commands;
-using Weapsy.Domain.Model.Themes.Events;
+using Weapsy.Domain.Themes;
+using Weapsy.Domain.Themes.Commands;
+using Weapsy.Domain.Themes.Events;
 
 namespace Weapsy.Domain.Tests.Themes
 {

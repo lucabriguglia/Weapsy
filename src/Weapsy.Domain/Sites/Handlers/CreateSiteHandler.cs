@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Sites.Commands;
+using Weapsy.Domain.Sites.Commands;
 
-namespace Weapsy.Domain.Model.Sites.Handlers
+namespace Weapsy.Domain.Sites.Handlers
 {
     public class CreateSiteHandler : ICommandHandler<CreateSite>
     {

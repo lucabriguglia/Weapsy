@@ -2,8 +2,8 @@
 using NUnit.Framework;
 using System;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Sites;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Sites;
 using Weapsy.Reporting.Data.Default.Sites;
 using Weapsy.Reporting.Sites;
 

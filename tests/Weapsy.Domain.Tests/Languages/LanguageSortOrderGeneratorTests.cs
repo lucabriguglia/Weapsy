@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Moq;
-using Weapsy.Domain.Model.Languages;
+using Weapsy.Domain.Languages;
 
 namespace Weapsy.Domain.Tests.Languages
 {

@@ -2,8 +2,8 @@
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
-using Weapsy.Domain.Model.Pages;
-using Weapsy.Domain.Model.Pages.Commands;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Commands;
 using System.Collections.Generic;
 
 namespace Weapsy.Tests.Factories

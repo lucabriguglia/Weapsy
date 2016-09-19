@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Apps.Commands
+namespace Weapsy.Domain.Apps.Commands
 {
     public class AppDetails : ICommand
     {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Modules;
-using Weapsy.Domain.Model.ModuleTypes;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Modules;
+using Weapsy.Domain.ModuleTypes;
+using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Pages;
 using Microsoft.AspNetCore.Identity;
 using Weapsy.Core.Identity;
@@ -99,9 +99,9 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
                 if (int.TryParse(roleId, out id))
                 {
-                    if (Enum.IsDefined(typeof(Roles), id))
+                    if (Enum.IsDefined(typeof(DefaultRoles), id))
                     {
-                        result.Add(Enum.GetName(typeof(Roles), id));
+                        result.Add(Enum.GetName(typeof(DefaultRoles), id));
                         continue;
                     }
                 }

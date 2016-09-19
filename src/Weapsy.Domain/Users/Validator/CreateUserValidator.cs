@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentValidation;
-using Weapsy.Domain.Model.Users.Commands;
-using Weapsy.Domain.Model.Users.Rules;
+using Weapsy.Domain.Users.Commands;
+using Weapsy.Domain.Users.Rules;
 
-namespace Weapsy.Domain.Model.Users.Validators
+namespace Weapsy.Domain.Users.Validators
 {
     public class CreateUserValidator : AbstractValidator<CreateUser>
     {

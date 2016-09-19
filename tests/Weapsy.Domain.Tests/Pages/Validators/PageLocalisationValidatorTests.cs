@@ -2,11 +2,11 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Pages.Validators;
-using Weapsy.Domain.Model.Pages.Rules;
-using Weapsy.Domain.Model.Languages.Rules;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Pages.Validators;
+using Weapsy.Domain.Pages.Rules;
+using Weapsy.Domain.Languages.Rules;
+using Weapsy.Domain.Pages;
 
 namespace Weapsy.Domain.Tests.Pages.Validators
 {

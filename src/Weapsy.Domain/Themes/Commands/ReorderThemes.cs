@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Themes.Commands
+namespace Weapsy.Domain.Themes.Commands
 {
     public class ReorderThemes : ICommand
     {

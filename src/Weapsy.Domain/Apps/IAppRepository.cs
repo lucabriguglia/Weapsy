@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Apps
+namespace Weapsy.Domain.Apps
 {
     public interface IAppRepository : IRepository<App>
     {

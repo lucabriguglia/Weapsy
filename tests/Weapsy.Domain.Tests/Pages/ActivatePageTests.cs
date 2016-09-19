@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Pages;
-using Weapsy.Domain.Model.Pages.Events;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Events;
 using System;
 using FluentValidation.Results;
-using Weapsy.Domain.Model.Pages.Commands;
+using Weapsy.Domain.Pages.Commands;
 using Moq;
 using FluentValidation;
 

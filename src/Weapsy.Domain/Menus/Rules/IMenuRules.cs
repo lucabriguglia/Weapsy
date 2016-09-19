@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Menus.Rules
+namespace Weapsy.Domain.Menus.Rules
 {
     public interface IMenuRules : IRules<Menu>
     {

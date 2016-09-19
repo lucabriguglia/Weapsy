@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Pages;
 
 namespace Weapsy.Reporting.Pages
 {

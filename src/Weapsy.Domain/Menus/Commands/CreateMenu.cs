@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Menus.Commands
+namespace Weapsy.Domain.Menus.Commands
 {
     public class CreateMenu : ICommand
     {

@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Pages
+﻿namespace Weapsy.Domain.Pages
 {
     public enum PermissionType
     {

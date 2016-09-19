@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Menus.Events
+namespace Weapsy.Domain.Menus.Events
 {
     public class MenuDeleted : Event
     {

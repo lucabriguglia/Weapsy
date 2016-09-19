@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.EmailAccounts;
+using Weapsy.Domain.EmailAccounts;
 using Weapsy.Reporting.EmailAccounts;
 
 namespace Weapsy.Reporting.Data.Default.EmailAccounts

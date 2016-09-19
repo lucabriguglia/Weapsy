@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.EmailAccounts
+﻿namespace Weapsy.Domain.EmailAccounts
 {
     public enum EmailAccountStatus
     {

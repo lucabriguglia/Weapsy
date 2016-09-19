@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Weapsy.Domain.Model.Sites.Rules
+namespace Weapsy.Domain.Sites.Rules
 {
     public class SiteRules : ISiteRules
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
-using Weapsy.Domain.Model.Menus;
+using Weapsy.Domain.Menus;
 using Weapsy.Tests.Factories;
 using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
 using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;

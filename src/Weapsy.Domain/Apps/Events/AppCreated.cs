@@ -1,6 +1,6 @@
 ﻿using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Apps.Events
+namespace Weapsy.Domain.Apps.Events
 {
     public class AppCreated : Event
     {

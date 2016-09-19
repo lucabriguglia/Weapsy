@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Users.Commands;
-using Weapsy.Domain.Model.Users.Events;
+using Weapsy.Domain.Users.Commands;
+using Weapsy.Domain.Users.Events;
 
-namespace Weapsy.Domain.Model.Users
+namespace Weapsy.Domain.Users
 {
     public class User : AggregateRoot
     {

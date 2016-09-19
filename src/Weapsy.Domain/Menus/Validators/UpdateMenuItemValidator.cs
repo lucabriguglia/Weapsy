@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using Weapsy.Domain.Model.Languages.Rules;
-using Weapsy.Domain.Model.Menus.Commands;
-using Weapsy.Domain.Model.Pages.Rules;
-using Weapsy.Domain.Model.Sites.Rules;
+using Weapsy.Domain.Languages.Rules;
+using Weapsy.Domain.Menus.Commands;
+using Weapsy.Domain.Pages.Rules;
+using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Model.Menus.Validators
+namespace Weapsy.Domain.Menus.Validators
 {
     public class UpdateMenuItemValidator : MenuItemValidator<UpdateMenuItem>
     {

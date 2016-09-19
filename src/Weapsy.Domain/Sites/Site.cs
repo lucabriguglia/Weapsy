@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Sites.Commands;
-using Weapsy.Domain.Model.Sites.Events;
+using Weapsy.Domain.Sites.Commands;
+using Weapsy.Domain.Sites.Events;
 
-namespace Weapsy.Domain.Model.Sites
+namespace Weapsy.Domain.Sites
 {
     public class Site : AggregateRoot
     {

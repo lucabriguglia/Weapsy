@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Sites.Events
+namespace Weapsy.Domain.Sites.Events
 {
     public class SiteDetailsUpdated : Event
     {

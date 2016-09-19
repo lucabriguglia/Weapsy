@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Menus.Events
+namespace Weapsy.Domain.Menus.Events
 {
     public class MenuItemsReordered : Event
     {

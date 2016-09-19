@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentValidation;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Modules.Rules;
-using Weapsy.Domain.Model.Sites.Rules;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Modules.Rules;
+using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Model.Pages.Validators
+namespace Weapsy.Domain.Pages.Validators
 {
     public class AddPageModuleValidator : AbstractValidator<AddPageModule>
     {

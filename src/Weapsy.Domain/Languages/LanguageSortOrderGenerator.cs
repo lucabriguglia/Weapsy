@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Domain.Model.Languages
+namespace Weapsy.Domain.Languages
 {
     public class LanguageSortOrderGenerator : ILanguageSortOrderGenerator
     {

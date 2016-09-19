@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 using Weapsy.Domain.Data.SqlServer.Repositories;
-using Weapsy.Domain.Model.Sites;
+using Weapsy.Domain.Sites;
 using Weapsy.Tests.Factories;
 using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
 

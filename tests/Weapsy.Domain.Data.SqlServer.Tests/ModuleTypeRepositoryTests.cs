@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 using Weapsy.Domain.Data.SqlServer.Repositories;
-using Weapsy.Domain.Model.ModuleTypes;
+using Weapsy.Domain.ModuleTypes;
 using Weapsy.Tests.Factories;
 using ModuleTypeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.ModuleType;
 

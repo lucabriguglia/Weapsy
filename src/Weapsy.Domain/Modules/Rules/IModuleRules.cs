@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Modules.Rules
+namespace Weapsy.Domain.Modules.Rules
 {
     public interface IModuleRules : IRules<Module>
     {

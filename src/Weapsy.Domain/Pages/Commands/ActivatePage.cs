@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Pages.Commands
+namespace Weapsy.Domain.Pages.Commands
 {
     public class ActivatePage : ICommand
     {

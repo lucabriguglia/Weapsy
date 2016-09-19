@@ -1,12 +1,12 @@
 ﻿using System;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Pages.Events;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Pages.Events;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Weapsy.Domain.Model.Pages
+namespace Weapsy.Domain.Pages
 {
     public class Page : AggregateRoot
     {

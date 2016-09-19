@@ -1,9 +1,9 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Pages;
-using Weapsy.Domain.Model.Pages.Commands;
-using Weapsy.Domain.Model.Pages.Handlers;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Pages.Handlers;
 using FluentValidation.Results;
 using FluentValidation;
 

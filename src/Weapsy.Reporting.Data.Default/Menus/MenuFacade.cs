@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Languages;
-using Weapsy.Domain.Model.Menus;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Menus;
+using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Menus;
 
 namespace Weapsy.Reporting.Data.Default.Menus

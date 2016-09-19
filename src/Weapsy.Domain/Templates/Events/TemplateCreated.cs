@@ -1,6 +1,6 @@
 ﻿using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Templates.Events
+namespace Weapsy.Domain.Templates.Events
 {
     public class TemplateCreated : Event
     {

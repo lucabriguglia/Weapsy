@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Weapsy.Domain.Model.EmailAccounts.Rules
+namespace Weapsy.Domain.EmailAccounts.Rules
 {
     public class EmailAccountRules : IEmailAccountRules
     {

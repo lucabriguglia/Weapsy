@@ -2,9 +2,9 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.ModuleTypes.Commands;
+using Weapsy.Domain.ModuleTypes.Commands;
 
-namespace Weapsy.Domain.Model.ModuleTypes.Handlers
+namespace Weapsy.Domain.ModuleTypes.Handlers
 {
     public class DeleteModuleTypeHandler : ICommandHandler<DeleteModuleType>
     {

@@ -78,13 +78,13 @@ namespace Weapsy.Services.Identity
 
             foreach (var role in roles)
             {
-                if (role == Roles.Everyone.ToString())
+                if (role == DefaultRoles.Everyone.ToString())
                     return true;
 
-                if (role == Roles.Registered.ToString() && user.Identity.IsAuthenticated)
+                if (role == DefaultRoles.Registered.ToString() && user.Identity.IsAuthenticated)
                     return true;
 
-                if (role == Roles.Anonymous.ToString() && !user.Identity.IsAuthenticated)
+                if (role == DefaultRoles.Anonymous.ToString() && !user.Identity.IsAuthenticated)
                     return true;
 
                 if (user.IsInRole(role))

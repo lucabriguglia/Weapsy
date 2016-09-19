@@ -2,8 +2,8 @@
 using FluentValidation;
 using Weapsy.Apps.Text.Domain.Rules;
 using Weapsy.Apps.Text.Domain.Commands;
-using Weapsy.Domain.Model.Sites.Rules;
-using Weapsy.Domain.Model.Modules.Rules;
+using Weapsy.Domain.Sites.Rules;
+using Weapsy.Domain.Modules.Rules;
 
 namespace Weapsy.Apps.Text.Domain.Validators
 {

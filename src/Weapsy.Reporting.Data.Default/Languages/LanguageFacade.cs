@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Core.Caching;
-using Weapsy.Domain.Model.Languages;
+using Weapsy.Domain.Languages;
 using Weapsy.Reporting.Languages;
 
 namespace Weapsy.Reporting.Data.Default.Languages

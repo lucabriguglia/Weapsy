@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Weapsy.Domain.Model.ModuleTypes;
+using Weapsy.Domain.ModuleTypes;
 
 namespace Weapsy.Reporting.Pages
 {

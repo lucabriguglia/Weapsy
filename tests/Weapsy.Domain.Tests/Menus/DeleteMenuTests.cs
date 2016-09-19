@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Menus;
-using Weapsy.Domain.Model.Menus.Events;
+using Weapsy.Domain.Menus;
+using Weapsy.Domain.Menus.Events;
 using System;
-using Weapsy.Domain.Model.Menus.Commands;
+using Weapsy.Domain.Menus.Commands;
 using Moq;
 using FluentValidation;
 using FluentValidation.Results;

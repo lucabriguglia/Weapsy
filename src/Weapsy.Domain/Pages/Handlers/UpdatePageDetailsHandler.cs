@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Pages.Commands;
+using Weapsy.Domain.Pages.Commands;
 using System;
-using Weapsy.Domain.Model.Pages.Events;
+using Weapsy.Domain.Pages.Events;
 
-namespace Weapsy.Domain.Model.Pages.Handlers
+namespace Weapsy.Domain.Pages.Handlers
 {
     public class UpdatePageDetailsHandler : ICommandHandler<UpdatePageDetails>
     {

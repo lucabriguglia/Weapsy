@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Users.Commands;
+using Weapsy.Domain.Users.Commands;
 
-namespace Weapsy.Domain.Model.Users.Handlers
+namespace Weapsy.Domain.Users.Handlers
 {
     public class CreateUserHandler : ICommandHandler<CreateUser>
     {

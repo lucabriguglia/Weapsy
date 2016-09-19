@@ -1,6 +1,6 @@
 ﻿namespace Weapsy.Core.Identity
 {
-    public enum Roles
+    public enum DefaultRoles
     {
         Everyone = -1,
         Registered = -2,

@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Domain.Model.Menus.Commands
+﻿namespace Weapsy.Domain.Menus.Commands
 {
     public class UpdateMenuItem : MenuItemDetails
     {

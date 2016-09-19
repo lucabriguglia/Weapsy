@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Weapsy.Core.Caching;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Languages.Events;
+using Weapsy.Domain.Languages.Events;
 
 namespace Weapsy.Reporting.Data.Default.Languages
 {

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 using System;
-using Weapsy.Domain.Model.Menus.Commands;
+using Weapsy.Domain.Menus.Commands;
 using FluentValidation;
 
-namespace Weapsy.Domain.Model.Menus.Handlers
+namespace Weapsy.Domain.Menus.Handlers
 {
     public class ReorderMenuItemsHandler : ICommandHandler<ReorderMenuItems>
     {

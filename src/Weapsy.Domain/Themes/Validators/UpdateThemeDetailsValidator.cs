@@ -1,7 +1,7 @@
-﻿using Weapsy.Domain.Model.Themes.Commands;
-using Weapsy.Domain.Model.Themes.Rules;
+﻿using Weapsy.Domain.Themes.Commands;
+using Weapsy.Domain.Themes.Rules;
 
-namespace Weapsy.Domain.Model.Themes.Validators
+namespace Weapsy.Domain.Themes.Validators
 {
     public class UpdateThemeDetailsValidator : ThemeDetailsValidator<UpdateThemeDetails>
     {

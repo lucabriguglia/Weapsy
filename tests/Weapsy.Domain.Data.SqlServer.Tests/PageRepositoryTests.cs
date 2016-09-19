@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
-using Weapsy.Domain.Model.Pages;
+using Weapsy.Domain.Pages;
 using Weapsy.Tests.Factories;
 using PageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Page;
 using PageModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModule;

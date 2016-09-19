@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Model.Sites
+namespace Weapsy.Domain.Sites
 {
     public interface ISiteRepository : IRepository<Site>
     {

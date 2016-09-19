@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Weapsy.Domain.Model.ModuleTypes;
+using Weapsy.Domain.ModuleTypes;
 
 namespace Weapsy.Domain.Data.SqlServer.Entities
 {

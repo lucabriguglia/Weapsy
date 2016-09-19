@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Weapsy.Domain.Model.Themes;
-using Weapsy.Domain.Model.Themes.Events;
+using Weapsy.Domain.Themes;
+using Weapsy.Domain.Themes.Events;
 using System;
 
 namespace Weapsy.Domain.Tests.Themes

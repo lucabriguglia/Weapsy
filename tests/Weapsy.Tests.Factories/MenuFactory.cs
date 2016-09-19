@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
-using Weapsy.Domain.Model.Menus;
-using Weapsy.Domain.Model.Menus.Commands;
+using Weapsy.Domain.Menus;
+using Weapsy.Domain.Menus.Commands;
 
 namespace Weapsy.Tests.Factories
 {

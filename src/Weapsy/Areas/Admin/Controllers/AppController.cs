@@ -3,8 +3,8 @@ using Weapsy.Mvc.Controllers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Apps;
-using Weapsy.Domain.Model.Apps;
-using Weapsy.Domain.Model.Apps.Commands;
+using Weapsy.Domain.Apps;
+using Weapsy.Domain.Apps.Commands;
 using Weapsy.Core.Dispatcher;
 using Weapsy.Mvc.Context;
 

@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using System.Threading.Tasks;
 using Weapsy.Core.Domain;
-using Weapsy.Domain.Model.Users.Commands;
-using Weapsy.Domain.Model.Users.Events;
+using Weapsy.Domain.Users.Commands;
+using Weapsy.Domain.Users.Events;
 
-namespace Weapsy.Domain.Model.Users.Handlers
+namespace Weapsy.Domain.Users.Handlers
 {
     public class UserRegisteredHandler : IEventHandler<UserRegistered>
     {
