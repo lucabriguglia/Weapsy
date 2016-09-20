@@ -1,6 +1,6 @@
 ﻿using Weapsy.Core.Domain;
 
-namespace Weapsy.Domain.Services.Installation
+namespace Weapsy.Services.Installation
 {
     public interface ISiteInstallationService : IService
     {

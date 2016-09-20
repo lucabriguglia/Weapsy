@@ -14,7 +14,7 @@ using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
 
-namespace Weapsy.Domain.Services.Installation
+namespace Weapsy.Services.Installation
 {
     public class SiteInstallationService : ISiteInstallationService
     {

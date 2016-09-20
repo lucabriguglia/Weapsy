@@ -18,19 +18,18 @@ using Weapsy.Data;
 using Weapsy.DependencyConfigurator;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.ViewEngine;
-using Weapsy.Models;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services;
 using System.Collections.Generic;
 using Weapsy.Apps.Text;
 using Weapsy.Core.Configuration;
 using Weapsy.Reporting.Languages;
-using Weapsy.Domain.Services.Installation;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Sites;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Linq;
+using Weapsy.Services.Installation;
 
 namespace Weapsy
 {

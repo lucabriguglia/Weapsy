@@ -5,7 +5,7 @@ using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.ModuleTypes.Commands;
 using Weapsy.Domain.Apps.Commands;
 
-namespace Weapsy.Domain.Services.Installation
+namespace Weapsy.Services.Installation
 {
     public class AppInstallationService : IAppInstallationService
     {

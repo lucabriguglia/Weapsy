@@ -7,7 +7,6 @@ using Weapsy.Core.Caching;
 using Weapsy.Domain.Sites.Handlers;
 using Weapsy.Domain.Sites.Rules;
 using Weapsy.Domain.Sites.Validators;
-using Weapsy.Domain.Services.Installation;
 using Weapsy.Domain.Languages;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Languages;
@@ -31,6 +30,7 @@ using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Data.Default.Themes;
 using Weapsy.Domain.Users.Handlers;
 using Weapsy.Services.Identity;
+using Weapsy.Services.Installation;
 
 namespace Weapsy.DependencyConfigurator
 {
