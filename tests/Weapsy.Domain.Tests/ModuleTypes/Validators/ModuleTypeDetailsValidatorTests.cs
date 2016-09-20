@@ -175,7 +175,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
             {
                 Id = moduleTypeId,
                 Name = viewName,
-                ViewType = Model.ModuleTypes.ViewType.ViewComponent
+                ViewType = Domain.ModuleTypes.ViewType.ViewComponent
             });
         }
 
