@@ -27,7 +27,7 @@ namespace Weapsy.Tests.Factories
             var validatorMock = new Mock<IValidator<CreateApp>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
-            return Domain.Model.Apps.App.CreateNew(command, validatorMock.Object);
+            return Domain.Apps.App.CreateNew(command, validatorMock.Object);
         }
     }
 }

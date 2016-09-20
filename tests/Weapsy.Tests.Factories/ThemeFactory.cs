@@ -30,7 +30,7 @@ namespace Weapsy.Tests.Factories
             var sortOrderGeneratorMock = new Mock<IThemeSortOrderGenerator>();
             sortOrderGeneratorMock.Setup(x => x.GenerateNextSortOrder()).Returns(2);
 
-            return Domain.Model.Themes.Theme.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
+            return Domain.Themes.Theme.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
         }
     }
 }

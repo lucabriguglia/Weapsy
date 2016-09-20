@@ -30,7 +30,7 @@ namespace Weapsy.Tests.Factories
             var createValidatorMock = new Mock<IValidator<CreateMenu>>();
             createValidatorMock.Setup(x => x.Validate(createCommand)).Returns(new ValidationResult());
 
-            var menu = Domain.Model.Menus.Menu.CreateNew(createCommand, createValidatorMock.Object);
+            var menu = Domain.Menus.Menu.CreateNew(createCommand, createValidatorMock.Object);
 
             var addItemCommand = new AddMenuItem
             {

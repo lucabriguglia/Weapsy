@@ -31,7 +31,7 @@ namespace Weapsy.Tests.Factories
             var sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();
             sortOrderGeneratorMock.Setup(x => x.GenerateNextSortOrder(command.SiteId)).Returns(2);
 
-            return Domain.Model.Languages.Language.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
+            return Domain.Languages.Language.CreateNew(command, validatorMock.Object, sortOrderGeneratorMock.Object);
         }
     }
 }

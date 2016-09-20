@@ -4,7 +4,7 @@ using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Languages.Rules;
 using Weapsy.Apps.Text.Domain.Commands;
-using Weapsy.Apps.Text.Domain.Model.Validators;
+using Weapsy.Apps.Text.Domain.Validators;
 
 namespace Weapsy.Apps.Text.Domain.Tests.Validators
 {

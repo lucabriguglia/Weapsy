@@ -27,7 +27,7 @@ namespace Weapsy.Tests.Factories
             var validatorMock = new Mock<IValidator<CreateModuleType>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
-            return Domain.Model.ModuleTypes.ModuleType.CreateNew(command, validatorMock.Object);
+            return Domain.ModuleTypes.ModuleType.CreateNew(command, validatorMock.Object);
         }
     }
 }

@@ -3,7 +3,7 @@ using System;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Domain.Languages.Rules;
 
-namespace Weapsy.Apps.Text.Domain.Model.Validators
+namespace Weapsy.Apps.Text.Domain.Validators
 {
     public class VersionLocalisationValidator : AbstractValidator<AddVersion.VersionLocalisation>
     {

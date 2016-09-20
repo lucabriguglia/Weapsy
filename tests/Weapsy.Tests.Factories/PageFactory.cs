@@ -45,7 +45,7 @@ namespace Weapsy.Tests.Factories
             var createValidatorMock = new Mock<IValidator<CreatePage>>();
             createValidatorMock.Setup(x => x.Validate(createCommand)).Returns(new ValidationResult());
 
-            var page = Domain.Model.Pages.Page.CreateNew(createCommand, createValidatorMock.Object);
+            var page = Domain.Pages.Page.CreateNew(createCommand, createValidatorMock.Object);
 
             var addModuleCommand = new AddPageModule
             {
