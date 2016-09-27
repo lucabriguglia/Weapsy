@@ -38,8 +38,12 @@ namespace Weapsy.Services.Identity
 
             var q = _userManager.Users
                 .OrderBy(x => x.Email)
-                .Skip(query.StartIndex)
-                .Take(query.NumberOfUsers);
+                .Skip(query.StartIndex);
+
+            // Part-1: If 0 (zero) is passed for query.NumberOfUsers, we load all users
+
+            if (query.NumberOfUsers > 0)
+                q = q.Take(query.NumberOfUsers);
 
             var viewModel = new UsersViewModel
             {
