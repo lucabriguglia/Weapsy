@@ -8,14 +8,16 @@ weapsy.admin.userIndex = (function ($, ko) {
         this.rolesUrl = "/admin/user/roles/" + data.id;
     }
 
-    function usersViewModel() {
+    function usersViewModel(recordsPerPage) {
         var self = this;
 
         self.pageIndex = ko.observable(0);
         self.maxPageIndex = ko.observable();
 
         self.startIndex = ko.observable();
-        self.numberOfUsers = ko.observable(10);
+        //Subrata: 27.09.2016
+        //ko.observable(n) - "n" denotes records / page.
+        self.numberOfUsers = ko.observable(recordsPerPage);
         
         self.users = ko.observableArray([]);
         self.allPages = ko.observableArray([]);
@@ -77,7 +79,8 @@ weapsy.admin.userIndex = (function ($, ko) {
 
     return {
         UsersViewModel: function () {
-            return usersViewModel();
+            // 0 for All records (no pagination)
+            return usersViewModel(2);
         }
     }
 }(jQuery, ko));
