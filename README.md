@@ -49,6 +49,8 @@ Please create issues to report bugs, suggest new functionalities, ask questions 
 
 I started working on the very first version in 2012 and release a stable version in the same year and published CodePlex.
 For various reasons I didn't work on it for almost 4 years.
+
 At the beginning of 2016 I decided to revive the project.
 Since 4 years in technology is an eternity I started everything from scratch again.
+
 I hope to update this history with other chapters in the near future :-)
