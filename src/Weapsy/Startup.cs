@@ -29,6 +29,7 @@ using Weapsy.Domain.Sites;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Linq;
+using Weapsy.Extensions;
 using Weapsy.Services.Installation;
 
 namespace Weapsy
@@ -96,21 +97,12 @@ namespace Weapsy
                 options.ViewLocationExpanders.Add(new WeapsyViewLocationExpander());
             });
 
+            services.AddAutoMapper();
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<IContextService, ContextService>();
-
-            var autoMapperConfig = new MapperConfiguration(cfg =>
-            {
-                // temporary: all profiles will be added automatically 
-                cfg.AddProfile(new Api.AutoMapperProfile());
-                cfg.AddProfile(new Domain.Data.SqlServer.AutoMapperProfile());
-                cfg.AddProfile(new Reporting.Data.Default.AutoMapperProfile());
-                cfg.AddProfile(new Apps.Text.Data.SqlServer.AutoMapperProfile());
-            });
-
-            services.AddSingleton(sp => autoMapperConfig.CreateMapper());
 
             var builder = new ContainerBuilder();
 
