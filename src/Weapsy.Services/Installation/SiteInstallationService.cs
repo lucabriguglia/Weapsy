@@ -72,6 +72,9 @@ namespace Weapsy.Services.Installation
             // temporary implementation, it will be based on site templates
             // and possibly moved to an infrastructure service
 
+            if (_siteRepository.GetByName("Default") != null)
+                return;
+
             var siteId = Guid.NewGuid();
             var englishLanguageId = Guid.NewGuid();
             var mainMenuId = Guid.NewGuid();

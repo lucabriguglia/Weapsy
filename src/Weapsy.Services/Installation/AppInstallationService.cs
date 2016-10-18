@@ -30,6 +30,9 @@ namespace Weapsy.Services.Installation
             // temporary implementation, it will be based on configuration files
             // and possibly moved to an infrastructure service
 
+            if (_appRepository.GetByName("Text") != null)
+                return;
+
             // ===== Text ===== //
 
             var textAppId = Guid.NewGuid();

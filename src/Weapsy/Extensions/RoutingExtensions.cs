@@ -5,6 +5,7 @@ using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Pages;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Weapsy.Domain.Sites;
 
 namespace Weapsy.Extensions
