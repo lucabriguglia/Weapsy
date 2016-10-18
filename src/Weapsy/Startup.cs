@@ -116,12 +116,12 @@ namespace Weapsy
             // ===== Temporary ===== //
             _appInstallationService = container.Resolve<IAppInstallationService>();
             _siteInstallationService = container.Resolve<ISiteInstallationService>();
-            AppRepository = container.Resolve<IAppRepository>();
-            SiteRepository = container.Resolve<ISiteRepository>();
-            PageFacade = container.Resolve<IPageFacade>();
-            LanguageFacade = container.Resolve<ILanguageFacade>();
-            UserManager = container.Resolve<UserManager<IdentityUser>>();
-            RoleManager = container.Resolve<RoleManager<IdentityRole>>();
+            _appRepository = container.Resolve<IAppRepository>();
+            _siteRepository = container.Resolve<ISiteRepository>();
+            _pageFacade = container.Resolve<IPageFacade>();
+            _languageFacade = container.Resolve<ILanguageFacade>();
+            _userManager = container.Resolve<UserManager<IdentityUser>>();
+            _roleManager = container.Resolve<RoleManager<IdentityRole>>();
             // ==================== //
 
             return container.Resolve<IServiceProvider>();
@@ -162,95 +162,17 @@ namespace Weapsy
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            var site = SiteRepository.GetByName("Default");
-            var activeLanguages = LanguageFacade.GetAllActive(site.Id);
+            var site = _siteRepository.GetByName("Default");
+            var activeLanguages = _languageFacade.GetAllActive(site.Id);
+            var pages = _pageFacade.GetAllForAdminAsync(site.Id).Result;
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "area",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-                if (site != null)
-                {
-                    foreach (var page in PageFacade.GetAllForAdminAsync(site.Id).Result)
-                    {
-                        var defaults = new RouteValueDictionary();
-                        var constraints = new RouteValueDictionary();
-                        var tokens = new RouteValueDictionary();
-
-                        defaults.Add("controller", "Home");
-                        defaults.Add("action", "Index");
-                        defaults.Add("data", string.Empty);
-
-                        constraints.Add("data", @"[a-zA-Z0-9\-]*");
-
-                        tokens.Add("namespaces", new[] { "Weapsy.Controllers" });
-                        tokens.Add(ContextKeys.PageKey, page.Id);
-                        //tokens.Add("languageId", default language id);
-
-                        routes.MapRoute(
-                            name: page.Name,
-                            template: page.Url,
-                            defaults: defaults,
-                            constraints: constraints,
-                            dataTokens: tokens);
-
-                        foreach (var language in activeLanguages)
-                        {
-                            if (tokens.ContainsKey(ContextKeys.LanguageKey))
-                                tokens.Remove(ContextKeys.LanguageKey);
-
-                            tokens.Add(ContextKeys.LanguageKey, language.Id);
-
-                            var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
-
-                            var url = (pageLocalisation != null && !string.IsNullOrWhiteSpace(pageLocalisation.Url))
-                                ? pageLocalisation.Url 
-                                : page.Url;
-
-                            routes.MapRoute(
-                                name: $"{page.Name} - {language.Name}",
-                                template: $"{language.Url}/{url}",
-                                defaults: defaults,
-                                constraints: constraints,
-                                dataTokens: tokens);
-                        }
-                    }
-                }
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-            var supportedCultures = new List<CultureInfo>();
-            RequestCulture defaultRequestCulture;
-
-            try
-            {
-                foreach (var language in activeLanguages)
-                    supportedCultures.Add(new CultureInfo(language.CultureName));
-
-                defaultRequestCulture = new RequestCulture(supportedCultures[0].Name);
-            }
-            catch (Exception)
-            {
-                supportedCultures.Add(new CultureInfo("en"));
-                defaultRequestCulture = new RequestCulture("en");
-            }
-
-            app.UseRequestLocalization(new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = defaultRequestCulture,
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            });
+            app.AddRoutes(site, activeLanguages, pages);
+            app.AddLocalisation(activeLanguages);
         }
 
         private void CheckIfDeafultAppsHaveBeenInstalled()
         {
-            if (AppRepository.GetByName("Text") == null)
+            if (_appRepository.GetByName("Text") == null)
             {
                 _appInstallationService.InstallDefaultApps();
             }
@@ -258,7 +180,7 @@ namespace Weapsy
 
         private void CheckIfDeafultSiteHasBeenInstalled()
         {
-            if (SiteRepository.GetByName("Default") == null)
+            if (_siteRepository.GetByName("Default") == null)
             {
                 _siteInstallationService.InstallDefaultSite();
             }
@@ -272,31 +194,31 @@ namespace Weapsy
             var adminRoleName = "Administrator";
             var adminRole = new IdentityRole(adminRoleName);
 
-            if (await UserManager.FindByEmailAsync(adminEmail) == null)
+            if (await _userManager.FindByEmailAsync(adminEmail) == null)
             {
-                await UserManager.CreateAsync(adminUser, "Ab1234567!");
+                await _userManager.CreateAsync(adminUser, "Ab1234567!");
             }
 
-            if (!await RoleManager.RoleExistsAsync(adminRoleName))
+            if (!await _roleManager.RoleExistsAsync(adminRoleName))
             {
-                await RoleManager.CreateAsync(adminRole);
+                await _roleManager.CreateAsync(adminRole);
             }
 
-            adminUser = await UserManager.FindByEmailAsync(adminEmail);
+            adminUser = await _userManager.FindByEmailAsync(adminEmail);
 
-            if (!await UserManager.IsInRoleAsync(adminUser, adminRoleName))
+            if (!await _userManager.IsInRoleAsync(adminUser, adminRoleName))
             {
-                await UserManager.AddToRoleAsync(adminUser, adminRoleName);
+                await _userManager.AddToRoleAsync(adminUser, adminRoleName);
             }
         }
 
         private static IAppInstallationService _appInstallationService;
         private static ISiteInstallationService _siteInstallationService;
-        private static IAppRepository AppRepository { get; set; }
-        private static ISiteRepository SiteRepository { get; set; }
-        private static IPageFacade PageFacade { get; set; }
-        private static ILanguageFacade LanguageFacade { get; set; }
-        private static UserManager<IdentityUser> UserManager { get; set; }
-        private static RoleManager<IdentityRole> RoleManager { get; set; }
+        private static IAppRepository _appRepository;
+        private static ISiteRepository _siteRepository;
+        private static IPageFacade _pageFacade;
+        private static ILanguageFacade _languageFacade;
+        private static UserManager<IdentityUser> _userManager;
+        private static RoleManager<IdentityRole> _roleManager;
     }
 }
