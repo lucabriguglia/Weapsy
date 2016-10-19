@@ -13,6 +13,7 @@ using FluentValidation.Results;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Modules.Rules;
+using Weapsy.Tests.Factories;
 
 namespace Weapsy.Domain.Tests.Services.Handlers
 {
@@ -130,25 +131,10 @@ namespace Weapsy.Domain.Tests.Services.Handlers
         {
             var siteId = Guid.NewGuid();
             var pageId = Guid.NewGuid();
+            var pageModuleId = Guid.NewGuid();
             var moduleId = Guid.NewGuid();
 
-            var addPageModuleCommand = new AddPageModule
-            {
-                SiteId = siteId,
-                PageId = pageId,
-                ModuleId = moduleId,
-                Id = Guid.NewGuid(),
-                Zone = "Zone",
-                SortOrder = 1,
-                Title = "Title"
-            };
-
-            var addPageModuleValidatoMock = new Mock<IValidator<AddPageModule>>();
-            addPageModuleValidatoMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
-
-            var page = new Page();
-
-            page.AddModule(addPageModuleCommand, addPageModuleValidatoMock.Object);
+            var page = PageFactory.Page(siteId, pageId, "Name", pageModuleId, moduleId);
 
             var command = new RemoveModule
             {
@@ -158,6 +144,7 @@ namespace Weapsy.Domain.Tests.Services.Handlers
             };
 
             var moduleRepositoryMock = new Mock<IModuleRepository>();
+            moduleRepositoryMock.Setup(x => x.GetById(command.SiteId, command.ModuleId)).Returns(new Module());
             moduleRepositoryMock.Setup(x => x.GetCountByModuleId(command.ModuleId)).Returns(2);
             moduleRepositoryMock.Setup(x => x.Update(It.IsAny<Module>()));
 

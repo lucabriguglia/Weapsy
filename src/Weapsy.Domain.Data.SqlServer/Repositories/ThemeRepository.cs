@@ -50,7 +50,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public int GetThemesCount()
         {
-            return _entities.Where(x => x.Status != ThemeStatus.Deleted).Count();
+            return _entities.Count(x => x.Status != ThemeStatus.Deleted);
         }
 
         public void Create(Theme theme)
