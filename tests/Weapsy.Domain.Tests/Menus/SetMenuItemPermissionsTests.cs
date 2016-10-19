@@ -51,7 +51,7 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_set_module_permissions()
         {
-            Assert.AreEqual(_command.MenuItemPermissions, _menuItem.MenuItemPermissions);
+            Assert.AreEqual(_command.MenuItemPermissions.FirstOrDefault().RoleId, _menuItem.MenuItemPermissions.FirstOrDefault().RoleId);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_set_menu_permissions_in_menu_module_permissions_set_event()
         {
-            Assert.AreEqual(_menuItem.MenuItemPermissions, _event.MenuItemPermissions);
+            Assert.AreEqual(_menuItem.MenuItemPermissions.FirstOrDefault().RoleId, _event.MenuItemPermissions.FirstOrDefault().RoleId);
         }
     }
 }

@@ -18,19 +18,20 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         private Guid _siteId;
         private Guid _languageId1;
         private Guid _languageId2;
+        private WeapsyDbContext _dbContext;
 
         [SetUp]
         public void SetUp()
         {
             var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
             optionsBuilder.UseInMemoryDatabase();
-            var dbContext = new WeapsyDbContext(optionsBuilder.Options);
+            _dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
             _siteId = Guid.NewGuid();
             _languageId1 = Guid.NewGuid();
             _languageId2 = Guid.NewGuid();
 
-            dbContext.Set<LanguageDbEntity>().AddRange(
+            _dbContext.Set<LanguageDbEntity>().AddRange(
                 new LanguageDbEntity
                 {
                     SiteId = _siteId,
@@ -55,7 +56,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 }
             );
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             var mapperMock = new Mock<IMapper>();
             mapperMock.Setup(x => x.Map<LanguageDbEntity>(It.IsAny<Language>())).Returns(new LanguageDbEntity());
@@ -66,7 +67,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 LanguageFactory.Language(_siteId, _languageId2, "Name", "CultureName", "Url")
             });
 
-            _sut = new LanguageRepository(dbContext, mapperMock.Object);
+            _sut = new LanguageRepository(_dbContext, mapperMock.Object);
         }
 
         [Test]
@@ -135,8 +136,19 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         [Test]
         public void Should_save_new_language()
         {
-            var newLanguage = LanguageFactory.Language();
+            var newLanguage = LanguageFactory.Language(_siteId, Guid.NewGuid(), "Name", "CultureName", "Url");
 
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<LanguageDbEntity>(newLanguage)).Returns(new LanguageDbEntity
+            {
+                SiteId = newLanguage.SiteId,
+                Id = newLanguage.Id,
+                Name = newLanguage.Name,
+                CultureName = newLanguage.CultureName
+            });
+
+            _sut = new LanguageRepository(_dbContext, mapperMock.Object);
+           
             _sut.Create(newLanguage);
 
             var actual = _sut.GetById(_siteId, newLanguage.Id);

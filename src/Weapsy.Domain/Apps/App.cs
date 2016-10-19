@@ -25,6 +25,7 @@ namespace Weapsy.Domain.Apps
             Name = cmd.Name;
             Description = cmd.Description;
             Folder = cmd.Folder;
+            Status = AppStatus.Active;
 
             AddEvent(new AppCreated
             {

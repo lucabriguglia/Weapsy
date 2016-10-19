@@ -52,7 +52,7 @@ namespace Weapsy.Domain.Tests.Pages
         [Test]
         public void Should_set_module_permissions()
         {
-            Assert.AreEqual(_command.PageModulePermissions, _pageModule.PageModulePermissions);
+            Assert.AreEqual(_command.PageModulePermissions.FirstOrDefault().RoleId, _pageModule.PageModulePermissions.FirstOrDefault().RoleId);
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Weapsy.Domain.Tests.Pages
         [Test]
         public void Should_set_page_permissions_in_page_module_permissions_set_event()
         {
-            Assert.AreEqual(_pageModule.PageModulePermissions, _event.PageModulePermissions);
+            Assert.AreEqual(_pageModule.PageModulePermissions.FirstOrDefault().RoleId, _event.PageModulePermissions.FirstOrDefault().RoleId);
         }
     }
 }
