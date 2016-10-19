@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public Language GetById(Guid siteId, Guid id)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.SiteId.Equals(siteId) && x.Id.Equals(id));
+            var dbEntity = _entities.FirstOrDefault(x => x.SiteId == siteId && x.Id == id);
             return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
         }
 
@@ -64,12 +64,12 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public int GetLanguagesCount(Guid siteId)
         {
-            return _entities.Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted).Count();
+            return _entities.Count(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted);
         }
 
         public int GetActiveLanguagesCount(Guid siteId)
         {
-            return _entities.Where(x => x.SiteId == siteId && x.Status == LanguageStatus.Active).Count();
+            return _entities.Count(x => x.SiteId == siteId && x.Status == LanguageStatus.Active);
         }
 
         public IEnumerable<Guid> GetLanguagesIdList(Guid siteId)
