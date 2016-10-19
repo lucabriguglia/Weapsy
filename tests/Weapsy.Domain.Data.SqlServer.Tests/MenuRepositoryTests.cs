@@ -96,6 +96,11 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<MenuDbEntity>(It.IsAny<Menu>())).Returns(new MenuDbEntity());
             mapperMock.Setup(x => x.Map<Menu>(It.IsAny<MenuDbEntity>())).Returns(new Menu());
+            mapperMock.Setup(x => x.Map<ICollection<Menu>>(It.IsAny<ICollection<MenuDbEntity>>())).Returns(new List<Menu>
+            {
+                MenuFactory.Menu(_siteId, _menuId1, "Name", "ItemText", "ItemTextLocalised"),
+                MenuFactory.Menu(_siteId, _menuId2, "Name", "ItemText", "ItemTextLocalised")
+            });
 
             _sut = new MenuRepository(dbContext, mapperMock.Object);
         }

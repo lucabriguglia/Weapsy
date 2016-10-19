@@ -6,6 +6,7 @@ using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Sites;
 using Weapsy.Tests.Factories;
 using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
+using System.Collections.Generic;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests
 {
@@ -51,9 +52,14 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             dbContext.SaveChanges();
 
-            var mapperMock = new Moq.Mock<AutoMapper.IMapper>();
+            var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<SiteDbEntity>(It.IsAny<Site>())).Returns(new SiteDbEntity());
             mapperMock.Setup(x => x.Map<Site>(It.IsAny<SiteDbEntity>())).Returns(new Site());
+            mapperMock.Setup(x => x.Map<IList<Site>>(It.IsAny<IList<SiteDbEntity>>())).Returns(new List<Site>
+            {
+                SiteFactory.Site(_siteId1, "Name"),
+                SiteFactory.Site(_siteId2, "Name")
+            });
 
             _sut = new SiteRepository(dbContext, mapperMock.Object);
         }

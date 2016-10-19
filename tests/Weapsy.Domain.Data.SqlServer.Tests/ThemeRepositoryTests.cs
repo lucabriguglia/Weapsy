@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Themes;
@@ -52,9 +53,14 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             dbContext.SaveChanges();
 
-            var mapperMock = new Moq.Mock<AutoMapper.IMapper>();
+            var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<ThemeDbEntity>(It.IsAny<Theme>())).Returns(new ThemeDbEntity());
             mapperMock.Setup(x => x.Map<Theme>(It.IsAny<ThemeDbEntity>())).Returns(new Theme());
+            mapperMock.Setup(x => x.Map<ICollection<Theme>>(It.IsAny<ICollection<ThemeDbEntity>>())).Returns(new List<Theme>
+            {
+                ThemeFactory.Theme(_themeId1, "Name", "Description", "Folder"),
+                ThemeFactory.Theme(_themeId2, "Name", "Description", "Folder")
+            });
 
             _sut = new ThemeRepository(dbContext, mapperMock.Object);
         }

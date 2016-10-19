@@ -60,7 +60,11 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             var mapperMock = new Mock<IMapper>();
             mapperMock.Setup(x => x.Map<LanguageDbEntity>(It.IsAny<Language>())).Returns(new LanguageDbEntity());
             mapperMock.Setup(x => x.Map<Language>(It.IsAny<LanguageDbEntity>())).Returns(new Language());
-            mapperMock.Setup(x => x.Map<ICollection<Language>>(It.IsAny<ICollection<LanguageDbEntity>>())).Returns(new List<Language>());
+            mapperMock.Setup(x => x.Map<ICollection<Language>>(It.IsAny<ICollection<LanguageDbEntity>>())).Returns(new List<Language>
+            {
+                LanguageFactory.Language(_siteId, _languageId1, "Name", "CultureName", "Url"),
+                LanguageFactory.Language(_siteId, _languageId2, "Name", "CultureName", "Url")
+            });
 
             _sut = new LanguageRepository(dbContext, mapperMock.Object);
         }
