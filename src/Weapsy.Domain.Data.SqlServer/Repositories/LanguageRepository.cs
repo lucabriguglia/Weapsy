@@ -23,7 +23,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public Language GetById(Guid id)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.Id.Equals(id));
+            var dbEntity = _entities.FirstOrDefault(x => x.Id == id);
             return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
         }
 
@@ -85,7 +85,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public void Update(Language language)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.Id.Equals(language.Id));
+            var dbEntity = _entities.FirstOrDefault(x => x.Id == language.Id);
             dbEntity = _mapper.Map(language, dbEntity);
             _context.SaveChanges();
         }

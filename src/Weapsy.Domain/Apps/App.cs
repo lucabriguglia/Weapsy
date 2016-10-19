@@ -32,7 +32,8 @@ namespace Weapsy.Domain.Apps
                 AggregateRootId = Id,
                 Name = Name,
                 Description = Description,
-                Folder = Folder
+                Folder = Folder,
+                Status = Status
             });
         }
 

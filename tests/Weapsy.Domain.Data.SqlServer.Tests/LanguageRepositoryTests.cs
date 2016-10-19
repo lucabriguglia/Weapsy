@@ -137,15 +137,17 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         public void Should_save_new_language()
         {
             var newLanguage = LanguageFactory.Language(_siteId, Guid.NewGuid(), "Name", "CultureName", "Url");
-
-            var mapperMock = new Mock<IMapper>();
-            mapperMock.Setup(x => x.Map<LanguageDbEntity>(newLanguage)).Returns(new LanguageDbEntity
+            var newLanguageDbEntity = new LanguageDbEntity
             {
                 SiteId = newLanguage.SiteId,
                 Id = newLanguage.Id,
                 Name = newLanguage.Name,
                 CultureName = newLanguage.CultureName
-            });
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<LanguageDbEntity>(newLanguage)).Returns(newLanguageDbEntity);
+            mapperMock.Setup(x => x.Map<Language>(newLanguageDbEntity)).Returns(newLanguage);
 
             _sut = new LanguageRepository(_dbContext, mapperMock.Object);
            
@@ -159,9 +161,22 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         [Test]
         public void Should_update_language()
         {
-            var newLanguageName = "New Language Name 1";
+            const string newLanguageName = "New Language Name 1";
 
             var languageToUpdate = LanguageFactory.Language(_siteId, _languageId1, newLanguageName, "en", "en");
+            var languageToUpdateDbEntity = new LanguageDbEntity
+            {
+                SiteId = languageToUpdate.SiteId,
+                Id = languageToUpdate.Id,
+                Name = languageToUpdate.Name,
+                CultureName = languageToUpdate.CultureName
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<LanguageDbEntity>(languageToUpdate)).Returns(languageToUpdateDbEntity);
+            mapperMock.Setup(x => x.Map<Language>(languageToUpdateDbEntity)).Returns(languageToUpdate);
+
+            _sut = new LanguageRepository(_dbContext, mapperMock.Object);
 
             _sut.Update(languageToUpdate);
 
