@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -92,9 +93,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             dbContext.SaveChanges();
 
-            var mapperMock = new Moq.Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<MenuDbEntity>(Moq.It.IsAny<Menu>())).Returns(new MenuDbEntity());
-            mapperMock.Setup(x => x.Map<Menu>(Moq.It.IsAny<MenuDbEntity>())).Returns(new Menu());
+            var mapperMock = new Mock<AutoMapper.IMapper>();
+            mapperMock.Setup(x => x.Map<MenuDbEntity>(It.IsAny<Menu>())).Returns(new MenuDbEntity());
+            mapperMock.Setup(x => x.Map<Menu>(It.IsAny<MenuDbEntity>())).Returns(new Menu());
 
             _sut = new MenuRepository(dbContext, mapperMock.Object);
         }

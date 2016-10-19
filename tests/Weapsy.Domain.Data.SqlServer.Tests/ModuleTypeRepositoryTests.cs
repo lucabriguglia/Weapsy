@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
+using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Tests.Factories;
@@ -51,8 +52,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             dbContext.SaveChanges();
 
             var mapperMock = new Moq.Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<ModuleTypeDbEntity>(Moq.It.IsAny<ModuleType>())).Returns(new ModuleTypeDbEntity());
-            mapperMock.Setup(x => x.Map<ModuleType>(Moq.It.IsAny<ModuleTypeDbEntity>())).Returns(new ModuleType());
+            mapperMock.Setup(x => x.Map<ModuleTypeDbEntity>(It.IsAny<ModuleType>())).Returns(new ModuleTypeDbEntity());
+            mapperMock.Setup(x => x.Map<ModuleType>(It.IsAny<ModuleTypeDbEntity>())).Returns(new ModuleType());
 
             _sut = new ModuleTypeRepository(dbContext, mapperMock.Object);
         }

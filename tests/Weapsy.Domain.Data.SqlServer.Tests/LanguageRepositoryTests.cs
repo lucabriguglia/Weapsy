@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using AutoMapper;
+using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Languages;
 using Weapsy.Tests.Factories;
@@ -55,9 +57,10 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             dbContext.SaveChanges();
 
-            var mapperMock = new Moq.Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<Language, LanguageDbEntity>(Moq.It.IsAny<Language>())).Returns(new LanguageDbEntity());
-            mapperMock.Setup(x => x.Map<LanguageDbEntity, Language>(Moq.It.IsAny<LanguageDbEntity>())).Returns(new Language());
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<LanguageDbEntity>(It.IsAny<Language>())).Returns(new LanguageDbEntity());
+            mapperMock.Setup(x => x.Map<Language>(It.IsAny<LanguageDbEntity>())).Returns(new Language());
+            mapperMock.Setup(x => x.Map<ICollection<Language>>(It.IsAny<ICollection<LanguageDbEntity>>())).Returns(new List<Language>());
 
             _sut = new LanguageRepository(dbContext, mapperMock.Object);
         }

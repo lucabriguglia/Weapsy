@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Pages;
 using Weapsy.Tests.Factories;
@@ -95,8 +96,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             dbContext.SaveChanges();
 
             var mapperMock = new Moq.Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<PageDbEntity>(Moq.It.IsAny<Page>())).Returns(new PageDbEntity());
-            mapperMock.Setup(x => x.Map<Page>(Moq.It.IsAny<PageDbEntity>())).Returns(new Page());
+            mapperMock.Setup(x => x.Map<PageDbEntity>(It.IsAny<Page>())).Returns(new PageDbEntity());
+            mapperMock.Setup(x => x.Map<Page>(It.IsAny<PageDbEntity>())).Returns(new Page());
 
             _sut = new PageRepository(dbContext, mapperMock.Object);
         }

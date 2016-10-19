@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using System;
+using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Sites;
 using Weapsy.Tests.Factories;
@@ -51,8 +52,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             dbContext.SaveChanges();
 
             var mapperMock = new Moq.Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<SiteDbEntity>(Moq.It.IsAny<Site>())).Returns(new SiteDbEntity());
-            mapperMock.Setup(x => x.Map<Site>(Moq.It.IsAny<SiteDbEntity>())).Returns(new Site());
+            mapperMock.Setup(x => x.Map<SiteDbEntity>(It.IsAny<Site>())).Returns(new SiteDbEntity());
+            mapperMock.Setup(x => x.Map<Site>(It.IsAny<SiteDbEntity>())).Returns(new Site());
 
             _sut = new SiteRepository(dbContext, mapperMock.Object);
         }
