@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using AutoMapper;
 using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.ModuleTypes;
@@ -14,6 +15,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     public class ModuleTypeRepositoryTests
     {
         private IModuleTypeRepository _sut;
+        private WeapsyDbContext _dbContext;
         private Guid _moduleTypeId1;
         private Guid _moduleTypeId2;
 
@@ -22,12 +24,12 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
             optionsBuilder.UseInMemoryDatabase();
-            var dbContext = new WeapsyDbContext(optionsBuilder.Options);
+            _dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
             _moduleTypeId1 = Guid.NewGuid();
             _moduleTypeId2 = Guid.NewGuid();
 
-            dbContext.Set<ModuleTypeDbEntity>().AddRange(
+            _dbContext.Set<ModuleTypeDbEntity>().AddRange(
                 new ModuleTypeDbEntity
                 {
                     Id = _moduleTypeId1,
@@ -50,7 +52,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 }
             );
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<ModuleTypeDbEntity>(It.IsAny<ModuleType>())).Returns(new ModuleTypeDbEntity());
@@ -61,7 +63,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 ModuleTypeFactory.ModuleType(_moduleTypeId2, "Name", "Title", "Description")
             });
 
-            _sut = new ModuleTypeRepository(dbContext, mapperMock.Object);
+            _sut = new ModuleTypeRepository(_dbContext, mapperMock.Object);
         }
 
         [Test]
@@ -89,6 +91,18 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         public void Should_save_new_moduleType()
         {
             var newModuleType = ModuleTypeFactory.ModuleType(Guid.NewGuid(), "Name 3", "Title 3", "Description 3");
+            var newModuleTypeDbEntity = new ModuleTypeDbEntity
+            {
+                Id = newModuleType.Id,
+                Title = newModuleType.Title,
+                Name = newModuleType.Name
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<ModuleTypeDbEntity>(newModuleType)).Returns(newModuleTypeDbEntity);
+            mapperMock.Setup(x => x.Map<ModuleType>(newModuleTypeDbEntity)).Returns(newModuleType);
+
+            _sut = new ModuleTypeRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newModuleType);
 

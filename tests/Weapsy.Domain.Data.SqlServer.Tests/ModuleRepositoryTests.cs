@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using AutoMapper;
 using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Modules;
@@ -14,6 +15,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     public class ModuleRepositoryTests
     {
         private IModuleRepository _sut;
+        private WeapsyDbContext _dbContext;
         private Guid _siteId;
         private Guid _moduleId1;
         private Guid _moduleId2;
@@ -25,7 +27,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
             optionsBuilder.UseInMemoryDatabase();
-            var dbContext = new WeapsyDbContext(optionsBuilder.Options);
+            _dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
             _siteId = Guid.NewGuid();
             _moduleId1 = Guid.NewGuid();
@@ -33,7 +35,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             _moduleTypeId1 = Guid.NewGuid();
             _moduleTypeId2 = Guid.NewGuid();
 
-            dbContext.Set<ModuleDbEntity>().AddRange(
+            _dbContext.Set<ModuleDbEntity>().AddRange(
                 new ModuleDbEntity
                 {
                     SiteId = _siteId,
@@ -56,7 +58,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 }
             );
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<ModuleDbEntity>(It.IsAny<Module>())).Returns(new ModuleDbEntity());
@@ -67,7 +69,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 ModuleFactory.Module(_siteId, _moduleTypeId2, _moduleId2, "Title")
             });
 
-            _sut = new ModuleRepository(dbContext, mapperMock.Object);
+            _sut = new ModuleRepository(_dbContext, mapperMock.Object);
         }
 
         [Test]
@@ -102,6 +104,18 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         public void Should_save_new_module()
         {
             var newModule = ModuleFactory.Module(_siteId, Guid.NewGuid(), Guid.NewGuid(), "Title 3");
+            var newModuleDbEntity = new ModuleDbEntity
+            {
+                SiteId = newModule.SiteId,
+                Id = newModule.Id,
+                Title = newModule.Title
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<ModuleDbEntity>(newModule)).Returns(newModuleDbEntity);
+            mapperMock.Setup(x => x.Map<Module>(newModuleDbEntity)).Returns(newModule);
+
+            _sut = new ModuleRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newModule);
 

@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Menus;
 using Weapsy.Tests.Factories;
@@ -17,6 +18,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     public class MenuRepositoryTests
     {
         private IMenuRepository _sut;
+        private WeapsyDbContext _dbContext;
         private Guid _siteId;
         private Guid _menuId1;
         private Guid _menuId2;
@@ -29,7 +31,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
             optionsBuilder.UseInMemoryDatabase();
-            var dbContext = new WeapsyDbContext(optionsBuilder.Options);
+            _dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
             _siteId = Guid.NewGuid();
             _menuId1 = Guid.NewGuid();
@@ -38,7 +40,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             _menuItemId2 = Guid.NewGuid();
             _language1 = Guid.NewGuid();
 
-            dbContext.Set<MenuDbEntity>().AddRange(
+            _dbContext.Set<MenuDbEntity>().AddRange(
                 new MenuDbEntity
                 {
                     SiteId = _siteId,
@@ -91,9 +93,9 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 }
             );
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
-            var mapperMock = new Mock<AutoMapper.IMapper>();
+            var mapperMock = new Mock<IMapper>();
             mapperMock.Setup(x => x.Map<MenuDbEntity>(It.IsAny<Menu>())).Returns(new MenuDbEntity());
             mapperMock.Setup(x => x.Map<Menu>(It.IsAny<MenuDbEntity>())).Returns(new Menu());
             mapperMock.Setup(x => x.Map<ICollection<Menu>>(It.IsAny<ICollection<MenuDbEntity>>())).Returns(new List<Menu>
@@ -102,7 +104,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 MenuFactory.Menu(_siteId, _menuId2, "Name", "ItemText", "ItemTextLocalised")
             });
 
-            _sut = new MenuRepository(dbContext, mapperMock.Object);
+            _sut = new MenuRepository(_dbContext, mapperMock.Object);
         }
 
         [Test]
@@ -166,6 +168,18 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         public void Should_save_new_menu()
         {
             var newMenu = MenuFactory.Menu(_siteId, Guid.NewGuid(), "Menu 3", "Item", "");
+            var newMenuDbEntity = new MenuDbEntity
+            {
+                SiteId = newMenu.SiteId,
+                Id = newMenu.Id,
+                Name = newMenu.Name
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<MenuDbEntity>(newMenu)).Returns(newMenuDbEntity);
+            mapperMock.Setup(x => x.Map<Menu>(newMenuDbEntity)).Returns(newMenu);
+
+            _sut = new MenuRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newMenu);
 

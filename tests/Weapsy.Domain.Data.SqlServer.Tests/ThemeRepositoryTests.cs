@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using AutoMapper;
 using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Themes;
@@ -14,6 +15,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     public class ThemeRepositoryTests
     {
         private IThemeRepository _sut;
+        private WeapsyDbContext _dbContext;
         private Guid _themeId1;
         private Guid _themeId2;
 
@@ -22,12 +24,12 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
             optionsBuilder.UseInMemoryDatabase();
-            var dbContext = new WeapsyDbContext(optionsBuilder.Options);
+            _dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
             _themeId1 = Guid.NewGuid();
             _themeId2 = Guid.NewGuid();
 
-            dbContext.Set<ThemeDbEntity>().AddRange
+            _dbContext.Set<ThemeDbEntity>().AddRange
             (
                 new ThemeDbEntity
                 {
@@ -51,7 +53,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 }
             );
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<ThemeDbEntity>(It.IsAny<Theme>())).Returns(new ThemeDbEntity());
@@ -62,7 +64,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 ThemeFactory.Theme(_themeId2, "Name", "Description", "Folder")
             });
 
-            _sut = new ThemeRepository(dbContext, mapperMock.Object);
+            _sut = new ThemeRepository(_dbContext, mapperMock.Object);
         }
 
         [Test]
@@ -105,6 +107,19 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         public void Should_save_new_theme()
         {
             var newTheme = ThemeFactory.Theme(Guid.NewGuid(), "Name 3", "Description 3", "Folder 3");
+            var newThemeDbEntity = new ThemeDbEntity
+            {
+                Id = newTheme.Id,
+                Name = newTheme.Name,
+                Description = newTheme.Description,
+                Folder = newTheme.Folder
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<ThemeDbEntity>(newTheme)).Returns(newThemeDbEntity);
+            mapperMock.Setup(x => x.Map<Theme>(newThemeDbEntity)).Returns(newTheme);
+
+            _sut = new ThemeRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newTheme);
 

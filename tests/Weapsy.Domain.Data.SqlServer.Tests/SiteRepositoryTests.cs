@@ -7,6 +7,7 @@ using Weapsy.Domain.Sites;
 using Weapsy.Tests.Factories;
 using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests
 {
@@ -14,6 +15,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     public class SiteRepositoryTests
     {
         private ISiteRepository _sut;
+        private WeapsyDbContext _dbContext;
         private Guid _siteId1;
         private Guid _siteId2;
 
@@ -22,12 +24,12 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
             optionsBuilder.UseInMemoryDatabase();
-            var dbContext = new WeapsyDbContext(optionsBuilder.Options);
+            _dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
             _siteId1 = Guid.NewGuid();
             _siteId2 = Guid.NewGuid();
 
-            dbContext.Set<SiteDbEntity>().AddRange(
+            _dbContext.Set<SiteDbEntity>().AddRange(
                 new SiteDbEntity
                 {
                     Id = _siteId1,
@@ -50,7 +52,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 }
             );
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<SiteDbEntity>(It.IsAny<Site>())).Returns(new SiteDbEntity());
@@ -61,7 +63,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 SiteFactory.Site(_siteId2, "Name")
             });
 
-            _sut = new SiteRepository(dbContext, mapperMock.Object);
+            _sut = new SiteRepository(_dbContext, mapperMock.Object);
         }
 
         [Test]
@@ -96,6 +98,17 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         public void Should_save_new_site()
         {
             var newSite = SiteFactory.Site(Guid.NewGuid(), "Name 3");
+            var newSiteDbEntity = new SiteDbEntity
+            {
+                Id = newSite.Id,
+                Name = newSite.Name
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<SiteDbEntity>(newSite)).Returns(newSiteDbEntity);
+            mapperMock.Setup(x => x.Map<Site>(newSiteDbEntity)).Returns(newSite);
+
+            _sut = new SiteRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newSite);
 

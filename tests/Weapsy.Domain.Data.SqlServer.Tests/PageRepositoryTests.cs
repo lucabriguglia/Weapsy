@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Pages;
@@ -17,6 +18,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
     public class PageRepositoryTests
     {
         private IPageRepository _sut;
+        private WeapsyDbContext _dbContext;
         private Guid _siteId;
         private Guid _pageId1;
         private Guid _pageId2;
@@ -29,7 +31,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         {
             var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
             optionsBuilder.UseInMemoryDatabase();
-            var dbContext = new WeapsyDbContext(optionsBuilder.Options);
+            _dbContext = new WeapsyDbContext(optionsBuilder.Options);
 
             _siteId = Guid.NewGuid();
             _pageId1 = Guid.NewGuid();
@@ -38,7 +40,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
             _pageModuleId1 = Guid.NewGuid();
             _languageId1 = Guid.NewGuid();
 
-            dbContext.Set<PageDbEntity>().AddRange(
+            _dbContext.Set<PageDbEntity>().AddRange(
                 new PageDbEntity
                 {
                     SiteId = _siteId,
@@ -93,7 +95,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 }
             );
 
-            dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<PageDbEntity>(It.IsAny<Page>())).Returns(new PageDbEntity());
@@ -104,7 +106,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 PageFactory.Page(_siteId, _pageId2, "Name")
             });
 
-            _sut = new PageRepository(dbContext, mapperMock.Object);
+            _sut = new PageRepository(_dbContext, mapperMock.Object);
         }
 
         [Test]
@@ -182,6 +184,18 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         public void Should_save_new_page()
         {
             var newPage = PageFactory.Page(_siteId, Guid.NewGuid(), "Name 3");
+            var newPageDbEntity = new PageDbEntity
+            {
+                SiteId = newPage.SiteId,
+                Id = newPage.Id,
+                Title = newPage.Title
+            };
+
+            var mapperMock = new Mock<IMapper>();
+            mapperMock.Setup(x => x.Map<PageDbEntity>(newPage)).Returns(newPageDbEntity);
+            mapperMock.Setup(x => x.Map<Page>(newPageDbEntity)).Returns(newPage);
+
+            _sut = new PageRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newPage);
 
