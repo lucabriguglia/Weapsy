@@ -25,13 +25,15 @@ namespace Weapsy.Services.Installation
             _createModuleTypeValidator = createModuleTypeValidator;
         }
 
+        public void VerifyAppInstallation()
+        {
+            if (_appRepository.GetByName("Text") == null)
+                InstallDefaultApps();
+        }
+
         public void InstallDefaultApps()
         {
             // temporary implementation, it will be based on configuration files
-            // and possibly moved to an infrastructure service
-
-            if (_appRepository.GetByName("Text") != null)
-                return;
 
             // ===== Text ===== //
 

@@ -118,9 +118,9 @@ namespace Weapsy
             ILanguageFacade languageFacade,
             IPageFacade pageFacade)
         {
-            appInstallationService.InstallDefaultApps();
-            siteInstallationService.InstallDefaultSite();
-            membershipInstallationService.CreateDefaultUsers();
+            appInstallationService.VerifyAppInstallation();
+            siteInstallationService.VerifySiteInstallation();
+            membershipInstallationService.VerifyUserCreation();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

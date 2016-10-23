@@ -4,6 +4,6 @@ namespace Weapsy.Services.Installation
 {
     public interface IMembershipInstallationService : IService
     {
-        void CreateDefaultUsers();
+        void VerifyUserCreation();
     }
 }

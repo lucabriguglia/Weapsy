@@ -15,7 +15,7 @@ namespace Weapsy.Services.Installation
             _roleManager = roleManager;
         }
 
-        public async void CreateDefaultUsers()
+        public async void VerifyUserCreation()
         {
             var adminEmail = "admin@default.com";
             var adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail };

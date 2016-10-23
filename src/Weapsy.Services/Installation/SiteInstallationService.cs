@@ -67,13 +67,15 @@ namespace Weapsy.Services.Installation
             _moduleTypeRepository = moduleTypeRepository;
         }
 
+        public void VerifySiteInstallation()
+        {
+            if (_siteRepository.GetByName("Default") == null)
+                InstallDefaultSite();
+        }
+
         public void InstallDefaultSite()
         {
             // temporary implementation, it will be based on site templates
-            // and possibly moved to an infrastructure service
-
-            if (_siteRepository.GetByName("Default") != null)
-                return;
 
             var siteId = Guid.NewGuid();
             var englishLanguageId = Guid.NewGuid();
