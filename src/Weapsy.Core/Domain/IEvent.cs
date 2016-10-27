@@ -6,7 +6,7 @@ namespace Weapsy.Core.Domain
     {
         Guid AggregateRootId { get; set; }
         int Version { get; set; }
-        DateTime TimeStamp { get; }
+        DateTime TimeStamp { get; set; }
         string UserId { get; set; }
     }
 }

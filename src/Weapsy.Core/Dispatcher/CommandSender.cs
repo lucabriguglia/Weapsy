@@ -1,7 +1,6 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 using Weapsy.Core.DependencyResolver;
-using AutoMapper;
 
 namespace Weapsy.Core.Dispatcher
 {
@@ -41,13 +40,8 @@ namespace Weapsy.Core.Dispatcher
                 if (!publishEvents)
                     continue;
 
-                // hack for autofac resolver inside event publisher
-                Type type = @event.GetType();
-                var config = new MapperConfiguration(cfg => { cfg.CreateMap(type, type); });
-                IMapper mapper = config.CreateMapper();
-                dynamic newEvent = mapper.Map(@event, type, type);
-
-                _eventPublisher.Publish(newEvent);
+                dynamic concreteEvent = EventFactory.GetConcreteEvent(@event);
+                _eventPublisher.Publish<IEvent, TAggregate>(concreteEvent);
             }
         }
     }

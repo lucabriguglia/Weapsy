@@ -42,7 +42,7 @@ namespace Weapsy.Domain.EventStore.SqlServer
                 SequenceNumber = currentSequenceCount + 1,
                 Type = @event.GetType().AssemblyQualifiedName,
                 Body = JsonConvert.SerializeObject(@event),
-                TimeStamp = @event.TimeStamp,//DateTime.UtcNow,
+                TimeStamp = @event.TimeStamp
                 //UserId = @event.UserId
             });
 
@@ -61,9 +61,10 @@ namespace Weapsy.Domain.EventStore.SqlServer
             foreach (var entity in entities)
             {
                 var @event = JsonConvert.DeserializeObject(entity.Body, Type.GetType(entity.Type));
+                result.Add((IEvent)@event);
             }
 
-            throw new NotImplementedException();
+            return result;
         }
     }
 }
