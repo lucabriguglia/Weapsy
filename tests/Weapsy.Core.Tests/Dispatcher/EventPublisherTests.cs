@@ -16,10 +16,11 @@ namespace Weapsy.Core.Tests.Dispatcher
         public void Should_throw_an_exception_when_event_is_null()
         {
             var resolverMock = new Mock<IResolver>();
+            var eventStore = new Mock<IEventStore>();
 
-            var eventPublisher = new EventPublisher(resolverMock.Object);
+            var eventPublisher = new EventPublisher(resolverMock.Object, eventStore.Object);
 
-            Assert.That(() => eventPublisher.Publish<IEvent>(null), Throws.TypeOf<ArgumentNullException>());
+            Assert.That(() => eventPublisher.Publish<IEvent, IAggregateRoot>(null), Throws.TypeOf<ArgumentNullException>());
         }
 
         [Test]
@@ -38,9 +39,11 @@ namespace Weapsy.Core.Tests.Dispatcher
             var resolverMock = new Mock<IResolver>();
             resolverMock.Setup(x => x.ResolveAll<IEventHandler<IEvent>>()).Returns(eventHandlers);
 
-            var eventPublisher = new EventPublisher(resolverMock.Object);
+            var eventStore = new Mock<IEventStore>();
 
-            eventPublisher.Publish<IEvent>(fakeEvent);
+            var eventPublisher = new EventPublisher(resolverMock.Object, eventStore.Object);
+
+            eventPublisher.Publish<IEvent, IAggregateRoot>(fakeEvent);
 
             eventHandler1Mock.Verify(x => x.Handle(fakeEvent), Times.Once);
             eventHandler2Mock.Verify(x => x.Handle(fakeEvent), Times.Once);
