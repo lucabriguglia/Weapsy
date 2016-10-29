@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Menus
 
             validator.ValidateCommand(cmd);
 
-            var sortOrder = MenuItems.Where(x => x.ParentId == Guid.Empty).Count() + 1;
+            var sortOrder = MenuItems.Count(x => x.ParentId == Guid.Empty) + 1;
 
             MenuItems.Add(new MenuItem(cmd, sortOrder));
 

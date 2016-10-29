@@ -116,7 +116,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = context.Set<LanguageDbEntity>().FirstOrDefault(x => x.Id == language.Id);
-                _mapper.Map(language, dbEntity);
+                dbEntity = _mapper.Map(language, dbEntity);
                 context.SaveChanges();                
             }
         }

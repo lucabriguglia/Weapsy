@@ -189,6 +189,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         public void Should_update_language()
         {
             const string newLanguageName = "New Language Name 1";
+
             var languageToUpdate = LanguageFactory.Language(_siteId, _languageId1, newLanguageName, "en", "en");
 
             using (var context = new WeapsyDbContext(_contextOptions))

@@ -15,10 +15,13 @@ namespace Weapsy.Tests.Factories
             return Menu(Guid.NewGuid(), Guid.NewGuid(), "My Menu", "My Item", "My Item Localised");
         }
 
-        public static Menu Menu(Guid siteId, Guid id, string name, string itemText, string itemTextLocalised, Guid menuItemId = new Guid())
+        public static Menu Menu(Guid siteId, Guid id, string name, string itemText, string itemTextLocalised, Guid menuItemId = new Guid(), Guid languageId = new Guid())
         {
             if (menuItemId == Guid.Empty)
                 menuItemId = Guid.NewGuid();
+
+            if (languageId == Guid.Empty)
+                languageId = Guid.NewGuid();
 
             var createCommand = new CreateMenu
             {
@@ -46,7 +49,7 @@ namespace Weapsy.Tests.Factories
                 {
                     new MenuItemDetails.MenuItemLocalisation
                     {
-                        LanguageId = Guid.NewGuid(),
+                        LanguageId = languageId,
                         Text = itemTextLocalised,
                         Title = "Title 1"
                     }

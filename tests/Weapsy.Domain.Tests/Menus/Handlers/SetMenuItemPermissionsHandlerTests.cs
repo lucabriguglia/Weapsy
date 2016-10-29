@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Menus;
@@ -35,7 +36,8 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
-                MenuItemId = Guid.NewGuid()
+                MenuItemId = Guid.NewGuid(),
+                MenuItemPermissions = new List<MenuItemPermission>()
             };
 
             var menu = MenuFactory.Menu(command.SiteId, command.MenuId, "Name", "Item", "Item", command.MenuItemId);
