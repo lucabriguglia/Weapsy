@@ -16,25 +16,25 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
     public class PageRepository : IPageRepository
     {
         private readonly IWeapsyDbContextFactory _dbContextFactory;
-        //private readonly WeapsyDbContext _context;
-        //private readonly DbSet<PageDbEntity> _pages;
-        //private readonly DbSet<PageLocalisationDbEntity> _pageLocalisations;
-        //private readonly DbSet<PageModuleDbEntity> _pageModules;
-        //private readonly DbSet<PageModuleLocalisationDbEntity> _pageModuleLocalisations;
-        //private readonly DbSet<PagePermissionDbEntity> _pagePermissions;
-        //private readonly DbSet<PageModulePermissionDbEntity> _pageModulePermissions;
+        private readonly WeapsyDbContext _context;
+        private readonly DbSet<PageDbEntity> _pages;
+        private readonly DbSet<PageLocalisationDbEntity> _pageLocalisations;
+        private readonly DbSet<PageModuleDbEntity> _pageModules;
+        private readonly DbSet<PageModuleLocalisationDbEntity> _pageModuleLocalisations;
+        private readonly DbSet<PagePermissionDbEntity> _pagePermissions;
+        private readonly DbSet<PageModulePermissionDbEntity> _pageModulePermissions;
         private readonly IMapper _mapper;
 
-        public PageRepository(IWeapsyDbContextFactory dbContextFactory, IMapper mapper)
+        public PageRepository(IWeapsyDbContextFactory dbContextFactory, WeapsyDbContext context, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
-            //_context = context;
-            //_pages = context.Set<PageDbEntity>();
-            //_pageLocalisations = context.Set<PageLocalisationDbEntity>();
-            //_pageModules = context.Set<PageModuleDbEntity>();
-            //_pageModuleLocalisations = context.Set<PageModuleLocalisationDbEntity>();
-            //_pagePermissions = context.Set<PagePermissionDbEntity>();
-            //_pageModulePermissions = context.Set<PageModulePermissionDbEntity>();
+            _context = context;
+            _pages = context.Set<PageDbEntity>();
+            _pageLocalisations = context.Set<PageLocalisationDbEntity>();
+            _pageModules = context.Set<PageModuleDbEntity>();
+            _pageModuleLocalisations = context.Set<PageModuleLocalisationDbEntity>();
+            _pagePermissions = context.Set<PagePermissionDbEntity>();
+            _pageModulePermissions = context.Set<PageModulePermissionDbEntity>();
             _mapper = mapper;
         }
 
@@ -127,192 +127,193 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public void Update(Page page)
         {
-            using (var context = _dbContextFactory.Create())
+            //using (var context = _dbContextFactory.Create())
+            //{
+            //    //var dbEntity = _mapper.Map<PageDbEntity>(page);
+            //    //context.Update(dbEntity);
+            //    //context.SaveChanges();
+
+            //    //var dbEntity = context.Set<PageDbEntity>()
+            //    //    .Include(x => x.PageLocalisations)
+            //    //    .Include(x => x.PagePermissions)
+            //    //    .FirstOrDefault(x => x.Id == page.Id);
+            //    //LoadAllPageModules(context, dbEntity);
+            //    //_mapper.Map(page, dbEntity);
+            //    //context.SaveChanges();
+            //}
+
+            var pageDbEntity = _pages.FirstOrDefault(x => x.Id == page.Id);
+
+            //pageDbEntity = _mapper.Map(page, pageDbEntity);
+            pageDbEntity.EndDate = page.EndDate;
+            pageDbEntity.Title = page.Title;
+            pageDbEntity.MetaDescription = page.MetaDescription;
+            pageDbEntity.MetaKeywords = page.MetaKeywords;
+            pageDbEntity.Name = page.Name;
+            pageDbEntity.Status = page.Status;
+            pageDbEntity.SiteId = page.SiteId;
+            pageDbEntity.StartDate = page.StartDate;
+            pageDbEntity.Url = page.Url;
+
+            UpdatePageLocalisations(page.PageLocalisations);
+            UpdatePageModules(page.PageModules);
+            UpdatePagePermissions(page.Id, page.PagePermissions);
+
+            _context.SaveChanges();
+        }
+
+        private void UpdatePageLocalisations(IEnumerable<PageLocalisation> pageLocalisations)
+        {
+            //foreach (var item in _pageLocalisations.Where(x => x.PageId == page.Id))
+            //{
+            //    if (page.PageLocalisations.FirstOrDefault(x => x.LanguageId == item.LanguageId) == null)
+            //    {
+            //        _pageLocalisations.Remove(item);
+            //    }
+            //}
+
+            foreach (var pageLocalisation in pageLocalisations)
             {
-                var dbEntity = context.Set<PageDbEntity>()
-                    .Include(x => x.PageLocalisations)
-                    .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.Id == page.Id);
+                var pageLocalisationDbEntity = _pageLocalisations
+                    .FirstOrDefault(x =>
+                        x.PageId == pageLocalisation.PageId &&
+                        x.LanguageId == pageLocalisation.LanguageId);
 
-                LoadAllPageModules(context, dbEntity);
+                if (pageLocalisationDbEntity == null)
+                {
+                    _pageLocalisations.Add(_mapper.Map<PageLocalisationDbEntity>(pageLocalisation));
+                }
+                else
+                {
+                    //pageLocalisationDbEntity = _mapper.Map(pageLocalisation, pageLocalisationDbEntity);
+                    pageLocalisationDbEntity.Title = pageLocalisation.Title;
+                    pageLocalisationDbEntity.MetaDescription = pageLocalisation.MetaDescription;
+                    pageLocalisationDbEntity.MetaKeywords = pageLocalisation.MetaKeywords;
+                    pageLocalisationDbEntity.PageId = pageLocalisation.PageId;
+                    pageLocalisationDbEntity.Url = pageLocalisation.Url;
+                }
+            }
+        }
 
-                _mapper.Map(page, dbEntity);
+        private void UpdatePageModules(IEnumerable<PageModule> pageModules)
+        {
+            foreach (var pageModule in pageModules)
+            {
+                var pageModuleDbEntity = _pageModules
+                    .FirstOrDefault(x =>
+                        x.ModuleId == pageModule.ModuleId &&
+                        x.PageId == pageModule.PageId);
 
-                context.SaveChanges();
+                if (pageModuleDbEntity == null)
+                {
+                    _pageModules.Add(_mapper.Map<PageModuleDbEntity>(pageModule));
+                }
+                else
+                {
+                    //pageModuleDbEntity = _mapper.Map(pageModule, pageModuleDbEntity);
+                    pageModuleDbEntity.Id = pageModule.Id;
+                    pageModuleDbEntity.InheritPermissions = pageModule.InheritPermissions;
+                    pageModuleDbEntity.ModuleId = pageModule.ModuleId;
+                    pageModuleDbEntity.PageId = pageModule.PageId;
+                    pageModuleDbEntity.Status = pageModule.Status;
+                    pageModuleDbEntity.SortOrder = pageModule.SortOrder;
+                    pageModuleDbEntity.Title = pageModule.Title;
+                    pageModuleDbEntity.Zone = pageModule.Zone;
+
+                    UpdatePageModuleLocalisations(pageModule.PageModuleLocalisations);
+                    UpdatePageModulePermissions(pageModule.Id, pageModule.PageModulePermissions);
+                }
+            }
+        }
+
+        private void UpdatePageModuleLocalisations(IEnumerable<PageModuleLocalisation> pageModuleLocalisations)
+        {
+            foreach (var pageModuleLocalisation in pageModuleLocalisations)
+            {
+                var pageModuleLocalisationDbEntity = _pageModuleLocalisations
+                    .FirstOrDefault(x =>
+                        x.PageModuleId == pageModuleLocalisation.PageModuleId &&
+                        x.LanguageId == pageModuleLocalisation.LanguageId);
+
+                if (pageModuleLocalisationDbEntity == null)
+                {
+                    _pageModuleLocalisations.Add(_mapper.Map<PageModuleLocalisationDbEntity>(pageModuleLocalisation));
+                }
+                else
+                {
+                    //pageModuleLocalisationDbEntity = _mapper.Map(pageModuleLocalisation, pageModuleLocalisationDbEntity);
+                    pageModuleLocalisationDbEntity.LanguageId = pageModuleLocalisation.LanguageId;
+                    pageModuleLocalisationDbEntity.PageModuleId = pageModuleLocalisation.PageModuleId;
+                    pageModuleLocalisationDbEntity.Title = pageModuleLocalisation.Title;
+                }
+            }
+        }
+
+        private void UpdatePageModulePermissions(Guid pageModuleId, IEnumerable<PageModulePermission> pageModulePermissions)
+        {
+            var existingPageModulePermissionDbEntities = _pageModulePermissions.Where(x => x.PageModuleId == pageModuleId).ToList();
+
+            foreach (var pageModulePermissionDbEntity in existingPageModulePermissionDbEntities)
+            {
+                var pageModulePermission = pageModulePermissions
+                    .FirstOrDefault(x => x.PageModuleId == pageModulePermissionDbEntity.PageModuleId
+                    && x.RoleId == pageModulePermissionDbEntity.RoleId
+                    && x.Type == pageModulePermissionDbEntity.Type);
+
+                if (pageModulePermission == null)
+                    _pageModulePermissions.Remove(pageModulePermissionDbEntity);
             }
 
-            //var pageDbEntity = _pages.FirstOrDefault(x => x.Id == page.Id);
+            foreach (var pageModulePermission in pageModulePermissions)
+            {
+                var existingPageModulePermissionDbEntity = existingPageModulePermissionDbEntities
+                    .FirstOrDefault(x => x.PageModuleId == pageModulePermission.PageModuleId
+                    && x.RoleId == pageModulePermission.RoleId
+                    && x.Type == pageModulePermission.Type);
 
-            ////pageDbEntity = _mapper.Map(page, pageDbEntity);
-            //pageDbEntity.EndDate = page.EndDate;
-            //pageDbEntity.Title = page.Title;
-            //pageDbEntity.MetaDescription = page.MetaDescription;
-            //pageDbEntity.MetaKeywords = page.MetaKeywords;
-            //pageDbEntity.Name = page.Name;
-            //pageDbEntity.Status = page.Status;
-            //pageDbEntity.SiteId = page.SiteId;
-            //pageDbEntity.StartDate = page.StartDate;
-            //pageDbEntity.Url = page.Url;
-
-            //UpdatePageLocalisations(page.PageLocalisations);
-            //UpdatePageModules(page.PageModules);
-            //UpdatePagePermissions(page.Id, page.PagePermissions);
-
-            //_context.SaveChanges();
+                if (existingPageModulePermissionDbEntity == null)
+                    _pageModulePermissions.Add(_mapper.Map<PageModulePermissionDbEntity>(pageModulePermission));
+            }
         }
 
-        //private void UpdatePageLocalisations(IEnumerable<PageLocalisation> pageLocalisations)
-        //{
-        //    //foreach (var item in _pageLocalisations.Where(x => x.PageId == page.Id))
-        //    //{
-        //    //    if (page.PageLocalisations.FirstOrDefault(x => x.LanguageId == item.LanguageId) == null)
-        //    //    {
-        //    //        _pageLocalisations.Remove(item);
-        //    //    }
-        //    //}
-
-        //    foreach (var pageLocalisation in pageLocalisations)
-        //    {
-        //        var pageLocalisationDbEntity = _pageLocalisations
-        //            .FirstOrDefault(x =>
-        //                x.PageId == pageLocalisation.PageId &&
-        //                x.LanguageId == pageLocalisation.LanguageId);
-
-        //        if (pageLocalisationDbEntity == null)
-        //        {
-        //            _pageLocalisations.Add(_mapper.Map<PageLocalisationDbEntity>(pageLocalisation));
-        //        }
-        //        else
-        //        {
-        //            //pageLocalisationDbEntity = _mapper.Map(pageLocalisation, pageLocalisationDbEntity);
-        //            pageLocalisationDbEntity.Title = pageLocalisation.Title;
-        //            pageLocalisationDbEntity.MetaDescription = pageLocalisation.MetaDescription;
-        //            pageLocalisationDbEntity.MetaKeywords = pageLocalisation.MetaKeywords;
-        //            pageLocalisationDbEntity.PageId = pageLocalisation.PageId;
-        //            pageLocalisationDbEntity.Url = pageLocalisation.Url;
-        //        }
-        //    }
-        //}
-
-        //private void UpdatePageModules(IEnumerable<PageModule> pageModules)
-        //{
-        //    foreach (var pageModule in pageModules)
-        //    {
-        //        var pageModuleDbEntity = _pageModules
-        //            .FirstOrDefault(x =>
-        //                x.ModuleId == pageModule.ModuleId &&
-        //                x.PageId == pageModule.PageId);
-
-        //        if (pageModuleDbEntity == null)
-        //        {
-        //            _pageModules.Add(_mapper.Map<PageModuleDbEntity>(pageModule));
-        //        }
-        //        else
-        //        {
-        //            //pageModuleDbEntity = _mapper.Map(pageModule, pageModuleDbEntity);
-        //            pageModuleDbEntity.Id = pageModule.Id;
-        //            pageModuleDbEntity.InheritPermissions = pageModule.InheritPermissions;
-        //            pageModuleDbEntity.ModuleId = pageModule.ModuleId;
-        //            pageModuleDbEntity.PageId = pageModule.PageId;
-        //            pageModuleDbEntity.Status = pageModule.Status;
-        //            pageModuleDbEntity.SortOrder = pageModule.SortOrder;
-        //            pageModuleDbEntity.Title = pageModule.Title;
-        //            pageModuleDbEntity.Zone = pageModule.Zone;
-
-        //            UpdatePageModuleLocalisations(pageModule.PageModuleLocalisations);
-        //            UpdatePageModulePermissions(pageModule.Id, pageModule.PageModulePermissions);
-        //        }
-        //    }
-        //}
-
-        //private void UpdatePageModuleLocalisations(IEnumerable<PageModuleLocalisation> pageModuleLocalisations)
-        //{
-        //    foreach (var pageModuleLocalisation in pageModuleLocalisations)
-        //    {
-        //        var pageModuleLocalisationDbEntity = _pageModuleLocalisations
-        //            .FirstOrDefault(x =>
-        //                x.PageModuleId == pageModuleLocalisation.PageModuleId &&
-        //                x.LanguageId == pageModuleLocalisation.LanguageId);
-
-        //        if (pageModuleLocalisationDbEntity == null)
-        //        {
-        //            _pageModuleLocalisations.Add(_mapper.Map<PageModuleLocalisationDbEntity>(pageModuleLocalisation));
-        //        }
-        //        else
-        //        {
-        //            //pageModuleLocalisationDbEntity = _mapper.Map(pageModuleLocalisation, pageModuleLocalisationDbEntity);
-        //            pageModuleLocalisationDbEntity.LanguageId = pageModuleLocalisation.LanguageId;
-        //            pageModuleLocalisationDbEntity.PageModuleId = pageModuleLocalisation.PageModuleId;
-        //            pageModuleLocalisationDbEntity.Title = pageModuleLocalisation.Title;
-        //        }
-        //    }
-        //}
-
-        //private void UpdatePageModulePermissions(Guid pageModuleId, IEnumerable<PageModulePermission> pageModulePermissions)
-        //{
-        //    var existingPageModulePermissionDbEntities = _pageModulePermissions.Where(x => x.PageModuleId == pageModuleId).ToList();
-
-        //    foreach (var pageModulePermissionDbEntity in existingPageModulePermissionDbEntities)
-        //    {
-        //        var pageModulePermission = pageModulePermissions
-        //            .FirstOrDefault(x => x.PageModuleId == pageModulePermissionDbEntity.PageModuleId
-        //            && x.RoleId == pageModulePermissionDbEntity.RoleId
-        //            && x.Type == pageModulePermissionDbEntity.Type);
-
-        //        if (pageModulePermission == null)
-        //            _pageModulePermissions.Remove(pageModulePermissionDbEntity);
-        //    }
-
-        //    foreach (var pageModulePermission in pageModulePermissions)
-        //    {
-        //        var existingPageModulePermissionDbEntity = existingPageModulePermissionDbEntities
-        //            .FirstOrDefault(x => x.PageModuleId == pageModulePermission.PageModuleId
-        //            && x.RoleId == pageModulePermission.RoleId
-        //            && x.Type == pageModulePermission.Type);
-
-        //        if (existingPageModulePermissionDbEntity == null)
-        //            _pageModulePermissions.Add(_mapper.Map<PageModulePermissionDbEntity>(pageModulePermission));
-        //    }
-        //}
-
-        //private void UpdatePagePermissions(Guid pageId, IEnumerable<PagePermission> pagePermissions)
-        //{
-        //    var existingPagePermissionDbEntities = _pagePermissions.Where(x => x.PageId == pageId).ToList();
-
-        //    foreach (var pagePermissionDbEntity in existingPagePermissionDbEntities)
-        //    {
-        //        var pagePermission = pagePermissions
-        //            .FirstOrDefault(x => x.PageId == pagePermissionDbEntity.PageId 
-        //            && x.RoleId == pagePermissionDbEntity.RoleId 
-        //            && x.Type == pagePermissionDbEntity.Type);
-
-        //        if (pagePermission == null)
-        //            _pagePermissions.Remove(pagePermissionDbEntity);
-        //    }
-
-        //    foreach (var pagePermission in pagePermissions)
-        //    {
-        //        var existingPagePermissionDbEntity = existingPagePermissionDbEntities
-        //            .FirstOrDefault(x => x.PageId == pagePermission.PageId 
-        //            && x.RoleId == pagePermission.RoleId
-        //            && x.Type == pagePermission.Type);
-
-        //        if (existingPagePermissionDbEntity == null)
-        //            _pagePermissions.Add(_mapper.Map<PagePermissionDbEntity>(pagePermission));
-        //    }
-        //}
-
-        private void LoadAllPageModules(WeapsyDbContext context, PageDbEntity pageDbEntity)
+        private void UpdatePagePermissions(Guid pageId, IEnumerable<PagePermission> pagePermissions)
         {
-            if (pageDbEntity == null)
-                return;
+            var existingPagePermissionDbEntities = _pagePermissions.Where(x => x.PageId == pageId).ToList();
 
-            pageDbEntity.PageModules = context.Set<PageModuleDbEntity>()
-                .Include(y => y.PageModuleLocalisations)
-                .Include(y => y.PageModulePermissions)
-                .Where(x => x.PageId == pageDbEntity.Id)
-                .ToList();
+            foreach (var pagePermissionDbEntity in existingPagePermissionDbEntities)
+            {
+                var pagePermission = pagePermissions
+                    .FirstOrDefault(x => x.PageId == pagePermissionDbEntity.PageId
+                    && x.RoleId == pagePermissionDbEntity.RoleId
+                    && x.Type == pagePermissionDbEntity.Type);
+
+                if (pagePermission == null)
+                    _pagePermissions.Remove(pagePermissionDbEntity);
+            }
+
+            foreach (var pagePermission in pagePermissions)
+            {
+                var existingPagePermissionDbEntity = existingPagePermissionDbEntities
+                    .FirstOrDefault(x => x.PageId == pagePermission.PageId
+                    && x.RoleId == pagePermission.RoleId
+                    && x.Type == pagePermission.Type);
+
+                if (existingPagePermissionDbEntity == null)
+                    _pagePermissions.Add(_mapper.Map<PagePermissionDbEntity>(pagePermission));
+            }
         }
+
+        //private void LoadAllPageModules(WeapsyDbContext context, PageDbEntity pageDbEntity)
+        //{
+        //    if (pageDbEntity == null)
+        //        return;
+
+        //    pageDbEntity.PageModules = context.Set<PageModuleDbEntity>()
+        //        .Include(y => y.PageModuleLocalisations)
+        //        .Include(y => y.PageModulePermissions)
+        //        .Where(x => x.PageId == pageDbEntity.Id)
+        //        .ToList();
+        //}
 
         private void LoadActivePageModules(WeapsyDbContext context, PageDbEntity pageDbEntity)
         {

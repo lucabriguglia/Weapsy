@@ -8,7 +8,7 @@ namespace Weapsy.Domain.Data.SqlServer
 {
     public class WeapsyDbContext : DbContext
     {
-        private ConnectionStrings ConnectionStrings { get; set; }
+        private ConnectionStrings ConnectionStrings { get; }
 
         public WeapsyDbContext(IOptions<ConnectionStrings> settings)
         {
@@ -22,7 +22,7 @@ namespace Weapsy.Domain.Data.SqlServer
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            if (ConnectionStrings != null && !string.IsNullOrEmpty(ConnectionStrings.DefaultConnection))
+            if (!string.IsNullOrEmpty(ConnectionStrings?.DefaultConnection))
                 builder.UseSqlServer(ConnectionStrings.DefaultConnection);
 
             base.OnConfiguring(builder);
@@ -97,7 +97,11 @@ namespace Weapsy.Domain.Data.SqlServer
 
         public new EntityEntry<T> Entry<T>(T entity) where T : class, IDbEntity
         {
-            return base.Entry<T>(entity);
+            return base.Entry(entity);
         }
+
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<MenuItem> MenuItems { get; set; }
+        public DbSet<MenuItemLocalisation> MenuItemLocalisations { get; set; }
     }
 }
