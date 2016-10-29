@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Menus;
 using Weapsy.Tests.Factories;
@@ -12,7 +11,7 @@ using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
 using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
 using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;
 
-namespace Weapsy.Domain.Data.SqlServer.Tests
+namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 {
     [TestFixture]
     public class MenuRepositoryTests
@@ -95,16 +94,12 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             _dbContext.SaveChanges();
 
-            var mapperMock = new Mock<IMapper>();
-            mapperMock.Setup(x => x.Map<MenuDbEntity>(It.IsAny<Menu>())).Returns(new MenuDbEntity());
-            mapperMock.Setup(x => x.Map<Menu>(It.IsAny<MenuDbEntity>())).Returns(new Menu());
-            mapperMock.Setup(x => x.Map<ICollection<Menu>>(It.IsAny<ICollection<MenuDbEntity>>())).Returns(new List<Menu>
+            var autoMapperConfig = new MapperConfiguration(cfg =>
             {
-                MenuFactory.Menu(_siteId, _menuId1, "Name", "ItemText", "ItemTextLocalised"),
-                MenuFactory.Menu(_siteId, _menuId2, "Name", "ItemText", "ItemTextLocalised")
+                cfg.AddProfile(new AutoMapperProfile());
             });
 
-            _sut = new MenuRepository(_dbContext, mapperMock.Object);
+            _sut = new MenuRepository(_dbContext, autoMapperConfig.CreateMapper());
         }
 
         [Test]
@@ -168,18 +163,6 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
         public void Should_save_new_menu()
         {
             var newMenu = MenuFactory.Menu(_siteId, Guid.NewGuid(), "Menu 3", "Item", "");
-            var newMenuDbEntity = new MenuDbEntity
-            {
-                SiteId = newMenu.SiteId,
-                Id = newMenu.Id,
-                Name = newMenu.Name
-            };
-
-            var mapperMock = new Mock<IMapper>();
-            mapperMock.Setup(x => x.Map<MenuDbEntity>(newMenu)).Returns(newMenuDbEntity);
-            mapperMock.Setup(x => x.Map<Menu>(newMenuDbEntity)).Returns(newMenu);
-
-            _sut = new MenuRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newMenu);
 

@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using AutoMapper;
-using Moq;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Themes;
 using Weapsy.Tests.Factories;
 using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
 
-namespace Weapsy.Domain.Data.SqlServer.Tests
+namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 {
     [TestFixture]
     public class ThemeRepositoryTests
@@ -55,16 +53,12 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             _dbContext.SaveChanges();
 
-            var mapperMock = new Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<ThemeDbEntity>(It.IsAny<Theme>())).Returns(new ThemeDbEntity());
-            mapperMock.Setup(x => x.Map<Theme>(It.IsAny<ThemeDbEntity>())).Returns(new Theme());
-            mapperMock.Setup(x => x.Map<ICollection<Theme>>(It.IsAny<ICollection<ThemeDbEntity>>())).Returns(new List<Theme>
+            var autoMapperConfig = new MapperConfiguration(cfg =>
             {
-                ThemeFactory.Theme(_themeId1, "Name", "Description", "Folder"),
-                ThemeFactory.Theme(_themeId2, "Name", "Description", "Folder")
+                cfg.AddProfile(new AutoMapperProfile());
             });
 
-            _sut = new ThemeRepository(_dbContext, mapperMock.Object);
+            _sut = new ThemeRepository(_dbContext, autoMapperConfig.CreateMapper());
         }
 
         [Test]
@@ -114,12 +108,6 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 Description = newTheme.Description,
                 Folder = newTheme.Folder
             };
-
-            var mapperMock = new Mock<IMapper>();
-            mapperMock.Setup(x => x.Map<ThemeDbEntity>(newTheme)).Returns(newThemeDbEntity);
-            mapperMock.Setup(x => x.Map<Theme>(newThemeDbEntity)).Returns(newTheme);
-
-            _sut = new ThemeRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newTheme);
 

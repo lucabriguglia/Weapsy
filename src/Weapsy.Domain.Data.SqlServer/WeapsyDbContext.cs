@@ -15,7 +15,10 @@ namespace Weapsy.Domain.Data.SqlServer
             ConnectionStrings = settings.Value;
         }
 
-        public WeapsyDbContext(DbContextOptions<WeapsyDbContext> options) : base(options) {}
+        public WeapsyDbContext(DbContextOptions<WeapsyDbContext> options)
+            : base(options)
+        {            
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {

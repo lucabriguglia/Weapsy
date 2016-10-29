@@ -39,6 +39,7 @@ namespace Weapsy.DependencyConfigurator
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<WeapsyDbContext>().As<WeapsyDbContext>();
+            builder.RegisterType<WeapsyDbContextFactory>().As<IWeapsyDbContextFactory>();
             builder.RegisterType<EventStoreDbContext>().As<EventStoreDbContext>();
 
             builder.RegisterType<AutofacResolver>().As<IResolver>();

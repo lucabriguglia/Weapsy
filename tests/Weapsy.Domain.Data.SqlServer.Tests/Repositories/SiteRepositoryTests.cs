@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
-using Moq;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Sites;
 using Weapsy.Tests.Factories;
 using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
-using System.Collections.Generic;
-using AutoMapper;
 
-namespace Weapsy.Domain.Data.SqlServer.Tests
+namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 {
     [TestFixture]
     public class SiteRepositoryTests
@@ -54,16 +52,12 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
 
             _dbContext.SaveChanges();
 
-            var mapperMock = new Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<SiteDbEntity>(It.IsAny<Site>())).Returns(new SiteDbEntity());
-            mapperMock.Setup(x => x.Map<Site>(It.IsAny<SiteDbEntity>())).Returns(new Site());
-            mapperMock.Setup(x => x.Map<IList<Site>>(It.IsAny<IList<SiteDbEntity>>())).Returns(new List<Site>
+            var autoMapperConfig = new MapperConfiguration(cfg =>
             {
-                SiteFactory.Site(_siteId1, "Name"),
-                SiteFactory.Site(_siteId2, "Name")
+                cfg.AddProfile(new AutoMapperProfile());
             });
 
-            _sut = new SiteRepository(_dbContext, mapperMock.Object);
+            _sut = new SiteRepository(_dbContext, autoMapperConfig.CreateMapper());
         }
 
         [Test]
@@ -103,12 +97,6 @@ namespace Weapsy.Domain.Data.SqlServer.Tests
                 Id = newSite.Id,
                 Name = newSite.Name
             };
-
-            var mapperMock = new Mock<IMapper>();
-            mapperMock.Setup(x => x.Map<SiteDbEntity>(newSite)).Returns(newSiteDbEntity);
-            mapperMock.Setup(x => x.Map<Site>(newSiteDbEntity)).Returns(newSite);
-
-            _sut = new SiteRepository(_dbContext, mapperMock.Object);
 
             _sut.Create(newSite);
 
