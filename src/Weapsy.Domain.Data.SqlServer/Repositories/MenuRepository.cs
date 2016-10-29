@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Menus;
 using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
 using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
-using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
@@ -67,7 +66,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = _mapper.Map<MenuDbEntity>(menu);
-                context.Set<MenuDbEntity>().Add(dbEntity);
+                context.Add(dbEntity);
                 context.SaveChanges();
             }
         }
@@ -76,54 +75,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var menuDbEntity = context.Set<MenuDbEntity>()
-                    .Include(x => x.MenuItems)
-                    .ThenInclude(y => y.MenuItemLocalisations)
-                    .FirstOrDefault(x => x.Id == menu.Id);
-
-                menuDbEntity.Name = menu.Name;
-                menuDbEntity.Status = menu.Status;
-
-                foreach (var menuItem in menu.MenuItems)
-                {
-                    var menuItemDbEntity = menuDbEntity.MenuItems.FirstOrDefault(x => x.Id == menuItem.Id);
-
-                    if (menuItemDbEntity == null)
-                    {
-                        var newMenItemDbEntity = _mapper.Map<MenuItemDbEntity>(menuItem);
-                        menuDbEntity.MenuItems.Add(newMenItemDbEntity);
-                    }
-                    else
-                    {
-                        menuItemDbEntity.Link = menuItem.Link;
-                        menuItemDbEntity.Status = menuItem.Status;
-                        menuItemDbEntity.MenuItemType = menuItem.MenuItemType;
-                        menuItemDbEntity.PageId = menuItem.PageId;
-                        menuItemDbEntity.ParentId = menuItem.ParentId;
-                        menuItemDbEntity.SortOrder = menuItem.SortOrder;
-                        menuItemDbEntity.Text = menuItem.Text;
-                        menuItemDbEntity.Title = menuItem.Title;                        
-                    }
-
-                    foreach (var menuItemLocalisation in menuItem.MenuItemLocalisations)
-                    {
-                        var menuItemLocalisationDbEntity = menuItemDbEntity.MenuItemLocalisations.FirstOrDefault(x => x.MenuItemId == menuItemLocalisation.MenuItemId && x.LanguageId == menuItemLocalisation.LanguageId);
-
-                        if (menuItemLocalisationDbEntity == null)
-                        {
-                            var newMenItemLocalisationDbEntity = _mapper.Map<MenuItemLocalisationDbEntity>(menuItem);
-                            menuItemDbEntity.MenuItemLocalisations.Add(newMenItemLocalisationDbEntity);
-                        }
-                        else
-                        {
-                            menuItemLocalisationDbEntity.LanguageId = menuItemLocalisation.LanguageId;
-                            menuItemLocalisationDbEntity.MenuItemId = menuItemLocalisation.MenuItemId;
-                            menuItemLocalisationDbEntity.Text = menuItemLocalisation.Text;
-                            menuItemLocalisationDbEntity.Title = menuItemLocalisation.Title;
-                        }
-                    }
-                }
-
+                var dbEntity = _mapper.Map<MenuDbEntity>(menu);
+                context.Update(dbEntity);
                 context.SaveChanges();
             }
         }

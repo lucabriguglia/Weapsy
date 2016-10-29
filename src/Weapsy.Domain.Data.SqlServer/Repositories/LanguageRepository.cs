@@ -97,7 +97,12 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                return context.Set<LanguageDbEntity>().Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted).Select(x => x.Id);
+                var languages =
+                    context.Set<LanguageDbEntity>()
+                        .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
+                        .ToList();
+
+                return languages.Select(x => x.Id);
             }            
         }
 
@@ -106,7 +111,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = _mapper.Map<LanguageDbEntity>(language);
-                context.Set<LanguageDbEntity>().Add(dbEntity);
+                context.Add(dbEntity);
                 context.SaveChanges();
             }
         }
@@ -115,8 +120,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>().FirstOrDefault(x => x.Id == language.Id);
-                dbEntity = _mapper.Map(language, dbEntity);
+                var dbEntity = _mapper.Map<LanguageDbEntity>(language);
+                context.Update(dbEntity);
                 context.SaveChanges();                
             }
         }
@@ -127,8 +132,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             {
                 foreach (var language in languages)
                 {
-                    var dbEntity = context.Set<LanguageDbEntity>().FirstOrDefault(x => x.Id.Equals(language.Id));
-                    _mapper.Map(language, dbEntity);
+                    var dbEntity = _mapper.Map<LanguageDbEntity>(language);
+                    context.Update(dbEntity);
                 }
                 context.SaveChanges();
             }
