@@ -13,19 +13,11 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
     public class MenuRepository : IMenuRepository
     {
         private readonly IWeapsyDbContextFactory _dbContextFactory;
-        private readonly WeapsyDbContext _context;
-        private readonly DbSet<MenuDbEntity> _menus;
-        private readonly DbSet<MenuItemDbEntity> _menuItems;
-        private readonly DbSet<MenuItemLocalisationDbEntity> _menuItemLocalisations;
         private readonly IMapper _mapper;
 
-        public MenuRepository(IWeapsyDbContextFactory dbContextFactory, WeapsyDbContext context, IMapper mapper)
+        public MenuRepository(IWeapsyDbContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
-            _context = context;
-            _menus = context.Set<MenuDbEntity>();
-            _menuItems = context.Set<MenuItemDbEntity>();
-            _menuItemLocalisations = context.Set<MenuItemLocalisationDbEntity>();
             _mapper = mapper;
         }
 
@@ -33,8 +25,11 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<MenuDbEntity>().FirstOrDefault(x => x.Id == id);
+                var dbEntity = context.Set<MenuDbEntity>()
+                    .FirstOrDefault(x => x.Id == id);
+
                 LoadMenuItems(context, dbEntity);
+
                 return dbEntity != null ? _mapper.Map<Menu>(dbEntity) : null;
             }
         }
@@ -43,8 +38,11 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<MenuDbEntity>().FirstOrDefault(x => x.SiteId == siteId &&  x.Id == id);
+                var dbEntity = context.Set<MenuDbEntity>()
+                    .FirstOrDefault(x => x.SiteId == siteId &&  x.Id == id);
+
                 LoadMenuItems(context, dbEntity);
+
                 return dbEntity != null ? _mapper.Map<Menu>(dbEntity) : null;
             }
         }
@@ -53,8 +51,11 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<MenuDbEntity>().FirstOrDefault(x => x.SiteId == siteId && x.Name == name);
+                var dbEntity = context.Set<MenuDbEntity>()
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Name == name);
+
                 LoadMenuItems(context, dbEntity);
+
                 return dbEntity != null ? _mapper.Map<Menu>(dbEntity) : null;
             }
         }
@@ -63,9 +64,13 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntities = context.Set<MenuDbEntity>().Where(x => x.SiteId == siteId && x.Status != MenuStatus.Deleted).ToList();
+                var dbEntities = context.Set<MenuDbEntity>()
+                    .Where(x => x.SiteId == siteId && x.Status != MenuStatus.Deleted)
+                    .ToList();
+
                 foreach (var dbEntity in dbEntities)
                     LoadMenuItems(context, dbEntity);
+
                 return _mapper.Map<ICollection<Menu>>(dbEntities);
             }
         }
@@ -82,124 +87,54 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public void Update(Menu menu)
         {
-            var menuDbEntity = _menus.FirstOrDefault(x => x.SiteId == menu.SiteId && x.Id == menu.Id);
+            using (var context = _dbContextFactory.Create())
+            {
+                var menuDbEntity = _mapper.Map<MenuDbEntity>(menu);
 
-            //menuDbEntity = _mapper.Map(menu, menuDbEntity);
-            menuDbEntity.Name = menu.Name;
-            menuDbEntity.Status = menu.Status;
+                context.Entry(menuDbEntity).State = EntityState.Modified;
 
-            UpdateMenuItems(menu.MenuItems);
+                UpdateMenuItems(context, menuDbEntity.MenuItems);
 
-            _context.SaveChanges();
+                context.SaveChanges();
+            }
         }
 
-        private void UpdateMenuItems(IEnumerable<MenuItem> menuItems)
+        private void UpdateMenuItems(WeapsyDbContext context, IEnumerable<MenuItemDbEntity> menuItemDbEntities)
         {
-            foreach (var menuItem in menuItems)
+            foreach (var menuItemDbEntity in menuItemDbEntities)
             {
-                var menuItemDbEntity = _menuItems.FirstOrDefault(x => x.Id == menuItem.Id);
+                var currentMenuItem = context.MenuItems.AsNoTracking().FirstOrDefault(x => x.Id == menuItemDbEntity.Id);
 
-                if (menuItemDbEntity == null)
+                if (currentMenuItem == null)
                 {
-                    _menuItems.Add(_mapper.Map<MenuItemDbEntity>(menuItem));
+                    context.Add(menuItemDbEntity);
                 }
                 else
                 {
-                    //menuItemDbEntity = _mapper.Map(menuItem, menuItemDbEntity);
-                    menuItemDbEntity.Link = menuItem.Link;
-                    menuItemDbEntity.Status = menuItem.Status;
-                    menuItemDbEntity.MenuItemType = menuItem.MenuItemType;
-                    menuItemDbEntity.PageId = menuItem.PageId;
-                    menuItemDbEntity.ParentId = menuItem.ParentId;
-                    menuItemDbEntity.SortOrder = menuItem.SortOrder;
-                    menuItemDbEntity.Text = menuItem.Text;
-                    menuItemDbEntity.Title = menuItem.Title;
-
-                    UpdateMenuItemLocalisations(menuItem.MenuItemLocalisations);
+                    context.Entry(menuItemDbEntity).State = EntityState.Modified;
+                    UpdateMenuItemLocalisations(context, menuItemDbEntity.MenuItemLocalisations);
                 }
             }
         }
 
-        public void UpdateMenuItemLocalisations(IEnumerable<MenuItemLocalisation> menuItemLocalisations)
+        private void UpdateMenuItemLocalisations(WeapsyDbContext context, IEnumerable<MenuItemLocalisationDbEntity> menuItemLocalisationDbEntities)
         {
-            foreach (var menuItemLocalisation in menuItemLocalisations)
+            foreach (var menuItemLocalisationDbEntity in menuItemLocalisationDbEntities)
             {
-                var menuItemLocalisationDbEntity = _menuItemLocalisations.FirstOrDefault(x => x.MenuItemId == menuItemLocalisation.MenuItemId && x.LanguageId == menuItemLocalisation.LanguageId);
+                var currentMenuItemLocalisation = context.MenuItemLocalisations.AsNoTracking()
+                    .FirstOrDefault(x => x.MenuItemId == menuItemLocalisationDbEntity.MenuItemId 
+                    && x.LanguageId == menuItemLocalisationDbEntity.LanguageId);
 
-                if (menuItemLocalisationDbEntity == null)
+                if (currentMenuItemLocalisation == null)
                 {
-                    _menuItemLocalisations.Add(_mapper.Map<MenuItemLocalisationDbEntity>(menuItemLocalisation));
+                    context.Add(menuItemLocalisationDbEntity);
                 }
                 else
                 {
-                    //menuItemLocalisationDbEntity = _mapper.Map(menuItemLocalisation, menuItemLocalisationDbEntity);
-                    menuItemLocalisationDbEntity.LanguageId = menuItemLocalisation.LanguageId;
-                    menuItemLocalisationDbEntity.MenuItemId = menuItemLocalisation.MenuItemId;
-                    menuItemLocalisationDbEntity.Text = menuItemLocalisation.Text;
-                    menuItemLocalisationDbEntity.Title = menuItemLocalisation.Title;
-                }
+                    context.Entry(menuItemLocalisationDbEntity).State = EntityState.Modified;
+                }                
             }
         }
-
-        //public void Update(Menu menu)
-        //{
-        //    using (var context = _dbContextFactory.Create())
-        //    {
-        //        //var dbEntity = _mapper.Map<MenuDbEntity>(menu);
-        //        //context.Update(dbEntity);
-        //        //context.SaveChanges();
-
-        //        var menuDbEntity = context.Set<MenuDbEntity>()
-        //            .Include(x => x.MenuItems)
-        //            .ThenInclude(y => y.MenuItemLocalisations)
-        //            .FirstOrDefault(x => x.Id == menu.Id);
-
-        //        menuDbEntity.Name = menu.Name;
-        //        menuDbEntity.Status = menu.Status;
-
-        //        foreach (var menuItem in menu.MenuItems)
-        //        {
-        //            var menuItemDbEntity = menuDbEntity.MenuItems.FirstOrDefault(x => x.Id == menuItem.Id);
-
-        //            if (menuItemDbEntity == null)
-        //            {
-        //                var newMenItemDbEntity = _mapper.Map<MenuItemDbEntity>(menuItem);
-        //                menuDbEntity.MenuItems.Add(newMenItemDbEntity);
-        //            }
-        //            else
-        //            {
-        //                menuItemDbEntity.Link = menuItem.Link;
-        //                menuItemDbEntity.Status = menuItem.Status;
-        //                menuItemDbEntity.MenuItemType = menuItem.MenuItemType;
-        //                menuItemDbEntity.PageId = menuItem.PageId;
-        //                menuItemDbEntity.ParentId = menuItem.ParentId;
-        //                menuItemDbEntity.SortOrder = menuItem.SortOrder;
-        //                menuItemDbEntity.Text = menuItem.Text;
-        //                menuItemDbEntity.Title = menuItem.Title;                        
-        //            }
-
-        //            foreach (var menuItemLocalisation in menuItem.MenuItemLocalisations)
-        //            {
-        //                var menuItemLocalisationDbEntity = menuItemDbEntity.MenuItemLocalisations.FirstOrDefault(x => x.MenuItemId == menuItemLocalisation.MenuItemId && x.LanguageId == menuItemLocalisation.LanguageId);
-
-        //                if (menuItemLocalisationDbEntity == null)
-        //                {
-        //                    var newMenItemLocalisationDbEntity = _mapper.Map<MenuItemLocalisationDbEntity>(menuItemLocalisation);
-        //                    menuItemDbEntity.MenuItemLocalisations.Add(newMenItemLocalisationDbEntity);
-        //                }
-        //                else
-        //                {
-        //                    menuItemLocalisationDbEntity.LanguageId = menuItemLocalisation.LanguageId;
-        //                    menuItemLocalisationDbEntity.MenuItemId = menuItemLocalisation.MenuItemId;
-        //                    menuItemLocalisationDbEntity.Text = menuItemLocalisation.Text;
-        //                    menuItemLocalisationDbEntity.Title = menuItemLocalisation.Title;
-        //                }
-        //            }
-        //        }
-
-        //        context.SaveChanges();
-        //    }
-        //}
 
         private void LoadMenuItems(WeapsyDbContext context, MenuDbEntity menu)
         {

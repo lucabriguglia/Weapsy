@@ -41,12 +41,12 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public int GetCountByModuleTypeId(Guid moduleTypeId)
         {
-            return _entities.Where(x => x.ModuleTypeId == moduleTypeId && x.Status != ModuleStatus.Deleted).Count();
+            return _entities.Count(x => x.ModuleTypeId == moduleTypeId && x.Status != ModuleStatus.Deleted);
         }
 
         public int GetCountByModuleId(Guid moduleId)
         {
-            return _entities.Where(x => x.Id == moduleId && x.Status != ModuleStatus.Deleted).Count();
+            return _entities.Count(x => x.Id == moduleId && x.Status != ModuleStatus.Deleted);
         }
 
         public void Create(Module module)
