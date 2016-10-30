@@ -16,25 +16,11 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
     public class PageRepository : IPageRepository
     {
         private readonly IWeapsyDbContextFactory _dbContextFactory;
-        private readonly WeapsyDbContext _context;
-        private readonly DbSet<PageDbEntity> _pages;
-        private readonly DbSet<PageLocalisationDbEntity> _pageLocalisations;
-        private readonly DbSet<PageModuleDbEntity> _pageModules;
-        private readonly DbSet<PageModuleLocalisationDbEntity> _pageModuleLocalisations;
-        private readonly DbSet<PagePermissionDbEntity> _pagePermissions;
-        private readonly DbSet<PageModulePermissionDbEntity> _pageModulePermissions;
         private readonly IMapper _mapper;
 
-        public PageRepository(IWeapsyDbContextFactory dbContextFactory, WeapsyDbContext context, IMapper mapper)
+        public PageRepository(IWeapsyDbContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
-            _context = context;
-            _pages = context.Set<PageDbEntity>();
-            _pageLocalisations = context.Set<PageLocalisationDbEntity>();
-            _pageModules = context.Set<PageModuleDbEntity>();
-            _pageModuleLocalisations = context.Set<PageModuleLocalisationDbEntity>();
-            _pagePermissions = context.Set<PagePermissionDbEntity>();
-            _pageModulePermissions = context.Set<PageModulePermissionDbEntity>();
             _mapper = mapper;
         }
 
@@ -127,193 +113,144 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public void Update(Page page)
         {
-            //using (var context = _dbContextFactory.Create())
-            //{
-            //    //var dbEntity = _mapper.Map<PageDbEntity>(page);
-            //    //context.Update(dbEntity);
-            //    //context.SaveChanges();
+            using (var context = _dbContextFactory.Create())
+            {
+                var pageDbEntity = _mapper.Map<PageDbEntity>(page);
 
-            //    //var dbEntity = context.Set<PageDbEntity>()
-            //    //    .Include(x => x.PageLocalisations)
-            //    //    .Include(x => x.PagePermissions)
-            //    //    .FirstOrDefault(x => x.Id == page.Id);
-            //    //LoadAllPageModules(context, dbEntity);
-            //    //_mapper.Map(page, dbEntity);
-            //    //context.SaveChanges();
-            //}
+                context.Entry(pageDbEntity).State = EntityState.Modified;
 
-            var pageDbEntity = _pages.FirstOrDefault(x => x.Id == page.Id);
+                UpdatePageLocalisations(context, pageDbEntity.PageLocalisations);
+                UpdatePageModules(context, pageDbEntity.PageModules);
+                UpdatePagePermissions(context, pageDbEntity.Id, pageDbEntity.PagePermissions);
 
-            //pageDbEntity = _mapper.Map(page, pageDbEntity);
-            pageDbEntity.EndDate = page.EndDate;
-            pageDbEntity.Title = page.Title;
-            pageDbEntity.MetaDescription = page.MetaDescription;
-            pageDbEntity.MetaKeywords = page.MetaKeywords;
-            pageDbEntity.Name = page.Name;
-            pageDbEntity.Status = page.Status;
-            pageDbEntity.SiteId = page.SiteId;
-            pageDbEntity.StartDate = page.StartDate;
-            pageDbEntity.Url = page.Url;
-
-            UpdatePageLocalisations(page.PageLocalisations);
-            UpdatePageModules(page.PageModules);
-            UpdatePagePermissions(page.Id, page.PagePermissions);
-
-            _context.SaveChanges();
+                context.SaveChanges();
+            }
         }
 
-        private void UpdatePageLocalisations(IEnumerable<PageLocalisation> pageLocalisations)
+        private void UpdatePageLocalisations(WeapsyDbContext context, IEnumerable<PageLocalisationDbEntity> pageLocalisations)
         {
-            //foreach (var item in _pageLocalisations.Where(x => x.PageId == page.Id))
-            //{
-            //    if (page.PageLocalisations.FirstOrDefault(x => x.LanguageId == item.LanguageId) == null)
-            //    {
-            //        _pageLocalisations.Remove(item);
-            //    }
-            //}
-
             foreach (var pageLocalisation in pageLocalisations)
             {
-                var pageLocalisationDbEntity = _pageLocalisations
+                var currentPageLocalisation = context.Set<PageLocalisationDbEntity>()
+                    .AsNoTracking()
                     .FirstOrDefault(x =>
                         x.PageId == pageLocalisation.PageId &&
                         x.LanguageId == pageLocalisation.LanguageId);
 
-                if (pageLocalisationDbEntity == null)
+                if (currentPageLocalisation == null)
                 {
-                    _pageLocalisations.Add(_mapper.Map<PageLocalisationDbEntity>(pageLocalisation));
+                    context.Add(pageLocalisation);
                 }
                 else
                 {
-                    //pageLocalisationDbEntity = _mapper.Map(pageLocalisation, pageLocalisationDbEntity);
-                    pageLocalisationDbEntity.Title = pageLocalisation.Title;
-                    pageLocalisationDbEntity.MetaDescription = pageLocalisation.MetaDescription;
-                    pageLocalisationDbEntity.MetaKeywords = pageLocalisation.MetaKeywords;
-                    pageLocalisationDbEntity.PageId = pageLocalisation.PageId;
-                    pageLocalisationDbEntity.Url = pageLocalisation.Url;
+                    context.Entry(pageLocalisation).State = EntityState.Modified;
                 }
             }
         }
 
-        private void UpdatePageModules(IEnumerable<PageModule> pageModules)
+        private void UpdatePageModules(WeapsyDbContext context, IEnumerable<PageModuleDbEntity> pageModules)
         {
             foreach (var pageModule in pageModules)
             {
-                var pageModuleDbEntity = _pageModules
+                var currentPageModule = context.Set<PageModuleDbEntity>()
+                    .AsNoTracking()
                     .FirstOrDefault(x =>
                         x.ModuleId == pageModule.ModuleId &&
                         x.PageId == pageModule.PageId);
 
-                if (pageModuleDbEntity == null)
+                if (currentPageModule == null)
                 {
-                    _pageModules.Add(_mapper.Map<PageModuleDbEntity>(pageModule));
+                    context.Add(pageModule);
                 }
                 else
                 {
-                    //pageModuleDbEntity = _mapper.Map(pageModule, pageModuleDbEntity);
-                    pageModuleDbEntity.Id = pageModule.Id;
-                    pageModuleDbEntity.InheritPermissions = pageModule.InheritPermissions;
-                    pageModuleDbEntity.ModuleId = pageModule.ModuleId;
-                    pageModuleDbEntity.PageId = pageModule.PageId;
-                    pageModuleDbEntity.Status = pageModule.Status;
-                    pageModuleDbEntity.SortOrder = pageModule.SortOrder;
-                    pageModuleDbEntity.Title = pageModule.Title;
-                    pageModuleDbEntity.Zone = pageModule.Zone;
-
-                    UpdatePageModuleLocalisations(pageModule.PageModuleLocalisations);
-                    UpdatePageModulePermissions(pageModule.Id, pageModule.PageModulePermissions);
+                    context.Entry(pageModule).State = EntityState.Modified;
+                    UpdatePageModuleLocalisations(context, pageModule.PageModuleLocalisations);
+                    UpdatePageModulePermissions(context, pageModule.Id, pageModule.PageModulePermissions);
                 }
             }
         }
 
-        private void UpdatePageModuleLocalisations(IEnumerable<PageModuleLocalisation> pageModuleLocalisations)
+        private void UpdatePageModuleLocalisations(WeapsyDbContext context, IEnumerable<PageModuleLocalisationDbEntity> pageModuleLocalisations)
         {
             foreach (var pageModuleLocalisation in pageModuleLocalisations)
             {
-                var pageModuleLocalisationDbEntity = _pageModuleLocalisations
+                var currentPageModuleLocalisation = context.Set<PageModuleLocalisationDbEntity>()
+                    .AsNoTracking()
                     .FirstOrDefault(x =>
                         x.PageModuleId == pageModuleLocalisation.PageModuleId &&
                         x.LanguageId == pageModuleLocalisation.LanguageId);
 
-                if (pageModuleLocalisationDbEntity == null)
+                if (currentPageModuleLocalisation == null)
                 {
-                    _pageModuleLocalisations.Add(_mapper.Map<PageModuleLocalisationDbEntity>(pageModuleLocalisation));
+                    context.Add(pageModuleLocalisation);
                 }
                 else
                 {
-                    //pageModuleLocalisationDbEntity = _mapper.Map(pageModuleLocalisation, pageModuleLocalisationDbEntity);
-                    pageModuleLocalisationDbEntity.LanguageId = pageModuleLocalisation.LanguageId;
-                    pageModuleLocalisationDbEntity.PageModuleId = pageModuleLocalisation.PageModuleId;
-                    pageModuleLocalisationDbEntity.Title = pageModuleLocalisation.Title;
+                    context.Entry(pageModuleLocalisation).State = EntityState.Modified;
                 }
             }
         }
 
-        private void UpdatePageModulePermissions(Guid pageModuleId, IEnumerable<PageModulePermission> pageModulePermissions)
+        private void UpdatePageModulePermissions(WeapsyDbContext context, Guid pageModuleId, IEnumerable<PageModulePermissionDbEntity> pageModulePermissions)
         {
-            var existingPageModulePermissionDbEntities = _pageModulePermissions.Where(x => x.PageModuleId == pageModuleId).ToList();
+            var currentPageModulePermissions = context.Set<PageModulePermissionDbEntity>()
+                .AsNoTracking()
+                .Where(x => x.PageModuleId == pageModuleId)
+                .ToList();
 
-            foreach (var pageModulePermissionDbEntity in existingPageModulePermissionDbEntities)
+            foreach (var currentPageModulePermission in currentPageModulePermissions)
             {
                 var pageModulePermission = pageModulePermissions
-                    .FirstOrDefault(x => x.PageModuleId == pageModulePermissionDbEntity.PageModuleId
-                    && x.RoleId == pageModulePermissionDbEntity.RoleId
-                    && x.Type == pageModulePermissionDbEntity.Type);
+                    .FirstOrDefault(x => x.PageModuleId == currentPageModulePermission.PageModuleId
+                    && x.RoleId == currentPageModulePermission.RoleId
+                    && x.Type == currentPageModulePermission.Type);
 
                 if (pageModulePermission == null)
-                    _pageModulePermissions.Remove(pageModulePermissionDbEntity);
+                    context.Remove(currentPageModulePermission);
             }
 
             foreach (var pageModulePermission in pageModulePermissions)
             {
-                var existingPageModulePermissionDbEntity = existingPageModulePermissionDbEntities
+                var currentPageModulePermission = currentPageModulePermissions
                     .FirstOrDefault(x => x.PageModuleId == pageModulePermission.PageModuleId
                     && x.RoleId == pageModulePermission.RoleId
                     && x.Type == pageModulePermission.Type);
 
-                if (existingPageModulePermissionDbEntity == null)
-                    _pageModulePermissions.Add(_mapper.Map<PageModulePermissionDbEntity>(pageModulePermission));
+                if (currentPageModulePermission == null)
+                    context.Add(pageModulePermission);
             }
         }
 
-        private void UpdatePagePermissions(Guid pageId, IEnumerable<PagePermission> pagePermissions)
+        private void UpdatePagePermissions(WeapsyDbContext context, Guid pageId, IEnumerable<PagePermissionDbEntity> pagePermissions)
         {
-            var existingPagePermissionDbEntities = _pagePermissions.Where(x => x.PageId == pageId).ToList();
+            var currentPagePermissions = context.Set<PagePermissionDbEntity>()
+                .AsNoTracking()
+                .Where(x => x.PageId == pageId)
+                .ToList();
 
-            foreach (var pagePermissionDbEntity in existingPagePermissionDbEntities)
+            foreach (var currentPagePermission in currentPagePermissions)
             {
                 var pagePermission = pagePermissions
-                    .FirstOrDefault(x => x.PageId == pagePermissionDbEntity.PageId
-                    && x.RoleId == pagePermissionDbEntity.RoleId
-                    && x.Type == pagePermissionDbEntity.Type);
+                    .FirstOrDefault(x => x.PageId == currentPagePermission.PageId
+                    && x.RoleId == currentPagePermission.RoleId
+                    && x.Type == currentPagePermission.Type);
 
                 if (pagePermission == null)
-                    _pagePermissions.Remove(pagePermissionDbEntity);
+                    context.Remove(currentPagePermission);
             }
 
             foreach (var pagePermission in pagePermissions)
             {
-                var existingPagePermissionDbEntity = existingPagePermissionDbEntities
+                var existingPagePermissionDbEntity = currentPagePermissions
                     .FirstOrDefault(x => x.PageId == pagePermission.PageId
                     && x.RoleId == pagePermission.RoleId
                     && x.Type == pagePermission.Type);
 
                 if (existingPagePermissionDbEntity == null)
-                    _pagePermissions.Add(_mapper.Map<PagePermissionDbEntity>(pagePermission));
+                    context.Add(pagePermission);
             }
         }
-
-        //private void LoadAllPageModules(WeapsyDbContext context, PageDbEntity pageDbEntity)
-        //{
-        //    if (pageDbEntity == null)
-        //        return;
-
-        //    pageDbEntity.PageModules = context.Set<PageModuleDbEntity>()
-        //        .Include(y => y.PageModuleLocalisations)
-        //        .Include(y => y.PageModulePermissions)
-        //        .Where(x => x.PageId == pageDbEntity.Id)
-        //        .ToList();
-        //}
 
         private void LoadActivePageModules(WeapsyDbContext context, PageDbEntity pageDbEntity)
         {
