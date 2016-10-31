@@ -1,115 +1,145 @@
-﻿//using System;
-//using AutoMapper;
-//using Microsoft.EntityFrameworkCore;
-//using NUnit.Framework;
-//using Weapsy.Domain.Data.SqlServer.Repositories;
-//using Weapsy.Domain.Sites;
-//using Weapsy.Tests.Factories;
-//using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using Weapsy.Domain.Data.SqlServer.Repositories;
+using Weapsy.Domain.Sites;
+using Weapsy.Tests.Factories;
+using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
 
-//namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
-//{
-//    [TestFixture]
-//    public class SiteRepositoryTests
-//    {
-//        private DbContextOptions<WeapsyDbContext> _contextOptions;
-//        private Guid _siteId1;
-//        private Guid _siteId2;
+namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
+{
+    [TestFixture]
+    public class SiteRepositoryTests
+    {
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
+        private Guid _siteId1;
+        private Guid _siteId2;
 
-//        [SetUp]
-//        public void SetUp()
-//        {
-//            _contextOptions = Shared.CreateContextOptions();
+        [SetUp]
+        public void SetUp()
+        {
+            _contextOptions = Shared.CreateContextOptions();
 
-//            using (var context = new WeapsyDbContext(_contextOptions))
-//            {
-//                _siteId1 = Guid.NewGuid();
-//                _siteId2 = Guid.NewGuid();
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                _siteId1 = Guid.NewGuid();
+                _siteId2 = Guid.NewGuid();
 
-//                context.Set<SiteDbEntity>().AddRange(
-//                    new SiteDbEntity
-//                    {
-//                        Id = _siteId1,
-//                        Name = "Name 1",
-//                        Title = "Title 1",
-//                        Url = "Url 1",
-//                        Status = SiteStatus.Active
-//                    },
-//                    new SiteDbEntity
-//                    {
-//                        Id = _siteId2,
-//                        Name = "Name 2",
-//                        Title = "Title 2",
-//                        Url = "Url 2",
-//                        Status = SiteStatus.Active
-//                    },
-//                    new SiteDbEntity
-//                    {
-//                        Status = SiteStatus.Deleted
-//                    }
-//                );
+                context.Set<SiteDbEntity>().AddRange(
+                    new SiteDbEntity
+                    {
+                        Id = _siteId1,
+                        Name = "Name 1",
+                        Title = "Title 1",
+                        Url = "Url 1",
+                        Status = SiteStatus.Active
+                    },
+                    new SiteDbEntity
+                    {
+                        Id = _siteId2,
+                        Name = "Name 2",
+                        Title = "Title 2",
+                        Url = "Url 2",
+                        Status = SiteStatus.Active
+                    },
+                    new SiteDbEntity
+                    {
+                        Status = SiteStatus.Deleted
+                    }
+                );
 
-//                context.SaveChanges();
-//            }
-//        }
+                context.SaveChanges();
+            }
+        }
 
-//        [Test]
-//        public void Should_return_site_by_id()
-//        {
-//            var actual = _sut.GetById(_siteId1);
-//            Assert.NotNull(actual);
-//        }
+        [Test]
+        public void Should_return_site_by_id()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var site = repository.GetById(_siteId1);
 
-//        [Test]
-//        public void Should_return_site_by_name()
-//        {
-//            var actual = _sut.GetByName("Name 1");
-//            Assert.NotNull(actual);
-//        }
+                Assert.NotNull(site);
+            }
+        }
 
-//        [Test]
-//        public void Should_return_site_by_url()
-//        {
-//            var actual = _sut.GetByUrl("Url 1");
-//            Assert.NotNull(actual);
-//        }
+        [Test]
+        public void Should_return_site_by_name()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var site = repository.GetByName("Name 1");
 
-//        [Test]
-//        public void Should_return_all_sites()
-//        {
-//            var actual = _sut.GetAll();
-//            Assert.AreEqual(2, actual.Count);
-//        }
+                Assert.NotNull(site);
+            }
+        }
 
-//        [Test]
-//        public void Should_save_new_site()
-//        {
-//            var newSite = SiteFactory.Site(Guid.NewGuid(), "Name 3");
-//            var newSiteDbEntity = new SiteDbEntity
-//            {
-//                Id = newSite.Id,
-//                Name = newSite.Name
-//            };
+        [Test]
+        public void Should_return_site_by_url()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var site = repository.GetByUrl("Url 1");
 
-//            _sut.Create(newSite);
+                Assert.NotNull(site);
+            }
+        }
 
-//            var actual = _sut.GetById(newSite.Id);
+        [Test]
+        public void Should_return_all_sites()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var sites = repository.GetAll();
 
-//            Assert.NotNull(actual);
-//        }
+                Assert.AreEqual(2, sites.Count);
+            }
+        }
 
-//        [Test]
-//        public void Should_update_site()
-//        {
-//            var newSiteName = "New Title 1";
+        [Test]
+        public void Should_save_new_site()
+        {
+            var newSite = SiteFactory.Site(Guid.NewGuid(), "Name 3");
 
-//            var siteToUpdate = SiteFactory.Site(_siteId1, newSiteName);
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                repository.Create(newSite);
+            }
 
-//            _sut.Update(siteToUpdate);
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var language = repository.GetById(newSite.Id);
 
-//            var updatedSite = _sut.GetById(_siteId1);
+                Assert.NotNull(language);
+            }
+        }
 
-//            Assert.AreEqual(newSiteName, updatedSite.Title);
-//        }
-//    }
-//}
+        [Test]
+        public void Should_update_site()
+        {
+            const string newSiteName = "New Title 1";
+
+            var siteToUpdate = SiteFactory.Site(_siteId1, newSiteName);
+
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                repository.Update(siteToUpdate);
+            }
+
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var updatedSite = repository.GetById(_siteId1);
+
+                Assert.AreEqual(newSiteName, updatedSite.Name);
+            }
+        }
+    }
+}
