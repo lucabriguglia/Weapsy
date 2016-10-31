@@ -172,8 +172,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var sut = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                sut.Create(newLanguage);
+                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                repository.Create(newLanguage);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))

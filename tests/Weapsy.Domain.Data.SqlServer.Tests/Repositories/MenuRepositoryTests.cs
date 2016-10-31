@@ -198,8 +198,8 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var sut = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                sut.Create(newMenu);
+                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                repository.Create(newMenu);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
