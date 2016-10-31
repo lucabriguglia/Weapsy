@@ -1,126 +1,158 @@
-﻿//using System;
-//using AutoMapper;
-//using Microsoft.EntityFrameworkCore;
-//using NUnit.Framework;
-//using Weapsy.Domain.Data.SqlServer.Repositories;
-//using Weapsy.Domain.Themes;
-//using Weapsy.Tests.Factories;
-//using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using Weapsy.Domain.Data.SqlServer.Repositories;
+using Weapsy.Domain.Themes;
+using Weapsy.Tests.Factories;
+using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
 
-//namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
-//{
-//    [TestFixture]
-//    public class ThemeRepositoryTests
-//    {
-//        private DbContextOptions<WeapsyDbContext> _contextOptions;
-//        private Guid _themeId1;
-//        private Guid _themeId2;
+namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
+{
+    [TestFixture]
+    public class ThemeRepositoryTests
+    {
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
+        private Guid _themeId1;
+        private Guid _themeId2;
 
-//        [SetUp]
-//        public void SetUp()
-//        {
-//            _contextOptions = Shared.CreateContextOptions();
+        [SetUp]
+        public void SetUp()
+        {
+            _contextOptions = Shared.CreateContextOptions();
 
-//            using (var context = new WeapsyDbContext(_contextOptions))
-//            {
-//                _themeId1 = Guid.NewGuid();
-//                _themeId2 = Guid.NewGuid();
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                _themeId1 = Guid.NewGuid();
+                _themeId2 = Guid.NewGuid();
 
-//                context.Set<ThemeDbEntity>().AddRange
-//                (
-//                    new ThemeDbEntity
-//                    {
-//                        Id = _themeId1,
-//                        Name = "Name 1",
-//                        Description = "Description 1",
-//                        Folder = "Folder 1",
-//                        Status = ThemeStatus.Active
-//                    },
-//                    new ThemeDbEntity
-//                    {
-//                        Id = _themeId2,
-//                        Name = "Name 2",
-//                        Description = "Description 2",
-//                        Folder = "Folder 2",
-//                        Status = ThemeStatus.Active
-//                    },
-//                    new ThemeDbEntity
-//                    {
-//                        Status = ThemeStatus.Deleted
-//                    }
-//                );
+                context.Set<ThemeDbEntity>().AddRange
+                (
+                    new ThemeDbEntity
+                    {
+                        Id = _themeId1,
+                        Name = "Name 1",
+                        Description = "Description 1",
+                        Folder = "Folder 1",
+                        Status = ThemeStatus.Active
+                    },
+                    new ThemeDbEntity
+                    {
+                        Id = _themeId2,
+                        Name = "Name 2",
+                        Description = "Description 2",
+                        Folder = "Folder 2",
+                        Status = ThemeStatus.Active
+                    },
+                    new ThemeDbEntity
+                    {
+                        Status = ThemeStatus.Deleted
+                    }
+                );
 
-//                context.SaveChanges();
-//            }
-//        }
+                context.SaveChanges();
+            }
+        }
 
-//        [Test]
-//        public void Should_return_theme_by_id()
-//        {
-//            var actual = _sut.GetById(_themeId1);
-//            Assert.NotNull(actual);
-//        }
+        [Test]
+        public void Should_return_theme_by_id()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var theme = repository.GetById(_themeId1);
 
-//        [Test]
-//        public void Should_return_theme_by_name()
-//        {
-//            var actual = _sut.GetByName("Name 1");
-//            Assert.NotNull(actual);
-//        }
+                Assert.NotNull(theme);
+            }
+        }
 
-//        [Test]
-//        public void Should_return_theme_by_folder()
-//        {
-//            var actual = _sut.GetByFolder("Folder 1");
-//            Assert.NotNull(actual);
-//        }
+        [Test]
+        public void Should_return_theme_by_name()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var theme = repository.GetByName("Name 1");
 
-//        [Test]
-//        public void Should_return_all_themes()
-//        {
-//            var actual = _sut.GetAll();
-//            Assert.AreEqual(2, actual.Count);
-//        }
+                Assert.NotNull(theme);
+            }
+        }
 
-//        [Test]
-//        [Ignore("No idea why count is 10 instead of 2")]
-//        public void Should_return_themes_count()
-//        {
-//            var actual = _sut.GetThemesCount();
-//            Assert.AreEqual(2, actual);
-//        }
+        [Test]
+        public void Should_return_theme_by_folder()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var theme = repository.GetByFolder("Folder 1");
 
-//        [Test]
-//        public void Should_save_new_theme()
-//        {
-//            var newTheme = ThemeFactory.Theme(Guid.NewGuid(), "Name 3", "Description 3", "Folder 3");
-//            var newThemeDbEntity = new ThemeDbEntity
-//            {
-//                Id = newTheme.Id,
-//                Name = newTheme.Name,
-//                Description = newTheme.Description,
-//                Folder = newTheme.Folder
-//            };
+                Assert.NotNull(theme);
+            }
+        }
 
-//            _sut.Create(newTheme);
+        [Test]
+        public void Should_return_all_themes()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var list = repository.GetAll();
 
-//            var actual = _sut.GetById(newTheme.Id);
+                Assert.AreEqual(2, list.Count);
+            }
+        }
 
-//            Assert.NotNull(actual);
-//        }
+        [Test]
+        public void Should_return_themes_count()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var count = repository.GetThemesCount();
 
-//        [Test]
-//        public void Should_update_theme()
-//        {
-//            var newThemeDescription = "New Description 1";
+                Assert.AreEqual(2, count);
+            }
+        }
 
-//            var themeToUpdate = ThemeFactory.Theme(_themeId1, "Name 1", newThemeDescription, "Folder 1");
+        [Test]
+        public void Should_save_new_theme()
+        {
+            var newTheme = ThemeFactory.Theme(Guid.NewGuid(), "Name 3", "Description 3", "Folder 3");
 
-//            _sut.Update(themeToUpdate);
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                repository.Create(newTheme);
+            }
 
-//            var updatedTheme = _sut.GetById(_themeId1);
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var theme = repository.GetById(newTheme.Id);
 
-//            Assert.AreEqual(newThemeDescription, updatedTheme.Description);
-//        }
-//    }
-//}
+                Assert.NotNull(theme);
+            }
+        }
+
+        [Test]
+        public void Should_update_theme()
+        {
+            const string newThemeDescription = "New Description 1";
+
+            var themeToUpdate = ThemeFactory.Theme(_themeId1, "Name 1", newThemeDescription, "Folder 1");
+
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                repository.Update(themeToUpdate);
+            }
+
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var updatedTheme = repository.GetById(_themeId1);
+
+                Assert.AreEqual(newThemeDescription, updatedTheme.Description);
+            }
+        }
+    }
+}
