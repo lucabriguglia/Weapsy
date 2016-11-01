@@ -80,7 +80,7 @@ weapsy.admin.userIndex = (function ($, ko) {
     return {
         UsersViewModel: function () {
             // 0 for All records (no pagination)
-            return usersViewModel(2);
+            return usersViewModel(25);
         }
     }
 }(jQuery, ko));
