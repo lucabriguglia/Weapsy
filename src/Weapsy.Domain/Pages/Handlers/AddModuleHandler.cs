@@ -33,6 +33,12 @@ namespace Weapsy.Domain.Pages.Handlers
 
             //using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
             //{
+
+                var page = _pageRepository.GetById(cmd.SiteId, cmd.PageId);
+
+                if (page == null)
+                    throw new Exception("Page not found");
+
                 var moduleId = Guid.NewGuid();
 
                 var module = Module.CreateNew(new CreateModule
@@ -45,17 +51,12 @@ namespace Weapsy.Domain.Pages.Handlers
                 _moduleRepository.Create(module);
                 events.AddRange(module.Events);
 
-                var page = _pageRepository.GetById(cmd.SiteId, cmd.PageId);
-
-                if (page == null)
-                    throw new Exception("Page not found");
-
                 page.AddModule(new AddPageModule
                 {
                     SiteId = cmd.SiteId,
                     PageId = cmd.PageId,
                     ModuleId = moduleId,
-                    Id = Guid.NewGuid(),
+                    PageModuleId = Guid.NewGuid(),
                     Title = cmd.Title,
                     Zone = cmd.Zone,
                     SortOrder = cmd.SortOrder

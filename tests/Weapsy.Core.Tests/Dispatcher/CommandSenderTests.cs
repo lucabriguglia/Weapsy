@@ -48,13 +48,13 @@ namespace Weapsy.Core.Tests.Dispatcher
             var fakeEvent = new FakeEvent();
 
             var commandHandlerMock = new Mock<ICommandHandler<ICommand>>();
-            commandHandlerMock.Setup(x => x.Handle(fakeCommand)).Returns(new List<IEvent>() { fakeEvent });
+            commandHandlerMock.Setup(x => x.Handle(fakeCommand)).Returns(new List<IEvent> { fakeEvent });
 
             var resolverMock = new Mock<IResolver>();
             resolverMock.Setup(x => x.Resolve<ICommandHandler<ICommand>>()).Returns(commandHandlerMock.Object);
 
             var eventPublisherMock = new Mock<IEventPublisher>();
-            eventPublisherMock.Setup(x => x.Publish<IEvent, IAggregateRoot>(fakeEvent));
+            eventPublisherMock.Setup(x => x.Publish(fakeEvent));
 
             var eventStoreMock = new Mock<IEventStore>();
 
@@ -65,7 +65,7 @@ namespace Weapsy.Core.Tests.Dispatcher
             commandSender.Send<ICommand, IAggregateRoot>(fakeCommand);
 
             commandHandlerMock.Verify(x => x.Handle(fakeCommand), Times.Once);
-            eventPublisherMock.Verify(x => x.Publish<IEvent, IAggregateRoot>(It.IsAny<IEvent>()), Times.Once);
+            eventPublisherMock.Verify(x => x.Publish(It.IsAny<IEvent>()), Times.Once);
         }
 
         private class FakeCommand : ICommand { public Guid Id { get; set; } }

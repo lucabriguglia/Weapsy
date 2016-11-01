@@ -91,7 +91,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
                 ModuleId = Guid.Empty,
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Title",
                 Zone = "Zone"
             });
@@ -110,7 +110,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
                 ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Title",
                 Zone = "Zone"
             });
@@ -131,7 +131,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
                 ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = title,
                 Zone = "Zone"
             });
@@ -149,7 +149,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
                 ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Title",
                 Zone = string.Empty
             });
@@ -170,7 +170,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
                 ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Title",
                 Zone = zone
             });

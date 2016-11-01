@@ -20,7 +20,7 @@ namespace Weapsy.Domain.Pages.Validators
                 .NotEmpty().WithMessage("Site id is required.")
                 .Must(BeAnExistingSite).WithMessage("Site does not exist.");
 
-            RuleFor(c => c.Id)
+            RuleFor(c => c.PageModuleId)
                 .NotEmpty().WithMessage("Page module id is required.");
 
             RuleFor(c => c.ModuleId)

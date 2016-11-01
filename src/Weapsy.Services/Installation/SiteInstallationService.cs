@@ -191,7 +191,7 @@ namespace Weapsy.Services.Installation
                 SiteId = siteId,
                 PageId = homePageId,
                 ModuleId = contentModuleId,
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Content",
                 Zone = "Content",
                 SortOrder = 1
@@ -202,7 +202,7 @@ namespace Weapsy.Services.Installation
                 SiteId = siteId,
                 PageId = homePageId,
                 ModuleId = leftModuleId,
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Left",
                 Zone = "Left",
                 SortOrder = 1
@@ -213,7 +213,7 @@ namespace Weapsy.Services.Installation
                 SiteId = siteId,
                 PageId = homePageId,
                 ModuleId = rightModuleId,
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Right",
                 Zone = "Right",
                 SortOrder = 1

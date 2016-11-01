@@ -55,7 +55,7 @@ namespace Weapsy.Tests.Factories
                 SiteId = siteId,
                 PageId = id,
                 ModuleId = moduleId,
-                Id = pageModuleId,
+                PageModuleId = pageModuleId,
                 Title = "Title",
                 Zone = "Zone",
                 SortOrder = 1

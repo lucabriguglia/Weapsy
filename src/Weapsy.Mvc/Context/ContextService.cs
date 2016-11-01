@@ -7,6 +7,7 @@ using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Pages;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace Weapsy.Mvc.Context
 {
@@ -65,8 +66,8 @@ namespace Weapsy.Mvc.Context
             Guid pageId = GetIdFromRouteData(ContextKeys.PageKey);
 
             if (pageId == Guid.Empty)
-            {
                 // pageId = Site.HomePageId
+            {
                 var pages = _pageFacade.GetAllForAdminAsync(siteId).Result;
                 var homePage = pages.FirstOrDefault(x => x.Name == "Home");
                 if (homePage != null)
@@ -80,7 +81,7 @@ namespace Weapsy.Mvc.Context
         {
             var requestedLanguageId = GetIdFromRouteData(ContextKeys.LanguageKey);
 
-            //var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+            var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
             return new LanguageInfo
             {

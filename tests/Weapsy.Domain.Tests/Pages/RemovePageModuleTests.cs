@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Tests.Pages
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
                 ModuleId = _moduleId,
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Title",
                 Zone = "Zone"
             };

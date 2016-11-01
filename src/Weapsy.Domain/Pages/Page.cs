@@ -139,7 +139,7 @@ namespace Weapsy.Domain.Pages
         {
             validator.ValidateCommand(cmd);
 
-            AddModule(new PageModule(cmd.PageId, cmd.Id, cmd.ModuleId, cmd.Title, cmd.Zone, cmd.SortOrder));
+            AddModule(new PageModule(cmd.PageId, cmd.PageModuleId, cmd.ModuleId, cmd.Title, cmd.Zone, cmd.SortOrder));
         }
 
         public void AddModule(PageModule pageModule)

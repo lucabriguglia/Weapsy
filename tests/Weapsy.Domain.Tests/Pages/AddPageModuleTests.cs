@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Tests.Pages
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
                 ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Title",
                 Zone = "Zone",
                 SortOrder = 1
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.Pages
             _page = new Page();
             _page.AddModule(_command, _validatorMock.Object);
             _event = _page.Events.OfType<PageModuleAdded>().SingleOrDefault();
-            _pageModule = _page.PageModules.FirstOrDefault(x => x.Id == _command.Id);
+            _pageModule = _page.PageModules.FirstOrDefault(x => x.Id == _command.PageModuleId);
         }
 
         [Test]

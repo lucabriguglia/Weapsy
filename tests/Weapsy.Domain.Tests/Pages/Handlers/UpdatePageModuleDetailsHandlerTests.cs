@@ -61,7 +61,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 SiteId = siteId,
                 PageId = pageId,
                 ModuleId = moduleId,
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Title",
                 Zone = "Zone"
             };
@@ -115,7 +115,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 SiteId = siteId,
                 PageId = pageId,
                 ModuleId = moduleId,
-                Id = Guid.NewGuid(),
+                PageModuleId = Guid.NewGuid(),
                 Title = "Title",
                 Zone = "Zone"
             };

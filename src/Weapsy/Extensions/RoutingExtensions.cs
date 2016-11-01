@@ -50,14 +50,19 @@ namespace Weapsy.Extensions
 
                         foreach (var language in languages)
                         {
-                            if (tokens.ContainsKey(ContextKeys.LanguageKey))
-                                tokens.Remove(ContextKeys.LanguageKey);
+                            if (defaults.ContainsKey("culture"))
+                                defaults.Remove("culture");
 
-                            tokens.Add(ContextKeys.LanguageKey, language.Id);
+                            defaults.Add("culture", language.CultureName);
+
+                            //if (tokens.ContainsKey(ContextKeys.LanguageKey))
+                            //    tokens.Remove(ContextKeys.LanguageKey);
+
+                            //tokens.Add(ContextKeys.LanguageKey, language.Id);                            
 
                             var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
 
-                            var url = (pageLocalisation != null && !string.IsNullOrWhiteSpace(pageLocalisation.Url))
+                            var url = !string.IsNullOrWhiteSpace(pageLocalisation?.Url)
                                 ? pageLocalisation.Url
                                 : page.Url;
 
