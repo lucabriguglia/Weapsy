@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Weapsy.Mvc.Controllers;
+﻿using Weapsy.Mvc.Controllers;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Sites;
@@ -28,14 +27,14 @@ namespace Weapsy.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            if (PageInfo == null || !_userService.IsUserAuthorized(User, PageInfo.Page.ViewRoles))
+            if (PageInfo == null || !_userService.IsUserAuthorized(User, PageInfo.ViewRoles))
                 return NotFound();
 
-            ViewBag.Title = PageInfo.Page.Title;
-            ViewBag.MetaDescription = PageInfo.Page.MetaDescription;
-            ViewBag.MetaKeywords = PageInfo.Page.MetaKeywords;
+            ViewBag.Title = PageInfo.Title;
+            ViewBag.MetaDescription = PageInfo.MetaDescription;
+            ViewBag.MetaKeywords = PageInfo.MetaKeywords;
 
             return View(PageInfo);
         }

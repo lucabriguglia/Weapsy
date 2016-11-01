@@ -45,8 +45,6 @@ namespace Weapsy.Reporting.Data.Default.Pages
             if (page == null || page.Status != PageStatus.Active)
                 return null;
 
-            var result = new PageInfo();
-
             var pageViewRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
             var pageViewRoleNames = GetRoleNames(pageViewRoleIds);
 
@@ -68,7 +66,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 }
             }
 
-            result.Page = new PageModel
+            var result = new PageInfo
             {
                 Id = page.Id,
                 Name = page.Name,
@@ -76,40 +74,13 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 Title = title,
                 MetaDescription = metaDescription,
                 MetaKeywords = metaKeywords,
-                ViewRoles = pageViewRoleNames
-            };
-
-            result.Page.Template = new PageTemplateModel
-            {
-                ViewName = "Default"
-            };
-
-            result.Zones = GetZones(page, pageViewRoleNames, languageId);
-
-            return result;
-        }
-
-        private IList<string> GetRoleNames(IEnumerable<string> roleIds)
-        {
-            var result = new List<string>();
-
-            foreach (var roleId in roleIds)
-            {
-                int id;
-
-                if (int.TryParse(roleId, out id))
+                ViewRoles = pageViewRoleNames,
+                Template = new PageTemplateModel
                 {
-                    if (Enum.IsDefined(typeof(DefaultRoles), id))
-                    {
-                        result.Add(Enum.GetName(typeof(DefaultRoles), id));
-                        continue;
-                    }
-                }
-
-                var role = _roleManager.FindByIdAsync(roleId).Result;
-                if (role != null)
-                    result.Add(role.Name);
-            }
+                    ViewName = "Default"
+                },
+                Zones = GetZones(page, pageViewRoleNames, languageId)
+            };
 
             return result;
         }
@@ -187,23 +158,46 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 PageModuleId = pageModule.Id,
                 Title = title,
                 SortOrder = pageModule.SortOrder,
-                ViewRoles = moduleViewRoleNames
-            };
-
-            moduleModel.ModuleType = new ModuleTypeModel
-            {
-                ViewType = moduleType.ViewType,
-                ViewName = moduleType.ViewName,
-                EditType = moduleType.EditType,
-                EditUrl = moduleType.EditUrl
-            };
-
-            moduleModel.Template = new ModuleTemplateModel
-            {
-                ViewName = "Default"
+                ViewRoles = moduleViewRoleNames,
+                ModuleType = new ModuleTypeModel
+                {
+                    ViewType = moduleType.ViewType,
+                    ViewName = moduleType.ViewName,
+                    EditType = moduleType.EditType,
+                    EditUrl = moduleType.EditUrl
+                },
+                Template = new ModuleTemplateModel
+                {
+                    ViewName = "Default"
+                }
             };
 
             return moduleModel;
+        }
+
+        private IList<string> GetRoleNames(IEnumerable<string> roleIds)
+        {
+            var result = new List<string>();
+
+            foreach (var roleId in roleIds)
+            {
+                int id;
+
+                if (int.TryParse(roleId, out id))
+                {
+                    if (Enum.IsDefined(typeof(DefaultRoles), id))
+                    {
+                        result.Add(Enum.GetName(typeof(DefaultRoles), id));
+                        continue;
+                    }
+                }
+
+                var role = _roleManager.FindByIdAsync(roleId).Result;
+                if (role != null)
+                    result.Add(role.Name);
+            }
+
+            return result;
         }
     }
 }

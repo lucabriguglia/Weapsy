@@ -7,19 +7,6 @@ namespace Weapsy.Reporting.Pages
 {
     public class PageInfo
     {
-        public PageModel Page { get; set; } = new PageModel();
-        public ThemeModel Theme { get; set; } = new ThemeModel();
-        public ICollection<ZoneModel> Zones { get; set; } = new List<ZoneModel>();
-
-        public ZoneModel Zone(string zoneName)
-        {
-            var zone = Zones.FirstOrDefault(x => x.Name.ToLowerInvariant() == zoneName.ToLowerInvariant());
-            return zone != null ? zone : new ZoneModel();
-        }
-    }
-
-    public class PageModel
-    {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
@@ -27,7 +14,26 @@ namespace Weapsy.Reporting.Pages
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
         public IList<string> ViewRoles { get; set; }
+
+        public ThemeModel Theme { get; set; } = new ThemeModel();
         public PageTemplateModel Template { get; set; } = new PageTemplateModel();
+        public ICollection<ZoneModel> Zones { get; set; } = new List<ZoneModel>();
+
+        public ZoneModel Zone(string zoneName)
+        {
+            var zone = Zones.FirstOrDefault(x => x.Name.ToLowerInvariant() == zoneName.ToLowerInvariant());
+            return zone ?? new ZoneModel();
+        }
+    }
+
+    public class ThemeModel
+    {
+        public string Name { get; set; } = "Default";
+    }
+
+    public class PageTemplateModel
+    {
+        public string ViewName { get; set; } = "Default";
     }
 
     public class ZoneModel
@@ -47,26 +53,16 @@ namespace Weapsy.Reporting.Pages
         public IEnumerable<string> ViewRoles { get; set; }
     }
 
+    public class ModuleTemplateModel
+    {
+        public string ViewName { get; set; } = "Default";
+    }
+
     public class ModuleTypeModel
     {
         public ViewType ViewType { get; set; }
         public string ViewName { get; set; }
         public EditType EditType { get; set; }
         public string EditUrl { get; set; }
-    }
-
-    public class PageTemplateModel
-    {
-        public string ViewName { get; set; } = "Default";
-    }
-
-    public class ModuleTemplateModel
-    {
-        public string ViewName { get; set; } = "Default";
-    }
-
-    public class ThemeModel
-    {
-        public string Name { get; set; } = "Default";
     }
 }

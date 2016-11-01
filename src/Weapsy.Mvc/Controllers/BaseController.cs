@@ -10,7 +10,7 @@ namespace Weapsy.Mvc.Controllers
     {
         private readonly IContextService _contextService;
 
-        public BaseController(IContextService contextService)
+        protected BaseController(IContextService contextService)
         {
             _contextService = contextService;
         }
