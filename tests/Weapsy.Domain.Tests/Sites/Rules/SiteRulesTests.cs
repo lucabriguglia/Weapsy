@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Tests.Sites.Handlers
+namespace Weapsy.Domain.Tests.Sites.Rules
 {
     [TestFixture]
     public class SiteRulesTests

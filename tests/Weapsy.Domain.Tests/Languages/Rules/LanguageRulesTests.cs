@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Languages.Rules;
-using System.Collections.Generic;
 
-namespace Weapsy.Domain.Tests.Languages.Handlers
+namespace Weapsy.Domain.Tests.Languages.Rules
 {
     [TestFixture]
     public class LanguageRulesTests

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Themes;
 using Weapsy.Domain.Themes.Rules;
 
-namespace Weapsy.Domain.Tests.Themes.Handlers
+namespace Weapsy.Domain.Tests.Themes.Rules
 {
     [TestFixture]
     public class ThemeRulesTests

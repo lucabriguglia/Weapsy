@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Rules;
 
-namespace Weapsy.Domain.Tests.Pages.Handlers
+namespace Weapsy.Domain.Tests.Pages.Rules
 {
     [TestFixture]
     public class PageRulesTests

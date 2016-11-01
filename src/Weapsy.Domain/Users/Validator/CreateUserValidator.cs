@@ -3,7 +3,7 @@ using FluentValidation;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users.Rules;
 
-namespace Weapsy.Domain.Users.Validators
+namespace Weapsy.Domain.Users.Validator
 {
     public class CreateUserValidator : AbstractValidator<CreateUser>
     {

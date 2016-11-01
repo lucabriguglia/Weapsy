@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.Modules.Rules;
 
-namespace Weapsy.Domain.Tests.Modules.Handlers
+namespace Weapsy.Domain.Tests.Modules.Rules
 {
     [TestFixture]
     public class ModuleRulesTests

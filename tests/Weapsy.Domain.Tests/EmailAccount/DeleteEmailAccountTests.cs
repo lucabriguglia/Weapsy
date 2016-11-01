@@ -1,19 +1,19 @@
-﻿using System.Linq;
-using NUnit.Framework;
-using Weapsy.Domain.EmailAccounts;
-using Weapsy.Domain.EmailAccounts.Events;
-using System;
-using Moq;
-using Weapsy.Domain.EmailAccounts.Commands;
+﻿using System;
+using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
+using Moq;
+using NUnit.Framework;
+using Weapsy.Domain.EmailAccounts;
+using Weapsy.Domain.EmailAccounts.Commands;
+using Weapsy.Domain.EmailAccounts.Events;
 
-namespace Weapsy.Domain.Tests.EmailAccounts
+namespace Weapsy.Domain.Tests.EmailAccount
 {
     [TestFixture]
     public class DeleteEmailAccountTests
     {
-        private EmailAccount _emailAccount;
+        private EmailAccounts.EmailAccount _emailAccount;
         private Mock<IValidator<DeleteEmailAccount>> _validatorMock;
         private DeleteEmailAccount _command;
         private EmailAccountDeleted _event;
@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts
             };
             var createEmailAccountValidatorMock = new Mock<IValidator<CreateEmailAccount>>();
             createEmailAccountValidatorMock.Setup(x => x.Validate(createEmailAccountCommand)).Returns(new ValidationResult());
-            _emailAccount = EmailAccount.CreateNew(createEmailAccountCommand, createEmailAccountValidatorMock.Object);
+            _emailAccount = EmailAccounts.EmailAccount.CreateNew(createEmailAccountCommand, createEmailAccountValidatorMock.Object);
 
             _command = new DeleteEmailAccount
             {

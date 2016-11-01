@@ -1,9 +1,9 @@
-﻿using FluentValidation;
-using System;
+﻿using System;
+using FluentValidation;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Languages.Validators
+namespace Weapsy.Domain.Menus.Validators
 {
     public class ReorderMenuItemsValidator : AbstractValidator<ReorderMenuItems>
     {

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Rules;
 
-namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
+namespace Weapsy.Domain.Tests.EmailAccount.Rules
 {
     [TestFixture]
     public class EmailAccountRulesTests
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
             var id = Guid.NewGuid();
 
             var repositoryMock = new Mock<IEmailAccountRepository>();
-            repositoryMock.Setup(x => x.GetById(id)).Returns(new EmailAccount());
+            repositoryMock.Setup(x => x.GetById(id)).Returns(new EmailAccounts.EmailAccount());
 
             var sut = new EmailAccountRules(repositoryMock.Object);
 
@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
             var id = Guid.NewGuid();
 
             var repositoryMock = new Mock<IEmailAccountRepository>();
-            repositoryMock.Setup(x => x.GetById(id)).Returns((EmailAccount)null);
+            repositoryMock.Setup(x => x.GetById(id)).Returns((EmailAccounts.EmailAccount)null);
 
             var sut = new EmailAccountRules(repositoryMock.Object);
 
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
             var address = "info@mysite.com";
 
             var repositoryMock = new Mock<IEmailAccountRepository>();
-            repositoryMock.Setup(x => x.GetByAddress(siteId, address)).Returns(new EmailAccount());
+            repositoryMock.Setup(x => x.GetByAddress(siteId, address)).Returns(new EmailAccounts.EmailAccount());
 
             var sut = new EmailAccountRules(repositoryMock.Object);
 
@@ -62,7 +62,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
             var address = "info@mysite.com";
 
             var repositoryMock = new Mock<IEmailAccountRepository>();
-            repositoryMock.Setup(x => x.GetByAddress(siteId, address)).Returns((EmailAccount)null);
+            repositoryMock.Setup(x => x.GetByAddress(siteId, address)).Returns((EmailAccounts.EmailAccount)null);
 
             var sut = new EmailAccountRules(repositoryMock.Object);
 

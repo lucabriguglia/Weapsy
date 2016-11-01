@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Rules;
 
-namespace Weapsy.Domain.Tests.Apps.Handlers
+namespace Weapsy.Domain.Tests.Apps.Rules
 {
     [TestFixture]
     public class AppRulesTests

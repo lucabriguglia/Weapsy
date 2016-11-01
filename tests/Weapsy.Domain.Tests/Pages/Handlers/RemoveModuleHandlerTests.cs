@@ -1,21 +1,19 @@
 ﻿using System;
-using Moq;
-using NUnit.Framework;
-using Weapsy.Domain.Pages;
-using Weapsy.Domain.Services.Modules.Commands;
-using Weapsy.Domain.Services.Modules.Handlers;
-using Weapsy.Domain.Modules;
-using Weapsy.Domain.Modules.Events;
-using Weapsy.Domain.Pages.Events;
 using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
-using Weapsy.Domain.Pages.Commands;
+using Moq;
+using NUnit.Framework;
+using Weapsy.Domain.Modules;
 using Weapsy.Domain.Modules.Commands;
-using Weapsy.Domain.Modules.Rules;
+using Weapsy.Domain.Modules.Events;
+using Weapsy.Domain.Pages;
+using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Pages.Events;
+using Weapsy.Domain.Pages.Handlers;
 using Weapsy.Tests.Factories;
 
-namespace Weapsy.Domain.Tests.Services.Handlers
+namespace Weapsy.Domain.Tests.Pages.Handlers
 {
     [TestFixture]
     public class RemoveModuleHandlerTests

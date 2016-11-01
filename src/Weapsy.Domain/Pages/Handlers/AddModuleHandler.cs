@@ -1,15 +1,13 @@
+using System;
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Core.Domain;
 using Weapsy.Domain.Modules;
-using Weapsy.Domain.Pages;
-using Weapsy.Domain.Services.Modules.Commands;
-//using System.Transactions;
 using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Pages.Commands;
-using System;
+//using System.Transactions;
 
-namespace Weapsy.Domain.Services.Modules.Handlers
+namespace Weapsy.Domain.Pages.Handlers
 {
     public class AddModuleHandler : ICommandHandler<AddModule>
     {

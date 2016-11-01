@@ -3,11 +3,11 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.EmailAccounts.Commands;
-using Weapsy.Domain.EmailAccounts.Validators;
 using Weapsy.Domain.EmailAccounts.Rules;
+using Weapsy.Domain.EmailAccounts.Validators;
 using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Tests.EmailAccounts.Validators
+namespace Weapsy.Domain.Tests.EmailAccount.Validators
 {
     [TestFixture]
     public class CreateEmailAccountValidatorTests

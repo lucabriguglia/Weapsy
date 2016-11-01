@@ -1,11 +1,11 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
+using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.ModuleTypes.Rules;
-using Weapsy.Domain.Modules;
 
-namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
+namespace Weapsy.Domain.Tests.ModuleTypes.Rules
 {
     [TestFixture]
     public class ModuleTypeRulesTests

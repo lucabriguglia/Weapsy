@@ -3,10 +3,10 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Menus.Commands;
+using Weapsy.Domain.Menus.Validators;
 using Weapsy.Domain.Sites.Rules;
-using Weapsy.Domain.Languages.Validators;
 
-namespace Weapsy.Domain.Tests.MenuItems.Validators
+namespace Weapsy.Domain.Tests.Menus.Validators
 {
     [TestFixture]
     public class ReorderMenuItemsValidatorTests

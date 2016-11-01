@@ -2,11 +2,11 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Sites.Rules;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Validators;
+using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Domain.Tests.PageModules.Validators
+namespace Weapsy.Domain.Tests.Pages.Validators
 {
     [TestFixture]
     public class ReorderPageModulesValidatorTests

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Menus;
 using Weapsy.Domain.Menus.Rules;
 
-namespace Weapsy.Domain.Tests.Menus.Handlers
+namespace Weapsy.Domain.Tests.Menus.Rules
 {
     [TestFixture]
     public class MenuRulesTests

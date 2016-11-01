@@ -1,13 +1,13 @@
 ﻿using System;
+using FluentValidation;
+using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts.Handlers;
-using FluentValidation;
-using FluentValidation.Results;
 
-namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
+namespace Weapsy.Domain.Tests.EmailAccount.Handlers
 {
     [TestFixture]
     public class DeleteEmailAccountHandlerTests
@@ -22,7 +22,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
             };
 
             var repositoryMock = new Mock<IEmailAccountRepository>();
-            repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns((EmailAccount)null);
+            repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns((EmailAccounts.EmailAccount)null);
 
             var validatorMock = new Mock<IValidator<DeleteEmailAccount>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
@@ -41,7 +41,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
                 Id = Guid.NewGuid()
             };
 
-            var emailAccountMock = new Mock<EmailAccount>();
+            var emailAccountMock = new Mock<EmailAccounts.EmailAccount>();
 
             var repositoryMock = new Mock<IEmailAccountRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(emailAccountMock.Object);
@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
 
             deleteEmailAccountHandler.Handle(command);
 
-            repositoryMock.Verify(x => x.Update(It.IsAny<EmailAccount>()));
+            repositoryMock.Verify(x => x.Update(It.IsAny<EmailAccounts.EmailAccount>()));
         }
     }
 }

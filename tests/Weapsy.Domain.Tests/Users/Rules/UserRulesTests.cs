@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Users;
 using Weapsy.Domain.Users.Rules;
 
-namespace Weapsy.Domain.Tests.Users.Handlers
+namespace Weapsy.Domain.Tests.Users.Rules
 {
     [TestFixture]
     public class UserRulesTests

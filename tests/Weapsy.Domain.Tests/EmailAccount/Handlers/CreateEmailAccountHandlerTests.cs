@@ -8,7 +8,7 @@ using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts.Handlers;
 
-namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
+namespace Weapsy.Domain.Tests.EmailAccount.Handlers
 {
     [TestFixture]
     public class CreateEmailAccountHandlerTests
@@ -58,7 +58,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
             };
 
             var emailAccountRepositoryMock = new Mock<IEmailAccountRepository>();
-            emailAccountRepositoryMock.Setup(x => x.Create(It.IsAny<EmailAccount>()));
+            emailAccountRepositoryMock.Setup(x => x.Create(It.IsAny<EmailAccounts.EmailAccount>()));
 
             var validatorMock = new Mock<IValidator<CreateEmailAccount>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
@@ -67,7 +67,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts.Handlers
             createEmailAccountHandler.Handle(command);
 
             validatorMock.Verify(x => x.Validate(command));
-            emailAccountRepositoryMock.Verify(x => x.Create(It.IsAny<EmailAccount>()));
+            emailAccountRepositoryMock.Verify(x => x.Create(It.IsAny<EmailAccounts.EmailAccount>()));
         }
     }
 }

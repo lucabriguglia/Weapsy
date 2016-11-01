@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Linq;
-using NUnit.Framework;
-using Moq;
 using FluentValidation;
 using FluentValidation.Results;
+using Moq;
+using NUnit.Framework;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts.Events;
 
-namespace Weapsy.Domain.Tests.EmailAccounts
+namespace Weapsy.Domain.Tests.EmailAccount
 {
     [TestFixture]
     public class CreateEmailAccountTests
     {
         private CreateEmailAccount _command;
         private Mock<IValidator<CreateEmailAccount>> _validatorMock;
-        private EmailAccount _emailAccount;
+        private EmailAccounts.EmailAccount _emailAccount;
         private EmailAccountCreated _event;
 
         [SetUp]
@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Tests.EmailAccounts
             };            
             _validatorMock = new Mock<IValidator<CreateEmailAccount>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
-            _emailAccount = EmailAccount.CreateNew(_command, _validatorMock.Object);
+            _emailAccount = EmailAccounts.EmailAccount.CreateNew(_command, _validatorMock.Object);
             _event = _emailAccount.Events.OfType<EmailAccountCreated>().SingleOrDefault();
         }
 

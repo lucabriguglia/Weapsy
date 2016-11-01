@@ -3,8 +3,8 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Users.Commands;
-using Weapsy.Domain.Users.Validators;
 using Weapsy.Domain.Users.Rules;
+using Weapsy.Domain.Users.Validator;
 
 namespace Weapsy.Domain.Tests.Users.Validators
 {
