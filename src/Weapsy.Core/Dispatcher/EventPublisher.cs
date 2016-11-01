@@ -8,23 +8,16 @@ namespace Weapsy.Core.Dispatcher
     public class EventPublisher : IEventPublisher
     {
         private readonly IResolver _resolver;
-        private readonly IEventStore _eventStore;
 
-        public EventPublisher(IResolver resolver,
-            IEventStore eventStore)
+        public EventPublisher(IResolver resolver)
         {
             _resolver = resolver;
-            _eventStore = eventStore;
         }
 
-        public void Publish<TEvent, TAggregate>(TEvent @event)
-            where TEvent : IEvent
-            where TAggregate : IAggregateRoot
+        public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
         {
             if (@event == null)
                 throw new ArgumentNullException(nameof(@event));
-
-            _eventStore.SaveEvent<TAggregate>(@event);
 
             var eventHandlers = _resolver.ResolveAll<IEventHandler<TEvent>>();
 

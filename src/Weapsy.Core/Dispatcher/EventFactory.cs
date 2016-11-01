@@ -5,7 +5,7 @@ namespace Weapsy.Core.Dispatcher
 {
     public static class EventFactory
     {
-        public static dynamic GetConcreteEvent(object @event)
+        public static dynamic CreateConcreteEvent(object @event)
         {
             Type type = @event.GetType();
             var config = new MapperConfiguration(cfg => { cfg.CreateMap(type, type); });

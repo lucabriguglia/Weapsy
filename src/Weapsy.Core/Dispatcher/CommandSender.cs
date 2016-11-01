@@ -40,8 +40,9 @@ namespace Weapsy.Core.Dispatcher
                 if (!publishEvents)
                     continue;
 
-                dynamic concreteEvent = EventFactory.GetConcreteEvent(@event);
-                _eventPublisher.Publish<IEvent, TAggregate>(concreteEvent);
+                var concreteEvent = EventFactory.CreateConcreteEvent(@event);
+
+                _eventPublisher.Publish(concreteEvent);
             }
         }
     }
