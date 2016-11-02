@@ -13,7 +13,7 @@ namespace Weapsy.Reporting.Pages
         public string Title { get; set; }
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
-        public IList<string> ViewRoles { get; set; }
+        public IEnumerable<string> ViewRoles { get; set; }
 
         public ThemeModel Theme { get; set; } = new ThemeModel();
         public PageTemplateModel Template { get; set; } = new PageTemplateModel();

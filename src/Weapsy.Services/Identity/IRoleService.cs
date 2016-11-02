@@ -12,5 +12,6 @@ namespace Weapsy.Services.Identity
         Task<IList<string>> GetDefaultPageViewPermissionRoleIds();
         Task<IList<string>> GetDefaultModuleViewPermissionRoleIds();
         IList<IdentityRole> GetAllRoles();
+        IList<IdentityRole> GetRolesFromIds(IEnumerable<string> roleIds);
     }
 }

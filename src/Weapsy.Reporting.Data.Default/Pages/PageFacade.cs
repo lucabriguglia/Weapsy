@@ -25,7 +25,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
         private readonly IMapper _mapper;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRoleService _roleService;
-        private readonly IPageViewFactory _pageViewFactory;
+        private readonly IPageInfoFactory _pageViewFactory;
         private readonly IPageAdminFactory _pageAdminFactory;
 
         public PageFacade(IPageRepository pageRepository, 
@@ -36,7 +36,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             IMapper mapper,
             RoleManager<IdentityRole> roleManager,
             IRoleService roleService,
-            IPageViewFactory pageViewFactory,
+            IPageInfoFactory pageViewFactory,
             IPageAdminFactory pageAdminFactory)
         {
             _pageRepository = pageRepository;
@@ -55,7 +55,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
         {
             return _cacheManager.Get(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, languageId), () =>
             {
-                return _pageViewFactory.GetPageInfo(siteId, pageId, languageId);
+                return _pageViewFactory.CreatePageInfo(siteId, pageId, languageId);
             });
         }
 

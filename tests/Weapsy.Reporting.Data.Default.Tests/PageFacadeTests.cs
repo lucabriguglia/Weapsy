@@ -38,7 +38,7 @@ namespace Weapsy.Reporting.Data.Default.Tests
 
             var roleManagerMock = new Mock<RoleManager<IdentityRole>>();
             var roleServiceMock = new Mock<IRoleService>();
-            var pageViewFactoryMock = new Mock<IPageViewFactory>();
+            var pageViewFactoryMock = new Mock<IPageInfoFactory>();
             var pageAdminFactoryMock = new Mock<IPageAdminFactory>();
 
             _sut = new PageFacade(pageRepositoryMock.Object, 

@@ -150,5 +150,34 @@ namespace Weapsy.Services.Identity
 
             return result.OrderBy(x => x.Name).ToList();
         }
+
+        public IList<IdentityRole> GetRolesFromIds(IEnumerable<string> roleIds)
+        {
+            var result = new List<IdentityRole>();
+
+            foreach (var roleId in roleIds)
+            {
+                int id;
+
+                if (int.TryParse(roleId, out id))
+                {
+                    if (Enum.IsDefined(typeof(DefaultRoles), id))
+                    {
+                        result.Add(new IdentityRole
+                        {
+                            Id = id.ToString(),
+                            Name = Enum.GetName(typeof(DefaultRoles), id)
+                        });
+                        continue;
+                    }
+                }
+
+                var role = _roleManager.FindByIdAsync(roleId).Result;
+                if (role != null)
+                    result.Add(role);
+            }
+
+            return result;
+        }
     }
 }
