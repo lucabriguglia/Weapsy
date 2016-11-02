@@ -165,9 +165,7 @@ namespace Weapsy.Domain.Menus
                 .ToList();
 
             foreach (var subMenuItem in subMenuItemsToDelete)
-            {
                 MarkMenuItemAsDeleted(subMenuItem);
-            }
         }
 
         public void SetMenuItemPermissions(SetMenuItemPermissions cmd)

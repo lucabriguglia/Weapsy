@@ -4,6 +4,8 @@ namespace Weapsy.Core.Domain
 {
     public abstract class Entity : IEntity
     {
+        public Guid Id { get; protected set; }
+
         protected Entity()
         {
             Id = Guid.Empty;
@@ -11,9 +13,10 @@ namespace Weapsy.Core.Domain
 
         protected Entity(Guid id)
         {
-            Id = id;
-        }
+            if (id == Guid.Empty)
+                id = Guid.NewGuid();
 
-        public Guid Id { get; protected set; }
+            Id = id;
+        }        
     }
 }

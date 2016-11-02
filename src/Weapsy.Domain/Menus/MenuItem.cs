@@ -73,14 +73,14 @@ namespace Weapsy.Domain.Menus
 
             foreach (var permission in cmd.MenuItemPermissions)
             {
-                if (MenuItemPermissions.FirstOrDefault(x => x.RoleId == permission.RoleId) == null)
+                if (MenuItemPermissions.FirstOrDefault(x => x.RoleId == permission.RoleId) != null)
+                    continue;
+
+                MenuItemPermissions.Add(new MenuItemPermission
                 {
-                    MenuItemPermissions.Add(new MenuItemPermission
-                    {
-                        MenuItemId = Id,
-                        RoleId = permission.RoleId
-                    });
-                }
+                    MenuItemId = Id,
+                    RoleId = permission.RoleId
+                });
             }
         }
 

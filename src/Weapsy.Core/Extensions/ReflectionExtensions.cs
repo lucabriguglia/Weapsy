@@ -17,7 +17,7 @@ namespace Weapsy.Core.Extensions
                 return false;
             var caurrentValue = currentProperty.GetValue(obj);
             var defaultValue = Activator.CreateInstance(obj.GetType()).GetType().GetRuntimeProperty(name).GetValue(obj);            
-            return caurrentValue == defaultValue;
+            return caurrentValue != defaultValue;
         }
 
         public static void SetValue(this object obj, string name, object value)
