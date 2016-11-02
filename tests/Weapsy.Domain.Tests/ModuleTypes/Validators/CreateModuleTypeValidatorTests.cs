@@ -13,25 +13,6 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
     public class CreateModuleTypeValidatorTests
     {
         [Test]
-        public void Should_have_validation_error_when_module_type_id_is_empty()
-        {
-            var command = new CreateModuleType
-            {
-                AppId = Guid.NewGuid(),
-                Id = Guid.Empty,
-                Name = "Name",
-                Title = "Title",
-                Description = "Description"
-            };
-
-            var moduleTypeRulesMock = new Mock<IModuleTypeRules>();
-            var appRulesMock = new Mock<IAppRules>();
-            var validator = new CreateModuleTypeValidator(moduleTypeRulesMock.Object, appRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
-        }
-
-        [Test]
         public void Should_have_validation_error_when_module_type_id_already_exists()
         {
             var command = new CreateModuleType

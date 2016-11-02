@@ -14,8 +14,8 @@ namespace Weapsy.Domain.Themes.Validators
             _themeRules = themeRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("A theme with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("A theme with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
         }
 
         private bool HaveUniqueId(Guid id)

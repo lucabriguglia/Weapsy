@@ -166,6 +166,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 Id = pageModule.ModuleId,
                 PageModuleId = pageModule.Id,
                 Title = title,
+                Zone = pageModule.Zone,
                 SortOrder = pageModule.SortOrder,
                 ViewRoles = moduleViewRoleNames,
                 ModuleType = new ModuleTypeModel

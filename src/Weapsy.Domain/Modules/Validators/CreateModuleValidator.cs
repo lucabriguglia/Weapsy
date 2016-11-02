@@ -20,8 +20,8 @@ namespace Weapsy.Domain.Modules.Validators
             _siteRules = siteRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("A module with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("A module with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
 
             RuleFor(c => c.SiteId)
                 .NotEmpty().WithMessage("Site id is required.")

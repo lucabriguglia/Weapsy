@@ -14,8 +14,8 @@ namespace Weapsy.Domain.Apps.Validators
             _appRules = appRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("An app with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("An app with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
         }
 
         private bool HaveUniqueId(Guid id)

@@ -16,8 +16,8 @@ namespace Weapsy.Domain.EmailAccounts.Validators
             _emailAccountRules = emailAccountRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("An email account with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("An email account with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
         }
 
         private bool HaveUniqueId(Guid id)

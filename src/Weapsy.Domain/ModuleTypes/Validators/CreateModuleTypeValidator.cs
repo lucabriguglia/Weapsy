@@ -18,8 +18,8 @@ namespace Weapsy.Domain.ModuleTypes.Validators
             _appRules = appRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("A module type with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("A module type with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
 
             RuleFor(c => c.AppId)
                 .NotEmpty().WithMessage("App id is required.")

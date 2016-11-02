@@ -14,8 +14,8 @@ namespace Weapsy.Domain.Templates.Validators
             _templateRules = templateRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("A template with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("A template with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
         }
 
         private bool HaveUniqueId(Guid id)

@@ -13,23 +13,6 @@ namespace Weapsy.Domain.Tests.Themes.Validators
     public class CreateThemeValidatorTests
     {
         [Test]
-        public void Should_have_validation_error_when_theme_id_is_empty()
-        {
-            var command = new CreateTheme
-            {
-                Id = Guid.Empty,
-                Name = "Name",
-                Description = "Description",
-                Folder = "Folder"
-            };
-
-            var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new CreateThemeValidator(themeRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
-        }
-
-        [Test]
         public void Should_have_validation_error_when_theme_id_already_exists()
         {
             var command = new CreateTheme

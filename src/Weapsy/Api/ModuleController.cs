@@ -51,7 +51,6 @@ namespace Weapsy.Api
         public async Task<IActionResult> Post([FromBody] CreateModule model)
         {
             model.SiteId = SiteId;
-            model.Id = Guid.NewGuid();
             await Task.Run(() => _commandSender.Send<CreateModule, Module>(model));
             return new NoContentResult();
         }

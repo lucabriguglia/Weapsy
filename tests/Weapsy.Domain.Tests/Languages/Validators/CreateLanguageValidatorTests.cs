@@ -13,25 +13,6 @@ namespace Weapsy.Domain.Tests.Languages.Validators
     public class CreateLanguageValidatorTests
     {
         [Test]
-        public void Should_have_validation_error_when_language_id_is_empty()
-        {
-            var command = new CreateLanguage
-            {
-                SiteId = Guid.NewGuid(),
-                Id = Guid.Empty,
-                Name = "My Language",
-                CultureName = "aa-bb",
-                Url = "url"
-            };
-
-            var languageRulesMock = new Mock<ILanguageRules>();
-            var siteRulesMock = new Mock<ISiteRules>();
-            var validator = new CreateLanguageValidator(languageRulesMock.Object, siteRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
-        }
-
-        [Test]
         public void Should_have_validation_error_when_language_id_already_exists()
         {
             var command = new CreateLanguage

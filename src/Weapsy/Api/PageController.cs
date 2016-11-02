@@ -54,8 +54,7 @@ namespace Weapsy.Api
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreatePage model)
         {
-            model.SiteId = SiteId;
-            model.Id = Guid.NewGuid();
+            //model.SiteId = SiteId;
             await Task.Run(() => _commandSender.Send<CreatePage, Page>(model));
             return new NoContentResult();
         }

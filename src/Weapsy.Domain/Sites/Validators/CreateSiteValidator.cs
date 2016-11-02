@@ -14,8 +14,8 @@ namespace Weapsy.Domain.Sites.Validators
             _siteRules = siteRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("A site with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("A site with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
 
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Name is required.")

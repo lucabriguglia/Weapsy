@@ -1,6 +1,7 @@
 ﻿using System;
 using Weapsy.Core.Domain;
 using Weapsy.Core.DependencyResolver;
+using Weapsy.Core.Extensions;
 
 namespace Weapsy.Core.Dispatcher
 {
@@ -25,6 +26,9 @@ namespace Weapsy.Core.Dispatcher
         {
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
+
+            //if (command.HasProperty("SiteId") && !command.HasValue("SiteId"))
+            //    command.SetValue("SiteId", Guid.NewGuid());
 
             var commandHandler = _resolver.Resolve<ICommandHandler<TCommand>>();
 

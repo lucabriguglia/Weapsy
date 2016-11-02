@@ -15,6 +15,9 @@ namespace Weapsy.Core.Domain
 
         protected AggregateRoot(Guid id)
         {
+            if (id == Guid.Empty)
+                id = new Guid();
+
             Id = id;
         }
 

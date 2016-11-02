@@ -14,24 +14,6 @@ namespace Weapsy.Domain.Tests.Modules.Validators
     public class CreateModuleValidatorTests
     {
         [Test]
-        public void Should_have_error_when_module_id_is_empty()
-        {
-            var moduleRulesMock = new Mock<IModuleRules>();
-            var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var siteRulesMock = new Mock<ISiteRules>();
-
-            var validator = new CreateModuleValidator(moduleRulesMock.Object, moduleTypeRules.Object, siteRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.Id, new CreateModule
-            {
-                SiteId = Guid.NewGuid(),
-                ModuleTypeId = Guid.NewGuid(),
-                Id = Guid.Empty,
-                Title = "Title"
-            });
-        }
-
-        [Test]
         public void Should_have_error_when_module_id_already_exists()
         {
             Guid id = Guid.NewGuid();
@@ -47,7 +29,7 @@ namespace Weapsy.Domain.Tests.Modules.Validators
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = id,
-                Id = Guid.Empty,
+                Id = id,
                 Title = "Title"
             });
         }

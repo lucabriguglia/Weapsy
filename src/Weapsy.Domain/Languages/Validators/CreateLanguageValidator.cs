@@ -16,8 +16,8 @@ namespace Weapsy.Domain.Languages.Validators
             _languageRules = languageRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("A language with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("A language with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
         }
 
         private bool HaveUniqueId(Guid id)

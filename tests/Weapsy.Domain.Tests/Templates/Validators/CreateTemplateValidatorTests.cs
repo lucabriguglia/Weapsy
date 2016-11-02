@@ -13,23 +13,6 @@ namespace Weapsy.Domain.Tests.Templates.Validators
     public class CreateTemplateValidatorTests
     {
         [Test]
-        public void Should_have_validation_error_when_template_id_is_empty()
-        {
-            var command = new CreateTemplate
-            {
-                Id = Guid.Empty,
-                Name = "Name",
-                Description = "Description",
-                ViewName = "ViewName"
-            };
-
-            var templateRulesMock = new Mock<ITemplateRules>();
-            var validator = new CreateTemplateValidator(templateRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
-        }
-
-        [Test]
         public void Should_have_validation_error_when_template_id_already_exists()
         {
             var command = new CreateTemplate

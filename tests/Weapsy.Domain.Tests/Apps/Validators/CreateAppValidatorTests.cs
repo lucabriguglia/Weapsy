@@ -35,13 +35,6 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         }
 
         [Test]
-        public void Should_have_validation_error_when_app_id_is_empty()
-        {
-            _command.Id = Guid.Empty;
-            _validator.ShouldHaveValidationErrorFor(x => x.Id, _command);
-        }
-
-        [Test]
         public void Should_have_validation_error_when_app_id_already_exists()
         {
             _appRulesMock = new Mock<IAppRules>();

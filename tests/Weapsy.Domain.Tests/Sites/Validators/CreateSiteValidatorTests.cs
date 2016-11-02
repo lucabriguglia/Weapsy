@@ -12,21 +12,6 @@ namespace Weapsy.Domain.Tests.Sites.Validators
     public class CreateSiteValidatorTests
     {
         [Test]
-        public void Should_have_error_when_site_id_is_empty()
-        {
-            var command = new CreateSite
-            {
-                Id = Guid.Empty,
-                Name = "My Site"
-            };
-
-            var siteRules = new Mock<ISiteRules>();
-            var validator = new CreateSiteValidator(siteRules.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
-        }
-
-        [Test]
         public void Should_have_error_when_site_id_already_exists()
         {
             var command = new CreateSite

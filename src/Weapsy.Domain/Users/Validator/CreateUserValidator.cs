@@ -14,8 +14,8 @@ namespace Weapsy.Domain.Users.Validator
             _userRules = userRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("A user with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("A user with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
 
             RuleFor(c => c.Email)
                 .NotEmpty().WithMessage("Email is required.")

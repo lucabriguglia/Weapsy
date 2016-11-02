@@ -20,8 +20,8 @@ namespace Weapsy.Domain.Pages.Validators
             _pageRules = pageRules;
 
             RuleFor(c => c.Id)
-                .NotEmpty().WithMessage("Id is required.")
-                .Must(HaveUniqueId).WithMessage("A page with the same id already exists.");
+                .Must(HaveUniqueId).WithMessage("A page with the same id already exists.")
+                .When(x => x.Id != Guid.Empty);
         }
 
         private bool HaveUniqueId(Guid id)
