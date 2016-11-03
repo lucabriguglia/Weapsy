@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Domain.Languages.Rules;
-using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
 
 namespace Weapsy.Domain.Pages.Validators

@@ -1,11 +1,9 @@
 ﻿using System;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Languages.Commands
 {
-    public class HideLanguage : ICommand
+    public class HideLanguage : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid Id { get; set; }
     }
 }

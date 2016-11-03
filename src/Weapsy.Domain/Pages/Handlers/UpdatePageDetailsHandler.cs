@@ -3,7 +3,6 @@ using FluentValidation;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Pages.Commands;
 using System;
-using Weapsy.Domain.Pages.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
