@@ -1,9 +1,5 @@
 ﻿using Autofac;
 using FluentValidation;
-using Weapsy.Core.DependencyResolver;
-using Weapsy.Core.Dispatcher;
-using Weapsy.Core.Domain;
-using Weapsy.Core.Caching;
 using Weapsy.Domain.Sites.Handlers;
 using Weapsy.Domain.Sites.Rules;
 using Weapsy.Domain.Sites.Validators;
@@ -31,6 +27,10 @@ using Weapsy.Reporting.Data.Default.Themes;
 using Weapsy.Domain.Users.Handlers;
 using Weapsy.Services.Identity;
 using Weapsy.Services.Installation;
+using Weapsy.Infrastructure.DependencyResolver;
+using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Caching;
+using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.DependencyConfigurator
 {

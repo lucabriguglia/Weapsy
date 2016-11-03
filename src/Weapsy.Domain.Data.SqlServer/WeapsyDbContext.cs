@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
-using Weapsy.Core.Configuration;
 using Weapsy.Domain.Data.SqlServer.Entities;
+using Weapsy.Infrastructure.Configuration;
 
 namespace Weapsy.Domain.Data.SqlServer
 {

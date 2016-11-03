@@ -46,7 +46,6 @@
     },
     "Microsoft.Extensions.FileProviders.Embedded": "1.0.0",
     "Weapsy.Apps.Text": "1.0.0-*",
-    "Weapsy.Core": "1.0.0-*",
     "Weapsy.DependencyConfigurator": "1.0.0-*",
     "Weapsy.Domain": "1.0.0-*",
     "Weapsy.Domain.Data.SqlServer": "1.0.0-*",
@@ -58,7 +57,8 @@
     "Weapsy.Apps.Text.Data.SqlServer": "1.0.0-*",
     "Weapsy.Apps.Text.DependencyConfigurator": "1.0.0-*",
     "Autofac.Extensions.DependencyInjection": "4.0.0-rc3-309",
-    "BundlerMinifier.Core": "2.1.258"
+    "BundlerMinifier.Core": "2.1.258",
+    "Weapsy.Infrastructure": "1.0.0-*"
   },
 
   "tools": {

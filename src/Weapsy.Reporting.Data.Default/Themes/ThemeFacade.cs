@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Weapsy.Core.Caching;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Themes;
 using Weapsy.Reporting.Themes;
 

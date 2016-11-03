@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Weapsy.Core.Caching;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;

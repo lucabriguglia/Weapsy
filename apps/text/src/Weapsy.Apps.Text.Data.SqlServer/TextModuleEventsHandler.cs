@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Weapsy.Apps.Text.Domain.Events;
-using Weapsy.Core.Caching;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Caching;
+using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Apps.Text.Data.SqlServer
 {

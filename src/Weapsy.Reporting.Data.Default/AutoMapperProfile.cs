@@ -18,7 +18,7 @@ namespace Weapsy.Reporting.Data.Default
 {
     public class AutoMapperProfile : Profile
     {
-        protected override void Configure()
+        public AutoMapperProfile()
         {
             CreateMap<App, AppAdminModel>();
             CreateMap<App, AppAdminListModel>();

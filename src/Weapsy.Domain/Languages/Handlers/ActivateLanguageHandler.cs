@@ -1,7 +1,7 @@
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Languages.Commands;
 
 namespace Weapsy.Domain.Languages.Handlers

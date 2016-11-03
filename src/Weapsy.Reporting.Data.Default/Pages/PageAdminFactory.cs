@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Weapsy.Core.Identity;
+using Weapsy.Infrastructure.Identity;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Pages;

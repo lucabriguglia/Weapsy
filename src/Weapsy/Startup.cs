@@ -17,7 +17,7 @@ using Weapsy.Mvc.ViewEngine;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services;
 using Weapsy.Apps.Text;
-using Weapsy.Core.Configuration;
+using Weapsy.Infrastructure.Configuration;
 using Weapsy.Reporting.Languages;
 using Weapsy.Domain.Sites;
 using Weapsy.Extensions;

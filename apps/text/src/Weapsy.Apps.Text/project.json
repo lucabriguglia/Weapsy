@@ -4,9 +4,9 @@
   "dependencies": {
     "NETStandard.Library": "1.6.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
-    "Weapsy.Core": "1.0.0-*",
     "Weapsy.Domain": "1.0.0-*",
-    "Weapsy.Mvc": "1.0.0-*"
+    "Weapsy.Mvc": "1.0.0-*",
+    "Weapsy.Infrastructure": "1.0.0-*"
   },
 
   "frameworks": {

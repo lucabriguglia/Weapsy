@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Weapsy.Core.Domain;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.EventStore.SqlServer
 {

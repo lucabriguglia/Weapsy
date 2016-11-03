@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Languages;
 using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Languages;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Languages.Rules;
 using Weapsy.Mvc.Context;
 

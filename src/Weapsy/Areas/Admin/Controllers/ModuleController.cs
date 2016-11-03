@@ -1,7 +1,7 @@
 ﻿using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Modules;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Areas.Admin.Controllers

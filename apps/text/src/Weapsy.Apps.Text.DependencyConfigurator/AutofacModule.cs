@@ -9,7 +9,7 @@ using Weapsy.Apps.Text.Domain.Rules;
 using Weapsy.Apps.Text.Domain.Validators;
 using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Reporting.Data.Default;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Apps.Text
 {

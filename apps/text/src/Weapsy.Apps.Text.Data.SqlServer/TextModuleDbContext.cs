@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Weapsy.Apps.Text.Data.SqlServer.Entities;
-using Weapsy.Core.Configuration;
+using Weapsy.Infrastructure.Configuration;
 
 namespace Weapsy.Apps.Text.Data.SqlServer
 {

@@ -4,7 +4,7 @@ using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Pages;
 using Weapsy.Apps.Text.Reporting;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Apps.Text.Domain.Commands;
 using System;
 using Weapsy.Apps.Text.Domain;

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Sites.Commands;
 
 namespace Weapsy.Domain.Sites.Handlers

@@ -10,7 +10,7 @@ using Weapsy.Models;
 using Weapsy.Models.AccountViewModels;
 using Weapsy.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Users.Events;
 using System;
 using FluentValidation;

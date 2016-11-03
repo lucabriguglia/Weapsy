@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Themes.Commands;
 
 namespace Weapsy.Domain.Themes.Handlers

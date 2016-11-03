@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain.Events;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Apps.Text.Domain
 {

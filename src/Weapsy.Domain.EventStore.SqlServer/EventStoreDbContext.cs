@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Weapsy.Core.Configuration;
+using Weapsy.Infrastructure.Configuration;
 
 namespace Weapsy.Domain.EventStore.SqlServer
 {

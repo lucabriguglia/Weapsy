@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.EmailAccounts.Rules;
 using Weapsy.Mvc.Context;
 

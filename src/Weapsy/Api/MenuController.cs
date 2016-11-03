@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus;
 using Weapsy.Reporting.Menus;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Menus.Rules;
 using Weapsy.Mvc.Context;
 

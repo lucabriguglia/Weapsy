@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using System.Threading.Tasks;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users.Events;
 

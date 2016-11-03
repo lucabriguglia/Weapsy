@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Security.Claims;
-using Weapsy.Core.Identity;
 using System.Linq;
+using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Services.Identity
 {

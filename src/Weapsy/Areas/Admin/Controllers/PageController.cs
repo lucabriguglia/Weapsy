@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Pages;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Mvc.Context;
 using AutoMapper;
 using System.Collections.Generic;

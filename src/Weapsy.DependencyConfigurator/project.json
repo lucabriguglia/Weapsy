@@ -4,10 +4,10 @@
   "dependencies": {
     "Autofac": "4.0.0-rc3-316",
     "NETStandard.Library": "1.6.0",
-    "Weapsy.Core": "1.0.0-*",
     "Weapsy.Domain": "1.0.0-*",
     "Weapsy.Domain.Data.SqlServer": "1.0.0-*",
     "Weapsy.Domain.EventStore.SqlServer": "1.0.0-*",
+    "Weapsy.Infrastructure": "1.0.0-*",
     "Weapsy.Reporting": "1.0.0-*",
     "Weapsy.Reporting.Data.Default": "1.0.0-*",
     "Weapsy.Services": "1.0.0-*"

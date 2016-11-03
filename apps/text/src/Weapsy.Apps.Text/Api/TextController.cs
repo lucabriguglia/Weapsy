@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Mvc.Context;
 using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Domain.Commands;

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
-using Weapsy.Core.Caching;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;

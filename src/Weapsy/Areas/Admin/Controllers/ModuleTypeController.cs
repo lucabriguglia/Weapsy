@@ -4,7 +4,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Mvc.Context;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.ModuleTypes.Commands;
 using Weapsy.Domain.ModuleTypes;
 

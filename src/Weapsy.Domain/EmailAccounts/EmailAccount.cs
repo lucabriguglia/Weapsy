@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using System;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts.Events;
 

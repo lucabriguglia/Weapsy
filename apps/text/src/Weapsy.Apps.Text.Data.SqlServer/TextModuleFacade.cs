@@ -2,7 +2,7 @@
 using System.Linq;
 using Weapsy.Apps.Text.Data.SqlServer;
 using Weapsy.Apps.Text.Domain;
-using Weapsy.Core.Caching;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Modules;
 

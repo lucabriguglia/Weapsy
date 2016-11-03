@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
-using Weapsy.Core.Identity;
+using Weapsy.Infrastructure.Identity;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Menus;

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Sites;
-using Weapsy.Core.Dispatcher;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Sites.Rules;
 using Weapsy.Domain.Sites.Commands;
 using Weapsy.Domain.Sites;

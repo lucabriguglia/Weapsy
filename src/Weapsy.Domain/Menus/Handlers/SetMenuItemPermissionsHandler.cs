@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Menus.Commands;
 using System;
 

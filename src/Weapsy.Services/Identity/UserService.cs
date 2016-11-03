@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Weapsy.Core.Identity;
 using System.Linq;
 using System;
 using System.Security.Principal;
+using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Services.Identity
 {

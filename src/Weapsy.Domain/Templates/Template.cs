@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using System;
-using Weapsy.Core.Domain;
+using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Templates.Commands;
 using Weapsy.Domain.Templates.Events;
 
