@@ -20,8 +20,8 @@ https://github.com/weapsy/Weapsy/wiki
 # Technology
 
 - C#
-- ASP.NET Core MVC and Web Api
-- JavaScript, jQuery, KnockoutJS
+- ASP.NET Core
+- JavaScript, jQuery
 - Entity Framework Core
 - SQL Server
 
