@@ -1,11 +1,9 @@
 ﻿using System;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.EmailAccounts.Commands
 {
-    public class EmailAccountDetails : ICommand
+    public class EmailAccountDetails : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid Id { get; set; }
         public string Address { get; set; }
         public string DisplayName { get; set; }

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Menus.Commands
 {
-    public class ReorderMenuItems : ICommand
+    public class ReorderMenuItems : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid Id { get; set; }
         public IList<MenuItem> MenuItems { get; set; } = new List<MenuItem>();
 

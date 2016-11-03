@@ -1,11 +1,9 @@
 ﻿using System;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Modules.Commands
 {
-    public class CreateModule : ICommand
+    public class CreateModule : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid ModuleTypeId { get; set; }
         public Guid Id { get; set; }
         public string Title { get; set; }

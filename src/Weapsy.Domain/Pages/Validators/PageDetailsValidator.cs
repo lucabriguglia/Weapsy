@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Domain.Languages.Rules;
@@ -9,10 +8,9 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class PageDetailsValidator<T> : AbstractValidator<T> where T : PageDetails
+    public class PageDetailsValidator<T> : BaseSiteValidator<T> where T : PageDetails
     {
         private readonly IPageRules _pageRules;
-        private readonly ISiteRules _siteRules;
         private readonly ILanguageRules _languageRules;
         private readonly IValidator<PageLocalisation> _localisationValidator;
 
@@ -20,15 +18,11 @@ namespace Weapsy.Domain.Pages.Validators
             ISiteRules siteRules,
             ILanguageRules languageRules,
             IValidator<PageLocalisation> localisationValidator)
+            : base(siteRules)
         {
             _pageRules = pageRules;
-            _siteRules = siteRules;
             _languageRules = languageRules;
             _localisationValidator = localisationValidator;
-
-            RuleFor(c => c.SiteId)
-                .NotEmpty().WithMessage("Site id is required.")
-                .Must(BeAnExistingSite).WithMessage("Site does not exist.");
 
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Page name is required.")
@@ -60,11 +54,6 @@ namespace Weapsy.Domain.Pages.Validators
 
             RuleFor(c => c.PageLocalisations)
                 .SetCollectionValidator(_localisationValidator);
-        }
-
-        private bool BeAnExistingSite(Guid siteId)
-        {
-            return _siteRules.DoesSiteExist(siteId);
         }
 
         private bool HaveUniqueName(PageDetails cmd, string name)

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Pages.Commands
 {
-    public class SetPagePermissions : ICommand
+    public class SetPagePermissions : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid Id { get; set; }
         public IList<PagePermission> PagePermissions { get; set; }
     }

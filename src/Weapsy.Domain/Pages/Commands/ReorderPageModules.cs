@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Pages.Commands
 {
-    public class ReorderPageModules : ICommand
+    public class ReorderPageModules : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid PageId { get; set; }
         public IEnumerable<Zone> Zones { get; set; } = new List<Zone>();
 

@@ -1,11 +1,9 @@
 ﻿using System;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Pages.Commands
 {
-    public class ActivatePage : ICommand
+    public class ActivatePage : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid Id { get; set; }
     }
 }

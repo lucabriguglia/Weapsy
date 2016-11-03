@@ -1,11 +1,9 @@
 ﻿using System;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Menus.Commands
 {
-    public class RemoveMenuItem : ICommand
+    public class RemoveMenuItem : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid MenuId { get; set; }
         public Guid MenuItemId { get; set; }
     }

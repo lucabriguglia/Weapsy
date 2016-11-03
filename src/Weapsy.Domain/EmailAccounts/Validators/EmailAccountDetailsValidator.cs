@@ -1,24 +1,18 @@
 ﻿using FluentValidation;
-using System;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts.Rules;
 using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.EmailAccounts.Validators
 {
-    public class EmailAccountDetailsValidator<T> : AbstractValidator<T> where T : EmailAccountDetails
+    public class EmailAccountDetailsValidator<T> : BaseSiteValidator<T> where T : EmailAccountDetails
     {
         private readonly IEmailAccountRules _emailAccountRules;
-        private readonly ISiteRules _siteRules;
 
         public EmailAccountDetailsValidator(IEmailAccountRules emailAccountRules, ISiteRules siteRules)
+            : base(siteRules)
         {
             _emailAccountRules = emailAccountRules;
-            _siteRules = siteRules;
-
-            RuleFor(c => c.SiteId)
-                .NotEmpty().WithMessage("Site id is required.")
-                .Must(BeAnExistingSite).WithMessage("Site does not exist.");
 
             RuleFor(c => c.Address)
                 .NotEmpty().WithMessage("Email account address is required.")
@@ -46,11 +40,6 @@ namespace Weapsy.Domain.EmailAccounts.Validators
                 .NotEmpty().WithMessage("Password is required.")
                 .Length(1, 250).WithMessage("Password length must be between 1 and 250 characters.")
                 .When(x => x.DefaultCredentials == false);
-        }
-
-        private bool BeAnExistingSite(Guid siteId)
-        {
-            return _siteRules.DoesSiteExist(siteId);
         }
 
         private bool HaveUniqueAddress(EmailAccountDetails cmd, string name)

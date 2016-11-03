@@ -9,9 +9,8 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Menus.Validators
 {
-    public class MenuItemValidator<T> : AbstractValidator<T> where T : MenuItemDetails
+    public class MenuItemValidator<T> : BaseSiteValidator<T> where T : MenuItemDetails
     {
-        private readonly ISiteRules _siteRules;
         private readonly IPageRules _pageRules;
         private readonly ILanguageRules _languageRules;
         private readonly IValidator<MenuItemDetails.MenuItemLocalisation> _localisationValidator;
@@ -20,15 +19,11 @@ namespace Weapsy.Domain.Menus.Validators
             IPageRules pageRules, 
             ILanguageRules languageRules, 
             IValidator<MenuItemDetails.MenuItemLocalisation> localisationValidator)
+            : base(siteRules)
         {
-            _siteRules = siteRules;
             _pageRules = pageRules;
             _languageRules = languageRules;
             _localisationValidator = localisationValidator;
-
-            RuleFor(c => c.SiteId)
-                .NotEmpty().WithMessage("Site id is required.")
-                .Must(BeAnExistingSite).WithMessage("Site does not exist.");
 
             RuleFor(c => c.PageId)
                 .NotEmpty().WithMessage("Page is required")
@@ -53,11 +48,6 @@ namespace Weapsy.Domain.Menus.Validators
 
             RuleFor(c => c.MenuItemLocalisations)
                 .SetCollectionValidator(_localisationValidator);
-        }
-
-        private bool BeAnExistingSite(Guid siteId)
-        {
-            return _siteRules.DoesSiteExist(siteId);
         }
 
         private bool BeAnExistingPage(MenuItemDetails cmd, Guid pageId)

@@ -6,23 +6,18 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Menus.Validators
 {
-    public class CreateMenuValidator : AbstractValidator<CreateMenu>
+    public class CreateMenuValidator : BaseSiteValidator<CreateMenu>
     {
         private readonly IMenuRules _menuRules;
-        private readonly ISiteRules _siteRules;
 
         public CreateMenuValidator(IMenuRules menuRules, ISiteRules siteRules)
+            : base(siteRules)
         {
             _menuRules = menuRules;
-            _siteRules = siteRules;
 
             RuleFor(c => c.Id)
                 .Must(HaveUniqueId).WithMessage("A menu with the same id already exists.")
                 .When(x => x.Id != Guid.Empty);
-
-            RuleFor(c => c.SiteId)
-                .NotEmpty().WithMessage("Site id is required.")
-                .Must(BeAnExistingSite).WithMessage("Site does not exist.");
 
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Menu name is required.")
@@ -34,11 +29,6 @@ namespace Weapsy.Domain.Menus.Validators
         private bool HaveUniqueId(Guid id)
         {
             return _menuRules.IsMenuIdUnique(id);
-        }
-
-        private bool BeAnExistingSite(Guid siteId)
-        {
-            return _siteRules.DoesSiteExist(siteId);
         }
 
         private bool HaveUniqueName(CreateMenu cmd, string name)
