@@ -58,44 +58,6 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         }
 
         [Test]
-        public void Should_have_validation_error_when_site_id_is_empty()
-        {
-            var command = new MenuItemDetails
-            {
-                SiteId = Guid.Empty
-            };
-
-            var pageRulesMock = new Mock<IPageRules>();
-            var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
-            var siteRulesMock = new Mock<ISiteRules>();
-
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
-        }
-
-        [Test]
-        public void Should_have_validation_error_when_site_does_not_exist()
-        {
-            var command = new MenuItemDetails
-            {
-                SiteId = Guid.NewGuid()
-            };
-
-            var siteRulesMock = new Mock<ISiteRules>();
-            siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(false);
-
-            var pageRulesMock = new Mock<IPageRules>();
-            var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
-
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
-        }
-
-        [Test]
         public void Should_have_validation_error_if_page_id_is_empty()
         {
             var updateMenuItem = new MenuItemDetails

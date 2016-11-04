@@ -44,22 +44,6 @@ namespace Weapsy.Domain.Tests.EmailAccount.Validators
         }
 
         [Test]
-        public void Should_have_validation_error_when_site_id_is_empty()
-        {
-            _command.SiteId = Guid.Empty;
-            _validator.ShouldHaveValidationErrorFor(x => x.SiteId, _command);
-        }
-
-        [Test]
-        public void Should_have_validation_error_when_site_does_not_exist()
-        {
-            _siteRulesMock = new Mock<ISiteRules>();
-            _siteRulesMock.Setup(x => x.DoesSiteExist(_command.SiteId)).Returns(false);
-            _validator = new EmailAccountDetailsValidator<EmailAccountDetails>(_emailAccountRulesMock.Object, _siteRulesMock.Object);
-            _validator.ShouldHaveValidationErrorFor(x => x.SiteId, _command);
-        }
-
-        [Test]
         public void Should_have_validation_error_when_email_account_address_is_empty()
         {
             _command.Address = string.Empty;

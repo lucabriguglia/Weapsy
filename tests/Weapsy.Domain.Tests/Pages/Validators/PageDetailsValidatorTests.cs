@@ -17,41 +17,6 @@ namespace Weapsy.Domain.Tests.Pages.Validators
     public class PageDetailsValidatorTests
     {
         [Test]
-        public void Should_have_validation_error_when_site_id_is_empty()
-        {
-            var command = new PageDetails
-            {
-                SiteId = Guid.Empty
-            };
-
-            var pageRulesMock = new Mock<IPageRules>();
-            var siteRulesMock = new Mock<ISiteRules>();
-            var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
-            var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
-        }
-
-        [Test]
-        public void Should_have_validation_error_when_site_does_not_exist()
-        {
-            var command = new PageDetails
-            {
-                SiteId = Guid.NewGuid()
-            };
-
-            var pageRulesMock = new Mock<IPageRules>();
-            var siteRulesMock = new Mock<ISiteRules>();
-            siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(false);
-            var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
-            var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
-        }
-
-        [Test]
         public void Should_have_error_when_page_name_is_empty()
         {
             var pageRulesMock = new Mock<IPageRules>();

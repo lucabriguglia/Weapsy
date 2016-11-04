@@ -14,37 +14,6 @@ namespace Weapsy.Domain.Tests.Pages.Validators
     public class UpdatePageModuleDetailsValidatorTests
     {
         [Test]
-        public void Should_have_validation_error_when_site_id_is_empty()
-        {
-            var command = new UpdatePageModuleDetails
-            {
-                SiteId = Guid.Empty
-            };
-
-            var siteRulesMock = new Mock<ISiteRules>();
-            var localisationValidator = new Mock<IValidator<PageModuleLocalisation>>();
-            var validator = new UpdatePageModuleDetailsValidator(siteRulesMock.Object, localisationValidator.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
-        }
-
-        [Test]
-        public void Should_have_validation_error_when_site_does_not_exist()
-        {
-            var command = new UpdatePageModuleDetails
-            {
-                SiteId = Guid.NewGuid()
-            };
-
-            var siteRulesMock = new Mock<ISiteRules>();
-            siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(false);
-            var localisationValidator = new Mock<IValidator<PageModuleLocalisation>>();
-            var validator = new UpdatePageModuleDetailsValidator(siteRulesMock.Object, localisationValidator.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
-        }
-
-        [Test]
         public void Should_have_error_when_page_title_is_too_long()
         {
             var siteRulesMock = new Mock<ISiteRules>();

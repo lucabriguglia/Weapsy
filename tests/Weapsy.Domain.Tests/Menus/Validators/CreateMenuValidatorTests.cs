@@ -51,44 +51,6 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         }
 
         [Test]
-        public void Should_have_validation_error_when_site_id_is_empty()
-        {
-            var command = new CreateMenu
-            {
-                SiteId = Guid.Empty,
-                Id = Guid.NewGuid(),
-                Name = "My Menu"
-            };
-
-            var menuRulesMock = new Mock<IMenuRules>();
-            var siteRulesMock = new Mock<ISiteRules>();
-
-            var validator = new CreateMenuValidator(menuRulesMock.Object, siteRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
-        }
-
-        [Test]
-        public void Should_have_validation_error_when_site_does_not_exist()
-        {
-            var command = new CreateMenu
-            {
-                SiteId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
-                Name = "My Menu"
-            };
-
-            var menuRulesMock = new Mock<IMenuRules>();
-
-            var siteRulesMock = new Mock<ISiteRules>();
-            siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(false);
-
-            var validator = new CreateMenuValidator(menuRulesMock.Object, siteRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
-        }
-
-        [Test]
         public void Should_have_validation_error_when_menu_name_is_empty()
         {
             var command = new CreateMenu
