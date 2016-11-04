@@ -2,11 +2,11 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Languages.Rules;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain.Validators;
+using Weapsy.Domain.Languages.Rules;
 
-namespace Weapsy.Apps.Text.Domain.Tests.Validators
+namespace Weapsy.Apps.Text.Tests.Domain.Validators
 {
     [TestFixture]
     public class VersionLocalisationValidatorTests

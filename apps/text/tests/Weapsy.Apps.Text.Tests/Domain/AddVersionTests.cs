@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
-using Moq;
 using FluentValidation;
 using FluentValidation.Results;
+using Moq;
+using NUnit.Framework;
+using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain.Events;
-using Weapsy.Apps.Text.Tests.Domain;
-using System.Collections.Generic;
 
-namespace Weapsy.Apps.Text.Domain.Tests
+namespace Weapsy.Apps.Text.Tests.Domain
 {
     [TestFixture]
     public class AddVersionTests

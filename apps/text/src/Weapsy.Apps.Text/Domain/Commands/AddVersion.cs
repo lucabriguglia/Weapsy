@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Domain;
 
 namespace Weapsy.Apps.Text.Domain.Commands
 {
-    public class AddVersion : ICommand
+    public class AddVersion : BaseSiteCommand
     {
-        public Guid SiteId { get; set; }
         public Guid ModuleId { get; set; }
         public Guid Id { get; set; }
         public Guid VersionId { get; set; }

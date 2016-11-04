@@ -5,10 +5,10 @@ using NUnit.Framework;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain.Rules;
 using Weapsy.Apps.Text.Domain.Validators;
-using Weapsy.Domain.Sites.Rules;
 using Weapsy.Domain.Modules.Rules;
+using Weapsy.Domain.Sites.Rules;
 
-namespace Weapsy.Apps.Text.Domain.Tests.Validators
+namespace Weapsy.Apps.Text.Tests.Domain.Validators
 {
     [TestFixture]
     public class CreateTextModuleValidatorTests
@@ -89,45 +89,6 @@ namespace Weapsy.Apps.Text.Domain.Tests.Validators
             var validator = new CreateTextModuleValidator(textModuleRulesMock.Object, moduleRulesMock.Object, siteRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.ModuleId, command);
-        }
-
-        [Test]
-        public void Should_have_error_when_site_id_is_empty()
-        {
-            var command = new CreateTextModule
-            {
-                SiteId = Guid.Empty,
-                ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
-                Content = "Content"
-            };
-
-            var textModuleRulesMock = new Mock<ITextModuleRules>();
-            var moduleRulesMock = new Mock<IModuleRules>();
-            var siteRulesMock = new Mock<ISiteRules>();
-            var validator = new CreateTextModuleValidator(textModuleRulesMock.Object, moduleRulesMock.Object, siteRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
-        }
-
-        [Test]
-        public void Should_have_error_when_site_does_not_exist()
-        {
-            var command = new CreateTextModule
-            {
-                SiteId = Guid.NewGuid(),
-                ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
-                Content = "Content"
-            };
-
-            var textModuleRulesMock = new Mock<ITextModuleRules>();
-            var moduleRulesMock = new Mock<IModuleRules>();
-            var siteRulesMock = new Mock<ISiteRules>();
-            siteRulesMock.Setup(x => x.DoesSiteExist(command.SiteId)).Returns(false);
-            var validator = new CreateTextModuleValidator(textModuleRulesMock.Object, moduleRulesMock.Object, siteRulesMock.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.SiteId, command);
         }
 
         [Test]

@@ -7,14 +7,14 @@ using Weapsy.Domain.Modules.Rules;
 using Weapsy.Domain.Languages.Rules;
 using System.Collections.Generic;
 using System.Linq;
+using Weapsy.Domain;
 
 namespace Weapsy.Apps.Text.Domain.Validators
 {
-    public class AddVersionValidator : AbstractValidator<AddVersion>
+    public class AddVersionValidator : BaseSiteValidator<AddVersion>
     {
         private readonly ITextModuleRules _textModuleRules;
         private readonly IModuleRules _moduleRules;
-        private readonly ISiteRules _siteRules;
         private readonly ILanguageRules _languageRules;
         private readonly IValidator<AddVersion.VersionLocalisation> _localisationValidator;
 
@@ -23,20 +23,16 @@ namespace Weapsy.Apps.Text.Domain.Validators
             ISiteRules siteRules,
             ILanguageRules languageRules,
             IValidator<AddVersion.VersionLocalisation> localisationValidator)
+            : base(siteRules)
         {
             _textModuleRules = textModuleRules;
             _moduleRules = moduleRules;
-            _siteRules = siteRules;
             _languageRules = languageRules;
             _localisationValidator = localisationValidator;
 
             RuleFor(c => c.ModuleId)
                 .NotEmpty().WithMessage("Module id is required.")
                 .Must(BeAnExistingModule).WithMessage("Module does not exist.");
-
-            RuleFor(c => c.SiteId)
-                .NotEmpty().WithMessage("Site id is required.")
-                .Must(BeAnExistingSite).WithMessage("Site does not exist.");
 
             RuleFor(c => c.Content)
                 .NotEmpty().WithMessage("Content is required.");
@@ -60,11 +56,6 @@ namespace Weapsy.Apps.Text.Domain.Validators
         private bool BeAnExistingModule(AddVersion cmd, Guid moduleId)
         {
             return _moduleRules.DoesModuleExist(cmd.SiteId, moduleId);
-        }
-
-        private bool BeAnExistingSite(Guid siteId)
-        {
-            return _siteRules.DoesSiteExist(siteId);
         }
 
         private bool IncludeAllSupportedLanguages(AddVersion cmd, IEnumerable<AddVersion.VersionLocalisation> versionLocalisations)

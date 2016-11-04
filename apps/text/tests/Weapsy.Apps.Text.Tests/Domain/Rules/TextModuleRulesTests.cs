@@ -1,9 +1,10 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
+using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Domain.Rules;
 
-namespace Weapsy.Apps.Text.Domain.Tests.Handlers
+namespace Weapsy.Apps.Text.Tests.Domain.Rules
 {
     [TestFixture]
     public class TextMdouleRulesTests

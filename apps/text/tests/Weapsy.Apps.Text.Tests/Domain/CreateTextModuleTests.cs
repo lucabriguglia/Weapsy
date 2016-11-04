@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
-using NUnit.Framework;
-using Moq;
 using FluentValidation;
 using FluentValidation.Results;
-using Weapsy.Apps.Text.Domain.Commands;
+using Moq;
+using NUnit.Framework;
 using Weapsy.Apps.Text.Domain;
+using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain.Events;
 
-namespace Weapsy.Apps.Text.Domain.Tests
+namespace Weapsy.Apps.Text.Tests.Domain
 {
     [TestFixture]
     public class CreateTextModuleTests

@@ -4,10 +4,11 @@ using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
+using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain.Handlers;
 
-namespace Weapsy.Apps.Text.Domain.Tests.Handlers
+namespace Weapsy.Apps.Text.Tests.Domain.Handlers
 {
     [TestFixture]
     public class CreateTextModuleHandlerTests

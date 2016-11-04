@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
-using Moq;
+﻿using System;
+using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
+using Moq;
+using NUnit.Framework;
+using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Domain.Commands;
-using Weapsy.Apps.Text.Tests.Domain;
-using System;
-using System.Linq;
 
-namespace Weapsy.Apps.Text.Domain.Tests
+namespace Weapsy.Apps.Text.Tests.Domain
 {
     [TestFixture]
     public class AddVersionStatusTests
