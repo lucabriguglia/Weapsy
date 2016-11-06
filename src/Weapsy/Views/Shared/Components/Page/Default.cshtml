@@ -1,8 +1,8 @@
 ﻿@model Weapsy.Reporting.Pages.PageInfo
 
-<h2>@Model.Title</h2>
+<h2>@Model.Page.Title</h2>
 
-<div id="page" data-page-id="@Model.Id" class="clearfix">
+<div id="page" data-page-id="@Model.Page.Id" class="clearfix">
     <div class="col-md-12 zone" data-zone-name="Content">
         @await Component.InvokeAsync("Zone", new { model = Model.Zone("Content") })
     </div>

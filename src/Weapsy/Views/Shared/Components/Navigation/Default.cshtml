@@ -3,8 +3,8 @@
 <ul class="nav navbar-nav">
     @foreach (var menuItem in Model.MenuItems)
     {
-        <li class="@(menuItem.Children.Count() > 0 ? "dropdown" : "")">
-            <a data-toggle="@(menuItem.Children.Count() > 0 ? "dropdown" : "")" href="@menuItem.Url" title="@menuItem.Title">@menuItem.Text</a>
+        <li class="@(menuItem.Children.Any() ? "dropdown" : "")">
+            <a data-toggle="@(menuItem.Children.Any() ? "dropdown" : "")" href="@menuItem.Url" title="@menuItem.Title">@menuItem.Text</a>
             @await Html.PartialAsync("~/Views/Shared/Components/Navigation/_ChildrenPartial.cshtml", menuItem.Children)
         </li>        
     }

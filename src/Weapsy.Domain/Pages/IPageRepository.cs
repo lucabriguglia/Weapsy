@@ -9,7 +9,8 @@ namespace Weapsy.Domain.Pages
         Page GetById(Guid id);
         Page GetById(Guid siteId, Guid id);
         Page GetByName(Guid siteId, string name);
-        Page GetByUrl(Guid siteId, string url);        
+        Page GetByUrl(Guid siteId, string url);
+        Guid? GetIdBySlug(Guid siteId, string slug);        
         ICollection<Page> GetAll(Guid siteId);
         void Create(Page page);
         void Update(Page page);

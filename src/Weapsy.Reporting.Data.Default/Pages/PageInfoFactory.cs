@@ -67,13 +67,16 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
             var result = new PageInfo
             {
-                Id = page.Id,
-                Name = page.Name,
-                Url = url,
-                Title = title,
-                MetaDescription = metaDescription,
-                MetaKeywords = metaKeywords,
-                ViewRoles = pageViewRoles.Select(x => x.Name),
+                Page = new PageModel
+                {
+                    Id = page.Id,
+                    Name = page.Name,
+                    Url = url,
+                    Title = title,
+                    MetaDescription = metaDescription,
+                    MetaKeywords = metaKeywords,
+                    ViewRoles = pageViewRoles.Select(x => x.Name)                   
+                },
                 Theme = new ThemeModel
                 {
                     Name = "Default"

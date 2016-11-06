@@ -1,42 +1,50 @@
 ﻿using Weapsy.Mvc.Controllers;
 using System;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Pages;
 using Weapsy.Mvc.Context;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using Weapsy.Services.Identity;
+using System.Linq;
 
 namespace Weapsy.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ISiteFacade _siteFacade;
         private readonly IPageFacade _pageFacade;
         private readonly IUserService _userService;
 
-        public HomeController(ISiteFacade siteFacade, 
-            IPageFacade pageFacade,
+        public HomeController(IPageFacade pageFacade,
             IUserService userService,
             IContextService contextService)
             : base(contextService)
         {
-            _siteFacade = siteFacade;
             _pageFacade = pageFacade;
             _userService = userService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(Guid pageId)
         {
-            if (PageInfo == null || !_userService.IsUserAuthorized(User, PageInfo.ViewRoles))
+            if (pageId == Guid.Empty)
+            // pageId = Site.HomePageId
+            {
+                var pages = _pageFacade.GetAllForAdminAsync(SiteId).Result;
+                var homePage = pages.FirstOrDefault(x => x.Name == "Home");
+                if (homePage != null)
+                    pageId = homePage.Id;
+            }
+
+            var pageInfo = _pageFacade.GetPageInfo(SiteId, pageId);
+
+            if (pageInfo == null || !_userService.IsUserAuthorized(User, pageInfo.Page.ViewRoles))
                 return NotFound();
 
-            ViewBag.Title = PageInfo.Title;
-            ViewBag.MetaDescription = PageInfo.MetaDescription;
-            ViewBag.MetaKeywords = PageInfo.MetaKeywords;
+            ViewBag.Title = pageInfo.Page.Title;
+            ViewBag.MetaDescription = pageInfo.Page.MetaDescription;
+            ViewBag.MetaKeywords = pageInfo.Page.MetaKeywords;
 
-            return View(PageInfo);
+            return View(pageInfo);
         }
 
         public IActionResult SetLanguage(string culture, string returnUrl)

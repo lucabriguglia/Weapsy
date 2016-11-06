@@ -18,6 +18,5 @@ namespace Weapsy.Mvc.Controllers
         public ContextInfo ContextInfo => _contextService.GetCurrentContextInfo();
         public SiteInfo SiteInfo => ContextInfo.Site;
         public Guid SiteId => SiteInfo.Id;
-        public PageInfo PageInfo => ContextInfo.Page;
     }
 }

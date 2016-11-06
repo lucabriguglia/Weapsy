@@ -7,14 +7,7 @@ namespace Weapsy.Reporting.Pages
 {
     public class PageInfo
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string Title { get; set; }
-        public string MetaDescription { get; set; }
-        public string MetaKeywords { get; set; }
-        public IEnumerable<string> ViewRoles { get; set; }
-
+        public PageModel Page { get; set; }
         public ThemeModel Theme { get; set; } = new ThemeModel();
         public PageTemplateModel Template { get; set; } = new PageTemplateModel();
         public ICollection<ZoneModel> Zones { get; set; } = new List<ZoneModel>();
@@ -24,6 +17,17 @@ namespace Weapsy.Reporting.Pages
             var zone = Zones.FirstOrDefault(x => x.Name.ToLowerInvariant() == zoneName.ToLowerInvariant());
             return zone ?? new ZoneModel();
         }
+    }
+
+    public class PageModel
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Title { get; set; }
+        public string MetaDescription { get; set; }
+        public string MetaKeywords { get; set; }
+        public IEnumerable<string> ViewRoles { get; set; }
     }
 
     public class ThemeModel

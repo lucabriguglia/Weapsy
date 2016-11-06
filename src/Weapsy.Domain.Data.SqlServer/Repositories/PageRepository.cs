@@ -84,6 +84,16 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             }
         }
 
+        public Guid? GetIdBySlug(Guid siteId, string slug)
+        {
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.Set<PageDbEntity>()
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Url == slug && x.Status == PageStatus.Active);
+                return dbEntity?.Id;
+            }
+        }
+
         public ICollection<Page> GetAll(Guid siteId)
         {
             using (var context = _dbContextFactory.Create())
