@@ -24,18 +24,18 @@ namespace Weapsy.Controllers
             _userService = userService;
         }
 
-        public IActionResult Index(Guid pageId)
+        public IActionResult Index(Guid pageId, Guid languageId)
         {
             if (pageId == Guid.Empty)
-            // pageId = Site.HomePageId
             {
+                // pageId = Site.HomePageId // todo: set pageId to the home page of current site
                 var pages = _pageFacade.GetAllForAdminAsync(SiteId).Result;
                 var homePage = pages.FirstOrDefault(x => x.Name == "Home");
                 if (homePage != null)
                     pageId = homePage.Id;
             }
 
-            var pageInfo = _pageFacade.GetPageInfo(SiteId, pageId);
+            var pageInfo = _pageFacade.GetPageInfo(SiteId, pageId, languageId);
 
             if (pageInfo == null || !_userService.IsUserAuthorized(User, pageInfo.Page.ViewRoles))
                 return NotFound();

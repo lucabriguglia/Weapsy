@@ -11,6 +11,7 @@ namespace Weapsy.Domain.Languages
         Language GetByName(Guid siteId, string name);
         Language GetByCultureName(Guid siteId, string cultureName);
         Language GetByUrl(Guid siteId, string url);
+        Guid? GetIdBySlug(Guid siteId, string slug);
         ICollection<Language> GetAll(Guid siteId);
         int GetLanguagesCount(Guid siteId);
         int GetActiveLanguagesCount(Guid siteId);

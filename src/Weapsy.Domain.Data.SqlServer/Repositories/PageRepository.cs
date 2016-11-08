@@ -89,8 +89,25 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = context.Set<PageDbEntity>()
-                    .FirstOrDefault(x => x.SiteId == siteId && x.Url == slug && x.Status == PageStatus.Active);
+                    .FirstOrDefault(x => x.SiteId == siteId
+                    && x.Status == PageStatus.Active
+                    && x.Url == slug);
+
                 return dbEntity?.Id;
+            }
+        }
+
+        public Guid? GetIdBySlug(Guid siteId, string slug, Guid languageId)
+        {
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.Set<PageLocalisationDbEntity>()
+                    .FirstOrDefault(x => x.Page.SiteId == siteId
+                    && x.Page.Status == PageStatus.Active
+                    && x.Url == slug
+                    && x.LanguageId == languageId);
+
+                return dbEntity?.PageId;
             }
         }
 

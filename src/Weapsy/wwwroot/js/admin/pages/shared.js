@@ -19,7 +19,7 @@ weapsy.admin.pages = (function ($) {
             url: {
                 required: true,
                 rangelength: [1, 200],
-                regex: /^[A-Za-z\d_-]+$/,
+                regex: /^[A-Za-z/\d_-]+$/,
                 remote: {
                     param: {
                         url: '/api/page/IsPageUrlUnique/'

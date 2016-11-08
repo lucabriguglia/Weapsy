@@ -6,10 +6,6 @@ weapsy.controlPanel = (function ($) {
     });
 
     function init() {
-        //var margin = $("#control-panel").css("width");
-        //$("#modal-admin").css("margin-left", margin);
-        //$("#wrapper").css("margin-left", margin);
-
         $(".zone").addClass("edit-mode");
 
         $(".moduleType").draggable({
@@ -28,7 +24,7 @@ weapsy.controlPanel = (function ($) {
 
                 var moduleTypeId = $(ui.item.context).attr("data-module-type-id");
 
-                var command = {};
+                var command;
 
                 if (!moduleTypeId) {
                     var zones = [];
@@ -91,11 +87,10 @@ weapsy.controlPanel = (function ($) {
         $('.module-edit').click(function () {
             $("#modal-title").empty();
             $("#modal-body").empty();
-            var pageId = $("#page").attr("data-page-id");
             var moduleId = $(this).closest(".module-data").attr("data-module-id");
             var moduleEditUrl = $(this).closest(".module-data").attr("data-module-edit-url");
             $("#modal-title").text("Edit Module");
-            $("#modal-body").load(moduleEditUrl, { moduleId: moduleId });
+            $("#modal-body").load("/" + moduleEditUrl, { moduleId: moduleId });
         });
 
         $('.module-settings').click(function () {
