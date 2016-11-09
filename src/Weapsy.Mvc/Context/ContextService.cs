@@ -3,6 +3,7 @@ using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Languages;
 using System;
+using Weapsy.Reporting.Users;
 
 namespace Weapsy.Mvc.Context
 {
@@ -25,6 +26,10 @@ namespace Weapsy.Mvc.Context
         }
 
         private const string ContextInfoKey = "Weapsy|ContextInfo";
+        private const string SiteInfoKey = "Weapsy|SiteInfo";
+        private const string LanguageInfoKey = "Weapsy|LanguageInfo";
+        private const string ThemeInfoKey = "Weapsy|ThemeInfo";
+        private const string UserInfoKey = "Weapsy|UserInfo";
 
         public ContextInfo GetCurrentContextInfo()
         {
@@ -53,7 +58,6 @@ namespace Weapsy.Mvc.Context
 
         private LanguageInfo GetLanguageInfo()
         {
-            //var requestedLanguageId = GetIdFromRouteData(ContextKeys.LanguageKey);
             //var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
             return new LanguageInfo
@@ -62,11 +66,32 @@ namespace Weapsy.Mvc.Context
             };
         }
 
-        //private Guid GetIdFromRouteData(string key)
-        //{
-        //    return _httpContextAccessor.HttpContext.GetRouteData().Values[key] != null
-        //        ? (Guid)_httpContextAccessor.HttpContext.GetRouteData().Values[key]
-        //        : Guid.Empty;
-        //}
+        public SiteInfo GetCurrentSiteInfo()
+        {
+            return GetInfo(SiteInfoKey, GetSiteInfo);
+        }
+
+        public LanguageInfo GetCurrentLanguageInfo()
+        {
+            return GetInfo(LanguageInfoKey, GetLanguageInfo);
+        }
+
+        public ThemeInfo GetCurrentThemeInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserInfo GetCurrentUserInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        private T GetInfo<T>(string key, Func<T> acquire)
+        {
+            if (_httpContextAccessor.HttpContext.Items[key] == null)
+                _httpContextAccessor.HttpContext.Items.Add(key, acquire());
+
+            return (T)_httpContextAccessor.HttpContext.Items[key];
+        }
     }
 }
