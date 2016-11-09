@@ -41,9 +41,11 @@ namespace Weapsy.Reporting.Data.Default.Menus
                 if (menu == null)
                     return new MenuViewModel();
 
-                var menuModel = new MenuViewModel { Name = menu.Name };
-
-                menuModel.MenuItems = PopulateMenuItems(menu.MenuItems.Where(x => x.Status == MenuItemStatus.Active), Guid.Empty, languageId);
+                var menuModel = new MenuViewModel
+                {
+                    Name = menu.Name,
+                    MenuItems = PopulateMenuItems(menu.MenuItems.Where(x => x.Status == MenuItemStatus.Active), Guid.Empty, languageId)
+                };
 
                 return menuModel;
             });
@@ -78,6 +80,13 @@ namespace Weapsy.Reporting.Data.Default.Menus
                         continue;
 
                     url = $"/{page.Url}";
+
+                    if (languageId != Guid.Empty)
+                    {
+                        var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+                        if (pageLocalisation != null)
+                            url = !string.IsNullOrEmpty(pageLocalisation.Url) ? pageLocalisation.Url : url;
+                    }
                 }
                 else if (menuItem.MenuItemType == MenuItemType.Link && !string.IsNullOrWhiteSpace(menuItem.Link))
                 {
@@ -195,3 +204,4 @@ namespace Weapsy.Reporting.Data.Default.Menus
         }
     }
 }
+

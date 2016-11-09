@@ -61,15 +61,15 @@ namespace Weapsy.Extensions
             string pageSlug;
 
             var siteId = contextService.GetCurrentContextInfo().Site.Id;
-            Guid? languageId = languageRepository.GetIdBySlug(siteId, languageSlug);
+            var language = languageRepository.GetByUrl(siteId, languageSlug);
             Guid? pageId = null;
 
-            if (languageId != null)
+            if (language != null)
             {
                 pageSlug = languageSlug == path ? string.Empty : path.Substring(languageSlug.Length + 1);
 
                 if (!string.IsNullOrEmpty(pageSlug))
-                    pageId = pageRepository.GetIdBySlug(siteId, pageSlug, languageId.Value);
+                    pageId = pageRepository.GetIdBySlug(siteId, pageSlug, language.Id);
             }
             else
             {
@@ -96,7 +96,7 @@ namespace Weapsy.Extensions
             routeData.Values["controller"] = "Home";
             routeData.Values["action"] = "Index";
             routeData.Values[ContextKeys.PageKey] = pageId;
-            routeData.Values[ContextKeys.LanguageKey] = languageId;
+            routeData.Values[ContextKeys.LanguageKey] = language?.Id ?? Guid.Empty;
 
             context.RouteData = routeData;
 
