@@ -27,13 +27,7 @@ namespace Weapsy.Controllers
         public IActionResult Index(Guid pageId, Guid languageId)
         {
             if (pageId == Guid.Empty)
-            {
-                // pageId = Site.HomePageId // todo: set pageId to the home page of current site
-                var pages = _pageFacade.GetAllForAdminAsync(SiteId).Result;
-                var homePage = pages.FirstOrDefault(x => x.Name == "Home");
-                if (homePage != null)
-                    pageId = homePage.Id;
-            }
+                return NotFound();
 
             var pageInfo = _pageFacade.GetPageInfo(SiteId, pageId, languageId);
 

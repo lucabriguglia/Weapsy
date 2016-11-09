@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Sites;
+using System.Linq;
 
 namespace Weapsy.Extensions
 {
@@ -46,40 +47,48 @@ namespace Weapsy.Extensions
             _router = router;
         }
 
+        // under development/refactoring
         public async Task RouteAsync(RouteContext context)
         {
-            // under development/refactoring
-            Guid? pageId = null;
-            Guid? languageId = null;
-            string path = context.HttpContext.Request.Path.Value;
-
-            if (!string.IsNullOrEmpty(path) && path[0] == '/')
-                path = path.Substring(1);
-
-            //if (path == string.Empty)
+            string path = GetPath(context);
 
             var contextService = context.HttpContext.RequestServices.GetService<IContextService>();
             var languageRepository = context.HttpContext.RequestServices.GetService<ILanguageRepository>();
             var pageRepository = context.HttpContext.RequestServices.GetService<IPageRepository>();
 
             var pathParts = path.Split('/');
-            var languagePart = pathParts.Length > 1 ? pathParts[0] : path;
+            var languageSlug = pathParts.Length > 1 ? pathParts[0] : path;
+            string pageSlug;
 
             var siteId = contextService.GetCurrentContextInfo().Site.Id;
+            Guid? languageId = languageRepository.GetIdBySlug(siteId, languageSlug);
+            Guid? pageId = null;
 
+            if (languageId != null)
+            {
+                pageSlug = languageSlug == path ? string.Empty : path.Substring(languageSlug.Length + 1);
+
+                if (!string.IsNullOrEmpty(pageSlug))
+                    pageId = pageRepository.GetIdBySlug(siteId, pageSlug, languageId.Value);
+            }
+            else
+            {
+                pageSlug = path;
+            }
             
-            languageId = languageRepository.GetIdBySlug(siteId, languagePart);
+            if (pageId == null && !string.IsNullOrEmpty(pageSlug))
+                pageId = pageRepository.GetIdBySlug(siteId, pageSlug);
 
-            if (languageId != null)
-                path = languagePart == path ? string.Empty : path.Substring(languagePart.Length + 1);
-
-            if (languageId != null)
-                pageId = pageRepository.GetIdBySlug(siteId, path, languageId.Value);
+            if (pageId == null && string.IsNullOrEmpty(pageSlug))
+            {
+                // pageId = site.HomePageId // todo: set pageId to the home page of current site
+                var pages = pageRepository.GetAll(siteId);
+                var homePage = pages.FirstOrDefault(x => x.Name == "Home");
+                if (homePage != null)
+                    pageId = homePage.Id;
+            }
 
             if (pageId == null)
-                pageId = pageRepository.GetIdBySlug(siteId, path);
-
-            if (pageId == null && languageId == null)
                 return;
 
             var routeData = new RouteData(context.RouteData);
@@ -97,6 +106,16 @@ namespace Weapsy.Extensions
         public VirtualPathData GetVirtualPath(VirtualPathContext context)
         {
             return null;
+        }
+
+        private string GetPath(RouteContext context)
+        {
+            string path = context.HttpContext.Request.Path.Value;
+
+            if (!string.IsNullOrEmpty(path) && path[0] == '/')
+                path = path.Substring(1);
+
+            return path;
         }
     }
 }
