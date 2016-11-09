@@ -66,6 +66,14 @@ namespace Weapsy.Extensions
 
             if (language != null)
             {
+                contextService.SetLanguageInfo(new LanguageInfo
+                {
+                    Id = language.Id,
+                    Name = language.Name,
+                    CultureName = language.CultureName,
+                    Url = language.Url
+                });
+
                 pageSlug = languageSlug == path ? string.Empty : path.Substring(languageSlug.Length + 1);
 
                 if (!string.IsNullOrEmpty(pageSlug))

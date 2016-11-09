@@ -3,6 +3,7 @@ using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Languages;
 using System;
+using Weapsy.Domain.Languages;
 using Weapsy.Reporting.Users;
 
 namespace Weapsy.Mvc.Context
@@ -33,47 +34,43 @@ namespace Weapsy.Mvc.Context
 
         public ContextInfo GetCurrentContextInfo()
         {
-            if (_httpContextAccessor.HttpContext.Items[ContextInfoKey] == null)
-                _httpContextAccessor.HttpContext.Items.Add(ContextInfoKey, GetContextInfo());
-
-            return (ContextInfo)_httpContextAccessor.HttpContext.Items[ContextInfoKey];
-        }
-
-        private ContextInfo GetContextInfo()
-        {
-            var site = GetSiteInfo();
-            var language = GetLanguageInfo();
-
-            return new ContextInfo
+            return GetInfo(SiteInfoKey, () =>
             {
-                Site = site,
-                Language = language
-            };
-        }
+                var site = _siteFacade.GetSiteInfo("Default").Result;
+                var language = new LanguageInfo
+                {
+                    Id = new Guid()
+                };
 
-        private SiteInfo GetSiteInfo()
-        {
-            return _siteFacade.GetSiteInfo("Default").Result;
-        }
-
-        private LanguageInfo GetLanguageInfo()
-        {
-            //var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
-
-            return new LanguageInfo
-            {
-                Id = new Guid()
-            };
+                return new ContextInfo
+                {
+                    Site = site,
+                    Language = language
+                };
+            });
         }
 
         public SiteInfo GetCurrentSiteInfo()
         {
-            return GetInfo(SiteInfoKey, GetSiteInfo);
+            return GetInfo(SiteInfoKey, () => _siteFacade.GetSiteInfo("Default").Result);
+        }
+
+        public void SetLanguageInfo(LanguageInfo languageInfo)
+        {
+            SetInfo(LanguageInfoKey, languageInfo);
         }
 
         public LanguageInfo GetCurrentLanguageInfo()
         {
-            return GetInfo(LanguageInfoKey, GetLanguageInfo);
+            return GetInfo(LanguageInfoKey, () =>
+            {
+                //var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+
+                return new LanguageInfo
+                {
+                    Id = new Guid()
+                };
+            });
         }
 
         public ThemeInfo GetCurrentThemeInfo()
@@ -84,6 +81,11 @@ namespace Weapsy.Mvc.Context
         public UserInfo GetCurrentUserInfo()
         {
             throw new NotImplementedException();
+        }
+
+        private void SetInfo(string key, object data)
+        {
+            _httpContextAccessor.HttpContext.Items.Add(key, data);
         }
 
         private T GetInfo<T>(string key, Func<T> acquire)

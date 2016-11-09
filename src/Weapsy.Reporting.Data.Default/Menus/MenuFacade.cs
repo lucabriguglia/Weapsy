@@ -34,24 +34,29 @@ namespace Weapsy.Reporting.Data.Default.Menus
 
         public async Task<MenuViewModel> GetByNameAsync(Guid siteId, string name, Guid languageId = new Guid())
         {
-            return _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, siteId, name), () =>
+            return _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, siteId, name, languageId), () =>
             {
                 var menu = _menuRepository.GetByName(siteId, name);
 
                 if (menu == null)
                     return new MenuViewModel();
 
+                Language language = null;
+
+                if (languageId != Guid.Empty)
+                    language = _languageRepository.GetById(languageId);
+
                 var menuModel = new MenuViewModel
                 {
                     Name = menu.Name,
-                    MenuItems = PopulateMenuItems(menu.MenuItems.Where(x => x.Status == MenuItemStatus.Active), Guid.Empty, languageId)
+                    MenuItems = PopulateMenuItems(menu.MenuItems.Where(x => x.Status == MenuItemStatus.Active), Guid.Empty, language)
                 };
 
                 return menuModel;
             });
         }
 
-        private List<MenuViewModel.MenuItem> PopulateMenuItems(IEnumerable<MenuItem> source, Guid parentId, Guid languageId)
+        private List<MenuViewModel.MenuItem> PopulateMenuItems(IEnumerable<MenuItem> source, Guid parentId, Language language)
         {
             var result = new List<MenuViewModel.MenuItem>();
 
@@ -61,9 +66,9 @@ namespace Weapsy.Reporting.Data.Default.Menus
                 var title = menuItem.Title;
                 var url = "#";
 
-                if (languageId != Guid.Empty)
+                if (language != null)
                 {
-                    var menuItemLocalisation = menuItem.MenuItemLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+                    var menuItemLocalisation = menuItem.MenuItemLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
 
                     if (menuItemLocalisation != null)
                     {
@@ -79,13 +84,13 @@ namespace Weapsy.Reporting.Data.Default.Menus
                     if (page == null || page.Status != PageStatus.Active)
                         continue;
 
-                    url = $"/{page.Url}";
+                    url = language == null ? $"/{page.Url}" : $"/{language.Url}/{page.Url}";
 
-                    if (languageId != Guid.Empty)
+                    if (language != null)
                     {
-                        var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+                        var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
                         if (pageLocalisation != null)
-                            url = !string.IsNullOrEmpty(pageLocalisation.Url) ? pageLocalisation.Url : url;
+                            url = !string.IsNullOrEmpty(pageLocalisation.Url) ? $"/{language.Url}/{pageLocalisation.Url}" : url;
                     }
                 }
                 else if (menuItem.MenuItemType == MenuItemType.Link && !string.IsNullOrWhiteSpace(menuItem.Link))
@@ -100,7 +105,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
                     Url = url
                 };
 
-                menuItemModel.Children.AddRange(PopulateMenuItems(source, menuItem.Id, languageId));
+                menuItemModel.Children.AddRange(PopulateMenuItems(source, menuItem.Id, language));
 
                 result.Add(menuItemModel);
             }
