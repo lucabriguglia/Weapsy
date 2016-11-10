@@ -71,7 +71,8 @@ namespace Weapsy.Extensions
                     Id = language.Id,
                     Name = language.Name,
                     CultureName = language.CultureName,
-                    Url = language.Url
+                    Url = language.Url,
+                    SortOrder = language.SortOrder
                 });
 
                 pageSlug = languageSlug == path ? string.Empty : path.Substring(languageSlug.Length + 1);
