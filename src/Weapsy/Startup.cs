@@ -150,9 +150,8 @@ namespace Weapsy
 
             var site = siteRepository.GetByName("Default");
             var activeLanguages = languageFacade.GetAllActive(site.Id);
-            var pages = pageFacade.GetAllForAdminAsync(site.Id).Result;
 
-            app.AddRoutes(site, activeLanguages, pages);
+            app.AddRoutes();
             app.AddLocalisation(activeLanguages);
         }
     }

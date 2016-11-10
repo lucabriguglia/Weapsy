@@ -6,7 +6,6 @@ using Weapsy.Mvc.Context;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using Weapsy.Services.Identity;
-using System.Linq;
 
 namespace Weapsy.Controllers
 {

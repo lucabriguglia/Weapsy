@@ -1,25 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages;
-using Weapsy.Reporting.Pages;
 using System.Threading.Tasks;
-using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
-using Weapsy.Domain.Sites;
 using System.Linq;
 
 namespace Weapsy.Extensions
 {
     public static class RoutingExtensions
     {
-        public static IApplicationBuilder AddRoutes(this IApplicationBuilder app,
-            Site site,
-            IEnumerable<LanguageInfo> languages, 
-            IEnumerable<PageAdminListModel> pages)
+        public static IApplicationBuilder AddRoutes(this IApplicationBuilder app)
         {
             app.UseMvc(routes =>
             {
@@ -53,36 +46,25 @@ namespace Weapsy.Extensions
             string path = GetPath(context);
 
             var contextService = context.HttpContext.RequestServices.GetService<IContextService>();
-            var languageRepository = context.HttpContext.RequestServices.GetService<ILanguageRepository>();
+            var languageFacade = context.HttpContext.RequestServices.GetService<ILanguageFacade>();
             var pageRepository = context.HttpContext.RequestServices.GetService<IPageRepository>();
 
             var pathParts = path.Split('/');
             var languageSlug = pathParts.Length > 1 ? pathParts[0] : path;
-            string pageSlug;
+            var pageSlug = path;
 
             var siteId = contextService.GetCurrentContextInfo().Site.Id;
-            var language = languageRepository.GetByUrl(siteId, languageSlug);
+            var language = languageFacade.GetAllActive(siteId).FirstOrDefault(x => x.Url == languageSlug);
             Guid? pageId = null;
 
             if (language != null)
             {
-                contextService.SetLanguageInfo(new LanguageInfo
-                {
-                    Id = language.Id,
-                    Name = language.Name,
-                    CultureName = language.CultureName,
-                    Url = language.Url,
-                    SortOrder = language.SortOrder
-                });
+                contextService.SetLanguageInfo(language);
 
                 pageSlug = languageSlug == path ? string.Empty : path.Substring(languageSlug.Length + 1);
 
                 if (!string.IsNullOrEmpty(pageSlug))
                     pageId = pageRepository.GetIdBySlug(siteId, pageSlug, language.Id);
-            }
-            else
-            {
-                pageSlug = path;
             }
             
             if (pageId == null && !string.IsNullOrEmpty(pageSlug))
