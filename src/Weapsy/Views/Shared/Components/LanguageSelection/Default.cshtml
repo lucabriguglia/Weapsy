@@ -15,11 +15,13 @@
                 </li>
             }
         </ul>*@
-        <select id="langId" name="langId" class="form-control">
-            @foreach (var langItem in Model)
-            {
-                <option value="@langItem.Id">@langItem.Name</option>
-            }
-        </select>
+        <div class="nav navbar-nav">
+            <select id="langId" name="langId" class="form-control align-to-bar">
+                @foreach (var langItem in Model)
+                {
+                    <option value="@langItem.Id">@langItem.Name</option>
+                }
+            </select>
+        </div>
     }
 }
