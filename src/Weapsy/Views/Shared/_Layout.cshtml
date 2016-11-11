@@ -52,9 +52,10 @@
                 <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a></p>
             </footer>
         </div>
-
-        @await Html.PartialAsync("_ErrorModal")
+        
         @await Html.PartialAsync("_AdminModal")
+        @await Html.PartialAsync("_DeleteModuleModal")
+        @await Html.PartialAsync("_ErrorModal")
 
         <environment names="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>

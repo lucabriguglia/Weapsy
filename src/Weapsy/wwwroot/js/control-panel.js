@@ -2,7 +2,8 @@
 
 weapsy.controlPanel = (function ($) {
     $(document).ready(function () {
-        if ($('#control-panel').length) init();
+        if ($('#control-panel').length)
+            init();
     });
 
     function init() {
@@ -102,12 +103,18 @@ weapsy.controlPanel = (function ($) {
             $("#modal-body").load("/Admin/Page/EditModule", { pageId: pageId, pageModuleId: pageModuleId });
         });
 
+        var moduleIdToDelete;
+
         $('.module-remove').click(function () {
+            moduleIdToDelete = $(this).closest(".module-data").attr("data-module-id");
+        });
+
+        $('#confirmDeleteModule').click(function () {
             var pageId = $("#page").attr("data-page-id");
-            var moduleId = $(this).closest(".module-data").attr("data-module-id");
+
             var command = {
                 pageId: pageId,
-                moduleId: moduleId
+                moduleId: moduleIdToDelete
             };
             $.ajax({
                 url: "/api/page/" + pageId + "/remove-module",
@@ -116,7 +123,7 @@ weapsy.controlPanel = (function ($) {
                 dataType: 'json',
                 contentType: 'application/json'
             }).done(function () {
-                $("#" + moduleId).remove();
+                $("#" + moduleIdToDelete).remove();
             });
         });
     }

@@ -2,6 +2,7 @@
 
 @{ 
     Layout = "";
+    var display = Model.InheritPermissions ? "none" : "block";
 }
 
 <form id="editPageModuleForm" name="editPageModuleForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/Page/UpdateModule" data-ajax-loading="#savingModule" data-ajax-success="weapsy.controlPanel.refresh" class="form-horizontal validate-form" role="form">
@@ -18,7 +19,7 @@
         </div>
     </div>
 
-    <div class="form-group has-feedback">
+    <div id="pageModulePermissions" class="form-group has-feedback" style="display: @display">
         <div class="col-md-12">
             <table class="table table-bordered" style="width:auto;">
                 <tr>
@@ -54,3 +55,16 @@
         </div>
     </div>
 </form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#InheritPermissions').click(function () {
+            if ($(this).is(":checked")) {
+                $('#pageModulePermissions').slideUp(500);
+            }
+            else {
+                $('#pageModulePermissions').slideDown(500);
+            }
+        });
+    });
+</script>
