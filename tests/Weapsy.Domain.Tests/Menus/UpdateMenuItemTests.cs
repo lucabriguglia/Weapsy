@@ -39,15 +39,15 @@ namespace Weapsy.Domain.Tests.Menus
                 Link = "link",
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+                MenuItemLocalisations = new List<MenuItemLocalisation>
                 {
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 1",
                         Title = "Title 1"
                     },
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 2",
@@ -66,15 +66,15 @@ namespace Weapsy.Domain.Tests.Menus
                 SiteId = _menu.SiteId,
                 MenuId = _menu.Id,
                 MenuItemId = menuItemId,
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+                MenuItemLocalisations = new List<MenuItemLocalisation>
                 {
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 1",
                         Title = "Title 1"
                     },
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 2",
@@ -200,28 +200,6 @@ namespace Weapsy.Domain.Tests.Menus
         {
             var menuItem = _menu.MenuItems.FirstOrDefault(x => x.Id == _command.MenuItemId);
             typeof(MenuItem).GetTypeInfo().GetProperty("Status").SetValue(menuItem, MenuItemStatus.Deleted);
-            Assert.Throws<Exception>(() => _menu.UpdateMenuItem(_command, _validatorMock.Object));
-        }
-
-        [Test]
-        public void Should_throw_exception_if_menu_item_localisation_already_exists()
-        {
-            var languageId = Guid.NewGuid();
-            _command.MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
-            {
-                new MenuItemDetails.MenuItemLocalisation
-                {
-                    LanguageId = languageId,
-                    Text = "Text 1",
-                    Title = "Title 1"
-                },
-                new MenuItemDetails.MenuItemLocalisation
-                {
-                    LanguageId = languageId,
-                    Text = "Text 2",
-                    Title = "Title 2"
-                }
-            };
             Assert.Throws<Exception>(() => _menu.UpdateMenuItem(_command, _validatorMock.Object));
         }
     }

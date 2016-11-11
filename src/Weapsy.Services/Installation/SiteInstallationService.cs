@@ -240,11 +240,18 @@ namespace Weapsy.Services.Installation
                 Link = string.Empty,
                 Text = "Home",
                 Title = "Home Page",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+                MenuItemLocalisations = new List<MenuItemLocalisation>
                 {
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = englishLanguageId
+                    }
+                },
+                MenuItemPermissions = new List<MenuItemPermission>
+                {
+                    new MenuItemPermission
+                    {
+                        RoleId = DefaultRoles.Everyone.ToString()
                     }
                 }
             }, _addMenuItemValidator);

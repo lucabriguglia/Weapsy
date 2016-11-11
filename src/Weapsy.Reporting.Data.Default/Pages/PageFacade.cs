@@ -3,14 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
-using Weapsy.Domain.Modules;
-using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Pages;
-using Microsoft.AspNetCore.Identity;
 using Weapsy.Services.Identity;
 
 namespace Weapsy.Reporting.Data.Default.Pages
@@ -19,33 +15,24 @@ namespace Weapsy.Reporting.Data.Default.Pages
     {
         private readonly IPageRepository _pageRepository;
         private readonly ILanguageRepository _languageRepository;
-        private readonly IModuleRepository _moduleRepository;
-        private readonly IModuleTypeRepository _moduleTypeRepository;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRoleService _roleService;
         private readonly IPageInfoFactory _pageViewFactory;
         private readonly IPageAdminFactory _pageAdminFactory;
 
         public PageFacade(IPageRepository pageRepository, 
             ILanguageRepository languageRepository,
-            IModuleRepository moduleRepository,
-            IModuleTypeRepository moduleTypeRepository,
             ICacheManager cacheManager, 
             IMapper mapper,
-            RoleManager<IdentityRole> roleManager,
             IRoleService roleService,
             IPageInfoFactory pageViewFactory,
             IPageAdminFactory pageAdminFactory)
         {
             _pageRepository = pageRepository;
             _languageRepository = languageRepository;
-            _moduleRepository = moduleRepository;
-            _moduleTypeRepository = moduleTypeRepository;
             _cacheManager = cacheManager;
             _mapper = mapper;
-            _roleManager = roleManager;
             _roleService = roleService;
             _pageViewFactory = pageViewFactory;
             _pageAdminFactory = pageAdminFactory;

@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
 
             var pageRulesMock = new Mock<IPageRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new AddMenuItemValidator(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);

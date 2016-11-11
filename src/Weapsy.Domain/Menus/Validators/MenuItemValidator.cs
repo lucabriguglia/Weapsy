@@ -13,12 +13,12 @@ namespace Weapsy.Domain.Menus.Validators
     {
         private readonly IPageRules _pageRules;
         private readonly ILanguageRules _languageRules;
-        private readonly IValidator<MenuItemDetails.MenuItemLocalisation> _localisationValidator;
+        private readonly IValidator<MenuItemLocalisation> _localisationValidator;
 
         public MenuItemValidator(ISiteRules siteRules, 
             IPageRules pageRules, 
             ILanguageRules languageRules, 
-            IValidator<MenuItemDetails.MenuItemLocalisation> localisationValidator)
+            IValidator<MenuItemLocalisation> localisationValidator)
             : base(siteRules)
         {
             _pageRules = pageRules;
@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Menus.Validators
             return _pageRules.DoesPageExist(cmd.SiteId, pageId);
         }
 
-        private bool IncludeAllSupportedLanguages(MenuItemDetails cmd, IEnumerable<MenuItemDetails.MenuItemLocalisation> localisations)
+        private bool IncludeAllSupportedLanguages(MenuItemDetails cmd, IEnumerable<MenuItemLocalisation> localisations)
         {
             return _languageRules.AreAllSupportedLanguagesIncluded(cmd.SiteId, localisations.Select(x => x.LanguageId));
         }

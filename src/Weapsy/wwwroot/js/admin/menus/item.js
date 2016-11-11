@@ -20,6 +20,12 @@ weapsy.admin.menuItem = (function ($, ko) {
         this.title = ko.observable(data.title);
     }
 
+    function MenuItemPermission(data) {
+        this.roleId = ko.observable(data.roleId);
+        this.roleName = ko.observable(data.roleName);
+        this.selected = ko.observable(data.selected);
+    }
+
     function Page(data) {
         this.id = data.id;
         this.name = data.name;
@@ -53,6 +59,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         self.text = ko.observable();
         self.title = ko.observable();
         self.menuItemLocalisations = ko.observableArray([]);
+        self.menuItemPermissions = ko.observableArray([]);
 
         self.emptyId = "00000000-0000-0000-0000-000000000000";
 
@@ -92,6 +99,7 @@ weapsy.admin.menuItem = (function ($, ko) {
             self.title("");
 
             self.menuItemLocalisations([]);
+            self.menuItemPermissions([]);
 
             $.each(self.languages(), function () {
                 var item = this;
@@ -116,11 +124,14 @@ weapsy.admin.menuItem = (function ($, ko) {
                 self.link(data.link);
                 self.text(data.text);
                 self.title(data.title);
-
                 self.menuItemLocalisations([]);
+                self.menuItemPermissions([]);
 
                 var mappedLocalisations = $.map(data.menuItemLocalisations, function (item) { return new MenuItemLocalisation(item) });
                 self.menuItemLocalisations(mappedLocalisations);
+
+                var mappedPermissions = $.map(data.menuItemPermissions, function (item) { return new MenuItemPermission(item) });
+                self.menuItemPermissions(mappedPermissions);
 
                 self.showEditForm(true);
 
@@ -183,6 +194,7 @@ weapsy.admin.menuItem = (function ($, ko) {
             $('#savingMenuItem').show();
 
             var localisations = [];
+            var permissions = [];
 
             $.each(self.menuItemLocalisations(), function () {
                 var item = this;
@@ -193,6 +205,15 @@ weapsy.admin.menuItem = (function ($, ko) {
                 });
             });
 
+            $.each(self.menuItemPermissions(), function () {
+                var item = this;
+                if (item.selected())
+                    permissions.push({
+                        menuItemId: self.menuItemId(),
+                        roleId: item.roleId()
+                    });
+            });
+
             var data = {
                 menuItemId: self.menuItemId(),
                 menuItemType: self.menuItemType(),
@@ -200,7 +221,8 @@ weapsy.admin.menuItem = (function ($, ko) {
                 link: self.link(),
                 text: self.text(),
                 title: self.title(),
-                menuItemLocalisations: localisations
+                menuItemLocalisations: localisations,
+                menuItemPermissions: permissions
             };
 
             var action = data.menuItemId != self.emptyId ? "update" : "add";

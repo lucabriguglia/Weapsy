@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus;

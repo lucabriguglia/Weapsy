@@ -14,63 +14,104 @@
     </div>
 
     <form id="editMenuItemForm" name="editMenuItemForm" class="form-horizontal" role="form">
-        <div class="form-group has-feedback">
-            <label for="page" class="col-md-2 control-label">Type</label>
-            <div class="col-md-4">
-                <select id="itemTypes" name="itemTypes" data-bind="options: itemTypes, optionsText: 'name', optionsValue: 'id', value: menuItemType" class="form-control"></select>
-            </div>
-        </div>
-
-        <div class="form-group has-feedback" data-bind="visible: menuItemType() == 1">
-            <label for="page" class="col-md-2 control-label">Page</label>
-            <div class="col-md-4">
-                <select id="pages" name="pages" data-bind="options: pages, optionsText: 'name', optionsValue: 'id', value: pageId" class="form-control"></select>
-            </div>
-        </div>
-
-        <div class="form-group has-feedback" data-bind="visible: menuItemType() == 2">
-            <label for="link" class="col-md-2 control-label">Link</label>
-            <div class="col-md-4">
-                <input id="link" name="link" type="text" data-bind="value: link" class="form-control" placeholder="Enter Link">
-                <i class="form-control-feedback glyphicon"></i>
-            </div>
-            <div class="col-md-6 help-block">
-                <label id="link-error" for="url" class="text-danger" style="display:none;"></label>
-            </div>
-        </div>
-
-        <!-- ko ifnot: menuItemLocalisations().length > 0 -->
-        <div data-bind="template: { name: 'menuItemDefaultLocalisation-template' }"></div>
-        <!-- /ko -->
-        <!-- ko if: menuItemLocalisations().length > 0 -->
         <ul class="nav nav-tabs">
             <li class="active">
-                <a href="#Default" data-toggle="tab">Default</a>
+                <a href="#Details" data-toggle="tab">Details</a>
             </li>
-            <!-- ko foreach: menuItemLocalisations -->
             <li>
-                <a data-bind="text: languageName, attr: { href: '#' + languageName() }" data-toggle="tab"></a>
+                <a href="#Permissions" data-toggle="tab">Permissions</a>
             </li>
-            <!-- /ko -->
         </ul>
-        <div class="tab-content" style="margin:25px 0 35px;">
-            <div id="Default" data-bind="template: { name: 'menuItemDefaultLocalisation-template' }" class="tab-pane active"></div>
-            <!-- ko foreach: menuItemLocalisations -->
-            <div data-bind="attr: { id: languageName }, template: { name: 'menuItemLocalisation-template' }" class="tab-pane"></div>
-            <!-- /ko -->
+
+        <div class="tab-content" style="margin:25px 0">
+            <div id="Details" class="tab-pane active">
+
+                <div class="form-group has-feedback">
+                    <label for="page" class="col-md-2 control-label">Type</label>
+                    <div class="col-md-4">
+                        <select id="itemTypes" name="itemTypes" data-bind="options: itemTypes, optionsText: 'name', optionsValue: 'id', value: menuItemType" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback" data-bind="visible: menuItemType() == 1">
+                    <label for="page" class="col-md-2 control-label">Page</label>
+                    <div class="col-md-4">
+                        <select id="pages" name="pages" data-bind="options: pages, optionsText: 'name', optionsValue: 'id', value: pageId" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback" data-bind="visible: menuItemType() == 2">
+                    <label for="link" class="col-md-2 control-label">Link</label>
+                    <div class="col-md-4">
+                        <input id="link" name="link" type="text" data-bind="value: link" class="form-control" placeholder="Enter Link">
+                        <i class="form-control-feedback glyphicon"></i>
+                    </div>
+                    <div class="col-md-6 help-block">
+                        <label id="link-error" for="url" class="text-danger" style="display: none;"></label>
+                    </div>
+                </div>
+
+                <!-- ko ifnot: menuItemLocalisations().length > 0 -->
+                <div data-bind="template: { name: 'menuItemDefaultLocalisation-template' }"></div>
+                <!-- /ko -->
+                <!-- ko if: menuItemLocalisations().length > 0 -->
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#Default" data-toggle="tab">Default</a>
+                    </li>
+                    <!-- ko foreach: menuItemLocalisations -->
+                    <li>
+                        <a data-bind="text: languageName, attr: { href: '#' + languageName() }" data-toggle="tab"></a>
+                    </li>
+                    <!-- /ko -->
+                </ul>
+                <div class="tab-content" style="margin: 25px 0 35px;">
+                    <div id="Default" data-bind="template: { name: 'menuItemDefaultLocalisation-template' }" class="tab-pane active"></div>
+                    <!-- ko foreach: menuItemLocalisations -->
+                    <div data-bind="attr: { id: languageName }, template: { name: 'menuItemLocalisation-template' }" class="tab-pane"></div>
+                    <!-- /ko -->
+                </div>
+                <!-- /ko -->
+
+            </div>
+            <div id="Permissions" class="tab-pane">
+                <div class="form-group has-feedback">
+                    <div class="col-md-12">
+                        <table class="table table-bordered" style="width: auto;" data-bind="visible: menuItemType() != 1">
+                            <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th class="text-center">View</th>
+                            </tr>
+                            </thead>
+                            <tbody data-bind="foreach: menuItemPermissions()">
+                            <tr>
+                                <td data-bind="text: roleName"></td>
+                                <td class="text-center">
+                                    <input type="hidden" data-bind="value: roleId"/>
+                                    <input type="checkbox" data-bind="checked: selected" />
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div data-bind="visible: menuItemType() == 1">
+                            Permissions will be inhrited from the selected page.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /ko -->
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-12">
                 <input id="save" type="submit" class="btn btn-primary" value="Save" title="Save" />
                 <button id="cancel" data-bind="click: cancel" class="btn btn-default" title="Cancel">Cancel</button>
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <span id="savingMenuItem" style="display:none;">
+            <div class="col-md-12">
+                <span id="savingMenuItem" style="display: none;">
                     Saving...
                 </span>
             </div>
@@ -85,7 +126,7 @@
                 <i class="form-control-feedback glyphicon"></i>
             </div>
             <div class="col-md-6 help-block">
-                <label id="text-error" for="text" class="text-danger" style="display:none;"></label>
+                <label id="text-error" for="text" class="text-danger" style="display: none;"></label>
             </div>
         </div>
         <div class="form-group has-feedback">
@@ -95,7 +136,7 @@
                 <i class="form-control-feedback glyphicon"></i>
             </div>
             <div class="col-md-6 help-block">
-                <label id="title-error" for="title" class="text-danger" style="display:none;"></label>
+                <label id="title-error" for="title" class="text-danger" style="display: none;"></label>
             </div>
         </div>
     </script>
@@ -108,7 +149,7 @@
                 <i class="form-control-feedback glyphicon"></i>
             </div>
             <div class="col-md-6 help-block">
-                <label data-bind="attr: { id: 'text-error-' + languageName(), for: 'text-' + languageName() }" class="text-danger"  style="display:none;"></label>
+                <label data-bind="attr: { id: 'text-error-' + languageName(), for: 'text-' + languageName() }" class="text-danger" style="display: none;"></label>
             </div>
         </div>
         <div class="form-group has-feedback">
@@ -118,7 +159,7 @@
                 <i class="form-control-feedback glyphicon"></i>
             </div>
             <div class="col-md-6 help-block">
-                <label data-bind="attr: { id: 'title-error-' + languageName(), for: 'title-' + languageName() }" class="text-danger" style="display:none;"></label>
+                <label data-bind="attr: { id: 'title-error-' + languageName(), for: 'title-' + languageName() }" class="text-danger" style="display: none;"></label>
             </div>
         </div>
     </script>

@@ -39,7 +39,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
                 MenuItemId = Guid.NewGuid(),
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>()
+                MenuItemLocalisations = new List<MenuItemLocalisation>()
             };
 
             var menuRepositoryMock = new Mock<IMenuRepository>();
@@ -70,15 +70,15 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
                 Link = "link",
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+                MenuItemLocalisations = new List<MenuItemLocalisation>
                 {
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 1",
                         Title = "Title 1"
                     },
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 2",
@@ -97,7 +97,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
                 MenuItemId = menuItemId,
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>()
+                MenuItemLocalisations = new List<MenuItemLocalisation>()
             };
 
             var menuRepositoryMock = new Mock<IMenuRepository>();

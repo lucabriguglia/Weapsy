@@ -45,9 +45,9 @@ namespace Weapsy.Tests.Factories
                 Link = "link",
                 Text = itemText,
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+                MenuItemLocalisations = new List<MenuItemLocalisation>
                 {
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = languageId,
                         Text = itemTextLocalised,

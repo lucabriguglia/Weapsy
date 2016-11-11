@@ -12,8 +12,8 @@ namespace Weapsy.Reporting.Menus
         public string Link { get; set; }
         public string Text { get; set; }
         public string Title { get; set; }
-
         public List<MenuItemLocalisation> MenuItemLocalisations { get; set; } = new List<MenuItemLocalisation>();
+        public List<MenuItemPermission> MenuItemPermissions { get; set; } = new List<MenuItemPermission>();
 
         public class MenuItemLocalisation
         {
@@ -22,6 +22,14 @@ namespace Weapsy.Reporting.Menus
             public string LanguageName { get; set; }
             public string Text { get; set; }
             public string Title { get; set; }
+        }
+
+        public class MenuItemPermission
+        {
+            public Guid MenuItemId { get; set; }
+            public string RoleId { get; set; }
+            public string RoleName { get; set; }
+            public bool Selected { get; set; }
         }
     }
 }

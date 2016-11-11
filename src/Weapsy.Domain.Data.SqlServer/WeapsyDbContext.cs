@@ -48,6 +48,10 @@ namespace Weapsy.Domain.Data.SqlServer
                 .ToTable("MenuItemLocalisation")
                 .HasKey(x => new { x.MenuItemId, x.LanguageId });
 
+            builder.Entity<MenuItemPermission>()
+                .ToTable("MenuItemPermission")
+                .HasKey(x => new { x.MenuItemId, x.RoleId });
+
             builder.Entity<Module>()
                 .ToTable("Module");
 
@@ -103,5 +107,6 @@ namespace Weapsy.Domain.Data.SqlServer
         public DbSet<Menu> Menus { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }
         public DbSet<MenuItemLocalisation> MenuItemLocalisations { get; set; }
+        public DbSet<MenuItemPermission> MenuItemPermissions { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using Weapsy.Domain.Menus.Commands;
 
 namespace Weapsy.Domain.Menus.Validators
 {
-    public class MenuItemLocalisationValidator : AbstractValidator<MenuItemDetails.MenuItemLocalisation>
+    public class MenuItemLocalisationValidator : AbstractValidator<MenuItemLocalisation>
     {
         private readonly ILanguageRules _languageRules;
 

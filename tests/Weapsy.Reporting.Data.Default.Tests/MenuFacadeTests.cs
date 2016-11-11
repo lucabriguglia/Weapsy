@@ -8,6 +8,7 @@ using Weapsy.Domain.Menus;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Data.Default.Menus;
 using Weapsy.Reporting.Menus;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Reporting.Data.Default.Tests
 {
@@ -33,7 +34,14 @@ namespace Weapsy.Reporting.Data.Default.Tests
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<MenuAdminModel>(It.IsAny<Menu>())).Returns(new MenuAdminModel());
 
-            _sut = new MenuFacade(menuRepositoryMock.Object, pageRepositoryMock.Object, languageRepositoryMock.Object, cacheManagerMock.Object, mapperMock.Object);
+            var roleServiceMock = new Mock<IRoleService>();
+
+            _sut = new MenuFacade(menuRepositoryMock.Object, 
+                pageRepositoryMock.Object, 
+                languageRepositoryMock.Object, 
+                cacheManagerMock.Object, 
+                mapperMock.Object,
+                roleServiceMock.Object);
         }
     }
 }

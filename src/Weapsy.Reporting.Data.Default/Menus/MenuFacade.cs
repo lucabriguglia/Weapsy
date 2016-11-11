@@ -8,6 +8,7 @@ using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Menus;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Reporting.Data.Default.Menus
 {
@@ -18,18 +19,21 @@ namespace Weapsy.Reporting.Data.Default.Menus
         private readonly ILanguageRepository _languageRepository;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
+        private readonly IRoleService _roleService;
 
         public MenuFacade(IMenuRepository menuRepository, 
             IPageRepository pageRepository, 
             ILanguageRepository languageRepository, 
             ICacheManager cacheManager, 
-            IMapper mapper)
+            IMapper mapper, 
+            IRoleService roleService)
         {
             _menuRepository = menuRepository;
             _pageRepository = pageRepository;
             _languageRepository = languageRepository;
             _cacheManager = cacheManager;
             _mapper = mapper;
+            _roleService = roleService;
         }
 
         public async Task<MenuViewModel> GetByNameAsync(Guid siteId, string name, Guid languageId = new Guid())
@@ -60,8 +64,12 @@ namespace Weapsy.Reporting.Data.Default.Menus
         {
             var result = new List<MenuViewModel.MenuItem>();
 
-            foreach (var menuItem in source.Where(x => x.ParentId == parentId).OrderBy(x => x.SortOrder).ToList())
+            var menuItems = source as IList<MenuItem> ?? source.ToList();
+
+            foreach (var menuItem in menuItems.Where(x => x.ParentId == parentId).OrderBy(x => x.SortOrder).ToList())
             {
+                var menuItemRoleIds = menuItem.MenuItemPermissions.Select(x => x.RoleId);
+
                 var text = menuItem.Text;
                 var title = menuItem.Title;
                 var url = "#";
@@ -92,20 +100,25 @@ namespace Weapsy.Reporting.Data.Default.Menus
                         if (pageLocalisation != null)
                             url = !string.IsNullOrEmpty(pageLocalisation.Url) ? $"/{language.Url}/{pageLocalisation.Url}" : url;
                     }
+
+                    menuItemRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
                 }
                 else if (menuItem.MenuItemType == MenuItemType.Link && !string.IsNullOrWhiteSpace(menuItem.Link))
                 {
                     url = menuItem.Link;
                 }
 
+                var menuItemRoles = _roleService.GetRolesFromIds(menuItemRoleIds);
+
                 var menuItemModel = new MenuViewModel.MenuItem
                 {
                     Text = text,
                     Title = title,
-                    Url = url
+                    Url = url,
+                    ViewRoles = menuItemRoles.Select(x => x.Name)
                 };
 
-                menuItemModel.Children.AddRange(PopulateMenuItems(source, menuItem.Id, language));
+                menuItemModel.Children.AddRange(PopulateMenuItems(menuItems, menuItem.Id, language));
 
                 result.Add(menuItemModel);
             }
@@ -152,10 +165,24 @@ namespace Weapsy.Reporting.Data.Default.Menus
 
                 result.MenuItemLocalisations.Add(new MenuItemAdminModel.MenuItemLocalisation
                 {
+                    MenuItemId = menuItem.Id,
                     LanguageId = language.Id,
                     LanguageName = language.Name,
                     Text = text,
                     Title = title
+                });
+            }
+
+            foreach (var role in _roleService.GetAllRoles())
+            {
+                bool selected = menuItem.MenuItemPermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
+
+                result.MenuItemPermissions.Add(new MenuItemAdminModel.MenuItemPermission
+                {
+                    MenuItemId = menuItem.Id,
+                    RoleId = role.Id,
+                    RoleName = role.Name,
+                    Selected = selected
                 });
             }
 

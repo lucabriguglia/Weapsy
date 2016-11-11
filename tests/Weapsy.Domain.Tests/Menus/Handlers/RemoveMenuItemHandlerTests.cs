@@ -56,15 +56,15 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
                 Link = "link",
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+                MenuItemLocalisations = new List<MenuItemLocalisation>
                 {
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 1",
                         Title = "Title 1"
                     },
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 2",

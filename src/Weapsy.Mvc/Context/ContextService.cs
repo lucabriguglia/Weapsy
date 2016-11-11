@@ -26,29 +26,10 @@ namespace Weapsy.Mvc.Context
             _themeFacade = themeFacade;
         }
 
-        private const string ContextInfoKey = "Weapsy|ContextInfo";
         private const string SiteInfoKey = "Weapsy|SiteInfo";
         private const string LanguageInfoKey = "Weapsy|LanguageInfo";
         private const string ThemeInfoKey = "Weapsy|ThemeInfo";
         private const string UserInfoKey = "Weapsy|UserInfo";
-
-        public ContextInfo GetCurrentContextInfo()
-        {
-            return GetInfo(SiteInfoKey, () =>
-            {
-                var site = _siteFacade.GetSiteInfo("Default").Result;
-                var language = new LanguageInfo
-                {
-                    Id = new Guid()
-                };
-
-                return new ContextInfo
-                {
-                    Site = site,
-                    Language = language
-                };
-            });
-        }
 
         public SiteInfo GetCurrentSiteInfo()
         {

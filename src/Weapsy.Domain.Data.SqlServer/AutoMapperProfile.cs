@@ -13,6 +13,7 @@ using LanguageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Language;
 using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
 using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
 using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;
+using MenuItemPermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemPermission;
 using ModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Module;
 using ModuleTypeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.ModuleType;
 using PageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Page;
@@ -45,6 +46,9 @@ namespace Weapsy.Domain.Data.SqlServer
 
             CreateMap<MenuItemLocalisation, MenuItemLocalisationDbEntity>();
             CreateMap<MenuItemLocalisationDbEntity, MenuItemLocalisation>().ConstructUsing(x => new MenuItemLocalisation());
+
+            CreateMap<MenuItemPermission, MenuItemPermissionDbEntity>();
+            CreateMap<MenuItemPermissionDbEntity, MenuItemPermission>().ConstructUsing(x => new MenuItemPermission());
 
             CreateMap<Module, ModuleDbEntity>();
             CreateMap<ModuleDbEntity, Module>().ConstructUsing(x => new Module());

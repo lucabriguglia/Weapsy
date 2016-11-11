@@ -30,15 +30,15 @@ namespace Weapsy.Domain.Tests.Menus.Validators
                 Link = "link",
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+                MenuItemLocalisations = new List<MenuItemLocalisation>
                 {
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 1",
                         Title = "Title 1"
                     },
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 2",
@@ -49,7 +49,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
 
             var pageRulesMock = new Mock<IPageRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
@@ -70,12 +70,12 @@ namespace Weapsy.Domain.Tests.Menus.Validators
                 Link = "link",
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>()
+                MenuItemLocalisations = new List<MenuItemLocalisation>()
             };
 
             var pageRulesMock = new Mock<IPageRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
@@ -96,14 +96,14 @@ namespace Weapsy.Domain.Tests.Menus.Validators
                 Link = "link",
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>()
+                MenuItemLocalisations = new List<MenuItemLocalisation>()
             };
 
             var pageRulesMock = new Mock<IPageRules>();
             pageRulesMock.Setup(x => x.DoesPageExist(updateMenuItem.SiteId, updateMenuItem.PageId)).Returns(false);
 
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
@@ -124,12 +124,12 @@ namespace Weapsy.Domain.Tests.Menus.Validators
                 Link = string.Empty,
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>()
+                MenuItemLocalisations = new List<MenuItemLocalisation>()
             };
 
             var pageRulesMock = new Mock<IPageRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
@@ -153,12 +153,12 @@ namespace Weapsy.Domain.Tests.Menus.Validators
                 Link = link,
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>()
+                MenuItemLocalisations = new List<MenuItemLocalisation>()
             };
 
             var pageRulesMock = new Mock<IPageRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
@@ -182,12 +182,12 @@ namespace Weapsy.Domain.Tests.Menus.Validators
                 Link = "Link",
                 Text = text,
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>()
+                MenuItemLocalisations = new List<MenuItemLocalisation>()
             };
 
             var pageRulesMock = new Mock<IPageRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
@@ -211,12 +211,12 @@ namespace Weapsy.Domain.Tests.Menus.Validators
                 Link = "Link",
                 Text = "Text",
                 Title = title,
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>()
+                MenuItemLocalisations = new List<MenuItemLocalisation>()
             };
 
             var pageRulesMock = new Mock<IPageRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
@@ -230,7 +230,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var pageRulesMock = new Mock<IPageRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
             languageRulesMock.Setup(x => x.AreAllSupportedLanguagesIncluded(It.IsAny<Guid>(), It.IsAny<IEnumerable<Guid>>())).Returns(false);
-            var localisationValidatorMock = new Mock<IValidator<MenuItemDetails.MenuItemLocalisation>>();
+            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
             var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);

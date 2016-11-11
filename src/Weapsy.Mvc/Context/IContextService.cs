@@ -8,7 +8,6 @@ namespace Weapsy.Mvc.Context
 {
     public interface IContextService
     {
-        ContextInfo GetCurrentContextInfo();
         SiteInfo GetCurrentSiteInfo();
         void SetLanguageInfo(LanguageInfo languageInfo);
         LanguageInfo GetCurrentLanguageInfo();

@@ -4,7 +4,7 @@ using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Menus.Validators;
 using Weapsy.Domain.Languages.Rules;
-using Weapsy.Domain.Menus.Commands;
+using Weapsy.Domain.Menus;
 
 namespace Weapsy.Domain.Tests.Menus.Validators
 {
@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_when_language_id_is_empty()
         {
-            var command = new MenuItemDetails.MenuItemLocalisation
+            var command = new MenuItemLocalisation
             {
                 LanguageId = Guid.Empty,
                 Text = "Text",
@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_when_language_does_not_exist()
         {
-            var localisation = new MenuItemDetails.MenuItemLocalisation
+            var localisation = new MenuItemLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Text = "Text",
@@ -51,7 +51,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var text = string.Empty;
             for (int i = 0; i < 101; i++) text += i;
 
-            var command = new MenuItemDetails.MenuItemLocalisation
+            var command = new MenuItemLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Text = text,
@@ -70,7 +70,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var title = string.Empty;
             for (int i = 0; i < 101; i++) title += i;
 
-            var command = new MenuItemDetails.MenuItemLocalisation
+            var command = new MenuItemLocalisation
             {
                 LanguageId = Guid.NewGuid(),
                 Text = "Text",

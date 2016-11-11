@@ -138,20 +138,5 @@ namespace Weapsy.Domain.Tests.Pages
         {
             Assert.AreEqual(_pageModule, _event.PageModule);
         }
-
-        [Test]
-        public void Should_throw_exception_if_language_is_already_added_to_page_module_localisations()
-        {
-            var languageId = Guid.NewGuid();
-            _command.PageModuleLocalisations.Add(new PageModuleLocalisation
-            {
-                LanguageId = languageId
-            });
-            _command.PageModuleLocalisations.Add(new PageModuleLocalisation
-            {
-                LanguageId = languageId
-            });
-            Assert.Throws<Exception>(() => _page.UpdateModule(_command, _validatorMock.Object));
-        }
     }
 }

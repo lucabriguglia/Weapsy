@@ -80,29 +80,6 @@ namespace Weapsy.Services.Identity
             return model;
         }
 
-        public bool IsUserAuthorized(ClaimsPrincipal user, IEnumerable<string> roles)
-        {
-            if (user == null || roles == null)
-                return false;
-
-            foreach (var role in roles)
-            {
-                if (role == DefaultRoles.Everyone.ToString())
-                    return true;
-
-                if (role == DefaultRoles.Registered.ToString() && user.Identity.IsAuthenticated)
-                    return true;
-
-                if (role == DefaultRoles.Anonymous.ToString() && !user.Identity.IsAuthenticated)
-                    return true;
-
-                if (user.IsInRole(role))
-                    return true;
-            }
-
-            return false;
-        }
-
         public async Task<IList<string>> GetDefaultPageViewPermissionRoleIds()
         {
             var result = new List<string>();

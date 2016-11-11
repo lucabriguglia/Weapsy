@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Menus.Commands;
+using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Domain.Menus
 {
@@ -20,9 +21,7 @@ namespace Weapsy.Domain.Menus
         public ICollection<MenuItemLocalisation> MenuItemLocalisations { get; private set; } = new List<MenuItemLocalisation>();
         public ICollection<MenuItemPermission> MenuItemPermissions { get; private set; } = new List<MenuItemPermission>();
 
-        public MenuItem()
-        {
-        }
+        public MenuItem() {}
 
         public MenuItem(AddMenuItem cmd, int sortOrder) : base(cmd.MenuItemId)
         {
@@ -35,8 +34,8 @@ namespace Weapsy.Domain.Menus
             Title = cmd.Title;
             Status = MenuItemStatus.Active;
 
-            foreach (var item in cmd.MenuItemLocalisations)
-                AddLocalisation(item.LanguageId, item.Text, item.Title);
+            SetLocalisations(cmd.MenuItemLocalisations);
+            SetPermisisons(cmd.MenuItemPermissions);
         }
 
         public void Update(UpdateMenuItem cmd)
@@ -47,31 +46,28 @@ namespace Weapsy.Domain.Menus
             Text = cmd.Text;
             Title = cmd.Title;
 
+            SetLocalisations(cmd.MenuItemLocalisations);
+            SetPermisisons(cmd.MenuItemPermissions);
+        }
+
+        private void SetLocalisations(IEnumerable<MenuItemLocalisation> localisations)
+        {
             MenuItemLocalisations.Clear();
 
-            foreach (var item in cmd.MenuItemLocalisations)
-                AddLocalisation(item.LanguageId, item.Text, item.Title);
+            foreach (var item in localisations)
+            {
+                if (MenuItemLocalisations.FirstOrDefault(x => x.LanguageId == item.LanguageId) != null)
+                    continue;
+
+                MenuItemLocalisations.Add(new MenuItemLocalisation(Id, item.LanguageId, item.Text, item.Title));
+            }
         }
 
-        private void AddLocalisation(Guid languageId, string text, string title)
-        {
-            if (MenuItemLocalisations.FirstOrDefault(x => x.LanguageId == languageId) != null)
-                throw new Exception("Language already added.");
-
-            MenuItemLocalisations.Add(new MenuItemLocalisation(Id, languageId, text, title));
-        }
-
-        public void Reorder(Guid parentId, int sortOrder)
-        {
-            ParentId = parentId;
-            SortOrder = sortOrder;
-        }
-
-        public void SetPermisisons(SetMenuItemPermissions cmd)
+        public void SetPermisisons(IEnumerable<MenuItemPermission> permissions)
         {
             MenuItemPermissions.Clear();
 
-            foreach (var permission in cmd.MenuItemPermissions)
+            foreach (var permission in permissions)
             {
                 if (MenuItemPermissions.FirstOrDefault(x => x.RoleId == permission.RoleId) != null)
                     continue;
@@ -82,6 +78,19 @@ namespace Weapsy.Domain.Menus
                     RoleId = permission.RoleId
                 });
             }
+
+            if (!MenuItemPermissions.Any())
+                MenuItemPermissions.Add(new MenuItemPermission
+                {
+                    MenuItemId = Id,
+                    RoleId = ((int)DefaultRoles.Everyone).ToString()
+                });
+        }
+
+        public void Reorder(Guid parentId, int sortOrder)
+        {
+            ParentId = parentId;
+            SortOrder = sortOrder;
         }
 
         public void Delete()

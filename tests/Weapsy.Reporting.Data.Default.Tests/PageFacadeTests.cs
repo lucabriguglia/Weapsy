@@ -36,20 +36,16 @@ namespace Weapsy.Reporting.Data.Default.Tests
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<PageAdminModel>(It.IsAny<Page>())).Returns(new PageAdminModel());
 
-            var roleManagerMock = new Mock<RoleManager<IdentityRole>>();
             var roleServiceMock = new Mock<IRoleService>();
-            var pageViewFactoryMock = new Mock<IPageInfoFactory>();
+            var pageInfoFactoryMock = new Mock<IPageInfoFactory>();
             var pageAdminFactoryMock = new Mock<IPageAdminFactory>();
 
             _sut = new PageFacade(pageRepositoryMock.Object, 
                 languageRepositoryMock.Object,
-                moduleRepositoryMock.Object,
-                moduleTypeRepositoryMock.Object,
                 cacheManagerMock.Object, 
                 mapperMock.Object,
-                roleManagerMock.Object,
                 roleServiceMock.Object,
-                pageViewFactoryMock.Object,
+                pageInfoFactoryMock.Object,
                 pageAdminFactoryMock.Object);
         }
     }

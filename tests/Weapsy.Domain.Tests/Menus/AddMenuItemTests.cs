@@ -36,15 +36,15 @@ namespace Weapsy.Domain.Tests.Menus
                 Link = "link",
                 Text = "Text",
                 Title = "Title",
-                MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+                MenuItemLocalisations = new List<MenuItemLocalisation>
                 {
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 1",
                         Title = "Title 1"
                     },
-                    new MenuItemDetails.MenuItemLocalisation
+                    new MenuItemLocalisation
                     {
                         LanguageId = Guid.NewGuid(),
                         Text = "Text 2",
@@ -201,15 +201,15 @@ namespace Weapsy.Domain.Tests.Menus
         public void Should_throw_exception_if_menu_item_localisation_already_exists()
         {
             var languageId = Guid.NewGuid();
-            _command.MenuItemLocalisations = new List<MenuItemDetails.MenuItemLocalisation>
+            _command.MenuItemLocalisations = new List<MenuItemLocalisation>
             {
-                new MenuItemDetails.MenuItemLocalisation
+                new MenuItemLocalisation
                 {
                     LanguageId = languageId,
                     Text = "Text 1",
                     Title = "Title 1"
                 },
-                new MenuItemDetails.MenuItemLocalisation
+                new MenuItemLocalisation
                 {
                     LanguageId = languageId,
                     Text = "Text 2",

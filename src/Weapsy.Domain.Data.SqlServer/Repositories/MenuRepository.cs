@@ -7,6 +7,7 @@ using Weapsy.Domain.Menus;
 using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
 using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
 using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;
+using MenuItemPermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemPermission;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
@@ -113,6 +114,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                 {
                     context.Entry(menuItemDbEntity).State = EntityState.Modified;
                     UpdateMenuItemLocalisations(context, menuItemDbEntity.MenuItemLocalisations);
+                    UpdateMenuItemPermissions(context, currentMenuItem.Id, menuItemDbEntity.MenuItemPermissions);
                 }
             }
         }
@@ -136,6 +138,34 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             }
         }
 
+        private void UpdateMenuItemPermissions(WeapsyDbContext context, Guid menuItemId, IEnumerable<MenuItemPermissionDbEntity> menuItemPermissions)
+        {
+            var currentMenuItemPermissions = context.Set<MenuItemPermissionDbEntity>()
+                .AsNoTracking()
+                .Where(x => x.MenuItemId == menuItemId)
+                .ToList();
+
+            foreach (var currentMenuItemPermission in currentMenuItemPermissions)
+            {
+                var menuItemPermission = menuItemPermissions
+                    .FirstOrDefault(x => x.MenuItemId == currentMenuItemPermission.MenuItemId
+                    && x.RoleId == currentMenuItemPermission.RoleId);
+
+                if (menuItemPermission == null)
+                    context.Remove(currentMenuItemPermission);
+            }
+
+            foreach (var menuItemPermission in menuItemPermissions)
+            {
+                var currentPageModulePermission = currentMenuItemPermissions
+                    .FirstOrDefault(x => x.MenuItemId == menuItemPermission.MenuItemId
+                    && x.RoleId == menuItemPermission.RoleId);
+
+                if (currentPageModulePermission == null)
+                    context.Add(menuItemPermission);
+            }
+        }
+
         private void LoadMenuItems(WeapsyDbContext context, MenuDbEntity menu)
         {
             if (menu == null)
@@ -143,6 +173,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
             menu.MenuItems = context.Set<MenuItemDbEntity>()
                 .Include(x => x.MenuItemLocalisations)
+                .Include(x => x.MenuItemPermissions)
                 .Where(x => x.MenuId == menu.Id && x.Status != MenuItemStatus.Deleted)
                 .ToList();
         }

@@ -11,7 +11,7 @@ namespace Weapsy.Domain.Menus.Validators
         public AddMenuItemValidator(ISiteRules siteRules, 
             IPageRules pageRules, 
             ILanguageRules languageRules, 
-            IValidator<MenuItemDetails.MenuItemLocalisation> localisationValidator)
+            IValidator<MenuItemLocalisation> localisationValidator)
             : base(siteRules, pageRules, languageRules, localisationValidator)
         {
             RuleFor(c => c.MenuItemId)

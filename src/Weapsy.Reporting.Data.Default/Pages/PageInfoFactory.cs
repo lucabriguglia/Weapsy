@@ -15,24 +15,18 @@ namespace Weapsy.Reporting.Data.Default.Pages
     public class PageInfoFactory : IPageInfoFactory
     {
         private readonly IPageRepository _pageRepository;
-        private readonly ILanguageRepository _languageRepository;
         private readonly IModuleRepository _moduleRepository;
         private readonly IModuleTypeRepository _moduleTypeRepository;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IRoleService _roleService;
 
         public PageInfoFactory(IPageRepository pageRepository,
-            ILanguageRepository languageRepository,
             IModuleRepository moduleRepository,
             IModuleTypeRepository moduleTypeRepository,
-            RoleManager<IdentityRole> roleManager,
             IRoleService roleService)
         {
             _pageRepository = pageRepository;
-            _languageRepository = languageRepository;
             _moduleRepository = moduleRepository;
             _moduleTypeRepository = moduleTypeRepository;
-            _roleManager = roleManager;
             _roleService = roleService;
         }
 

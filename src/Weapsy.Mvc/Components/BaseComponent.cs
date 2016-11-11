@@ -14,7 +14,7 @@ namespace Weapsy.Mvc.Components
             _contextService = contextService;
         }
 
-        public SiteInfo SiteInfo => _contextService.GetCurrentContextInfo().Site;
+        public SiteInfo SiteInfo => _contextService.GetCurrentSiteInfo();
         public Guid SiteId => SiteInfo.Id;
     }
 }

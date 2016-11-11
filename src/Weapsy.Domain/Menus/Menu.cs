@@ -175,7 +175,7 @@ namespace Weapsy.Domain.Menus
             if (menuItem == null)
                 throw new Exception("Menu item not found.");
 
-            menuItem.SetPermisisons(cmd);
+            menuItem.SetPermisisons(cmd.MenuItemPermissions);
 
             Events.Add(new MenuItemPermissionsSet
             {

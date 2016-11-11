@@ -18,6 +18,7 @@ namespace Weapsy.Domain.Data.SqlServer.Entities
         public MenuItemStatus Status { get; set; }
 
         public ICollection<MenuItemLocalisation> MenuItemLocalisations { get; set; } = new HashSet<MenuItemLocalisation>();
+        public ICollection<MenuItemPermission> MenuItemPermissions { get; set; } = new HashSet<MenuItemPermission>();
 
         public virtual Menu Menu { get; set; }
         public virtual Page Page { get; set; }
