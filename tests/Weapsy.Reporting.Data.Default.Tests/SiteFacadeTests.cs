@@ -5,6 +5,8 @@ using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Sites;
 using Weapsy.Reporting.Data.Default.Sites;
+using Weapsy.Reporting.Languages;
+using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
 
 namespace Weapsy.Reporting.Data.Default.Tests
@@ -21,13 +23,18 @@ namespace Weapsy.Reporting.Data.Default.Tests
             _siteId = Guid.NewGuid();
 
             var siteRepositoryMock = new Mock<ISiteRepository>();
-            var languageRepositoryMock = new Mock<ILanguageRepository>();
+            var languageFacadeMock = new Mock<ILanguageFacade>();
+            var pageFacadeMock = new Mock<IPageFacade>();
             var cacheManagerMock = new Mock<ICacheManager>();
 
             var mapperMock = new Mock<AutoMapper.IMapper>();
             mapperMock.Setup(x => x.Map<SiteAdminModel>(It.IsAny<Site>())).Returns(new SiteAdminModel());
 
-            _sut = new SiteFacade(siteRepositoryMock.Object, languageRepositoryMock.Object, cacheManagerMock.Object, mapperMock.Object);
+            _sut = new SiteFacade(siteRepositoryMock.Object, 
+                languageFacadeMock.Object, 
+                pageFacadeMock.Object, 
+                cacheManagerMock.Object, 
+                mapperMock.Object);
         }
     }
 }
