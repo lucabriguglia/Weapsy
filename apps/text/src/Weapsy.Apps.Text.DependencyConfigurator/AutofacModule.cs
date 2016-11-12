@@ -1,6 +1,6 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using FluentValidation;
-using System.Reflection;
 using Weapsy.Apps.Text.Data.SqlServer;
 using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Domain.Data.SqlServer;
@@ -8,10 +8,9 @@ using Weapsy.Apps.Text.Domain.Handlers;
 using Weapsy.Apps.Text.Domain.Rules;
 using Weapsy.Apps.Text.Domain.Validators;
 using Weapsy.Apps.Text.Reporting;
-using Weapsy.Apps.Text.Reporting.Data.Default;
 using Weapsy.Infrastructure.Domain;
 
-namespace Weapsy.Apps.Text
+namespace Weapsy.Apps.Text.DependencyConfigurator
 {
     public class AutofacModule : Autofac.Module
     {

@@ -2,6 +2,6 @@
 {
     public static class CacheKeys
     {
-        public const string TextModuleCacheKey = "TextModule|ModuleId:{0}";
+        public const string TextModuleCacheKey = "TextModule|ModuleId:{0}|LanguageId:{1}";
     }
 }

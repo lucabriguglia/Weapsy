@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using Weapsy.Apps.Text.Data.SqlServer;
 using Weapsy.Apps.Text.Domain;
-using Weapsy.Infrastructure.Caching;
+using Weapsy.Apps.Text.Reporting;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Modules;
+using Weapsy.Infrastructure.Caching;
 
-namespace Weapsy.Apps.Text.Reporting.Data.Default
+namespace Weapsy.Apps.Text.Data.SqlServer
 {
     public class TextModuleFacade : ITextModuleFacade
     {
@@ -26,9 +26,9 @@ namespace Weapsy.Apps.Text.Reporting.Data.Default
             _cacheManager = cacheManager;
         }
 
-        public string GetContent(Guid moduleId)
+        public string GetContent(Guid moduleId, Guid languageId = new Guid())
         {
-            return _cacheManager.Get(string.Format(CacheKeys.TextModuleCacheKey, moduleId), () =>
+            return _cacheManager.Get(string.Format(CacheKeys.TextModuleCacheKey, moduleId, languageId), () =>
             {
                 var textModule = _textRepository.GetByModuleId(moduleId);
 
@@ -37,7 +37,18 @@ namespace Weapsy.Apps.Text.Reporting.Data.Default
 
                 var publishedVersion = textModule.TextVersions.FirstOrDefault(x => x.Status == TextVersionStatus.Published);
 
-                return publishedVersion != null ? publishedVersion.Content : string.Empty;
+                var content = publishedVersion != null ? publishedVersion.Content : string.Empty;
+
+                if (languageId != Guid.Empty)
+                {
+                    var localisedVersion =
+                        publishedVersion.TextLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+
+                    if (localisedVersion != null && !string.IsNullOrEmpty(localisedVersion.Content))
+                        content = localisedVersion.Content;
+                }
+
+                return content;
             });
         }
 

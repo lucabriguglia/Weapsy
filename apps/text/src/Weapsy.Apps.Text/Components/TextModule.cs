@@ -30,7 +30,7 @@ namespace Weapsy.Apps.Text.Components
 
         public async Task<IViewComponentResult> InvokeAsync(ModuleModel model)
         {
-            var content = _textModuleFacade.GetContent(model.Id);
+            var content = _textModuleFacade.GetContent(model.Id, _contextService.GetCurrentLanguageInfo().Id);
 
             if (content == null)
             {

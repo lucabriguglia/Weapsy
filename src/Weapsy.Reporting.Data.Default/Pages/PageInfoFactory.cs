@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Weapsy.Domain.Languages;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Pages;
-using Microsoft.AspNetCore.Identity;
 using Weapsy.Services.Identity;
 
 namespace Weapsy.Reporting.Data.Default.Pages
