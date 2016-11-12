@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Events;
 using System;
+using Weapsy.Tests.Factories;
 
 namespace Weapsy.Domain.Tests.Sites
 {
@@ -14,6 +15,7 @@ namespace Weapsy.Domain.Tests.Sites
         {
             var site = new Site();
 
+            site.Close();
             site.Reopen();
             
             Assert.Throws<Exception>(() => site.Reopen());
@@ -34,6 +36,7 @@ namespace Weapsy.Domain.Tests.Sites
         {
             var site = new Site();
 
+            site.Close();
             site.Reopen();
 
             Assert.AreEqual(true, site.Status == SiteStatus.Active);
@@ -44,6 +47,7 @@ namespace Weapsy.Domain.Tests.Sites
         {
             var site = new Site();
 
+            site.Close();
             site.Reopen();
 
             var @event = site.Events.OfType<SiteReopened>().SingleOrDefault();
@@ -54,13 +58,27 @@ namespace Weapsy.Domain.Tests.Sites
         [Test]
         public void Should_set_id_in_site_reopened_event()
         {
-            var site = new Site();
+            var site = SiteFactory.Site();
 
+            site.Close();
             site.Reopen();
 
             var @event = site.Events.OfType<SiteReopened>().SingleOrDefault();
 
             Assert.AreEqual(site.Id, @event.AggregateRootId);
+        }
+
+        [Test]
+        public void Should_set_name_in_site_reopened_event()
+        {
+            var site = SiteFactory.Site();
+
+            site.Close();
+            site.Reopen();
+
+            var @event = site.Events.OfType<SiteReopened>().SingleOrDefault();
+
+            Assert.AreEqual(site.Name, @event.Name);
         }
     }
 }

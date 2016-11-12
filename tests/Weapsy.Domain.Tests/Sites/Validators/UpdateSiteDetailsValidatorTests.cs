@@ -17,6 +17,29 @@ namespace Weapsy.Domain.Tests.Sites.Validators
     public class UpdateSiteDetailsValidatorTests
     {
         [Test]
+        public void Should_have_error_when_home_page_does_not_exist()
+        {
+            var siteId = Guid.NewGuid();
+            var homePageId = Guid.NewGuid();
+
+            var siteRulesMock = new Mock<ISiteRules>();
+            var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
+            pageRulesMock.Setup(x => x.DoesPageExist(siteId, homePageId)).Returns(false);
+            var localisationValidatorMock = new Mock<IValidator<SiteLocalisation>>();
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object,
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
+
+            validator.ShouldHaveValidationErrorFor(x => x.HomePageId, new UpdateSiteDetails
+            {
+                SiteId = siteId,
+                HomePageId = homePageId
+            });
+        }
+
+        [Test]
         [Ignore("Feature not implented yet.")]
         public void Should_have_error_when_site_url_is_empty()
         {
@@ -85,7 +108,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
 
             validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetails
             {
-                SiteId = Guid.NewGuid(),
+                SiteId = siteId,
                 Url = url,
                 Title = "Title",
                 MetaDescription = "Meta Description",
@@ -122,7 +145,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         }
 
         [Test]
-        public void Should_have_error_when_site_head_title_is_too_long()
+        public void Should_have_error_when_site_title_is_too_long()
         {
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();

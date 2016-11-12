@@ -111,6 +111,7 @@ namespace Weapsy.Domain.Sites
 
             AddEvent(new SiteClosed
             {
+                Name = Name,
                 AggregateRootId = Id
             });
         }
@@ -129,6 +130,7 @@ namespace Weapsy.Domain.Sites
 
             AddEvent(new SiteReopened
             {
+                Name = Name,
                 AggregateRootId = Id
             });
         }
@@ -142,6 +144,7 @@ namespace Weapsy.Domain.Sites
 
             AddEvent(new SiteDeleted
             {
+                Name = Name,
                 AggregateRootId = Id
             });
         }

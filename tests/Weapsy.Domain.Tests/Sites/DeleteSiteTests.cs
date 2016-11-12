@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Events;
 using System;
+using Weapsy.Tests.Factories;
 
 namespace Weapsy.Domain.Tests.Sites
 {
@@ -44,13 +45,25 @@ namespace Weapsy.Domain.Tests.Sites
         [Test]
         public void Should_set_id_in_site_deleted_event()
         {
-            var site = new Site();
+            var site = SiteFactory.Site();
 
             site.Delete();
 
             var @event = site.Events.OfType<SiteDeleted>().SingleOrDefault();
 
             Assert.AreEqual(site.Id, @event.AggregateRootId);
+        }
+
+        [Test]
+        public void Should_set_name_in_site_deleted_event()
+        {
+            var site = SiteFactory.Site();
+
+            site.Delete();
+
+            var @event = site.Events.OfType<SiteDeleted>().SingleOrDefault();
+
+            Assert.AreEqual(site.Name, @event.Name);
         }
     }
 }

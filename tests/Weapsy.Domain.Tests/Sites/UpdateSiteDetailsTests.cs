@@ -115,6 +115,12 @@ namespace Weapsy.Domain.Tests.Sites
         }
 
         [Test]
+        public void Should_set_name_in_site_details_updated_event()
+        {
+            Assert.AreEqual(_site.Name, _event.Name);
+        }
+
+        [Test]
         public void Should_set_url_in_site_details_updated_event()
         {
             Assert.AreEqual(_site.Url, _event.Url);
