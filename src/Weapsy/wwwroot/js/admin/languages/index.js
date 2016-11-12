@@ -5,22 +5,51 @@ weapsy.admin.languageIndex = (function ($) {
         placeholder: "placeholder",
         handle: ".handle",
         stop: function (event, ui) {
-            var languages = [];
+            //var languages = [];
 
-            $("#languages").find('li').each(function () {
-                var languageId = $(this).attr("id");
-                languages.push(languageId);
-            });
+            //$("#languages").find('li').each(function () {
+            //    var languageId = $(this).attr("id");
+            //    languages.push(languageId);
+            //});
 
-            $.ajax({
-                url: "/api/language/reorder",
-                type: "PUT",
-                data: JSON.stringify(languages),
-                dataType: 'json',
-                contentType: 'application/json'
-            }).done(function () {
-            });
+            //$.ajax({
+            //    url: "/api/language/reorder",
+            //    type: "PUT",
+            //    data: JSON.stringify(languages),
+            //    dataType: 'json',
+            //    contentType: 'application/json'
+            //}).done(function () {
+            //});
         }
+    });
+
+    $('#confirmReorder').click(function () {
+        $('#savingOrder').show();
+        $('#orderSaved').hide();
+
+        var languages = [];
+
+        $("#languages").find('li').each(function () {
+            var languageId = $(this).attr("id");
+            languages.push(languageId);
+        });
+
+        $.ajax({
+            url: "/api/language/reorder",
+            type: "PUT",
+            data: JSON.stringify(languages),
+            dataType: 'json',
+            contentType: 'application/json'
+        }).done(function () {
+            $('#savingOrder').hide();
+            $('#orderSaved').show();
+            setTimeout(function() {
+                 $("#orderSaved").hide();
+            }, 2000);
+        }).fail(function () {
+            $('#savingOrder').hide();
+            $('#orderSaved').hide();
+        });
     });
 
     var languageIdToDelete;

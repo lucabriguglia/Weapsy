@@ -3,6 +3,8 @@ using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Languages;
 using System;
+using System.Linq;
+using Microsoft.AspNetCore.Localization;
 using Weapsy.Domain.Languages;
 using Weapsy.Reporting.Users;
 
@@ -45,12 +47,18 @@ namespace Weapsy.Mvc.Context
         {
             return GetInfo(LanguageInfoKey, () =>
             {
-                //var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+                var languages = _languageFacade.GetAllActive(GetCurrentSiteInfo().Id);
+                var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
-                return new LanguageInfo
+                if (!string.IsNullOrEmpty(userCulture))
                 {
-                    Id = new Guid()
-                };
+                    var userLanguage = languages.FirstOrDefault(x => x.CultureName == userCulture);
+
+                    if (userLanguage != null)
+                        return userLanguage;
+                }
+
+                return languages.Any() ? languages.FirstOrDefault() : new LanguageInfo();
             });
         }
 

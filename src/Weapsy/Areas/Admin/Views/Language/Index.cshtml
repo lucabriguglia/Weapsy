@@ -30,6 +30,9 @@
 
 <div>
     <a href="@Url.Action("Create", "Language", new { area = "Admin" })" class="btn btn-primary" title="New Language">New Language</a>
+    <a id="confirmReorder" href="#" class="btn btn-primary" title="Update Order">Update Order</a>
+    <span id="savingOrder" style="display:none;">Saving...</span>
+    <span id="orderSaved" style="display:none;">Saved</span>
 </div>
 
 @await Html.PartialAsync("_ConfirmDelete")
