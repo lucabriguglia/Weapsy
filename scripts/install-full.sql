@@ -255,7 +255,7 @@ CREATE TABLE [dbo].[MenuItem](
 	[MenuId] [uniqueidentifier] NOT NULL,
 	[ParentId] [uniqueidentifier] NULL,
 	[SortOrder] [int] NOT NULL,
-	[MenuItemType] [int] NOT NULL,
+	[Type] [int] NOT NULL,
 	[PageId] [uniqueidentifier] NULL,
 	[Link] [nvarchar](250) NULL,
 	[Status] [int] NOT NULL,

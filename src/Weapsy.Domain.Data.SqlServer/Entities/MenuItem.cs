@@ -10,7 +10,7 @@ namespace Weapsy.Domain.Data.SqlServer.Entities
         public Guid MenuId { get; set; }
         public Guid ParentId { get; set; }
         public int SortOrder { get; set; }
-        public MenuItemType MenuItemType { get; set; }
+        public MenuItemType Type { get; set; }
         public Guid PageId { get; set; }        
         public string Link { get; set; }
         public string Text { get; set; }

@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Tests.Menus
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
                 MenuItemId = Guid.NewGuid(),
-                MenuItemType = MenuItemType.Link,
+                Type = MenuItemType.Link,
                 PageId = Guid.NewGuid(),
                 Link = "link",
                 Text = "Text",

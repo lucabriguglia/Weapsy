@@ -235,7 +235,7 @@ namespace Weapsy.Services.Installation
                 SiteId = siteId,
                 MenuId = mainMenuId,
                 MenuItemId = Guid.NewGuid(),
-                MenuItemType = MenuItemType.Page,
+                Type = MenuItemType.Page,
                 PageId = homePageId,
                 Link = string.Empty,
                 Text = "Home",

@@ -85,7 +85,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
                     }
                 }
 
-                if (menuItem.MenuItemType == MenuItemType.Page)
+                if (menuItem.Type == MenuItemType.Page)
                 {
                     var page = _pageRepository.GetById(menuItem.PageId);
 
@@ -103,7 +103,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
 
                     menuItemRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
                 }
-                else if (menuItem.MenuItemType == MenuItemType.Link && !string.IsNullOrWhiteSpace(menuItem.Link))
+                else if (menuItem.Type == MenuItemType.Link && !string.IsNullOrWhiteSpace(menuItem.Link))
                 {
                     url = menuItem.Link;
                 }
@@ -141,7 +141,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
             var result = new MenuItemAdminModel
             {
                 Id = menuItem.Id,
-                MenuItemType = menuItem.MenuItemType,
+                Type = menuItem.Type,
                 PageId = menuItem.PageId,
                 Link = menuItem.Link,
                 Text = menuItem.Text,
@@ -213,7 +213,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
                     ParentId = menuItem.ParentId,
                     SortOrder = menuItem.SortOrder,
                     Text = menuItem.Text,
-                    MenuItemType = menuItem.MenuItemType
+                    Type = menuItem.Type
                 };
 
                 menuItemModel.MenuItems.AddRange(PopulateMenuItemsForAdmin(source, menuItem.Id));

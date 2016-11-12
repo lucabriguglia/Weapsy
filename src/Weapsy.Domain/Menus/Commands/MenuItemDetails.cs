@@ -7,7 +7,7 @@ namespace Weapsy.Domain.Menus.Commands
     {
         public Guid MenuId { get; set; }
         public Guid MenuItemId { get; set; }
-        public MenuItemType MenuItemType { get; set; }
+        public MenuItemType Type { get; set; }
         public Guid PageId { get; set; }
         public string Link { get; set; }
         public string Text { get; set; }

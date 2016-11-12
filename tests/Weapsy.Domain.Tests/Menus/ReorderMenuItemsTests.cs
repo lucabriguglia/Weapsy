@@ -41,7 +41,7 @@ namespace Weapsy.Domain.Tests.Menus
                 SiteId = _menu.SiteId,
                 MenuId = _menu.Id,
                 MenuItemId = Guid.NewGuid(),
-                MenuItemType = MenuItemType.Page,
+                Type = MenuItemType.Page,
                 PageId = Guid.NewGuid(),
                 Text = "Menu Item 1"
             };
@@ -51,7 +51,7 @@ namespace Weapsy.Domain.Tests.Menus
                 SiteId = _menu.SiteId,
                 MenuId = _menu.Id,
                 MenuItemId = Guid.NewGuid(),
-                MenuItemType = MenuItemType.Page,
+                Type = MenuItemType.Page,
                 PageId = Guid.NewGuid(),
                 Text = "Menu Item 2"
             };
@@ -61,7 +61,7 @@ namespace Weapsy.Domain.Tests.Menus
                 SiteId = _menu.SiteId,
                 MenuId = _menu.Id,
                 MenuItemId = Guid.NewGuid(),
-                MenuItemType = MenuItemType.Page,
+                Type = MenuItemType.Page,
                 PageId = Guid.NewGuid(),
                 Text = "Menu Item 3"
             };

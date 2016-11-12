@@ -119,7 +119,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         self.editMenuItem = function (id) {
             $.getJSON("/api/menu/" + self.menu().id() + "/admin-edit-item/" + id, function (data) {
                 self.menuItemId(id);
-                self.menuItemType(data.menuItemType);
+                self.menuItemType(data.type);
                 self.pageId(data.pageId);
                 self.link(data.link);
                 self.text(data.text);
@@ -216,7 +216,7 @@ weapsy.admin.menuItem = (function ($, ko) {
 
             var data = {
                 menuItemId: self.menuItemId(),
-                menuItemType: self.menuItemType(),
+                type: self.menuItemType(),
                 pageId: self.pageId(),
                 link: self.link(),
                 text: self.text(),

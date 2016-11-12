@@ -34,7 +34,7 @@ namespace Weapsy.Domain.Tests.Menus
                 SiteId = _menu.SiteId,
                 MenuId = Guid.NewGuid(),
                 MenuItemId = menuItemId,
-                MenuItemType = MenuItemType.Link,
+                Type = MenuItemType.Link,
                 PageId = Guid.NewGuid(),
                 Link = "link",
                 Text = "Text",
@@ -158,7 +158,7 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_set_link_in_menu_item_added_event()
         {
-            Assert.AreEqual(_menuItem.MenuItemType, _event.MenuItem.MenuItemType);
+            Assert.AreEqual(_menuItem.Type, _event.MenuItem.Type);
         }
 
         [Test]

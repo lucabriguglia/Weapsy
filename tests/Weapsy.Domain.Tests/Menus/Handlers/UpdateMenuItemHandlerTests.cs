@@ -65,7 +65,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
                 MenuItemId = menuItemId,
-                MenuItemType = MenuItemType.Link,
+                Type = MenuItemType.Link,
                 PageId = Guid.NewGuid(),
                 Link = "link",
                 Text = "Text",

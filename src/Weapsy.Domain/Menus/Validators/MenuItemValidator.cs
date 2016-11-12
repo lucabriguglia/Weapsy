@@ -28,12 +28,12 @@ namespace Weapsy.Domain.Menus.Validators
             RuleFor(c => c.PageId)
                 .NotEmpty().WithMessage("Page is required")
                 .Must(BeAnExistingPage).WithMessage("Page does not exist.")
-                .When(c => c.MenuItemType == MenuItemType.Page);
+                .When(c => c.Type == MenuItemType.Page);
 
             RuleFor(c => c.Link)
                 .NotEmpty().WithMessage("Link is required.")
                 .Length(1, 250).WithMessage("Link length must be between 1 and 250 characters.")
-                .When(c => c.MenuItemType == MenuItemType.Link);
+                .When(c => c.Type == MenuItemType.Link);
 
             RuleFor(c => c.Text)
                 .NotEmpty().WithMessage("Text is required.")

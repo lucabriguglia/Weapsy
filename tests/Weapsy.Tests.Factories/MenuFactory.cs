@@ -40,7 +40,7 @@ namespace Weapsy.Tests.Factories
                 SiteId = menu.SiteId,
                 MenuId = menu.Id,
                 MenuItemId = menuItemId,
-                MenuItemType = MenuItemType.Link,
+                Type = MenuItemType.Link,
                 PageId = Guid.NewGuid(),
                 Link = "link",
                 Text = itemText,

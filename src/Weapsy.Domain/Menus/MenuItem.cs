@@ -12,7 +12,7 @@ namespace Weapsy.Domain.Menus
         public Guid MenuId { get; private set; }
         public Guid ParentId { get; private set; }
         public int SortOrder { get; private set; }
-        public MenuItemType MenuItemType { get; private set; }
+        public MenuItemType Type { get; private set; }
         public Guid PageId { get; private set; }
         public string Link { get; private set; }
         public string Text { get; private set; }
@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Menus
         {
             MenuId = cmd.MenuId;
             SortOrder = sortOrder;
-            MenuItemType = cmd.MenuItemType;
+            Type = cmd.Type;
             PageId = cmd.PageId;
             Link = cmd.Link;
             Text = cmd.Text;
@@ -40,7 +40,7 @@ namespace Weapsy.Domain.Menus
 
         public void Update(UpdateMenuItem cmd)
         {
-            MenuItemType = cmd.MenuItemType;
+            Type = cmd.Type;
             PageId = cmd.PageId;
             Link = cmd.Link;
             Text = cmd.Text;

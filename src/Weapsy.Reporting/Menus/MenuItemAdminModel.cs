@@ -7,7 +7,7 @@ namespace Weapsy.Reporting.Menus
     public class MenuItemAdminModel
     {
         public Guid Id { get; set; }
-        public MenuItemType MenuItemType { get; set; }
+        public MenuItemType Type { get; set; }
         public Guid PageId { get; set; }
         public string Link { get; set; }
         public string Text { get; set; }
