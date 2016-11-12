@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Pages.Events;
+using Weapsy.Reporting.Languages;
 
 namespace Weapsy.Reporting.Data.Default.Pages
 {
@@ -18,10 +19,13 @@ namespace Weapsy.Reporting.Data.Default.Pages
         IEventHandler<PageModuleRemoved>
     {
         private readonly ICacheManager _cacheManager;
+        private readonly ILanguageFacade _languageFacade;
 
-        public PageEventsHandler(ICacheManager cacheManager)
+        public PageEventsHandler(ICacheManager cacheManager, 
+            ILanguageFacade languageFacade)
         {
             _cacheManager = cacheManager;
+            _languageFacade = languageFacade;
         }
 
         public async Task Handle(PageCreated @event)
@@ -72,12 +76,24 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
         private Task ClearPageCache(Guid siteId, Guid pageId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, Guid.Empty)));
+            return Task.Run(() =>
+            {
+                foreach (var language in _languageFacade.GetAllActive(siteId))
+                    _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, language.Id));
+
+                _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, Guid.Empty));
+            });
         }
 
         private Task ClearMenuCache(Guid siteId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main")));
+            return Task.Run(() =>
+            {
+                foreach (var language in _languageFacade.GetAllActive(siteId))
+                    _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", language.Id));
+
+                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main"));
+            });
         }
     }
 }
