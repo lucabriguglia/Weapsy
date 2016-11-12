@@ -105,7 +105,7 @@ namespace Weapsy.Reporting.Data.Default.Sites
                 });
             }
 
-            foreach (var page in _pageFacade.GetAllForAdminAsync(id).Result.Where(x => x.Status == PageStatus.Active))
+            foreach (var page in _pageFacade.GetAllForAdmin(id).Where(x => x.Status == PageStatus.Active))
             {
                 model.Pages.Add(new PageListAdminModel
                 {

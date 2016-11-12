@@ -51,23 +51,23 @@ namespace Weapsy.Reporting.Data.Default.Pages
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<PageAdminListModel>> GetAllForAdminAsync(Guid siteId)
+        public IEnumerable<PageAdminListModel> GetAllForAdmin(Guid siteId)
         {
             var pages = _pageRepository.GetAll(siteId).Where(x => x.Status != PageStatus.Deleted);
             return _mapper.Map<IEnumerable<PageAdminListModel>>(pages);
         }
 
-        public async Task<PageAdminModel> GetAdminModelAsync(Guid siteId, Guid pageId)
+        public PageAdminModel GetAdminModel(Guid siteId, Guid pageId)
         {
             return _pageAdminFactory.GetAdminModel(siteId, pageId);
         }
 
-        public async Task<PageAdminModel> GetDefaultAdminModelAsync(Guid siteId)
+        public PageAdminModel GetDefaultAdminModel(Guid siteId)
         {
             return _pageAdminFactory.GetDefaultAdminModel(siteId);
         }
 
-        public async Task<PageModuleAdminModel> GetModuleAdminModelAsync(Guid siteId, Guid pageId, Guid pageModuleId)
+        public PageModuleAdminModel GetModuleAdminModel(Guid siteId, Guid pageId, Guid pageModuleId)
         {
             var page = _pageRepository.GetById(siteId, pageId);
 

@@ -31,7 +31,7 @@ namespace Weapsy.Domain.Data.SqlServer
 {
     public class AutoMapperProfile : Profile
     {
-        protected override void Configure()
+        public AutoMapperProfile()
         {
             CreateMap<App, AppDbEntity>();
             CreateMap<AppDbEntity, App>().ConstructUsing(x => new App());

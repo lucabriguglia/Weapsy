@@ -24,13 +24,13 @@ namespace Weapsy.Reporting.Data.Default.Themes
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ThemeAdminModel>> GetAllForAdminAsync()
+        public IEnumerable<ThemeAdminModel> GetAllForAdmin()
         {
             var themes = _themeRepository.GetAll().Where(x => x.Status != ThemeStatus.Deleted);
             return _mapper.Map<IEnumerable<ThemeAdminModel>>(themes);
         }
 
-        public async Task<ThemeAdminModel> GetForAdminAsync(Guid id)
+        public ThemeAdminModel GetForAdmin(Guid id)
         {
             var theme = _themeRepository.GetById(id);
             if (theme == null || theme.Status == ThemeStatus.Deleted)

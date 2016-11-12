@@ -1,12 +1,12 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
-using System;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Themes;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Data.Default.Themes;
 using Weapsy.Reporting.Themes;
 
-namespace Weapsy.Reporting.Data.Default.Tests
+namespace Weapsy.Reporting.Data.Default.Tests.Facades
 {
     [TestFixture]
     public class ThemeFacadeTests

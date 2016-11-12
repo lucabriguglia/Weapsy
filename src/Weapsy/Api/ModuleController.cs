@@ -55,55 +55,11 @@ namespace Weapsy.Api
             return new NoContentResult();
         }
 
-        //[HttpPut]
-        //[Route("{id}/update")]
-        //public async Task<IActionResult> UpdateDetails([FromBody] UpdateModuleDetails model)
-        //{
-        //    model.SiteId = SiteId;
-        //    await Task.Run(() => _commandSender.Send<UpdateModuleDetails, Module>(model));
-        //    return new NoContentResult();
-        //}
-
-        //[HttpPut]
-        //[Route("{id}/activate")]
-        //public async Task<IActionResult> Activate(Guid id)
-        //{
-        //    await Task.Run(() => _commandSender.Send<ActivateModule, Module>(new ActivateModule
-        //    {
-        //        SiteId = SiteId,
-        //        Id = id
-        //    }));
-        //    return new NoContentResult();
-        //}
-
-        //[HttpPut]
-        //[Route("{id}/hide")]
-        //public async Task<IActionResult> Hide(Guid id)
-        //{
-        //    await Task.Run(() => _commandSender.Send<HideModule, Module>(new HideModule
-        //    {
-        //        SiteId = SiteId,
-        //        Id = id
-        //    }));
-        //    return new NoContentResult();
-        //}
-
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    await Task.Run(() => _commandSender.Send<DeleteModule, Module>(new DeleteModule
-        //    {
-        //        SiteId = SiteId,
-        //        Id = id
-        //    }));
-        //    return new NoContentResult();
-        //}
-
         [HttpGet]
         [Route("{id}/admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var model = await _moduleFacade.GetAllForAdminAsync();
+            var model = await Task.Run(() => _moduleFacade.GetAllForAdmin());
             return Ok(model);
         }
 
@@ -111,8 +67,11 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _moduleFacade.GetAdminModelAsync(id);
-            if (model == null) return NotFound();
+            var model = await Task.Run(() => _moduleFacade.GetAdminModel(id));
+
+            if (model == null)
+                return NotFound();
+
             return Ok(model);
         }
     }

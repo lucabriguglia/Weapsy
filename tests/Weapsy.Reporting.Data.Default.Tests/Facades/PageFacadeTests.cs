@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
 using Moq;
 using NUnit.Framework;
-using System;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Data.Default.Pages;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 
-namespace Weapsy.Reporting.Data.Default.Tests
+namespace Weapsy.Reporting.Data.Default.Tests.Facades
 {
     [TestFixture]
     public class PageFacadeTests

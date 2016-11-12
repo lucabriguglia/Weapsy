@@ -9,7 +9,8 @@
     "Weapsy.Infrastructure": "1.0.0-*",
     "Weapsy.Reporting": "1.0.0-*",
     "Weapsy.Reporting.Data.Default": "1.0.0-*",
-    "dotnet-test-nunit": "3.4.0-beta-2"
+    "dotnet-test-nunit": "3.4.0-beta-2",
+    "Weapsy.Tests.Factories": "1.0.0-*"
   },
 
   "testRunner": "nunit",

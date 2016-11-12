@@ -36,7 +36,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
             _roleService = roleService;
         }
 
-        public async Task<MenuViewModel> GetByNameAsync(Guid siteId, string name, Guid languageId = new Guid())
+        public MenuViewModel GetByName(Guid siteId, string name, Guid languageId = new Guid())
         {
             return _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, siteId, name, languageId), () =>
             {
@@ -126,7 +126,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
             return result;
         }
 
-        public async Task<MenuItemAdminModel> GetItemForAdminAsync(Guid siteId, Guid menuId, Guid menuItemId)
+        public MenuItemAdminModel GetItemForAdmin(Guid siteId, Guid menuId, Guid menuItemId)
         {
             var menu = _menuRepository.GetById(siteId, menuId);
 
@@ -189,7 +189,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
             return result;
         }
 
-        public async Task<IEnumerable<MenuItemAdminListModel>> GetMenuItemsForAdminListAsync(Guid siteId, Guid menuId)
+        public IEnumerable<MenuItemAdminListModel> GetMenuItemsForAdminList(Guid siteId, Guid menuId)
         {
             var menu = _menuRepository.GetById(siteId, menuId);
 
@@ -224,13 +224,13 @@ namespace Weapsy.Reporting.Data.Default.Menus
             return result;
         }
 
-        public async Task<IEnumerable<MenuAdminModel>> GetAllForAdminAsync(Guid siteId)
+        public IEnumerable<MenuAdminModel> GetAllForAdmin(Guid siteId)
         {
             var menus = _menuRepository.GetAll(siteId).Where(x => x.Status != MenuStatus.Deleted);
             return _mapper.Map<IEnumerable<MenuAdminModel>>(menus);
         }
 
-        public Task<MenuAdminModel> GetForAdminAsync(Guid siteId, Guid id)
+        public MenuAdminModel GetForAdmin(Guid siteId, Guid id)
         {
             throw new NotImplementedException();
         }

@@ -1,16 +1,16 @@
-﻿using Moq;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Caching;
+using Moq;
+using NUnit.Framework;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 using Weapsy.Domain.Pages;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Data.Default.Menus;
 using Weapsy.Reporting.Menus;
 using Weapsy.Services.Identity;
 
-namespace Weapsy.Reporting.Data.Default.Tests
+namespace Weapsy.Reporting.Data.Default.Tests.Facades
 {
     [TestFixture]
     public class MenuFacadeTests

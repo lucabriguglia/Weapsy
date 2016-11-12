@@ -33,13 +33,13 @@ namespace Weapsy.Reporting.Data.Default.Languages
             });
         }
 
-        public async Task<IEnumerable<LanguageAdminModel>> GetAllForAdminAsync(Guid siteId)
+        public IEnumerable<LanguageAdminModel> GetAllForAdmin(Guid siteId)
         {
             var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
             return _mapper.Map<IEnumerable<LanguageAdminModel>>(languages);
         }
 
-        public async Task<LanguageAdminModel> GetForAdminAsync(Guid siteId, Guid id)
+        public LanguageAdminModel GetForAdmin(Guid siteId, Guid id)
         {
             var language = _languageRepository.GetById(siteId, id);
             if (language == null || language.Status == LanguageStatus.Deleted)

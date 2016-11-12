@@ -34,7 +34,7 @@ namespace Weapsy.Api
         [Route("{name}")]
         public async Task<IActionResult> Get(string name)
         {
-            var menu = await _menuFacade.GetByNameAsync(SiteId, name);
+            var menu = await Task.Run(()=> _menuFacade.GetByName(SiteId, name));
             return Ok(menu);
         }
 
@@ -42,7 +42,7 @@ namespace Weapsy.Api
         [Route("admin")]
         public async Task<IActionResult> GetAllForAdmin()
         {
-            var menus = await _menuFacade.GetAllForAdminAsync(SiteId);
+            var menus = await Task.Run(() => _menuFacade.GetAllForAdmin(SiteId));
             return Ok(menus);
         }
 
@@ -50,7 +50,7 @@ namespace Weapsy.Api
         [Route("{id}/items")]
         public async Task<IActionResult> GetItemsForAdmin(Guid id)
         {
-            var menuItems = await _menuFacade.GetMenuItemsForAdminListAsync(SiteId, id);
+            var menuItems = await Task.Run(() => _menuFacade.GetMenuItemsForAdminList(SiteId, id));
             return Ok(menuItems);
         }
 
@@ -132,7 +132,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var model = await _menuFacade.GetAllForAdminAsync(SiteId);
+            var model = await Task.Run(() => _menuFacade.GetAllForAdmin(SiteId));
             return Ok(model);
         }
 
@@ -140,7 +140,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _menuFacade.GetForAdminAsync(SiteId, id);
+            var model = await Task.Run(() => _menuFacade.GetForAdmin(SiteId, id));
             if (model == null) return NotFound();
             return Ok(model);
         }
@@ -149,7 +149,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit-item/{itemId}")]
         public async Task<IActionResult> AdminEditItem(Guid id, Guid itemId)
         {
-            var item = await _menuFacade.GetItemForAdminAsync(SiteId, id, itemId);
+            var item = await Task.Run(() => _menuFacade.GetItemForAdmin(SiteId, id, itemId));
             return Ok(item);
         }
     }

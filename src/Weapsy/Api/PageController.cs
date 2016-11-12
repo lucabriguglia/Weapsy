@@ -211,7 +211,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var model = await _pageFacade.GetAllForAdminAsync(SiteId);
+            var model = await Task.Run(() => _pageFacade.GetAllForAdmin(SiteId));
             return Ok(model);
         }
 
@@ -219,8 +219,11 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _pageFacade.GetAdminModelAsync(SiteId, id);
-            if (model == null) return NotFound();
+            var model = await Task.Run(() => _pageFacade.GetAdminModel(SiteId, id));
+
+            if (model == null)
+                return NotFound();
+
             return Ok(model);
         }
     }

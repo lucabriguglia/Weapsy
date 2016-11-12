@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Menus;
 using Weapsy.Mvc.Context;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Weapsy.Areas.Admin.Controllers
@@ -41,7 +40,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _menuFacade.GetForAdminAsync(SiteId, id);
+            var model = await Task.Run(() => _menuFacade.GetForAdmin(SiteId, id));
             if (model == null) return NotFound();
             return View(model);
         }

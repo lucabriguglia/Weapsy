@@ -32,13 +32,13 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await _pageFacade.GetAllForAdminAsync(SiteId);
+            var model = await Task.Run(() => _pageFacade.GetAllForAdmin(SiteId));
             return View(model);
         }
 
         public async Task<IActionResult> Create()
         {
-            var model = await _pageFacade.GetDefaultAdminModelAsync(SiteId);
+            var model = await Task.Run(() => _pageFacade.GetDefaultAdminModel(SiteId));
             return View(model);
         }
 
@@ -54,7 +54,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _pageFacade.GetAdminModelAsync(SiteId, id);
+            var model = await Task.Run(() => _pageFacade.GetAdminModel(SiteId, id));
 
             if (model == null)
                 return NotFound();
@@ -93,7 +93,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> EditModule(Guid pageId, Guid pageModuleId)
         {
-            var model = await _pageFacade.GetModuleAdminModelAsync(SiteId, pageId, pageModuleId);
+            var model = await Task.Run(() => _pageFacade.GetModuleAdminModel(SiteId, pageId, pageModuleId));
 
             if (model == null)
                 return NotFound();

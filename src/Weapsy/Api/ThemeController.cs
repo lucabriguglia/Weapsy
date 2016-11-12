@@ -33,15 +33,18 @@ namespace Weapsy.Api
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var themes = await _themeFacade.GetAllForAdminAsync();
+            var themes = await Task.Run(() => _themeFacade.GetAllForAdmin());
             return Ok(themes);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var theme = await _themeFacade.GetForAdminAsync(id);
-            if (theme == null) return NotFound();
+            var theme = await Task.Run(() => _themeFacade.GetForAdmin(id));
+
+            if (theme == null)
+                return NotFound();
+
             return Ok(theme);
         }
 
@@ -120,7 +123,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var model = await _themeFacade.GetAllForAdminAsync();
+            var model = await Task.Run(() => _themeFacade.GetAllForAdmin());
             return Ok(model);
         }
 
@@ -128,8 +131,11 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _themeFacade.GetForAdminAsync(id);
-            if (model == null) return NotFound();
+            var model = await Task.Run(() => _themeFacade.GetForAdmin(id));
+
+            if (model == null)
+                return NotFound();
+
             return Ok(model);
         }
     }

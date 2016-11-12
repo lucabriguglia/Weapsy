@@ -28,7 +28,7 @@ namespace Weapsy.Components
 
         public async Task<IViewComponentResult> InvokeAsync(string name, string viewName = "Default")
         {
-            var viewModel = await _menuFacade.GetByNameAsync(SiteId, name, _contextService.GetCurrentLanguageInfo().Id);
+            var viewModel = await Task.Run(() => _menuFacade.GetByName(SiteId, name, _contextService.GetCurrentLanguageInfo().Id));
 
             var menuItemsToRemove = new List<MenuViewModel.MenuItem>();
 

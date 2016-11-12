@@ -1,13 +1,13 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
-using System;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.ModuleTypes;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Data.Default.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes;
 
-namespace Weapsy.Reporting.Data.Default.Tests
+namespace Weapsy.Reporting.Data.Default.Tests.Facades
 {
     [TestFixture]
     public class ModuleTypeFacadeTests

@@ -118,7 +118,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                 var dbEntities = context.Set<PageDbEntity>()
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
-                    .Where(x => x.SiteId == siteId && x.Status == PageStatus.Active)
+                    .Where(x => x.SiteId == siteId && x.Status != PageStatus.Deleted)
                     .OrderBy(x => x.Name).ToList();
 
                 foreach (var dbEntity in dbEntities)
