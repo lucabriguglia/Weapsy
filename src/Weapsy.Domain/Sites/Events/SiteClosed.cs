@@ -4,5 +4,6 @@ namespace Weapsy.Domain.Sites.Events
 {
     public class SiteClosed : Event
     {
+        public string Name { get; set; }
     }
 }

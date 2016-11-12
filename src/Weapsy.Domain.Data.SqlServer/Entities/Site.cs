@@ -20,6 +20,7 @@ namespace Weapsy.Domain.Data.SqlServer.Entities
         public Guid ModuleTemplateId { get; set; }
         public SiteStatus Status { get; set; }
 
+        public virtual ICollection<SiteLocalisation> SiteLocalisations { get; set; } = new List<SiteLocalisation>();
         public virtual ICollection<Page> Pages { get; set; } = new List<Page>();
         public virtual ICollection<Module> Modules { get; set; } = new List<Module>();
     }

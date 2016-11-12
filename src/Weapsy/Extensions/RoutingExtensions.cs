@@ -53,8 +53,8 @@ namespace Weapsy.Extensions
             var languageSlug = pathParts.Length > 1 ? pathParts[0] : path;
             var pageSlug = path;
 
-            var siteId = contextService.GetCurrentSiteInfo().Id;
-            var language = languageFacade.GetAllActive(siteId).FirstOrDefault(x => x.Url == languageSlug);
+            var site = contextService.GetCurrentSiteInfo();
+            var language = languageFacade.GetAllActive(site.Id).FirstOrDefault(x => x.Url == languageSlug);
             Guid? pageId = null;
 
             if (language != null)
@@ -64,20 +64,14 @@ namespace Weapsy.Extensions
                 pageSlug = languageSlug == path ? string.Empty : path.Substring(languageSlug.Length + 1);
 
                 if (!string.IsNullOrEmpty(pageSlug))
-                    pageId = pageRepository.GetIdBySlug(siteId, pageSlug, language.Id);
+                    pageId = pageRepository.GetIdBySlug(site.Id, pageSlug, language.Id);
             }
             
             if (pageId == null && !string.IsNullOrEmpty(pageSlug))
-                pageId = pageRepository.GetIdBySlug(siteId, pageSlug);
+                pageId = pageRepository.GetIdBySlug(site.Id, pageSlug);
 
             if (pageId == null && string.IsNullOrEmpty(pageSlug))
-            {
-                // pageId = site.HomePageId // todo: set pageId to the home page of current site
-                var pages = pageRepository.GetAll(siteId);
-                var homePage = pages.FirstOrDefault(x => x.Name == "Home");
-                if (homePage != null)
-                    pageId = homePage.Id;
-            }
+                pageId = site.HomePageId;
 
             if (pageId == null)
                 return;

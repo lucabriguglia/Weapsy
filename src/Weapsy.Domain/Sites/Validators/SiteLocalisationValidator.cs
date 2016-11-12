@@ -1,28 +1,20 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Domain.Languages.Rules;
-using Weapsy.Domain.Pages.Rules;
 
-namespace Weapsy.Domain.Pages.Validators
+namespace Weapsy.Domain.Sites.Validators
 {
-    public class PageLocalisationValidator : AbstractValidator<PageLocalisation>
+    public class SiteLocalisationValidator : AbstractValidator<SiteLocalisation>
     {
-        private readonly IPageRules _pageRules;
         private readonly ILanguageRules _languageRules;
 
-        public PageLocalisationValidator(IPageRules pageRules, ILanguageRules languageRules)
+        public SiteLocalisationValidator(ILanguageRules languageRules)
         {
-            _pageRules = pageRules;
             _languageRules = languageRules;
 
             RuleFor(c => c.LanguageId)
                 .NotEmpty().WithMessage("Language is required.")
                 .Must(BeAnExistingLanguage).WithMessage("Language does not exist.");
-
-            RuleFor(c => c.Url)
-                .Length(1, 200).WithMessage("Page url cannot have more than 200 characters.")
-                .Must(HaveValidUrl).WithMessage("Page url is not valid. Enter only letters, numbers, underscores and hyphens with no spaces.")
-                .When(x => !string.IsNullOrWhiteSpace(x.Url));
 
             RuleFor(c => c.Title)
                 .Length(1, 250).WithMessage("Title cannot have more than 250 characters.")
@@ -40,11 +32,6 @@ namespace Weapsy.Domain.Pages.Validators
         private bool BeAnExistingLanguage(Guid languageId)
         {
             return _languageRules.DoesLanguageExist(languageId);
-        }
-
-        private bool HaveValidUrl(string url)
-        {
-            return _pageRules.IsPageUrlValid(url);
         }
     }
 }

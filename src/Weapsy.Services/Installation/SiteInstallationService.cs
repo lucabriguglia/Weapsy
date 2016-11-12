@@ -20,6 +20,7 @@ namespace Weapsy.Services.Installation
     {
         private readonly ISiteRepository _siteRepository;
         private readonly IValidator<CreateSite> _createSiteValidator;
+        private readonly IValidator<UpdateSiteDetails> _updateSiteDetailsSiteValidator;
         private readonly ILanguageRepository _languageRepository;
         private readonly IValidator<CreateLanguage> _createLanguageValidator;
         private readonly ILanguageSortOrderGenerator _languageSortOrderGenerator;
@@ -36,6 +37,7 @@ namespace Weapsy.Services.Installation
 
         public SiteInstallationService(ISiteRepository siteRepository,
             IValidator<CreateSite> createSiteValidator,
+            IValidator<UpdateSiteDetails> updateSiteDetailsSiteValidator,
             ILanguageRepository languageRepository,
             IValidator<CreateLanguage> createLanguageValidator,
             ILanguageSortOrderGenerator languageSortOrderGenerator,
@@ -52,6 +54,7 @@ namespace Weapsy.Services.Installation
         {
             _siteRepository = siteRepository;
             _createSiteValidator = createSiteValidator;
+            _updateSiteDetailsSiteValidator = updateSiteDetailsSiteValidator;
             _languageRepository = languageRepository;
             _createLanguageValidator = createLanguageValidator;
             _languageSortOrderGenerator = languageSortOrderGenerator;
@@ -257,6 +260,24 @@ namespace Weapsy.Services.Installation
             }, _addMenuItemValidator);
 
             _menuRepository.Create(mainMenu);
+
+            // ===== Update Site ===== //
+
+            site.UpdateDetails(new UpdateSiteDetails
+            {
+                SiteId = siteId,
+                HomePageId = homePageId,
+                SiteLocalisations = new List<SiteLocalisation>
+                {
+                    new SiteLocalisation
+                    {
+                        SiteId = siteId,
+                        LanguageId = englishLanguageId
+                    }
+                }
+            }, _updateSiteDetailsSiteValidator);
+
+            _siteRepository.Update(site);
         }
     }
 }

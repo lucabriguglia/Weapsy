@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Sites;
+using Weapsy.Domain.Sites.Commands;
 using Weapsy.Reporting.Pages;
+using Weapsy.Reporting.Sites;
 
 namespace Weapsy.Api
 {
@@ -13,6 +16,8 @@ namespace Weapsy.Api
             CreateMap<PageLocalisationAdminModel, PageLocalisation>();
             CreateMap<PageAdminModel, UpdatePageDetails>().ForMember(x => x.PagePermissions, opt => opt.Ignore());
             CreateMap<PageModuleAdminModel, UpdatePageModuleDetails>().ForMember(x => x.PageModulePermissions, opt => opt.Ignore());
+            CreateMap<SiteAdminModel, UpdateSiteDetails>();
+            CreateMap<SiteLocalisationAdminModel, SiteLocalisation>();
         }
     }
 }

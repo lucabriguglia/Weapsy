@@ -8,6 +8,7 @@ using Weapsy.Domain.Sites.Rules;
 using FluentValidation;
 using Weapsy.Domain.Languages.Rules;
 using System.Collections.Generic;
+using Weapsy.Domain.Pages.Rules;
 
 namespace Weapsy.Domain.Tests.Sites.Validators
 {
@@ -15,12 +16,17 @@ namespace Weapsy.Domain.Tests.Sites.Validators
     public class UpdateSiteDetailsValidatorTests
     {
         [Test]
+        [Ignore("Feature not implented yet.")]
         public void Should_have_error_when_site_url_is_empty()
         {
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
-            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, 
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetails
             {
@@ -33,12 +39,17 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         }
 
         [Test]
+        [Ignore("Feature not implented yet.")]
         public void Should_have_error_when_site_url_is_too_long()
         {
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
-            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object,
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
 
             var url = "";
             for (int i = 0; i < 51; i++) url += i;
@@ -54,6 +65,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         }
 
         [Test]
+        [Ignore("Feature not implented yet.")]
         public void Should_have_error_when_site_url_is_not_valid()
         {
             Guid siteId = Guid.NewGuid();
@@ -63,8 +75,12 @@ namespace Weapsy.Domain.Tests.Sites.Validators
             siteRulesMock.Setup(x => x.IsSiteUrlValid(url)).Returns(false);
 
             var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
-            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object,
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetails
             {
@@ -77,6 +93,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         }
 
         [Test]
+        [Ignore("Feature not implented yet.")]
         public void Should_have_error_when_site_url_already_exists()
         {
             Guid siteId = Guid.NewGuid();
@@ -86,8 +103,12 @@ namespace Weapsy.Domain.Tests.Sites.Validators
             siteRulesMock.Setup(x => x.IsSiteUrlUnique(url, siteId)).Returns(false);
 
             var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
-            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object,
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetails
             {
@@ -104,8 +125,12 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         {
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
-            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object,
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
 
             var title = "";
             for (int i = 0; i < 251; i++) title += i;
@@ -125,8 +150,12 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         {
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
-            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object,
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
 
             var metaDescription = "";
             for (int i = 0; i < 501; i++) metaDescription += i;
@@ -146,8 +175,12 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         {
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
-            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object,
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
 
             var metaKeywords = "";
             for (int i = 0; i < 501; i++) metaKeywords += i;
@@ -167,9 +200,13 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         {
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
+            var pageRulesMock = new Mock<IPageRules>();
             var localisationValidatorMock = new Mock<IValidator<UpdateSiteDetails.SiteLocalisation>>();
             languageRulesMock.Setup(x => x.AreAllSupportedLanguagesIncluded(It.IsAny<Guid>(), It.IsAny<IEnumerable<Guid>>())).Returns(false);
-            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new UpdateSiteDetailsValidator(siteRulesMock.Object,
+                languageRulesMock.Object,
+                pageRulesMock.Object,
+                localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.SiteLocalisations, new UpdateSiteDetails
             {

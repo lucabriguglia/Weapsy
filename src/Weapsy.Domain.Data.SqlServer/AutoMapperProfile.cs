@@ -23,6 +23,7 @@ using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Pag
 using PageModulePermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModulePermission;
 using PagePermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PagePermission;
 using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
+using SiteLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.SiteLocalisation;
 using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
 using UserDbEntity = Weapsy.Domain.Data.SqlServer.Entities.User;
 
@@ -76,6 +77,9 @@ namespace Weapsy.Domain.Data.SqlServer
 
             CreateMap<Site, SiteDbEntity>();
             CreateMap<SiteDbEntity, Site>().ConstructUsing(x => new Site());
+
+            CreateMap<SiteLocalisation, SiteLocalisationDbEntity>();
+            CreateMap<SiteLocalisationDbEntity, SiteLocalisation>().ConstructUsing(x => new SiteLocalisation());
 
             CreateMap<Theme, ThemeDbEntity>();
             CreateMap<ThemeDbEntity, Theme>().ConstructUsing(x => new Theme());

@@ -11,14 +11,11 @@ namespace Weapsy.Domain.Sites.Commands
         public string Title { get; set; }
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
-        public List<SiteLocalisation> SiteLocalisations { get; set; } = new List<SiteLocalisation>();
+        public Guid HomePageId { get; set; }
+        public Guid ThemeId { get; set; }
+        public Guid PageTemplateId { get; set; }
+        public Guid ModuleTemplateId { get; set; }
 
-        public class SiteLocalisation
-        {
-            public Guid LanguageId { get; set; }
-            public string Title { get; set; }
-            public string MetaDescription { get; set; }
-            public string MetaKeywords { get; set; }
-        }
+        public List<SiteLocalisation> SiteLocalisations { get; set; } = new List<SiteLocalisation>();
     }
 }

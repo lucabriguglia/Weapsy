@@ -5,21 +5,6 @@ weapsy.admin.languageIndex = (function ($) {
         placeholder: "placeholder",
         handle: ".handle",
         stop: function (event, ui) {
-            //var languages = [];
-
-            //$("#languages").find('li').each(function () {
-            //    var languageId = $(this).attr("id");
-            //    languages.push(languageId);
-            //});
-
-            //$.ajax({
-            //    url: "/api/language/reorder",
-            //    type: "PUT",
-            //    data: JSON.stringify(languages),
-            //    dataType: 'json',
-            //    contentType: 'application/json'
-            //}).done(function () {
-            //});
         }
     });
 

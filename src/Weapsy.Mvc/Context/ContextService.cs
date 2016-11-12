@@ -35,7 +35,7 @@ namespace Weapsy.Mvc.Context
 
         public SiteInfo GetCurrentSiteInfo()
         {
-            return GetInfo(SiteInfoKey, () => _siteFacade.GetSiteInfo("Default").Result);
+            return GetInfo(SiteInfoKey, () => _siteFacade.GetSiteInfo("Default"));
         }
 
         public void SetLanguageInfo(LanguageInfo languageInfo)

@@ -5,6 +5,7 @@ namespace Weapsy.Domain.Sites.Events
 {
     public class SiteDetailsUpdated : Event
     {
+        public string Name { get; set; }
         public string Url { get; set; }
         public string Title { get; set; }
         public string MetaDescription { get; set; }

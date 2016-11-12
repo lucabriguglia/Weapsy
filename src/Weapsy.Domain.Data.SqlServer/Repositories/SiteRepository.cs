@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Sites;
 using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
+using SiteLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.SiteLocalisation;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {
@@ -22,7 +24,9 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<SiteDbEntity>().FirstOrDefault(x => x.Id == id);
+                var dbEntity = context.Set<SiteDbEntity>()
+                    .Include(x => x.SiteLocalisations)
+                    .FirstOrDefault(x => x.Id == id);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
             }
         }
@@ -31,7 +35,9 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<SiteDbEntity>().FirstOrDefault(x => x.Name == name);
+                var dbEntity = context.Set<SiteDbEntity>()
+                    .Include(x => x.SiteLocalisations)
+                    .FirstOrDefault(x => x.Name == name);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
             }
         }
@@ -40,7 +46,9 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<SiteDbEntity>().FirstOrDefault(x => x.Url == url);
+                var dbEntity = context.Set<SiteDbEntity>()
+                    .Include(x => x.SiteLocalisations)
+                    .FirstOrDefault(x => x.Url == url);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
             }
         }
@@ -49,7 +57,9 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntities = context.Set<SiteDbEntity>().Where(x => x.Status != SiteStatus.Deleted).ToList();
+                var dbEntities = context.Set<SiteDbEntity>()
+                    .Include(x => x.SiteLocalisations)
+                    .Where(x => x.Status != SiteStatus.Deleted).ToList();
                 return _mapper.Map<IList<Site>>(dbEntities);
             }
         }
@@ -68,9 +78,34 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<SiteDbEntity>().FirstOrDefault(x => x.Id == site.Id);
-                _mapper.Map(site, dbEntity);
+                var siteDbEntity = _mapper.Map<SiteDbEntity>(site);
+
+                context.Entry(siteDbEntity).State = EntityState.Modified;
+
+                UpdateSiteLocalisations(context, siteDbEntity.SiteLocalisations);
+
                 context.SaveChanges();
+            }
+        }
+
+        private void UpdateSiteLocalisations(WeapsyDbContext context, IEnumerable<SiteLocalisationDbEntity> siteLocalisations)
+        {
+            foreach (var siteLocalisation in siteLocalisations)
+            {
+                var currentSiteLocalisation = context.Set<SiteLocalisationDbEntity>()
+                    .AsNoTracking()
+                    .FirstOrDefault(x =>
+                        x.SiteId == siteLocalisation.SiteId &&
+                        x.LanguageId == siteLocalisation.LanguageId);
+
+                if (currentSiteLocalisation == null)
+                {
+                    context.Add(siteLocalisation);
+                }
+                else
+                {
+                    context.Entry(siteLocalisation).State = EntityState.Modified;
+                }
             }
         }
     }
