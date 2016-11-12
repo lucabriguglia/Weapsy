@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             {
                 var dbEntity = context.Set<SiteDbEntity>()
                     .Include(x => x.SiteLocalisations)
-                    .FirstOrDefault(x => x.Id == id);
+                    .FirstOrDefault(x => x.Id == id && x.Status != SiteStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
             }
         }
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             {
                 var dbEntity = context.Set<SiteDbEntity>()
                     .Include(x => x.SiteLocalisations)
-                    .FirstOrDefault(x => x.Name == name);
+                    .FirstOrDefault(x => x.Name == name && x.Status != SiteStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
             }
         }
@@ -48,7 +48,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             {
                 var dbEntity = context.Set<SiteDbEntity>()
                     .Include(x => x.SiteLocalisations)
-                    .FirstOrDefault(x => x.Url == url);
+                    .FirstOrDefault(x => x.Url == url && x.Status != SiteStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
             }
         }

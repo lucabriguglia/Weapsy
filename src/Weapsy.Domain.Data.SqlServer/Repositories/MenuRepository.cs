@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = context.Set<MenuDbEntity>()
-                    .FirstOrDefault(x => x.Id == id);
+                    .FirstOrDefault(x => x.Id == id && x.Status != MenuStatus.Deleted);
 
                 LoadMenuItems(context, dbEntity);
 
@@ -40,7 +40,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = context.Set<MenuDbEntity>()
-                    .FirstOrDefault(x => x.SiteId == siteId &&  x.Id == id);
+                    .FirstOrDefault(x => x.SiteId == siteId &&  x.Id == id && x.Status != MenuStatus.Deleted);
 
                 LoadMenuItems(context, dbEntity);
 
@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = context.Set<MenuDbEntity>()
-                    .FirstOrDefault(x => x.SiteId == siteId && x.Name == name);
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Name == name && x.Status != MenuStatus.Deleted);
 
                 LoadMenuItems(context, dbEntity);
 

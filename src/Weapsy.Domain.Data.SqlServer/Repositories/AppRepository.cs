@@ -23,19 +23,22 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public App GetById(Guid id)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.Id.Equals(id));
+            var dbEntity = _entities
+                .FirstOrDefault(x => x.Id == id && x.Status != AppStatus.Deleted);
             return dbEntity != null ? _mapper.Map<App>(dbEntity) : null;
         }
 
         public App GetByName(string name)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.Name == name);
+            var dbEntity = _entities
+                .FirstOrDefault(x => x.Name == name && x.Status != AppStatus.Deleted);
             return dbEntity != null ? _mapper.Map<App>(dbEntity) : null;
         }
 
         public App GetByFolder(string folder)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.Folder == folder);
+            var dbEntity = _entities
+                .FirstOrDefault(x => x.Folder == folder && x.Status != AppStatus.Deleted);
             return dbEntity != null ? _mapper.Map<App>(dbEntity) : null;
         }
 

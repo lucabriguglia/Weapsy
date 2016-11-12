@@ -27,7 +27,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
         {
             var page = _pageRepository.GetById(siteId, pageId);
 
-            if (page == null || page.Status == PageStatus.Deleted)
+            if (page == null)
                 return null;
 
             var result = new PageAdminModel
@@ -41,7 +41,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 MetaKeywords = page.MetaKeywords
             };
 
-            var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
+            var languages = _languageRepository.GetAll(siteId);
 
             foreach (var language in languages)
             {
@@ -94,7 +94,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
         {
             var result = new PageAdminModel();
 
-            var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
+            var languages = _languageRepository.GetAll(siteId);
 
             foreach (var language in languages)
             {

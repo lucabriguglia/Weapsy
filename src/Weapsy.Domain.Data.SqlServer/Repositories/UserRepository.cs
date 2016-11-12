@@ -22,19 +22,19 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
 
         public User GetById(Guid id)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.Id.Equals(id));
+            var dbEntity = _entities.FirstOrDefault(x => x.Id == id && x.Status != UserStatus.Deleted);
             return dbEntity != null ? _mapper.Map<User>(dbEntity) : null;
         }
 
         public User GetByUserName(string userName)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.UserName == userName);
+            var dbEntity = _entities.FirstOrDefault(x => x.UserName == userName && x.Status != UserStatus.Deleted);
             return dbEntity != null ? _mapper.Map<User>(dbEntity) : null;
         }
 
         public User GetByEmail(string email)
         {
-            var dbEntity = _entities.FirstOrDefault(x => x.Email == email);
+            var dbEntity = _entities.FirstOrDefault(x => x.Email == email && x.Status != UserStatus.Deleted);
             return dbEntity != null ? _mapper.Map<User>(dbEntity) : null;
         }
 

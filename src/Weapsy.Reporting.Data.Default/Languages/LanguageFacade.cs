@@ -28,23 +28,21 @@ namespace Weapsy.Reporting.Data.Default.Languages
         {
             return _cacheManager.Get(string.Format(CacheKeys.LanguagesCacheKey, siteId), () =>
             {
-                var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
+                var languages = _languageRepository.GetAll(siteId);
                 return _mapper.Map<IEnumerable<LanguageInfo>>(languages);
             });
         }
 
         public IEnumerable<LanguageAdminModel> GetAllForAdmin(Guid siteId)
         {
-            var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
+            var languages = _languageRepository.GetAll(siteId);
             return _mapper.Map<IEnumerable<LanguageAdminModel>>(languages);
         }
 
         public LanguageAdminModel GetForAdmin(Guid siteId, Guid id)
         {
             var language = _languageRepository.GetById(siteId, id);
-            if (language == null || language.Status == LanguageStatus.Deleted)
-                return null;
-            return _mapper.Map<LanguageAdminModel>(language);
+            return language == null ? null : _mapper.Map<LanguageAdminModel>(language);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
@@ -53,7 +52,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
         public IEnumerable<PageAdminListModel> GetAllForAdmin(Guid siteId)
         {
-            var pages = _pageRepository.GetAll(siteId).Where(x => x.Status != PageStatus.Deleted);
+            var pages = _pageRepository.GetAll(siteId);
             return _mapper.Map<IEnumerable<PageAdminListModel>>(pages);
         }
 
@@ -71,12 +70,12 @@ namespace Weapsy.Reporting.Data.Default.Pages
         {
             var page = _pageRepository.GetById(siteId, pageId);
 
-            if (page == null || page.Status == PageStatus.Deleted)
+            if (page == null)
                 return null;
 
             var pageModule = page.PageModules.FirstOrDefault(x => x.Id == pageModuleId);
 
-            if (pageModule == null || pageModule.Status == PageModuleStatus.Deleted)
+            if (pageModule == null)
                 return null;
 
             var result = new PageModuleAdminModel
@@ -88,7 +87,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 InheritPermissions = pageModule.InheritPermissions
             };
 
-            var languages = _languageRepository.GetAll(siteId).Where(x => x.Status != LanguageStatus.Deleted);
+            var languages = _languageRepository.GetAll(siteId);
 
             foreach (var language in languages)
             {

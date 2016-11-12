@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Weapsy.Domain.Apps;
 using Weapsy.Domain.Languages;
 using LanguageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Language;
 
@@ -22,7 +23,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>().FirstOrDefault(x => x.Id == id);
+                var dbEntity = context.Set<LanguageDbEntity>()
+                    .FirstOrDefault(x => x.Id == id && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;                
             }
         }
@@ -31,7 +33,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>().FirstOrDefault(x => x.SiteId == siteId && x.Id == id);
+                var dbEntity = context.Set<LanguageDbEntity>()
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Id == id && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
             }
         }
@@ -40,7 +43,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>().FirstOrDefault(x => x.SiteId == siteId && x.Name == name);
+                var dbEntity = context.Set<LanguageDbEntity>()
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Name == name && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
             }
         }
@@ -49,7 +53,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>().FirstOrDefault(x => x.SiteId == siteId && x.CultureName == cultureName);
+                var dbEntity = context.Set<LanguageDbEntity>()
+                    .FirstOrDefault(x => x.SiteId == siteId && x.CultureName == cultureName && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
             }
         }
@@ -58,7 +63,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>().FirstOrDefault(x => x.SiteId == siteId && x.Url == url);
+                var dbEntity = context.Set<LanguageDbEntity>()
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Url == url && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
             }
         }

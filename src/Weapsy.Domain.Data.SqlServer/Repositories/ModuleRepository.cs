@@ -22,7 +22,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ModuleDbEntity>().FirstOrDefault(x => x.Id == id);
+                var dbEntity = context.Set<ModuleDbEntity>()
+                    .FirstOrDefault(x => x.Id == id && x.Status != ModuleStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Module>(dbEntity) : null;
             }
         }
@@ -31,7 +32,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ModuleDbEntity>().FirstOrDefault(x => x.SiteId ==  siteId && x.Id == id);
+                var dbEntity = context.Set<ModuleDbEntity>()
+                    .FirstOrDefault(x => x.SiteId ==  siteId && x.Id == id && x.Status != ModuleStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Module>(dbEntity) : null;
             }
         }
@@ -40,7 +42,9 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntities = context.Set<ModuleDbEntity>().Where(x => x.Status != ModuleStatus.Deleted).ToList();
+                var dbEntities = context.Set<ModuleDbEntity>()
+                    .Where(x => x.Status != ModuleStatus.Deleted)
+                    .ToList();
                 return _mapper.Map<ICollection<Module>>(dbEntities);
             }
         }
@@ -49,7 +53,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                return context.Set<ModuleDbEntity>().Count(x => x.ModuleTypeId == moduleTypeId && x.Status != ModuleStatus.Deleted);
+                return context.Set<ModuleDbEntity>()
+                    .Count(x => x.ModuleTypeId == moduleTypeId && x.Status != ModuleStatus.Deleted);
             }
         }
 
@@ -57,7 +62,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                return context.Set<ModuleDbEntity>().Count(x => x.Id == moduleId && x.Status != ModuleStatus.Deleted);
+                return context.Set<ModuleDbEntity>()
+                    .Count(x => x.Id == moduleId && x.Status != ModuleStatus.Deleted);
             }
         }
 

@@ -37,7 +37,7 @@ namespace Weapsy.Reporting.Data.Default.Sites
             {
                 var site = _siteRepository.GetByName(name);
 
-                if (site == null || site.Status == SiteStatus.Deleted)
+                if (site == null)
                     return null;
 
                 var siteInfo = _mapper.Map<SiteInfo>(site);
@@ -70,7 +70,7 @@ namespace Weapsy.Reporting.Data.Default.Sites
         {
             var site = _siteRepository.GetById(id);
 
-            if (site == null || site.Status == SiteStatus.Deleted)
+            if (site == null)
                 return null;
 
             var model = _mapper.Map<SiteAdminModel>(site);

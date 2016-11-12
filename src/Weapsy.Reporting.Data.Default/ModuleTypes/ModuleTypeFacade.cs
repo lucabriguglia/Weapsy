@@ -29,26 +29,40 @@ namespace Weapsy.Reporting.Data.Default.ModuleTypes
 
         public IEnumerable<ModuleTypeAdminListModel> GetAllForAdmin(Guid appId = default(Guid))
         {
-            var moduleTypes = _moduleTypeRepository.GetAll().Where(x => x.Status != ModuleTypeStatus.Deleted);
+            var moduleTypes = _moduleTypeRepository.GetAll();
             return _mapper.Map<IEnumerable<ModuleTypeAdminListModel>>(moduleTypes);
         }
 
         public ModuleTypeAdminModel GetAdminModel(Guid moduleTypeId)
         {
             var moduleType = _moduleTypeRepository.GetById(moduleTypeId);
-            if (moduleType == null || moduleType.Status == ModuleTypeStatus.Deleted)
+
+            if (moduleType == null)
                 return null;
+
             var result = _mapper.Map<ModuleTypeAdminModel>(moduleType);
+
             foreach (var app in _appRepository.GetAll())
-                result.AvailableApps.Add(new ModuleTypeAdminModel.App { Id = app.Id, Name = app.Name });
+                result.AvailableApps.Add(new ModuleTypeAdminModel.App
+                {
+                    Id = app.Id,
+                    Name = app.Name
+                });
+
             return result;
         }
 
         public ModuleTypeAdminModel GetDefaultAdminModel()
         {
             var result = new ModuleTypeAdminModel();
+
             foreach (var app in _appRepository.GetAll())
-                result.AvailableApps.Add(new ModuleTypeAdminModel.App { Id = app.Id, Name = app.Name });
+                result.AvailableApps.Add(new ModuleTypeAdminModel.App
+                {
+                    Id = app.Id,
+                    Name = app.Name
+                });
+
             return result;
         }
 

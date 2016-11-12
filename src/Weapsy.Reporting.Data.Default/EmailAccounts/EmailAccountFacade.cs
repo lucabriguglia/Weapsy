@@ -25,16 +25,14 @@ namespace Weapsy.Reporting.Data.Default.EmailAccounts
 
         public IEnumerable<EmailAccountModel> GetAll(Guid siteId)
         {
-            var emailAccounts = _emailAccountRepository.GetAll(siteId).Where(x => x.Status != EmailAccountStatus.Deleted);
+            var emailAccounts = _emailAccountRepository.GetAll(siteId);
             return _mapper.Map<IEnumerable<EmailAccountModel>>(emailAccounts);
         }
 
         public EmailAccountModel Get(Guid siteId, Guid id)
         {
             var emailAccount = _emailAccountRepository.GetById(siteId, id);
-            if (emailAccount == null || emailAccount.Status == EmailAccountStatus.Deleted)
-                return null;
-            return _mapper.Map<EmailAccountModel>(emailAccount);
+            return emailAccount == null ? null : _mapper.Map<EmailAccountModel>(emailAccount);
         }
     }
 }

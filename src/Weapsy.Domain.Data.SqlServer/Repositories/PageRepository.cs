@@ -31,7 +31,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                 var dbEntity = context.Set<PageDbEntity>()
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.Id == id);
+                    .FirstOrDefault(x => x.Id == id && x.Status != PageStatus.Deleted);
 
                 LoadActivePageModules(context, dbEntity);
 
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                 var dbEntity = context.Set<PageDbEntity>()
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.SiteId == siteId &&  x.Id == id);
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Id == id && x.Status != PageStatus.Deleted);
 
                 LoadActivePageModules(context, dbEntity);
 
@@ -61,7 +61,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                 var dbEntity = context.Set<PageDbEntity>()
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.SiteId == siteId && x.Name == name);
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Name == name && x.Status != PageStatus.Deleted);
 
                 LoadActivePageModules(context, dbEntity);
 
@@ -76,7 +76,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                 var dbEntity = context.Set<PageDbEntity>()
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.SiteId == siteId && x.Url == url);
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Url == url && x.Status != PageStatus.Deleted);
 
                 LoadActivePageModules(context, dbEntity);
 

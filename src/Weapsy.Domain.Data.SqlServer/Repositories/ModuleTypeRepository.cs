@@ -23,7 +23,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ModuleTypeDbEntity>().FirstOrDefault(x => x.Id == id);
+                var dbEntity = context.Set<ModuleTypeDbEntity>()
+                    .FirstOrDefault(x => x.Id == id && x.Status != ModuleTypeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<ModuleType>(dbEntity) : null;
             }
         }
@@ -32,7 +33,8 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ModuleTypeDbEntity>().FirstOrDefault(x => x.Name == name);
+                var dbEntity = context.Set<ModuleTypeDbEntity>()
+                    .FirstOrDefault(x => x.Name == name && x.Status != ModuleTypeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<ModuleType>(dbEntity) : null;
             }
         }
@@ -42,7 +44,9 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = context.Set<ModuleTypeDbEntity>()
-                    .FirstOrDefault(x => x.ViewName == viewComponentName && x.ViewType == ViewType.ViewComponent);
+                    .FirstOrDefault(x => x.ViewName == viewComponentName 
+                        && x.ViewType == ViewType.ViewComponent
+                        && x.Status != ModuleTypeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<ModuleType>(dbEntity) : null;
             }
         }
@@ -51,7 +55,9 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntities = context.Set<ModuleTypeDbEntity>().Where(x => x.Status != ModuleTypeStatus.Deleted).ToList();
+                var dbEntities = context.Set<ModuleTypeDbEntity>()
+                    .Where(x => x.Status != ModuleTypeStatus.Deleted)
+                    .ToList();
                 return _mapper.Map<ICollection<ModuleType>>(dbEntities);
             }
         }

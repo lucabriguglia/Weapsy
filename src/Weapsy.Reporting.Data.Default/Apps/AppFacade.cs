@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Weapsy.Domain.Apps;
 using Weapsy.Reporting.Apps;
@@ -20,7 +19,7 @@ namespace Weapsy.Reporting.Data.Default.Apps
 
         public IEnumerable<AppAdminListModel> GetAllForAdmin()
         {
-            var apps = _appRepository.GetAll().Where(x => x.Status != AppStatus.Deleted);
+            var apps = _appRepository.GetAll();
             return _mapper.Map<IEnumerable<AppAdminListModel>>(apps);
         }
 
@@ -28,10 +27,7 @@ namespace Weapsy.Reporting.Data.Default.Apps
         {
             var app = _appRepository.GetById(appId);
 
-            if (app == null || app.Status == AppStatus.Deleted)
-                return null;
-
-            return _mapper.Map<AppAdminModel>(app);
+            return app == null ? null : _mapper.Map<AppAdminModel>(app);
         }
 
         public AppAdminModel GetDefaultAdminModel()

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Themes;
@@ -26,16 +24,14 @@ namespace Weapsy.Reporting.Data.Default.Themes
 
         public IEnumerable<ThemeAdminModel> GetAllForAdmin()
         {
-            var themes = _themeRepository.GetAll().Where(x => x.Status != ThemeStatus.Deleted);
+            var themes = _themeRepository.GetAll();
             return _mapper.Map<IEnumerable<ThemeAdminModel>>(themes);
         }
 
         public ThemeAdminModel GetForAdmin(Guid id)
         {
             var theme = _themeRepository.GetById(id);
-            if (theme == null || theme.Status == ThemeStatus.Deleted)
-                return null;
-            return _mapper.Map<ThemeAdminModel>(theme);
+            return theme == null ? null : _mapper.Map<ThemeAdminModel>(theme);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
@@ -53,7 +52,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
                 var menuModel = new MenuViewModel
                 {
                     Name = menu.Name,
-                    MenuItems = PopulateMenuItems(menu.MenuItems.Where(x => x.Status == MenuItemStatus.Active), Guid.Empty, language)
+                    MenuItems = PopulateMenuItems(menu.MenuItems, Guid.Empty, language)
                 };
 
                 return menuModel;
@@ -89,7 +88,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
                 {
                     var page = _pageRepository.GetById(menuItem.PageId);
 
-                    if (page == null || page.Status != PageStatus.Active)
+                    if (page == null)
                         continue;
 
                     url = language == null ? $"/{page.Url}" : $"/{language.Url}/{page.Url}";
@@ -130,12 +129,12 @@ namespace Weapsy.Reporting.Data.Default.Menus
         {
             var menu = _menuRepository.GetById(siteId, menuId);
 
-            if (menu == null || menu.Status == MenuStatus.Deleted)
+            if (menu == null)
                 return new MenuItemAdminModel();
 
             var menuItem = menu.MenuItems.FirstOrDefault(x => x.Id == menuItemId);
 
-            if (menuItem == null || menuItem.Status == MenuItemStatus.Deleted)
+            if (menuItem == null)
                 return new MenuItemAdminModel();
 
             var result = new MenuItemAdminModel
@@ -226,7 +225,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
 
         public IEnumerable<MenuAdminModel> GetAllForAdmin(Guid siteId)
         {
-            var menus = _menuRepository.GetAll(siteId).Where(x => x.Status != MenuStatus.Deleted);
+            var menus = _menuRepository.GetAll(siteId);
             return _mapper.Map<IEnumerable<MenuAdminModel>>(menus);
         }
 
