@@ -22,6 +22,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         private Guid _moduleId1;
         private Guid _pageModuleId1;
         private Guid _languageId1;
+        private Guid _deletedPageId;
 
         [SetUp]
         public void SetUp()
@@ -36,6 +37,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                 _moduleId1 = Guid.NewGuid();
                 _pageModuleId1 = Guid.NewGuid();
                 _languageId1 = Guid.NewGuid();
+                _deletedPageId = Guid.NewGuid();
 
                 context.Set<PageDbEntity>().AddRange(
                     new PageDbEntity
@@ -88,11 +90,24 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                     },
                     new PageDbEntity
                     {
+                        Id = _deletedPageId,
                         Status = PageStatus.Deleted
                     }
                 );
 
                 context.SaveChanges();
+            }
+        }
+
+        [Test]
+        public void Should_return_null_if_page_is_deleted()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var page = repository.GetById(_deletedPageId);
+
+                Assert.Null(page);
             }
         }
 

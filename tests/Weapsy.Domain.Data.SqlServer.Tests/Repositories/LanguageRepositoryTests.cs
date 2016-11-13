@@ -16,6 +16,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         private Guid _siteId;
         private Guid _languageId1;
         private Guid _languageId2;
+        private Guid _deletedLanguageId;
 
         [SetUp]
         public void SetUp()
@@ -27,6 +28,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                 _siteId = Guid.NewGuid();
                 _languageId1 = Guid.NewGuid();
                 _languageId2 = Guid.NewGuid();
+                _deletedLanguageId = Guid.NewGuid();
 
                 context.Set<LanguageDbEntity>().AddRange(
                     new LanguageDbEntity
@@ -49,11 +51,24 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                     },
                     new LanguageDbEntity
                     {
+                        Id = _deletedLanguageId,
                         Status = LanguageStatus.Deleted
                     }
                 );
 
                 context.SaveChanges();                
+            }
+        }
+
+        [Test]
+        public void Should_return_null_if_language_is_deleted()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var language = repository.GetById(_deletedLanguageId);
+
+                Assert.Null(language);
             }
         }
 

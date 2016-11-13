@@ -15,6 +15,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _moduleTypeId1;
         private Guid _moduleTypeId2;
+        private Guid _deletedModuleTypeId;
 
         [SetUp]
         public void SetUp()
@@ -25,6 +26,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
             {
                 _moduleTypeId1 = Guid.NewGuid();
                 _moduleTypeId2 = Guid.NewGuid();
+                _deletedModuleTypeId = Guid.NewGuid();
 
                 context.Set<ModuleTypeDbEntity>().AddRange(
                     new ModuleTypeDbEntity
@@ -45,11 +47,24 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                     },
                     new ModuleTypeDbEntity
                     {
+                        Id = _deletedModuleTypeId,
                         Status = ModuleTypeStatus.Deleted
                     }
                 );
 
                 context.SaveChanges();
+            }
+        }
+
+        [Test]
+        public void Should_return_null_if_module_type_is_deleted()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var moduleType = repository.GetById(_deletedModuleTypeId);
+
+                Assert.Null(moduleType);
             }
         }
 

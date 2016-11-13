@@ -22,6 +22,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         private Guid _menuItemId1;
         private Guid _menuItemId2;
         private Guid _language1;
+        private Guid _deletedMenuId;
 
         [SetUp]
         public void SetUp()
@@ -36,6 +37,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                 _menuItemId1 = Guid.NewGuid();
                 _menuItemId2 = Guid.NewGuid();
                 _language1 = Guid.NewGuid();
+                _deletedMenuId = Guid.NewGuid();
 
                 context.Set<MenuDbEntity>().AddRange(
                     new MenuDbEntity
@@ -86,11 +88,24 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                     },
                     new MenuDbEntity
                     {
+                        Id = _deletedMenuId,
                         Status = MenuStatus.Deleted
                     }
                 );
 
                 context.SaveChanges();
+            }
+        }
+
+        [Test]
+        public void Should_return_null_if_menu_is_deleted()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var menu = repository.GetById(_deletedMenuId);
+
+                Assert.Null(menu);
             }
         }
 

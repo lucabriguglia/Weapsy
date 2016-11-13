@@ -14,6 +14,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _themeId1;
         private Guid _themeId2;
+        private Guid _deletedThemeId;
 
         [SetUp]
         public void SetUp()
@@ -24,6 +25,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
             {
                 _themeId1 = Guid.NewGuid();
                 _themeId2 = Guid.NewGuid();
+                _deletedThemeId = Guid.NewGuid();
 
                 context.Set<ThemeDbEntity>().AddRange
                 (
@@ -45,11 +47,24 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                     },
                     new ThemeDbEntity
                     {
+                        Id = _deletedThemeId,
                         Status = ThemeStatus.Deleted
                     }
                 );
 
                 context.SaveChanges();
+            }
+        }
+
+        [Test]
+        public void Should_return_null_if_theme_is_deleted()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var theme = repository.GetById(_deletedThemeId);
+
+                Assert.Null(theme);
             }
         }
 

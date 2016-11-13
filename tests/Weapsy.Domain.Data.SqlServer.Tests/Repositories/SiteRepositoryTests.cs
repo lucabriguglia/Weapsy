@@ -14,6 +14,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId1;
         private Guid _siteId2;
+        private Guid _deletedSiteId;
 
         [SetUp]
         public void SetUp()
@@ -24,6 +25,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
             {
                 _siteId1 = Guid.NewGuid();
                 _siteId2 = Guid.NewGuid();
+                _deletedSiteId = Guid.NewGuid();
 
                 context.Set<SiteDbEntity>().AddRange(
                     new SiteDbEntity
@@ -44,11 +46,24 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
                     },
                     new SiteDbEntity
                     {
+                        Id = _deletedSiteId,
                         Status = SiteStatus.Deleted
                     }
                 );
 
                 context.SaveChanges();
+            }
+        }
+
+        [Test]
+        public void Should_return_null_if_site_is_deleted()
+        {
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var site = repository.GetById(_deletedSiteId);
+
+                Assert.Null(site);
             }
         }
 
