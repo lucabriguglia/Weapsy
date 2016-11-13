@@ -58,6 +58,7 @@ weapsy.controlPanel = (function ($) {
                 }
                 else {
                     $(ui.item.context).text("Saving...");
+                    $(ui.item.context).css("margin-bottom", "10px");
 
                     var title = $(ui.item.context).attr("data-module-type-title");
                     var zone = $(ui.item[0].parentNode).attr("data-zone-name");
