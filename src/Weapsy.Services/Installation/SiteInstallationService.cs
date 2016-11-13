@@ -16,6 +16,7 @@ using Weapsy.Domain.Sites.Commands;
 
 namespace Weapsy.Services.Installation
 {
+    // temporary implementation, it will be based on site templates
     public class SiteInstallationService : ISiteInstallationService
     {
         private readonly ISiteRepository _siteRepository;
@@ -23,6 +24,7 @@ namespace Weapsy.Services.Installation
         private readonly IValidator<UpdateSiteDetails> _updateSiteDetailsSiteValidator;
         private readonly ILanguageRepository _languageRepository;
         private readonly IValidator<CreateLanguage> _createLanguageValidator;
+        private readonly IValidator<ActivateLanguage> _activateLanguageValidator;
         private readonly ILanguageSortOrderGenerator _languageSortOrderGenerator;
         private readonly IPageRepository _pageRepository;
         private readonly IValidator<CreatePage> _createPageValidator;
@@ -40,6 +42,7 @@ namespace Weapsy.Services.Installation
             IValidator<UpdateSiteDetails> updateSiteDetailsSiteValidator,
             ILanguageRepository languageRepository,
             IValidator<CreateLanguage> createLanguageValidator,
+            IValidator<ActivateLanguage> activateLanguageValidator,
             ILanguageSortOrderGenerator languageSortOrderGenerator,
             IPageRepository pageRepository,
             IValidator<CreatePage> createPageValidator,
@@ -57,6 +60,7 @@ namespace Weapsy.Services.Installation
             _updateSiteDetailsSiteValidator = updateSiteDetailsSiteValidator;
             _languageRepository = languageRepository;
             _createLanguageValidator = createLanguageValidator;
+            _activateLanguageValidator = activateLanguageValidator;
             _languageSortOrderGenerator = languageSortOrderGenerator;
             _pageRepository = pageRepository;
             _createPageValidator = createPageValidator;
@@ -78,8 +82,6 @@ namespace Weapsy.Services.Installation
 
         public void InstallDefaultSite()
         {
-            // temporary implementation, it will be based on site templates
-
             var siteId = Guid.NewGuid();
             var englishLanguageId = Guid.NewGuid();
             var mainMenuId = Guid.NewGuid();
@@ -105,6 +107,12 @@ namespace Weapsy.Services.Installation
                 CultureName = "en",
                 Url = "en"
             }, _createLanguageValidator, _languageSortOrderGenerator);
+
+            language.Activate(new ActivateLanguage
+            {
+                SiteId = siteId,
+                Id = englishLanguageId
+            }, _activateLanguageValidator);
 
             _languageRepository.Create(language);
 
