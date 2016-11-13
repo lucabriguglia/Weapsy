@@ -58,7 +58,7 @@ namespace Weapsy.Domain.Tests.Sites
         [Test]
         public void Should_set_id_in_site_reopened_event()
         {
-            var site = SiteFactory.Site();
+            var site = SiteFactory.CreateNew();
 
             site.Close();
             site.Reopen();
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Tests.Sites
         [Test]
         public void Should_set_name_in_site_reopened_event()
         {
-            var site = SiteFactory.Site();
+            var site = SiteFactory.CreateNew();
 
             site.Close();
             site.Reopen();

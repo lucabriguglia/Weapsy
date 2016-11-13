@@ -57,5 +57,15 @@ namespace Weapsy.Domain.Sites.Rules
                 || site.Status == SiteStatus.Deleted
                 || (siteId != Guid.Empty && site.Id == siteId);
         }
+
+        public bool IsPageSetAsHomePage(Guid siteId, Guid pageId)
+        {
+            var site = _siteRepository.GetById(siteId);
+
+            if (site == null)
+                return false;
+
+            return site.HomePageId == pageId;
+        }
     }
 }

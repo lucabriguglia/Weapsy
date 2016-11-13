@@ -9,12 +9,12 @@ namespace Weapsy.Tests.Factories
 {
     public static class SiteFactory
     {
-        public static Site Site()
+        public static Site CreateNew()
         {
-            return Site(Guid.NewGuid(), "My Site");
+            return CreateNew(Guid.NewGuid(), "My Site");
         }
 
-        public static Site Site(Guid id, string name)
+        public static Site CreateNew(Guid id, string name)
         {
             var command = new CreateSite
             {
@@ -25,7 +25,23 @@ namespace Weapsy.Tests.Factories
             var validatorMock = new Mock<IValidator<CreateSite>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
-            return Domain.Sites.Site.CreateNew(command, validatorMock.Object);
+            return Site.CreateNew(command, validatorMock.Object);
+        }
+
+        public static Site Update(this Site site, Guid homePageId)
+        {
+            var command = new UpdateSiteDetails
+            {
+                SiteId = site.Id,
+                HomePageId = homePageId
+            };
+
+            var validatorMock = new Mock<IValidator<UpdateSiteDetails>>();
+            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
+
+            site.UpdateDetails(command, validatorMock.Object);
+
+            return site;
         }
     }
 }

@@ -3,6 +3,7 @@ using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Rules;
+using Weapsy.Tests.Factories;
 
 namespace Weapsy.Domain.Tests.Sites.Rules
 {
@@ -203,6 +204,41 @@ namespace Weapsy.Domain.Tests.Sites.Rules
             var actual = sut.IsSiteUrlUnique(url, siteId);
 
             Assert.AreEqual(true, actual);
+        }
+
+        [Test]
+        public void Should_return_true_if_page_is_set_as_home_page()
+        {
+            var siteId = Guid.NewGuid();
+            var pageId = Guid.NewGuid();
+
+            var site = SiteFactory.CreateNew();
+            site.Update(pageId);
+
+            var repositoryMock = new Mock<ISiteRepository>();
+            repositoryMock.Setup(x => x.GetById(siteId)).Returns(site);
+
+            var sut = new SiteRules(repositoryMock.Object);
+
+            var actual = sut.IsPageSetAsHomePage(siteId, pageId);
+
+            Assert.AreEqual(true, actual);
+        }
+
+        [Test]
+        public void Should_return_false_if_page_is_not_set_as_home_page()
+        {
+            var siteId = Guid.NewGuid();
+            var pageId = Guid.NewGuid();
+
+            var repositoryMock = new Mock<ISiteRepository>();
+            repositoryMock.Setup(x => x.GetById(siteId)).Returns(new Site());
+
+            var sut = new SiteRules(repositoryMock.Object);
+
+            var actual = sut.IsPageSetAsHomePage(siteId, pageId);
+
+            Assert.AreEqual(false, actual);
         }
     }
 }

@@ -103,7 +103,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         [Test]
         public void Should_save_new_site()
         {
-            var newSite = SiteFactory.Site(Guid.NewGuid(), "Name 3");
+            var newSite = SiteFactory.CreateNew(Guid.NewGuid(), "Name 3");
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
@@ -125,7 +125,7 @@ namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
         {
             const string newSiteName = "New Title 1";
 
-            var siteToUpdate = SiteFactory.Site(_siteId1, newSiteName);
+            var siteToUpdate = SiteFactory.CreateNew(_siteId1, newSiteName);
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
