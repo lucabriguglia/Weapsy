@@ -9,6 +9,9 @@ An app can display content through modules added to dynamic pages or through sta
 The first one included is the Text app used to add html modules.
 Right after the first RTM my plan is to develop a Blog and a Forum app.
 
+# Demo
+Coming Soon
+
 # Trello Board
 https://trello.com/b/jL79sV09/weapsy
 
