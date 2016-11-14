@@ -1,16 +1,7 @@
 ﻿@model Weapsy.Reporting.Pages.ModuleModel
-@inject SignInManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> SignInManager
 
 <div id="@Model.Id" class="panel panel-default module" data-module-id="@Model.Id">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <div class="panel-heading">
-            <div class="panel-title">
-                <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
-                <span class="pull-right">@await Component.InvokeAsync("ModuleActions", new { model = Model })</span>                
-            </div>
-        </div>
-    }
+    @await Component.InvokeAsync("ModuleActions", new { model = Model })
     @*<div>
     @Model.Title
     </div>*@

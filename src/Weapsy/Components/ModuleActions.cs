@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Pages;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Components
 {
@@ -10,15 +12,21 @@ namespace Weapsy.Components
     public class ModuleActionsViewComponent : BaseViewComponent
     {
         private readonly IContextService _contextService;
+        private readonly IUserService _userService;
 
-        public ModuleActionsViewComponent(IContextService contextService)
+        public ModuleActionsViewComponent(IContextService contextService, 
+            IUserService userService)
             : base(contextService)
         {
             _contextService = contextService;
+            _userService = userService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(ModuleModel model)
         {
+            if (!_userService.IsUserAuthorized(User, new List<string> { "Administrator" }))
+                return Content(string.Empty);
+
             return View(model);
         }
     }
