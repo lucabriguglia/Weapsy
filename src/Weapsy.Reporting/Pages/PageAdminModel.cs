@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 
 namespace Weapsy.Reporting.Pages
@@ -22,6 +23,7 @@ namespace Weapsy.Reporting.Pages
         public Guid PageId { get; set; }
         public Guid LanguageId { get; set; }
         public string LanguageName { get; set; }
+        public LanguageStatus LanguageStatus { get; set; }
         public string Url { get; set; }
         public string Title { get; set; }
         public string MetaDescription { get; set; }

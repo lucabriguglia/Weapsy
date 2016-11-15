@@ -67,6 +67,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                     PageId = page.Id,
                     LanguageId = language.Id,
                     LanguageName = language.Name,
+                    LanguageStatus = language.Status,
                     Url = url,
                     Title = title,
                     MetaDescription = metaDescription,
@@ -101,7 +102,8 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 result.PageLocalisations.Add(new PageLocalisationAdminModel
                 {
                     LanguageId = language.Id,
-                    LanguageName = language.Name
+                    LanguageName = language.Name,
+                    LanguageStatus = language.Status
                 });
             }
 

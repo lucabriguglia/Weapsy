@@ -167,6 +167,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
                     MenuItemId = menuItem.Id,
                     LanguageId = language.Id,
                     LanguageName = language.Name,
+                    LanguageStatus = language.Status,
                     Text = text,
                     Title = title
                 });

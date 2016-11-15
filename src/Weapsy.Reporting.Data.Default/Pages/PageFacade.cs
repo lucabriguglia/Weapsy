@@ -107,6 +107,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                     PageModuleId = pageModule.Id,
                     LanguageId = language.Id,
                     LanguageName = language.Name,
+                    LanguageStatus = language.Status,
                     Title = title
                 });
             }

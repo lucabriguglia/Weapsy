@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 
 namespace Weapsy.Reporting.Menus
@@ -18,8 +19,9 @@ namespace Weapsy.Reporting.Menus
         public class MenuItemLocalisation
         {
             public Guid MenuItemId { get; set; }
-            public Guid LanguageId { get; set; }
+            public Guid LanguageId { get; set; }            
             public string LanguageName { get; set; }
+            public LanguageStatus LanguageStatus { get; set; }
             public string Text { get; set; }
             public string Title { get; set; }
         }

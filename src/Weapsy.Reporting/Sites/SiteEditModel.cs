@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Weapsy.Domain.Languages;
 
 namespace Weapsy.Reporting.Sites
 {
@@ -24,6 +25,7 @@ namespace Weapsy.Reporting.Sites
         public Guid SiteId { get; set; }
         public Guid LanguageId { get; set; }
         public string LanguageName { get; set; }
+        public LanguageStatus LanguageStatus { get; set; }
         public string Title { get; set; }
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
