@@ -2,15 +2,26 @@
 
 @model IEnumerable<Weapsy.Reporting.Languages.LanguageInfo>
 
-@if (Model.Count() > 1)
+@if (Model != null)
 {
-    <ul class="nav navbar-nav">
-        <li><a>|</a></li>
-        @foreach (var language in Model)
-        {
-            <li>
-                <a href="/home/setlanguage?culture=@language.Url&returnUrl=@Context.Request.Path" title="@language.Name">@language.Name</a>
-            </li>
-        }
-    </ul>
+    @if (Model.Any())
+    {
+        @*<ul class="nav navbar-nav">
+            <li><a>|</a></li>
+            @foreach (var language in Model)
+            {
+                <li>
+                    <a href="/home/setlanguage?culture=@language.Url&returnUrl=@Context.Request.Path" title="@language.Name">@language.Name</a>
+                </li>
+            }
+        </ul>*@
+        <div class="nav navbar-nav navbar-left">
+            <select id="langId" name="langId" class="form-control align-to-bar" style="position:relative; top: 10px;">
+                @foreach (var langItem in Model)
+                {
+                    <option value="@langItem.Id">@langItem.Name</option>
+                }
+            </select>
+        </div>
+    }
 }
