@@ -32,7 +32,7 @@
             </li>
             @foreach (var siteLocalisation in Model.SiteLocalisations)
             {
-                var status = siteLocalisation.LanguageStatus == LanguageStatus.Active ? "" : " (NOT ACTIVE)";
+                var status = siteLocalisation.LanguageStatus == LanguageStatus.Active ? "" : " *";
                 <li>
                     <a href="#@siteLocalisation.LanguageName" data-toggle="tab">@siteLocalisation.LanguageName@status</a>
                 </li>
@@ -113,6 +113,7 @@
                 </div>
             }
         </div>
+        * Language Not Active
     </div>
     <div id="Appearance" class="tab-pane">
         <div style="font-style: italic;">

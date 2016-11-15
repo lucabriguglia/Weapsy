@@ -30,7 +30,7 @@
             </li>
             @foreach (var pageLocalisation in Model.PageLocalisations)
             {
-                var status = pageLocalisation.LanguageStatus == LanguageStatus.Active ? "" : " (NOT ACTIVE)";
+                var status = pageLocalisation.LanguageStatus == LanguageStatus.Active ? "" : " *";
                 <li>
                     <a href="#@pageLocalisation.LanguageName" data-toggle="tab">@pageLocalisation.LanguageName@status</a>
                 </li>
@@ -134,6 +134,7 @@
                 </div>
             }
         </div>
+        * Language Not Active
     </div>
     <div id="Permissions" class="tab-pane">
         <div class="form-group has-feedback">

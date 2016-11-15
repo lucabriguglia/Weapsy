@@ -14,8 +14,11 @@ weapsy.admin.menuItem = (function ($, ko) {
     }
 
     function MenuItemLocalisation(data) {
+        var languageName = data.languageName;
+        if (data.languageStatus != 1)
+            languageName += " *";
         this.languageId = ko.observable(data.languageId);
-        this.languageName = ko.observable(data.languageName);
+        this.languageName = ko.observable(languageName);
         this.text = ko.observable(data.text);
         this.title = ko.observable(data.title);
     }
