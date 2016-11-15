@@ -93,9 +93,3 @@ ol.sortable, ol.sortable ol {
 #page {
     margin-top:20px;
 }
-
-/* Language dropdown alignment relative to menu bar (admin) */
-.align-to-bar{
-    position: relative;
-    top:10px;
-}

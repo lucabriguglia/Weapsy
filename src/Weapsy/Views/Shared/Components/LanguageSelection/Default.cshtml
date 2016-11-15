@@ -15,8 +15,8 @@
                 </li>
             }
         </ul>*@
-        <div class="nav navbar-nav">
-            <select id="langId" name="langId" class="form-control align-to-bar">
+        <div class="nav navbar-nav navbar-left">
+            <select id="langId" name="langId" class="form-control align-to-bar" style="position:relative; top: 10px;">
                 @foreach (var langItem in Model)
                 {
                     <option value="@langItem.Id">@langItem.Name</option>
