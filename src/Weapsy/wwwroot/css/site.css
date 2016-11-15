@@ -93,3 +93,16 @@ ol.sortable, ol.sortable ol {
 #page {
     margin-top:20px;
 }
+
+.align-to-bar{
+     position:relative;
+     top: 10px;
+}
+
+.action-panel:hover{
+    cursor: pointer;
+}
+
+.action-panel .panel-heading{
+    display:none;
+}

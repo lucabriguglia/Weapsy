@@ -3,6 +3,18 @@
 weapsy.controlPanel = (function ($) {
     $(document).ready(function () {
         if ($('#control-panel').length) init();
+
+        //To show panel header when mouse enters the panel and hide when it leaves
+        $(".action-panel").each(function () {
+            var panelHeading = $(this).find(".panel-heading");
+            $(this).bind("mouseover", function () {
+                $(panelHeading).slideDown(300);
+            });
+
+            $(this).bind("mouseleave", function () {
+                $(panelHeading).slideUp(300);
+            });
+        });
     });
 
     function init() {

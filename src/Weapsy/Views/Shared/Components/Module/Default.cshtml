@@ -1,7 +1,7 @@
 ﻿@model Weapsy.Reporting.Pages.ModuleModel
 @inject SignInManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> SignInManager
 
-<div id="@Model.Id" class="panel panel-default module" data-module-id="@Model.Id">
+<div id="@Model.Id" class="panel panel-default module action-panel" data-module-id="@Model.Id">
     @if (SignInManager.IsSignedIn(User))
     {
         <div class="panel-heading">
