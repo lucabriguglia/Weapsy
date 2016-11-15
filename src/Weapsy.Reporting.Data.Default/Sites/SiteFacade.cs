@@ -4,6 +4,7 @@ using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Sites;
 using Weapsy.Reporting.Sites;
 using System.Linq;
+using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Pages;
@@ -13,19 +14,19 @@ namespace Weapsy.Reporting.Data.Default.Sites
     public class SiteFacade : ISiteFacade
     {
         private readonly ISiteRepository _siteRepository;
-        private readonly ILanguageFacade _languageFacade;
+        private readonly ILanguageRepository _languageRepository;
         private readonly IPageFacade _pageFacade;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
         public SiteFacade(ISiteRepository siteRepository,
-            ILanguageFacade languageFacade,
+            ILanguageRepository languageRepository,
             IPageFacade pageFacade,
             ICacheManager cacheManager,
             IMapper mapper)
         {
             _siteRepository = siteRepository;
-            _languageFacade = languageFacade;
+            _languageRepository = languageRepository;
             _pageFacade = pageFacade;
             _cacheManager = cacheManager;
             _mapper = mapper;
@@ -77,7 +78,7 @@ namespace Weapsy.Reporting.Data.Default.Sites
 
             model.SiteLocalisations.Clear();
 
-            foreach (var language in _languageFacade.GetAllActive(id))
+            foreach (var language in _languageRepository.GetAll(id))
             {
                 var title = string.Empty;
                 var metaDescription = string.Empty;
@@ -99,6 +100,7 @@ namespace Weapsy.Reporting.Data.Default.Sites
                     SiteId = site.Id,
                     LanguageId = language.Id,
                     LanguageName = language.Name,
+                    LanguageStatus = language.Status,
                     Title = title,
                     MetaDescription = metaDescription,
                     MetaKeywords = metaKeywords

@@ -1,4 +1,6 @@
-﻿@model Weapsy.Reporting.Sites.SiteAdminModel
+﻿@using System.Threading.Tasks
+@using Weapsy.Domain.Languages
+@model Weapsy.Reporting.Sites.SiteAdminModel
 
 <ul class="nav nav-tabs">
     <li class="active">
@@ -30,8 +32,9 @@
             </li>
             @foreach (var siteLocalisation in Model.SiteLocalisations)
             {
+                var status = siteLocalisation.LanguageStatus == LanguageStatus.Active ? "" : " (NOT ACTIVE)";
                 <li>
-                    <a href="#@siteLocalisation.LanguageName" data-toggle="tab">@siteLocalisation.LanguageName</a>
+                    <a href="#@siteLocalisation.LanguageName" data-toggle="tab">@siteLocalisation.LanguageName@status</a>
                 </li>
             }
         </ul>

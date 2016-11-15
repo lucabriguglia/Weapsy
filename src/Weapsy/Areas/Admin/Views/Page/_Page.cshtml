@@ -1,4 +1,5 @@
-﻿@model Weapsy.Reporting.Pages.PageAdminModel
+﻿@using Weapsy.Domain.Languages
+@model Weapsy.Reporting.Pages.PageAdminModel
 
 <ul class="nav nav-tabs">
     <li class="active">
@@ -29,8 +30,9 @@
             </li>
             @foreach (var pageLocalisation in Model.PageLocalisations)
             {
+                var status = pageLocalisation.LanguageStatus == LanguageStatus.Active ? "" : " (NOT ACTIVE)";
                 <li>
-                    <a href="#@pageLocalisation.LanguageName" data-toggle="tab">@pageLocalisation.LanguageName</a>
+                    <a href="#@pageLocalisation.LanguageName" data-toggle="tab">@pageLocalisation.LanguageName@status</a>
                 </li>
             }
         </ul>
