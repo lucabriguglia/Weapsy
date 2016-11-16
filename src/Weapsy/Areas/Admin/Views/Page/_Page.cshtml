@@ -134,7 +134,10 @@
                 </div>
             }
         </div>
-        * Language Not Active
+        @if (Model.PageLocalisations.Any(x => x.LanguageStatus != LanguageStatus.Active))
+        {
+            <span style="font-style: italic;">* Language Not Active</span>
+        }
     </div>
     <div id="Permissions" class="tab-pane">
         <div class="form-group has-feedback">

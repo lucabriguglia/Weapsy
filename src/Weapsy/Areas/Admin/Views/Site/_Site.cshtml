@@ -113,7 +113,10 @@
                 </div>
             }
         </div>
-        * Language Not Active
+        @if (Model.SiteLocalisations.Any(x => x.LanguageStatus != LanguageStatus.Active))
+        {
+            <span style="font-style: italic;">* Language Not Active</span>
+        }
     </div>
     <div id="Appearance" class="tab-pane">
         <div style="font-style: italic;">

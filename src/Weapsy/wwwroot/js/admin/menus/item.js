@@ -19,6 +19,7 @@ weapsy.admin.menuItem = (function ($, ko) {
             languageName += " *";
         this.languageId = ko.observable(data.languageId);
         this.languageName = ko.observable(languageName);
+        this.languageStatus = ko.observable(data.languageStatus);
         this.text = ko.observable(data.text);
         this.title = ko.observable(data.title);
     }
@@ -63,6 +64,11 @@ weapsy.admin.menuItem = (function ($, ko) {
         self.title = ko.observable();
         self.menuItemLocalisations = ko.observableArray([]);
         self.menuItemPermissions = ko.observableArray([]);
+        self.menuItemLocalisationsNotActive = ko.computed(function () {
+            return ko.utils.arrayFilter(self.menuItemLocalisations(), function (localisation) {
+                return localisation.languageStatus != 1;
+            });
+        });
 
         self.emptyId = "00000000-0000-0000-0000-000000000000";
 
