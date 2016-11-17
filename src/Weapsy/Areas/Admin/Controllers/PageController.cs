@@ -47,7 +47,7 @@ namespace Weapsy.Areas.Admin.Controllers
             var command = _mapper.Map<CreatePage>(model);
             command.SiteId = SiteId;
             command.Id = Guid.NewGuid();
-            command.PagePermissions = GetSelectedPagePermissions(model.PagePermissions);
+            command.PagePermissions = model.PagePermissions.ToDomain();
             await Task.Run(() => _commandSender.Send<CreatePage, Page>(command));
             return new NoContentResult();
         }
@@ -66,29 +66,9 @@ namespace Weapsy.Areas.Admin.Controllers
         {
             var command = _mapper.Map<UpdatePageDetails>(model);
             command.SiteId = SiteId;
-            command.PagePermissions = GetSelectedPagePermissions(model.PagePermissions);
+            command.PagePermissions = model.PagePermissions.ToDomain();
             await Task.Run(() => _commandSender.Send<UpdatePageDetails, Page>(command));
             return new NoContentResult();
-        }
-
-        private List<PagePermission> GetSelectedPagePermissions(IList<PagePermissionModel> models)
-        {
-            var result = new List<PagePermission>();
-
-            foreach (var permission in models)
-            {
-                if (permission.Selected)
-                {
-                    result.Add(new PagePermission
-                    {
-                        PageId = permission.PageId,
-                        RoleId = permission.RoleId,
-                        Type = permission.Type
-                    });
-                }
-            }
-
-            return result;
         }
 
         public async Task<IActionResult> EditModule(Guid pageId, Guid pageModuleId)
@@ -105,29 +85,9 @@ namespace Weapsy.Areas.Admin.Controllers
         {
             var command = _mapper.Map<UpdatePageModuleDetails>(model);
             command.SiteId = SiteId;
-            command.PageModulePermissions = GetSelectedPageModulePermissions(model.PageModulePermissions);
+            command.PageModulePermissions = model.PageModulePermissions.ToDomain();
             await Task.Run(() => _commandSender.Send<UpdatePageModuleDetails, Page>(command));
             return new NoContentResult();
-        }
-
-        private List<PageModulePermission> GetSelectedPageModulePermissions(IList<PageModulePermissionModel> models)
-        {
-            var result = new List<PageModulePermission>();
-
-            //foreach (var permission in models)
-            //{
-            //    if (permission.Selected)
-            //    {
-            //        result.Add(new PageModulePermission
-            //        {
-            //            PageModuleId = permission.PageModuleId,
-            //            RoleId = permission.RoleId,
-            //            Type = permission.Type
-            //        });
-            //    }
-            //}
-
-            return result;
         }
     }
 }

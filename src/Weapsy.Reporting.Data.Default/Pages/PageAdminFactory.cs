@@ -77,15 +77,25 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
             foreach (var role in _roleService.GetAllRoles())
             {
-                bool selected = page.PagePermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
-
-                result.PagePermissions.Add(new PagePermissionModel
+                var pagePermission = new PagePermissionModel
                 {
                     RoleId = role.Id,
-                    RoleName = role.Name,
-                    Type = PermissionType.View,
-                    Selected = selected
-                });
+                    RoleName = role.Name
+                };
+
+                foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+                {
+                    bool selected = page.PagePermissions
+                        .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;
+
+                    pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
+                    {
+                        Type = permisisonType,
+                        Selected = selected
+                    });
+                }
+
+                result.PagePermissions.Add(pagePermission);
             }
 
             return result;
@@ -109,15 +119,24 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
             foreach (var role in _roleService.GetAllRoles())
             {
-                bool selected = role.Name == DefaultRoleNames.Administrator;
-
-                result.PagePermissions.Add(new PagePermissionModel
+                var pagePermission = new PagePermissionModel
                 {
                     RoleId = role.Id,
-                    RoleName = role.Name,
-                    Type = PermissionType.View,
-                    Selected = selected
-                });
+                    RoleName = role.Name
+                };
+
+                foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+                {
+                    bool selected = role.Name == DefaultRoleNames.Administrator;
+
+                    pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
+                    {
+                        Type = permisisonType,
+                        Selected = selected
+                    });
+                }
+
+                result.PagePermissions.Add(pagePermission);
             }
 
             return result;

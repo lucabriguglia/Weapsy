@@ -1,4 +1,6 @@
-﻿@using Weapsy.Domain.Languages
+﻿@using System.Threading.Tasks
+@using Weapsy.Domain.Languages
+@using Weapsy.Domain.Pages
 @model Weapsy.Reporting.Pages.PageAdminModel
 
 <ul class="nav nav-tabs">
@@ -145,17 +147,25 @@
                 <table class="table table-bordered" style="width:auto;">
                     <tr>
                         <th>Role</th>
-                        <th class="text-center">View</th>
+                        @for (int i = 0; i < Enum.GetValues(typeof(PermissionType)).Length; i++)
+                        {
+                            <th class="text-center">@Enum.GetValues(typeof(PermissionType)).GetValue(i)</th>
+                        }  
                     </tr>
                     @for (int i = 0; i < Model.PagePermissions.Count; i++)
                     {
                         <tr>
-                            <td>@Model.PagePermissions[i].RoleName&nbsp;</td>
-                            <td class="text-center">
+                            <td>
+                                @Model.PagePermissions[i].RoleName&nbsp;
                                 <input asp-for="PagePermissions[i].RoleId" type="hidden" />
-                                <input asp-for="PagePermissions[i].Type" type="hidden" />
-                                <input asp-for="PagePermissions[i].Selected" type="checkbox" />
                             </td>
+                            @for (int j = 0; j < Model.PagePermissions[i].PagePermissionTypes.Count; j++)
+                            {
+                                <td class="text-center">
+                                    <input asp-for="PagePermissions[i].PagePermissionTypes[j].Type" type="hidden" />
+                                    <input asp-for="PagePermissions[i].PagePermissionTypes[j].Selected" type="checkbox" />
+                                </td>
+                            }
                         </tr>
                     }
                 </table>

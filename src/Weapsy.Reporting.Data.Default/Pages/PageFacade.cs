@@ -5,7 +5,6 @@ using AutoMapper;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
-using Weapsy.Infrastructure.Extensions;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 
@@ -113,10 +112,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 });
             }
 
-            var roles = _roleService.GetAllRoles();
-            var permissionTypes = Enum.GetValues(typeof(PermissionType));
-
-            foreach (var role in roles)
+            foreach (var role in _roleService.GetAllRoles())
             {
                 var pageModulePermission = new PageModulePermissionModel
                 {
@@ -124,7 +120,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                     RoleName = role.Name
                 };
 
-                foreach (PermissionType permisisonType in permissionTypes)
+                foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
                 {
                     bool selected = pageModule.PageModulePermissions
                         .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;

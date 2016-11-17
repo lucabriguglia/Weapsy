@@ -74,11 +74,11 @@ namespace Weapsy.Domain.Data.SqlServer
 
             builder.Entity<PageModulePermission>()
                 .ToTable("PageModulePermission")
-                .HasKey(x => new { x.PageModuleId, x.RoleId });
+                .HasKey(x => new { x.PageModuleId, x.RoleId, x.Type });
 
             builder.Entity<PagePermission>()
                 .ToTable("PagePermission")
-                .HasKey(x => new { x.PageId, x.RoleId });
+                .HasKey(x => new { x.PageId, x.RoleId, x.Type });
 
             builder.Entity<Site>()
                 .ToTable("Site");
