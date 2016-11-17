@@ -8,7 +8,6 @@ using Weapsy.Domain.Pages.Commands;
 using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Mvc.Context;
 using AutoMapper;
-using System.Collections.Generic;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
