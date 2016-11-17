@@ -114,18 +114,18 @@ namespace Weapsy.Areas.Admin.Controllers
         {
             var result = new List<PageModulePermission>();
 
-            foreach (var permission in models)
-            {
-                if (permission.Selected)
-                {
-                    result.Add(new PageModulePermission
-                    {
-                        PageModuleId = permission.PageModuleId,
-                        RoleId = permission.RoleId,
-                        Type = permission.Type
-                    });
-                }
-            }
+            //foreach (var permission in models)
+            //{
+            //    if (permission.Selected)
+            //    {
+            //        result.Add(new PageModulePermission
+            //        {
+            //            PageModuleId = permission.PageModuleId,
+            //            RoleId = permission.RoleId,
+            //            Type = permission.Type
+            //        });
+            //    }
+            //}
 
             return result;
         }

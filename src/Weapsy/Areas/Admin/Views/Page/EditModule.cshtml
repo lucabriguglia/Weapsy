@@ -1,4 +1,5 @@
-﻿@model Weapsy.Reporting.Pages.PageModuleAdminModel
+﻿@using Weapsy.Domain.Pages
+@model Weapsy.Reporting.Pages.PageModuleAdminModel
 
 @{ 
     Layout = "";
@@ -24,7 +25,11 @@
             <table class="table table-bordered" style="width:auto;">
                 <tr>
                     <th>Role</th>
-                    <th class="text-center">View</th>
+                    @for (int i = 0; i < Enum.GetValues(typeof(PermissionType)).Length; i++)
+                    {
+                        <th class="text-center">@Enum.GetValues(typeof(PermissionType)).GetValue(i)</th>
+                    }
+                    
                 </tr>
                 @for (int i = 0; i < Model.PageModulePermissions.Count; i++)
                 {
@@ -32,8 +37,11 @@
                         <td>@Model.PageModulePermissions[i].RoleName&nbsp;</td>
                         <td class="text-center">
                             <input asp-for="PageModulePermissions[i].RoleId" type="hidden" />
-                            <input asp-for="PageModulePermissions[i].Type" type="hidden" />
-                            <input asp-for="PageModulePermissions[i].Selected" type="checkbox" />
+                            @for (int j = 0; j < Model.PageModulePermissions[i].PageModulePermissionTypes.Count; j++)
+                            {
+                                <input asp-for="PageModulePermissions[i].PageModulePermissionTypes[j].Type" type="hidden" />
+                                <input asp-for="PageModulePermissions[i].PageModulePermissionTypes[j].Selected" type="checkbox" />
+                            }
                         </td>
                     </tr>
                 }

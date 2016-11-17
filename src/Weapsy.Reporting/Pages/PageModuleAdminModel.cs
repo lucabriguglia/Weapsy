@@ -28,9 +28,14 @@ namespace Weapsy.Reporting.Pages
     public class PageModulePermissionModel
     {
         public Guid PageModuleId { get; set; }
-        public PermissionType Type { get; set; }
         public string RoleId { get; set; }
         public string RoleName { get; set; }
+        public List<PageModulePermissionTypeModel> PageModulePermissionTypes { get; set; } = new List<PageModulePermissionTypeModel>();
+    }
+
+    public class PageModulePermissionTypeModel
+    {
+        public PermissionType Type { get; set; }
         public bool Selected { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using AutoMapper;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
+using Weapsy.Infrastructure.Extensions;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 
@@ -20,9 +21,9 @@ namespace Weapsy.Reporting.Data.Default.Pages
         private readonly IPageInfoFactory _pageViewFactory;
         private readonly IPageAdminFactory _pageAdminFactory;
 
-        public PageFacade(IPageRepository pageRepository, 
+        public PageFacade(IPageRepository pageRepository,
             ILanguageRepository languageRepository,
-            ICacheManager cacheManager, 
+            ICacheManager cacheManager,
             IMapper mapper,
             IRoleService roleService,
             IPageInfoFactory pageViewFactory,
@@ -112,17 +113,30 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 });
             }
 
-            foreach (var role in _roleService.GetAllRoles())
-            {
-                bool selected = pageModule.PageModulePermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
+            var roles = _roleService.GetAllRoles();
+            var permissionTypes = Enum.GetValues(typeof(PermissionType));
 
-                result.PageModulePermissions.Add(new PageModulePermissionModel
+            foreach (var role in roles)
+            {
+                var pageModulePermission = new PageModulePermissionModel
                 {
                     RoleId = role.Id,
-                    RoleName = role.Name,
-                    Type = PermissionType.View,
-                    Selected = selected
-                });
+                    RoleName = role.Name
+                };
+
+                foreach (PermissionType permisisonType in permissionTypes)
+                {
+                    bool selected = pageModule.PageModulePermissions
+                        .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;
+
+                    pageModulePermission.PageModulePermissionTypes.Add(new PageModulePermissionTypeModel
+                    {
+                        Type = permisisonType,
+                        Selected = selected
+                    });
+                }
+
+                result.PageModulePermissions.Add(pageModulePermission);
             }
 
             return result;
