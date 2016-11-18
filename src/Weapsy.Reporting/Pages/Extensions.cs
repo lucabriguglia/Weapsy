@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Weapsy.Domain.Pages;
-using Weapsy.Services.Identity;
 
 namespace Weapsy.Reporting.Pages
 {
@@ -53,19 +50,5 @@ namespace Weapsy.Reporting.Pages
 
             return result;
         }
-
-        //public static Dictionary<PermissionType, IEnumerable<string>> ToRoleDictionary(this IList<PagePermission> pagePermissions, IRoleService roleService)
-        //{
-        //    var result = new Dictionary<PermissionType, IEnumerable<string>>();
-
-        //    foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
-        //    {
-        //        var pageRoleIds = pagePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
-        //        var pageRoles = roleService.GetRolesFromIds(pageRoleIds);
-        //        result.Add(permisisonType, pageRoles.Select(x => x.Name));
-        //    }
-
-        //    return result;
-        //}
     }
 }
