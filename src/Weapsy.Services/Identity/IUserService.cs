@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Weapsy.Services.Identity
 {
@@ -8,6 +9,7 @@ namespace Weapsy.Services.Identity
     {
         UsersViewModel GetUsersViewModel(UsersQuery query);
         Task<UserRolesViewModel> GetUserRolesViewModel(string id);
+        bool IsUserAuthorized(IPrincipal user, IEnumerable<IdentityRole> roles);
         bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roles);
         Task CreateUser(string email);
         Task AddUserToRole(string id, string roleName);

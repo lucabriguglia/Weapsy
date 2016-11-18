@@ -13,6 +13,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
+using Weapsy.Services.Identity;
 
 namespace Weapsy.Services.Installation
 {
@@ -36,6 +37,7 @@ namespace Weapsy.Services.Installation
         private readonly IValidator<CreateMenu> _createMenuValidator;
         private readonly IValidator<AddMenuItem> _addMenuItemValidator;
         private readonly IModuleTypeRepository _moduleTypeRepository;
+        private readonly IRoleService _roleService;
 
         public SiteInstallationService(ISiteRepository siteRepository,
             IValidator<CreateSite> createSiteValidator,
@@ -53,7 +55,8 @@ namespace Weapsy.Services.Installation
             IMenuRepository menuRepository,
             IValidator<CreateMenu> createMenuValidator,
             IValidator<AddMenuItem> addMenuItemValidator,
-            IModuleTypeRepository moduleTypeRepository)
+            IModuleTypeRepository moduleTypeRepository,
+            IRoleService roleService)
         {
             _siteRepository = siteRepository;
             _createSiteValidator = createSiteValidator;
@@ -72,6 +75,7 @@ namespace Weapsy.Services.Installation
             _createMenuValidator = createMenuValidator;
             _addMenuItemValidator = addMenuItemValidator;
             _moduleTypeRepository = moduleTypeRepository;
+            _roleService = roleService;
         }
 
         public void VerifySiteInstallation()
@@ -118,6 +122,22 @@ namespace Weapsy.Services.Installation
 
             // ===== Pages ===== //
 
+            var pagePermisisons = new List<PagePermission>();
+
+            foreach (var roleId in _roleService.GetDefaultPageViewPermissionRoleIds().Result)
+                pagePermisisons.Add(new PagePermission
+                {
+                    RoleId = roleId,
+                    Type = PermissionType.View
+                });
+
+            foreach (var roleId in _roleService.GetDefaultPageEditPermissionRoleIds().Result)
+                pagePermisisons.Add(new PagePermission
+                {
+                    RoleId = roleId,
+                    Type = PermissionType.Edit
+                });
+
             var homePage = Page.CreateNew(new CreatePage
             {
                 SiteId = siteId,
@@ -131,14 +151,7 @@ namespace Weapsy.Services.Installation
                         LanguageId = englishLanguageId
                     }
                 },
-                PagePermissions = new List<PagePermission>
-                {
-                    new PagePermission
-                    {
-                        RoleId = ((int)DefaultRoles.Everyone).ToString(),
-                        Type = PermissionType.View
-                    }
-                }
+                PagePermissions = pagePermisisons
             }, _createPageValidator);
 
             homePage.Activate(new ActivatePage

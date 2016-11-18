@@ -75,6 +75,11 @@ namespace Weapsy.Services.Identity
             return model;
         }
 
+        public bool IsUserAuthorized(IPrincipal user, IEnumerable<IdentityRole> roles)
+        {
+            return IsUserAuthorized(user, roles.Select(x => x.Name));
+        }
+
         public bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roles)
         {
             if (user == null || roles == null || !roles.Any())

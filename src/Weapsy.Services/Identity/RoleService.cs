@@ -88,10 +88,36 @@ namespace Weapsy.Services.Identity
             if (adminRole != null)
                 result.Add(adminRole.Id);
 
+            result.Add(((int)DefaultRoles.Everyone).ToString());
+
+            return result;
+        }
+
+        public async Task<IList<string>> GetDefaultPageEditPermissionRoleIds()
+        {
+            var result = new List<string>();
+
+            var adminRole = await _roleManager.FindByNameAsync(DefaultRoleNames.Administrator);
+            if (adminRole != null)
+                result.Add(adminRole.Id);
+
             return result;
         }
 
         public async Task<IList<string>> GetDefaultModuleViewPermissionRoleIds()
+        {
+            var result = new List<string>();
+
+            var adminRole = await _roleManager.FindByNameAsync(DefaultRoleNames.Administrator);
+            if (adminRole != null)
+                result.Add(adminRole.Id);
+
+            result.Add(((int)DefaultRoles.Everyone).ToString());
+
+            return result;
+        }
+
+        public async Task<IList<string>> GetDefaultModuleEditPermissionRoleIds()
         {
             var result = new List<string>();
 

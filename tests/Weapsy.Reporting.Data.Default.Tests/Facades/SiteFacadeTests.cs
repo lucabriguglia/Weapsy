@@ -1,6 +1,7 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
+using Weapsy.Domain.Languages;
 using Weapsy.Domain.Sites;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Data.Default.Sites;
@@ -22,7 +23,7 @@ namespace Weapsy.Reporting.Data.Default.Tests.Facades
             _siteId = Guid.NewGuid();
 
             var siteRepositoryMock = new Mock<ISiteRepository>();
-            var languageFacadeMock = new Mock<ILanguageFacade>();
+            var languageRepositoryMock = new Mock<ILanguageRepository>();
             var pageFacadeMock = new Mock<IPageFacade>();
             var cacheManagerMock = new Mock<ICacheManager>();
 
@@ -30,7 +31,7 @@ namespace Weapsy.Reporting.Data.Default.Tests.Facades
             mapperMock.Setup(x => x.Map<SiteAdminModel>(It.IsAny<Site>())).Returns(new SiteAdminModel());
 
             _sut = new SiteFacade(siteRepositoryMock.Object, 
-                languageFacadeMock.Object, 
+                languageRepositoryMock.Object, 
                 pageFacadeMock.Object, 
                 cacheManagerMock.Object, 
                 mapperMock.Object);

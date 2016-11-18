@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Weapsy.Domain.Pages;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Pages;
@@ -21,7 +22,7 @@ namespace Weapsy.Components
 
         public async Task<IViewComponentResult> InvokeAsync(ModuleModel model)
         {
-            if (!_userService.IsUserAuthorized(User, model.ViewRoles))
+            if (!_userService.IsUserAuthorized(User, model.Roles[PermissionType.View]))
                 return Content(string.Empty);
 
             var viewName = !string.IsNullOrEmpty(model.Template.ViewName)

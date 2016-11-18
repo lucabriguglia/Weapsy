@@ -36,8 +36,13 @@ namespace Weapsy.Reporting.Data.Default.Pages
             if (page == null || page.Status != PageStatus.Active)
                 return null;
 
-            var pageViewRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
-            var pageViewRoles = _roleService.GetRolesFromIds(pageViewRoleIds);
+            var roles = new Dictionary<PermissionType, IEnumerable<string>>();
+            foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+            {
+                var pageRoleIds = page.PagePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
+                var pageRoles = _roleService.GetRolesFromIds(pageRoleIds);
+                roles.Add(permisisonType, pageRoles.Select(x => x.Name));
+            }
 
             var url = page.Url;
             var title = page.Title;
@@ -67,7 +72,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                     Title = title,
                     MetaDescription = metaDescription,
                     MetaKeywords = metaKeywords,
-                    ViewRoles = pageViewRoles.Select(x => x.Name)                   
+                    Roles = roles
                 },
                 Theme = new ThemeModel
                 {
@@ -77,13 +82,13 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 {
                     ViewName = "Default"
                 },
-                Zones = CreateZones(page, pageViewRoles, languageId)
+                Zones = CreateZones(page, roles, languageId)
             };
 
             return result;
         }
 
-        private ICollection<ZoneModel> CreateZones(Page page, IEnumerable<IdentityRole> pageViewRoles, Guid languageId)
+        private ICollection<ZoneModel> CreateZones(Page page, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new List<ZoneModel>();
 
@@ -91,14 +96,14 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
             foreach (var zone in zones)
             {
-                var zoneModel = CreateZone(zone, pageViewRoles, languageId);
+                var zoneModel = CreateZone(zone, roles, languageId);
                 result.Add(zoneModel);
             }
 
             return result;
         }
 
-        private ZoneModel CreateZone(IGrouping<string, PageModule> zone, IEnumerable<IdentityRole> pageViewRoles, Guid languageId)
+        private ZoneModel CreateZone(IGrouping<string, PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new ZoneModel
             {
@@ -107,7 +112,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
 
             foreach (var pageModule in zone.OrderBy(x => x.SortOrder))
             {
-                var moduleModel = CreateModule(pageModule, pageViewRoles, languageId);
+                var moduleModel = CreateModule(pageModule, roles, languageId);
 
                 if (moduleModel == null)
                     continue;
@@ -118,7 +123,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
             return result;
         }
 
-        private ModuleModel CreateModule(PageModule pageModule, IEnumerable<IdentityRole> pageViewRoles, Guid languageId)
+        private ModuleModel CreateModule(PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var module = _moduleRepository.GetById(pageModule.ModuleId);
 
@@ -130,16 +135,20 @@ namespace Weapsy.Reporting.Data.Default.Pages
             if (moduleType == null)
                 return null;
 
-            IEnumerable<string> moduleViewRoleNames;
+            var moduleRoles = new Dictionary<PermissionType, IEnumerable<string>>();
 
             if (pageModule.InheritPermissions)
             {
-                moduleViewRoleNames = pageViewRoles.Select(x => x.Name);
+                moduleRoles = roles;
             }
             else
             {
-                var moduleViewRoleIds = pageModule.PageModulePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
-                moduleViewRoleNames = _roleService.GetRolesFromIds(moduleViewRoleIds).Select(x => x.Name);
+                foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+                {
+                    var pageRoleIds = pageModule.PageModulePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
+                    var pageRoles = _roleService.GetRolesFromIds(pageRoleIds);
+                    moduleRoles.Add(permisisonType, pageRoles.Select(x => x.Name));
+                }
             }
 
             var title = pageModule.Title;
@@ -163,7 +172,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 Title = title,
                 Zone = pageModule.Zone,
                 SortOrder = pageModule.SortOrder,
-                ViewRoles = moduleViewRoleNames,
+                Roles = moduleRoles,
                 ModuleType = new ModuleTypeModel
                 {
                     ViewType = moduleType.ViewType,

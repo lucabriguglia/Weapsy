@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Domain.ModuleTypes;
+using Weapsy.Domain.Pages;
 
 namespace Weapsy.Reporting.Pages
 {
@@ -27,7 +28,7 @@ namespace Weapsy.Reporting.Pages
         public string Title { get; set; }
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
-        public IEnumerable<string> ViewRoles { get; set; }
+        public Dictionary<PermissionType, IEnumerable<string>> Roles { get; set; }
     }
 
     public class ThemeModel
@@ -55,7 +56,7 @@ namespace Weapsy.Reporting.Pages
         public int SortOrder { get; set; }
         public ModuleTemplateModel Template { get; set; } = new ModuleTemplateModel();
         public ModuleTypeModel ModuleType { get; set; } = new ModuleTypeModel();
-        public IEnumerable<string> ViewRoles { get; set; }
+        public Dictionary<PermissionType, IEnumerable<string>> Roles { get; set; }
     }
 
     public class ModuleTemplateModel

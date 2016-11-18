@@ -19,13 +19,13 @@ namespace Weapsy.Api
         private readonly ICommandSender _commandSender;
         private readonly IPageRules _pageRules;
         private readonly IPageRepository _pageRepository;
-        private readonly IRoleService _identityService;
+        private readonly IRoleService _roleService;
 
         public PageController(IPageFacade pageFacade,
             ICommandSender commandSender,
             IPageRules pageRules,
             IPageRepository pageRepository,
-            IRoleService identityService,
+            IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
@@ -33,7 +33,7 @@ namespace Weapsy.Api
             _commandSender = commandSender;
             _pageRules = pageRules;
             _pageRepository = pageRepository;
-            _identityService = identityService;
+            _roleService = roleService;
         }
 
         [HttpGet]
@@ -73,7 +73,7 @@ namespace Weapsy.Api
         public async Task<IActionResult> AddModule([FromBody] AddModule model)
         {
             model.SiteId = SiteId;
-            model.ViewPermissionRoleIds = await _identityService.GetDefaultModuleViewPermissionRoleIds();
+            model.ViewPermissionRoleIds = await _roleService.GetDefaultModuleViewPermissionRoleIds();
             await Task.Run(() => _commandSender.Send<AddModule, Page>(model));
             return new NoContentResult();
         }

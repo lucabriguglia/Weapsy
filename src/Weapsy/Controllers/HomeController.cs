@@ -5,6 +5,7 @@ using Weapsy.Reporting.Pages;
 using Weapsy.Mvc.Context;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using Weapsy.Domain.Pages;
 using Weapsy.Services.Identity;
 
 namespace Weapsy.Controllers
@@ -30,7 +31,7 @@ namespace Weapsy.Controllers
 
             var pageInfo = _pageFacade.GetPageInfo(SiteId, pageId, languageId);
 
-            if (pageInfo == null || !_userService.IsUserAuthorized(User, pageInfo.Page.ViewRoles))
+            if (pageInfo == null || !_userService.IsUserAuthorized(User, pageInfo.Page.Roles[PermissionType.View]))
                 return NotFound();
 
             ViewBag.Title = pageInfo.Page.Title;
