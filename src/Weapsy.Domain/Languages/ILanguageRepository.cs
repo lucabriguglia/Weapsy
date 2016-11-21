@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Languages
@@ -15,6 +16,7 @@ namespace Weapsy.Domain.Languages
         int GetLanguagesCount(Guid siteId);
         int GetActiveLanguagesCount(Guid siteId);
         IEnumerable<Guid> GetLanguagesIdList(Guid siteId);        
+        Task CreateAsync(Language language);
         void Create(Language language);
         void Update(Language language);
         void Update(IEnumerable<Language> languages);

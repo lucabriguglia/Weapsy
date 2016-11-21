@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Languages;
@@ -112,13 +113,23 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             }            
         }
 
+        public async Task CreateAsync(Language language)
+        {
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = _mapper.Map<LanguageDbEntity>(language);
+                context.Add(dbEntity);
+                await context.SaveChangesAsync();
+            }
+        }
+
         public void Create(Language language)
         {
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = _mapper.Map<LanguageDbEntity>(language);
                 context.Add(dbEntity);
-                context.SaveChanges();
+                context.SaveChangesAsync();
             }
         }
 

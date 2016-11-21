@@ -59,7 +59,7 @@ namespace Weapsy.Api
         public async Task<IActionResult> UpdateDetails([FromBody] UpdateLanguageDetails model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<UpdateLanguageDetails, Language>(model));
+            await _commandSender.SendAsync<UpdateLanguageDetails, Language>(model);
             return new NoContentResult();
         }
 

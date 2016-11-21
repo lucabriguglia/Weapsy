@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Weapsy.Infrastructure.DependencyResolver;
 using Weapsy.Infrastructure.Domain;
 
@@ -47,6 +48,11 @@ namespace Weapsy.Infrastructure.Dispatcher
 
                 _eventPublisher.Publish(concreteEvent);
             }
+        }
+
+        public Task SendAsync<TCommand, TAggregate>(TCommand command, bool publishEvents = true) where TCommand : ICommand where TAggregate : IAggregateRoot
+        {
+            throw new NotImplementedException();
         }
     }
 }
