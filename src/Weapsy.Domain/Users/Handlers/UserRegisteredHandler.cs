@@ -17,18 +17,21 @@ namespace Weapsy.Domain.Users.Handlers
             _validator = validator;
         }
 
-        public void Handle(UserRegistered @event)
+        public Task Handle(UserRegistered @event)
         {
-            var command = new CreateUser
+            return Task.Run(() =>
             {
-                Id = @event.AggregateRootId,
-                Email = @event.Email,
-                UserName = @event.UserName
-            };
+                var command = new CreateUser
+                {
+                    Id = @event.AggregateRootId,
+                    Email = @event.Email,
+                    UserName = @event.UserName
+                };
 
-            var user = User.CreateNew(command, _validator);
+                var user = User.CreateNew(command, _validator);
 
-            _userRepository.Create(user);
+                _userRepository.Create(user);                
+            });
         }
     }
 }

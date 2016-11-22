@@ -8,6 +8,7 @@ namespace Weapsy.Reporting.Data.Default.Languages
 {
     public class LanguageEventsHandler : 
         IEventHandler<LanguageCreated>,
+        IEventHandler<LanguageDetailsUpdated>,
         IEventHandler<LanguageDeleted>,
         IEventHandler<LanguageActivated>
     {
@@ -18,24 +19,29 @@ namespace Weapsy.Reporting.Data.Default.Languages
             _cacheManager = cacheManager;
         }
 
-        public void Handle(LanguageCreated @event)
+        public Task Handle(LanguageCreated @event)
         {
-            ClearCache(@event.SiteId);
+            return ClearCache(@event.SiteId);
         }
 
-        public void Handle(LanguageDeleted @event)
+        public async Task Handle(LanguageDetailsUpdated @event)
         {
-            ClearCache(@event.SiteId);
+            await ClearCache(@event.SiteId);
         }
 
-        public void Handle(LanguageActivated @event)
+        public async Task Handle(LanguageDeleted @event)
         {
-            ClearCache(@event.SiteId);
+            await ClearCache(@event.SiteId);
         }
 
-        private void ClearCache(Guid siteId)
+        public async Task Handle(LanguageActivated @event)
         {
-            _cacheManager.Remove(string.Format(CacheKeys.LanguagesCacheKey, siteId));
+            await ClearCache(@event.SiteId);
+        }
+
+        private Task ClearCache(Guid siteId)
+        {
+            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.LanguagesCacheKey, siteId)));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Pages.Events;
@@ -27,66 +28,72 @@ namespace Weapsy.Reporting.Data.Default.Pages
             _languageFacade = languageFacade;
         }
 
-        public void Handle(PageCreated @event)
+        public async Task Handle(PageCreated @event)
         {
         }
 
-        public void Handle(PageDetailsUpdated @event)
+        public Task Handle(PageDetailsUpdated @event)
         {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            return ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageDeleted @event)
+        public async Task Handle(PageDeleted @event)
         {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageActivated @event)
+        public async Task Handle(PageActivated @event)
         {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
-            ClearMenuCache(@event.SiteId);
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            await ClearMenuCache(@event.SiteId);
         }
 
-        public void Handle(PageHidden @event)
+        public async Task Handle(PageHidden @event)
         {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
-            ClearMenuCache(@event.SiteId);
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            await ClearMenuCache(@event.SiteId);
         }
 
-        public void Handle(PageModuleAdded @event)
+        public async Task Handle(PageModuleAdded @event)
         {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageModuleDetailsUpdated @event)
+        public async Task Handle(PageModuleDetailsUpdated @event)
         {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageModulesReordered @event)
+        public async Task Handle(PageModulesReordered @event)
         {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageModuleRemoved @event)
+        public async Task Handle(PageModuleRemoved @event)
         {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        private void ClearPageCache(Guid siteId, Guid pageId)
+        private Task ClearPageCache(Guid siteId, Guid pageId)
         {
-            foreach (var language in _languageFacade.GetAllActive(siteId))
-                _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, language.Id));
+            return Task.Run(() =>
+            {
+                foreach (var language in _languageFacade.GetAllActive(siteId))
+                    _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, language.Id));
 
-            _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, Guid.Empty));
+                _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, Guid.Empty));
+            });
         }
 
-        private void ClearMenuCache(Guid siteId)
+        private Task ClearMenuCache(Guid siteId)
         {
-            foreach (var language in _languageFacade.GetAllActive(siteId))
-                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", language.Id));
+            return Task.Run(() =>
+            {
+                foreach (var language in _languageFacade.GetAllActive(siteId))
+                    _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", language.Id));
 
-            _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main"));
+                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main"));
+            });
         }
     }
 }

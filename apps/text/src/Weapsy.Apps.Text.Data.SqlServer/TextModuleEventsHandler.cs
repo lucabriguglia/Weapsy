@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Weapsy.Apps.Text.Domain.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
@@ -20,22 +21,25 @@ namespace Weapsy.Apps.Text.Data.SqlServer
             _languageFacade = languageFacade;
         }
 
-        public void Handle(TextModuleCreated @event)
+        public Task Handle(TextModuleCreated @event)
         {
-            ClearCache(@event.SiteId, @event.ModuleId);
+            return ClearCache(@event.SiteId, @event.ModuleId);
         }
 
-        public void Handle(VersionAdded @event)
+        public Task Handle(VersionAdded @event)
         {
-            ClearCache(@event.SiteId, @event.ModuleId);
+            return ClearCache(@event.SiteId, @event.ModuleId);
         }
 
-        private void ClearCache(Guid siteId, Guid moduleId)
+        private Task ClearCache(Guid siteId, Guid moduleId)
         {
-            foreach (var language in _languageFacade.GetAllActive(siteId))
-                _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, language.Id));
+            return Task.Run(() =>
+            {
+                foreach (var language in _languageFacade.GetAllActive(siteId))
+                    _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, language.Id));
 
-            _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, Guid.Empty));
+                _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, Guid.Empty));
+            });
         }
     }
 }

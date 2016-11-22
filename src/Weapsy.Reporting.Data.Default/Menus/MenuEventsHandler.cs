@@ -25,42 +25,45 @@ namespace Weapsy.Reporting.Data.Default.Menus
             _languageFacade = languageFacade;
         }
 
-        public void Handle(MenuCreated @event)
+        public async Task Handle(MenuCreated @event)
         {
-            ClearCache(@event.SiteId, @event.Name);
+            await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuItemAdded @event)
+        public async Task Handle(MenuItemAdded @event)
         {
-            ClearCache(@event.SiteId, @event.Name);
+            await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuItemUpdated @event)
+        public async Task Handle(MenuItemUpdated @event)
         {
-            ClearCache(@event.SiteId, @event.Name);
+            await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuItemRemoved @event)
+        public async Task Handle(MenuItemRemoved @event)
         {
-            ClearCache(@event.SiteId, @event.Name);
+            await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuItemsReordered @event)
+        public async Task Handle(MenuItemsReordered @event)
         {
-            ClearCache(@event.SiteId, @event.Name);
+            await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuDeleted @event)
+        public async Task Handle(MenuDeleted @event)
         {
-            ClearCache(@event.SiteId, @event.Name);
+            await ClearCache(@event.SiteId, @event.Name);
         }
 
-        private void ClearCache(Guid siteId, string name)
+        private Task ClearCache(Guid siteId, string name)
         {
-            foreach (var language in _languageFacade.GetAllActive(siteId))
-                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, language.Id));
+            return Task.Run(() =>
+            {
+                foreach (var language in _languageFacade.GetAllActive(siteId))
+                    _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, language.Id));
 
-            _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, Guid.Empty));
+                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, Guid.Empty));
+            });
         }
     }
 }
