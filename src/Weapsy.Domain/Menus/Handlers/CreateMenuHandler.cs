@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(CreateMenu command)
+        public IEnumerable<IEvent> Handle(CreateMenu command)
         {
             var menu = Menu.CreateNew(command, _validator);
 

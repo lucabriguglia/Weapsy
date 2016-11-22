@@ -7,6 +7,7 @@ namespace Weapsy.Infrastructure.Domain
     public interface IEventStore
     {
         void SaveEvent<TAggregate>(IEvent @event) where TAggregate : IAggregateRoot;
-        Task<IEnumerable<IEvent>> GetEvents(Guid aggregateId);
+        Task SaveEventAsync<TAggregate>(IEvent @event) where TAggregate : IAggregateRoot;
+        Task<IEnumerable<IEvent>> GetEventsAsync(Guid aggregateId);
     }
 }

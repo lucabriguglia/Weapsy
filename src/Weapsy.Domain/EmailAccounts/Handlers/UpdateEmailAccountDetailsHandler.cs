@@ -17,7 +17,7 @@ namespace Weapsy.Domain.EmailAccounts.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(UpdateEmailAccountDetails command)
+        public IEnumerable<IEvent> Handle(UpdateEmailAccountDetails command)
         {
             var emailAccount = _emailAccountRepository.GetById(command.SiteId, command.Id);
 

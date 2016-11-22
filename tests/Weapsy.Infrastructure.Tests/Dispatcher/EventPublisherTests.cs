@@ -27,10 +27,10 @@ namespace Weapsy.Infrastructure.Tests.Dispatcher
             var fakeEvent = new FakeEvent();
 
             var eventHandler1Mock = new Mock<IEventHandler<IEvent>>();
-            eventHandler1Mock.Setup(x => x.Handle(fakeEvent)).Returns(Task.FromResult(true));
+            eventHandler1Mock.Setup(x => x.Handle(fakeEvent));
 
             var eventHandler2Mock = new Mock<IEventHandler<IEvent>>();
-            eventHandler2Mock.Setup(x => x.Handle(fakeEvent)).Returns(Task.FromResult(true));
+            eventHandler2Mock.Setup(x => x.Handle(fakeEvent));
 
             var eventHandlers = new List<IEventHandler<IEvent>> { eventHandler1Mock.Object, eventHandler2Mock.Object };
 

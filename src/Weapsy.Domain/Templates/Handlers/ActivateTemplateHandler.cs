@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _templateRepository = templateRepository;
         }
 
-        public ICollection<IEvent> Handle(ActivateTemplate command)
+        public IEnumerable<IEvent> Handle(ActivateTemplate command)
         {
             var template = _templateRepository.GetById(command.Id);
 

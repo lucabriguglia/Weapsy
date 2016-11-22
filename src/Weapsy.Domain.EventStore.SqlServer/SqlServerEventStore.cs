@@ -49,6 +49,34 @@ namespace Weapsy.Domain.EventStore.SqlServer
             _context.SaveChanges();     
         }
 
+        public async Task SaveEventAsync<TAggregate>(IEvent @event) where TAggregate : IAggregateRoot
+        {
+            var aggregate = await _aggregates.FirstOrDefaultAsync(x => x.Id == @event.AggregateRootId);
+
+            if (aggregate == null)
+            {
+                _aggregates.Add(new DomainAggregate
+                {
+                    Id = @event.AggregateRootId,
+                    Type = typeof(TAggregate).AssemblyQualifiedName
+                });
+            }
+
+            var currentSequenceCount = await _events.CountAsync(x => x.AggregateId == @event.AggregateRootId);
+
+            _events.Add(new DomainEvent
+            {
+                AggregateId = @event.AggregateRootId,
+                SequenceNumber = currentSequenceCount + 1,
+                Type = @event.GetType().AssemblyQualifiedName,
+                Body = JsonConvert.SerializeObject(@event),
+                TimeStamp = @event.TimeStamp
+                //UserId = @event.UserId
+            });
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<IEvent>> GetEvents(Guid aggregateId)
         {
             var result = new List<IEvent>();
@@ -65,6 +93,11 @@ namespace Weapsy.Domain.EventStore.SqlServer
             }
 
             return result;
+        }
+
+        public Task<IEnumerable<IEvent>> GetEventsAsync(Guid aggregateId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

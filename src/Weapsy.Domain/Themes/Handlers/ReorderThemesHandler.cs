@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _themeRepository = themeRepository;
         }
 
-        public ICollection<IEvent> Handle(ReorderThemes cmd)
+        public IEnumerable<IEvent> Handle(ReorderThemes cmd)
         {
             var events = new List<IEvent>();
             var updatedThemes = new List<Theme>();

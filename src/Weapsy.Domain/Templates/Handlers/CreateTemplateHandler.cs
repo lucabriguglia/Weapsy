@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(CreateTemplate command)
+        public IEnumerable<IEvent> Handle(CreateTemplate command)
         {
             var template = Template.CreateNew(command, _validator);
 

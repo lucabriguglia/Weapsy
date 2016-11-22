@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _siteRules = siteRules;
         }
 
-        public ICollection<IEvent> Handle(ReorderLanguages cmd)
+        public IEnumerable<IEvent> Handle(ReorderLanguages cmd)
         {
             if (!_siteRules.DoesSiteExist(cmd.SiteId))
                 throw new Exception("Site does not exist.");

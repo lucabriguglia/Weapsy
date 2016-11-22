@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Sites.Events;
@@ -21,25 +20,22 @@ namespace Weapsy.Reporting.Data.Default.Sites
             _languageFacade = languageFacade;
         }
 
-        public async Task Handle(SiteCreated @event)
+        public void Handle(SiteCreated @event)
         {
-            await ClearCache(@event.AggregateRootId, @event.Name);
+            ClearCache(@event.AggregateRootId, @event.Name);
         }
 
-        public async Task Handle(SiteDetailsUpdated @event)
+        public void Handle(SiteDetailsUpdated @event)
         {
-            await ClearCache(@event.AggregateRootId, @event.Name);
+            ClearCache(@event.AggregateRootId, @event.Name);
         }
 
-        private Task ClearCache(Guid siteId, string name)
+        private void ClearCache(Guid siteId, string name)
         {
-            return Task.Run(() =>
-            {
-                foreach (var language in _languageFacade.GetAllActive(siteId))
-                    _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, language.Id));
+            foreach (var language in _languageFacade.GetAllActive(siteId))
+                _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, language.Id));
 
-                _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, Guid.Empty));
-            });
+            _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, Guid.Empty));
         }
     }
 }

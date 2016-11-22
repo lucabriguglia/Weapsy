@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _pageRepository = pageRepository;
         }
 
-        public ICollection<IEvent> Handle(SetPageModulePermissions command)
+        public IEnumerable<IEvent> Handle(SetPageModulePermissions command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.Id);
 

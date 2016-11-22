@@ -50,7 +50,7 @@ namespace Weapsy.Api
         public async Task<IActionResult> Post([FromBody] CreateLanguage model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<CreateLanguage, Language>(model));
+            await _commandSender.SendAsync<CreateLanguage, Language>(model);
             return new NoContentResult();
         }
 

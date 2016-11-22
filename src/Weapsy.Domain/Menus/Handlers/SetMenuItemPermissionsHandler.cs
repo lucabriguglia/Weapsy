@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _menuRepository = menuRepository;
         }
 
-        public ICollection<IEvent> Handle(SetMenuItemPermissions cmd)
+        public IEnumerable<IEvent> Handle(SetMenuItemPermissions cmd)
         {
             var menu = _menuRepository.GetById(cmd.SiteId, cmd.MenuId);
 

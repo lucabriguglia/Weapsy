@@ -50,9 +50,29 @@ namespace Weapsy.Infrastructure.Dispatcher
             }
         }
 
-        public Task SendAsync<TCommand, TAggregate>(TCommand command, bool publishEvents = true) where TCommand : ICommand where TAggregate : IAggregateRoot
+        public async Task SendAsync<TCommand, TAggregate>(TCommand command, bool publishEvents = true) where TCommand : ICommand where TAggregate : IAggregateRoot
         {
-            throw new NotImplementedException();
+            if (command == null)
+                throw new ArgumentNullException(nameof(command));
+
+            var commandHandler = _resolver.Resolve<ICommandHandlerAsync<TCommand>>();
+
+            if (commandHandler == null)
+                throw new Exception($"No handler found for command '{command.GetType().FullName}'");
+
+            var events = await commandHandler.HandleAsync(command);
+
+            foreach (var @event in events)
+            {
+                await _eventStore.SaveEventAsync<TAggregate>(@event);
+
+                if (!publishEvents)
+                    continue;
+
+                var concreteEvent = EventFactory.CreateConcreteEvent(@event);
+
+                _eventPublisher.Publish(concreteEvent);
+            }
         }
     }
 }

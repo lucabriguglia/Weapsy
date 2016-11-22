@@ -18,7 +18,7 @@ namespace Weapsy.Apps.Text.Domain.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(AddVersion command)
+        public IEnumerable<IEvent> Handle(AddVersion command)
         {
             var textModule = _textModuleRepository.GetByModuleId(command.ModuleId);
 

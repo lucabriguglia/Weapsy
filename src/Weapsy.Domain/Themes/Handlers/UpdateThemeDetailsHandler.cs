@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(UpdateThemeDetails cmd)
+        public IEnumerable<IEvent> Handle(UpdateThemeDetails cmd)
         {
             var theme = _themeRepository.GetById(cmd.Id);
 

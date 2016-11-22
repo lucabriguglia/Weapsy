@@ -17,7 +17,7 @@ namespace Weapsy.Domain.ModuleTypes.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(DeleteModuleType command)
+        public IEnumerable<IEvent> Handle(DeleteModuleType command)
         {
             var moduleType = _moduleTypeRepository.GetById(command.Id);
 

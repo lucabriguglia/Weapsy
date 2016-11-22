@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(ReorderMenuItems command)
+        public IEnumerable<IEvent> Handle(ReorderMenuItems command)
         {
             var menu = _menuRepository.GetById(command.Id);
 

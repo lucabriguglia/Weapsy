@@ -18,24 +18,24 @@ namespace Weapsy.Reporting.Data.Default.Languages
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(LanguageCreated @event)
+        public void Handle(LanguageCreated @event)
         {
-            await ClearCache(@event.SiteId);
+            ClearCache(@event.SiteId);
         }
 
-        public async Task Handle(LanguageDeleted @event)
+        public void Handle(LanguageDeleted @event)
         {
-            await ClearCache(@event.SiteId);
+            ClearCache(@event.SiteId);
         }
 
-        public async Task Handle(LanguageActivated @event)
+        public void Handle(LanguageActivated @event)
         {
-            await ClearCache(@event.SiteId);
+            ClearCache(@event.SiteId);
         }
 
-        private Task ClearCache(Guid siteId)
+        private void ClearCache(Guid siteId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.LanguagesCacheKey, siteId)));
+            _cacheManager.Remove(string.Format(CacheKeys.LanguagesCacheKey, siteId));
         }
     }
 }

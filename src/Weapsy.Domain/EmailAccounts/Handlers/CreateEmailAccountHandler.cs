@@ -17,7 +17,7 @@ namespace Weapsy.Domain.EmailAccounts.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(CreateEmailAccount command)
+        public IEnumerable<IEvent> Handle(CreateEmailAccount command)
         {
             var emailAccount = EmailAccount.CreateNew(command, _validator);
 

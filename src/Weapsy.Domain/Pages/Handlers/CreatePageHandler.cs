@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(CreatePage command)
+        public IEnumerable<IEvent> Handle(CreatePage command)
         {
             var page = Page.CreateNew(command, _validator);
 

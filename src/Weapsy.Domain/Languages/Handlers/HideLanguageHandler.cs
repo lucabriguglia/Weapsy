@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(HideLanguage command)
+        public IEnumerable<IEvent> Handle(HideLanguage command)
         {
             var language = _languageRepository.GetById(command.SiteId, command.Id);
 

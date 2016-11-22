@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Weapsy.Infrastructure.Caching;
+﻿using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.ModuleTypes.Events;
 
@@ -16,19 +15,19 @@ namespace Weapsy.Reporting.Data.Default.ModuleTypes
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(ModuleTypeCreated @event)
+        public void Handle(ModuleTypeCreated @event)
         {
-            await ClearCache();
+            ClearCache();
         }
 
-        public async Task Handle(ModuleTypeDetailsUpdated @event)
+        public void Handle(ModuleTypeDetailsUpdated @event)
         {
-            await ClearCache();
+            ClearCache();
         }
 
-        private Task ClearCache()
+        private void ClearCache()
         {
-            return Task.Run(() => _cacheManager.Remove(CacheKeys.ModuleTypesCacheKey));
+            _cacheManager.Remove(CacheKeys.ModuleTypesCacheKey);
         }
     }
 }

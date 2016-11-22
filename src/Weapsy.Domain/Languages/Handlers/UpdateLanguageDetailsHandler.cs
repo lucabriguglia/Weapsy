@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(UpdateLanguageDetails command)
+        public IEnumerable<IEvent> Handle(UpdateLanguageDetails command)
         {
             var language = _languageRepository.GetById(command.SiteId, command.Id);
 

@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _removePageModuleValidator = removePageModuleValidator;
         }
 
-        public ICollection<IEvent> Handle(RemoveModule cmd)
+        public IEnumerable<IEvent> Handle(RemoveModule cmd)
         {
             var events = new List<IEvent>();
 

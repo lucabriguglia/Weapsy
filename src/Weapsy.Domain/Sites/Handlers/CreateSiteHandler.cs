@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(CreateSite command)
+        public IEnumerable<IEvent> Handle(CreateSite command)
         {
             var site = Site.CreateNew(command, _validator);
 

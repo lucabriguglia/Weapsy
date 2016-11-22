@@ -6,13 +6,13 @@ using Weapsy.Domain.Languages.Commands;
 
 namespace Weapsy.Domain.Languages.Handlers
 {
-    public class CreateLanguageHandlerAsync : ICommandHandlerAsync<CreateLanguage>
+    public class CreateLanguageHandler : ICommandHandlerAsync<CreateLanguage>
     {
         private readonly ILanguageRepository _languageRepository;
         private readonly IValidator<CreateLanguage> _validator;
         private readonly ILanguageSortOrderGenerator _sortOrderGenerator;
 
-        public CreateLanguageHandlerAsync(ILanguageRepository languageRepository,
+        public CreateLanguageHandler(ILanguageRepository languageRepository,
             IValidator<CreateLanguage> validator,
             ILanguageSortOrderGenerator sortOrderGenerator)
         {

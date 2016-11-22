@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(UpdateTemplateDetails cmd)
+        public IEnumerable<IEvent> Handle(UpdateTemplateDetails cmd)
         {
             var template = _templateRepository.GetById(cmd.Id);
 

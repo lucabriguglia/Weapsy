@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _validator = validator;
         }
 
-        public ICollection<IEvent> Handle(ActivatePage command)
+        public IEnumerable<IEvent> Handle(ActivatePage command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.Id);
 
