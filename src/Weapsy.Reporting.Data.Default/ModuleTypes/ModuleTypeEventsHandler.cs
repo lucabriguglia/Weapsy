@@ -6,8 +6,8 @@ using Weapsy.Domain.ModuleTypes.Events;
 namespace Weapsy.Reporting.Data.Default.ModuleTypes
 {
     public class ModuleTypeEventsHandler : 
-        IEventHandler<ModuleTypeCreated>,
-        IEventHandler<ModuleTypeDetailsUpdated>
+        IEventHandlerAsync<ModuleTypeCreated>,
+        IEventHandlerAsync<ModuleTypeDetailsUpdated>
     {
         private readonly ICacheManager _cacheManager;
 
@@ -16,12 +16,12 @@ namespace Weapsy.Reporting.Data.Default.ModuleTypes
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(ModuleTypeCreated @event)
+        public async Task HandleAsync(ModuleTypeCreated @event)
         {
             await ClearCache();
         }
 
-        public async Task Handle(ModuleTypeDetailsUpdated @event)
+        public async Task HandleAsync(ModuleTypeDetailsUpdated @event)
         {
             await ClearCache();
         }

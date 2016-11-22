@@ -8,8 +8,8 @@ using Weapsy.Reporting.Languages;
 namespace Weapsy.Reporting.Data.Default.Sites
 {
     public class SiteEventsHandler : 
-        IEventHandler<SiteCreated>,
-        IEventHandler<SiteDetailsUpdated>
+        IEventHandlerAsync<SiteCreated>,
+        IEventHandlerAsync<SiteDetailsUpdated>
     {
         private readonly ICacheManager _cacheManager;
         private readonly ILanguageFacade _languageFacade;
@@ -21,12 +21,12 @@ namespace Weapsy.Reporting.Data.Default.Sites
             _languageFacade = languageFacade;
         }
 
-        public async Task Handle(SiteCreated @event)
+        public async Task HandleAsync(SiteCreated @event)
         {
             await ClearCache(@event.AggregateRootId, @event.Name);
         }
 
-        public async Task Handle(SiteDetailsUpdated @event)
+        public async Task HandleAsync(SiteDetailsUpdated @event)
         {
             await ClearCache(@event.AggregateRootId, @event.Name);
         }

@@ -113,16 +113,6 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             }            
         }
 
-        public async Task CreateAsync(Language language)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntity = _mapper.Map<LanguageDbEntity>(language);
-                context.Add(dbEntity);
-                await context.SaveChangesAsync();
-            }
-        }
-
         public void Create(Language language)
         {
             using (var context = _dbContextFactory.Create())
@@ -130,6 +120,16 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
                 var dbEntity = _mapper.Map<LanguageDbEntity>(language);
                 context.Add(dbEntity);
                 context.SaveChangesAsync();
+            }
+        }
+
+        public async Task CreateAsync(Language language)
+        {
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = _mapper.Map<LanguageDbEntity>(language);
+                context.Add(dbEntity);
+                await context.SaveChangesAsync();
             }
         }
 

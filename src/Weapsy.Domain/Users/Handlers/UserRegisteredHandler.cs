@@ -6,7 +6,7 @@ using Weapsy.Domain.Users.Events;
 
 namespace Weapsy.Domain.Users.Handlers
 {
-    public class UserRegisteredHandler : IEventHandler<UserRegistered>
+    public class UserRegisteredHandler : IEventHandlerAsync<UserRegistered>
     {
         private readonly IUserRepository _userRepository;
         private readonly IValidator<CreateUser> _validator;
@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Users.Handlers
             _validator = validator;
         }
 
-        public Task Handle(UserRegistered @event)
+        public Task HandleAsync(UserRegistered @event)
         {
             return Task.Run(() =>
             {

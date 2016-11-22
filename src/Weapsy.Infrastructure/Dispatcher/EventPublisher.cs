@@ -20,13 +20,10 @@ namespace Weapsy.Infrastructure.Dispatcher
             if (@event == null)
                 throw new ArgumentNullException(nameof(@event));
 
-            var eventHandlers = _resolver.ResolveAll<IEventHandler<TEvent>>();
+            var eventHandlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
 
             foreach (var handler in eventHandlers)
-            {
-                var thread = new Thread(() => handler.Handle(@event));
-                thread.Start();
-            }
+                Task.Run(() => handler.HandleAsync(@event));
         }
 
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent

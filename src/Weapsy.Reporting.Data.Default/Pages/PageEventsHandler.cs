@@ -8,15 +8,15 @@ using Weapsy.Reporting.Languages;
 namespace Weapsy.Reporting.Data.Default.Pages
 {
     public class PageEventsHandler : 
-        IEventHandler<PageCreated>,
-        IEventHandler<PageDeleted>,
-        IEventHandler<PageActivated>,
-        IEventHandler<PageDetailsUpdated>,
-        IEventHandler<PageHidden>,
-        IEventHandler<PageModuleAdded>,
-        IEventHandler<PageModuleDetailsUpdated>,
-        IEventHandler<PageModulesReordered>,
-        IEventHandler<PageModuleRemoved>
+        IEventHandlerAsync<PageCreated>,
+        IEventHandlerAsync<PageDeleted>,
+        IEventHandlerAsync<PageActivated>,
+        IEventHandlerAsync<PageDetailsUpdated>,
+        IEventHandlerAsync<PageHidden>,
+        IEventHandlerAsync<PageModuleAdded>,
+        IEventHandlerAsync<PageModuleDetailsUpdated>,
+        IEventHandlerAsync<PageModulesReordered>,
+        IEventHandlerAsync<PageModuleRemoved>
     {
         private readonly ICacheManager _cacheManager;
         private readonly ILanguageFacade _languageFacade;
@@ -28,48 +28,48 @@ namespace Weapsy.Reporting.Data.Default.Pages
             _languageFacade = languageFacade;
         }
 
-        public async Task Handle(PageCreated @event)
+        public async Task HandleAsync(PageCreated @event)
         {
         }
 
-        public Task Handle(PageDetailsUpdated @event)
+        public Task HandleAsync(PageDetailsUpdated @event)
         {
             return ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task Handle(PageDeleted @event)
+        public async Task HandleAsync(PageDeleted @event)
         {
             await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task Handle(PageActivated @event)
-        {
-            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
-            await ClearMenuCache(@event.SiteId);
-        }
-
-        public async Task Handle(PageHidden @event)
+        public async Task HandleAsync(PageActivated @event)
         {
             await ClearPageCache(@event.SiteId, @event.AggregateRootId);
             await ClearMenuCache(@event.SiteId);
         }
 
-        public async Task Handle(PageModuleAdded @event)
+        public async Task HandleAsync(PageHidden @event)
+        {
+            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            await ClearMenuCache(@event.SiteId);
+        }
+
+        public async Task HandleAsync(PageModuleAdded @event)
         {
             await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task Handle(PageModuleDetailsUpdated @event)
+        public async Task HandleAsync(PageModuleDetailsUpdated @event)
         {
             await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task Handle(PageModulesReordered @event)
+        public async Task HandleAsync(PageModulesReordered @event)
         {
             await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task Handle(PageModuleRemoved @event)
+        public async Task HandleAsync(PageModuleRemoved @event)
         {
             await ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }

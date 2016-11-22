@@ -7,10 +7,10 @@ using Weapsy.Domain.Languages.Events;
 namespace Weapsy.Reporting.Data.Default.Languages
 {
     public class LanguageEventsHandler : 
-        IEventHandler<LanguageCreated>,
-        IEventHandler<LanguageDetailsUpdated>,
-        IEventHandler<LanguageDeleted>,
-        IEventHandler<LanguageActivated>
+        IEventHandlerAsync<LanguageCreated>,
+        IEventHandlerAsync<LanguageDetailsUpdated>,
+        IEventHandlerAsync<LanguageDeleted>,
+        IEventHandlerAsync<LanguageActivated>
     {
         private readonly ICacheManager _cacheManager;
 
@@ -19,22 +19,22 @@ namespace Weapsy.Reporting.Data.Default.Languages
             _cacheManager = cacheManager;
         }
 
-        public Task Handle(LanguageCreated @event)
+        public Task HandleAsync(LanguageCreated @event)
         {
             return ClearCache(@event.SiteId);
         }
 
-        public async Task Handle(LanguageDetailsUpdated @event)
+        public async Task HandleAsync(LanguageDetailsUpdated @event)
         {
             await ClearCache(@event.SiteId);
         }
 
-        public async Task Handle(LanguageDeleted @event)
+        public async Task HandleAsync(LanguageDeleted @event)
         {
             await ClearCache(@event.SiteId);
         }
 
-        public async Task Handle(LanguageActivated @event)
+        public async Task HandleAsync(LanguageActivated @event)
         {
             await ClearCache(@event.SiteId);
         }

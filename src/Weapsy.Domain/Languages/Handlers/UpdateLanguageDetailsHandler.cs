@@ -11,7 +11,8 @@ namespace Weapsy.Domain.Languages.Handlers
         private readonly ILanguageRepository _languageRepository;
         private readonly IValidator<UpdateLanguageDetails> _validator;
 
-        public UpdateLanguageDetailsHandler(ILanguageRepository languageRepository, IValidator<UpdateLanguageDetails> validator)
+        public UpdateLanguageDetailsHandler(ILanguageRepository languageRepository, 
+            IValidator<UpdateLanguageDetails> validator)
         {
             _languageRepository = languageRepository;
             _validator = validator;

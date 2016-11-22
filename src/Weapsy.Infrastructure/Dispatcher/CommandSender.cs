@@ -50,7 +50,9 @@ namespace Weapsy.Infrastructure.Dispatcher
             }
         }
 
-        public async Task SendAsync<TCommand, TAggregate>(TCommand command, bool publishEvents = true) where TCommand : ICommand where TAggregate : IAggregateRoot
+        public async Task SendAsync<TCommand, TAggregate>(TCommand command, bool publishEvents = true) 
+            where TCommand : ICommand 
+            where TAggregate : IAggregateRoot
         {
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
@@ -71,7 +73,7 @@ namespace Weapsy.Infrastructure.Dispatcher
 
                 var concreteEvent = EventFactory.CreateConcreteEvent(@event);
 
-                _eventPublisher.Publish(concreteEvent);
+                await _eventPublisher.PublishAsync(concreteEvent);
             }
         }
     }

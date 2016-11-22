@@ -8,12 +8,12 @@ using Weapsy.Reporting.Languages;
 namespace Weapsy.Reporting.Data.Default.Menus
 {
     public class MenuEventsHandler : 
-        IEventHandler<MenuCreated>,
-        IEventHandler<MenuItemAdded>,
-        IEventHandler<MenuItemUpdated>,
-        IEventHandler<MenuItemRemoved>,
-        IEventHandler<MenuItemsReordered>,        
-        IEventHandler<MenuDeleted>        
+        IEventHandlerAsync<MenuCreated>,
+        IEventHandlerAsync<MenuItemAdded>,
+        IEventHandlerAsync<MenuItemUpdated>,
+        IEventHandlerAsync<MenuItemRemoved>,
+        IEventHandlerAsync<MenuItemsReordered>,        
+        IEventHandlerAsync<MenuDeleted>        
     {
         private readonly ICacheManager _cacheManager;
         private readonly ILanguageFacade _languageFacade;
@@ -25,32 +25,32 @@ namespace Weapsy.Reporting.Data.Default.Menus
             _languageFacade = languageFacade;
         }
 
-        public async Task Handle(MenuCreated @event)
+        public async Task HandleAsync(MenuCreated @event)
         {
             await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task Handle(MenuItemAdded @event)
+        public async Task HandleAsync(MenuItemAdded @event)
         {
             await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task Handle(MenuItemUpdated @event)
+        public async Task HandleAsync(MenuItemUpdated @event)
         {
             await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task Handle(MenuItemRemoved @event)
+        public async Task HandleAsync(MenuItemRemoved @event)
         {
             await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task Handle(MenuItemsReordered @event)
+        public async Task HandleAsync(MenuItemsReordered @event)
         {
             await ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task Handle(MenuDeleted @event)
+        public async Task HandleAsync(MenuDeleted @event)
         {
             await ClearCache(@event.SiteId, @event.Name);
         }

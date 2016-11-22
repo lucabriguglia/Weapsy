@@ -8,8 +8,8 @@ using Weapsy.Reporting.Languages;
 namespace Weapsy.Apps.Text.Data.SqlServer
 {
     public class TextModuleEventsHandler : 
-        IEventHandler<TextModuleCreated>,
-        IEventHandler<VersionAdded>       
+        IEventHandlerAsync<TextModuleCreated>,
+        IEventHandlerAsync<VersionAdded>       
     {
         private readonly ICacheManager _cacheManager;
         private readonly ILanguageFacade _languageFacade;
@@ -21,12 +21,12 @@ namespace Weapsy.Apps.Text.Data.SqlServer
             _languageFacade = languageFacade;
         }
 
-        public Task Handle(TextModuleCreated @event)
+        public Task HandleAsync(TextModuleCreated @event)
         {
             return ClearCache(@event.SiteId, @event.ModuleId);
         }
 
-        public Task Handle(VersionAdded @event)
+        public Task HandleAsync(VersionAdded @event)
         {
             return ClearCache(@event.SiteId, @event.ModuleId);
         }
