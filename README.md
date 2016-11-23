@@ -45,6 +45,7 @@ https://github.com/weapsy/Weapsy/wiki
 - Run install-full.sql script (in scripts folder)
 - Open the Weapsy.sln solution in Visual Studio
 - Run (F5 or Ctrl+F5)
+- THERE ARE CURRENTLY INTERMITTENT ERRORS DURING THE INSTALLATION OF THE DEFAULT SITE (EXPERIENCED AFTER UPDGRADING TO ASP.NET CORE 1.1)
 - Login using these credentials:
   - email: admin@default.com
   - password: Ab1234567!
