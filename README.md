@@ -36,7 +36,7 @@ https://github.com/weapsy/Weapsy/wiki
 # Prerequisites
 
 - Visual Studio 2015 Update 3
-- .NET Core 1.0 for Visual Studio (https://www.microsoft.com/net/core#windows)
+- .NET Core 1.1 for Visual Studio (https://www.microsoft.com/net/download/core)
 - SQL Server
 
 # How to run on local
