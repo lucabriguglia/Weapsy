@@ -3,7 +3,7 @@
 
   "dependencies": {
     "FluentValidation": "6.4.0-beta3",
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "Weapsy.Infrastructure": "1.0.0-*"
   },
 

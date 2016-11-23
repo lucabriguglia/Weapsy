@@ -3,8 +3,9 @@
 
   "dependencies": {
     "FluentValidation": "6.4.0-beta3",
+    "Microsoft.NETCore.App": "1.1.0",
     "Moq": "4.6.36-alpha",
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "Weapsy.Domain": "1.0.0-*",
     "Weapsy.Infrastructure": "1.0.0-*"
   },
@@ -13,10 +14,6 @@
     "netcoreapp1.0": {
       "imports": "portable-net45+win8",
       "dependencies": {
-        "Microsoft.NETCore.App": {
-          "version": "1.0.0-*",
-          "type": "platform"
-        }
       }
     }
   }

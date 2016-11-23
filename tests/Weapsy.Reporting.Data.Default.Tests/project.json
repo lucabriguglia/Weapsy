@@ -3,14 +3,15 @@
 
   "dependencies": {
     "Moq": "4.6.36-alpha",
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "NUnit": "3.4.1",
     "Weapsy.Domain": "1.0.0-*",
     "Weapsy.Infrastructure": "1.0.0-*",
     "Weapsy.Reporting": "1.0.0-*",
     "Weapsy.Reporting.Data.Default": "1.0.0-*",
     "dotnet-test-nunit": "3.4.0-beta-2",
-    "Weapsy.Tests.Factories": "1.0.0-*"
+    "Weapsy.Tests.Factories": "1.0.0-*",
+    "Microsoft.NETCore.App": "1.1.0"
   },
 
   "testRunner": "nunit",
@@ -19,10 +20,6 @@
     "netcoreapp1.0": {
       "imports": "portable-net45+win8",
       "dependencies": {
-        "Microsoft.NETCore.App": {
-          "version": "1.0.0-*",
-          "type": "platform"
-        }
       }
     }
   }
