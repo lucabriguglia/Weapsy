@@ -122,7 +122,14 @@ namespace Weapsy.Services.Installation
 
             // ===== Pages ===== //
 
-            var pagePermisisons = new List<PagePermission>();
+            var pagePermisisons = new List<PagePermission>
+            {
+                new PagePermission
+                {
+                    RoleId = ((int) DefaultRoles.Everyone).ToString(),
+                    Type = PermissionType.View
+                }
+            };
 
             foreach (var roleId in _roleService.GetDefaultPageViewPermissionRoleIds().Result)
                 pagePermisisons.Add(new PagePermission
@@ -210,6 +217,29 @@ namespace Weapsy.Services.Installation
 
             // Update Home Page
 
+            var pageModulePermisisons = new List<PageModulePermission>
+            {
+                new PageModulePermission
+                {
+                    RoleId = ((int) DefaultRoles.Everyone).ToString(),
+                    Type = PermissionType.View
+                }
+            };
+
+            foreach (var roleId in _roleService.GetDefaultModuleViewPermissionRoleIds().Result)
+                pageModulePermisisons.Add(new PageModulePermission
+                {
+                    RoleId = roleId,
+                    Type = PermissionType.View
+                });
+
+            foreach (var roleId in _roleService.GetDefaultModuleEditPermissionRoleIds().Result)
+                pageModulePermisisons.Add(new PageModulePermission
+                {
+                    RoleId = roleId,
+                    Type = PermissionType.Edit
+                });
+
             homePage.AddModule(new AddPageModule
             {
                 SiteId = siteId,
@@ -218,7 +248,8 @@ namespace Weapsy.Services.Installation
                 PageModuleId = Guid.NewGuid(),
                 Title = "Content",
                 Zone = "Content",
-                SortOrder = 1
+                SortOrder = 1,
+                PageModulePermissions = pageModulePermisisons
             }, _addPageModuleValidator);
 
             homePage.AddModule(new AddPageModule
@@ -229,7 +260,8 @@ namespace Weapsy.Services.Installation
                 PageModuleId = Guid.NewGuid(),
                 Title = "Left",
                 Zone = "Left",
-                SortOrder = 1
+                SortOrder = 1,
+                PageModulePermissions = pageModulePermisisons
             }, _addPageModuleValidator);
 
             homePage.AddModule(new AddPageModule
@@ -240,7 +272,8 @@ namespace Weapsy.Services.Installation
                 PageModuleId = Guid.NewGuid(),
                 Title = "Right",
                 Zone = "Right",
-                SortOrder = 1
+                SortOrder = 1,
+                PageModulePermissions = pageModulePermisisons
             }, _addPageModuleValidator);
 
             _pageRepository.Update(homePage);

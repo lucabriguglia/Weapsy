@@ -88,7 +88,7 @@ namespace Weapsy.Services.Identity
             if (adminRole != null)
                 result.Add(adminRole.Id);
 
-            result.Add(((int)DefaultRoles.Everyone).ToString());
+            //result.Add(((int)DefaultRoles.Everyone).ToString());
 
             return result;
         }
@@ -112,7 +112,7 @@ namespace Weapsy.Services.Identity
             if (adminRole != null)
                 result.Add(adminRole.Id);
 
-            result.Add(((int)DefaultRoles.Everyone).ToString());
+            //result.Add(((int)DefaultRoles.Everyone).ToString());
 
             return result;
         }

@@ -59,7 +59,8 @@ namespace Weapsy.Domain.Pages.Handlers
                     PageModuleId = Guid.NewGuid(),
                     Title = cmd.Title,
                     Zone = cmd.Zone,
-                    SortOrder = cmd.SortOrder
+                    SortOrder = cmd.SortOrder,
+                    PageModulePermissions = cmd.PageModulePermissions
                 }, _addPageModuleValidator);
                 events.AddRange(page.Events);
                 _pageRepository.Update(page);

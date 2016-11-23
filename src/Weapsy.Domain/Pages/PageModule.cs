@@ -24,7 +24,13 @@ namespace Weapsy.Domain.Pages
         {
         }
 
-        public PageModule(Guid pageId, Guid id, Guid moduleId, string title, string zone, int sortOrder) : base(id)
+        public PageModule(Guid pageId, 
+            Guid id, 
+            Guid moduleId, 
+            string title, 
+            string zone, 
+            int sortOrder,
+            IList<PageModulePermission> pageModulePermissions) : base(id)
         {
             PageId = pageId;
             ModuleId = moduleId;
@@ -32,7 +38,8 @@ namespace Weapsy.Domain.Pages
             Zone = zone;
             SortOrder = sortOrder;
             Status = PageModuleStatus.Active;
-            InheritPermissions = true;
+            InheritPermissions = false;
+            SetPermissions(pageModulePermissions);
         }
 
         public void UpdateDetails(UpdatePageModuleDetails cmd)
@@ -44,7 +51,7 @@ namespace Weapsy.Domain.Pages
             SetPermissions(cmd.PageModulePermissions);
         }
 
-        private void SetLocalisations(List<PageModuleLocalisation> pageModuleLocalisations)
+        private void SetLocalisations(IList<PageModuleLocalisation> pageModuleLocalisations)
         {
             PageModuleLocalisations.Clear();
 

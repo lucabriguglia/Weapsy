@@ -10,6 +10,23 @@ namespace Weapsy.Domain.Pages.Commands
         public string Zone { get; set; }
         public int SortOrder { get; set; }
         public string Title { get; set; }
-        public IList<string> ViewPermissionRoleIds { get; set; }
+        public IList<PageModulePermission> PageModulePermissions { get; set; } = new List<PageModulePermission>();
+
+        public void SetPageModulePermissions(IList<string> viewRoleIds, IList<string> editRoleIds)
+        {
+            foreach (var viewRoleId in viewRoleIds)
+                PageModulePermissions.Add(new PageModulePermission
+                {
+                    RoleId = viewRoleId,
+                    Type = PermissionType.View
+                });
+
+            foreach (var viewRoleId in editRoleIds)
+                PageModulePermissions.Add(new PageModulePermission
+                {
+                    RoleId = viewRoleId,
+                    Type = PermissionType.Edit
+                });
+        }
     }
 }
