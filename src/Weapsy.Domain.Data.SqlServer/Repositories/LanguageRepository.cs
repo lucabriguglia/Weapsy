@@ -119,7 +119,7 @@ namespace Weapsy.Domain.Data.SqlServer.Repositories
             {
                 var dbEntity = _mapper.Map<LanguageDbEntity>(language);
                 context.Add(dbEntity);
-                context.SaveChangesAsync();
+                context.SaveChanges();
             }
         }
 
