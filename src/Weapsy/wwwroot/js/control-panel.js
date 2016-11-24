@@ -7,6 +7,12 @@ weapsy.controlPanel = (function ($) {
     });
 
     function init() {
+        $(".moduleType").draggable({
+            connectToSortable: ".zone",
+            helper: "clone",
+            revert: "invalid"
+        });
+
         $(".zone").addClass("edit-mode");
 
         $(".zone").each(function () {
@@ -14,16 +20,11 @@ weapsy.controlPanel = (function ($) {
             $(this).prepend('<p class="zone-name">' + name + '</p>');
         });
 
-        $(".moduleType").draggable({
-            connectToSortable: ".zone",
-            helper: "clone",
-            revert: "invalid"
-        });
-
         $(".zone").sortable({
             handle: ".handle",
             placeholder: "placeholder",
             connectWith: ".zone",
+            items: "> div.module",
             revert: true,
             stop: function (event, ui) {
                 var pageId = $("#page").attr("data-page-id");
