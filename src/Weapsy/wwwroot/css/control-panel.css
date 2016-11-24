@@ -40,6 +40,11 @@
     list-style-type: none;
 }
 
+.zone p.zone-name {
+    color: #bbb;
+    font-weight: normal;
+}
+
 .module {
     margin-bottom:20px;
 }

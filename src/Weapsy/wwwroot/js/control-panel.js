@@ -9,6 +9,11 @@ weapsy.controlPanel = (function ($) {
     function init() {
         $(".zone").addClass("edit-mode");
 
+        $(".zone").each(function () {
+            var name = $(this).attr("data-zone-name");
+            $(this).prepend('<p class="zone-name">' + name + '</p>');
+        });
+
         $(".moduleType").draggable({
             connectToSortable: ".zone",
             helper: "clone",
@@ -22,7 +27,6 @@ weapsy.controlPanel = (function ($) {
             revert: true,
             stop: function (event, ui) {
                 var pageId = $("#page").attr("data-page-id");
-
                 var moduleTypeId = $(ui.item.context).attr("data-module-type-id");
 
                 var command;
