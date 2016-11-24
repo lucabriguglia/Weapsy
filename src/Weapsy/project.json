@@ -48,6 +48,8 @@
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   },
   "dependencies": {
+    "Autofac.Extensions.DependencyInjection": "4.0.0",
+    "BundlerMinifier.Core": "2.2.306",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.2",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
@@ -75,6 +77,7 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": "1.1.0-preview4-final"
   },
   "runtimes": {
-    "win10-x64": {}
+    "win10-x64": {},
+    "win7-x64": {} 
   }
 }

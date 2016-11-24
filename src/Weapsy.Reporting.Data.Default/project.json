@@ -2,7 +2,7 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "AutoMapper": "5.0.0-beta-1",
+    "AutoMapper": "5.2.0",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
     "NETStandard.Library": "1.6.1",
     "Weapsy.Domain": "1.0.0-*",

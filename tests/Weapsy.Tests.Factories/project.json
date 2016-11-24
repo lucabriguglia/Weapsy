@@ -2,9 +2,9 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "FluentValidation": "6.4.0-beta3",
+    "FluentValidation": "6.4.0-beta9",
     "Microsoft.NETCore.App": "1.1.0",
-    "Moq": "4.6.36-alpha",
+    "Moq": "4.6.38-alpha",
     "NETStandard.Library": "1.6.1",
     "Weapsy.Domain": "1.0.0-*",
     "Weapsy.Infrastructure": "1.0.0-*"
