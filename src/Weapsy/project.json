@@ -16,8 +16,6 @@
         "Weapsy.Services": "1.0.0-*",
         "Weapsy.Apps.Text.Data.SqlServer": "1.0.0-*",
         "Weapsy.Apps.Text.DependencyConfigurator": "1.0.0-*",
-        "Autofac.Extensions.DependencyInjection": "4.0.0-rc3-309",
-        "BundlerMinifier.Core": "2.1.258",
         "Weapsy.Infrastructure": "1.0.0-*"
       },
       "imports": [

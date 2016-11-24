@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
@@ -11,6 +12,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using Weapsy.Domain.Pages.Handlers;
+using Weapsy.Infrastructure.Domain;
 using Weapsy.Tests.Factories;
 
 namespace Weapsy.Domain.Tests.Pages.Handlers
@@ -316,7 +318,6 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var events = removeModuleHandler.Handle(command);
 
-            Assert.AreEqual(1, events.Count);
             Assert.AreEqual(typeof(PageModuleRemoved), events.FirstOrDefault().GetType());
         }
 
@@ -371,9 +372,9 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var events = removeModuleHandler.Handle(command);
 
-            Assert.AreEqual(2, events.Count);
-            Assert.AreEqual(typeof(PageModuleRemoved), events.FirstOrDefault().GetType());
-            Assert.AreEqual(typeof(ModuleDeleted), events.Skip(1).FirstOrDefault().GetType());
+            var enumerable = events as IList<IEvent> ?? events.ToList();
+            Assert.AreEqual(typeof(PageModuleRemoved), enumerable.FirstOrDefault().GetType());
+            Assert.AreEqual(typeof(ModuleDeleted), enumerable.Skip(1).FirstOrDefault().GetType());
         }
     }
 }

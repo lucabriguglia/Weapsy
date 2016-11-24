@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
 using FluentValidation.Results;
@@ -11,6 +12,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using Weapsy.Domain.Pages.Handlers;
+using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Tests.Pages.Handlers
 {
@@ -175,9 +177,9 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var events = addModuleHandler.Handle(command);
 
-            Assert.AreEqual(2, events.Count);
-            Assert.AreEqual(typeof(ModuleCreated), events.FirstOrDefault().GetType());
-            Assert.AreEqual(typeof(PageModuleAdded), events.Skip(1).FirstOrDefault().GetType());
+            var enumerable = events as IList<IEvent> ?? events.ToList();
+            Assert.AreEqual(typeof(ModuleCreated), enumerable.FirstOrDefault().GetType());
+            Assert.AreEqual(typeof(PageModuleAdded), enumerable.Skip(1).FirstOrDefault().GetType());
         }
     }
 }

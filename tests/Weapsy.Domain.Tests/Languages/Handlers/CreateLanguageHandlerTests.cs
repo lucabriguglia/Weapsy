@@ -34,11 +34,11 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
 
             var createLanguageHandler = new CreateLanguageHandler(languageRepositoryMock.Object, validatorMock.Object, sortOrderGeneratorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createLanguageHandler.Handle(command));
+            Assert.Throws<ValidationException>(async () => await createLanguageHandler.HandleAsync(command));
         }
 
         [Test]
-        public void Should_validate_command_and_save_new_language()
+        public async void Should_validate_command_and_save_new_language()
         {
             var command = new CreateLanguage
             {
@@ -58,7 +58,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();
 
             var createLanguageHandler = new CreateLanguageHandler(languageRepositoryMock.Object, validatorMock.Object, sortOrderGeneratorMock.Object);
-            createLanguageHandler.Handle(command);
+            await createLanguageHandler.HandleAsync(command);
 
             validatorMock.Verify(x => x.Validate(command));
             languageRepositoryMock.Verify(x => x.Create(It.IsAny<Language>()));
