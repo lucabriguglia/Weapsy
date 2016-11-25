@@ -28,10 +28,10 @@
             <td>@page.Name</td>
             <td>@page.Url</td>
             <td class="text-center">
-                <input type="checkbox" @(page.Status == Weapsy.Domain.Pages.PageStatus.Active ? "checked=\"checked\"" : "") disabled="disabled"/>
+                <input type="checkbox" @(page.Status == Weapsy.Domain.Pages.PageStatus.Active ? "checked=\"checked\"" : "") data-page-id="@page.Id" class="activate-page" />
             </td>
             <td class="text-center">
-                <a href="/admin/page/edit/@page.Id" class="glyphicon glyphicon-edit options" title="Edit"></a>
+                <a href="@Url.Action("Edit", "Page", new { area = "Admin", id = page.Id })" class="glyphicon glyphicon-edit options" title="Edit"></a>
                 <a href="#" class="glyphicon glyphicon-remove options delete-page" data-toggle="modal" data-target="#confirm-delete" data-id="@page.Id" title="Delete"></a>
             </td>
         </tr>
