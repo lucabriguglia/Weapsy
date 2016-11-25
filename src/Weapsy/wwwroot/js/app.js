@@ -3,6 +3,16 @@ weapsy.admin = weapsy.admin || {};
 weapsy.utils = weapsy.utils || {};
 
 weapsy.utils = (function ($) {
+    function showLoading() {
+        $("#main-success").hide();
+        $("#main-loading").show();
+    }
+
+    function showSuccess() {
+        $("#main-loading").hide();
+        $("#main-success").show().delay(2000).fadeOut();
+    }
+
     function showError(event, request, settings, thrownError) {
         var title =  "Error";
         var message = "";
@@ -33,7 +43,7 @@ weapsy.utils = (function ($) {
                 message = errorText;
         }
 
-        if (message == "")
+        if (message === "")
             message = thrownError ? thrownError : "Something went wrong.";
 
         $("#error-title").text(title);
@@ -59,6 +69,8 @@ weapsy.utils = (function ($) {
     }
 
     return {
+        showLoading: showLoading,
+        showSuccess: showSuccess,
         showError: showError,
         getUrlParameterByName: getUrlParameterByName,
         getUrlParts: getUrlParts
@@ -66,9 +78,23 @@ weapsy.utils = (function ($) {
 }(jQuery));
 
 (function ($) {
-    $(document).ajaxError(function (event, request, settings, thrownError) {
-        weapsy.utils.showError(event, request, settings, thrownError);
-    });
+
+    $("#main-loading").hide();
+    $("#main-success").hide();
+
+    $(document)
+        .ajaxStart(function () {
+          
+        })
+        .ajaxSuccess(function () {
+         
+        })
+        .ajaxError(function (event, request, settings, thrownError) {
+            weapsy.utils.showError(event, request, settings, thrownError);
+        })
+        .ajaxStop(function () {
+
+        });
 
     //$.fn.serializeObject = function () {
     //    var o = {};

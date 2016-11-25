@@ -4,9 +4,8 @@
     padding:0;
 }*/
 
-html, body, .container
-{
-    height:100%;
+html, body, .container {
+    height: 100%;
 }
 
 body {
@@ -95,7 +94,7 @@ table {
     padding: 0;
     min-height: 920px;
     background-color: #fff;
-    border-left :solid 1px #ddd;
+    border-left: solid 1px #ddd;
 }
 
 @media(min-width:768px) {
@@ -124,17 +123,32 @@ table {
     border-bottom: 1px solid #e7e7e7;
 }
 
- .connected-list {
+.connected-list {
     border: 1px solid #eee;
     min-height: 50px;
     padding: 10px;
     list-style-type: none;
-  }
+}
 
- .placeholder {
+.placeholder {
     outline: 1px dashed #286090;
     background-color: #e4ecf3;
     padding: 10px;
     margin: 8px 2px;
     min-height: 50px;
+}
+
+.main-state {
+    top: 0;
+    left: 50%;
+    position: fixed;
+    width: 100px;
+    height: 51px;
+    z-index: 100000;
+    text-align: center;
+    font-size: 35px;   
+}
+
+.main-loading {
+    color: #ddd;
 }

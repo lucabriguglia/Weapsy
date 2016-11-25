@@ -19,112 +19,121 @@
             <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/themes/ui-lightness/jquery-ui.css"
                   asp-fallback-href="~/lib/jquery-ui/themes/ui-lightness/jquery-ui.css"
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />            
-            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+            <link rel="stylesheet" href="~/css/admin.min.css" asp-append-version="true" />
         </environment>
     </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="/" class="navbar-brand">Weapsy (alpha)</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="@Url.Action("Index", "Home", new { area = "" })" title="back to site">
-                                <i class="fa fa-angle-left fa-fw"></i> back to site
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<body>
+<div id="main-state" class="main-state">
+    <i id="main-loading" class="fa fa-circle-o-notch fa-spin main-loading" style="display: none;"></i>
+    <i id="main-success" class="fa fa-check text-success" style="display: none;"></i>
+</div>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">Weapsy</a>
         </div>
-        <div class="wrapper">
-            <div class="navbar-collapse collapse sidebar">
-                <ul class="nav">
-                    <li>
-                        <a asp-controller="Home" asp-action="Index" title="Dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a asp-controller="Page" asp-action="Index" title="Pages"><i class="fa fa-files-o fa-fw"></i> Pages</a>
-                    </li>
-                    <li>
-                        <a asp-controller="Menu" asp-action="Index" title="Menus"><i class="fa fa-sitemap fa-fw"></i> Menus</a>
-                    </li>
-                    <li>
-                        <a asp-controller="Site" asp-action="Index" title="Site Settings"><i class="fa fa-gear fa-fw"></i> Site Settings</a>
-                    </li>
-                    <li>
-                        <a asp-controller="Language" asp-action="Index" title="Languages"><i class="fa fa-language fa-fw"></i> Languages</a>
-                    </li>
-                    <li>
-                        <a asp-controller="User" asp-action="Index" title="Users"><i class="fa fa-users fa-fw"></i> Users</a>
-                    </li>
-                    <li>
-                        <a asp-controller="Role" asp-action="Index" title="Roles"><i class="fa fa-lock fa-fw"></i> Roles</a>
-                    </li>
-                    <li>
-                        <a asp-controller="App" asp-action="Index" title="Apps"><i class="fa fa-th fa-fw"></i> Apps</a>
-                    </li>
-                    <li>
-                        <a asp-controller="ModuleType" asp-action="Index" title="Module Types"><i class="fa fa-puzzle-piece fa-fw"></i> Module Types</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="container body-content">
-                @RenderBody()
-                @*<hr />
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="@Url.Action("Index", "Home", new {area = ""})" title="back to site">
+                        <i class="fa fa-angle-left fa-fw"></i> back to site
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <div class="navbar-collapse collapse sidebar">
+        <ul class="nav">
+            <li>
+                <a asp-controller="Home" asp-action="Index" title="Dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+            </li>
+            <li>
+                <a asp-controller="Page" asp-action="Index" title="Pages"><i class="fa fa-files-o fa-fw"></i> Pages</a>
+            </li>
+            <li>
+                <a asp-controller="Menu" asp-action="Index" title="Menus"><i class="fa fa-sitemap fa-fw"></i> Menus</a>
+            </li>
+            <li>
+                <a asp-controller="Site" asp-action="Index" title="Site Settings"><i class="fa fa-gear fa-fw"></i> Site Settings</a>
+            </li>
+            <li>
+                <a asp-controller="Language" asp-action="Index" title="Languages"><i class="fa fa-language fa-fw"></i> Languages</a>
+            </li>
+            <li>
+                <a asp-controller="User" asp-action="Index" title="Users"><i class="fa fa-users fa-fw"></i> Users</a>
+            </li>
+            <li>
+                <a asp-controller="Role" asp-action="Index" title="Roles"><i class="fa fa-lock fa-fw"></i> Roles</a>
+            </li>
+            <li>
+                <a asp-controller="App" asp-action="Index" title="Apps"><i class="fa fa-th fa-fw"></i> Apps</a>
+            </li>
+            <li>
+                <a asp-controller="ModuleType" asp-action="Index" title="Module Types"><i class="fa fa-puzzle-piece fa-fw"></i> Module Types</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />
                 <footer>
                     <p>&copy; 2016 - Weapsy</p>
                     <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a></p>
                 </footer>*@
-            </div>
-        </div>
+    </div>
+</div>
 
-        @await Html.PartialAsync("_ErrorModal")
+@await Html.PartialAsync("_ErrorModal")
 
-        <environment names="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/jquery-ui/jquery-ui.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/lib/knockout/dist/knockout.js"></script>
-            @*<script src="~/lib/jquery.serializeJSON/jquery.serializejson.js"></script>*@
-            <script src="~/js/app.js"></script>
-            <script src="~/js/admin/admin.js"></script>
-        </environment>
-        <environment names="Staging,Production">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery">
-            </script>
-            <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
-                    asp-fallback-src="~/lib/jquery-ui/jquery-ui.min.js"
-                    asp-fallback-test="window.jQuery">
-            </script>
-            <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery">
-            </script>
-            <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.0.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-            </script>
-            <script src="~/lib/jquery.serializeJSON/jquery.serializejson.min.js"></script>
-            <script src="~/js/app.js" asp-append-version="true"></script>
-        </environment>
+<environment names="Development">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/knockout/dist/knockout.js"></script>
+    @*<script src="~/lib/jquery.serializeJSON/jquery.serializejson.js"></script>*@
+    <script src="~/js/app.js"></script>
+    <script src="~/js/admin/admin.js"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
+            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery">
+            
+    </script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
+            asp-fallback-src="~/lib/jquery-ui/jquery-ui.min.js"
+            asp-fallback-test="window.jQuery">
+            
+    </script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+            asp-fallback-test="window.jQuery">
+            
+    </script>
+    <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.0.js"
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+            
+    </script>
+    <script src="~/lib/jquery.serializeJSON/jquery.serializejson.min.js"></script>
+    <script src="~/js/app.js" asp-append-version="true"></script>
+</environment>
 
-        <script>
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-        </script>
+<script>
+    $(document)
+        .ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+</script>
 
-        @RenderSection("scripts", required: false)
-    </body>
+@RenderSection("scripts", required: false)
+</body>
 </html>
