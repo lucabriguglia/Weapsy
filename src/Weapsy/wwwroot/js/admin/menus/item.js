@@ -14,11 +14,12 @@ weapsy.admin.menuItem = (function ($, ko) {
     }
 
     function MenuItemLocalisation(data) {
-        var languageName = data.languageName;
+        var tabLanguageName = data.languageName;
         if (data.languageStatus != 1)
-            languageName += " *";
+            tabLanguageName += " *";
+        this.tabLanguageName = ko.observable(tabLanguageName);
         this.languageId = ko.observable(data.languageId);
-        this.languageName = ko.observable(languageName);
+        this.languageName = ko.observable(data.languageName);
         this.languageStatus = ko.observable(data.languageStatus);
         this.text = ko.observable(data.text);
         this.title = ko.observable(data.title);
