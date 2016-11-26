@@ -71,7 +71,6 @@ weapsy.utils = (function ($) {
 }(jQuery));
 
 (function ($) {
-
     $("#main-loading").hide();
     $("#main-success").hide();
 

@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using Weapsy.Models
-
-@inject SignInManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> SignInManager
+﻿@inject SignInManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> SignInManager
 @inject UserManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
@@ -9,7 +6,7 @@
     <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="/manage" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                <a asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>
             @if (User.IsInRole("Administrator"))
             {

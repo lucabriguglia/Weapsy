@@ -7,26 +7,26 @@ weapsy.controlPanel = (function ($) {
     });
 
     function init() {
-        var sPositions = localStorage.positions || "{}",
-        positions = JSON.parse(sPositions);
-        $.each(positions, function(id, pos) {
-            $("#" + id).css(pos);
-        });
+        //var sPositions = localStorage.positions || "{}",
+        //positions = JSON.parse(sPositions);
+        //$.each(positions, function(id, pos) {
+        //    $("#" + id).css(pos);
+        //});
 
-        $(".moduleTypes").show();
+        //$(".moduleTypes").show();
 
-        $('#restorePosition').click(function () {
-            positions["moduleTypes"] = { top: 25, left: 25 };
-            localStorage.positions = JSON.stringify(positions);
-            location.reload();
-        });
+        //$('#restorePosition').click(function () {
+        //    positions["moduleTypes"] = { top: 25, left: 25 };
+        //    localStorage.positions = JSON.stringify(positions);
+        //    location.reload();
+        //});
 
-        $(".moduleTypes").draggable({
-            stop: function (event, ui) {
-                positions[this.id] = ui.position;
-                localStorage.positions = JSON.stringify(positions);
-            }
-        });
+        //$(".moduleTypes").draggable({
+        //    stop: function (event, ui) {
+        //        positions[this.id] = ui.position;
+        //        localStorage.positions = JSON.stringify(positions);
+        //    }
+        //});
 
         $(".moduleType").draggable({
             connectToSortable: ".zone",
@@ -49,12 +49,12 @@ weapsy.controlPanel = (function ($) {
             revert: true,
             stop: function (event, ui) {
                 var pageId = $("#page").attr("data-page-id");
-
                 var moduleTypeId = $(ui.item.context).attr("data-module-type-id");
 
                 var command;
 
                 if (!moduleTypeId) {
+                    weapsy.utils.showLoading("Reordering Modules");
                     var zones = [];
                     $(".zone").each(function () {
                         var name = $(this).attr("data-zone-name");
@@ -81,11 +81,12 @@ weapsy.controlPanel = (function ($) {
                         dataType: 'json',
                         contentType: 'application/json'
                     }).done(function () {
+                        weapsy.utils.showSuccess("Modules Reordered");
                     });
                 }
                 else {
-                    $(ui.item.context).text("Saving...");
-                    $(ui.item.context).css("margin-bottom", "10px");
+                    $(ui.item[0]).text("Saving...");
+                    $(ui.item[0]).css("margin-bottom", "10px");
 
                     var title = $(ui.item.context).attr("data-module-type-title");
                     var zone = $(ui.item[0].parentNode).attr("data-zone-name");
@@ -144,6 +145,7 @@ weapsy.controlPanel = (function ($) {
                 pageId: pageId,
                 moduleId: moduleIdToDelete
             };
+
             $.ajax({
                 url: "/api/page/" + pageId + "/remove-module",
                 type: "PUT",

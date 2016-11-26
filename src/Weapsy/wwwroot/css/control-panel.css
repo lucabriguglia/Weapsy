@@ -13,6 +13,10 @@
     border-bottom: 1px solid #000;
 }
 
+/*#control-panel a:link, a:visited {
+    color: #ddd;
+}*/
+
 .help {
     color: #eee;
 }
@@ -27,6 +31,14 @@
     padding: 10px;
     margin: 8px 2px;
     min-height: 50px;
+}
+
+.moduleTypes {
+    top: 25px;
+    left: 25px;
+    position: absolute;
+    width: 250px;
+    z-index: 100000;
 }
 
 .moduleType {
@@ -72,7 +84,7 @@
 .main-state {
     top: 0;
     left: 50%;
-    position: fixed;
+    position: absolute;
     width: auto;
     height: 51px;
     z-index: 100000;
@@ -96,12 +108,4 @@
 
 .main-success span {
     color: #3c763d;
-}
-
-.moduleTypes {
-    top: 25px;
-    left: 25px;
-    position: absolute;
-    width: 250px;
-    z-index: 100000;
 }
