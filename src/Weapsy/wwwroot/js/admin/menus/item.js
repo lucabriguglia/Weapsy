@@ -38,6 +38,7 @@ weapsy.admin.menuItem = (function ($, ko) {
     function Language(data) {
         this.id = data.id;
         this.name = data.name;
+        this.status = data.status;
     }
 
     function menuItemViewModel() {
@@ -115,6 +116,7 @@ weapsy.admin.menuItem = (function ($, ko) {
                 self.menuItemLocalisations.push(new MenuItemLocalisation({
                     languageId: item.id,
                     languageName: item.name,
+                    languageStatus: item.status,
                     text: '',
                     title: ''
                 }));
