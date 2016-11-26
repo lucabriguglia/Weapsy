@@ -66,7 +66,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         self.menuItemPermissions = ko.observableArray([]);
         self.menuItemLocalisationsNotActive = ko.computed(function () {
             return ko.utils.arrayFilter(self.menuItemLocalisations(), function (localisation) {
-                return localisation.languageStatus != 1;
+                return localisation.languageStatus() != 1;
             });
         });
 
