@@ -3,17 +3,21 @@ weapsy.admin = weapsy.admin || {};
 weapsy.utils = weapsy.utils || {};
 
 weapsy.utils = (function ($) {
-    function showLoading() {
+    function showLoading(text) {
         $("#main-success").hide();
         $("#main-loading").show();
+        $("#main-loading-text").text(text !== "" ? text : "");
     }
 
-    function showSuccess() {
+    function showSuccess(text) {
         $("#main-loading").hide();
         $("#main-success").show().delay(2000).fadeOut();
+        $("#main-success-text").text(text !== "" ? text : "");
     }
 
     function showError(event, request, settings, thrownError) {
+        $("#main-loading").hide();
+
         var title =  "Error";
         var message = "";
 

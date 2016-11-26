@@ -4,7 +4,6 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>@ViewBag.Title</title>
-
         <environment names="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
             <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
@@ -23,10 +22,7 @@
         </environment>
     </head>
 <body>
-<div id="main-state" class="main-state">
-    <i id="main-loading" class="fa fa-circle-o-notch fa-spin main-loading" style="display: none;"></i>
-    <i id="main-success" class="fa fa-check text-success" style="display: none;"></i>
-</div>
+@await Html.PartialAsync("_AdminLoading")
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -51,43 +47,15 @@
 </div>
 <div class="wrapper">
     <div class="navbar-collapse collapse sidebar">
-        <ul class="nav">
-            <li>
-                <a asp-controller="Home" asp-action="Index" title="Dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-            </li>
-            <li>
-                <a asp-controller="Page" asp-action="Index" title="Pages"><i class="fa fa-files-o fa-fw"></i> Pages</a>
-            </li>
-            <li>
-                <a asp-controller="Menu" asp-action="Index" title="Menus"><i class="fa fa-sitemap fa-fw"></i> Menus</a>
-            </li>
-            <li>
-                <a asp-controller="Site" asp-action="Index" title="Site Settings"><i class="fa fa-gear fa-fw"></i> Site Settings</a>
-            </li>
-            <li>
-                <a asp-controller="Language" asp-action="Index" title="Languages"><i class="fa fa-language fa-fw"></i> Languages</a>
-            </li>
-            <li>
-                <a asp-controller="User" asp-action="Index" title="Users"><i class="fa fa-users fa-fw"></i> Users</a>
-            </li>
-            <li>
-                <a asp-controller="Role" asp-action="Index" title="Roles"><i class="fa fa-lock fa-fw"></i> Roles</a>
-            </li>
-            <li>
-                <a asp-controller="App" asp-action="Index" title="Apps"><i class="fa fa-th fa-fw"></i> Apps</a>
-            </li>
-            <li>
-                <a asp-controller="ModuleType" asp-action="Index" title="Module Types"><i class="fa fa-puzzle-piece fa-fw"></i> Module Types</a>
-            </li>
-        </ul>
+        @await Html.PartialAsync("_AdminNavigation")
     </div>
     <div class="container body-content">
         @RenderBody()
         @*<hr />
-                <footer>
-                    <p>&copy; 2016 - Weapsy</p>
-                    <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a></p>
-                </footer>*@
+        <footer>
+            <p>&copy; 2016 - Weapsy</p>
+            <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a></p>
+        </footer>*@
     </div>
 </div>
 
@@ -105,23 +73,19 @@
 <environment names="Staging,Production">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
             asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-            asp-fallback-test="window.jQuery">
-            
+            asp-fallback-test="window.jQuery">            
     </script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
             asp-fallback-src="~/lib/jquery-ui/jquery-ui.min.js"
-            asp-fallback-test="window.jQuery">
-            
+            asp-fallback-test="window.jQuery">            
     </script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
             asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-            asp-fallback-test="window.jQuery">
-            
+            asp-fallback-test="window.jQuery">            
     </script>
     <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.0.js"
             asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.js"
-            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-            
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">            
     </script>
     <script src="~/lib/jquery.serializeJSON/jquery.serializejson.min.js"></script>
     <script src="~/js/app.js" asp-append-version="true"></script>

@@ -2,15 +2,17 @@
 
 weapsy.admin.pageIndex = (function ($) {
     $('.activate-page').click(function () {
-        weapsy.utils.showLoading();
         var pageId = $(this).attr("data-page-id");
         var checked = $(this).is(":checked");
         var action = checked ? "activate" : "hide";
+        var loadingText = checked ? "Activating Page" : "Hiding Page";
+        var successText = checked ? "Page Activated" : "Page Hidden";
+        weapsy.utils.showLoading(loadingText);
         $.ajax({
             url: "/api/page/" + pageId + "/" + action,
             type: "PUT"
         }).done(function () {
-            weapsy.utils.showSuccess();
+            weapsy.utils.showSuccess(successText);
         }).fail(function () {
         });
     });
@@ -22,15 +24,13 @@ weapsy.admin.pageIndex = (function ($) {
     });
 
     $('#confirmDelete').click(function () {
-        $('#deletingPage').show();
+        weapsy.utils.showLoading("Deleting Page");
         $.ajax({
             url: "/api/page/" + pageIdToDelete,
             type: "DELETE"
         }).done(function () {
-            $('#deletingPage').hide();
-            window.location.href = '/admin/page'; // to do: just remove row
+            window.location.href = '/admin/page';
         }).fail(function () {
-            $('#deletingPage').hide();
         });
     });
 }(jQuery));

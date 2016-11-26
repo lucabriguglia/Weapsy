@@ -4,41 +4,41 @@ weapsy.admin.editPage = (function ($) {
     var id = $('#id').val();
 
     $('#activatePage').click(function () {
-        $('#savingPage').show();
+        weapsy.utils.showLoading("Activating Page");
         $.ajax({
             url: "/api/page/" + id + "/activate",
             type: "PUT"
         }).done(function () {
-            $('#savingPage').hide();
             window.location.href = '/admin/page';
         }).fail(function () {
-            $('#savingPage').hide();
         });
     });
 
     $('#hidePage').click(function () {
-        $('#savingPage').show();
+        weapsy.utils.showLoading("Hiding Page");
         $.ajax({
             url: "/api/page/" + id + "/hide",
             type: "PUT"
         }).done(function () {
-            $('#savingPage').hide();
             window.location.href = '/admin/page';
         }).fail(function () {
-            $('#savingPage').hide();
         });
     });
 
     $('#confirmDelete').click(function () {
-        $('#savingPage').show();
+        weapsy.utils.showLoading("Deleting Page");
         $.ajax({
             url: "/api/page/" + id,
             type: "DELETE"
         }).done(function () {
-            $('#savingPage').hide();
             window.location.href = '/admin/page';
         }).fail(function () {
-            $('#savingPage').hide();
         });
     });
+
+    return {
+        loading: function () {
+            weapsy.utils.showLoading("Updating Page");
+        }
+    }
 }(jQuery));

@@ -14,19 +14,12 @@
     <h1>Create New Page</h1>
 </div>
 
-<form id="createPageForm" name="createPageForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="/Admin/Page/Save" data-ajax-loading="#savingPage" data-ajax-success="weapsy.admin.pages.redirectToIndex" class="form-horizontal validate-form" role="form">    
+<form id="createPageForm" name="createPageForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="/Admin/Page/Save" data-ajax-begin="weapsy.admin.createPage.loading" data-ajax-success="weapsy.admin.pages.redirectToIndex" class="form-horizontal validate-form" role="form">    
     @await Html.PartialAsync("_Page")
     <div class="form-group">
         <div class="col-md-12">
             <button id="save" type="submit" class="btn btn-primary" title="Save">Save</button>
             <a href="@Url.Action("Index", "Page", new { area = "Admin" })" class="btn btn-default" title="Cancel">Cancel</a>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-12">
-            <span id="savingPage" style="display:none;">
-                Saving...
-            </span>
         </div>
     </div>
 </form>

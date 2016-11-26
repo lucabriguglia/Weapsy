@@ -142,13 +142,27 @@ table {
     top: 0;
     left: 50%;
     position: fixed;
-    width: 100px;
+    width: auto;
     height: 51px;
     z-index: 100000;
     text-align: center;
-    font-size: 35px;   
 }
 
-.main-loading {
+.main-state div {
     color: #ddd;
+    margin-top: 7px;
+}
+
+.main-state i {
+    font-size: 35px;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.main-state span {
+    font-size: 14px;
+}
+
+.main-success span {
+    color: #3c763d;
 }
