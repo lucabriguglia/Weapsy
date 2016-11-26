@@ -5,8 +5,7 @@ weapsy.admin.editLanguage = (function ($) {
 
     $('#editLanguageForm').validate({
         submitHandler: function (form) {
-            $('#savingLanguage').show();
-            $('#languageSaved').hide();
+            weapsy.utils.showLoading("Updating Language");
 
             var language = {
                 id: id,
@@ -23,48 +22,37 @@ weapsy.admin.editLanguage = (function ($) {
                 contentType: 'application/json'
             }).done(function () {
                 window.location.href = '/admin/language';
-            }).fail(function () {
-                $('#savingLanguage').hide();
             });
         }
     });
 
     $('#activateLanguage').click(function () {
-        $('#savingLanguage').show();
+        weapsy.utils.showLoading("Activating Language");
         $.ajax({
             url: "/api/language/" + id + "/activate",
             type: "PUT"
         }).done(function () {
-            $('#savingLanguage').hide();
             window.location.href = '/admin/language';
-        }).fail(function () {
-            $('#savingLanguage').hide();
         });
     });
 
     $('#hideLanguage').click(function () {
-        $('#savingLanguage').show();
+        weapsy.utils.showLoading("Hiding Language");
         $.ajax({
             url: "/api/language/" + id + "/hide",
             type: "PUT"
         }).done(function () {
-            $('#savingLanguage').hide();
             window.location.href = '/admin/language';
-        }).fail(function () {
-            $('#savingLanguage').hide();
         });
     });
 
     $('#confirmDelete').click(function () {
-        $('#savingLanguage').show();
+        weapsy.utils.showLoading("Deleting Language");
         $.ajax({
             url: "/api/language/" + id,
             type: "DELETE"
         }).done(function () {
-            $('#savingLanguage').hide();
             window.location.href = '/admin/language';
-        }).fail(function () {
-            $('#savingLanguage').hide();
         });
     });
 }(jQuery));

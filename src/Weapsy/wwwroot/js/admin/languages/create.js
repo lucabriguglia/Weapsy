@@ -3,9 +3,7 @@
 weapsy.admin.createLanguage = (function ($) {
     $('#createLanguageForm').validate({
         submitHandler: function (form) {
-            $('#savingLanguage').show();
-            $('#languageSaved').hide();
-
+            weapsy.utils.showLoading("Creating Language");
             var language = {
                 name: $('#name').val(),
                 cultureName: $('#cultureName').val(),
@@ -21,7 +19,6 @@ weapsy.admin.createLanguage = (function ($) {
             }).done(function () {
                 window.location.href = '/admin/language';
             }).fail(function () {
-                $('#savingLanguage').hide();
             });
         }
     });

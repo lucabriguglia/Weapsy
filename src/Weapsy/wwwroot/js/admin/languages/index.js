@@ -9,8 +9,7 @@ weapsy.admin.languageIndex = (function ($) {
     });
 
     $('#confirmReorder').click(function () {
-        $('#savingOrder').show();
-        $('#orderSaved').hide();
+        weapsy.utils.showLoading("Updating Order");
 
         var languages = [];
 
@@ -26,14 +25,7 @@ weapsy.admin.languageIndex = (function ($) {
             dataType: 'json',
             contentType: 'application/json'
         }).done(function () {
-            $('#savingOrder').hide();
-            $('#orderSaved').show();
-            setTimeout(function() {
-                 $("#orderSaved").hide();
-            }, 2000);
-        }).fail(function () {
-            $('#savingOrder').hide();
-            $('#orderSaved').hide();
+            weapsy.utils.showSuccess("Order Updated");
         });
     });
 
@@ -44,15 +36,12 @@ weapsy.admin.languageIndex = (function ($) {
     });
 
     $('#confirmDelete').click(function () {
-        $('#deletingPage').show();
+        weapsy.utils.showLoading("Deleting Language");
         $.ajax({
             url: "/api/language/" + languageIdToDelete,
             type: "DELETE"
         }).done(function () {
-            $('#deletingLanguage').hide();
-            window.location.href = '/admin/language'; // to do: just remove row
-        }).fail(function () {
-            $('#deletingLanguage').hide();
+            window.location.href = '/admin/language';
         });
     });
 }(jQuery));

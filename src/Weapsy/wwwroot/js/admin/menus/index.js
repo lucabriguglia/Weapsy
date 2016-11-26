@@ -63,12 +63,13 @@ weapsy.admin.menus = (function ($, ko) {
         }
 
         self.deleteMenuItem = function () {
+            weapsy.utils.showLoading("Deleting Menu Item");
             $.ajax({
                 url: "/api/menu/" + self.menu().id() + "/item/" + self.menuItemToDelete().id(),
                 type: "DELETE"
             }).done(function () {
+                weapsy.utils.showSuccess("Menu Item Deleted");
                 self.loadMenuItems(self.menu().id());
-                //display info message
             });
         }
 
@@ -105,8 +106,7 @@ weapsy.admin.menus = (function ($, ko) {
         });
 
         $('#confirmReorder').click(function () {
-            $('#savingOrder').show();
-            $('#orderSaved').hide();
+            weapsy.utils.showLoading("Updating Order");
 
             $.ajax({
                 url: "/api/menu/" + self.menu().id() + "/reorder",
@@ -115,14 +115,7 @@ weapsy.admin.menus = (function ($, ko) {
                 dataType: 'json',
                 contentType: 'application/json'
             }).done(function () {
-                $('#savingOrder').hide();
-                $('#orderSaved').show();
-                setTimeout(function () {
-                    $("#orderSaved").hide();
-                }, 2000);
-            }).fail(function () {
-                $('#savingOrder').hide();
-                $('#orderSaved').hide();
+                weapsy.utils.showSuccess("Order Updated");
             });
         });
     }

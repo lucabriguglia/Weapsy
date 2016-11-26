@@ -200,7 +200,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         };
 
         self.saveMenuItem = function () {
-            $('#savingMenuItem').show();
+            weapsy.utils.showLoading("Saving Menu Item");
 
             var localisations = [];
             var permissions = [];
@@ -244,8 +244,6 @@ weapsy.admin.menuItem = (function ($, ko) {
                 contentType: 'application/json'
             }).done(function () {
                 window.location.href = '/admin/menu';
-            }).fail(function () {
-                $('#savingMenuItem').hide();
             });
         }
 
@@ -255,6 +253,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         }
 
         self.deleteMenuItem = function () {
+            weapsy.utils.showLoading("Deleting Menu Item");
             $.ajax({
                 url: "/api/menu/" + self.menu().id() + "/item/" + self.menuItemToDelete().id(),
                 type: "DELETE"
