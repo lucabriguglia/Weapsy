@@ -46,7 +46,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         self.menu = ko.observable();
         self.pages = ko.observableArray([]);
         self.languages = ko.observableArray([]);
-        self.menuItemToDelete = ko.observable();
+        self.deletable = ko.observable(false);
         self.confirmDeleteMenuItemMessage = ko.observable();
         self.showEditForm = ko.observable(false);
 
@@ -126,6 +126,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         };
 
         self.editMenuItem = function (id) {
+            self.deletable(true);
             $.getJSON("/api/menu/" + self.menu().id() + "/admin-edit-item/" + id, function (data) {
                 self.menuItemId(id);
                 self.menuItemType(data.type);
@@ -247,15 +248,13 @@ weapsy.admin.menuItem = (function ($, ko) {
             });
         }
 
-        self.confirmMenuItemToDelete = function (item) {
-            self.menuItemToDelete(item);
-            self.confirmDeleteMenuItemMessage("Are you sure you want to delete " + item.text() + " and all descendants?");
+        self.confirmMenuItemToDelete = function () {
         }
 
         self.deleteMenuItem = function () {
             weapsy.utils.showLoading("Deleting Menu Item");
             $.ajax({
-                url: "/api/menu/" + self.menu().id() + "/item/" + self.menuItemToDelete().id(),
+                url: "/api/menu/" + self.menu().id() + "/item/" + self.menuItemId(),
                 type: "DELETE"
             }).done(function () {
                 window.location.href = '/admin/menu';
