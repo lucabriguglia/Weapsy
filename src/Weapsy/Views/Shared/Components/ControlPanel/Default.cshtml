@@ -2,12 +2,27 @@
 
 @if (User.IsInRole("Administrator"))
 {
+    @await Html.PartialAsync("_AdminLoading")
+
     <link rel="stylesheet" href="~/css/control-panel.css" />
+
     <div id="control-panel" class="clearfix">
         <div class="container">
-            @*<div style="margin-bottom:20px; text-align:center; font-weight:bold;">Control Panel</div>*@
-            <div class="help" style="margin-bottom:10px;">Drag and drop modules into page zones</div>
-            <ul id="moduleTypes" class="list-group">
+            <div class="help" style="margin-bottom:10px;">CONTROL PANEL</div>
+        </div>
+    </div>
+
+    <div id="moduleTypes" class="panel panel-default moduleTypes" style="display: none;">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
+            <span>Modules</span>
+            <a id="restorePosition" href="#" title="Restore Position">
+                <span class="glyphicon glyphicon-repeat pull-right" aria-hidden="true"></span> 
+            </a>                 
+        </div>
+        <div class="panel-body">
+            <p>Drag and drop modules into page zones</p>
+            <ul class="list-group">
                 @foreach (var moduleType in Model)
                 {
                     <li id="@moduleType.Id" class="list-group-item moduleType" data-module-type-id="@moduleType.Id" data-module-type-title="@moduleType.Title">

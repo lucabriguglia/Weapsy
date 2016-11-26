@@ -68,3 +68,40 @@
 .modal-backdrop.fade.in:nth-child(2){
     z-index: 1060 !important;
 }
+
+.main-state {
+    top: 0;
+    left: 50%;
+    position: fixed;
+    width: auto;
+    height: 51px;
+    z-index: 100000;
+    text-align: center;
+}
+
+.main-state div {
+    color: #ddd;
+    margin-top: 7px;
+}
+
+.main-state i {
+    font-size: 35px;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.main-state span {
+    font-size: 14px;
+}
+
+.main-success span {
+    color: #3c763d;
+}
+
+.moduleTypes {
+    top: 25px;
+    left: 25px;
+    position: absolute;
+    width: 250px;
+    z-index: 100000;
+}

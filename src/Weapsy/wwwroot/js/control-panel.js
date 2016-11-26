@@ -7,6 +7,27 @@ weapsy.controlPanel = (function ($) {
     });
 
     function init() {
+        var sPositions = localStorage.positions || "{}",
+        positions = JSON.parse(sPositions);
+        $.each(positions, function(id, pos) {
+            $("#" + id).css(pos);
+        });
+
+        $(".moduleTypes").show();
+
+        $('#restorePosition').click(function () {
+            positions["moduleTypes"] = { top: 25, left: 25 };
+            localStorage.positions = JSON.stringify(positions);
+            location.reload();
+        });
+
+        $(".moduleTypes").draggable({
+            stop: function (event, ui) {
+                positions[this.id] = ui.position;
+                localStorage.positions = JSON.stringify(positions);
+            }
+        });
+
         $(".moduleType").draggable({
             connectToSortable: ".zone",
             helper: "clone",
@@ -28,6 +49,7 @@ weapsy.controlPanel = (function ($) {
             revert: true,
             stop: function (event, ui) {
                 var pageId = $("#page").attr("data-page-id");
+
                 var moduleTypeId = $(ui.item.context).attr("data-module-type-id");
 
                 var command;
