@@ -2,11 +2,11 @@
 
 weapsy.admin.editSite = (function ($) {
     return {
+        loading: function () {
+            weapsy.utils.showLoading("Updating Site Settings");
+        },
         success: function () {
-            $("#siteSaved").show();
-            setTimeout(function () {
-                $("#siteSaved").hide();
-            }, 2000);
+            weapsy.utils.showSuccess("Site Settings Updated");
         }
     }
 }(jQuery));

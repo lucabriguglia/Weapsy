@@ -14,22 +14,13 @@
     <h1>Site Settings</h1>
 </div>
 
-<form id="editSiteForm" name="editSiteForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/Site/Update" data-ajax-loading="#savingSite" data-ajax-success="weapsy.admin.editSite.success" class="form-horizontal validate-form" role="form">
+<form id="editSiteForm" name="editSiteForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/Site/Update" data-ajax-begin="weapsy.admin.editSite.loading" data-ajax-success="weapsy.admin.editSite.success" class="form-horizontal validate-form" role="form">
     <input type="hidden" id="id" name="id" value="@Model.Id" />
-
     @await Html.PartialAsync("_Site")
-
     <div class="form-group">
         <div class="col-md-12">
             <button id="save" type="submit" class="btn btn-primary" title="Save">Save</button>
             <a href="@Url.Action("Index", "Home", new { area = "Admin" })" class="btn btn-default" title="Cancel">Cancel</a>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <span id="savingSite" style="display:none;">Saving...</span>
-            <span id="siteSaved" style="display:none;">Saved</span>
         </div>
     </div>
 </form>
