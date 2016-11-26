@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentValidation;
+using FluentValidation.Results;
+using System.Linq;
 
 namespace Weapsy.Infrastructure.Domain
 {
@@ -13,7 +16,13 @@ namespace Weapsy.Infrastructure.Domain
             var validationResult = validator.Validate(command);
 
             if (!validationResult.IsValid)
-                throw new ValidationException(validationResult.Errors);
+                throw new Exception(BuildErrorMesage(validationResult.Errors));
+        }
+
+        private static string BuildErrorMesage(IEnumerable<ValidationFailure> errors)
+        {
+            var errorsText = errors.Select(x => "\r\n - " + x.ErrorMessage).ToArray();
+            return "Validation failed: " + string.Join("", errorsText);
         }
     }
 }

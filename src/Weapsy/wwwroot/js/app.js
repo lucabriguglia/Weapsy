@@ -6,23 +6,22 @@ weapsy.utils = (function ($) {
     function showLoading(text) {
         $("#main-success").hide();
         $("#main-loading").show();
-        $("#main-loading-text").text(text !== "" ? text : "");
+        $("#main-loading-text").text(text !== "" ? text + "..." : "Loading...");
     }
 
     function showSuccess(text) {
         $("#main-loading").hide();
         $("#main-success").show().delay(2000).fadeOut();
-        $("#main-success-text").text(text !== "" ? text : "");
+        $("#main-success-text").text(text !== "" ? text : "Complete");
     }
 
     function showError(event, request, settings, thrownError) {
         $("#main-loading").hide();
 
-        var title =  "Error";
-        var message = "";
+        var title =  "An error occured";
+        var message = "Something went wrong.";
 
         if (request.status === 0) {
-            //alert("Not connect.n Verify Network.");
             title = "Not Connected";
             message = "Please verify your network connection.";
         } else if (request.status === 400) {
@@ -31,27 +30,17 @@ weapsy.utils = (function ($) {
             if (badRequestText != null)
                 message = badRequestText;
         } else if (request.status === 404) {
-            //alert("Requested page not found. [404]");
             title = "Not Found";
             message = "Requested resource not found.";
         } else if (request.status === 500) {
-            //alert("Internal Server Error [500].");
-            //} else if (exception === 'parsererror') {
-            //    alert('Requested JSON parse failed.');
-            //} else if (exception === 'timeout') {
-            //    alert('Time out error.');
-            //} else if (exception === 'abort') {
-            //    alert('Ajax request aborted.');
-            var errorText = $(request.responseText).filter(".titleerror").text();
-            if (errorText != null)
-                message = errorText;
+            var errorText = $(request.responseText).filter(".titleerror").html();
+            if (errorText != null) {
+                message = errorText.replace("Exception: ", "");
+            }
         }
 
-        if (message === "")
-            message = thrownError ? thrownError : "Something went wrong.";
-
         $("#error-title").text(title);
-        $("#error-message").text(message);
+        $("#error-message").html(message);
         $("#error-modal").modal("show");
     }
 
