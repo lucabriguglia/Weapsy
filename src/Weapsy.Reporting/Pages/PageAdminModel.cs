@@ -35,6 +35,7 @@ namespace Weapsy.Reporting.Pages
         public Guid PageId { get; set; }
         public string RoleId { get; set; }
         public string RoleName { get; set; }
+        public bool Disabled { get; set; }
         public List<PagePermissionTypeModel> PagePermissionTypes { get; set; } = new List<PagePermissionTypeModel>();
     }
 

@@ -6,6 +6,7 @@ using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 using Weapsy.Domain.Pages;
+using Weapsy.Infrastructure.Identity;
 using Weapsy.Reporting.Menus;
 using Weapsy.Services.Identity;
 
@@ -182,7 +183,8 @@ namespace Weapsy.Reporting.Data.Default.Menus
                     MenuItemId = menuItem.Id,
                     RoleId = role.Id,
                     RoleName = role.Name,
-                    Selected = selected
+                    Selected = selected || role.Name == DefaultRoleNames.Administrator,
+                    Disabled = role.Name == DefaultRoleNames.Administrator
                 });
             }
 

@@ -29,6 +29,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         this.roleId = ko.observable(data.roleId);
         this.roleName = ko.observable(data.roleName);
         this.selected = ko.observable(data.selected);
+        this.disabled = ko.observable(data.disabled);
     }
 
     function Page(data) {

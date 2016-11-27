@@ -163,7 +163,14 @@
                             {
                                 <td class="text-center">
                                     <input asp-for="PagePermissions[i].PagePermissionTypes[j].Type" type="hidden" />
-                                    <input asp-for="PagePermissions[i].PagePermissionTypes[j].Selected" type="checkbox" />
+                                    @if (Model.PagePermissions[i].Disabled)
+                                    {
+                                        <input asp-for="PagePermissions[i].PagePermissionTypes[j].Selected" type="checkbox" disabled="disabled" />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="PagePermissions[i].PagePermissionTypes[j].Selected" type="checkbox" />
+                                    }                                    
                                 </td>
                             }
                         </tr>

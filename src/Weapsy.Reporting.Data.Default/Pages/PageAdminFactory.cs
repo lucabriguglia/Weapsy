@@ -80,7 +80,8 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 var pagePermission = new PagePermissionModel
                 {
                     RoleId = role.Id,
-                    RoleName = role.Name
+                    RoleName = role.Name,
+                    Disabled = role.Name == DefaultRoleNames.Administrator
                 };
 
                 foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
@@ -91,7 +92,7 @@ namespace Weapsy.Reporting.Data.Default.Pages
                     pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
                     {
                         Type = permisisonType,
-                        Selected = selected
+                        Selected = selected || role.Name == DefaultRoleNames.Administrator
                     });
                 }
 
@@ -122,17 +123,16 @@ namespace Weapsy.Reporting.Data.Default.Pages
                 var pagePermission = new PagePermissionModel
                 {
                     RoleId = role.Id,
-                    RoleName = role.Name
+                    RoleName = role.Name,
+                    Disabled = role.Name == DefaultRoleNames.Administrator
                 };
 
                 foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
                 {
-                    bool selected = role.Name == DefaultRoleNames.Administrator;
-
                     pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
                     {
                         Type = permisisonType,
-                        Selected = selected
+                        Selected = role.Name == DefaultRoleNames.Administrator                        
                     });
                 }
 
