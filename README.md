@@ -9,6 +9,8 @@ An app can display content through modules added to dynamic pages or through sta
 The first one included is the Text app used to add html modules.
 Right after the first RTM my plan is to develop a Blog and a Forum app.
 
+[![Join the chat at https://gitter.im/weapsy](https://badges.gitter.im/weapsy.svg)](https://gitter.im/weapsy/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+
 # Demo
 Coming Soon
 
