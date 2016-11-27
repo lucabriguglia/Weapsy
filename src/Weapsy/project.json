@@ -8,7 +8,7 @@
         "Weapsy.Apps.Text": "1.0.0-*",
         "Weapsy.DependencyConfigurator": "1.0.0-*",
         "Weapsy.Domain": "1.0.0-*",
-        "Weapsy.Domain.Data.SqlServer": "1.0.0-*",
+        "Weapsy.Domain.Data": "1.0.0-*",
         "Weapsy.Domain.EventStore.SqlServer": "1.0.0-*",
         "Weapsy.Mvc": "1.0.0-*",
         "Weapsy.Reporting": "1.0.0-*",

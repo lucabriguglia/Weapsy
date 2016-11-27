@@ -2,12 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Weapsy.Data;
-using Weapsy.Domain.Data.SqlServer.Repositories;
+using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Themes;
 using Weapsy.Tests.Factories;
 using ThemeDbEntity = Weapsy.Data.Entities.Theme;
 
-namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
+namespace Weapsy.Domain.Data.Tests.Repositories
 {
     [TestFixture]
     public class ThemeRepositoryTests

@@ -10,7 +10,7 @@ using MenuItemDbEntity = Weapsy.Data.Entities.MenuItem;
 using MenuItemLocalisationDbEntity = Weapsy.Data.Entities.MenuItemLocalisation;
 using MenuItemPermissionDbEntity = Weapsy.Data.Entities.MenuItemPermission;
 
-namespace Weapsy.Domain.Data.SqlServer.Repositories
+namespace Weapsy.Domain.Data.Repositories
 {
     public class MenuRepository : IMenuRepository
     {

@@ -6,7 +6,7 @@ using Weapsy.Data;
 using Weapsy.Domain.ModuleTypes;
 using ModuleTypeDbEntity = Weapsy.Data.Entities.ModuleType;
 
-namespace Weapsy.Domain.Data.SqlServer.Repositories
+namespace Weapsy.Domain.Data.Repositories
 {
     public class ModuleTypeRepository : IModuleTypeRepository
     {

@@ -6,7 +6,7 @@
     "NETStandard.Library": "1.6.1",
     "Weapsy.Data": "1.0.0-*",
     "Weapsy.Domain": "1.0.0-*",
-    "Weapsy.Domain.Data.SqlServer": "1.0.0-*",
+    "Weapsy.Domain.Data": "1.0.0-*",
     "Weapsy.Domain.EventStore.SqlServer": "1.0.0-*",
     "Weapsy.Infrastructure": "1.0.0-*",
     "Weapsy.Reporting": "1.0.0-*",

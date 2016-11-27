@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Weapsy.Domain.Data.SqlServer")]
+[assembly: AssemblyProduct("Weapsy.Domain.Data.Tests")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -15,4 +15,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b93d41e2-9db5-44b0-ad45-b66edec4cae4")]
+[assembly: Guid("36c51dbe-a282-4799-82de-2de0f922061c")]

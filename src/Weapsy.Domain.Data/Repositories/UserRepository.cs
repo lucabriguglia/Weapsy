@@ -6,7 +6,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Users;
 using UserDbEntity = Weapsy.Data.Entities.User;
 
-namespace Weapsy.Domain.Data.SqlServer.Repositories
+namespace Weapsy.Domain.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {

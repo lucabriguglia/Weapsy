@@ -7,7 +7,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Apps;
 using AppDbEntity = Weapsy.Data.Entities.App;
 
-namespace Weapsy.Domain.Data.SqlServer.Repositories
+namespace Weapsy.Domain.Data.Repositories
 {
     public class AppRepository : IAppRepository
     {

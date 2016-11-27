@@ -12,7 +12,7 @@ using PageModuleLocalisationDbEntity = Weapsy.Data.Entities.PageModuleLocalisati
 using PagePermissionDbEntity = Weapsy.Data.Entities.PagePermission;
 using PageModulePermissionDbEntity = Weapsy.Data.Entities.PageModulePermission;
 
-namespace Weapsy.Domain.Data.SqlServer.Repositories
+namespace Weapsy.Domain.Data.Repositories
 {
     public class PageRepository : IPageRepository
     {

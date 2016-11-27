@@ -7,7 +7,7 @@ using Weapsy.Domain.Themes;
 using Theme = Weapsy.Domain.Themes.Theme;
 using ThemeDbEntity = Weapsy.Data.Entities.Theme;
 
-namespace Weapsy.Domain.Data.SqlServer.Repositories
+namespace Weapsy.Domain.Data.Repositories
 {
     public class ThemeRepository : IThemeRepository
     {

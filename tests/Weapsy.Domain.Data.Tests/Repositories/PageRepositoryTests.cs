@@ -4,14 +4,14 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using Weapsy.Data;
-using Weapsy.Domain.Data.SqlServer.Repositories;
+using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Pages;
 using Weapsy.Tests.Factories;
 using PageDbEntity = Weapsy.Data.Entities.Page;
 using PageModuleDbEntity = Weapsy.Data.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Data.Entities.PageModuleLocalisation;
 
-namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
+namespace Weapsy.Domain.Data.Tests.Repositories
 {
     [TestFixture]
     public class PageRepositoryTests

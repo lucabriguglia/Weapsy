@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Data;
-using Weapsy.Domain.Apps;
 using Weapsy.Domain.Languages;
 using LanguageDbEntity = Weapsy.Data.Entities.Language;
 
-namespace Weapsy.Domain.Data.SqlServer.Repositories
+namespace Weapsy.Domain.Data.Repositories
 {
     public class LanguageRepository : ILanguageRepository
     {
