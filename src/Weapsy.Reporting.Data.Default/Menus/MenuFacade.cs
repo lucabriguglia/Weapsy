@@ -60,6 +60,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
             });
         }
 
+        // UNDER DEVELOPMENT/REFACTORING
         private List<MenuViewModel.MenuItem> PopulateMenuItems(IEnumerable<MenuItem> source, Guid parentId, Language language)
         {
             var result = new List<MenuViewModel.MenuItem>();
@@ -92,13 +93,20 @@ namespace Weapsy.Reporting.Data.Default.Menus
                     if (page == null)
                         continue;
 
-                    url = language == null ? $"/{page.Url}" : $"/{language.Url}/{page.Url}";
-
-                    if (language != null)
+                    if (language == null)
+                    {
+                        url = $"/{page.Url}";
+                    }
+                    else
                     {
                         var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
                         if (pageLocalisation != null)
-                            url = !string.IsNullOrEmpty(pageLocalisation.Url) ? $"/{language.Url}/{pageLocalisation.Url}" : url;
+                            url = !string.IsNullOrEmpty(pageLocalisation.Url)
+                                ? $"/{pageLocalisation.Url}"
+                                : $"/{page.Url}";
+
+                        //if (site.AddLanguageToUrl)
+                            url = $"/{language.Url}" + url;
                     }
 
                     menuItemRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);

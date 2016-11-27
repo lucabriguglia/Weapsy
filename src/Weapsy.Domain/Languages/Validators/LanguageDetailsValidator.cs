@@ -23,13 +23,13 @@ namespace Weapsy.Domain.Languages.Validators
             RuleFor(c => c.CultureName)
                 .NotEmpty().WithMessage("Culture name is required.")
                 .Length(2, 100).WithMessage("Culture name length must be between 2 and 100 characters.")
-                .Must(HaveValidCultureName).WithMessage("Culture name is not valid. Enter only letters and 1 hyphen.")
+                .Must(HaveValidCultureName).WithMessage("Culture name is not valid.")
                 .Must(HaveUniqueCultureName).WithMessage("A language with the same culture name already exists.");
 
             RuleFor(c => c.Url)
                 .NotEmpty().WithMessage("Language url is required.")
                 .Length(2, 100).WithMessage("Language url length must be between 2 and 100 characters.")
-                .Must(HaveValidLanguageUrl).WithMessage("Language url is not valid. Enter only letters and 1 hyphen.")
+                .Must(HaveValidLanguageUrl).WithMessage("Language url is not valid. Enter only letters and hyphens.")
                 .Must(HaveUniqueLanguageUrl).WithMessage("A language with the same url already exists.");
         }
 

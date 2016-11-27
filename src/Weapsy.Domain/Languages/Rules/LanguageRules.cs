@@ -47,7 +47,8 @@ namespace Weapsy.Domain.Languages.Rules
 
         public bool IsCultureNameValid(string cultureName)
         {
-            if (string.IsNullOrWhiteSpace(cultureName)) return false;
+            if (string.IsNullOrWhiteSpace(cultureName))
+                return false;
 
             try
             {
