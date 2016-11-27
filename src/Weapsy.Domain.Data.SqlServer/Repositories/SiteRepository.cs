@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data;
 using Weapsy.Domain.Sites;
-using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
-using SiteLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.SiteLocalisation;
+using SiteDbEntity = Weapsy.Data.Entities.Site;
+using SiteLocalisationDbEntity = Weapsy.Data.Entities.SiteLocalisation;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Domain.Themes;
 
-namespace Weapsy.Domain.Data.SqlServer.Entities
+namespace Weapsy.Data.Entities
 {
     public class Theme : IDbEntity
     {

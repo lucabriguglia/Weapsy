@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Weapsy.Data;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Languages;
-using LanguageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Language;
+using LanguageDbEntity = Weapsy.Data.Entities.Language;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {

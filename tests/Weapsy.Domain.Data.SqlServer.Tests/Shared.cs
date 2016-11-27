@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Weapsy.Data;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests
 {

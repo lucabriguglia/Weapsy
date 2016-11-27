@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data;
 using Weapsy.Domain.Pages;
-using PageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Page;
-using PageLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageLocalisation;
-using PageModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModule;
-using PageModuleLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModuleLocalisation;
-using PagePermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PagePermission;
-using PageModulePermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.PageModulePermission;
+using PageDbEntity = Weapsy.Data.Entities.Page;
+using PageLocalisationDbEntity = Weapsy.Data.Entities.PageLocalisation;
+using PageModuleDbEntity = Weapsy.Data.Entities.PageModule;
+using PageModuleLocalisationDbEntity = Weapsy.Data.Entities.PageModuleLocalisation;
+using PagePermissionDbEntity = Weapsy.Data.Entities.PagePermission;
+using PageModulePermissionDbEntity = Weapsy.Data.Entities.PageModulePermission;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {

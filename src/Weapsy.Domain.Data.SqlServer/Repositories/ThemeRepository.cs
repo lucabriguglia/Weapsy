@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Weapsy.Data;
 using Weapsy.Domain.Themes;
 using Theme = Weapsy.Domain.Themes.Theme;
-using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
+using ThemeDbEntity = Weapsy.Data.Entities.Theme;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {

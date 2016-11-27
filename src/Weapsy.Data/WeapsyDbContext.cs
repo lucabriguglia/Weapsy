@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
-using Weapsy.Domain.Data.SqlServer.Entities;
+using Weapsy.Data.Entities;
 using Weapsy.Infrastructure.Configuration;
 
-namespace Weapsy.Domain.Data.SqlServer
+namespace Weapsy.Data
 {
     public class WeapsyDbContext : DbContext
     {

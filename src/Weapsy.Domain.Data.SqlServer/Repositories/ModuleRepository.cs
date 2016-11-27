@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Weapsy.Data;
 using Weapsy.Domain.Modules;
-using ModuleDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Module;
+using ModuleDbEntity = Weapsy.Data.Entities.Module;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {

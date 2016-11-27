@@ -28,7 +28,7 @@ namespace Weapsy.Reporting.Data.Default.Languages
         {
             return _cacheManager.Get(string.Format(CacheKeys.LanguagesCacheKey, siteId), () =>
             {
-                var languages = _languageRepository.GetAll(siteId);
+                var languages = _languageRepository.GetAll(siteId).Where(x => x.Status == LanguageStatus.Active);
                 return _mapper.Map<IEnumerable<LanguageInfo>>(languages);
             });
         }

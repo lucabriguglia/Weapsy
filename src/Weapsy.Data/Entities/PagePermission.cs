@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Domain.Pages;
 
-namespace Weapsy.Domain.Data.SqlServer.Entities
+namespace Weapsy.Data.Entities
 {
     public class PagePermission : IDbEntity
     {

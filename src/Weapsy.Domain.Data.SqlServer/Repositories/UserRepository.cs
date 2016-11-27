@@ -2,8 +2,9 @@
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data;
 using Weapsy.Domain.Users;
-using UserDbEntity = Weapsy.Domain.Data.SqlServer.Entities.User;
+using UserDbEntity = Weapsy.Data.Entities.User;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {

@@ -106,7 +106,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
                                 : $"/{page.Url}";
 
                         //if (site.AddLanguageToUrl)
-                            url = $"/{language.Url}" + url;
+                        //    url = $"/{language.Url}" + url;
                     }
 
                     menuItemRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);

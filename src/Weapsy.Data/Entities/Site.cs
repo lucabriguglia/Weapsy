@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Weapsy.Domain.Sites;
 
-namespace Weapsy.Domain.Data.SqlServer.Entities
+namespace Weapsy.Data.Entities
 {
     public class Site : IDbEntity
     {

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data;
 using Weapsy.Domain.Menus;
-using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
-using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
-using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;
-using MenuItemPermissionDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemPermission;
+using MenuDbEntity = Weapsy.Data.Entities.Menu;
+using MenuItemDbEntity = Weapsy.Data.Entities.MenuItem;
+using MenuItemLocalisationDbEntity = Weapsy.Data.Entities.MenuItemLocalisation;
+using MenuItemPermissionDbEntity = Weapsy.Data.Entities.MenuItemPermission;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {

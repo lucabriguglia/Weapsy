@@ -2,10 +2,11 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Weapsy.Data;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Tests.Factories;
-using ModuleTypeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.ModuleType;
+using ModuleTypeDbEntity = Weapsy.Data.Entities.ModuleType;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Domain.Pages;
 
-namespace Weapsy.Domain.Data.SqlServer.Entities
+namespace Weapsy.Data.Entities
 {
     public class PageModule : IDbEntity
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Domain.Data.SqlServer.Entities
+namespace Weapsy.Data.Entities
 {
     public class SiteLocalisation : IDbEntity
     {

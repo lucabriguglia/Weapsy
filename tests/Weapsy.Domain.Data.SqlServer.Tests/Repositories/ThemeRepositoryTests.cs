@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Weapsy.Data;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Themes;
 using Weapsy.Tests.Factories;
-using ThemeDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Theme;
+using ThemeDbEntity = Weapsy.Data.Entities.Theme;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 {

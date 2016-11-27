@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data;
 using Weapsy.Domain.Apps;
-using AppDbEntity = Weapsy.Domain.Data.SqlServer.Entities.App;
+using AppDbEntity = Weapsy.Data.Entities.App;
 
 namespace Weapsy.Domain.Data.SqlServer.Repositories
 {

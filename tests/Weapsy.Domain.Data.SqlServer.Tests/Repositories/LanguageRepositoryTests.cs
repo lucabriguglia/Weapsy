@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Weapsy.Data;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Languages;
 using Weapsy.Tests.Factories;
-using LanguageDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Language;
+using LanguageDbEntity = Weapsy.Data.Entities.Language;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 {

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using Weapsy.Infrastructure.Configuration;
 
-namespace Weapsy.Domain.Data.SqlServer
+namespace Weapsy.Data
 {
     public class WeapsyDbContextFactory : IWeapsyDbContextFactory
     {

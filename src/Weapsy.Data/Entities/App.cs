@@ -1,7 +1,7 @@
 using System;
 using Weapsy.Domain.Apps;
 
-namespace Weapsy.Domain.Data.SqlServer.Entities
+namespace Weapsy.Data.Entities
 {
     public class App : IDbEntity
     {

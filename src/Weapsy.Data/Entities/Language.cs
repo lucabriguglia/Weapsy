@@ -1,7 +1,7 @@
 using System;
 using Weapsy.Domain.Languages;
 
-namespace Weapsy.Domain.Data.SqlServer.Entities
+namespace Weapsy.Data.Entities
 {
     public class Language : IDbEntity
     {

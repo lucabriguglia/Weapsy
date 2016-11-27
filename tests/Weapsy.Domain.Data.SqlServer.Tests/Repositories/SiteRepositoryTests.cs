@@ -1,10 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Weapsy.Data;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Sites;
 using Weapsy.Tests.Factories;
-using SiteDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Site;
+using SiteDbEntity = Weapsy.Data.Entities.Site;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 {

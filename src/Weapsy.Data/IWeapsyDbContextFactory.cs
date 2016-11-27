@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Weapsy.Domain.Data.SqlServer
+namespace Weapsy.Data
 {
     public interface IWeapsyDbContextFactory
     {

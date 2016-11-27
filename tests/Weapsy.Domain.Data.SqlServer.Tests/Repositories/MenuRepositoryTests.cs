@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Weapsy.Data;
 using Weapsy.Domain.Data.SqlServer.Repositories;
 using Weapsy.Domain.Menus;
 using Weapsy.Tests.Factories;
-using MenuDbEntity = Weapsy.Domain.Data.SqlServer.Entities.Menu;
-using MenuItemDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItem;
-using MenuItemLocalisationDbEntity = Weapsy.Domain.Data.SqlServer.Entities.MenuItemLocalisation;
+using MenuDbEntity = Weapsy.Data.Entities.Menu;
+using MenuItemDbEntity = Weapsy.Data.Entities.MenuItem;
+using MenuItemLocalisationDbEntity = Weapsy.Data.Entities.MenuItemLocalisation;
 
 namespace Weapsy.Domain.Data.SqlServer.Tests.Repositories
 {
