@@ -9,7 +9,7 @@
         @foreach (var language in Model)
         {
             <li>
-                <a href="/home/setlanguage?culture=@language.Url&returnUrl=@Context.Request.Path" title="@language.Name">@language.Name</a>
+                <a href="/home/setlanguage?culture=@language.Url" title="@language.Name">@language.Name</a>
             </li>
         }
     </ul>

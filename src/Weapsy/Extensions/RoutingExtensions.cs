@@ -66,7 +66,11 @@ namespace Weapsy.Extensions
                 if (!string.IsNullOrEmpty(pageSlug))
                     pageId = pageRepository.GetIdBySlug(site.Id, pageSlug, language.Id);
             }
-            
+            else
+            {
+                language = contextService.GetCurrentLanguageInfo();
+            }
+
             if (pageId == null && !string.IsNullOrEmpty(pageSlug))
                 pageId = pageRepository.GetIdBySlug(site.Id, pageSlug);
 

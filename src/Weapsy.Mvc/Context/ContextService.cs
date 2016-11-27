@@ -48,10 +48,12 @@ namespace Weapsy.Mvc.Context
             return GetInfo(LanguageInfoKey, () =>
             {
                 var languages = _languageFacade.GetAllActive(GetCurrentSiteInfo().Id);
-                var userCulture = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+                var userCoockie = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
-                if (!string.IsNullOrEmpty(userCulture))
+                if (!string.IsNullOrEmpty(userCoockie))
                 {
+                    var userCulture = userCoockie.Split('|')[0].Split('=')[1];
+
                     var userLanguage = languages.FirstOrDefault(x => x.CultureName == userCulture);
 
                     if (userLanguage != null)
