@@ -46,7 +46,12 @@ namespace Weapsy.Infrastructure.Caching
             _memoryCache.Remove(key);
 		}
 
-		public void RemoveByPattern(string pattern)
+        public async Task RemoveAsync(string key)
+        {
+            await Task.Run(() => _memoryCache.Remove(key));
+        }
+
+        public void RemoveByPattern(string pattern)
 		{
             //var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
             //var keysToRemove = new List<string>();

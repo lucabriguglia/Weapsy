@@ -27,9 +27,6 @@ namespace Weapsy.Infrastructure.Dispatcher
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
 
-            //if (command.HasProperty("SiteId") && !command.HasValue("SiteId"))
-            //    command.SetValue("SiteId", Guid.NewGuid());
-
             var commandHandler = _resolver.Resolve<ICommandHandler<TCommand>>();
 
             if (commandHandler == null)

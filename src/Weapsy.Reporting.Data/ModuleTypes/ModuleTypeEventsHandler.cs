@@ -1,13 +1,12 @@
-﻿using System.Threading.Tasks;
-using Weapsy.Domain.ModuleTypes.Events;
+﻿using Weapsy.Domain.ModuleTypes.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Reporting.Data.ModuleTypes
 {
     public class ModuleTypeEventsHandler : 
-        IEventHandlerAsync<ModuleTypeCreated>,
-        IEventHandlerAsync<ModuleTypeDetailsUpdated>
+        IEventHandler<ModuleTypeCreated>,
+        IEventHandler<ModuleTypeDetailsUpdated>
     {
         private readonly ICacheManager _cacheManager;
 
@@ -16,19 +15,19 @@ namespace Weapsy.Reporting.Data.ModuleTypes
             _cacheManager = cacheManager;
         }
 
-        public async Task HandleAsync(ModuleTypeCreated @event)
+        public void Handle(ModuleTypeCreated @event)
         {
-            await ClearCache();
+            ClearCache();
         }
 
-        public async Task HandleAsync(ModuleTypeDetailsUpdated @event)
+        public void Handle(ModuleTypeDetailsUpdated @event)
         {
-            await ClearCache();
+            ClearCache();
         }
 
-        private Task ClearCache()
+        private void ClearCache()
         {
-            return Task.Run(() => _cacheManager.Remove(CacheKeys.ModuleTypesCacheKey));
+             _cacheManager.Remove(CacheKeys.ModuleTypesCacheKey);
         }
     }
 }

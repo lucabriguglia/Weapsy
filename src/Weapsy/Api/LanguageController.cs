@@ -33,16 +33,18 @@ namespace Weapsy.Api
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var languages = await Task.Run(() => _languageFacade.GetAllForAdmin(SiteId));
+            var languages = await _languageFacade.GetAllActiveAsync(SiteId);
             return Ok(languages);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var language = await Task.Run(() => _languageFacade.GetForAdmin(SiteId, id));
+            var language = await _languageFacade.GetForAdminAsync(SiteId, id);
+
             if (language == null)
                 return NotFound();
+
             return Ok(language);
         }
 
@@ -162,16 +164,19 @@ namespace Weapsy.Api
         [Route("{id}/admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var model = await Task.Run(() => _languageFacade.GetAllForAdmin(SiteId));
-            return Ok(model);
+            var models = await _languageFacade.GetAllForAdminAsync(SiteId);
+            return Ok(models);
         }
 
         [HttpGet]
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await Task.Run(() => _languageFacade.GetForAdmin(SiteId, id));
-            if (model == null) return NotFound();
+            var model = await _languageFacade.GetForAdminAsync(SiteId, id);
+
+            if (model == null)
+                return NotFound();
+
             return Ok(model);
         }
     }

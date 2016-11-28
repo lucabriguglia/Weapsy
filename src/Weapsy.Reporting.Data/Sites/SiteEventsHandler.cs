@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Weapsy.Domain.Sites.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
@@ -8,8 +7,8 @@ using Weapsy.Reporting.Languages;
 namespace Weapsy.Reporting.Data.Sites
 {
     public class SiteEventsHandler : 
-        IEventHandlerAsync<SiteCreated>,
-        IEventHandlerAsync<SiteDetailsUpdated>
+        IEventHandler<SiteCreated>,
+        IEventHandler<SiteDetailsUpdated>
     {
         private readonly ICacheManager _cacheManager;
         private readonly ILanguageFacade _languageFacade;
@@ -21,25 +20,22 @@ namespace Weapsy.Reporting.Data.Sites
             _languageFacade = languageFacade;
         }
 
-        public async Task HandleAsync(SiteCreated @event)
+        public void Handle(SiteCreated @event)
         {
-            await ClearCache(@event.AggregateRootId, @event.Name);
+            ClearCache(@event.AggregateRootId, @event.Name);
         }
 
-        public async Task HandleAsync(SiteDetailsUpdated @event)
+        public void Handle(SiteDetailsUpdated @event)
         {
-            await ClearCache(@event.AggregateRootId, @event.Name);
+            ClearCache(@event.AggregateRootId, @event.Name);
         }
 
-        private Task ClearCache(Guid siteId, string name)
+        private void ClearCache(Guid siteId, string name)
         {
-            return Task.Run(() =>
-            {
-                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
-                    _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, language.Id));
+            foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
+                _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, language.Id));
 
-                _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, Guid.Empty));
-            });
+            _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, Guid.Empty));
         }
     }
 }

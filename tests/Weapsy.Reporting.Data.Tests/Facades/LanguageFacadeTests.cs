@@ -51,7 +51,7 @@ namespace Weapsy.Reporting.Data.Tests.Facades
             using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var facade = new LanguageFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
-                var models = await facade.GetAllForAdmin(_siteId);
+                var models = await facade.GetAllForAdminAsync(_siteId);
                 Assert.IsNotEmpty(models);
             }
         }
@@ -62,7 +62,7 @@ namespace Weapsy.Reporting.Data.Tests.Facades
             using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var facade = new LanguageFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
-                var model = facade.GetForAdmin(_siteId, _languageId);
+                var model = facade.GetForAdminAsync(_siteId, _languageId);
                 Assert.NotNull(model);
             }
         }

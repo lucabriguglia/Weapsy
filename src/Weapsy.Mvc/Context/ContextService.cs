@@ -47,7 +47,7 @@ namespace Weapsy.Mvc.Context
         {
             return GetInfo(LanguageInfoKey, () =>
             {
-                var languages = _languageFacade.GetAllActive(GetCurrentSiteInfo().Id).Result;
+                var languages = _languageFacade.GetAllActiveAsync(GetCurrentSiteInfo().Id).Result;
                 var userCoockie = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
                 if (!string.IsNullOrEmpty(userCoockie))

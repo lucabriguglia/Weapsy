@@ -9,7 +9,8 @@ namespace Weapsy.Infrastructure.Caching
         void Set(string key, object data, int cacheTime);
 		bool IsSet(string key);
 		void Remove(string key);
-		void RemoveByPattern(string pattern);
+        Task RemoveAsync(string key);
+        void RemoveByPattern(string pattern);
 		void Clear();
 	}
 }

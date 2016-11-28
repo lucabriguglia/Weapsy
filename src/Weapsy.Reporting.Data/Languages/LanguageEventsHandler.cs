@@ -8,9 +8,9 @@ namespace Weapsy.Reporting.Data.Languages
 {
     public class LanguageEventsHandler : 
         IEventHandlerAsync<LanguageCreated>,
-        IEventHandlerAsync<LanguageDetailsUpdated>,
-        IEventHandlerAsync<LanguageDeleted>,
-        IEventHandlerAsync<LanguageActivated>
+        IEventHandler<LanguageDetailsUpdated>,
+        IEventHandler<LanguageDeleted>,
+        IEventHandler<LanguageActivated>
     {
         private readonly ICacheManager _cacheManager;
 
@@ -19,29 +19,34 @@ namespace Weapsy.Reporting.Data.Languages
             _cacheManager = cacheManager;
         }
 
-        public Task HandleAsync(LanguageCreated @event)
+        public async Task HandleAsync(LanguageCreated @event)
         {
-            return ClearCache(@event.SiteId);
+            await ClearCacheAsync(@event.SiteId);
         }
 
-        public async Task HandleAsync(LanguageDetailsUpdated @event)
+        public void Handle(LanguageDetailsUpdated @event)
         {
-            await ClearCache(@event.SiteId);
+            ClearCache(@event.SiteId);
         }
 
-        public async Task HandleAsync(LanguageDeleted @event)
+        public void Handle(LanguageDeleted @event)
         {
-            await ClearCache(@event.SiteId);
+            ClearCache(@event.SiteId);
         }
 
-        public async Task HandleAsync(LanguageActivated @event)
+        public void Handle(LanguageActivated @event)
         {
-            await ClearCache(@event.SiteId);
+            ClearCache(@event.SiteId);
         }
 
-        private Task ClearCache(Guid siteId)
+        private void ClearCache(Guid siteId)
         {
-            return Task.Run(() => _cacheManager.Remove(string.Format(CacheKeys.LanguagesCacheKey, siteId)));
+            _cacheManager.Remove(string.Format(CacheKeys.LanguagesCacheKey, siteId));
+        }
+
+        private async Task ClearCacheAsync(Guid siteId)
+        {
+            await _cacheManager.RemoveAsync(string.Format(CacheKeys.LanguagesCacheKey, siteId));
         }
     }
 }

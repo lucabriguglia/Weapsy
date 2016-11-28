@@ -54,7 +54,7 @@ namespace Weapsy.Extensions
             var pageSlug = path;
 
             var site = contextService.GetCurrentSiteInfo();
-            var languages = await languageFacade.GetAllActive(site.Id);
+            var languages = await languageFacade.GetAllActiveAsync(site.Id);
             var language = languages.FirstOrDefault(x => x.Url == languageSlug);
             Guid? pageId = null;
 

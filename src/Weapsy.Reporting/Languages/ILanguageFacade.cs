@@ -6,8 +6,8 @@ namespace Weapsy.Reporting.Languages
 {
     public interface ILanguageFacade
     {
-        Task<IEnumerable<LanguageInfo>> GetAllActive(Guid siteId);
-        Task<IEnumerable<LanguageAdminModel>> GetAllForAdmin(Guid siteId);
-        Task<LanguageAdminModel> GetForAdmin(Guid siteId, Guid id);
+        Task<IEnumerable<LanguageInfo>> GetAllActiveAsync(Guid siteId);
+        Task<IEnumerable<LanguageAdminModel>> GetAllForAdminAsync(Guid siteId);
+        Task<LanguageAdminModel> GetForAdminAsync(Guid siteId, Guid id);
     }
 }

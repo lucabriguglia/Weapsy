@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Weapsy.Domain.Pages.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
@@ -8,15 +7,15 @@ using Weapsy.Reporting.Languages;
 namespace Weapsy.Reporting.Data.Pages
 {
     public class PageEventsHandler : 
-        IEventHandlerAsync<PageCreated>,
-        IEventHandlerAsync<PageDeleted>,
-        IEventHandlerAsync<PageActivated>,
-        IEventHandlerAsync<PageDetailsUpdated>,
-        IEventHandlerAsync<PageHidden>,
-        IEventHandlerAsync<PageModuleAdded>,
-        IEventHandlerAsync<PageModuleDetailsUpdated>,
-        IEventHandlerAsync<PageModulesReordered>,
-        IEventHandlerAsync<PageModuleRemoved>
+        IEventHandler<PageCreated>,
+        IEventHandler<PageDeleted>,
+        IEventHandler<PageActivated>,
+        IEventHandler<PageDetailsUpdated>,
+        IEventHandler<PageHidden>,
+        IEventHandler<PageModuleAdded>,
+        IEventHandler<PageModuleDetailsUpdated>,
+        IEventHandler<PageModulesReordered>,
+        IEventHandler<PageModuleRemoved>
     {
         private readonly ICacheManager _cacheManager;
         private readonly ILanguageFacade _languageFacade;
@@ -28,72 +27,66 @@ namespace Weapsy.Reporting.Data.Pages
             _languageFacade = languageFacade;
         }
 
-        public async Task HandleAsync(PageCreated @event)
+        public void Handle(PageCreated @event)
         {
         }
 
-        public Task HandleAsync(PageDetailsUpdated @event)
+        public void Handle(PageDetailsUpdated @event)
         {
-            return ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task HandleAsync(PageDeleted @event)
+        public void Handle(PageDeleted @event)
         {
-            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task HandleAsync(PageActivated @event)
+        public void Handle(PageActivated @event)
         {
-            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
-            await ClearMenuCache(@event.SiteId);
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearMenuCache(@event.SiteId);
         }
 
-        public async Task HandleAsync(PageHidden @event)
+        public void Handle(PageHidden @event)
         {
-            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
-            await ClearMenuCache(@event.SiteId);
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearMenuCache(@event.SiteId);
         }
 
-        public async Task HandleAsync(PageModuleAdded @event)
+        public void Handle(PageModuleAdded @event)
         {
-            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task HandleAsync(PageModuleDetailsUpdated @event)
+        public void Handle(PageModuleDetailsUpdated @event)
         {
-            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task HandleAsync(PageModulesReordered @event)
+        public void Handle(PageModulesReordered @event)
         {
-            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public async Task HandleAsync(PageModuleRemoved @event)
+        public void Handle(PageModuleRemoved @event)
         {
-            await ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        private Task ClearPageCache(Guid siteId, Guid pageId)
+        private void ClearPageCache(Guid siteId, Guid pageId)
         {
-            return Task.Run(() =>
-            {
-                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
-                    _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, language.Id));
+            foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
+                _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, language.Id));
 
-                _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, Guid.Empty));
-            });
+            _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, Guid.Empty));
         }
 
-        private Task ClearMenuCache(Guid siteId)
+        private void ClearMenuCache(Guid siteId)
         {
-            return Task.Run(() =>
-            {
-                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
-                    _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", language.Id));
+            foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
+                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", language.Id));
 
-                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main"));
-            });
+            _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main"));
         }
     }
 }

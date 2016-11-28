@@ -26,7 +26,7 @@ namespace Weapsy.Reporting.Data.Languages
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<LanguageInfo>> GetAllActive(Guid siteId)
+        public async Task<IEnumerable<LanguageInfo>> GetAllActiveAsync(Guid siteId)
         {
             return await _cacheManager.GetAsync(string.Format(CacheKeys.LanguagesCacheKey, siteId), async () =>
             {
@@ -42,7 +42,7 @@ namespace Weapsy.Reporting.Data.Languages
             });
         }
 
-        public async Task<IEnumerable<LanguageAdminModel>> GetAllForAdmin(Guid siteId)
+        public async Task<IEnumerable<LanguageAdminModel>> GetAllForAdminAsync(Guid siteId)
         {
             using (var context = _dbContextFactory.Create())
             {
@@ -55,7 +55,7 @@ namespace Weapsy.Reporting.Data.Languages
             }
         }
 
-        public async Task<LanguageAdminModel> GetForAdmin(Guid siteId, Guid id)
+        public async Task<LanguageAdminModel> GetForAdminAsync(Guid siteId, Guid id)
         {
             using (var context = _dbContextFactory.Create())
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Weapsy.Domain.Menus.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
@@ -7,13 +6,13 @@ using Weapsy.Reporting.Languages;
 
 namespace Weapsy.Reporting.Data.Menus
 {
-    public class MenuEventsHandler : 
-        IEventHandlerAsync<MenuCreated>,
-        IEventHandlerAsync<MenuItemAdded>,
-        IEventHandlerAsync<MenuItemUpdated>,
-        IEventHandlerAsync<MenuItemRemoved>,
-        IEventHandlerAsync<MenuItemsReordered>,        
-        IEventHandlerAsync<MenuDeleted>        
+    public class MenuEventsHandler :
+        IEventHandler<MenuCreated>,
+        IEventHandler<MenuItemAdded>,
+        IEventHandler<MenuItemUpdated>,
+        IEventHandler<MenuItemRemoved>,
+        IEventHandler<MenuItemsReordered>,
+        IEventHandler<MenuDeleted>        
     {
         private readonly ICacheManager _cacheManager;
         private readonly ILanguageFacade _languageFacade;
@@ -25,45 +24,42 @@ namespace Weapsy.Reporting.Data.Menus
             _languageFacade = languageFacade;
         }
 
-        public async Task HandleAsync(MenuCreated @event)
+        public void Handle(MenuCreated @event)
         {
-            await ClearCache(@event.SiteId, @event.Name);
+            ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task HandleAsync(MenuItemAdded @event)
+        public void Handle(MenuItemAdded @event)
         {
-            await ClearCache(@event.SiteId, @event.Name);
+            ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task HandleAsync(MenuItemUpdated @event)
+        public void Handle(MenuItemUpdated @event)
         {
-            await ClearCache(@event.SiteId, @event.Name);
+            ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task HandleAsync(MenuItemRemoved @event)
+        public void Handle(MenuItemRemoved @event)
         {
-            await ClearCache(@event.SiteId, @event.Name);
+            ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task HandleAsync(MenuItemsReordered @event)
+        public void Handle(MenuItemsReordered @event)
         {
-            await ClearCache(@event.SiteId, @event.Name);
+            ClearCache(@event.SiteId, @event.Name);
         }
 
-        public async Task HandleAsync(MenuDeleted @event)
+        public void Handle(MenuDeleted @event)
         {
-            await ClearCache(@event.SiteId, @event.Name);
+            ClearCache(@event.SiteId, @event.Name);
         }
 
-        private Task ClearCache(Guid siteId, string name)
+        private void ClearCache(Guid siteId, string name)
         {
-            return Task.Run(() =>
-            {
-                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
-                    _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, language.Id));
+            foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
+                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, language.Id));
 
-                _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, Guid.Empty));
-            });
+            _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, Guid.Empty));
         }
     }
 }

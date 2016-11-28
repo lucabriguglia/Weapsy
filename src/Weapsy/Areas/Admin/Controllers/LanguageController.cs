@@ -21,8 +21,8 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await Task.Run(() => _languageFacade.GetAllForAdmin(SiteId));
-            return View(model);
+            var models = await _languageFacade.GetAllForAdminAsync(SiteId);
+            return View(models);
         }
 
         public IActionResult Create()
@@ -33,8 +33,11 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await Task.Run(() => _languageFacade.GetForAdmin(SiteId, id));
-            if (model == null) return NotFound();
+            var model = await _languageFacade.GetForAdminAsync(SiteId, id);
+
+            if (model == null)
+                return NotFound();
+
             return View(model);
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Weapsy.Infrastructure.DependencyResolver;
 using Weapsy.Infrastructure.Domain;
@@ -20,10 +19,10 @@ namespace Weapsy.Infrastructure.Dispatcher
             if (@event == null)
                 throw new ArgumentNullException(nameof(@event));
 
-            var eventHandlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
+            var eventHandlers = _resolver.ResolveAll<IEventHandler<TEvent>>();
 
             foreach (var handler in eventHandlers)
-                Task.Run(() => handler.HandleAsync(@event));
+                handler.Handle(@event);
         }
 
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
