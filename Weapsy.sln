@@ -33,13 +33,13 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Domain.EventStore.Sq
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Reporting", "src\Weapsy.Reporting\Weapsy.Reporting.xproj", "{EBC6DF39-AC4B-47F7-AA49-7A006C581FFE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Reporting.Data.Default", "src\Weapsy.Reporting.Data.Default\Weapsy.Reporting.Data.Default.xproj", "{C37EDE81-9FFD-445E-994A-9FCBFEEB4F8F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Reporting.Data", "src\Weapsy.Reporting.Data\Weapsy.Reporting.Data.xproj", "{C37EDE81-9FFD-445E-994A-9FCBFEEB4F8F}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Domain.Data.Tests", "tests\Weapsy.Domain.Data.Tests\Weapsy.Domain.Data.Tests.xproj", "{36C51DBE-A282-4799-82DE-2DE0F922061C}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Domain.Tests", "tests\Weapsy.Domain.Tests\Weapsy.Domain.Tests.xproj", "{33816E01-0D28-4179-BC0C-148AE304DD31}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Reporting.Data.Default.Tests", "tests\Weapsy.Reporting.Data.Default.Tests\Weapsy.Reporting.Data.Default.Tests.xproj", "{4976DE78-9077-4657-A61E-FF8FAC2C8D01}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Reporting.Data.Tests", "tests\Weapsy.Reporting.Data.Tests\Weapsy.Reporting.Data.Tests.xproj", "{4976DE78-9077-4657-A61E-FF8FAC2C8D01}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Tests", "tests\Weapsy.Tests\Weapsy.Tests.xproj", "{BE8A579E-74C4-4D09-A8EF-124E0D497D6F}"
 EndProject

@@ -10,7 +10,7 @@
     "Weapsy.Domain.EventStore.SqlServer": "1.0.0-*",
     "Weapsy.Infrastructure": "1.0.0-*",
     "Weapsy.Reporting": "1.0.0-*",
-    "Weapsy.Reporting.Data.Default": "1.0.0-*",
+    "Weapsy.Reporting.Data": "1.0.0-*",
     "Weapsy.Services": "1.0.0-*"
   },
 
