@@ -47,7 +47,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Apps.Text", "apps\te
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Mvc", "src\Weapsy.Mvc\Weapsy.Mvc.xproj", "{C2BABD9E-32EA-4662-BF7C-7D964461F670}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Apps.Text.Data.SqlServer", "apps\text\src\Weapsy.Apps.Text.Data.SqlServer\Weapsy.Apps.Text.Data.SqlServer.xproj", "{8722E1F2-F940-4810-8B7A-FF0FCFE8B8E1}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Apps.Text.Data", "apps\text\src\Weapsy.Apps.Text.Data\Weapsy.Apps.Text.Data.xproj", "{8722E1F2-F940-4810-8B7A-FF0FCFE8B8E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apps", "apps", "{61B860DE-28B3-4AF0-86DF-465AE1D5F20E}"
 EndProject
@@ -66,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{75B8
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Apps.Text.Tests", "apps\text\tests\Weapsy.Apps.Text.Tests\Weapsy.Apps.Text.Tests.xproj", "{777425A2-3F83-4DB4-990F-24D3B4601F39}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Apps.Text.Data.SqlServer.Tests", "apps\text\tests\Weapsy.Apps.Text.Data.SqlServer.Tests\Weapsy.Apps.Text.Data.SqlServer.Tests.xproj", "{40011C9C-0647-40AF-AC65-D2BD7F66D2A7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Apps.Text.Data.Tests", "apps\text\tests\Weapsy.Apps.Text.Data.Tests\Weapsy.Apps.Text.Data.Tests.xproj", "{40011C9C-0647-40AF-AC65-D2BD7F66D2A7}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Tests.Factories", "tests\Weapsy.Tests.Factories\Weapsy.Tests.Factories.xproj", "{D700186B-5CC1-477C-AE43-E1D089D687F9}"
 EndProject
