@@ -150,7 +150,7 @@ namespace Weapsy
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             var site = siteRepository.GetByName("Default");
-            var activeLanguages = languageFacade.GetAllActive(site.Id);
+            var activeLanguages = languageFacade.GetAllActive(site.Id).Result;
 
             app.AddRoutes();
             app.AddLocalisation(activeLanguages);

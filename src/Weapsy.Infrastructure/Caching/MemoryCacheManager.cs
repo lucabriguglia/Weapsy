@@ -20,7 +20,7 @@ namespace Weapsy.Infrastructure.Caching
 
         public async Task<T> GetAsync<T>(string key)
         {
-            return await (Task<T>)_memoryCache.Get(key);
+            return await Task.Run(() => (T)_memoryCache.Get(key));
         }
 
         public void Set(string key, object data, int cacheTime)
