@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
 
             var createThemeHandler = new UpdateThemeDetailsHandler(themeRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createThemeHandler.Handle(command));
+            Assert.Throws<Exception>(() => createThemeHandler.Handle(command));
         }
 
         [Test]

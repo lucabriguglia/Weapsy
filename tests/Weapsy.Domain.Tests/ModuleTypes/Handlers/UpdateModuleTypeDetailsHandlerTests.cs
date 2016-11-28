@@ -54,7 +54,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
 
             var createModuleTypeHandler = new UpdateModuleTypeDetailsHandler(repositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createModuleTypeHandler.Handle(command));
+            Assert.Throws<Exception>(() => createModuleTypeHandler.Handle(command));
         }
 
         [Test]

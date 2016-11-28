@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
 
             var createMenuHandler = new CreateMenuHandler(menuRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createMenuHandler.Handle(command));
+            Assert.Throws<Exception>(() => createMenuHandler.Handle(command));
         }
 
         [Test]

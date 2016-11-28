@@ -32,7 +32,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
 
             var createAppHandler = new UpdateAppDetailsHandler(repositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createAppHandler.Handle(command));
+            Assert.Throws<Exception>(() => createAppHandler.Handle(command));
         }
 
         [Test]

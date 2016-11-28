@@ -98,7 +98,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var createPageHandler = new UpdatePageModuleDetailsHandler(repositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createPageHandler.Handle(command));
+            Assert.Throws<Exception>(() => createPageHandler.Handle(command));
         }
 
         [Test]

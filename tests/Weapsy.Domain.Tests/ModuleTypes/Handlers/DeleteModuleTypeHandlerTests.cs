@@ -49,7 +49,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
 
             var deleteModuleTypeHandler = new DeleteModuleTypeHandler(repositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => deleteModuleTypeHandler.Handle(command));
+            Assert.Throws<Exception>(() => deleteModuleTypeHandler.Handle(command));
         }
 
         [Test]

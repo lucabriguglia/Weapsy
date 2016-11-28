@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
@@ -34,11 +35,11 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
 
             var createLanguageHandler = new CreateLanguageHandler(languageRepositoryMock.Object, validatorMock.Object, sortOrderGeneratorMock.Object);
 
-            Assert.Throws<ValidationException>(async () => await createLanguageHandler.HandleAsync(command));
+            Assert.ThrowsAsync<Exception>(async () => await createLanguageHandler.HandleAsync(command));
         }
 
         [Test]
-        public async void Should_validate_command_and_save_new_language()
+        public async Task Should_validate_command_and_save_new_language()
         {
             var command = new CreateLanguage
             {
@@ -50,7 +51,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             };
 
             var languageRepositoryMock = new Mock<ILanguageRepository>();
-            languageRepositoryMock.Setup(x => x.Create(It.IsAny<Language>()));
+            languageRepositoryMock.Setup(x => x.CreateAsync(It.IsAny<Language>())).Returns(Task.FromResult(false));
 
             var validatorMock = new Mock<IValidator<CreateLanguage>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
@@ -61,7 +62,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             await createLanguageHandler.HandleAsync(command);
 
             validatorMock.Verify(x => x.Validate(command));
-            languageRepositoryMock.Verify(x => x.Create(It.IsAny<Language>()));
+            languageRepositoryMock.Verify(x => x.CreateAsync(It.IsAny<Language>()));
         }
     }
 }

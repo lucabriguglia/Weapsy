@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
 
             var createSiteHandler = new CreateSiteHandler(siteRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createSiteHandler.Handle(command));
+            Assert.Throws<Exception>(() => createSiteHandler.Handle(command));
         }
 
         [Test]

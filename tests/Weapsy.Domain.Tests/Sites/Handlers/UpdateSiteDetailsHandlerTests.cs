@@ -56,7 +56,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
 
             var createSiteHandler = new UpdateSiteDetailsHandler(repositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createSiteHandler.Handle(command));
+            Assert.Throws<Exception>(() => createSiteHandler.Handle(command));
         }
 
         [Test]

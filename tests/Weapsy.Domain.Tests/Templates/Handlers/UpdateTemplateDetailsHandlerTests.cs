@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
 
             var createTemplateHandler = new UpdateTemplateDetailsHandler(templateRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createTemplateHandler.Handle(command));
+            Assert.Throws<Exception>(() => createTemplateHandler.Handle(command));
         }
 
         [Test]

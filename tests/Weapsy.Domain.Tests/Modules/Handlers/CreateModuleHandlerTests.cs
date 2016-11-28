@@ -31,7 +31,7 @@ namespace Weapsy.Domain.Tests.Modules.Handlers
 
             var createModuleHandler = new CreateModuleHandler(repositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createModuleHandler.Handle(command));
+            Assert.Throws<Exception>(() => createModuleHandler.Handle(command));
         }
 
         [Test]

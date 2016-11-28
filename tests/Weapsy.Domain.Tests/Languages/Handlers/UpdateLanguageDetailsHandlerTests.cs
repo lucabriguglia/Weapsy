@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
 
             var createLanguageHandler = new UpdateLanguageDetailsHandler(languageRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createLanguageHandler.Handle(command));
+            Assert.Throws<Exception>(() => createLanguageHandler.Handle(command));
         }
 
         [Test]

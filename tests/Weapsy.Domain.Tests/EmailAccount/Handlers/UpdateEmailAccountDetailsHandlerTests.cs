@@ -65,7 +65,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
 
             var createEmailAccountHandler = new UpdateEmailAccountDetailsHandler(emailAccountRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createEmailAccountHandler.Handle(command));
+            Assert.Throws<Exception>(() => createEmailAccountHandler.Handle(command));
         }
 
         [Test]

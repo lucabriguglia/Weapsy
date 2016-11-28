@@ -5,6 +5,7 @@
     "AutoMapper": "5.2.0",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
     "NETStandard.Library": "1.6.1",
+    "Weapsy.Data": "1.0.0-*",
     "Weapsy.Domain": "1.0.0-*",
     "Weapsy.Infrastructure": "1.0.0-*",
     "Weapsy.Reporting": "1.0.0-*",

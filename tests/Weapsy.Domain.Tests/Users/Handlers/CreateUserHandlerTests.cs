@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Tests.Users.Handlers
 
             var createUserHandler = new CreateUserHandler(userRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createUserHandler.Handle(command));
+            Assert.Throws<Exception>(() => createUserHandler.Handle(command));
         }
 
         [Test]
