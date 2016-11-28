@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Weapsy.Infrastructure.Caching
 {
@@ -9,7 +10,7 @@ namespace Weapsy.Infrastructure.Caching
 			return Get(cacheManager, key, 60, acquire);
 		}
 
-		public static T Get<T>(this ICacheManager cacheManager, string key, int cacheTime, Func<T> acquire)
+        public static T Get<T>(this ICacheManager cacheManager, string key, int cacheTime, Func<T> acquire)
 		{
 			if (cacheTime <= 0)
 				return acquire();
@@ -25,5 +26,27 @@ namespace Weapsy.Infrastructure.Caching
 
 			return result;
 		}
-	}
+
+        public static async Task<T> GetAsync<T>(this ICacheManager cacheManager, string key, Func<Task<T>> acquire)
+        {
+            return await GetAsync(cacheManager, key, 60, acquire);
+        }
+
+        public static async Task<T> GetAsync<T>(this ICacheManager cacheManager, string key, int cacheTime, Func<Task<T>> acquire)
+        {
+            if (cacheTime <= 0)
+                return await acquire();
+
+            var data = await cacheManager.GetAsync<T>(key);
+
+            if (data != null)
+                return data;
+
+            var result = await acquire();
+
+            cacheManager.Set(key, result, cacheTime);
+
+            return result;
+        }
+    }
 }

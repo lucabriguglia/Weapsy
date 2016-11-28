@@ -59,7 +59,7 @@ namespace Weapsy.Reporting.Data.Menus
         {
             return Task.Run(() =>
             {
-                foreach (var language in _languageFacade.GetAllActive(siteId))
+                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
                     _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, language.Id));
 
                 _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, Guid.Empty));

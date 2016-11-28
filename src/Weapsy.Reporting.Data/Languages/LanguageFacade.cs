@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Weapsy.Data;
 using Weapsy.Domain.Languages;
 using Weapsy.Infrastructure.Caching;
@@ -24,40 +26,40 @@ namespace Weapsy.Reporting.Data.Languages
             _mapper = mapper;
         }
 
-        public IEnumerable<LanguageInfo> GetAllActive(Guid siteId)
+        public async Task<IEnumerable<LanguageInfo>> GetAllActive(Guid siteId)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.LanguagesCacheKey, siteId), () =>
+            return await _cacheManager.GetAsync(string.Format(CacheKeys.LanguagesCacheKey, siteId), async () =>
             {
                 using (var context = _dbContextFactory.Create())
                 {
-                    var dbEntities = context.Languages
+                    var dbEntities = await context.Languages
                         .Where(x => x.SiteId == siteId && x.Status == LanguageStatus.Active)
                         .OrderBy(x => x.SortOrder)
-                        .ToList();
+                        .ToListAsync();
 
                     return _mapper.Map<IEnumerable<LanguageInfo>>(dbEntities);
                 }
             });
         }
 
-        public IEnumerable<LanguageAdminModel> GetAllForAdmin(Guid siteId)
+        public async Task<IEnumerable<LanguageAdminModel>> GetAllForAdmin(Guid siteId)
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntities = context.Languages
+                var dbEntities = await context.Languages
                     .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
-                    .ToList();
+                    .ToListAsync();
 
                 return _mapper.Map<IEnumerable<LanguageAdminModel>>(dbEntities);
             }
         }
 
-        public LanguageAdminModel GetForAdmin(Guid siteId, Guid id)
+        public async Task<LanguageAdminModel> GetForAdmin(Guid siteId, Guid id)
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Languages.FirstOrDefault(x => x.SiteId == siteId && x.Id == id && x.Status != LanguageStatus.Deleted);
+                var dbEntity = await context.Languages.FirstOrDefaultAsync(x => x.SiteId == siteId && x.Id == id && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<LanguageAdminModel>(dbEntity) : null;
             }
         }

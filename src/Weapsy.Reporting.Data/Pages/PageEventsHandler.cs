@@ -78,7 +78,7 @@ namespace Weapsy.Reporting.Data.Pages
         {
             return Task.Run(() =>
             {
-                foreach (var language in _languageFacade.GetAllActive(siteId))
+                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
                     _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, language.Id));
 
                 _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, Guid.Empty));
@@ -89,7 +89,7 @@ namespace Weapsy.Reporting.Data.Pages
         {
             return Task.Run(() =>
             {
-                foreach (var language in _languageFacade.GetAllActive(siteId))
+                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
                     _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", language.Id));
 
                 _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main"));

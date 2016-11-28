@@ -35,7 +35,7 @@ namespace Weapsy.Reporting.Data.Sites
         {
             return Task.Run(() =>
             {
-                foreach (var language in _languageFacade.GetAllActive(siteId))
+                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
                     _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, language.Id));
 
                 _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, Guid.Empty));

@@ -35,7 +35,7 @@ namespace Weapsy.Apps.Text.Data
         {
             return Task.Run(() =>
             {
-                foreach (var language in _languageFacade.GetAllActive(siteId))
+                foreach (var language in _languageFacade.GetAllActive(siteId).Result)
                     _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, language.Id));
 
                 _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, Guid.Empty));

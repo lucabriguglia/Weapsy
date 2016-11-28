@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Weapsy.Infrastructure.Caching
@@ -17,7 +18,12 @@ namespace Weapsy.Infrastructure.Caching
             return (T)_memoryCache.Get(key);
 		}
 
-		public void Set(string key, object data, int cacheTime)
+        public async Task<T> GetAsync<T>(string key)
+        {
+            return await (Task<T>)_memoryCache.Get(key);
+        }
+
+        public void Set(string key, object data, int cacheTime)
 		{
 			if (data == null)
 				return;

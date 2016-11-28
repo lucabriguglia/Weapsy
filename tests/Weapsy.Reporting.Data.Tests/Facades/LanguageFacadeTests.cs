@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
@@ -45,12 +46,12 @@ namespace Weapsy.Reporting.Data.Tests.Facades
         }
 
         [Test]
-        public void Should_return_all_models_for_admin()
+        public async Task Should_return_all_models_for_admin()
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var facade = new LanguageFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
-                var models = facade.GetAllForAdmin(_siteId);
+                var models = await facade.GetAllForAdmin(_siteId);
                 Assert.IsNotEmpty(models);
             }
         }
