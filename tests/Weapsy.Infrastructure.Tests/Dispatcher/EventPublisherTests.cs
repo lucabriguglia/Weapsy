@@ -26,23 +26,23 @@ namespace Weapsy.Infrastructure.Tests.Dispatcher
         {
             var fakeEvent = new FakeEvent();
 
-            var eventHandler1Mock = new Mock<IEventHandlerAsync<IEvent>>();
-            eventHandler1Mock.Setup(x => x.HandleAsync(fakeEvent));
+            var eventHandler1Mock = new Mock<IEventHandler<IEvent>>();
+            eventHandler1Mock.Setup(x => x.Handle(fakeEvent));
 
-            var eventHandler2Mock = new Mock<IEventHandlerAsync<IEvent>>();
-            eventHandler2Mock.Setup(x => x.HandleAsync(fakeEvent));
+            var eventHandler2Mock = new Mock<IEventHandler<IEvent>>();
+            eventHandler2Mock.Setup(x => x.Handle(fakeEvent));
 
-            var eventHandlers = new List<IEventHandlerAsync<IEvent>> { eventHandler1Mock.Object, eventHandler2Mock.Object };
+            var eventHandlers = new List<IEventHandler<IEvent>> { eventHandler1Mock.Object, eventHandler2Mock.Object };
 
             var resolverMock = new Mock<IResolver>();
-            resolverMock.Setup(x => x.ResolveAll<IEventHandlerAsync<IEvent>>()).Returns(eventHandlers);
+            resolverMock.Setup(x => x.ResolveAll<IEventHandler<IEvent>>()).Returns(eventHandlers);
 
             var eventPublisher = new EventPublisher(resolverMock.Object);
 
             eventPublisher.Publish<IEvent>(fakeEvent);
 
-            eventHandler1Mock.Verify(x => x.HandleAsync(fakeEvent), Times.Once);
-            eventHandler2Mock.Verify(x => x.HandleAsync(fakeEvent), Times.Once);
+            eventHandler1Mock.Verify(x => x.Handle(fakeEvent), Times.Once);
+            eventHandler2Mock.Verify(x => x.Handle(fakeEvent), Times.Once);
         }
 
         private class FakeEvent : Event {}
