@@ -6,7 +6,7 @@ using Weapsy.Domain.Languages;
 using Weapsy.Domain.Modules;
 using Weapsy.Infrastructure.Caching;
 
-namespace Weapsy.Apps.Text.Data.SqlServer
+namespace Weapsy.Apps.Text.Data
 {
     public class TextModuleFacade : ITextModuleFacade
     {

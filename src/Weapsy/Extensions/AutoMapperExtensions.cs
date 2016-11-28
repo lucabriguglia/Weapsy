@@ -14,7 +14,7 @@ namespace Weapsy.Extensions
                 cfg.AddProfile(new Api.AutoMapperProfile());
                 cfg.AddProfile(new AutoMapperProfile());
                 cfg.AddProfile(new Reporting.Data.AutoMapperProfile());
-                cfg.AddProfile(new Apps.Text.Data.SqlServer.AutoMapperProfile());
+                cfg.AddProfile(new Apps.Text.Data.AutoMapperProfile());
             });
 
             services.AddSingleton(sp => autoMapperConfig.CreateMapper());

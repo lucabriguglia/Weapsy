@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
 using Autofac;
 using FluentValidation;
-using Weapsy.Apps.Text.Data.SqlServer;
+using Weapsy.Apps.Text.Data;
 using Weapsy.Apps.Text.Domain;
-using Weapsy.Apps.Text.Domain.Data.SqlServer;
 using Weapsy.Apps.Text.Domain.Handlers;
 using Weapsy.Apps.Text.Domain.Rules;
 using Weapsy.Apps.Text.Domain.Validators;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Apps.Text.Domain;
 
-namespace Weapsy.Apps.Text.Data.SqlServer.Entities
+namespace Weapsy.Apps.Text.Data.Entities
 {
     public class TextVersion
     {

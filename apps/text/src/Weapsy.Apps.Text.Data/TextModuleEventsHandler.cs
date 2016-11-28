@@ -5,7 +5,7 @@ using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Reporting.Languages;
 
-namespace Weapsy.Apps.Text.Data.SqlServer
+namespace Weapsy.Apps.Text.Data
 {
     public class TextModuleEventsHandler : 
         IEventHandlerAsync<TextModuleCreated>,

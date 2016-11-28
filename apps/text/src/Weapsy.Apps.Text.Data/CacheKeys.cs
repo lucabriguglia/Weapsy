@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Apps.Text.Data.SqlServer
+﻿namespace Weapsy.Apps.Text.Data
 {
     public static class CacheKeys
     {

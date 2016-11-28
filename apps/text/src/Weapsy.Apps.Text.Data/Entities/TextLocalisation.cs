@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Apps.Text.Data.SqlServer.Entities
+namespace Weapsy.Apps.Text.Data.Entities
 {
     public class TextLocalisation
     {

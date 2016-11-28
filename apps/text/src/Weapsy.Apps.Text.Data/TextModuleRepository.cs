@@ -1,14 +1,14 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Weapsy.Apps.Text.Data.SqlServer;
-using TextModuleDbEntity = Weapsy.Apps.Text.Data.SqlServer.Entities.TextModule;
-using TextVersionDbEntity = Weapsy.Apps.Text.Data.SqlServer.Entities.TextVersion;
-using TextLocalisationDbEntity = Weapsy.Apps.Text.Data.SqlServer.Entities.TextLocalisation;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Apps.Text.Domain;
+using TextModuleDbEntity = Weapsy.Apps.Text.Data.Entities.TextModule;
+using TextVersionDbEntity = Weapsy.Apps.Text.Data.Entities.TextVersion;
+using TextLocalisationDbEntity = Weapsy.Apps.Text.Data.Entities.TextLocalisation;
 
-namespace Weapsy.Apps.Text.Domain.Data.SqlServer
+namespace Weapsy.Apps.Text.Data
 {
     public class TextModuleRepository : ITextModuleRepository
     {

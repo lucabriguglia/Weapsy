@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Weapsy.Apps.Text.Data.SqlServer.Entities;
+using Weapsy.Apps.Text.Data.Entities;
 using Weapsy.Infrastructure.Configuration;
 
-namespace Weapsy.Apps.Text.Data.SqlServer
+namespace Weapsy.Apps.Text.Data
 {
     public class TextModuleDbContext : DbContext
     {
