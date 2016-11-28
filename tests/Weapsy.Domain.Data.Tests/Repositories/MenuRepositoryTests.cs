@@ -7,6 +7,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Menus;
 using Weapsy.Tests.Factories;
+using Weapsy.Tests.Shared;
 using MenuDbEntity = Weapsy.Data.Entities.Menu;
 using MenuItemDbEntity = Weapsy.Data.Entities.MenuItem;
 using MenuItemLocalisationDbEntity = Weapsy.Data.Entities.MenuItemLocalisation;
@@ -28,7 +29,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [SetUp]
         public void SetUp()
         {
-            _contextOptions = Shared.CreateContextOptions();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
@@ -103,7 +104,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_deletedMenuId);
 
                 Assert.Null(menu);
@@ -115,7 +116,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_menuId1);
 
                 Assert.NotNull(menu);
@@ -127,7 +128,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_menuId1);
 
                 Assert.AreEqual(0, menu.MenuItems.Where(x => x.Status == MenuItemStatus.Deleted).Count());
@@ -139,7 +140,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_siteId, _menuId1);
 
                 Assert.NotNull(menu);
@@ -151,7 +152,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_siteId, _menuId1);
 
                 Assert.AreEqual(0, menu.MenuItems.Where(x => x.Status == MenuItemStatus.Deleted).Count());
@@ -163,7 +164,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetByName(_siteId, "Menu 1");
 
                 Assert.NotNull(menu);
@@ -175,7 +176,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetByName(_siteId, "Menu 1");
 
                 Assert.AreEqual(0, menu.MenuItems.Where(x => x.Status == MenuItemStatus.Deleted).Count());
@@ -187,7 +188,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menus = repository.GetAll(_siteId);
 
                 Assert.AreEqual(2, menus.Count);
@@ -199,7 +200,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menus = repository.GetAll(_siteId);
 
                 foreach (var menu in menus)
@@ -214,13 +215,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newMenu);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_siteId, newMenu.Id);
 
                 Assert.NotNull(menu);
@@ -238,13 +239,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(menuToUpdate);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new MenuRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
 
                 var updatedMenu = repository.GetById(_siteId, _menuId1);
                 var updatedMenuItem = updatedMenu.MenuItems.FirstOrDefault();

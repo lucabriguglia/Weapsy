@@ -1,51 +1,69 @@
 ﻿using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
+using Weapsy.Data;
 using Weapsy.Domain.Languages;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Data.Default.Languages;
-using Weapsy.Reporting.Languages;
-using Weapsy.Tests.Factories;
+using Weapsy.Tests.Shared;
+using Language = Weapsy.Data.Entities.Language;
 
 namespace Weapsy.Reporting.Data.Default.Tests.Facades
 {
     [TestFixture]
     public class LanguageFacadeTests
     {
-        private ILanguageFacade _sut;
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId;
         private Guid _languageId;
 
         [SetUp]
         public void Setup()
         {
-            _siteId = Guid.NewGuid();
-            _languageId = Guid.NewGuid();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
-            var language = LanguageFactory.Language(_siteId, _languageId, "", "", "");
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                _siteId = Guid.NewGuid();
+                _languageId = Guid.NewGuid();
 
-            var repositoryMock = new Mock<ILanguageRepository>();
-            repositoryMock.Setup(x => x.GetById(_siteId, _languageId)).Returns(language);
-            repositoryMock.Setup(x => x.GetAll(_siteId)).Returns(new List<Language> { language });
+                context.Languages.AddRange(
+                    new Language
+                    {
+                        SiteId = _siteId,
+                        Id = _languageId,
+                        Name = "Language Name 1",
+                        CultureName = "ab1",
+                        Url = "ab1",
+                        Status = LanguageStatus.Active
+                    }
+                );
 
-            var cacheManagerMock = new Mock<ICacheManager>();
-
-            _sut = new LanguageFacade(repositoryMock.Object, cacheManagerMock.Object, Shared.CreateNewMapper());
+                context.SaveChanges();
+            }
         }
 
         [Test]
         public void Should_return_all_models_for_admin()
         {
-            var models = _sut.GetAllForAdmin(_siteId);
-            Assert.IsNotEmpty(models);
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var facade = new LanguageFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
+                var models = facade.GetAllForAdmin(_siteId);
+                Assert.IsNotEmpty(models);
+            }
         }
 
         [Test]
         public void Should_return_model_for_admin()
         {
-            var model = _sut.GetForAdmin(_siteId, _languageId);
-            Assert.NotNull(model);
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var facade = new LanguageFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
+                var model = facade.GetForAdmin(_siteId, _languageId);
+                Assert.NotNull(model);
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Languages;
 using Weapsy.Tests.Factories;
+using Weapsy.Tests.Shared;
 using LanguageDbEntity = Weapsy.Data.Entities.Language;
 
 namespace Weapsy.Domain.Data.Tests.Repositories
@@ -22,7 +23,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [SetUp]
         public void SetUp()
         {
-            _contextOptions = Shared.CreateContextOptions();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
@@ -31,7 +32,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
                 _languageId2 = Guid.NewGuid();
                 _deletedLanguageId = Guid.NewGuid();
 
-                context.Set<LanguageDbEntity>().AddRange(
+                context.Languages.AddRange(
                     new LanguageDbEntity
                     {
                         SiteId = _siteId,
@@ -66,7 +67,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetById(_deletedLanguageId);
 
                 Assert.Null(language);
@@ -78,7 +79,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetById(_languageId1);
 
                 Assert.NotNull(language);
@@ -90,7 +91,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetById(_siteId, _languageId1);
 
                 Assert.NotNull(language);
@@ -102,7 +103,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetByName(_siteId, "Language Name 1");
 
                 Assert.NotNull(language);
@@ -114,7 +115,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetByCultureName(_siteId, "ab1");
 
                 Assert.NotNull(language);
@@ -126,7 +127,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetByUrl(_siteId, "ab1");
 
                 Assert.NotNull(language);
@@ -138,7 +139,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var count = repository.GetLanguagesCount(_siteId);
 
                 Assert.AreEqual(2, count);
@@ -150,7 +151,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var count = repository.GetActiveLanguagesCount(_siteId);
 
                 Assert.AreEqual(1, count);
@@ -162,7 +163,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var list = repository.GetLanguagesIdList(_siteId);
 
                 Assert.AreEqual(new List<Guid> { _languageId1, _languageId2 }, list);
@@ -174,7 +175,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var list = repository.GetAll(_siteId);
 
                 Assert.AreEqual(2, list.Count);
@@ -188,13 +189,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newLanguage);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetById(_siteId, newLanguage.Id);
 
                 Assert.NotNull(language);
@@ -210,13 +211,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(languageToUpdate);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedLanguage = repository.GetById(_siteId, _languageId1);
 
                 Assert.AreEqual(newLanguageName, updatedLanguage.Name);
@@ -234,13 +235,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(new List<Language> { languageToUpdate1, languageToUpdate2 });
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedLanguage1 = repository.GetById(_siteId, _languageId1);
 
                 Assert.AreEqual(newLanguageName1, updatedLanguage1.Name);
@@ -248,7 +249,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new LanguageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedLanguage2 = repository.GetById(_siteId, _languageId2);
 
                 Assert.AreEqual(newLanguageName2, updatedLanguage2.Name);

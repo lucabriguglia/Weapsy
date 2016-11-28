@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Weapsy.Data;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Reporting.Languages;
@@ -10,15 +11,15 @@ namespace Weapsy.Reporting.Data.Default.Languages
 {
     public class LanguageFacade : ILanguageFacade
     {
-        private readonly ILanguageRepository _languageRepository;
+        private readonly IWeapsyDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public LanguageFacade(ILanguageRepository languageRepository, 
+        public LanguageFacade(IWeapsyDbContextFactory dbContextFactory,
             ICacheManager cacheManager, 
             IMapper mapper)
         {
-            _languageRepository = languageRepository;
+            _dbContextFactory = dbContextFactory;
             _cacheManager = cacheManager;
             _mapper = mapper;
         }
@@ -27,21 +28,38 @@ namespace Weapsy.Reporting.Data.Default.Languages
         {
             return _cacheManager.Get(string.Format(CacheKeys.LanguagesCacheKey, siteId), () =>
             {
-                var languages = _languageRepository.GetAll(siteId).Where(x => x.Status == LanguageStatus.Active);
-                return _mapper.Map<IEnumerable<LanguageInfo>>(languages);
+                using (var context = _dbContextFactory.Create())
+                {
+                    var dbEntities = context.Languages
+                        .Where(x => x.SiteId == siteId && x.Status == LanguageStatus.Active)
+                        .OrderBy(x => x.SortOrder)
+                        .ToList();
+
+                    return _mapper.Map<IEnumerable<LanguageInfo>>(dbEntities);
+                }
             });
         }
 
         public IEnumerable<LanguageAdminModel> GetAllForAdmin(Guid siteId)
         {
-            var languages = _languageRepository.GetAll(siteId);
-            return _mapper.Map<IEnumerable<LanguageAdminModel>>(languages);
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntities = context.Languages
+                    .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
+                    .OrderBy(x => x.SortOrder)
+                    .ToList();
+
+                return _mapper.Map<IEnumerable<LanguageAdminModel>>(dbEntities);
+            }
         }
 
         public LanguageAdminModel GetForAdmin(Guid siteId, Guid id)
         {
-            var language = _languageRepository.GetById(siteId, id);
-            return language == null ? null : _mapper.Map<LanguageAdminModel>(language);
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.Languages.FirstOrDefault(x => x.SiteId == siteId && x.Id == id && x.Status != LanguageStatus.Deleted);
+                return dbEntity != null ? _mapper.Map<LanguageAdminModel>(dbEntity) : null;
+            }
         }
     }
 }

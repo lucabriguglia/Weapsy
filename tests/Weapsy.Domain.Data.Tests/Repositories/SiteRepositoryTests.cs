@@ -5,6 +5,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Sites;
 using Weapsy.Tests.Factories;
+using Weapsy.Tests.Shared;
 using SiteDbEntity = Weapsy.Data.Entities.Site;
 
 namespace Weapsy.Domain.Data.Tests.Repositories
@@ -20,7 +21,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [SetUp]
         public void SetUp()
         {
-            _contextOptions = Shared.CreateContextOptions();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
@@ -61,7 +62,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var site = repository.GetById(_deletedSiteId);
 
                 Assert.Null(site);
@@ -73,7 +74,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var site = repository.GetById(_siteId1);
 
                 Assert.NotNull(site);
@@ -85,7 +86,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var site = repository.GetByName("Name 1");
 
                 Assert.NotNull(site);
@@ -97,7 +98,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var site = repository.GetByUrl("Url 1");
 
                 Assert.NotNull(site);
@@ -109,7 +110,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var sites = repository.GetAll();
 
                 Assert.AreEqual(2, sites.Count);
@@ -123,13 +124,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newSite);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetById(newSite.Id);
 
                 Assert.NotNull(language);
@@ -145,13 +146,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(siteToUpdate);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new SiteRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedSite = repository.GetById(_siteId1);
 
                 Assert.AreEqual(newSiteName, updatedSite.Name);

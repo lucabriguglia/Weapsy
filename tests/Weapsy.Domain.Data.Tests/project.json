@@ -12,7 +12,8 @@
     "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
     "Microsoft.NETCore.App": "1.1.0",
     "Weapsy.Data": "1.0.0-*",
-    "Weapsy.Domain.Data": "1.0.0-*"
+    "Weapsy.Domain.Data": "1.0.0-*",
+    "Weapsy.Tests.Shared": "1.0.0-*"
   },
 
   "testRunner": "nunit",

@@ -7,6 +7,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Pages;
 using Weapsy.Tests.Factories;
+using Weapsy.Tests.Shared;
 using PageDbEntity = Weapsy.Data.Entities.Page;
 using PageModuleDbEntity = Weapsy.Data.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Data.Entities.PageModuleLocalisation;
@@ -28,7 +29,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [SetUp]
         public void SetUp()
         {
-            _contextOptions = Shared.CreateContextOptions();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
@@ -105,7 +106,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_deletedPageId);
 
                 Assert.Null(page);
@@ -117,7 +118,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_pageId1);
 
                 Assert.NotNull(page);
@@ -129,7 +130,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_pageId1);
 
                 Assert.AreEqual(0, page.PageModules.Count(x => x.Status == PageModuleStatus.Deleted));
@@ -141,7 +142,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_siteId, _pageId1);
 
                 Assert.NotNull(page);
@@ -153,7 +154,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_siteId, _pageId1);
 
                 Assert.AreEqual(0, page.PageModules.Count(x => x.Status == PageModuleStatus.Deleted));
@@ -165,7 +166,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetByName(_siteId, "Name 1");
 
                 Assert.NotNull(page);
@@ -177,7 +178,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetByName(_siteId, "Name 1");
 
                 Assert.AreEqual(0, page.PageModules.Count(x => x.Status == PageModuleStatus.Deleted));
@@ -189,7 +190,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetByUrl(_siteId, "Url 1");
 
                 Assert.NotNull(page);
@@ -201,7 +202,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetByUrl(_siteId, "Url 1");
 
                 Assert.AreEqual(0, page.PageModules.Count(x => x.Status == PageModuleStatus.Deleted));
@@ -213,7 +214,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var pages = repository.GetAll(_siteId);
 
                 Assert.AreEqual(2, pages.Count);
@@ -225,7 +226,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var pages = repository.GetAll(_siteId);
 
                 foreach (var page in pages)
@@ -240,13 +241,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newPage);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_siteId, newPage.Id);
 
                 Assert.NotNull(page);
@@ -262,13 +263,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(pageToUpdate);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new PageRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedPage = repository.GetById(_siteId, _pageId1);
 
                 Assert.AreEqual(newPageName, updatedPage.Name);

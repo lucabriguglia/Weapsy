@@ -5,6 +5,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Themes;
 using Weapsy.Tests.Factories;
+using Weapsy.Tests.Shared;
 using ThemeDbEntity = Weapsy.Data.Entities.Theme;
 
 namespace Weapsy.Domain.Data.Tests.Repositories
@@ -20,7 +21,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [SetUp]
         public void SetUp()
         {
-            _contextOptions = Shared.CreateContextOptions();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
@@ -62,7 +63,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetById(_deletedThemeId);
 
                 Assert.Null(theme);
@@ -74,7 +75,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetById(_themeId1);
 
                 Assert.NotNull(theme);
@@ -86,7 +87,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetByName("Name 1");
 
                 Assert.NotNull(theme);
@@ -98,7 +99,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetByFolder("Folder 1");
 
                 Assert.NotNull(theme);
@@ -110,7 +111,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var list = repository.GetAll();
 
                 Assert.AreEqual(2, list.Count);
@@ -122,7 +123,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var count = repository.GetThemesCount();
 
                 Assert.AreEqual(2, count);
@@ -136,13 +137,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newTheme);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetById(newTheme.Id);
 
                 Assert.NotNull(theme);
@@ -158,13 +159,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(themeToUpdate);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ThemeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedTheme = repository.GetById(_themeId1);
 
                 Assert.AreEqual(newThemeDescription, updatedTheme.Description);

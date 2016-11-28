@@ -5,6 +5,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Tests.Factories;
+using Weapsy.Tests.Shared;
 using ModuleTypeDbEntity = Weapsy.Data.Entities.ModuleType;
 
 namespace Weapsy.Domain.Data.Tests.Repositories
@@ -20,7 +21,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [SetUp]
         public void SetUp()
         {
-            _contextOptions = Shared.CreateContextOptions();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
@@ -61,7 +62,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var moduleType = repository.GetById(_deletedModuleTypeId);
 
                 Assert.Null(moduleType);
@@ -73,7 +74,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var moduleType = repository.GetById(_moduleTypeId1);
 
                 Assert.NotNull(moduleType);
@@ -85,7 +86,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var moduleType = repository.GetByName("Name 1");
 
                 Assert.NotNull(moduleType);
@@ -97,7 +98,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var moduleTypes = repository.GetAll();
 
                 Assert.AreEqual(2, moduleTypes.Count);
@@ -111,13 +112,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newModuleType);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var moduleType = repository.GetById(newModuleType.Id);
 
                 Assert.NotNull(moduleType);
@@ -133,13 +134,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(moduleTypeToUpdate);
             }
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var repository = new ModuleTypeRepository(Shared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedModuleType = repository.GetById(_moduleTypeId1);
 
                 Assert.AreEqual(newModuleTypeTitle, updatedModuleType.Title);

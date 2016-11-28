@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using Weapsy.Domain.Apps;
+using Weapsy.Data.Entities;
 using Weapsy.Domain.EmailAccounts;
-using Weapsy.Domain.Languages;
-using Weapsy.Domain.Menus;
-using Weapsy.Domain.ModuleTypes;
-using Weapsy.Domain.Pages;
-using Weapsy.Domain.Sites;
 using Weapsy.Reporting.Apps;
 using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Reporting.Languages;
@@ -13,6 +8,13 @@ using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
+using App = Weapsy.Domain.Apps.App;
+using Menu = Weapsy.Domain.Menus.Menu;
+using ModuleType = Weapsy.Domain.ModuleTypes.ModuleType;
+using Page = Weapsy.Domain.Pages.Page;
+using PageLocalisation = Weapsy.Domain.Pages.PageLocalisation;
+using Site = Weapsy.Domain.Sites.Site;
+using SiteLocalisation = Weapsy.Domain.Sites.SiteLocalisation;
 
 namespace Weapsy.Reporting.Data.Default
 {

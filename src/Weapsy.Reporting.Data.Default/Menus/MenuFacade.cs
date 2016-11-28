@@ -38,7 +38,7 @@ namespace Weapsy.Reporting.Data.Default.Menus
 
         public MenuViewModel GetByName(Guid siteId, string name, Guid languageId = new Guid())
         {
-            return _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, siteId, name, languageId), 0, () =>
+            return _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, siteId, name, languageId), () =>
             {
                 var menu = _menuRepository.GetByName(siteId, name);
 

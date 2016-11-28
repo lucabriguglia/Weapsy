@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>()
+                var dbEntity = context.Languages
                     .FirstOrDefault(x => x.Id == id && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;                
             }
@@ -34,7 +34,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>()
+                var dbEntity = context.Languages
                     .FirstOrDefault(x => x.SiteId == siteId && x.Id == id && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
             }
@@ -44,7 +44,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>()
+                var dbEntity = context.Languages
                     .FirstOrDefault(x => x.SiteId == siteId && x.Name == name && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
             }
@@ -54,7 +54,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>()
+                var dbEntity = context.Languages
                     .FirstOrDefault(x => x.SiteId == siteId && x.CultureName == cultureName && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
             }
@@ -64,7 +64,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<LanguageDbEntity>()
+                var dbEntity = context.Languages
                     .FirstOrDefault(x => x.SiteId == siteId && x.Url == url && x.Status != LanguageStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Language>(dbEntity) : null;
             }
@@ -74,7 +74,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntities = context.Set<LanguageDbEntity>()
+                var dbEntities = context.Languages
                     .Where(x =>
                         x.SiteId == siteId &&
                         x.Status != LanguageStatus.Deleted)
@@ -88,7 +88,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                return context.Set<LanguageDbEntity>().Count(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted);
+                return context.Languages.Count(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted);
             }            
         }
 
@@ -96,7 +96,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                return context.Set<LanguageDbEntity>().Count(x => x.SiteId == siteId && x.Status == LanguageStatus.Active);
+                return context.Languages.Count(x => x.SiteId == siteId && x.Status == LanguageStatus.Active);
             }
         }
 
@@ -105,7 +105,7 @@ namespace Weapsy.Domain.Data.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var languages =
-                    context.Set<LanguageDbEntity>()
+                    context.Languages
                         .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
                         .ToList();
 
