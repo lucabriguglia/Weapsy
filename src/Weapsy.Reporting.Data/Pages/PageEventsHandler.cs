@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Weapsy.Domain.Pages.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
-using Weapsy.Domain.Pages.Events;
 using Weapsy.Reporting.Languages;
 
-namespace Weapsy.Reporting.Data.Default.Pages
+namespace Weapsy.Reporting.Data.Pages
 {
     public class PageEventsHandler : 
         IEventHandlerAsync<PageCreated>,

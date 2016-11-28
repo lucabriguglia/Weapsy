@@ -4,10 +4,10 @@ using NUnit.Framework;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Data.Default.ModuleTypes;
+using Weapsy.Reporting.Data.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes;
 
-namespace Weapsy.Reporting.Data.Default.Tests.Facades
+namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class ModuleTypeFacadeTests

@@ -5,11 +5,11 @@ using NUnit.Framework;
 using Weapsy.Data;
 using Weapsy.Domain.Languages;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Data.Default.Languages;
+using Weapsy.Reporting.Data.Languages;
 using Weapsy.Tests.Shared;
 using Language = Weapsy.Data.Entities.Language;
 
-namespace Weapsy.Reporting.Data.Default.Tests.Facades
+namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class LanguageFacadeTests

@@ -4,11 +4,11 @@ using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Data.Default.EmailAccounts;
+using Weapsy.Reporting.Data.EmailAccounts;
 using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Tests.Factories;
 
-namespace Weapsy.Reporting.Data.Default.Tests.Facades
+namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class EmailAccountFacadeTests

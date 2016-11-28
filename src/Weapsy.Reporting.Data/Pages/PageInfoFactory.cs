@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 
-namespace Weapsy.Reporting.Data.Default.Pages
+namespace Weapsy.Reporting.Data.Pages
 {
     public class PageInfoFactory : IPageInfoFactory
     {

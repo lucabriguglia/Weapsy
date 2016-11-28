@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.ModuleTypes;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.ModuleTypes;
 
-namespace Weapsy.Reporting.Data.Default.ModuleTypes
+namespace Weapsy.Reporting.Data.ModuleTypes
 {
     public class ModuleTypeFacade : IModuleTypeFacade
     {

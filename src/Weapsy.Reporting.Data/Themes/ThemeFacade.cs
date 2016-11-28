@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Themes;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Themes;
 
-namespace Weapsy.Reporting.Data.Default.Themes
+namespace Weapsy.Reporting.Data.Themes
 {
     public class ThemeFacade : IThemeFacade
     {

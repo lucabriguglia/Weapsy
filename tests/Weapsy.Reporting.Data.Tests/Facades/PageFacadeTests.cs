@@ -6,11 +6,11 @@ using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Data.Default.Pages;
+using Weapsy.Reporting.Data.Pages;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 
-namespace Weapsy.Reporting.Data.Default.Tests.Facades
+namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class PageFacadeTests

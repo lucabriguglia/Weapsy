@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 
-namespace Weapsy.Reporting.Data.Default.Pages
+namespace Weapsy.Reporting.Data.Pages
 {
     public class PageFacade : IPageFacade
     {

@@ -13,7 +13,7 @@ namespace Weapsy.Extensions
                 // temporary: all profiles will be added automatically 
                 cfg.AddProfile(new Api.AutoMapperProfile());
                 cfg.AddProfile(new AutoMapperProfile());
-                cfg.AddProfile(new Reporting.Data.Default.AutoMapperProfile());
+                cfg.AddProfile(new Reporting.Data.AutoMapperProfile());
                 cfg.AddProfile(new Apps.Text.Data.SqlServer.AutoMapperProfile());
             });
 

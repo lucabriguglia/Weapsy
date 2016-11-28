@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Reporting.Data.Default
+﻿namespace Weapsy.Reporting.Data
 {
     public class CacheKeys
     {

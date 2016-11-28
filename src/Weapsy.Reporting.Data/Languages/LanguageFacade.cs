@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Weapsy.Data;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Languages;
 
-namespace Weapsy.Reporting.Data.Default.Languages
+namespace Weapsy.Reporting.Data.Languages
 {
     public class LanguageFacade : ILanguageFacade
     {

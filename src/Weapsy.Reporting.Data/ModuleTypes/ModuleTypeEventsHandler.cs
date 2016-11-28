@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Weapsy.Domain.ModuleTypes.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
-using Weapsy.Domain.ModuleTypes.Events;
 
-namespace Weapsy.Reporting.Data.Default.ModuleTypes
+namespace Weapsy.Reporting.Data.ModuleTypes
 {
     public class ModuleTypeEventsHandler : 
         IEventHandlerAsync<ModuleTypeCreated>,

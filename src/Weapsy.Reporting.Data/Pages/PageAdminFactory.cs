@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using Weapsy.Infrastructure.Identity;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
+using Weapsy.Infrastructure.Identity;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 
-namespace Weapsy.Reporting.Data.Default.Pages
+namespace Weapsy.Reporting.Data.Pages
 {
     public class PageAdminFactory : IPageAdminFactory
     {

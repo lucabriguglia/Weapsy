@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Weapsy.Domain.Sites.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
-using Weapsy.Domain.Sites.Events;
 using Weapsy.Reporting.Languages;
 
-namespace Weapsy.Reporting.Data.Default.Sites
+namespace Weapsy.Reporting.Data.Sites
 {
     public class SiteEventsHandler : 
         IEventHandlerAsync<SiteCreated>,

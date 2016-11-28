@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.EmailAccounts;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.EmailAccounts;
 
-namespace Weapsy.Reporting.Data.Default.EmailAccounts
+namespace Weapsy.Reporting.Data.EmailAccounts
 {
     public class EmailAccountFacade : IEmailAccountFacade
     {

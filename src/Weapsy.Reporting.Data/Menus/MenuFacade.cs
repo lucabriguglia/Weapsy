@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 using Weapsy.Domain.Pages;
+using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Identity;
 using Weapsy.Reporting.Menus;
 using Weapsy.Services.Identity;
 
-namespace Weapsy.Reporting.Data.Default.Menus
+namespace Weapsy.Reporting.Data.Menus
 {
     public class MenuFacade : IMenuFacade
     {

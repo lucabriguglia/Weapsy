@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Weapsy.Domain.Menus.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
-using Weapsy.Domain.Menus.Events;
 using Weapsy.Reporting.Languages;
 
-namespace Weapsy.Reporting.Data.Default.Menus
+namespace Weapsy.Reporting.Data.Menus
 {
     public class MenuEventsHandler : 
         IEventHandlerAsync<MenuCreated>,

@@ -4,12 +4,11 @@ using NUnit.Framework;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Sites;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Data.Default.Sites;
-using Weapsy.Reporting.Languages;
+using Weapsy.Reporting.Data.Sites;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
 
-namespace Weapsy.Reporting.Data.Default.Tests.Facades
+namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class SiteFacadeTests

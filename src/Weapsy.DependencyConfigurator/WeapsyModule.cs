@@ -9,21 +9,13 @@ using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
 using Weapsy.Domain.EventStore.SqlServer;
-using Weapsy.Reporting.Data.Default.Languages;
-using Weapsy.Reporting.Data.Default.Menus;
-using Weapsy.Reporting.Data.Default.Pages;
-using Weapsy.Reporting.Data.Default.Sites;
 using System.Reflection;
 using Weapsy.Data;
 using Weapsy.Domain.Data.Repositories;
-using Weapsy.Reporting.Data.Default.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes;
-using Weapsy.Reporting.Data.Default.Apps;
 using Weapsy.Reporting.Apps;
-using Weapsy.Reporting.Data.Default.Modules;
 using Weapsy.Reporting.Modules;
 using Weapsy.Reporting.Themes;
-using Weapsy.Reporting.Data.Default.Themes;
 using Weapsy.Domain.Users.Handlers;
 using Weapsy.Services.Identity;
 using Weapsy.Services.Installation;
@@ -31,6 +23,14 @@ using Weapsy.Infrastructure.DependencyResolver;
 using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
+using Weapsy.Reporting.Data.Apps;
+using Weapsy.Reporting.Data.Languages;
+using Weapsy.Reporting.Data.Menus;
+using Weapsy.Reporting.Data.Modules;
+using Weapsy.Reporting.Data.ModuleTypes;
+using Weapsy.Reporting.Data.Pages;
+using Weapsy.Reporting.Data.Sites;
+using Weapsy.Reporting.Data.Themes;
 
 namespace Weapsy.DependencyConfigurator
 {

@@ -4,7 +4,7 @@ using AutoMapper;
 using Weapsy.Domain.Apps;
 using Weapsy.Reporting.Apps;
 
-namespace Weapsy.Reporting.Data.Default.Apps
+namespace Weapsy.Reporting.Data.Apps
 {
     public class AppFacade : IAppFacade
     {

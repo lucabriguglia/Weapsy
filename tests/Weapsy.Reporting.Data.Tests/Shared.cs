@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Weapsy.Reporting.Data.Default.Tests
+namespace Weapsy.Reporting.Data.Tests
 {
     public static class Shared
     {

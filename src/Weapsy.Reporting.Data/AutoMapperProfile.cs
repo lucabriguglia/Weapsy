@@ -16,7 +16,7 @@ using PageLocalisation = Weapsy.Domain.Pages.PageLocalisation;
 using Site = Weapsy.Domain.Sites.Site;
 using SiteLocalisation = Weapsy.Domain.Sites.SiteLocalisation;
 
-namespace Weapsy.Reporting.Data.Default
+namespace Weapsy.Reporting.Data
 {
     public class AutoMapperProfile : Profile
     {

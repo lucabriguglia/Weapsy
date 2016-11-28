@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Weapsy.Domain.Languages.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
-using Weapsy.Domain.Languages.Events;
 
-namespace Weapsy.Reporting.Data.Default.Languages
+namespace Weapsy.Reporting.Data.Languages
 {
     public class LanguageEventsHandler : 
         IEventHandlerAsync<LanguageCreated>,

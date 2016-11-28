@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Reporting.Modules;
 
-namespace Weapsy.Reporting.Data.Default.Modules
+namespace Weapsy.Reporting.Data.Modules
 {
     public class ModuleFacade : IModuleFacade
     {

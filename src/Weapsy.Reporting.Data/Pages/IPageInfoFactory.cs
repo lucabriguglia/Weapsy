@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Reporting.Pages;
 
-namespace Weapsy.Reporting.Data.Default.Pages
+namespace Weapsy.Reporting.Data.Pages
 {
     public interface IPageInfoFactory
     {
