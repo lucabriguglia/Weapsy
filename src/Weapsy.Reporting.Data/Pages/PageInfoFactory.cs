@@ -1,93 +1,94 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Weapsy.Data;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
+using Page = Weapsy.Data.Entities.Page;
+using PageModule = Weapsy.Data.Entities.PageModule;
 
 namespace Weapsy.Reporting.Data.Pages
 {
     public class PageInfoFactory : IPageInfoFactory
     {
-        private readonly IPageRepository _pageRepository;
-        private readonly IModuleRepository _moduleRepository;
-        private readonly IModuleTypeRepository _moduleTypeRepository;
+        private readonly IWeapsyDbContextFactory _dbContextFactory;
         private readonly IRoleService _roleService;
 
-        public PageInfoFactory(IPageRepository pageRepository,
-            IModuleRepository moduleRepository,
-            IModuleTypeRepository moduleTypeRepository,
+        public PageInfoFactory(IWeapsyDbContextFactory dbContextFactory,
             IRoleService roleService)
         {
-            _pageRepository = pageRepository;
-            _moduleRepository = moduleRepository;
-            _moduleTypeRepository = moduleTypeRepository;
+            _dbContextFactory = dbContextFactory;
             _roleService = roleService;
         }
 
         // needs refactoring
         public PageInfo CreatePageInfo(Guid siteId, Guid pageId, Guid languageId = new Guid())
         {
-            var page = _pageRepository.GetById(siteId, pageId);
-
-            if (page == null || page.Status != PageStatus.Active)
-                return null;
-
-            var roles = new Dictionary<PermissionType, IEnumerable<string>>();
-            foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+            using (var context = _dbContextFactory.Create())
             {
-                var pageRoleIds = page.PagePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
-                var pageRoles = _roleService.GetRolesFromIds(pageRoleIds);
-                roles.Add(permisisonType, pageRoles.Select(x => x.Name));
-            }
+                var page = GetPage(context, siteId, pageId);
 
-            var url = page.Url;
-            var title = page.Title;
-            var metaDescription = page.MetaDescription;
-            var metaKeywords = page.MetaKeywords;
+                if (page == null)
+                    return null;
 
-            if (languageId != Guid.Empty)
-            {
-                var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
-
-                if (pageLocalisation != null)
+                var roles = new Dictionary<PermissionType, IEnumerable<string>>();
+                foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
                 {
-                    url = !string.IsNullOrWhiteSpace(pageLocalisation.Url) ? pageLocalisation.Url : url;
-                    title = !string.IsNullOrWhiteSpace(pageLocalisation.Title) ? pageLocalisation.Title : title;
-                    metaDescription = !string.IsNullOrWhiteSpace(pageLocalisation.MetaDescription) ? pageLocalisation.MetaDescription : metaDescription;
-                    metaKeywords = !string.IsNullOrWhiteSpace(pageLocalisation.MetaKeywords) ? pageLocalisation.MetaKeywords : metaKeywords;
+                    var pageRoleIds = page.PagePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
+                    var pageRoles = _roleService.GetRolesFromIds(pageRoleIds);
+                    roles.Add(permisisonType, pageRoles.Select(x => x.Name));
                 }
+
+                var url = page.Url;
+                var title = page.Title;
+                var metaDescription = page.MetaDescription;
+                var metaKeywords = page.MetaKeywords;
+
+                if (languageId != Guid.Empty)
+                {
+                    var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+
+                    if (pageLocalisation != null)
+                    {
+                        url = !string.IsNullOrWhiteSpace(pageLocalisation.Url) ? pageLocalisation.Url : url;
+                        title = !string.IsNullOrWhiteSpace(pageLocalisation.Title) ? pageLocalisation.Title : title;
+                        metaDescription = !string.IsNullOrWhiteSpace(pageLocalisation.MetaDescription) ? pageLocalisation.MetaDescription : metaDescription;
+                        metaKeywords = !string.IsNullOrWhiteSpace(pageLocalisation.MetaKeywords) ? pageLocalisation.MetaKeywords : metaKeywords;
+                    }
+                }
+
+                var result = new PageInfo
+                {
+                    Page = new PageModel
+                    {
+                        Id = page.Id,
+                        Name = page.Name,
+                        Url = url,
+                        Title = title,
+                        MetaDescription = metaDescription,
+                        MetaKeywords = metaKeywords,
+                        Roles = roles
+                    },
+                    Theme = new ThemeModel
+                    {
+                        Name = "Default"
+                    },
+                    Template = new PageTemplateModel
+                    {
+                        ViewName = "Default"
+                    },
+                    Zones = CreateZones(context, page, roles, languageId)
+                };
+
+                return result;
             }
-
-            var result = new PageInfo
-            {
-                Page = new PageModel
-                {
-                    Id = page.Id,
-                    Name = page.Name,
-                    Url = url,
-                    Title = title,
-                    MetaDescription = metaDescription,
-                    MetaKeywords = metaKeywords,
-                    Roles = roles
-                },
-                Theme = new ThemeModel
-                {
-                    Name = "Default"
-                },
-                Template = new PageTemplateModel
-                {
-                    ViewName = "Default"
-                },
-                Zones = CreateZones(page, roles, languageId)
-            };
-
-            return result;
         }
 
-        private ICollection<ZoneModel> CreateZones(Page page, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private ICollection<ZoneModel> CreateZones(WeapsyDbContext context, Page page, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new List<ZoneModel>();
 
@@ -95,14 +96,14 @@ namespace Weapsy.Reporting.Data.Pages
 
             foreach (var zone in zones)
             {
-                var zoneModel = CreateZone(zone, roles, languageId);
+                var zoneModel = CreateZone(context, zone, roles, languageId);
                 result.Add(zoneModel);
             }
 
             return result;
         }
 
-        private ZoneModel CreateZone(IGrouping<string, PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private ZoneModel CreateZone(WeapsyDbContext context, IGrouping<string, PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new ZoneModel
             {
@@ -111,7 +112,7 @@ namespace Weapsy.Reporting.Data.Pages
 
             foreach (var pageModule in zone.OrderBy(x => x.SortOrder))
             {
-                var moduleModel = CreateModule(pageModule, roles, languageId);
+                var moduleModel = CreateModule(context, pageModule, roles, languageId);
 
                 if (moduleModel == null)
                     continue;
@@ -122,14 +123,14 @@ namespace Weapsy.Reporting.Data.Pages
             return result;
         }
 
-        private ModuleModel CreateModule(PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private ModuleModel CreateModule(WeapsyDbContext context, PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
-            var module = _moduleRepository.GetById(pageModule.ModuleId);
+            var module = context.Modules.FirstOrDefault(x => x.Id == pageModule.ModuleId && x.Status != ModuleStatus.Deleted);
 
             if (module == null)
                 return null;
 
-            var moduleType = _moduleTypeRepository.GetById(module.ModuleTypeId);
+            var moduleType = context.ModuleTypes.FirstOrDefault(x => x.Id == module.ModuleTypeId && x.Status != ModuleTypeStatus.Deleted);
 
             if (moduleType == null)
                 return null;
@@ -186,6 +187,25 @@ namespace Weapsy.Reporting.Data.Pages
             };
 
             return moduleModel;
+        }
+
+        private Page GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
+        {
+            var page = context.Pages
+                .Include(x => x.PageLocalisations)
+                .Include(x => x.PagePermissions)
+                .FirstOrDefault(x => x.SiteId == siteId && x.Id == pageId && x.Status == PageStatus.Active);
+
+            if (page == null)
+                return null;
+
+            page.PageModules = context.PageModules
+                .Include(y => y.PageModuleLocalisations)
+                .Include(y => y.PageModulePermissions)
+                .Where(x => x.PageId == pageId && x.Status == PageModuleStatus.Active)
+                .ToList();
+
+            return page;
         }
     }
 }
