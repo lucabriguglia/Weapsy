@@ -1,32 +1,28 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Data;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Sites;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
+using Site = Weapsy.Data.Entities.Site;
 
 namespace Weapsy.Reporting.Data.Sites
 {
     public class SiteFacade : ISiteFacade
     {
-        private readonly ISiteRepository _siteRepository;
-        private readonly ILanguageRepository _languageRepository;
-        private readonly IPageFacade _pageFacade;
+        private readonly IWeapsyDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public SiteFacade(ISiteRepository siteRepository,
-            ILanguageRepository languageRepository,
-            IPageFacade pageFacade,
+        public SiteFacade(IWeapsyDbContextFactory dbContextFactory,
             ICacheManager cacheManager,
             IMapper mapper)
         {
-            _siteRepository = siteRepository;
-            _languageRepository = languageRepository;
-            _pageFacade = pageFacade;
+            _dbContextFactory = dbContextFactory;
             _cacheManager = cacheManager;
             _mapper = mapper;
         }
@@ -35,87 +31,103 @@ namespace Weapsy.Reporting.Data.Sites
         {
             return _cacheManager.Get(string.Format(CacheKeys.SiteInfoCacheKey, name, languageId), () =>
             {
-                var site = _siteRepository.GetByName(name);
-
-                if (site == null)
-                    return null;
-
-                var siteInfo = _mapper.Map<SiteInfo>(site);
-
-                var title = site.Title;
-                var metaDescription = site.MetaDescription;
-                var metaKeywords = site.MetaKeywords;
-
-                if (languageId != Guid.Empty)
+                using (var context = _dbContextFactory.Create())
                 {
-                    var siteLocalisation = site.SiteLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+                    var site = context.Set<Site>()
+                        .Include(x => x.SiteLocalisations)
+                        .FirstOrDefault(x => x.Name == name && x.Status == SiteStatus.Active);
 
-                    if (siteLocalisation != null)
+                    if (site == null)
+                        return null;
+
+                    var siteInfo = _mapper.Map<SiteInfo>(site);
+
+                    var title = site.Title;
+                    var metaDescription = site.MetaDescription;
+                    var metaKeywords = site.MetaKeywords;
+
+                    if (languageId != Guid.Empty)
                     {
-                        title = !string.IsNullOrWhiteSpace(siteLocalisation.Title) ? siteLocalisation.Title : title;
-                        metaDescription = !string.IsNullOrWhiteSpace(siteLocalisation.MetaDescription) ? siteLocalisation.MetaDescription : metaDescription;
-                        metaKeywords = !string.IsNullOrWhiteSpace(siteLocalisation.MetaKeywords) ? siteLocalisation.MetaKeywords : metaKeywords;
+                        var siteLocalisation = site.SiteLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+
+                        if (siteLocalisation != null)
+                        {
+                            title = !string.IsNullOrWhiteSpace(siteLocalisation.Title) ? siteLocalisation.Title : title;
+                            metaDescription = !string.IsNullOrWhiteSpace(siteLocalisation.MetaDescription) ? siteLocalisation.MetaDescription : metaDescription;
+                            metaKeywords = !string.IsNullOrWhiteSpace(siteLocalisation.MetaKeywords) ? siteLocalisation.MetaKeywords : metaKeywords;
+                        }
                     }
+
+                    siteInfo.Title = title;
+                    siteInfo.MetaDescription = metaDescription;
+                    siteInfo.MetaKeywords = metaKeywords;
+
+                    return siteInfo;
                 }
-
-                siteInfo.Title = title;
-                siteInfo.MetaDescription = metaDescription;
-                siteInfo.MetaKeywords = metaKeywords;
-
-                return siteInfo;
             });
         }
 
         public SiteAdminModel GetAdminModel(Guid id)
         {
-            var site = _siteRepository.GetById(id);
-
-            if (site == null)
-                return null;
-
-            var model = _mapper.Map<SiteAdminModel>(site);
-
-            model.SiteLocalisations.Clear();
-
-            foreach (var language in _languageRepository.GetAll(id))
+            using (var context = _dbContextFactory.Create())
             {
-                var title = string.Empty;
-                var metaDescription = string.Empty;
-                var metaKeywords = string.Empty;
+                var site = context.Sites
+                    .Include(x => x.SiteLocalisations)
+                    .FirstOrDefault(x => x.Id == id && x.Status == SiteStatus.Active);
 
-                var existingLocalisation = site
-                    .SiteLocalisations
-                    .FirstOrDefault(x => x.LanguageId == language.Id);
+                if (site == null)
+                    return null;
 
-                if (existingLocalisation != null)
+                var model = _mapper.Map<SiteAdminModel>(site);
+
+                model.SiteLocalisations.Clear();
+
+                var languages = context.Languages
+                    .Where(x => x.SiteId == site.Id && x.Status != LanguageStatus.Deleted)
+                    .OrderBy(x => x.SortOrder)
+                    .ToList();
+
+                foreach (var language in languages)
                 {
-                    title = existingLocalisation.Title;
-                    metaDescription = existingLocalisation.MetaDescription;
-                    metaKeywords = existingLocalisation.MetaKeywords;
+                    var title = string.Empty;
+                    var metaDescription = string.Empty;
+                    var metaKeywords = string.Empty;
+
+                    var existingLocalisation = site
+                        .SiteLocalisations
+                        .FirstOrDefault(x => x.LanguageId == language.Id);
+
+                    if (existingLocalisation != null)
+                    {
+                        title = existingLocalisation.Title;
+                        metaDescription = existingLocalisation.MetaDescription;
+                        metaKeywords = existingLocalisation.MetaKeywords;
+                    }
+
+                    model.SiteLocalisations.Add(new SiteLocalisationAdminModel
+                    {
+                        SiteId = site.Id,
+                        LanguageId = language.Id,
+                        LanguageName = language.Name,
+                        LanguageStatus = language.Status,
+                        Title = title,
+                        MetaDescription = metaDescription,
+                        MetaKeywords = metaKeywords
+                    });
                 }
 
-                model.SiteLocalisations.Add(new SiteLocalisationAdminModel
-                {
-                    SiteId = site.Id,
-                    LanguageId = language.Id,
-                    LanguageName = language.Name,
-                    LanguageStatus = language.Status,
-                    Title = title,
-                    MetaDescription = metaDescription,
-                    MetaKeywords = metaKeywords
-                });
-            }
+                var pages = context.Pages
+                    .Where(x => x.SiteId == site.Id && x.Status == PageStatus.Active)
+                    .Select(page => new PageListAdminModel
+                    {
+                        Id = page.Id,
+                        Name = page.Name
+                    });
 
-            foreach (var page in _pageFacade.GetAllForAdmin(id).Where(x => x.Status == PageStatus.Active))
-            {
-                model.Pages.Add(new PageListAdminModel
-                {
-                    Id = page.Id,
-                    Name = page.Name
-                });
-            }
+                model.Pages.AddRange(pages);
 
-            return model;
+                return model;
+            }
         }
     }
 }

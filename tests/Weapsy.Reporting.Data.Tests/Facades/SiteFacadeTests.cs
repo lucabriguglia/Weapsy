@@ -1,39 +1,39 @@
 ﻿using System;
-using Moq;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Domain.Languages;
+using Weapsy.Data;
 using Weapsy.Domain.Sites;
-using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Data.Sites;
-using Weapsy.Reporting.Pages;
-using Weapsy.Reporting.Sites;
+using Weapsy.Tests.Shared;
+using Site = Weapsy.Data.Entities.Site;
 
 namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class SiteFacadeTests
     {
-        private ISiteFacade _sut;
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId;
 
         [SetUp]
         public void Setup()
         {
-            _siteId = Guid.NewGuid();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
-            var siteRepositoryMock = new Mock<ISiteRepository>();
-            var languageRepositoryMock = new Mock<ILanguageRepository>();
-            var pageFacadeMock = new Mock<IPageFacade>();
-            var cacheManagerMock = new Mock<ICacheManager>();
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                _siteId = Guid.NewGuid();
 
-            var mapperMock = new Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<SiteAdminModel>(It.IsAny<Site>())).Returns(new SiteAdminModel());
+                context.Sites.AddRange(
+                    new Site
+                    {
+                        Id = _siteId,
+                        Name = "Site 1",
+                        Status = SiteStatus.Active
+                    }
+                );
 
-            _sut = new SiteFacade(siteRepositoryMock.Object, 
-                languageRepositoryMock.Object, 
-                pageFacadeMock.Object, 
-                cacheManagerMock.Object, 
-                mapperMock.Object);
+                context.SaveChanges();
+            }
         }
     }
 }

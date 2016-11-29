@@ -246,4 +246,3 @@ namespace Weapsy.Reporting.Data.Menus
         }
     }
 }
-
