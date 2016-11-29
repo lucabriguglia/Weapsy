@@ -122,7 +122,7 @@ namespace Weapsy.Reporting.Data.Sites
                     {
                         Id = page.Id,
                         Name = page.Name
-                    });
+                    }).ToList();
 
                 model.Pages.AddRange(pages);
 

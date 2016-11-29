@@ -15,7 +15,7 @@ namespace Weapsy.Reporting.ModuleTypes
         public string ViewName { get; set; }
         public EditType EditType { get; set; }
         public string EditUrl { get; set; }
-        public ICollection<App> AvailableApps { get; set; } = new List<App>();
+        public List<App> AvailableApps { get; set; } = new List<App>();
 
         public class App
         {

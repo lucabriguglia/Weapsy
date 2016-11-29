@@ -1,31 +1,39 @@
 ﻿using System;
-using Moq;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using Weapsy.Data;
 using Weapsy.Domain.Themes;
-using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Data.Themes;
-using Weapsy.Reporting.Themes;
+using Weapsy.Tests.Shared;
+using Theme = Weapsy.Data.Entities.Theme;
 
 namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class ThemeFacadeTests
     {
-        private IThemeFacade _sut;
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _themeId;
 
         [SetUp]
         public void Setup()
         {
-            _themeId = Guid.NewGuid();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
-            var themeRepositoryMock = new Mock<IThemeRepository>();
-            var cacheManagerMock = new Mock<ICacheManager>();
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                _themeId = Guid.NewGuid();
 
-            var mapperMock = new Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<ThemeAdminModel>(It.IsAny<Theme>())).Returns(new ThemeAdminModel());
+                context.Themes.AddRange(
+                    new Theme
+                    {
+                        Id = _themeId,
+                        Name = "Theme 1",
+                        Status = ThemeStatus.Active
+                    }
+                );
 
-            _sut = new ThemeFacade(themeRepositoryMock.Object, cacheManagerMock.Object, mapperMock.Object);
+                context.SaveChanges();
+            }
         }
     }
 }

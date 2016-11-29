@@ -1,85 +1,103 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
+using Weapsy.Data;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.ModuleTypes;
+using System.Linq;
 
 namespace Weapsy.Reporting.Data.ModuleTypes
 {
     public class ModuleTypeFacade : IModuleTypeFacade
     {
-        private readonly IModuleTypeRepository _moduleTypeRepository;
-        private readonly IAppRepository _appRepository;
+        private readonly IWeapsyDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public ModuleTypeFacade(IModuleTypeRepository moduleTypeRepository,
-            IAppRepository appRepository,
+        public ModuleTypeFacade(IWeapsyDbContextFactory dbContextFactory,
             ICacheManager cacheManager,
             IMapper mapper)
         {
-            _moduleTypeRepository = moduleTypeRepository;
-            _appRepository = appRepository;
+            _dbContextFactory = dbContextFactory;
             _cacheManager = cacheManager;
             _mapper = mapper;
         }
 
         public IEnumerable<ModuleTypeAdminListModel> GetAllForAdmin(Guid appId = default(Guid))
         {
-            var moduleTypes = _moduleTypeRepository.GetAll();
-            return _mapper.Map<IEnumerable<ModuleTypeAdminListModel>>(moduleTypes);
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntities = context.ModuleTypes
+                    .Where(x => x.Status != ModuleTypeStatus.Deleted)
+                    .ToList();
+
+                return _mapper.Map<IEnumerable<ModuleTypeAdminListModel>>(dbEntities);
+            }
         }
 
         public ModuleTypeAdminModel GetAdminModel(Guid moduleTypeId)
         {
-            var moduleType = _moduleTypeRepository.GetById(moduleTypeId);
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.ModuleTypes
+                    .FirstOrDefault(x => x.Id == moduleTypeId && x.Status != ModuleTypeStatus.Deleted);
 
-            if (moduleType == null)
-                return null;
+                if (dbEntity == null)
+                    return null;
 
-            var result = _mapper.Map<ModuleTypeAdminModel>(moduleType);
+                var result = _mapper.Map<ModuleTypeAdminModel>(dbEntity);
 
-            foreach (var app in _appRepository.GetAll())
-                result.AvailableApps.Add(new ModuleTypeAdminModel.App
-                {
-                    Id = app.Id,
-                    Name = app.Name
-                });
+                var apps = context.Apps
+                    .Where(x => x.Status != AppStatus.Deleted)
+                    .Select(app => new ModuleTypeAdminModel.App
+                    {
+                        Id = app.Id,
+                        Name = app.Name
+                    }).ToList();
 
-            return result;
+                result.AvailableApps.AddRange(apps);
+
+                return result;
+            }
         }
 
         public ModuleTypeAdminModel GetDefaultAdminModel()
         {
-            var result = new ModuleTypeAdminModel();
+            using (var context = _dbContextFactory.Create())
+            {
+                var result = new ModuleTypeAdminModel();
 
-            foreach (var app in _appRepository.GetAll())
-                result.AvailableApps.Add(new ModuleTypeAdminModel.App
-                {
-                    Id = app.Id,
-                    Name = app.Name
-                });
+                var apps = context.Apps
+                    .Where(x => x.Status != AppStatus.Deleted)
+                    .Select(app => new ModuleTypeAdminModel.App
+                    {
+                        Id = app.Id,
+                        Name = app.Name
+                    }).ToList();
 
-            return result;
+                result.AvailableApps.AddRange(apps);
+
+                return result;
+            }
         }
 
         public IEnumerable<ModuleTypeControlPanelModel> GetControlPanelModel()
         {
             return _cacheManager.Get(CacheKeys.ModuleTypesCacheKey, () =>
             {
-                var moduleTypes = _moduleTypeRepository.GetAll();
-                var result = new List<ModuleTypeControlPanelModel>();
-                foreach (var moduleType in moduleTypes)
+                using (var context = _dbContextFactory.Create())
                 {
-                    result.Add(new ModuleTypeControlPanelModel
-                    {
-                        Id = moduleType.Id,
-                        Title = moduleType.Title
-                    });
+                    return context.ModuleTypes
+                        .Where(x => x.Status != ModuleTypeStatus.Deleted)
+                        .Select(moduleType => new ModuleTypeControlPanelModel
+                        {
+                            Id = moduleType.Id,
+                            Title = moduleType.Title
+                        })
+                        .ToList();
                 }
-                return result;
             });
         }
     }
