@@ -7,8 +7,6 @@ using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
-using Page = Weapsy.Domain.Pages.Page;
-using PageLocalisation = Weapsy.Domain.Pages.PageLocalisation;
 
 namespace Weapsy.Reporting.Data
 {

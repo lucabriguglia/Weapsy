@@ -2,34 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Weapsy.Domain.Languages;
+using Weapsy.Data;
 using Weapsy.Domain.Pages;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Languages;
+using Weapsy.Infrastructure.Identity;
+using Page = Weapsy.Data.Entities.Page;
 
 namespace Weapsy.Reporting.Data.Pages
 {
     public class PageFacade : IPageFacade
     {
-        private readonly IPageRepository _pageRepository;
-        private readonly ILanguageRepository _languageRepository;
+        private readonly IWeapsyDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
         private readonly IPageInfoFactory _pageViewFactory;
         private readonly IPageAdminFactory _pageAdminFactory;
 
-        public PageFacade(IPageRepository pageRepository,
-            ILanguageRepository languageRepository,
+        public PageFacade(IWeapsyDbContextFactory dbContextFactory,
             ICacheManager cacheManager,
             IMapper mapper,
             IRoleService roleService,
             IPageInfoFactory pageViewFactory,
             IPageAdminFactory pageAdminFactory)
         {
-            _pageRepository = pageRepository;
-            _languageRepository = languageRepository;
+            _dbContextFactory = dbContextFactory;
             _cacheManager = cacheManager;
             _mapper = mapper;
             _roleService = roleService;
@@ -52,8 +53,15 @@ namespace Weapsy.Reporting.Data.Pages
 
         public IEnumerable<PageAdminListModel> GetAllForAdmin(Guid siteId)
         {
-            var pages = _pageRepository.GetAll(siteId);
-            return _mapper.Map<IEnumerable<PageAdminListModel>>(pages);
+            using (var context = _dbContextFactory.Create())
+            {
+                var pages = context.Pages
+                    .Include(x => x.PageLocalisations)
+                    .Where(x => x.SiteId == siteId && x.Status != PageStatus.Deleted)
+                    .OrderBy(x => x.Name).ToList();
+
+                return _mapper.Map<IEnumerable<PageAdminListModel>>(pages);
+            }            
         }
 
         public PageAdminModel GetAdminModel(Guid siteId, Guid pageId)
@@ -68,74 +76,100 @@ namespace Weapsy.Reporting.Data.Pages
 
         public PageModuleAdminModel GetModuleAdminModel(Guid siteId, Guid pageId, Guid pageModuleId)
         {
-            var page = _pageRepository.GetById(siteId, pageId);
+            using (var context = _dbContextFactory.Create())
+            {
+                var page = GetPage(context, siteId, pageId);
+
+                if (page == null)
+                    return null;
+
+                var pageModule = page.PageModules.FirstOrDefault(x => x.Id == pageModuleId);
+
+                if (pageModule == null)
+                    return null;
+
+                var result = new PageModuleAdminModel
+                {
+                    PageId = page.Id,
+                    ModuleId = pageModule.ModuleId,
+                    PageModuleId = pageModule.Id,
+                    Title = pageModule.Title,
+                    InheritPermissions = pageModule.InheritPermissions
+                };
+
+                var languages = context.Languages
+                    .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
+                    .OrderBy(x => x.SortOrder)
+                    .ToList();
+
+                foreach (var language in languages)
+                {
+                    var title = string.Empty;
+
+                    var existingLocalisation = pageModule
+                        .PageModuleLocalisations
+                        .FirstOrDefault(x => x.LanguageId == language.Id);
+
+                    if (existingLocalisation != null)
+                    {
+                        title = existingLocalisation.Title;
+                    }
+
+                    result.PageModuleLocalisations.Add(new PageModuleLocalisationAdminModel
+                    {
+                        PageModuleId = pageModule.Id,
+                        LanguageId = language.Id,
+                        LanguageName = language.Name,
+                        LanguageStatus = language.Status,
+                        Title = title
+                    });
+                }
+
+                foreach (var role in _roleService.GetAllRoles())
+                {
+                    var pageModulePermission = new PageModulePermissionModel
+                    {
+                        RoleId = role.Id,
+                        RoleName = role.Name,
+                        Disabled = role.Name == DefaultRoleNames.Administrator
+                    };
+
+                    foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+                    {
+                        bool selected = pageModule.PageModulePermissions
+                            .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;
+
+                        pageModulePermission.PageModulePermissionTypes.Add(new PageModulePermissionTypeModel
+                        {
+                            Type = permisisonType,
+                            Selected = selected
+                        });
+                    }
+
+                    result.PageModulePermissions.Add(pageModulePermission);
+                }
+
+                return result;
+            }
+        }
+
+        private Page GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
+        {
+            var page = context.Pages
+                .Include(x => x.PageLocalisations)
+                .Include(x => x.PagePermissions)
+                .FirstOrDefault(x => x.SiteId == siteId && x.Id == pageId && x.Status == PageStatus.Active);
 
             if (page == null)
                 return null;
 
-            var pageModule = page.PageModules.FirstOrDefault(x => x.Id == pageModuleId);
+            page.PageModules = context.PageModules
+                .Include(y => y.PageModuleLocalisations)
+                .Include(y => y.PageModulePermissions)
+                .Where(x => x.PageId == pageId && x.Status == PageModuleStatus.Active)
+                .ToList();
 
-            if (pageModule == null)
-                return null;
-
-            var result = new PageModuleAdminModel
-            {
-                PageId = page.Id,
-                ModuleId = pageModule.ModuleId,
-                PageModuleId = pageModule.Id,
-                Title = pageModule.Title,
-                InheritPermissions = pageModule.InheritPermissions
-            };
-
-            var languages = _languageRepository.GetAll(siteId);
-
-            foreach (var language in languages)
-            {
-                var title = string.Empty;
-
-                var existingLocalisation = pageModule
-                    .PageModuleLocalisations
-                    .FirstOrDefault(x => x.LanguageId == language.Id);
-
-                if (existingLocalisation != null)
-                {
-                    title = existingLocalisation.Title;
-                }
-
-                result.PageModuleLocalisations.Add(new PageModuleLocalisationAdminModel
-                {
-                    PageModuleId = pageModule.Id,
-                    LanguageId = language.Id,
-                    LanguageName = language.Name,
-                    LanguageStatus = language.Status,
-                    Title = title
-                });
-            }
-
-            foreach (var role in _roleService.GetAllRoles())
-            {
-                var pageModulePermission = new PageModulePermissionModel
-                {
-                    RoleId = role.Id,
-                    RoleName = role.Name
-                };
-
-                foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
-                {
-                    bool selected = pageModule.PageModulePermissions
-                        .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;
-
-                    pageModulePermission.PageModulePermissionTypes.Add(new PageModulePermissionTypeModel
-                    {
-                        Type = permisisonType,
-                        Selected = selected
-                    });
-                }
-
-                result.PageModulePermissions.Add(pageModulePermission);
-            }
-
-            return result;
+            return page;
         }
     }
 }

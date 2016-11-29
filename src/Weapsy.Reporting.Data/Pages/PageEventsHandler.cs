@@ -86,7 +86,7 @@ namespace Weapsy.Reporting.Data.Pages
             foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
                 _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", language.Id));
 
-            _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main"));
+            _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", Guid.Empty));
         }
     }
 }

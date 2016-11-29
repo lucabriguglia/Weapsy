@@ -13,7 +13,7 @@ namespace Weapsy.Reporting.Pages
             {
                 foreach (var permissionType in permission.PagePermissionTypes)
                 {
-                    if (!permissionType.Selected)
+                    if (!permissionType.Selected && !permission.Disabled)
                         continue;
 
                     result.Add(new PagePermission
@@ -36,7 +36,7 @@ namespace Weapsy.Reporting.Pages
             {
                 foreach (var permissionType in permission.PageModulePermissionTypes)
                 {
-                    if(!permissionType.Selected)
+                    if(!permissionType.Selected && !permission.Disabled)
                         continue;
 
                     result.Add(new PageModulePermission

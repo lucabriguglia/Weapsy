@@ -158,6 +158,7 @@
                             <td>
                                 @Model.PagePermissions[i].RoleName&nbsp;
                                 <input asp-for="PagePermissions[i].RoleId" type="hidden" />
+                                <input asp-for="PagePermissions[i].Disabled" type="hidden" />
                             </td>
                             @for (int j = 0; j < Model.PagePermissions[i].PagePermissionTypes.Count; j++)
                             {

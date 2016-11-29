@@ -36,12 +36,20 @@
                         <td>
                             @Model.PageModulePermissions[i].RoleName&nbsp;
                             <input asp-for="PageModulePermissions[i].RoleId" type="hidden" />
+                            <input asp-for="PageModulePermissions[i].Disabled" type="hidden" />
                         </td>
                         @for (int j = 0; j < Model.PageModulePermissions[i].PageModulePermissionTypes.Count; j++)
                         {
                             <td class="text-center">
                                 <input asp-for="PageModulePermissions[i].PageModulePermissionTypes[j].Type" type="hidden" />
-                                <input asp-for="PageModulePermissions[i].PageModulePermissionTypes[j].Selected" type="checkbox" />
+                                @if (Model.PageModulePermissions[i].Disabled)
+                                {
+                                    <input asp-for="PageModulePermissions[i].PageModulePermissionTypes[j].Selected" type="checkbox" disabled="disabled" />
+                                }
+                                else
+                                {
+                                    <input asp-for="PageModulePermissions[i].PageModulePermissionTypes[j].Selected" type="checkbox" />
+                                }
                             </td>
                         }
                     </tr>
