@@ -33,7 +33,7 @@ namespace Weapsy.Reporting.Data.Sites
             {
                 using (var context = _dbContextFactory.Create())
                 {
-                    var site = context.Set<Site>()
+                    var site = context.Sites
                         .Include(x => x.SiteLocalisations)
                         .FirstOrDefault(x => x.Name == name && x.Status == SiteStatus.Active);
 
