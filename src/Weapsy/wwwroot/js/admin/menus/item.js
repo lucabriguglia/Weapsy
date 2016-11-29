@@ -103,30 +103,26 @@ weapsy.admin.menuItem = (function ($, ko) {
         }
 
         self.addMenuItem = function () {
-            self.menuItemId(self.emptyId);
-            self.menuItemType(self.itemTypes()[0].id);
-            self.pageId(self.pages()[0].id);
-            self.link("");
-            self.text("");
-            self.title("");
+            $.getJSON("/api/menu/" + self.menu().id() + "/admin-edit-default-item/", function (data) {
+                self.menuItemId(self.emptyId);
+                self.menuItemType(self.itemTypes()[0].id);
+                self.pageId(self.pages()[0].id);
+                self.link("");
+                self.text("");
+                self.title("");
+                self.menuItemLocalisations([]);
+                self.menuItemPermissions([]);
 
-            self.menuItemLocalisations([]);
-            self.menuItemPermissions([]);
+                var mappedLocalisations = $.map(data.menuItemLocalisations, function (item) { return new MenuItemLocalisation(item) });
+                self.menuItemLocalisations(mappedLocalisations);
 
-            $.each(self.languages(), function () {
-                var item = this;
-                self.menuItemLocalisations.push(new MenuItemLocalisation({
-                    languageId: item.id,
-                    languageName: item.name,
-                    languageStatus: item.status,
-                    text: '',
-                    title: ''
-                }));
+                var mappedPermissions = $.map(data.menuItemPermissions, function (item) { return new MenuItemPermission(item) });
+                self.menuItemPermissions(mappedPermissions);
+
+                self.showEditForm(true);
+
+                self.setValidator();
             });
-
-            self.showEditForm(true);
-
-            self.setValidator();
         };
 
         self.editMenuItem = function (id) {

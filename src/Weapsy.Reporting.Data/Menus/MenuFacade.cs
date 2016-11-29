@@ -148,9 +148,10 @@ namespace Weapsy.Reporting.Data.Menus
                 if (menu == null)
                     return new MenuItemAdminModel();
 
-                LoadMenuItems(context, menu);
-
-                var menuItem = menu.MenuItems.FirstOrDefault(x => x.Id == menuItemId);
+                var menuItem = context.MenuItems
+                    .Include(x => x.MenuItemLocalisations)
+                    .Include(x => x.MenuItemPermissions)
+                    .FirstOrDefault(x => x.MenuId == menuId && x.Id == menuItemId && x.Status != MenuItemStatus.Deleted);
 
                 if (menuItem == null)
                     return new MenuItemAdminModel();
@@ -214,7 +215,45 @@ namespace Weapsy.Reporting.Data.Menus
 
         public MenuItemAdminModel GetDefaultItemForAdmin(Guid siteId, Guid menuId)
         {
-            return new MenuItemAdminModel();
+            using (var context = _dbContextFactory.Create())
+            {
+                var menu = context.Menus.FirstOrDefault(x => x.SiteId == siteId && x.Id == menuId && x.Status != MenuStatus.Deleted);
+
+                if (menu == null)
+                    return new MenuItemAdminModel();
+
+                var result = new MenuItemAdminModel();
+
+                var languages = context.Languages
+                    .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
+                    .OrderBy(x => x.SortOrder)
+                    .ToList();
+
+                foreach (var language in languages)
+                {
+                    result.MenuItemLocalisations.Add(new MenuItemAdminModel.MenuItemLocalisation
+                    {
+                        LanguageId = language.Id,
+                        LanguageName = language.Name,
+                        LanguageStatus = language.Status,
+                        Text = string.Empty,
+                        Title = string.Empty
+                    });
+                }
+
+                foreach (var role in _roleService.GetAllRoles())
+                {
+                    result.MenuItemPermissions.Add(new MenuItemAdminModel.MenuItemPermission
+                    {
+                        RoleId = role.Id,
+                        RoleName = role.Name,
+                        Selected = role.Name == DefaultRoleNames.Administrator,
+                        Disabled = role.Name == DefaultRoleNames.Administrator
+                    });
+                }
+
+                return result;
+            }
         }
 
         public IEnumerable<MenuItemAdminListModel> GetMenuItemsForAdminList(Guid siteId, Guid menuId)

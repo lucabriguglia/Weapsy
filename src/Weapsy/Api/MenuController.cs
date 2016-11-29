@@ -145,11 +145,19 @@ namespace Weapsy.Api
             return Ok(model);
         }
 
-        [HttpGet()]
+        [HttpGet]
         [Route("{id}/admin-edit-item/{itemId}")]
         public async Task<IActionResult> AdminEditItem(Guid id, Guid itemId)
         {
             var item = await Task.Run(() => _menuFacade.GetItemForAdmin(SiteId, id, itemId));
+            return Ok(item);
+        }
+
+        [HttpGet]
+        [Route("{id}/admin-edit-default-item")]
+        public IActionResult AdminEditDefaultItem(Guid id)
+        {
+            var item = _menuFacade.GetDefaultItemForAdmin(SiteId, id);
             return Ok(item);
         }
     }
