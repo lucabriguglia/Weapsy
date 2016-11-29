@@ -212,6 +212,11 @@ namespace Weapsy.Reporting.Data.Menus
             } 
         }
 
+        public MenuItemAdminModel GetDefaultItemForAdmin(Guid siteId, Guid menuId)
+        {
+            return new MenuItemAdminModel();
+        }
+
         public IEnumerable<MenuItemAdminListModel> GetMenuItemsForAdminList(Guid siteId, Guid menuId)
         {
             using (var context = _dbContextFactory.Create())

@@ -10,6 +10,7 @@ namespace Weapsy.Reporting.Menus
         IEnumerable<MenuAdminModel> GetAllForAdmin(Guid siteId);
         MenuAdminModel GetForAdmin(Guid siteId, Guid id);
         MenuItemAdminModel GetItemForAdmin(Guid siteId, Guid menuId, Guid menuItemId);
+        MenuItemAdminModel GetDefaultItemForAdmin(Guid siteId, Guid menuId);
         IEnumerable<MenuItemAdminListModel> GetMenuItemsForAdminList(Guid siteId, Guid id);               
     }
 }
