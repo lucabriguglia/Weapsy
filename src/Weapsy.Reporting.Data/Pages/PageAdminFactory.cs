@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Data;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Infrastructure.Identity;
@@ -10,136 +12,148 @@ namespace Weapsy.Reporting.Data.Pages
 {
     public class PageAdminFactory : IPageAdminFactory
     {
-        private readonly IPageRepository _pageRepository;
-        private readonly ILanguageRepository _languageRepository;
+        private readonly IWeapsyDbContextFactory _dbContextFactory;
         private readonly IRoleService _roleService;
 
-        public PageAdminFactory(IPageRepository pageRepository,
-            ILanguageRepository languageRepository,
+        public PageAdminFactory(IWeapsyDbContextFactory dbContextFactory,
             IRoleService roleService)
         {
-            _pageRepository = pageRepository;
-            _languageRepository = languageRepository;
+            _dbContextFactory = dbContextFactory;
             _roleService = roleService;
         }
 
         public PageAdminModel GetAdminModel(Guid siteId, Guid pageId)
         {
-            var page = _pageRepository.GetById(siteId, pageId);
-
-            if (page == null)
-                return null;
-
-            var result = new PageAdminModel
+            using (var context = _dbContextFactory.Create())
             {
-                Id = page.Id,
-                Name = page.Name,
-                Status = page.Status,
-                Url = page.Url,
-                Title = page.Title,
-                MetaDescription = page.MetaDescription,
-                MetaKeywords = page.MetaKeywords
-            };
+                var page = context.Pages
+                    .Include(x => x.PageLocalisations)
+                    .Include(x => x.PagePermissions)
+                    .FirstOrDefault(x => x.SiteId == siteId && x.Id == pageId && x.Status != PageStatus.Deleted);
 
-            var languages = _languageRepository.GetAll(siteId);
+                if (page == null)
+                    return null;
 
-            foreach (var language in languages)
-            {
-                var url = string.Empty;
-                var title = string.Empty;
-                var metaDescription = string.Empty;
-                var metaKeywords = string.Empty;
-
-                var existingLocalisation = page
-                    .PageLocalisations
-                    .FirstOrDefault(x => x.LanguageId == language.Id);
-
-                if (existingLocalisation != null)
+                var result = new PageAdminModel
                 {
-                    url = existingLocalisation.Url;
-                    title = existingLocalisation.Title;
-                    metaDescription = existingLocalisation.MetaDescription;
-                    metaKeywords = existingLocalisation.MetaKeywords;
-                }
-
-                result.PageLocalisations.Add(new PageLocalisationAdminModel
-                {
-                    PageId = page.Id,
-                    LanguageId = language.Id,
-                    LanguageName = language.Name,
-                    LanguageStatus = language.Status,
-                    Url = url,
-                    Title = title,
-                    MetaDescription = metaDescription,
-                    MetaKeywords = metaKeywords
-                });
-            }
-
-            foreach (var role in _roleService.GetAllRoles())
-            {
-                var pagePermission = new PagePermissionModel
-                {
-                    RoleId = role.Id,
-                    RoleName = role.Name,
-                    Disabled = role.Name == DefaultRoleNames.Administrator
+                    Id = page.Id,
+                    Name = page.Name,
+                    Status = page.Status,
+                    Url = page.Url,
+                    Title = page.Title,
+                    MetaDescription = page.MetaDescription,
+                    MetaKeywords = page.MetaKeywords
                 };
 
-                foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
-                {
-                    bool selected = page.PagePermissions
-                        .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;
+                var languages = context.Languages
+                    .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
+                    .OrderBy(x => x.SortOrder)
+                    .ToList();
 
-                    pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
+                foreach (var language in languages)
+                {
+                    var url = string.Empty;
+                    var title = string.Empty;
+                    var metaDescription = string.Empty;
+                    var metaKeywords = string.Empty;
+
+                    var existingLocalisation = page
+                        .PageLocalisations
+                        .FirstOrDefault(x => x.LanguageId == language.Id);
+
+                    if (existingLocalisation != null)
                     {
-                        Type = permisisonType,
-                        Selected = selected || role.Name == DefaultRoleNames.Administrator
+                        url = existingLocalisation.Url;
+                        title = existingLocalisation.Title;
+                        metaDescription = existingLocalisation.MetaDescription;
+                        metaKeywords = existingLocalisation.MetaKeywords;
+                    }
+
+                    result.PageLocalisations.Add(new PageLocalisationAdminModel
+                    {
+                        PageId = page.Id,
+                        LanguageId = language.Id,
+                        LanguageName = language.Name,
+                        LanguageStatus = language.Status,
+                        Url = url,
+                        Title = title,
+                        MetaDescription = metaDescription,
+                        MetaKeywords = metaKeywords
                     });
                 }
 
-                result.PagePermissions.Add(pagePermission);
-            }
+                foreach (var role in _roleService.GetAllRoles())
+                {
+                    var pagePermission = new PagePermissionModel
+                    {
+                        RoleId = role.Id,
+                        RoleName = role.Name,
+                        Disabled = role.Name == DefaultRoleNames.Administrator
+                    };
 
-            return result;
+                    foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+                    {
+                        bool selected = page.PagePermissions
+                            .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;
+
+                        pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
+                        {
+                            Type = permisisonType,
+                            Selected = selected || role.Name == DefaultRoleNames.Administrator
+                        });
+                    }
+
+                    result.PagePermissions.Add(pagePermission);
+                }
+
+                return result;
+            }
         }
 
         public PageAdminModel GetDefaultAdminModel(Guid siteId)
         {
-            var result = new PageAdminModel();
-
-            var languages = _languageRepository.GetAll(siteId);
-
-            foreach (var language in languages)
+            using (var context = _dbContextFactory.Create())
             {
-                result.PageLocalisations.Add(new PageLocalisationAdminModel
-                {
-                    LanguageId = language.Id,
-                    LanguageName = language.Name,
-                    LanguageStatus = language.Status
-                });
-            }
+                var result = new PageAdminModel();
 
-            foreach (var role in _roleService.GetAllRoles())
-            {
-                var pagePermission = new PagePermissionModel
-                {
-                    RoleId = role.Id,
-                    RoleName = role.Name,
-                    Disabled = role.Name == DefaultRoleNames.Administrator
-                };
+                var languages = context.Languages
+                    .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
+                    .OrderBy(x => x.SortOrder)
+                    .ToList();
 
-                foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+                foreach (var language in languages)
                 {
-                    pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
+                    result.PageLocalisations.Add(new PageLocalisationAdminModel
                     {
-                        Type = permisisonType,
-                        Selected = role.Name == DefaultRoleNames.Administrator                        
+                        LanguageId = language.Id,
+                        LanguageName = language.Name,
+                        LanguageStatus = language.Status
                     });
                 }
 
-                result.PagePermissions.Add(pagePermission);
-            }
+                foreach (var role in _roleService.GetAllRoles())
+                {
+                    var pagePermission = new PagePermissionModel
+                    {
+                        RoleId = role.Id,
+                        RoleName = role.Name,
+                        Disabled = role.Name == DefaultRoleNames.Administrator
+                    };
 
-            return result;
+                    foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+                    {
+                        pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
+                        {
+                            Type = permisisonType,
+                            Selected = role.Name == DefaultRoleNames.Administrator
+                        });
+                    }
+
+                    result.PagePermissions.Add(pagePermission);
+                }
+
+                return result;
+            }
         }
     }
 }
