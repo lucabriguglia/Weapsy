@@ -39,7 +39,7 @@ namespace Weapsy.Api
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var app = await Task.Run(() => _appFacade.GetAdminModel(id));
+            var app = await Task.Run(() => _appFacade.GetForAdmin(id));
             if (app == null) return NotFound();
             return Ok(app);
         }
@@ -103,7 +103,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await Task.Run(() => _appFacade.GetAdminModel(id));
+            var model = await Task.Run(() => _appFacade.GetForAdmin(id));
             if (model == null) return NotFound();
             return Ok(model);
         }

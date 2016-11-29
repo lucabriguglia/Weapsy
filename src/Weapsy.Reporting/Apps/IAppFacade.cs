@@ -6,7 +6,7 @@ namespace Weapsy.Reporting.Apps
     public interface IAppFacade
     {
         IEnumerable<AppAdminListModel> GetAllForAdmin();
-        AppAdminModel GetAdminModel(Guid appId);
-        AppAdminModel GetDefaultAdminModel();
+        AppAdminModel GetForAdmin(Guid appId);
+        AppAdminModel GetDefaultForAdmin();
     }
 }

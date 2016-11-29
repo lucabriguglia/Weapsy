@@ -35,6 +35,9 @@ namespace Weapsy.Data
             builder.Entity<App>()
                 .ToTable("App");
 
+            builder.Entity<EmailAccount>()
+                .ToTable("EmailAccount");
+
             builder.Entity<Language>()
                 .ToTable("Language");
 
@@ -104,7 +107,8 @@ namespace Weapsy.Data
             return base.Entry(entity);
         }
 
-        public DbSet<App> Apps { get; set; }        
+        public DbSet<App> Apps { get; set; }
+        public DbSet<EmailAccount> EmailAccounts { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<MenuItem> MenuItems { get; set; }

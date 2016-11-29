@@ -1,37 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
+using Weapsy.Data;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.EmailAccounts;
+using System.Linq;
 
 namespace Weapsy.Reporting.Data.EmailAccounts
 {
     public class EmailAccountFacade : IEmailAccountFacade
     {
-        private readonly IEmailAccountRepository _emailAccountRepository;
+        private readonly IWeapsyDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public EmailAccountFacade(IEmailAccountRepository emailAccountRepository, 
+        public EmailAccountFacade(IWeapsyDbContextFactory dbContextFactory, 
             ICacheManager cacheManager, 
             IMapper mapper)
         {
-            _emailAccountRepository = emailAccountRepository;
+            _dbContextFactory = dbContextFactory;
             _cacheManager = cacheManager;
             _mapper = mapper;
         }
 
         public IEnumerable<EmailAccountModel> GetAll(Guid siteId)
         {
-            var emailAccounts = _emailAccountRepository.GetAll(siteId);
-            return _mapper.Map<IEnumerable<EmailAccountModel>>(emailAccounts);
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntities = context.EmailAccounts
+                    .Where(x => x.SiteId == siteId && x.Status != EmailAccountStatus.Deleted)
+                    .ToList();
+
+                return _mapper.Map<IEnumerable<EmailAccountModel>>(dbEntities);
+            }
         }
 
         public EmailAccountModel Get(Guid siteId, Guid id)
         {
-            var emailAccount = _emailAccountRepository.GetById(siteId, id);
-            return emailAccount == null ? null : _mapper.Map<EmailAccountModel>(emailAccount);
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.EmailAccounts.FirstOrDefault(x => x.SiteId == siteId && x.Id == id && x.Status != EmailAccountStatus.Deleted);
+                return dbEntity != null ? _mapper.Map<EmailAccountModel>(dbEntity) : null;
+            }
         }
     }
 }

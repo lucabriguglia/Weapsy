@@ -33,7 +33,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var model = await Task.Run(() => _appFacade.GetDefaultAdminModel());
+            var model = await Task.Run(() => _appFacade.GetDefaultForAdmin());
             return View(model);
         }
 
@@ -46,7 +46,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await Task.Run(() => _appFacade.GetAdminModel(id));
+            var model = await Task.Run(() => _appFacade.GetForAdmin(id));
             if (model == null) return NotFound();
             return View(model);
         }

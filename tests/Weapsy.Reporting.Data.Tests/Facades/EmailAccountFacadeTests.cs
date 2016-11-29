@@ -1,51 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.EmailAccounts;
+using Weapsy.Data;
+using Weapsy.Domain.Languages;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Data.EmailAccounts;
-using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Tests.Factories;
+using Weapsy.Tests.Shared;
+using Weapsy.Domain.EmailAccounts;
+using EmailAccount = Weapsy.Data.Entities.EmailAccount;
 
 namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class EmailAccountFacadeTests
     {
-        private IEmailAccountFacade _sut;
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId;
         private Guid _emailAccountId;
 
         [SetUp]
         public void Setup()
         {
-            _siteId = Guid.NewGuid();
-            _emailAccountId = Guid.NewGuid();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
-            var emailAccount = EmailAccountFactory.EmailAccount(_siteId, _emailAccountId, "info@weapsy.org");
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                _siteId = Guid.NewGuid();
+                _emailAccountId = Guid.NewGuid();
 
-            var repositoryMock = new Mock<IEmailAccountRepository>();
-            repositoryMock.Setup(x => x.GetById(_siteId, _emailAccountId)).Returns(emailAccount);
-            repositoryMock.Setup(x => x.GetAll(_siteId)).Returns(new List<EmailAccount>() { emailAccount });
+                context.EmailAccounts.AddRange(
+                    new EmailAccount
+                    {
+                        SiteId = _siteId,
+                        Id = _emailAccountId,
+                        Status = EmailAccountStatus.Active
+                    }
+                );
 
-            var cacheManagerMock = new Mock<ICacheManager>();
-
-            _sut = new EmailAccountFacade(repositoryMock.Object, cacheManagerMock.Object, Shared.CreateNewMapper());
+                context.SaveChanges();
+            }
         }
 
         [Test]
         public void Should_return_all_models()
         {
-            var models = _sut.GetAll(_siteId);
-            Assert.IsNotEmpty(models);
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var facade = new EmailAccountFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
+                var models = facade.GetAll(_siteId);
+                Assert.IsNotEmpty(models);
+            }
         }
 
         [Test]
         public void Should_return_model()
         {
-            var model = _sut.Get(_siteId, _emailAccountId);
-            Assert.NotNull(model);
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                var facade = new EmailAccountFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
+                var model = facade.Get(_siteId, _emailAccountId);
+                Assert.NotNull(model);
+            }
         }
     }
 }
