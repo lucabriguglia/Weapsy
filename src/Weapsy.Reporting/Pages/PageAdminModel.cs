@@ -16,6 +16,7 @@ namespace Weapsy.Reporting.Pages
         public PageStatus Status { get; set; }
         public List<PageLocalisationAdminModel> PageLocalisations { get; set; } = new List<PageLocalisationAdminModel>();
         public List<PagePermissionModel> PagePermissions { get; set; } = new List<PagePermissionModel>();
+        public List<MenuModel> Menus { get; set; } = new List<MenuModel>();
     }
 
     public class PageLocalisationAdminModel
@@ -42,6 +43,13 @@ namespace Weapsy.Reporting.Pages
     public class PagePermissionTypeModel
     {
         public PermissionType Type { get; set; }
+        public bool Selected { get; set; }
+    }
+
+    public class MenuModel
+    {
+        public Guid MenuId { get; set; }
+        public string MenuName { get; set; }
         public bool Selected { get; set; }
     }
 }

@@ -50,6 +50,11 @@ namespace Weapsy.Domain.Tests.Pages
                         RoleId = Guid.NewGuid().ToString(),
                         Type = PermissionType.View
                     }
+                },
+                MenuIds = new List<Guid>
+                {
+                    Guid.NewGuid(),
+                    Guid.NewGuid()
                 }
             };
             _validatorMock = new Mock<IValidator<CreatePage>>();
@@ -224,6 +229,12 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_status_in_page_created_event()
         {
             Assert.AreEqual(_page.Status, _event.Status);
+        }
+
+        [Test]
+        public void Should_set_site_menu_id_in_page_created_event()
+        {
+            Assert.AreEqual(_command.MenuIds, _event.MenuIds);
         }
     }
 }

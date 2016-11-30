@@ -47,6 +47,7 @@ namespace Weapsy.Areas.Admin.Controllers
             command.SiteId = SiteId;
             command.Id = Guid.NewGuid();
             command.PagePermissions = model.PagePermissions.ToDomain();
+            command.MenuIds = model.Menus.ToCommand();
             await Task.Run(() => _commandSender.Send<CreatePage, Page>(command));
             return new NoContentResult();
         }

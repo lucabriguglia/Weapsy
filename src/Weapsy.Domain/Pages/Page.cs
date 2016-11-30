@@ -26,9 +26,7 @@ namespace Weapsy.Domain.Pages
         public ICollection<PageModule> PageModules { get; private set; } = new List<PageModule>();
         public ICollection<PagePermission> PagePermissions { get; private set; } = new List<PagePermission>();
 
-        public Page()
-        {
-        }
+        public Page() {}
 
         private Page(CreatePage cmd) : base(cmd.Id)
         {
@@ -48,7 +46,8 @@ namespace Weapsy.Domain.Pages
                 MetaKeywords = MetaKeywords,
                 PageLocalisations = PageLocalisations,
                 PagePermissions = PagePermissions,
-                Status = Status
+                Status = Status,
+                MenuIds = cmd.MenuIds
             });
         }
 

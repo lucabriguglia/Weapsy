@@ -1,50 +1,39 @@
 ﻿using System;
-using Moq;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Domain.Languages;
-using Weapsy.Domain.Modules;
-using Weapsy.Domain.ModuleTypes;
+using Weapsy.Data;
 using Weapsy.Domain.Pages;
-using Weapsy.Infrastructure.Caching;
-using Weapsy.Reporting.Data.Pages;
-using Weapsy.Reporting.Pages;
-using Weapsy.Services.Identity;
+using Weapsy.Tests.Shared;
+using Page = Weapsy.Data.Entities.Page;
 
 namespace Weapsy.Reporting.Data.Tests.Facades
 {
     [TestFixture]
     public class PageFacadeTests
     {
-        private IPageFacade _sut;
-        private Guid _siteId;
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _pageId;
 
         [SetUp]
         public void Setup()
         {
-            _siteId = Guid.NewGuid();
-            _pageId = Guid.NewGuid();
+            _contextOptions = DbContextShared.CreateContextOptions();
 
-            var pageRepositoryMock = new Mock<IPageRepository>();
-            var languageRepositoryMock = new Mock<ILanguageRepository>();
-            var moduleRepositoryMock = new Mock<IModuleRepository>();
-            var moduleTypeRepositoryMock = new Mock<IModuleTypeRepository>();
-            var cacheManagerMock = new Mock<ICacheManager>();
+            using (var context = new WeapsyDbContext(_contextOptions))
+            {
+                _pageId = Guid.NewGuid();
 
-            var mapperMock = new Mock<AutoMapper.IMapper>();
-            mapperMock.Setup(x => x.Map<PageAdminModel>(It.IsAny<Page>())).Returns(new PageAdminModel());
+                context.Pages.AddRange(
+                    new Page
+                    {
+                        Id = _pageId,
+                        Name = "Page 1",
+                        Status = PageStatus.Active
+                    }
+                );
 
-            var roleServiceMock = new Mock<IRoleService>();
-            var pageInfoFactoryMock = new Mock<IPageInfoFactory>();
-            var pageAdminFactoryMock = new Mock<IPageAdminFactory>();
-
-            _sut = new PageFacade(pageRepositoryMock.Object, 
-                languageRepositoryMock.Object,
-                cacheManagerMock.Object, 
-                mapperMock.Object,
-                roleServiceMock.Object,
-                pageInfoFactoryMock.Object,
-                pageAdminFactoryMock.Object);
+                context.SaveChanges();
+            }
         }
     }
 }

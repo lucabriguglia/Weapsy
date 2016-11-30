@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Weapsy.Domain.Pages;
 
 namespace Weapsy.Reporting.Pages
@@ -49,6 +51,11 @@ namespace Weapsy.Reporting.Pages
             }
 
             return result;
+        }
+
+        public static List<Guid> ToCommand(this IList<MenuModel> menus)
+        {
+            return (from menu in menus where menu.Selected select menu.MenuId).ToList();
         }
     }
 }

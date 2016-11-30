@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Data;
 using Weapsy.Domain.Languages;
+using Weapsy.Domain.Menus;
 using Weapsy.Domain.Pages;
 using Weapsy.Infrastructure.Identity;
 using Weapsy.Reporting.Pages;
@@ -151,6 +152,17 @@ namespace Weapsy.Reporting.Data.Pages
 
                     result.PagePermissions.Add(pagePermission);
                 }
+
+                var menus =
+                    context.Menus.Where(x => x.SiteId == siteId && x.Status == MenuStatus.Active)
+                        .Select(menu => new MenuModel
+                        {
+                            MenuId = menu.Id,
+                            MenuName = menu.Name,
+                            Selected = false
+                        });
+
+                result.Menus.AddRange(menus);
 
                 return result;
             }

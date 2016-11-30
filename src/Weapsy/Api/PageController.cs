@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
-using Weapsy.Infrastructure.Identity;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Pages;

@@ -10,6 +10,9 @@
     <li>
         <a href="#Permissions" data-toggle="tab">Permissions</a>
     </li>
+    <li>
+        <a href="#Advanced" data-toggle="tab">Advanced</a>
+    </li>
 </ul>
 
 <div class="tab-content" style="margin:25px 0">
@@ -179,5 +182,32 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div id="Advanced" class="tab-pane">
+        @if (Model.Id == Guid.Empty)
+        {
+            <div class="form-group has-feedback">
+                <div class="col-md-12">
+                    <table class="table table-bordered" style="width: auto;">
+                        <tr>
+                            <th>Menu</th>
+                            <th class="text-center">Add Item</th>
+                        </tr>
+                        @for (int i = 0; i < Model.Menus.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Model.Menus[i].MenuName&nbsp;
+                                    <input asp-for="Menus[i].MenuId" type="hidden" />
+                                </td>
+                                <td class="text-center">
+                                    <input asp-for="Menus[i].Selected" type="checkbox" />
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
     </div>
 </div>

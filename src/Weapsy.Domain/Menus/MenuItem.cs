@@ -23,7 +23,8 @@ namespace Weapsy.Domain.Menus
 
         public MenuItem() {}
 
-        public MenuItem(AddMenuItem cmd, int sortOrder) : base(cmd.MenuItemId)
+        public MenuItem(AddMenuItem cmd, int sortOrder) 
+            : base(cmd.MenuItemId)
         {
             MenuId = cmd.MenuId;
             SortOrder = sortOrder;
