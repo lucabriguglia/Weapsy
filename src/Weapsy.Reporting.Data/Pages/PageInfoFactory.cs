@@ -6,6 +6,7 @@ using Weapsy.Data;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
+using Weapsy.Domain.Sites;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services.Identity;
 using Page = Weapsy.Data.Entities.Page;
@@ -43,10 +44,15 @@ namespace Weapsy.Reporting.Data.Pages
                     roles.Add(permisisonType, pageRoles.Select(x => x.Name));
                 }
 
+                var site = context.Sites.FirstOrDefault(x => x.Id == siteId && x.Status == SiteStatus.Active);
+
+                if (site == null)
+                    return null;
+
                 var url = page.Url;
-                var title = page.Title;
-                var metaDescription = page.MetaDescription;
-                var metaKeywords = page.MetaKeywords;
+                var title = !string.IsNullOrWhiteSpace(page.Title) ? page.Title : site.Title;
+                var metaDescription = !string.IsNullOrWhiteSpace(page.MetaDescription) ? page.MetaDescription : site.MetaDescription;
+                var metaKeywords = !string.IsNullOrWhiteSpace(page.MetaKeywords) ? page.MetaKeywords : site.MetaKeywords;
 
                 if (languageId != Guid.Empty)
                 {
