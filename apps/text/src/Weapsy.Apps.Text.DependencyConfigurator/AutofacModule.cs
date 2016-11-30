@@ -19,6 +19,7 @@ namespace Weapsy.Apps.Text.DependencyConfigurator
 
             builder.RegisterAssemblyTypes(typeof(CreateTextModuleHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
             builder.RegisterAssemblyTypes(typeof(CreateTextModuleValidator).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IValidator<>));
+            builder.RegisterAssemblyTypes(typeof(TextModuleEventsHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandler<>));
             builder.RegisterAssemblyTypes(typeof(TextModuleEventsHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandlerAsync<>));
 
             builder.RegisterType<TextModuleRules>().As<ITextModuleRules>();

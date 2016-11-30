@@ -321,6 +321,9 @@ namespace Weapsy.Services.Installation
             {
                 SiteId = siteId,
                 HomePageId = homePageId,
+                Title = "Weapsy",
+                MetaDescription = "Weapsy",
+                MetaKeywords = "Weapsy",
                 SiteLocalisations = new List<SiteLocalisation>
                 {
                     new SiteLocalisation

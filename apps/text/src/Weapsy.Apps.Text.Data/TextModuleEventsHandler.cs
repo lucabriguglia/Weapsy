@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Weapsy.Apps.Text.Domain.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
@@ -8,8 +7,8 @@ using Weapsy.Reporting.Languages;
 namespace Weapsy.Apps.Text.Data
 {
     public class TextModuleEventsHandler : 
-        IEventHandlerAsync<TextModuleCreated>,
-        IEventHandlerAsync<VersionAdded>       
+        IEventHandler<TextModuleCreated>,
+        IEventHandler<VersionAdded>       
     {
         private readonly ICacheManager _cacheManager;
         private readonly ILanguageFacade _languageFacade;
@@ -21,25 +20,22 @@ namespace Weapsy.Apps.Text.Data
             _languageFacade = languageFacade;
         }
 
-        public Task HandleAsync(TextModuleCreated @event)
+        public void Handle(TextModuleCreated @event)
         {
-            return ClearCache(@event.SiteId, @event.ModuleId);
+            ClearCache(@event.SiteId, @event.ModuleId);
         }
 
-        public Task HandleAsync(VersionAdded @event)
+        public void Handle(VersionAdded @event)
         {
-            return ClearCache(@event.SiteId, @event.ModuleId);
+            ClearCache(@event.SiteId, @event.ModuleId);
         }
 
-        private Task ClearCache(Guid siteId, Guid moduleId)
+        private void ClearCache(Guid siteId, Guid moduleId)
         {
-            return Task.Run(() =>
-            {
-                foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
-                    _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, language.Id));
+            foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
+                _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, language.Id));
 
-                _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, Guid.Empty));
-            });
+            _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, Guid.Empty));
         }
     }
 }

@@ -30,6 +30,7 @@ namespace Weapsy.Domain.Tests.Sites
                 Title = "Title",
                 MetaDescription = "Meta Description",
                 MetaKeywords = "Meta Keywords",
+                AddLanguageSlug = true,
                 SiteLocalisations = new List<SiteLocalisation>
                 {
                     new SiteLocalisation
@@ -76,6 +77,12 @@ namespace Weapsy.Domain.Tests.Sites
         public void Should_set_meta_keywords()
         {
             Assert.AreEqual(_command.MetaKeywords, _site.MetaKeywords);
+        }
+
+        [Test]
+        public void Should_set_add_language_slug()
+        {
+            Assert.AreEqual(_command.AddLanguageSlug, _site.AddLanguageSlug);
         }
 
         [Test]
@@ -142,6 +149,12 @@ namespace Weapsy.Domain.Tests.Sites
         public void Should_set_meta_keywords_in_site_details_updated_event()
         {
             Assert.AreEqual(_site.MetaKeywords, _event.MetaKeywords);
+        }
+
+        [Test]
+        public void Should_set_add_language_slug_in_site_details_updated_event()
+        {
+            Assert.AreEqual(_site.AddLanguageSlug, _event.AddLanguageSlug);
         }
 
         [Test]

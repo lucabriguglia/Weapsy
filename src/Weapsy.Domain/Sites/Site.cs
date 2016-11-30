@@ -21,6 +21,7 @@ namespace Weapsy.Domain.Sites
         public Guid ThemeId { get; private set; }
         public Guid PageTemplateId { get; private set; }
         public Guid ModuleTemplateId { get; private set; }
+        public bool AddLanguageSlug { get; private set; }
         public SiteStatus Status { get; set; }
         public ICollection<SiteLocalisation> SiteLocalisations { get; private set; } = new List<SiteLocalisation>();
 
@@ -67,7 +68,8 @@ namespace Weapsy.Domain.Sites
                 Title = Title,
                 MetaDescription = MetaDescription,
                 MetaKeywords = MetaKeywords,
-                SiteLocalisations = SiteLocalisations
+                SiteLocalisations = SiteLocalisations,
+                AddLanguageSlug = AddLanguageSlug
             });
         }
 
@@ -78,6 +80,7 @@ namespace Weapsy.Domain.Sites
             MetaDescription = cmd.MetaDescription;
             MetaKeywords = cmd.MetaKeywords;
             HomePageId = cmd.HomePageId;
+            AddLanguageSlug = cmd.AddLanguageSlug;
 
             SetLOcalisations(cmd.SiteLocalisations);
         }

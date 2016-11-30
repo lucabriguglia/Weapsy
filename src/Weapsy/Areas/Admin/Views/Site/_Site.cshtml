@@ -9,6 +9,9 @@
     <li>
         <a href="#Appearance" data-toggle="tab">Appearance</a>
     </li>
+    <li>
+        <a href="#Advanced" data-toggle="tab">Advanced</a>
+    </li>
 </ul>
 
 <div class="tab-content" style="margin:25px 0">
@@ -121,6 +124,19 @@
     <div id="Appearance" class="tab-pane">
         <div style="font-style: italic;">
             Coming soon.
+        </div>
+    </div>
+    <div id="Advanced" class="tab-pane">
+        <div class="form-group has-feedback">
+            <label for="addLanguageSlug" class="col-md-2 control-label">Add Language Slug</label>
+            <div class="col-md-4">
+                <input asp-for="AddLanguageSlug" />
+                @*<input id="addLanguageSlug" name="addLanguageSlug" type="checkbox" class="form-control">*@
+                <i class="form-control-feedback glyphicon"></i>
+            </div>
+            <div class="col-md-6 help-block">
+                <label id="addLanguageSlug-error" for="addLanguageSlug" class="text-danger" style="display: none;"></label>
+            </div>
         </div>
     </div>
 </div>

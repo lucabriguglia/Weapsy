@@ -8,7 +8,6 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Sites;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Reporting.Sites;
-using Site = Weapsy.Data.Entities.Site;
 
 namespace Weapsy.Reporting.Data.Sites
 {

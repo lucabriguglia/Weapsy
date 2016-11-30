@@ -18,6 +18,7 @@ namespace Weapsy.Data.Entities
         public Guid ThemeId { get; set; }
         public Guid PageTemplateId { get; set; }
         public Guid ModuleTemplateId { get; set; }
+        public bool AddLanguageSlug { get; set; }
         public SiteStatus Status { get; set; }
 
         public virtual ICollection<SiteLocalisation> SiteLocalisations { get; set; } = new List<SiteLocalisation>();

@@ -11,6 +11,7 @@ using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Identity;
 using Weapsy.Reporting.Menus;
 using Weapsy.Services.Identity;
+using Language = Weapsy.Data.Entities.Language;
 using Menu = Weapsy.Data.Entities.Menu;
 using MenuItem = Weapsy.Data.Entities.MenuItem;
 
@@ -47,14 +48,16 @@ namespace Weapsy.Reporting.Data.Menus
 
                     LoadMenuItems(context, menu);
 
-                    bool languageExsits = languageId != Guid.Empty 
-                        && context.Languages.Count(
-                            x => x.SiteId == siteId && x.Id == languageId && x.Status == LanguageStatus.Active) == 1;
+                    var language = languageId != Guid.Empty 
+                        ? context.Languages.FirstOrDefault(x => x.SiteId == siteId && x.Id == languageId && x.Status == LanguageStatus.Active)
+                        : null;
+
+                    bool addLanguageSlug = context.Sites.Where(x => x.Id == siteId).Select(site => site.AddLanguageSlug).FirstOrDefault();
 
                     var menuModel = new MenuViewModel
                     {
                         Name = menu.Name,
-                        MenuItems = PopulateMenuItems(context, menu.MenuItems, Guid.Empty, languageExsits ? languageId : Guid.Empty)
+                        MenuItems = PopulateMenuItems(context, menu.MenuItems, Guid.Empty, language, addLanguageSlug)
                     };
 
                     return menuModel;
@@ -63,7 +66,7 @@ namespace Weapsy.Reporting.Data.Menus
         }
 
         // UNDER DEVELOPMENT/REFACTORING
-        private List<MenuViewModel.MenuItem> PopulateMenuItems(WeapsyDbContext context, IEnumerable<MenuItem> source, Guid parentId, Guid languageId)
+        private List<MenuViewModel.MenuItem> PopulateMenuItems(WeapsyDbContext context, IEnumerable<MenuItem> source, Guid parentId, Language language, bool addLanguageSlug)
         {
             var result = new List<MenuViewModel.MenuItem>();
 
@@ -76,10 +79,10 @@ namespace Weapsy.Reporting.Data.Menus
                 var text = menuItem.Text;
                 var title = menuItem.Title;
                 var url = "#";
-
-                if (languageId != Guid.Empty)
+                
+                if (language != null)
                 {
-                    var menuItemLocalisation = menuItem.MenuItemLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
+                    var menuItemLocalisation = menuItem.MenuItemLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
 
                     if (menuItemLocalisation != null)
                     {
@@ -98,20 +101,22 @@ namespace Weapsy.Reporting.Data.Menus
                     if (page == null)
                         continue;
 
-                    if (languageId == Guid.Empty)
+                    if (language == null)
                     {
                         url = $"/{page.Url}";
                     }
                     else
                     {
-                        var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
-                        if (pageLocalisation != null)
-                            url = !string.IsNullOrEmpty(pageLocalisation.Url)
+                        var pageLocalisation = page.PageLocalisations.FirstOrDefault(x => x.LanguageId == language.Id);
+
+                        url = pageLocalisation == null
+                            ? $"/{page.Url}"
+                            : !string.IsNullOrEmpty(pageLocalisation.Url)
                                 ? $"/{pageLocalisation.Url}"
                                 : $"/{page.Url}";
 
-                        //if (site.AddLanguageToUrl)
-                        //    url = $"/{language.Url}" + url;
+                        if (addLanguageSlug)
+                            url = $"/{language.Url}" + url;
                     }
 
                     menuItemRoleIds = page.PagePermissions.Where(x => x.Type == PermissionType.View).Select(x => x.RoleId);
@@ -131,7 +136,7 @@ namespace Weapsy.Reporting.Data.Menus
                     ViewRoles = menuItemRoles.Select(x => x.Name)
                 };
 
-                menuItemModel.Children.AddRange(PopulateMenuItems(context, menuItems, menuItem.Id, languageId));
+                menuItemModel.Children.AddRange(PopulateMenuItems(context, menuItems, menuItem.Id, language, addLanguageSlug));
 
                 result.Add(menuItemModel);
             }

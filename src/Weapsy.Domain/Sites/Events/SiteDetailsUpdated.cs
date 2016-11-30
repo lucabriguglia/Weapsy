@@ -10,6 +10,7 @@ namespace Weapsy.Domain.Sites.Events
         public string Title { get; set; }
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
+        public bool AddLanguageSlug { get; set; }
         public IEnumerable<SiteLocalisation> SiteLocalisations { get; set; } = new List<SiteLocalisation>();
     }
 }

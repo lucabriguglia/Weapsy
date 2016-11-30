@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
+using Weapsy.Data;
+using Weapsy.Domain.Languages;
+using Weapsy.Domain.Menus;
 using Weapsy.Domain.Sites.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Domain;
-using Weapsy.Reporting.Languages;
 
 namespace Weapsy.Reporting.Data.Sites
 {
@@ -10,14 +13,14 @@ namespace Weapsy.Reporting.Data.Sites
         IEventHandler<SiteCreated>,
         IEventHandler<SiteDetailsUpdated>
     {
+        private readonly IWeapsyDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
-        private readonly ILanguageFacade _languageFacade;
 
-        public SiteEventsHandler(ICacheManager cacheManager, 
-            ILanguageFacade languageFacade)
+        public SiteEventsHandler(IWeapsyDbContextFactory dbContextFactory,
+            ICacheManager cacheManager)
         {
+            _dbContextFactory = dbContextFactory;
             _cacheManager = cacheManager;
-            _languageFacade = languageFacade;
         }
 
         public void Handle(SiteCreated @event)
@@ -32,10 +35,35 @@ namespace Weapsy.Reporting.Data.Sites
 
         private void ClearCache(Guid siteId, string name)
         {
-            foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
-                _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, language.Id));
+            using (var context = _dbContextFactory.Create())
+            {
+                var languageIds = context.Languages
+                    .Where(x => x.SiteId == siteId && x.Status == LanguageStatus.Active)
+                    .Select(language => language.Id)
+                    .ToList();
 
-            _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, Guid.Empty));
+                foreach (var languageId in languageIds)
+                {
+                    _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, languageId));
+                }
+                
+                _cacheManager.Remove(string.Format(CacheKeys.SiteInfoCacheKey, name, Guid.Empty));
+
+                var menuNames = context.Menus
+                    .Where(x => x.SiteId == siteId && x.Status == MenuStatus.Active)
+                    .Select(menu => menu.Name)
+                    .ToList();
+
+                foreach (var menuName in menuNames)
+                {
+                    _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, menuName, Guid.Empty));
+
+                    foreach (var languageId in languageIds)
+                    {
+                        _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, menuName, languageId));
+                    }
+                }
+            }
         }
     }
 }
