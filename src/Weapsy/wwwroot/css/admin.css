@@ -166,3 +166,7 @@ table {
 .main-success span {
     color: #3c763d;
 }
+
+.checkbox-input {
+    padding-top: 8px;
+}
