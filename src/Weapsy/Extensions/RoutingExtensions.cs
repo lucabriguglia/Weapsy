@@ -5,8 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages;
 using System.Threading.Tasks;
-using Weapsy.Domain.Pages;
 using System.Linq;
+using Weapsy.Reporting.Pages;
 
 namespace Weapsy.Extensions
 {
@@ -47,7 +47,7 @@ namespace Weapsy.Extensions
 
             var contextService = context.HttpContext.RequestServices.GetService<IContextService>();
             var languageFacade = context.HttpContext.RequestServices.GetService<ILanguageFacade>();
-            var pageRepository = context.HttpContext.RequestServices.GetService<IPageRepository>();
+            var pageFacade = context.HttpContext.RequestServices.GetService<IPageFacade>();
 
             var pathParts = path.Split('/');
             var languageSlug = pathParts.Length > 1 ? pathParts[0] : path;
@@ -65,7 +65,7 @@ namespace Weapsy.Extensions
                 pageSlug = languageSlug == path ? string.Empty : path.Substring(languageSlug.Length + 1);
 
                 if (!string.IsNullOrEmpty(pageSlug))
-                    pageId = pageRepository.GetIdBySlug(site.Id, pageSlug, language.Id);
+                    pageId = pageFacade.GetIdBySlug(site.Id, pageSlug, language.Id);
             }
             else
             {
@@ -73,7 +73,7 @@ namespace Weapsy.Extensions
             }
 
             if (pageId == null && !string.IsNullOrEmpty(pageSlug))
-                pageId = pageRepository.GetIdBySlug(site.Id, pageSlug);
+                pageId = pageFacade.GetIdBySlug(site.Id, pageSlug);
 
             if (pageId == null && string.IsNullOrEmpty(pageSlug))
                 pageId = site.HomePageId;

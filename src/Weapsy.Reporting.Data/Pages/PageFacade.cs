@@ -153,6 +153,33 @@ namespace Weapsy.Reporting.Data.Pages
             }
         }
 
+        public Guid? GetIdBySlug(Guid siteId, string slug)
+        {
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.Pages
+                    .FirstOrDefault(x => x.SiteId == siteId
+                    && x.Status == PageStatus.Active
+                    && x.Url == slug);
+
+                return dbEntity?.Id;
+            }
+        }
+
+        public Guid? GetIdBySlug(Guid siteId, string slug, Guid languageId)
+        {
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.PageLocalisations
+                    .FirstOrDefault(x => x.Page.SiteId == siteId
+                    && x.Page.Status == PageStatus.Active
+                    && x.Url == slug
+                    && x.LanguageId == languageId);
+
+                return dbEntity?.PageId;
+            }
+        }
+
         private Page GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
         {
             var page = context.Pages

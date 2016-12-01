@@ -11,5 +11,7 @@ namespace Weapsy.Reporting.Pages
         PageAdminModel GetAdminModel(Guid siteId, Guid pageId);
         PageAdminModel GetDefaultAdminModel(Guid siteId);
         PageModuleAdminModel GetModuleAdminModel(Guid siteId, Guid pageId, Guid pageModuleId);
+        Guid? GetIdBySlug(Guid siteId, string slug);
+        Guid? GetIdBySlug(Guid siteId, string slug, Guid languageId);
     }
 }
