@@ -14,8 +14,6 @@ namespace Weapsy.Domain.Menus.Validators
             IValidator<MenuItemLocalisation> localisationValidator)
             : base(siteRules, pageRules, languageRules, localisationValidator)
         {
-            RuleFor(c => c.MenuItemId)
-                .NotEmpty().WithMessage("Menu item id is required.");
         }
     }
 }

@@ -15,9 +15,6 @@ namespace Weapsy.Domain.Pages.Validators
         {
             _moduleRules = moduleRules;
 
-            RuleFor(c => c.PageModuleId)
-                .NotEmpty().WithMessage("Page module id is required.");
-
             RuleFor(c => c.ModuleId)
                 .NotEmpty().WithMessage("Module id is required.")
                 .Must(BeAnExistingModule).WithMessage("Module does not exist.");

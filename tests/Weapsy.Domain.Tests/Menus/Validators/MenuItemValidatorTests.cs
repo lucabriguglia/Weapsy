@@ -17,47 +17,6 @@ namespace Weapsy.Domain.Tests.Menus.Validators
     public class MenuItemValidatorTests
     {
         [Test]
-        [Ignore("Need to find extension to validate collection of validators")]
-        public void Should_set_localisation_validator_when_validate_add_menu_item_command()
-        {
-            var updateMenuItem = new MenuItemDetails
-            {
-                SiteId = Guid.NewGuid(),
-                MenuId = Guid.NewGuid(),
-                MenuItemId = Guid.NewGuid(),
-                Type = MenuItemType.Link,
-                PageId = Guid.NewGuid(),
-                Link = "link",
-                Text = "Text",
-                Title = "Title",
-                MenuItemLocalisations = new List<MenuItemLocalisation>
-                {
-                    new MenuItemLocalisation
-                    {
-                        LanguageId = Guid.NewGuid(),
-                        Text = "Text 1",
-                        Title = "Title 1"
-                    },
-                    new MenuItemLocalisation
-                    {
-                        LanguageId = Guid.NewGuid(),
-                        Text = "Text 2",
-                        Title = "Title 2"
-                    }
-                }
-            };
-
-            var pageRulesMock = new Mock<IPageRules>();
-            var languageRulesMock = new Mock<ILanguageRules>();
-            var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
-            var siteRulesMock = new Mock<ISiteRules>();
-
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
-
-            validator.ShouldHaveChildValidator(x => x.MenuItemLocalisations, typeof(MenuItemLocalisationValidator));
-        }
-
-        [Test]
         public void Should_have_validation_error_if_page_id_is_empty()
         {
             var updateMenuItem = new MenuItemDetails

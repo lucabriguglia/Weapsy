@@ -20,9 +20,7 @@ namespace Weapsy.Domain.Pages
         public ICollection<PageModuleLocalisation> PageModuleLocalisations { get; private set; } = new List<PageModuleLocalisation>();
         public ICollection<PageModulePermission> PageModulePermissions { get; private set; } = new List<PageModulePermission>();
 
-        public PageModule()
-        {
-        }
+        public PageModule() {}
 
         public PageModule(Guid pageId, 
             Guid id, 
@@ -30,7 +28,8 @@ namespace Weapsy.Domain.Pages
             string title, 
             string zone, 
             int sortOrder,
-            IList<PageModulePermission> pageModulePermissions) : base(id)
+            IList<PageModulePermission> pageModulePermissions) 
+            : base(id)
         {
             PageId = pageId;
             ModuleId = moduleId;

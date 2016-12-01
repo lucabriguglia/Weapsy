@@ -39,7 +39,6 @@ namespace Weapsy.Infrastructure.Tests.Dispatcher
             Assert.Throws<Exception>(() => commandSender.Send<ICommand, IAggregateRoot>(new FakeCommand()));
         }
 
-        [Ignore("Failing due to an async method, it needs investigation.")]
         [Test]
         public void Should_publish_events()
         {

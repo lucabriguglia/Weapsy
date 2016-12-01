@@ -40,7 +40,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         }
 
         [Test]
-        [Ignore("Feature not implented yet.")]
+        [Ignore("Feature not implemented yet.")]
         public void Should_have_error_when_site_url_is_empty()
         {
             var siteRulesMock = new Mock<ISiteRules>();
@@ -63,7 +63,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         }
 
         [Test]
-        [Ignore("Feature not implented yet.")]
+        [Ignore("Feature not implemented yet.")]
         public void Should_have_error_when_site_url_is_too_long()
         {
             var siteRulesMock = new Mock<ISiteRules>();
@@ -89,7 +89,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         }
 
         [Test]
-        [Ignore("Feature not implented yet.")]
+        [Ignore("Feature not implemented yet.")]
         public void Should_have_error_when_site_url_is_not_valid()
         {
             Guid siteId = Guid.NewGuid();
@@ -117,7 +117,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         }
 
         [Test]
-        [Ignore("Feature not implented yet.")]
+        [Ignore("Feature not implemented yet.")]
         public void Should_have_error_when_site_url_already_exists()
         {
             Guid siteId = Guid.NewGuid();
