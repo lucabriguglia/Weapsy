@@ -16,7 +16,6 @@ using Weapsy.Mvc.Context;
 using Weapsy.Mvc.ViewEngine;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services;
-using Weapsy.Apps.Text;
 using Weapsy.Apps.Text.DependencyConfigurator;
 using Weapsy.Infrastructure.Configuration;
 using Weapsy.Reporting.Languages;

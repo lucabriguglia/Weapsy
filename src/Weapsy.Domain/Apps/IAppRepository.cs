@@ -9,7 +9,6 @@ namespace Weapsy.Domain.Apps
         App GetById(Guid id);
         App GetByName(string name);
         App GetByFolder(string folder);
-        ICollection<App> GetAll();
         void Create(App app);
         void Update(App app);
     }

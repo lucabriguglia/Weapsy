@@ -184,31 +184,6 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_all_menus()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var menus = repository.GetAll(_siteId);
-
-                Assert.AreEqual(2, menus.Count);
-            }
-        }
-
-        [Test]
-        public void Should_return_all_menus_with_no_deleted_menu_items()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var menus = repository.GetAll(_siteId);
-
-                foreach (var menu in menus)
-                    Assert.AreEqual(0, menu.MenuItems.Where(x => x.Status == MenuItemStatus.Deleted).Count()); 
-            }
-        }
-
-        [Test]
         public void Should_save_new_menu()
         {
             var newMenu = MenuFactory.Menu(_siteId, Guid.NewGuid(), "Menu 3", "Item", "");

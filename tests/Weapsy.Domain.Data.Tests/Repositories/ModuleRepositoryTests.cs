@@ -88,18 +88,6 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_all_modules()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var modules = repository.GetAll();
-
-                Assert.AreEqual(2, modules.Count);
-            }
-        }
-
-        [Test]
         public void Should_return_count_by_module_type_id()
         {
             using (var context = new WeapsyDbContext(_contextOptions))

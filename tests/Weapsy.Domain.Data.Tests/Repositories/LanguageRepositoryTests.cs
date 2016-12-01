@@ -147,18 +147,6 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_active_languages_count()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new LanguageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var count = repository.GetActiveLanguagesCount(_siteId);
-
-                Assert.AreEqual(1, count);
-            }
-        }
-
-        [Test]
         public void Should_return_languages_id_list()
         {
             using (var context = new WeapsyDbContext(_contextOptions))

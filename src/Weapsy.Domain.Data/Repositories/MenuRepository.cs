@@ -62,21 +62,6 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        public ICollection<Menu> GetAll(Guid siteId)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntities = context.Set<MenuDbEntity>()
-                    .Where(x => x.SiteId == siteId && x.Status != MenuStatus.Deleted)
-                    .ToList();
-
-                foreach (var dbEntity in dbEntities)
-                    LoadMenuItems(context, dbEntity);
-
-                return _mapper.Map<ICollection<Menu>>(dbEntities);
-            }
-        }
-
         public void Create(Menu menu)
         {
             using (var context = _dbContextFactory.Create())

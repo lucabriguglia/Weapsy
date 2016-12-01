@@ -8,7 +8,6 @@ namespace Weapsy.Domain.Modules
     {
         Module GetById(Guid id);
         Module GetById(Guid siteId, Guid id);
-        ICollection<Module> GetAll();
         int GetCountByModuleTypeId(Guid moduleTypeId);
         int GetCountByModuleId(Guid moduleId);
         void Create(Module module);

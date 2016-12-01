@@ -94,18 +94,6 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_all_moduleTypes()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new ModuleTypeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var moduleTypes = repository.GetAll();
-
-                Assert.AreEqual(2, moduleTypes.Count);
-            }
-        }
-
-        [Test]
         public void Should_save_new_moduleType()
         {
             var newModuleType = ModuleTypeFactory.ModuleType(Guid.NewGuid(), "Name 3", "Title 3", "Description 3");

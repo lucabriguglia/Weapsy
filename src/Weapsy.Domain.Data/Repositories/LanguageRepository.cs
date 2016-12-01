@@ -92,14 +92,6 @@ namespace Weapsy.Domain.Data.Repositories
             }            
         }
 
-        public int GetActiveLanguagesCount(Guid siteId)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                return context.Languages.Count(x => x.SiteId == siteId && x.Status == LanguageStatus.Active);
-            }
-        }
-
         public IEnumerable<Guid> GetLanguagesIdList(Guid siteId)
         {
             using (var context = _dbContextFactory.Create())

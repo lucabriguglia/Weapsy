@@ -210,31 +210,6 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_all_pages()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var pages = repository.GetAll(_siteId);
-
-                Assert.AreEqual(2, pages.Count);
-            }
-        }
-
-        [Test]
-        public void Should_return_all_pages_with_no_deleted_page_modules()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var pages = repository.GetAll(_siteId);
-
-                foreach (var page in pages)
-                    Assert.AreEqual(0, page.PageModules.Count(x => x.Status == PageModuleStatus.Deleted));
-            }
-        }
-
-        [Test]
         public void Should_save_new_page()
         {
             var newPage = PageFactory.Page(_siteId, Guid.NewGuid(), "Name 3");

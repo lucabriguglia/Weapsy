@@ -43,14 +43,6 @@ namespace Weapsy.Domain.Data.Repositories
             return dbEntity != null ? _mapper.Map<App>(dbEntity) : null;
         }
 
-        public ICollection<App> GetAll()
-        {
-            var dbEntities = _entities
-                .Where(x => x.Status != AppStatus.Deleted)
-                .ToList();
-            return _mapper.Map<ICollection<App>>(dbEntities);
-        }
-
         public void Create(App app)
         {
             var dbEntity = _mapper.Map<AppDbEntity>(app);

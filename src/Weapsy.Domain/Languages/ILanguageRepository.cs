@@ -14,7 +14,6 @@ namespace Weapsy.Domain.Languages
         Language GetByUrl(Guid siteId, string url);
         ICollection<Language> GetAll(Guid siteId);
         int GetLanguagesCount(Guid siteId);
-        int GetActiveLanguagesCount(Guid siteId);
         IEnumerable<Guid> GetLanguagesIdList(Guid siteId);        
         void Create(Language language);
         Task CreateAsync(Language language);

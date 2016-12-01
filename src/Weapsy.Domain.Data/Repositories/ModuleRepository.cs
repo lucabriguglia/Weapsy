@@ -39,17 +39,6 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        public ICollection<Module> GetAll()
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntities = context.Set<ModuleDbEntity>()
-                    .Where(x => x.Status != ModuleStatus.Deleted)
-                    .ToList();
-                return _mapper.Map<ICollection<Module>>(dbEntities);
-            }
-        }
-
         public int GetCountByModuleTypeId(Guid moduleTypeId)
         {
             using (var context = _dbContextFactory.Create())

@@ -85,23 +85,6 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        public ICollection<Page> GetAll(Guid siteId)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntities = context.Set<PageDbEntity>()
-                    .Include(x => x.PageLocalisations)
-                    .Include(x => x.PagePermissions)
-                    .Where(x => x.SiteId == siteId && x.Status != PageStatus.Deleted)
-                    .OrderBy(x => x.Name).ToList();
-
-                foreach (var dbEntity in dbEntities)
-                    LoadActivePageModules(context, dbEntity);
-
-                return _mapper.Map<ICollection<Page>>(dbEntities);
-            }
-        }
-
         public void Create(Page page)
         {
             using (var context = _dbContextFactory.Create())
