@@ -165,11 +165,11 @@ namespace Weapsy.Api
         }
 
         [HttpGet("{url}")]
-        [Route("isPageUrlUnique")]
-        public IActionResult IsPageUrlUnique(string url)
+        [Route("isPageSlugUnique")]
+        public IActionResult IsPageSlugUnique(string url)
         {
-            var isPageUrlUnique = _pageRules.IsPageUrlUnique(SiteId, url);
-            return Ok(isPageUrlUnique);
+            var isPageSlugUnique = _pageRules.IsSlugUnique(SiteId, url);
+            return Ok(isPageSlugUnique);
         }
 
         [HttpGet("{url}")]
@@ -209,7 +209,7 @@ namespace Weapsy.Api
         }
 
         [HttpGet]
-        [Route("{id}/admin-list")]
+        [Route("admin-list")]
         public IActionResult AdminList()
         {
             var model = _pageFacade.GetAllForAdmin(SiteId);

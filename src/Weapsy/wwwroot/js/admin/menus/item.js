@@ -83,7 +83,7 @@ weapsy.admin.menuItem = (function ($, ko) {
         }
 
         self.loadPages = function () {
-            $.getJSON("/api/page", function (data) {
+            $.getJSON("/api/page/admin-list", function (data) {
                 var mappedPages = $.map(data, function (item) { return new Page(item) });
                 self.pages(mappedPages);
                 self.loadLanguages();

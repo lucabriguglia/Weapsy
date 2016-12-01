@@ -2,7 +2,6 @@
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Validators;
 using Weapsy.Domain.Pages.Rules;
 using Weapsy.Domain.Languages.Rules;

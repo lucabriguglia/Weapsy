@@ -70,18 +70,25 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        public Page GetByUrl(Guid siteId, string url)
+        public Guid GetPageIdBySlug(Guid siteId, string slug)
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<PageDbEntity>()
-                    .Include(x => x.PageLocalisations)
-                    .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.SiteId == siteId && x.Url == url && x.Status != PageStatus.Deleted);
+                return context.Pages
+                    .Where(x => x.SiteId == siteId && x.Status != PageStatus.Deleted && x.Url == slug)
+                    .Select(x => x.Id)
+                    .FirstOrDefault();
+            }
+        }
 
-                LoadActivePageModules(context, dbEntity);
-
-                return dbEntity != null ? _mapper.Map<Page>(dbEntity) : null;
+        public Guid GetPageIdByLocalisedSlug(Guid siteId, string slug)
+        {
+            using (var context = _dbContextFactory.Create())
+            {
+                return context.PageLocalisations
+                    .Where(x => x.Page.SiteId == siteId && x.Page.Status != PageStatus.Deleted && x.Url == slug)
+                    .Select(x => x.PageId)
+                    .FirstOrDefault();
             }
         }
 

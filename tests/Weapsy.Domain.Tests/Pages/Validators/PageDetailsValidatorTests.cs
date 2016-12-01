@@ -226,14 +226,14 @@ namespace Weapsy.Domain.Tests.Pages.Validators
         }
 
         [Test]
-        public void Should_have_error_when_page_url_already_exists()
+        public void Should_have_error_when_page_slug_already_exists()
         {
             Guid siteId = Guid.NewGuid();
             Guid pageId = Guid.NewGuid();
-            const string url = "my-url";
+            const string slug = "something";
 
             var pageRulesMock = new Mock<IPageRules>();
-            pageRulesMock.Setup(x => x.IsPageUrlUnique(siteId, url, pageId)).Returns(false);
+            pageRulesMock.Setup(x => x.IsSlugUnique(Guid.NewGuid(), slug, Guid.Empty)).Returns(false);
 
             var siteRulesMock = new Mock<ISiteRules>();
             var languageRulesMock = new Mock<ILanguageRules>();
@@ -245,7 +245,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
                 SiteId = siteId,
                 Id = pageId,
                 Name = "Name",
-                Url = url,
+                Url = slug,
                 Title = "Title",
                 MetaDescription = "Meta Description",
                 MetaKeywords = "Meta Keywords"
@@ -341,6 +341,25 @@ namespace Weapsy.Domain.Tests.Pages.Validators
                 Name = "Name",
                 Url = "Url"
             });
+        }
+
+        [Test]
+        public void Should_have_error_when_localised_page_slug_is_not_unique()
+        {
+            var pageId = Guid.NewGuid();
+            const string slug = "My@Url";
+
+            var pageRulesMock = new Mock<IPageRules>();
+            pageRulesMock.Setup(x => x.IsSlugUnique(Guid.NewGuid(), slug, pageId)).Returns(false);
+            var siteRulesMock = new Mock<ISiteRules>();
+            var languageRulesMock = new Mock<ILanguageRules>();
+            var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
+            var validator = new PageDetailsValidator<PageDetails>(pageRulesMock.Object, 
+                siteRulesMock.Object, 
+                languageRulesMock.Object, 
+                localisationValidatorMock.Object);
+
+            validator.ShouldHaveValidationErrorFor(x => x.PageLocalisations, new PageDetails());
         }
     }
 }

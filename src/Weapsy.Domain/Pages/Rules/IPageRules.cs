@@ -12,6 +12,6 @@ namespace Weapsy.Domain.Pages.Rules
         bool IsPageNameUnique(Guid siteId, string name, Guid pageId = new Guid());
         bool IsPageUrlValid(string url);
         bool IsPageUrlReserved(string url);
-        bool IsPageUrlUnique(Guid siteId, string url, Guid pageId = new Guid());
+        bool IsSlugUnique(Guid siteId, string slug, Guid pageId = new Guid());
     }
 }

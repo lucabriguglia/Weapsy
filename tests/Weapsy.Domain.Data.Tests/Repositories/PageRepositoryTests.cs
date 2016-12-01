@@ -9,6 +9,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Tests.Factories;
 using Weapsy.Tests.Shared;
 using PageDbEntity = Weapsy.Data.Entities.Page;
+using PageLocalisation = Weapsy.Data.Entities.PageLocalisation;
 using PageModuleDbEntity = Weapsy.Data.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Data.Entities.PageModuleLocalisation;
 
@@ -41,7 +42,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
                 _languageId1 = Guid.NewGuid();
                 _deletedPageId = Guid.NewGuid();
 
-                context.Set<PageDbEntity>().AddRange(
+                context.Pages.AddRange(
                     new PageDbEntity
                     {
                         SiteId = _siteId,
@@ -79,6 +80,15 @@ namespace Weapsy.Domain.Data.Tests.Repositories
                                 Id = Guid.NewGuid(),
                                 Title = "Title 2",
                                 Status = PageModuleStatus.Deleted
+                            }
+                        },
+                        PageLocalisations = new List<PageLocalisation>
+                        {
+                            new PageLocalisation
+                            {
+                                PageId = _pageId1,
+                                LanguageId = _languageId1,
+                                Url = "localised-url-1"
                             }
                         }
                     },
@@ -186,26 +196,26 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_page_by_url()
+        public void Should_return_page_id_by_slug()
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var page = repository.GetByUrl(_siteId, "Url 1");
+                var pageId = repository.GetPageIdBySlug(_siteId, "Url 2");
 
-                Assert.NotNull(page);
+                Assert.AreNotEqual(Guid.Empty, pageId);
             }
         }
 
         [Test]
-        public void Should_return_page_by_url_with_no_deleted_page_modules()
+        public void Should_return_page_id_by_localised_slug()
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var page = repository.GetByUrl(_siteId, "Url 1");
+                var pageId = repository.GetPageIdByLocalisedSlug(_siteId, "localised-url-1");
 
-                Assert.AreEqual(0, page.PageModules.Count(x => x.Status == PageModuleStatus.Deleted));
+                Assert.AreNotEqual(Guid.Empty, pageId);
             }
         }
 

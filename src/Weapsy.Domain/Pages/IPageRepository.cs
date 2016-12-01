@@ -8,7 +8,8 @@ namespace Weapsy.Domain.Pages
         Page GetById(Guid id);
         Page GetById(Guid siteId, Guid id);
         Page GetByName(Guid siteId, string name);
-        Page GetByUrl(Guid siteId, string url);
+        Guid GetPageIdBySlug(Guid siteId, string slug);
+        Guid GetPageIdByLocalisedSlug(Guid siteId, string slug);
         void Create(Page page);
         void Update(Page page);
     }

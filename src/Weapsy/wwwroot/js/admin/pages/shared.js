@@ -22,7 +22,7 @@ weapsy.admin.pages = (function ($) {
                 regex: /^[A-Za-z/\d_-]+$/,
                 remote: {
                     param: {
-                        url: '/api/page/IsPageUrlUnique/'
+                        url: '/api/page/IsPageSlugUnique/'
                     },
                     depends: function () {
                         return ($('#url').val() !== $('#originalUrl').val());

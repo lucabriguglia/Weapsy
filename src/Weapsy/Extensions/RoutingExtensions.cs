@@ -61,16 +61,15 @@ namespace Weapsy.Extensions
             if (language != null)
             {
                 contextService.SetLanguageInfo(language);
-
                 pageSlug = languageSlug == path ? string.Empty : path.Substring(languageSlug.Length + 1);
-
-                if (!string.IsNullOrEmpty(pageSlug))
-                    pageId = pageFacade.GetIdBySlug(site.Id, pageSlug, language.Id);
             }
             else
             {
                 language = contextService.GetCurrentLanguageInfo();
             }
+
+            if (!string.IsNullOrEmpty(pageSlug))
+                pageId = pageFacade.GetIdBySlug(site.Id, pageSlug, language.Id);
 
             if (pageId == null && !string.IsNullOrEmpty(pageSlug))
                 pageId = pageFacade.GetIdBySlug(site.Id, pageSlug);

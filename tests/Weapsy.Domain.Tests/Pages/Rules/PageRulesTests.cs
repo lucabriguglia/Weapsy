@@ -209,11 +209,11 @@ namespace Weapsy.Domain.Tests.Pages.Rules
             var url = "my-page";
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetByUrl(siteId, url)).Returns(new Page());
+            repositoryMock.Setup(x => x.GetPageIdBySlug(siteId, url)).Returns(Guid.NewGuid());
 
             var sut = new PageRules(repositoryMock.Object);
 
-            var actual = sut.IsPageUrlUnique(siteId, url);
+            var actual = sut.IsSlugUnique(siteId, url);
 
             Assert.AreEqual(false, actual);
         }
@@ -225,11 +225,11 @@ namespace Weapsy.Domain.Tests.Pages.Rules
             var url = "my-page";
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetByUrl(siteId, url)).Returns((Page)null);
+            repositoryMock.Setup(x => x.GetPageIdBySlug(siteId, url)).Returns(Guid.Empty);
 
             var sut = new PageRules(repositoryMock.Object);
 
-            var actual = sut.IsPageUrlUnique(siteId, url);
+            var actual = sut.IsSlugUnique(siteId, url);
 
             Assert.AreEqual(true, actual);
         }
@@ -242,11 +242,11 @@ namespace Weapsy.Domain.Tests.Pages.Rules
             var url = "my-page";
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetByUrl(siteId, url)).Returns(new Page());
+            repositoryMock.Setup(x => x.GetPageIdBySlug(siteId, url)).Returns(Guid.NewGuid());
 
             var sut = new PageRules(repositoryMock.Object);
 
-            var actual = sut.IsPageUrlUnique(siteId, url, pageId);
+            var actual = sut.IsSlugUnique(siteId, url, pageId);
 
             Assert.AreEqual(false, actual);
         }
@@ -259,11 +259,75 @@ namespace Weapsy.Domain.Tests.Pages.Rules
             var url = "my-page";
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetByUrl(siteId, url)).Returns((Page)null);
+            repositoryMock.Setup(x => x.GetPageIdBySlug(siteId, url)).Returns(Guid.Empty);
 
             var sut = new PageRules(repositoryMock.Object);
 
-            var actual = sut.IsPageUrlUnique(siteId, url, pageId);
+            var actual = sut.IsSlugUnique(siteId, url, pageId);
+
+            Assert.AreEqual(true, actual);
+        }
+
+        [Test]
+        public void Should_return_false_if_localised_slug_is_not_unique()
+        {
+            var siteId = Guid.NewGuid();
+            var slug = "my-page";
+
+            var repositoryMock = new Mock<IPageRepository>();
+            repositoryMock.Setup(x => x.GetPageIdByLocalisedSlug(siteId, slug)).Returns(Guid.NewGuid());
+
+            var sut = new PageRules(repositoryMock.Object);
+
+            var actual = sut.IsSlugUnique(siteId, slug);
+
+            Assert.AreEqual(false, actual);
+        }
+
+        [Test]
+        public void Should_return_true_if_localised_slug_is_unique()
+        {
+            var siteId = Guid.NewGuid();
+            var slug = "my-page";
+
+            var repositoryMock = new Mock<IPageRepository>();
+            repositoryMock.Setup(x => x.GetPageIdByLocalisedSlug(siteId, slug)).Returns(Guid.Empty);
+
+            var sut = new PageRules(repositoryMock.Object);
+
+            var actual = sut.IsSlugUnique(siteId, slug);
+
+            Assert.AreEqual(true, actual);
+        }
+
+        [Test]
+        public void Should_return_false_if_localised_slug_is_not_unique_for_existing_pages()
+        {
+            var siteId = Guid.NewGuid();
+            var slug = "my-page";
+
+            var repositoryMock = new Mock<IPageRepository>();
+            repositoryMock.Setup(x => x.GetPageIdByLocalisedSlug(siteId, slug)).Returns(Guid.NewGuid());
+
+            var sut = new PageRules(repositoryMock.Object);
+
+            var actual = sut.IsSlugUnique(siteId, slug, Guid.NewGuid());
+
+            Assert.AreEqual(false, actual);
+        }
+
+        [Test]
+        public void Should_return_true_if_localised_slug_is_unique_for_existing_pages()
+        {
+            var siteId = Guid.NewGuid();
+            var slug = "my-page";
+
+            var repositoryMock = new Mock<IPageRepository>();
+            repositoryMock.Setup(x => x.GetPageIdByLocalisedSlug(siteId, slug)).Returns(Guid.Empty);
+
+            var sut = new PageRules(repositoryMock.Object);
+
+            var actual = sut.IsSlugUnique(siteId, slug, Guid.NewGuid());
 
             Assert.AreEqual(true, actual);
         }
