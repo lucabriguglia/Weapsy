@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
@@ -15,83 +14,77 @@ namespace Weapsy.Api
     [Route("api/[controller]")]
     public class ThemeController : BaseAdminController
     {
-        private readonly IThemeFacade _themeFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IThemeFacade _themeFacade;        
         private readonly IThemeRules _themeRules;
 
-        public ThemeController(IThemeFacade themeFacade,
-            ICommandSender commandSender,
+        public ThemeController(ICommandSender commandSender, 
+            IThemeFacade themeFacade,           
             IThemeRules themeRules,
             IContextService contextService)
             : base(contextService)
         {
-            _themeFacade = themeFacade;
             _commandSender = commandSender;
+            _themeFacade = themeFacade;
             _themeRules = themeRules;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
-            var themes = await Task.Run(() => _themeFacade.GetAllForAdmin());
-            return Ok(themes);
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public IActionResult Get(Guid id)
         {
-            var theme = await Task.Run(() => _themeFacade.GetForAdmin(id));
-
-            if (theme == null)
-                return NotFound();
-
-            return Ok(theme);
+            throw new NotImplementedException();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateTheme model)
+        public IActionResult Post([FromBody] CreateTheme model)
         {
             model.Id = Guid.NewGuid();
-            await Task.Run(() => _commandSender.Send<CreateTheme, Theme>(model));
+            _commandSender.Send<CreateTheme, Theme>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public async Task<IActionResult> UpdateDetails([FromBody] UpdateThemeDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdateThemeDetails model)
         {
-            await Task.Run(() => _commandSender.Send<UpdateThemeDetails, Theme>(model));
+            _commandSender.Send<UpdateThemeDetails, Theme>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("reorder")]
-        public async Task<IActionResult> ReorderThemes([FromBody] List<Guid> model)
+        public IActionResult ReorderThemes([FromBody] List<Guid> model)
         {
-            await Task.Run(() => _commandSender.Send<ReorderThemes, Theme>(new ReorderThemes { Themes = model }));
+            _commandSender.Send<ReorderThemes, Theme>(new ReorderThemes { Themes = model });
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/activate")]
-        public async Task<IActionResult> Activate(Guid id)
+        public IActionResult Activate(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<ActivateTheme, Theme>(new ActivateTheme { Id = id }));
+            _commandSender.Send<ActivateTheme, Theme>(new ActivateTheme { Id = id });
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/hide")]
-        public async Task<IActionResult> Hide(Guid id)
+        public IActionResult Hide(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<HideTheme, Theme>(new HideTheme { Id = id }));
+            _commandSender.Send<HideTheme, Theme>(new HideTheme { Id = id });
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<DeleteTheme, Theme>(new DeleteTheme { Id = id }));
+            _commandSender.Send<DeleteTheme, Theme>(new DeleteTheme { Id = id });
             return new NoContentResult();
         }
 
@@ -121,21 +114,19 @@ namespace Weapsy.Api
 
         [HttpGet]
         [Route("{id}/admin-list")]
-        public async Task<IActionResult> AdminList()
+        public IActionResult AdminList()
         {
-            var model = await Task.Run(() => _themeFacade.GetAllForAdmin());
+            var model = _themeFacade.GetAllForAdmin();
             return Ok(model);
         }
 
         [HttpGet]
         [Route("{id}/admin-edit")]
-        public async Task<IActionResult> AdminEdit(Guid id)
+        public IActionResult AdminEdit(Guid id)
         {
-            var model = await Task.Run(() => _themeFacade.GetForAdmin(id));
-
+            var model = _themeFacade.GetForAdmin(id);
             if (model == null)
                 return NotFound();
-
             return Ok(model);
         }
     }

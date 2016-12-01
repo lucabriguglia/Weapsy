@@ -42,7 +42,6 @@ namespace Weapsy.Api
             var role = await _roleManager.FindByIdAsync(id);
             if (role == null)
                 return NotFound();
-
             return Ok(role);
         }
 
@@ -53,21 +52,20 @@ namespace Weapsy.Api
             var role = await _roleManager.FindByNameAsync(name);
             if (role == null)
                 return NotFound();
-
             return Ok(role);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]IdentityRole model)
         {
-            await _roleService.CreateRole(model.Name);
+            await _roleService.CreateRoleAsync(model.Name);
             return new NoContentResult();
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]IdentityRole model)
         {
-            await _roleService.UpdateRoleName(model.Id, model.Name);
+            await _roleService.UpdateRoleNameAsync(model.Id, model.Name);
             return new NoContentResult();
         }
 
@@ -75,7 +73,7 @@ namespace Weapsy.Api
         [Route("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await _roleService.DeleteRole(id);
+            await _roleService.DeleteRoleAsync(id);
             return new NoContentResult();
         }
 

@@ -52,7 +52,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Roles(string id)
         {
-            var model = await _userService.GetUserRolesViewModel(id);
+            var model = await _userService.GetUserRolesViewModelAsync(id);
 
             if (model == null)
                 return NotFound();

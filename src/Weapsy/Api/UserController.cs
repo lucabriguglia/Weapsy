@@ -55,7 +55,7 @@ namespace Weapsy.Api
         [HttpPost]
         public async Task<IActionResult> Post(string email)
         {
-            await _userService.CreateUser(email);
+            await _userService.CreateUserAsync(email);
             return new NoContentResult();
         }
 
@@ -70,7 +70,7 @@ namespace Weapsy.Api
         [Route("{id}/add-to-role")]
         public async Task<IActionResult> AddToRole(string id, [FromBody]string roleName)
         {
-            await _userService.AddUserToRole(id, roleName);
+            await _userService.AddUserToRoleAsync(id, roleName);
             return new NoContentResult();
         }
 
@@ -78,14 +78,14 @@ namespace Weapsy.Api
         [Route("{id}/remove-from-role")]
         public async Task<IActionResult> RemoveFromRole(string id, [FromBody]string roleName)
         {
-            await _userService.RemoveUserFromRole(id, roleName);
+            await _userService.RemoveUserFromRoleAsync(id, roleName);
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            await _userService.DeleteUser(id);
+            await _userService.DeleteUserAsync(id);
             return new NoContentResult();
         }
 

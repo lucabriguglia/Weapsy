@@ -19,7 +19,6 @@ namespace Weapsy.Components
 
         public async Task<IViewComponentResult> InvokeAsync(ZoneModel model)
         {
-            // to do: check if a view with the same name of the zone exists and render it instead of Default
             return View("Default", model);
         }
     }

@@ -55,7 +55,7 @@ namespace Weapsy.Services.Identity
             return viewModel;
         }
 
-        public async Task<UserRolesViewModel> GetUserRolesViewModel(string id)
+        public async Task<UserRolesViewModel> GetUserRolesViewModelAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
@@ -103,7 +103,7 @@ namespace Weapsy.Services.Identity
             return false;
         }
 
-        public async Task CreateUser(string email)
+        public async Task CreateUserAsync(string email)
         {
             var user = new IdentityUser { UserName = email, Email = email };
 
@@ -113,7 +113,7 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task AddUserToRole(string id, string roleName)
+        public async Task AddUserToRoleAsync(string id, string roleName)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -124,7 +124,7 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task RemoveUserFromRole(string id, string roleName)
+        public async Task RemoveUserFromRoleAsync(string id, string roleName)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -135,7 +135,7 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task DeleteUser(string id)
+        public async Task DeleteUserAsync(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)

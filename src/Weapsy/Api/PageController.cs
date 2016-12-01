@@ -15,14 +15,14 @@ namespace Weapsy.Api
     [Route("api/[controller]")]
     public class PageController : BaseAdminController
     {
-        private readonly IPageFacade _pageFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IPageFacade _pageFacade;        
         private readonly IPageRules _pageRules;
         private readonly IPageRepository _pageRepository;
         private readonly IRoleService _roleService;
 
-        public PageController(IPageFacade pageFacade,
-            ICommandSender commandSender,
+        public PageController(ICommandSender commandSender,
+            IPageFacade pageFacade,            
             IPageRules pageRules,
             IPageRepository pageRepository,
             IRoleService roleService,
@@ -37,34 +37,31 @@ namespace Weapsy.Api
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
-            var pages = await Task.Run(() => _pageRepository.GetAll(SiteId));
-            return Ok(pages);
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public IActionResult Get(Guid id)
         {
-            var page = await Task.Run(() => _pageRepository.GetById(SiteId, id));
-            if (page == null) return NotFound();
-            return Ok(page);
+            throw new NotImplementedException();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreatePage model)
+        public IActionResult Post([FromBody] CreatePage model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<CreatePage, Page>(model));
+            _commandSender.Send<CreatePage, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public async Task<IActionResult> UpdateDetails([FromBody] UpdatePageDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdatePageDetails model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<UpdatePageDetails, Page>(model));
+             _commandSender.Send<UpdatePageDetails, Page>(model);
             return new NoContentResult();
         }
 
@@ -73,8 +70,8 @@ namespace Weapsy.Api
         public async Task<IActionResult> AddModule([FromBody] AddModule model)
         {
             model.SiteId = SiteId;
-            var defaultViewRoleIds = await _roleService.GetDefaultModuleViewPermissionRoleIds();
-            var defaultEditRoleIds = await _roleService.GetDefaultModuleEditPermissionRoleIds();
+            var defaultViewRoleIds = await _roleService.GetDefaultModuleViewPermissionRoleIdsAsync();
+            var defaultEditRoleIds = await _roleService.GetDefaultModuleEditPermissionRoleIdsAsync();
             model.SetPageModulePermissions(defaultViewRoleIds, defaultEditRoleIds);
             await Task.Run(() => _commandSender.Send<AddModule, Page>(model));
             return new NoContentResult();
@@ -82,72 +79,72 @@ namespace Weapsy.Api
 
         [HttpPut]
         [Route("{id}/remove-module")]
-        public async Task<IActionResult> RemoveModule([FromBody] RemoveModule model)
+        public IActionResult RemoveModule([FromBody] RemoveModule model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<RemoveModule, Page>(model));
+            _commandSender.Send<RemoveModule, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/reorder-modules")]
-        public async Task<IActionResult> ReorderPageModules([FromBody] ReorderPageModules model)
+        public IActionResult ReorderPageModules([FromBody] ReorderPageModules model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<ReorderPageModules, Page>(model));
+            _commandSender.Send<ReorderPageModules, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/set-permissions")]
-        public async Task<IActionResult> SetPermissions([FromBody] SetPagePermissions model)
+        public IActionResult SetPermissions([FromBody] SetPagePermissions model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<SetPagePermissions, Page>(model));
+            _commandSender.Send<SetPagePermissions, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/set-module-permissions")]
-        public async Task<IActionResult> SetModulePermissions([FromBody] SetPageModulePermissions model)
+        public IActionResult SetModulePermissions([FromBody] SetPageModulePermissions model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<SetPageModulePermissions, Page>(model));
+            _commandSender.Send<SetPageModulePermissions, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/activate")]
-        public async Task<IActionResult> Activate(Guid id)
+        public IActionResult Activate(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<ActivatePage, Page>(new ActivatePage
+            _commandSender.Send<ActivatePage, Page>(new ActivatePage
             {
                 SiteId = SiteId,
                 Id = id
-            }));
+            });
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/hide")]
-        public async Task<IActionResult> Hide(Guid id)
+        public IActionResult Hide(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<HidePage, Page>(new HidePage
+            _commandSender.Send<HidePage, Page>(new HidePage
             {
                 SiteId = SiteId,
                 Id = id
-            }));
+            });
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<DeletePage, Page>(new DeletePage
+            _commandSender.Send<DeletePage, Page>(new DeletePage
             {
                 SiteId = SiteId,
                 Id = id
-            }));
+            });
             return new NoContentResult();
         }
 
@@ -193,35 +190,37 @@ namespace Weapsy.Api
 
         [HttpGet]
         [Route("{id}/view")]
-        public async Task<IActionResult> ViewById(Guid id)
+        public IActionResult ViewById(Guid id)
         {
-            var model = await Task.Run(() => _pageFacade.GetPageInfo(SiteId, id));
-            if (model == null) return NotFound();
+            var model = _pageFacade.GetPageInfo(SiteId, id);
+            if (model == null)
+                return NotFound();
             return Ok(model);
         }
 
         [HttpGet]
         [Route("{name}/view")]
-        public async Task<IActionResult> ViewByName(string name)
+        public IActionResult ViewByName(string name)
         {
-            var model = await Task.Run(() => _pageFacade.GetPageInfo(SiteId, name));
-            if (model == null) return NotFound();
+            var model = _pageFacade.GetPageInfo(SiteId, name);
+            if (model == null)
+                return NotFound();
             return Ok(model);
         }
 
         [HttpGet]
         [Route("{id}/admin-list")]
-        public async Task<IActionResult> AdminList()
+        public IActionResult AdminList()
         {
-            var model = await Task.Run(() => _pageFacade.GetAllForAdmin(SiteId));
+            var model = _pageFacade.GetAllForAdmin(SiteId);
             return Ok(model);
         }
 
         [HttpGet]
         [Route("{id}/admin-edit")]
-        public async Task<IActionResult> AdminEdit(Guid id)
+        public IActionResult AdminEdit(Guid id)
         {
-            var model = await Task.Run(() => _pageFacade.GetAdminModel(SiteId, id));
+            var model = _pageFacade.GetAdminModel(SiteId, id);
 
             if (model == null)
                 return NotFound();

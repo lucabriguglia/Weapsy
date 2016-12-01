@@ -15,15 +15,15 @@ namespace Weapsy.Areas.Admin.Controllers
     public class RoleController : BaseAdminController
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IRoleService _identityService;
+        private readonly IRoleService _roleService;
 
         public RoleController(RoleManager<IdentityRole> roleManager,
-            IRoleService identityService,
+            IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
             _roleManager = roleManager;
-            _identityService = identityService;
+            _roleService = roleService;
         }
 
         public IActionResult Index()
@@ -44,7 +44,7 @@ namespace Weapsy.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(IdentityRole model)
         {
-            await _identityService.CreateRole(model.Name);
+            await _roleService.CreateRoleAsync(model.Name);
             return new NoContentResult();
         }
 
@@ -59,7 +59,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Update(IdentityRole model)
         {
-            await _identityService.UpdateRoleName(model.Id, model.Name);
+            await _roleService.UpdateRoleNameAsync(model.Id, model.Name);
             return new NoContentResult();
         }
 

@@ -131,14 +131,14 @@ namespace Weapsy.Services.Installation
                 }
             };
 
-            foreach (var roleId in _roleService.GetDefaultPageViewPermissionRoleIds().Result)
+            foreach (var roleId in _roleService.GetDefaultPageViewPermissionRoleIdsAsync().Result)
                 pagePermisisons.Add(new PagePermission
                 {
                     RoleId = roleId,
                     Type = PermissionType.View
                 });
 
-            foreach (var roleId in _roleService.GetDefaultPageEditPermissionRoleIds().Result)
+            foreach (var roleId in _roleService.GetDefaultPageEditPermissionRoleIdsAsync().Result)
                 pagePermisisons.Add(new PagePermission
                 {
                     RoleId = roleId,
@@ -226,14 +226,14 @@ namespace Weapsy.Services.Installation
                 }
             };
 
-            foreach (var roleId in _roleService.GetDefaultModuleViewPermissionRoleIds().Result)
+            foreach (var roleId in _roleService.GetDefaultModuleViewPermissionRoleIdsAsync().Result)
                 pageModulePermisisons.Add(new PageModulePermission
                 {
                     RoleId = roleId,
                     Type = PermissionType.View
                 });
 
-            foreach (var roleId in _roleService.GetDefaultModuleEditPermissionRoleIds().Result)
+            foreach (var roleId in _roleService.GetDefaultModuleEditPermissionRoleIdsAsync().Result)
                 pageModulePermisisons.Add(new PageModulePermission
                 {
                     RoleId = roleId,

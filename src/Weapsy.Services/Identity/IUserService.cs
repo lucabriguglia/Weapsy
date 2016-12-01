@@ -8,12 +8,12 @@ namespace Weapsy.Services.Identity
     public interface IUserService
     {
         UsersViewModel GetUsersViewModel(UsersQuery query);
-        Task<UserRolesViewModel> GetUserRolesViewModel(string id);
+        Task<UserRolesViewModel> GetUserRolesViewModelAsync(string id);
         bool IsUserAuthorized(IPrincipal user, IEnumerable<IdentityRole> roles);
         bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roles);
-        Task CreateUser(string email);
-        Task AddUserToRole(string id, string roleName);
-        Task RemoveUserFromRole(string id, string roleName);
-        Task DeleteUser(string id);
+        Task CreateUserAsync(string email);
+        Task AddUserToRoleAsync(string id, string roleName);
+        Task RemoveUserFromRoleAsync(string id, string roleName);
+        Task DeleteUserAsync(string id);
     }
 }

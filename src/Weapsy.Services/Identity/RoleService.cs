@@ -21,7 +21,7 @@ namespace Weapsy.Services.Identity
             _roleManager = roleManager;
         }
 
-        public async Task CreateRole(string name)
+        public async Task CreateRoleAsync(string name)
         {
             var role = new IdentityRole(name);
 
@@ -31,7 +31,7 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task UpdateRoleName(string id, string name)
+        public async Task UpdateRoleNameAsync(string id, string name)
         {
             var role = await _roleManager.FindByIdAsync(id);
 
@@ -46,7 +46,7 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task DeleteRole(string id)
+        public async Task DeleteRoleAsync(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
 
@@ -79,7 +79,7 @@ namespace Weapsy.Services.Identity
             return model;
         }
 
-        public async Task<IList<string>> GetDefaultPageViewPermissionRoleIds()
+        public async Task<IList<string>> GetDefaultPageViewPermissionRoleIdsAsync()
         {
             var result = new List<string>();
 
@@ -92,7 +92,7 @@ namespace Weapsy.Services.Identity
             return result;
         }
 
-        public async Task<IList<string>> GetDefaultPageEditPermissionRoleIds()
+        public async Task<IList<string>> GetDefaultPageEditPermissionRoleIdsAsync()
         {
             var result = new List<string>();
 
@@ -103,7 +103,7 @@ namespace Weapsy.Services.Identity
             return result;
         }
 
-        public async Task<IList<string>> GetDefaultModuleViewPermissionRoleIds()
+        public async Task<IList<string>> GetDefaultModuleViewPermissionRoleIdsAsync()
         {
             var result = new List<string>();
 
@@ -116,7 +116,7 @@ namespace Weapsy.Services.Identity
             return result;
         }
 
-        public async Task<IList<string>> GetDefaultModuleEditPermissionRoleIds()
+        public async Task<IList<string>> GetDefaultModuleEditPermissionRoleIdsAsync()
         {
             var result = new List<string>();
 
