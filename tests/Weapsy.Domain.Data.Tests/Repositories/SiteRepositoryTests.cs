@@ -106,18 +106,6 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_all_sites()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var sites = repository.GetAll();
-
-                Assert.AreEqual(2, sites.Count);
-            }
-        }
-
-        [Test]
         public void Should_save_new_site()
         {
             var newSite = SiteFactory.CreateNew(Guid.NewGuid(), "Name 3");

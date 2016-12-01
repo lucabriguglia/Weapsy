@@ -54,17 +54,6 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        public ICollection<Site> GetAll()
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntities = context.Set<SiteDbEntity>()
-                    .Include(x => x.SiteLocalisations)
-                    .Where(x => x.Status != SiteStatus.Deleted).ToList();
-                return _mapper.Map<IList<Site>>(dbEntities);
-            }
-        }
-
         public void Create(Site site)
         {
             using (var context = _dbContextFactory.Create())

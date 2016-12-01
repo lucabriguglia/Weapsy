@@ -9,7 +9,6 @@ namespace Weapsy.Domain.Sites
         Site GetById(Guid id);
         Site GetByName(string name);
         Site GetByUrl(string url);
-        ICollection<Site> GetAll();
         void Create(Site site);
         void Update(Site site);
     }

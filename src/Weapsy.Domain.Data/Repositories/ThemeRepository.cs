@@ -50,18 +50,6 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        public ICollection<Theme> GetAll()
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntities = context.Set<ThemeDbEntity>()
-                    .Where(x => x.Status != ThemeStatus.Deleted)
-                    .OrderBy(x => x.SortOrder)
-                    .ToList();
-                return _mapper.Map<ICollection<Theme>>(dbEntities);
-            }
-        }
-
         public int GetThemesCount()
         {
             using (var context = _dbContextFactory.Create())

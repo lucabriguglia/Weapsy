@@ -107,18 +107,6 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_all_themes()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var list = repository.GetAll();
-
-                Assert.AreEqual(2, list.Count);
-            }
-        }
-
-        [Test]
         public void Should_return_themes_count()
         {
             using (var context = new WeapsyDbContext(_contextOptions))
