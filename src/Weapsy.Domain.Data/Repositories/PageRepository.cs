@@ -70,12 +70,23 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
+        public Guid GetPageIdByName(Guid siteId, string name)
+        {
+            using (var context = _dbContextFactory.Create())
+            {
+                return context.Pages
+                    .Where(x => x.SiteId == siteId && x.Name == name && x.Status != PageStatus.Deleted)
+                    .Select(x => x.Id)
+                    .FirstOrDefault();
+            }
+        }
+
         public Guid GetPageIdBySlug(Guid siteId, string slug)
         {
             using (var context = _dbContextFactory.Create())
             {
                 return context.Pages
-                    .Where(x => x.SiteId == siteId && x.Status != PageStatus.Deleted && x.Url == slug)
+                    .Where(x => x.SiteId == siteId && x.Url == slug && x.Status != PageStatus.Deleted)
                     .Select(x => x.Id)
                     .FirstOrDefault();
             }
@@ -86,7 +97,7 @@ namespace Weapsy.Domain.Data.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 return context.PageLocalisations
-                    .Where(x => x.Page.SiteId == siteId && x.Page.Status != PageStatus.Deleted && x.Url == slug)
+                    .Where(x => x.Page.SiteId == siteId && x.Url == slug && x.Page.Status != PageStatus.Deleted)
                     .Select(x => x.PageId)
                     .FirstOrDefault();
             }

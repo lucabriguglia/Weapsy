@@ -172,26 +172,14 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         }
 
         [Test]
-        public void Should_return_page_by_name()
+        public void Should_return_page_id_by_name()
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var page = repository.GetByName(_siteId, "Name 1");
+                var pageId = repository.GetPageIdByName(_siteId, "Name 2");
 
-                Assert.NotNull(page);
-            }
-        }
-
-        [Test]
-        public void Should_return_page_by_name_with_no_deleted_page_modules()
-        {
-            using (var context = new WeapsyDbContext(_contextOptions))
-            {
-                var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
-                var page = repository.GetByName(_siteId, "Name 1");
-
-                Assert.AreEqual(0, page.PageModules.Count(x => x.Status == PageModuleStatus.Deleted));
+                Assert.AreEqual(_pageId2, pageId);
             }
         }
 

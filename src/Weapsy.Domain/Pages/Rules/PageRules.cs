@@ -40,8 +40,8 @@ namespace Weapsy.Domain.Pages.Rules
 
         public bool IsPageNameUnique(Guid siteId, string name, Guid pageId = new Guid())
         {
-            var page = _pageRepository.GetByName(siteId, name);
-            return IsPageUnique(page, pageId);
+            var pageIdByName = _pageRepository.GetPageIdByName(siteId, name);
+            return pageIdByName == Guid.Empty || (pageId != Guid.Empty && pageIdByName == pageId);
         }
 
         public bool IsPageUrlValid(string url)

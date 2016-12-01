@@ -98,7 +98,7 @@ namespace Weapsy.Domain.Tests.Pages.Rules
             var name = "My Page";
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetByName(siteId, name)).Returns(new Page());
+            repositoryMock.Setup(x => x.GetPageIdByName(siteId, name)).Returns(Guid.NewGuid());
 
             var sut = new PageRules(repositoryMock.Object);
 
@@ -114,7 +114,7 @@ namespace Weapsy.Domain.Tests.Pages.Rules
             var name = "My Page";
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetByName(siteId, name)).Returns((Page)null);
+            repositoryMock.Setup(x => x.GetPageIdByName(siteId, name)).Returns(Guid.Empty);
 
             var sut = new PageRules(repositoryMock.Object);
 
@@ -131,7 +131,7 @@ namespace Weapsy.Domain.Tests.Pages.Rules
             var name = "my-page";
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetByName(siteId, name)).Returns(new Page());
+            repositoryMock.Setup(x => x.GetPageIdByName(siteId, name)).Returns(Guid.NewGuid());
 
             var sut = new PageRules(repositoryMock.Object);
 
@@ -148,7 +148,7 @@ namespace Weapsy.Domain.Tests.Pages.Rules
             var name = "my-page";
 
             var repositoryMock = new Mock<IPageRepository>();
-            repositoryMock.Setup(x => x.GetByName(siteId, name)).Returns((Page)null);
+            repositoryMock.Setup(x => x.GetPageIdByName(siteId, name)).Returns(Guid.Empty);
 
             var sut = new PageRules(repositoryMock.Object);
 

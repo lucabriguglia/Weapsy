@@ -7,7 +7,7 @@ namespace Weapsy.Domain.Pages
     {
         Page GetById(Guid id);
         Page GetById(Guid siteId, Guid id);
-        Page GetByName(Guid siteId, string name);
+        Guid GetPageIdByName(Guid siteId, string name);
         Guid GetPageIdBySlug(Guid siteId, string slug);
         Guid GetPageIdByLocalisedSlug(Guid siteId, string slug);
         void Create(Page page);
