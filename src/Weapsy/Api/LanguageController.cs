@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Languages;
 using Weapsy.Domain.Languages.Commands;
@@ -40,7 +41,9 @@ namespace Weapsy.Api
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var language = await _languageFacade.GetForAdminAsync(SiteId, id);
+            var languages = await _languageFacade.GetAllActiveAsync(SiteId);
+
+            var language = languages.FirstOrDefault(x => x.Id == id);
 
             if (language == null)
                 return NotFound();
@@ -58,57 +61,57 @@ namespace Weapsy.Api
 
         [HttpPut]
         [Route("{id}/update")]
-        public async Task<IActionResult> UpdateDetails([FromBody] UpdateLanguageDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdateLanguageDetails model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<UpdateLanguageDetails, Language>(model));
+            _commandSender.Send<UpdateLanguageDetails, Language>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("reorder")]
-        public async Task<IActionResult> ReorderLanguages([FromBody] List<Guid> model)
+        public IActionResult ReorderLanguages([FromBody] List<Guid> model)
         {
-            await Task.Run(() => _commandSender.Send<ReorderLanguages, Language>(new ReorderLanguages
+            _commandSender.Send<ReorderLanguages, Language>(new ReorderLanguages
             {
                 SiteId = SiteId,
                 Languages = model
-            }));
+            });
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/activate")]
-        public async Task<IActionResult> Activate(Guid id)
+        public IActionResult Activate(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<ActivateLanguage, Language>(new ActivateLanguage
+            _commandSender.Send<ActivateLanguage, Language>(new ActivateLanguage
             {
                 SiteId = SiteId,
                 Id = id
-            }));
+            });
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/hide")]
-        public async Task<IActionResult> Hide(Guid id)
+        public IActionResult Hide(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<HideLanguage, Language>(new HideLanguage
+            _commandSender.Send<HideLanguage, Language>(new HideLanguage
             {
                 SiteId = SiteId,
                 Id = id
-            }));
+            });
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<DeleteLanguage, Language>(new DeleteLanguage
+            _commandSender.Send<DeleteLanguage, Language>(new DeleteLanguage
             {
                 SiteId = SiteId,
                 Id = id
-            }));
+            });
             return new NoContentResult();
         }
 

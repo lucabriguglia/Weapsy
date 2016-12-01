@@ -46,31 +46,31 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateEmailAccount model)
+        public IActionResult Post([FromBody] CreateEmailAccount model)
         {
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
-            await Task.Run(() => _commandSender.Send<CreateEmailAccount, EmailAccount>(model));
+            _commandSender.Send<CreateEmailAccount, EmailAccount>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public async Task<IActionResult> UpdateDetails([FromBody] UpdateEmailAccountDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdateEmailAccountDetails model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model));
+            _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model);
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
-            await Task.Run(() => _commandSender.Send<DeleteEmailAccount, EmailAccount>(new DeleteEmailAccount
+           _commandSender.Send<DeleteEmailAccount, EmailAccount>(new DeleteEmailAccount
             {
                 SiteId = SiteId,
                 Id = id
-            }));
+            });
             return new NoContentResult();
         }
 
