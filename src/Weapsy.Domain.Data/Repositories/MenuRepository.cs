@@ -99,34 +99,45 @@ namespace Weapsy.Domain.Data.Repositories
                 else
                 {
                     context.Entry(menuItemDbEntity).State = EntityState.Modified;
-                    UpdateMenuItemLocalisations(context, menuItemDbEntity.MenuItemLocalisations);
+                    UpdateMenuItemLocalisations(context, currentMenuItem.Id, menuItemDbEntity.MenuItemLocalisations);
                     UpdateMenuItemPermissions(context, currentMenuItem.Id, menuItemDbEntity.MenuItemPermissions);
                 }
             }
         }
 
-        private void UpdateMenuItemLocalisations(WeapsyDbContext context, IEnumerable<MenuItemLocalisationDbEntity> menuItemLocalisationDbEntities)
+        private void UpdateMenuItemLocalisations(WeapsyDbContext context, Guid menuItemId, IEnumerable<MenuItemLocalisationDbEntity> menuItemLocalisations)
         {
-            foreach (var menuItemLocalisationDbEntity in menuItemLocalisationDbEntities)
+            var currentMenuItemLocalisations = context.MenuItemLocalisations
+                .AsNoTracking()
+                .Where(x => x.MenuItemId == menuItemId)
+                .ToList();
+
+            foreach (var currentMenuItemLocalisation in currentMenuItemLocalisations)
+            {
+                var menuItemLocalisation = menuItemLocalisations
+                    .FirstOrDefault(x => x.MenuItemId == currentMenuItemLocalisation.MenuItemId
+                    && x.LanguageId == currentMenuItemLocalisation.LanguageId);
+
+                if (menuItemLocalisation == null)
+                    context.Remove(currentMenuItemLocalisation);
+            }
+
+            foreach (var menuItemLocalisation in menuItemLocalisations)
             {
                 var currentMenuItemLocalisation = context.MenuItemLocalisations.AsNoTracking()
-                    .FirstOrDefault(x => x.MenuItemId == menuItemLocalisationDbEntity.MenuItemId 
-                    && x.LanguageId == menuItemLocalisationDbEntity.LanguageId);
+                    .FirstOrDefault(x => x.MenuItemId == menuItemLocalisation.MenuItemId 
+                    && x.LanguageId == menuItemLocalisation.LanguageId);
 
                 if (currentMenuItemLocalisation == null)
-                {
-                    context.Add(menuItemLocalisationDbEntity);
-                }
+                    context.Add(menuItemLocalisation);
                 else
-                {
-                    context.Entry(menuItemLocalisationDbEntity).State = EntityState.Modified;
-                }                
+                    context.Entry(menuItemLocalisation).State = EntityState.Modified;              
             }
         }
 
         private void UpdateMenuItemPermissions(WeapsyDbContext context, Guid menuItemId, IEnumerable<MenuItemPermissionDbEntity> menuItemPermissions)
         {
-            var currentMenuItemPermissions = context.Set<MenuItemPermissionDbEntity>()
+            var currentMenuItemPermissions = context.MenuItemPermissions
                 .AsNoTracking()
                 .Where(x => x.MenuItemId == menuItemId)
                 .ToList();
