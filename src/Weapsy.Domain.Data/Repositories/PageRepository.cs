@@ -121,7 +121,7 @@ namespace Weapsy.Domain.Data.Repositories
 
                 context.Entry(pageDbEntity).State = EntityState.Modified;
 
-                UpdatePageLocalisations(context, pageDbEntity.PageLocalisations);
+                UpdatePageLocalisations(context, pageDbEntity.Id, pageDbEntity.PageLocalisations);
                 UpdatePageModules(context, pageDbEntity.PageModules);
                 UpdatePagePermissions(context, pageDbEntity.Id, pageDbEntity.PagePermissions);
 
@@ -129,8 +129,23 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageLocalisations(WeapsyDbContext context, IEnumerable<PageLocalisationDbEntity> pageLocalisations)
+        private void UpdatePageLocalisations(WeapsyDbContext context, Guid pageId, IEnumerable<PageLocalisationDbEntity> pageLocalisations)
         {
+            var currentPageLocalisations = context.PageLocalisations
+                .AsNoTracking()
+                .Where(x => x.PageId == pageId)
+                .ToList();
+
+            foreach (var currentPageLocalisation in currentPageLocalisations)
+            {
+                var pageLocalisation = pageLocalisations
+                    .FirstOrDefault(x => x.PageId == currentPageLocalisation.PageId
+                    && x.LanguageId == currentPageLocalisation.LanguageId);
+
+                if (pageLocalisation == null)
+                    context.Remove(currentPageLocalisation);
+            }
+
             foreach (var pageLocalisation in pageLocalisations)
             {
                 var currentPageLocalisation = context.Set<PageLocalisationDbEntity>()
@@ -140,13 +155,9 @@ namespace Weapsy.Domain.Data.Repositories
                         x.LanguageId == pageLocalisation.LanguageId);
 
                 if (currentPageLocalisation == null)
-                {
                     context.Add(pageLocalisation);
-                }
                 else
-                {
                     context.Entry(pageLocalisation).State = EntityState.Modified;
-                }
             }
         }
 
