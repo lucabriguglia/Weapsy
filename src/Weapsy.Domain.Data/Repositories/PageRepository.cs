@@ -167,14 +167,29 @@ namespace Weapsy.Domain.Data.Repositories
                 else
                 {
                     context.Entry(pageModule).State = EntityState.Modified;
-                    UpdatePageModuleLocalisations(context, pageModule.PageModuleLocalisations);
+                    UpdatePageModuleLocalisations(context, pageModule.Id, pageModule.PageModuleLocalisations);
                     UpdatePageModulePermissions(context, pageModule.Id, pageModule.PageModulePermissions);
                 }
             }
         }
 
-        private void UpdatePageModuleLocalisations(WeapsyDbContext context, IEnumerable<PageModuleLocalisationDbEntity> pageModuleLocalisations)
+        private void UpdatePageModuleLocalisations(WeapsyDbContext context, Guid pageModuleId, IEnumerable<PageModuleLocalisationDbEntity> pageModuleLocalisations)
         {
+            var currentPageModuleLocalisations = context.PageModuleLocalisations
+                .AsNoTracking()
+                .Where(x => x.PageModuleId == pageModuleId)
+                .ToList();
+
+            foreach (var currentPageModuleLocalisation in currentPageModuleLocalisations)
+            {
+                var pageModuleLocalisation = pageModuleLocalisations
+                    .FirstOrDefault(x => x.PageModuleId == currentPageModuleLocalisation.PageModuleId
+                    && x.LanguageId == currentPageModuleLocalisation.LanguageId);
+
+                if (pageModuleLocalisation == null)
+                    context.Remove(currentPageModuleLocalisation);
+            }
+
             foreach (var pageModuleLocalisation in pageModuleLocalisations)
             {
                 var currentPageModuleLocalisation = context.Set<PageModuleLocalisationDbEntity>()
@@ -184,13 +199,9 @@ namespace Weapsy.Domain.Data.Repositories
                         x.LanguageId == pageModuleLocalisation.LanguageId);
 
                 if (currentPageModuleLocalisation == null)
-                {
                     context.Add(pageModuleLocalisation);
-                }
                 else
-                {
                     context.Entry(pageModuleLocalisation).State = EntityState.Modified;
-                }
             }
         }
 
