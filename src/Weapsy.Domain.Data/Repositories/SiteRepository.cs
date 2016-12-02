@@ -72,30 +72,40 @@ namespace Weapsy.Domain.Data.Repositories
 
                 context.Entry(siteDbEntity).State = EntityState.Modified;
 
-                UpdateSiteLocalisations(context, siteDbEntity.SiteLocalisations);
+                UpdateSiteLocalisations(context, siteDbEntity.Id, siteDbEntity.SiteLocalisations);
 
                 context.SaveChanges();
             }
         }
 
-        private void UpdateSiteLocalisations(WeapsyDbContext context, IEnumerable<SiteLocalisationDbEntity> siteLocalisations)
+        private void UpdateSiteLocalisations(WeapsyDbContext context, Guid siteId, IEnumerable<SiteLocalisationDbEntity> siteLocalisations)
         {
+            var currentSiteLocalisations = context.SiteLocalisations
+                .AsNoTracking()
+                .Where(x => x.SiteId == siteId)
+                .ToList();
+
+            foreach (var currentSiteLocalisation in currentSiteLocalisations)
+            {
+                var siteLocalisation = siteLocalisations
+                    .FirstOrDefault(x => x.LanguageId == currentSiteLocalisation.LanguageId);
+
+                if (siteLocalisation == null)
+                    context.Remove(currentSiteLocalisation);
+            }
+
             foreach (var siteLocalisation in siteLocalisations)
             {
-                var currentSiteLocalisation = context.Set<SiteLocalisationDbEntity>()
+                var currentSiteLocalisation = context.SiteLocalisations
                     .AsNoTracking()
                     .FirstOrDefault(x =>
                         x.SiteId == siteLocalisation.SiteId &&
                         x.LanguageId == siteLocalisation.LanguageId);
 
                 if (currentSiteLocalisation == null)
-                {
                     context.Add(siteLocalisation);
-                }
                 else
-                {
                     context.Entry(siteLocalisation).State = EntityState.Modified;
-                }
             }
         }
     }

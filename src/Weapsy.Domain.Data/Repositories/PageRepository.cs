@@ -139,8 +139,7 @@ namespace Weapsy.Domain.Data.Repositories
             foreach (var currentPageLocalisation in currentPageLocalisations)
             {
                 var pageLocalisation = pageLocalisations
-                    .FirstOrDefault(x => x.PageId == currentPageLocalisation.PageId
-                    && x.LanguageId == currentPageLocalisation.LanguageId);
+                    .FirstOrDefault(x => x.LanguageId == currentPageLocalisation.LanguageId);
 
                 if (pageLocalisation == null)
                     context.Remove(currentPageLocalisation);
