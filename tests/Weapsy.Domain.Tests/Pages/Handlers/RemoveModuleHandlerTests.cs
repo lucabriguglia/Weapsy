@@ -211,9 +211,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var addPageModuleValidatoMock = new Mock<IValidator<AddPageModule>>();
             addPageModuleValidatoMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
 
-            var page = PageFactory.Page(siteId, pageId, "My Page", Guid.NewGuid(), Guid.NewGuid());
-
-            page.AddModule(addPageModuleCommand, addPageModuleValidatoMock.Object);
+            var page = PageFactory.Page(siteId, pageId, "My Page", Guid.NewGuid(), addPageModuleCommand.ModuleId);
 
             var command = new RemoveModule
             {
@@ -228,7 +226,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             moduleRepositoryMock.Setup(x => x.Update(It.IsAny<Module>()));
 
             var pageRepositoryMock = new Mock<IPageRepository>();
-            pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(new Page());
+            pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
 
             var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
             deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
