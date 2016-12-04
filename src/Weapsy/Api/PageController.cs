@@ -221,10 +221,8 @@ namespace Weapsy.Api
         public IActionResult AdminEdit(Guid id)
         {
             var model = _pageFacade.GetAdminModel(SiteId, id);
-
             if (model == null)
                 return NotFound();
-
             return Ok(model);
         }
     }

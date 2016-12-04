@@ -16,7 +16,7 @@ namespace Weapsy.Mvc.ViewEngine
 
         public IEnumerable<string> ExpandViewLocations(ViewLocationExpanderContext context, IEnumerable<string> viewLocations)
         {
-            string theme = null;
+            string theme;
             if (context.Values.TryGetValue(ThemeKey, out theme))
             {
                 viewLocations = new[] 

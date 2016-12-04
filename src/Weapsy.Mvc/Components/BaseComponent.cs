@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Sites;
 
 namespace Weapsy.Mvc.Components
@@ -9,12 +10,13 @@ namespace Weapsy.Mvc.Components
     {
         private readonly IContextService _contextService;
 
-        public BaseViewComponent(IContextService contextService)
+        protected BaseViewComponent(IContextService contextService)
         {
             _contextService = contextService;
         }
 
         public SiteInfo SiteInfo => _contextService.GetCurrentSiteInfo();
+        public LanguageInfo LanguageInfo => _contextService.GetCurrentLanguageInfo();
         public Guid SiteId => SiteInfo.Id;
     }
 }

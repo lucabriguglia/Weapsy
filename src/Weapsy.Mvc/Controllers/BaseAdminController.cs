@@ -6,7 +6,8 @@ namespace Weapsy.Mvc.Controllers
     [Authorize(Roles = "Administrator")]
     public abstract class BaseAdminController : BaseController
     {
-        public BaseAdminController(IContextService contextService) : base(contextService)
+        protected BaseAdminController(IContextService contextService) 
+            : base(contextService)
         {
         }
     }
