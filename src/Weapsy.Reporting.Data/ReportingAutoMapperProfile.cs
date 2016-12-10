@@ -10,9 +10,9 @@ using Weapsy.Reporting.Sites;
 
 namespace Weapsy.Reporting.Data
 {
-    public class AutoMapperProfile : Profile
+    public class ReportingAutoMapperProfile : Profile
     {
-        public AutoMapperProfile()
+        public ReportingAutoMapperProfile()
         {
             CreateMap<App, AppAdminModel>();
             CreateMap<App, AppAdminListModel>();

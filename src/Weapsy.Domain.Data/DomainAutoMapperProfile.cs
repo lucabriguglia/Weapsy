@@ -29,9 +29,9 @@ using UserDbEntity = Weapsy.Data.Entities.User;
 
 namespace Weapsy.Domain.Data
 {
-    public class AutoMapperProfile : Profile
+    public class DomainAutoMapperProfile : Profile
     {
-        public AutoMapperProfile()
+        public DomainAutoMapperProfile()
         {
             CreateMap<App, AppDbEntity>();
             CreateMap<AppDbEntity, App>().ConstructUsing(x => new App());

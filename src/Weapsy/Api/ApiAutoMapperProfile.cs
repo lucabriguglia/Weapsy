@@ -8,9 +8,9 @@ using Weapsy.Reporting.Sites;
 
 namespace Weapsy.Api
 {
-    public class AutoMapperProfile : Profile
+    public class ApiAutoMapperProfile : Profile
     {
-        public AutoMapperProfile()
+        public ApiAutoMapperProfile()
         {
             CreateMap<PageAdminModel, CreatePage>().ForMember(x => x.PagePermissions, opt => opt.Ignore());
             CreateMap<PageLocalisationAdminModel, PageLocalisation>();

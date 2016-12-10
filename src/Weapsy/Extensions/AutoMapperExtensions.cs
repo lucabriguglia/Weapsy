@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Weapsy.Api;
 using Weapsy.Domain.Data;
 using Weapsy.Mvc.Apps;
+using Weapsy.Reporting.Data;
 
 namespace Weapsy.Extensions
 {
@@ -12,9 +14,9 @@ namespace Weapsy.Extensions
         {
             var autoMapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new Api.AutoMapperProfile());
-                cfg.AddProfile(new AutoMapperProfile());
-                cfg.AddProfile(new Reporting.Data.AutoMapperProfile());
+                cfg.AddProfile(new ApiAutoMapperProfile());
+                cfg.AddProfile(new DomainAutoMapperProfile());
+                cfg.AddProfile(new ReportingAutoMapperProfile());
 
                 foreach (var profile in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<Profile>())
                 {
