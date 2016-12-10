@@ -6,7 +6,8 @@
     "NETStandard.Library": "1.6.1",
     "Weapsy.Apps.Text": "1.0.0-*",
     "Weapsy.Apps.Text.Data": "1.0.0-*",
-    "Weapsy.Infrastructure": "1.0.0-*"
+    "Weapsy.Infrastructure": "1.0.0-*",
+    "Weapsy.Mvc": "1.0.0-*"
   },
 
   "frameworks": {

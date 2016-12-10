@@ -6,6 +6,7 @@
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
     "NETStandard.Library": "1.6.1",
     "Weapsy.Apps.Text": "1.0.0-*",
+    "Weapsy.Data": "1.0.0-*",
     "Weapsy.Infrastructure": "1.0.0-*"
   },
 

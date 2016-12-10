@@ -10,18 +10,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.CodeAnalysis;
 using Weapsy.Data;
 using Weapsy.DependencyConfigurator;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.ViewEngine;
 using Weapsy.Reporting.Pages;
 using Weapsy.Services;
-using Weapsy.Apps.Text.DependencyConfigurator;
 using Weapsy.Infrastructure.Configuration;
 using Weapsy.Reporting.Languages;
 using Weapsy.Domain.Sites;
 using Weapsy.Extensions;
 using Weapsy.Services.Installation;
+using Weapsy.Mvc.Apps;
+using System.Linq;
+using System.Reflection;
+using Autofac.Core;
 
 namespace Weapsy
 {
@@ -52,20 +58,26 @@ namespace Weapsy
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            // Add functionality to inject IOptions<T>
+
+
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IContextService, ContextService>();
+
+            var hostingEnvironment = services.BuildServiceProvider().GetService<IHostingEnvironment>();
+
+
+
+            //var appLoader = services.BuildServiceProvider().GetService<IAppLoader>();
+            //var appDescriptors = appLoader.GetAppDescriptors();
+
+
             services.AddOptions();
-
-            // Add our Config object so it can be injected
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
-
-            // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services
-            //    .AddScoped(p => new WeapsyDbContext(p.GetService<DbContextOptions<WeapsyDbContext>>()));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -74,13 +86,19 @@ namespace Weapsy
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc()
-                //.AddViewComponentsAsServices
-                //.AddControllersAsServices
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = "Resources")
                 .AddDataAnnotationsLocalization()
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                })
+                .AddRazorOptions(options =>
+                {
+                    foreach (var assembly in AppLoader.Instance(hostingEnvironment).AppAssemblies)
+                    {
+                        var reference = MetadataReference.CreateFromFile(assembly.Location);
+                        options.AdditionalCompilationReferences.Add(reference);
+                    }
                 });
 
             services.Configure<RazorViewEngineOptions>(options =>
@@ -88,18 +106,21 @@ namespace Weapsy
                 options.ViewLocationExpanders.Add(new WeapsyViewLocationExpander());
             });
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(hostingEnvironment);
 
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-            services.AddTransient<IContextService, ContextService>();
+            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<Mvc.Apps.IStartup>())
+            {
+                startup.ConfigureServices(services);
+            }
 
             var builder = new ContainerBuilder();
 
-            // temporary: all modules will be added automatically 
+            foreach (var module in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<IModule>())
+            {
+                builder.RegisterModule(module);
+            }
+
             builder.RegisterModule(new WeapsyModule());
-            builder.RegisterModule(new AutofacModule());
             builder.Populate(services);
 
             var container = builder.Build();
@@ -109,7 +130,7 @@ namespace Weapsy
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
-            IHostingEnvironment env, 
+            IHostingEnvironment hostingEnvironment, 
             ILoggerFactory loggerFactory,
             ISiteInstallationService siteInstallationService,
             IAppInstallationService appInstallationService,
@@ -129,7 +150,7 @@ namespace Weapsy
 
             app.UseStatusCodePagesWithRedirects("~/error/{0}");
 
-            if (env.IsDevelopment())
+            if (hostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -144,9 +165,18 @@ namespace Weapsy
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<Mvc.Apps.IStartup>())
+            {
+                startup.Configure(app);
+            }
 
-            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+            var applicationPartManager = app.ApplicationServices.GetRequiredService<ApplicationPartManager>();
+            Parallel.ForEach(AppLoader.Instance(hostingEnvironment).AppAssemblies, assembly =>
+            {
+                applicationPartManager.ApplicationParts.Add(new AssemblyPart(assembly));
+            });
+
+            app.UseIdentity();
 
             var site = siteRepository.GetByName("Default");
             var activeLanguages = languageFacade.GetAllActiveAsync(site.Id).Result;

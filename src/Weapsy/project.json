@@ -5,7 +5,6 @@
   "frameworks": {
     "netcoreapp1.1": {
       "dependencies": {
-        "Weapsy.Apps.Text": "1.0.0-*",
         "Weapsy.DependencyConfigurator": "1.0.0-*",
         "Weapsy.Domain": "1.0.0-*",
         "Weapsy.Domain.Data": "1.0.0-*",
@@ -14,8 +13,6 @@
         "Weapsy.Reporting": "1.0.0-*",
         "Weapsy.Reporting.Data": "1.0.0-*",
         "Weapsy.Services": "1.0.0-*",
-        "Weapsy.Apps.Text.Data": "1.0.0-*",
-        "Weapsy.Apps.Text.DependencyConfigurator": "1.0.0-*",
         "Weapsy.Infrastructure": "1.0.0-*"
       },
       "imports": [
