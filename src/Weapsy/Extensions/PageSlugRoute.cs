@@ -1,36 +1,14 @@
 ﻿using System;
-using Microsoft.AspNetCore.Builder;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages;
-using System.Threading.Tasks;
-using System.Linq;
 using Weapsy.Reporting.Pages;
 
 namespace Weapsy.Extensions
 {
-    public static class RoutingExtensions
-    {
-        public static IApplicationBuilder AddRoutes(this IApplicationBuilder app)
-        {
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "area",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-                routes.Routes.Add(new PageSlugRoute(routes.DefaultHandler));
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-            return app;
-        }
-    }
-
     public class PageSlugRoute : IRouter
     {
         private readonly IRouter _router;

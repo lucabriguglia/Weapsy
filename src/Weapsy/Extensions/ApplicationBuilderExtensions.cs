@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Localization;
 
 namespace Weapsy.Extensions
 {
-    public static class LocalisationExtensions
+    public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder AddLocalisation(this IApplicationBuilder app,
             IEnumerable<LanguageInfo> languages)
@@ -33,6 +33,24 @@ namespace Weapsy.Extensions
                 DefaultRequestCulture = defaultRequestCulture,
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
+            });
+
+            return app;
+        }
+
+        public static IApplicationBuilder AddRoutes(this IApplicationBuilder app)
+        {
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "area",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                routes.Routes.Add(new PageSlugRoute(routes.DefaultHandler));
+
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
             return app;

@@ -100,11 +100,11 @@ namespace Weapsy
 
             services.Configure<RazorViewEngineOptions>(options =>
             {
-                //foreach (var assembly in AppLoader.Instance(hostingEnvironment).AppAssemblies)
-                //{
-                //    var embeddedFileProvider = new EmbeddedFileProvider(assembly, assembly.GetName().Name);
-                //    options.FileProviders.Add(embeddedFileProvider);
-                //}
+                foreach (var assembly in AppLoader.Instance(hostingEnvironment).AppAssemblies)
+                {
+                    var embeddedFileProvider = new EmbeddedFileProvider(assembly, assembly.GetName().Name);
+                    options.FileProviders.Add(embeddedFileProvider);
+                }
                 options.ViewLocationExpanders.Add(new ViewLocationExpander());
             });
 

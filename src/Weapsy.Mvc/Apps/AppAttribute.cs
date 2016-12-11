@@ -5,10 +5,6 @@ namespace Weapsy.Mvc.Apps
 {
     public class AppAttribute : RouteValueAttribute
     {
-        /// <summary>
-        /// Initializes a new <see cref="AppAttribute"/> instance.
-        /// </summary>
-        /// <param name="appName">The app containing the controller or action.</param>
         public AppAttribute(string appName)
             : base("area", appName)
         {

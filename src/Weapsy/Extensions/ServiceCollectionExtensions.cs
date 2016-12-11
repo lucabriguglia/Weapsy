@@ -8,7 +8,7 @@ using Weapsy.Reporting.Data;
 
 namespace Weapsy.Extensions
 {
-    public static class AutoMapperExtensions
+    public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddAutoMapper(this IServiceCollection services)
         {
