@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.CodeAnalysis;
@@ -164,6 +165,19 @@ namespace Weapsy
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
+
+            foreach (var appDescriptor in AppLoader.Instance(hostingEnvironment).AppDescriptors)
+            {
+                var contentPath = Path.Combine(hostingEnvironment.ContentRootPath, "Apps", appDescriptor.Folder, "wwwroot");
+                if (Directory.Exists(contentPath))
+                {
+                    app.UseStaticFiles(new StaticFileOptions
+                    {
+                        RequestPath = "/" + appDescriptor.Folder,
+                        FileProvider = new PhysicalFileProvider(contentPath)
+                    });
+                }
+            }
 
             foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<Mvc.Apps.IStartup>())
             {

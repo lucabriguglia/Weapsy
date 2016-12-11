@@ -10,7 +10,7 @@ namespace Weapsy.Mvc.ViewEngine
 
         public void PopulateValues(ViewLocationExpanderContext context)
         {
-            string theme = "Default" /*WeapsyGlobal.Current.Theme.Folder*/;
+            string theme = "Default";
             context.Values[ThemeKey] = theme;
         }
 
