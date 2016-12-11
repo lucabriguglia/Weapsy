@@ -47,7 +47,7 @@ namespace Weapsy.Apps.Text.Components
                 content = defaultContent;
             }
 
-            return View("Default", content);
+            return View("~/Apps/Text/Views/Shared/Components/TextModule/Default.cshtml", content);
         }
     }
 }

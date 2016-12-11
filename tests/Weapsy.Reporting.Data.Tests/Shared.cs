@@ -8,7 +8,7 @@ namespace Weapsy.Reporting.Data.Tests
         {
             var autoMapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new AutoMapperProfile());
+                cfg.AddProfile(new ReportingAutoMapperProfile());
             });
 
             return autoMapperConfig.CreateMapper();

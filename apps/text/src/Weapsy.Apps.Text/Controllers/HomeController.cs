@@ -7,10 +7,11 @@ using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Mvc.Context;
 using Weapsy.Apps.Text.Domain;
+using Weapsy.Mvc.Apps;
 
 namespace Weapsy.Apps.Text.Controllers
 {
-    [Area("Text")]
+    [App("Text")]
     public class HomeController : BaseAdminController
     {
         private readonly ITextModuleFacade _textFacade;

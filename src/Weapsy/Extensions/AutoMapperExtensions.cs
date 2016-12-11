@@ -10,8 +10,10 @@ namespace Weapsy.Extensions
 {
     public static class AutoMapperExtensions
     {
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services, IHostingEnvironment hostingEnvironment)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services)
         {
+            var hostingEnvironment = services.BuildServiceProvider().GetService<IHostingEnvironment>();
+
             var autoMapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new ApiAutoMapperProfile());

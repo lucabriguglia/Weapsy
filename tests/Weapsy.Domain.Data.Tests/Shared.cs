@@ -12,7 +12,7 @@ namespace Weapsy.Domain.Data.Tests
         {
             var autoMapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new AutoMapperProfile());
+                cfg.AddProfile(new DomainAutoMapperProfile());
             });
 
             return autoMapperConfig.CreateMapper();

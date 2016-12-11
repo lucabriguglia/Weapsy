@@ -29,6 +29,7 @@ using System.Linq;
 using System.Reflection;
 using Autofac.Core;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Extensions.FileProviders;
 
 namespace Weapsy
 {
@@ -98,10 +99,15 @@ namespace Weapsy
 
             services.Configure<RazorViewEngineOptions>(options =>
             {
-                options.ViewLocationExpanders.Add(new WeapsyViewLocationExpander());
+                //foreach (var assembly in AppLoader.Instance(hostingEnvironment).AppAssemblies)
+                //{
+                //    var embeddedFileProvider = new EmbeddedFileProvider(assembly, assembly.GetName().Name);
+                //    options.FileProviders.Add(embeddedFileProvider);
+                //}
+                options.ViewLocationExpanders.Add(new ViewLocationExpander());
             });
 
-            services.AddAutoMapper(hostingEnvironment);
+            services.AddAutoMapper();
 
             foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<Mvc.Apps.IStartup>())
             {
@@ -123,8 +129,8 @@ namespace Weapsy
             return container.Resolve<IServiceProvider>();
         }
 
-        public void Configure(IApplicationBuilder app, 
-            IHostingEnvironment hostingEnvironment, 
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment hostingEnvironment,
             ILoggerFactory loggerFactory,
             ISiteInstallationService siteInstallationService,
             IAppInstallationService appInstallationService,
@@ -136,7 +142,7 @@ namespace Weapsy
             membershipInstallationService.VerifyUserCreation();
             appInstallationService.VerifyAppInstallation();
             siteInstallationService.VerifySiteInstallation();
-            
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
