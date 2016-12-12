@@ -5,8 +5,7 @@ var gulp = require("gulp"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
-    uglify = require("gulp-uglify"),
-    clean = require('gulp-clean');
+    uglify = require("gulp-uglify");
 
 var webroot = "./wwwroot/";
 
