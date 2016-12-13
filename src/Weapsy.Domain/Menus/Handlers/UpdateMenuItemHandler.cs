@@ -18,7 +18,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateMenuItem command)
+        public IEnumerable<IDomainEvent> Handle(UpdateMenuItem command)
         {
             var menu = _menuRepository.GetById(command.SiteId, command.MenuId);
 

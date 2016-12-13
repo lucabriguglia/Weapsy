@@ -18,7 +18,7 @@ namespace Weapsy.Infrastructure.Tests.Dispatcher
             var resolverMock = new Mock<IResolver>();
             var eventPublisher = new EventPublisher(resolverMock.Object);
 
-            Assert.That(() => eventPublisher.Publish<IEvent>(null), Throws.TypeOf<ArgumentNullException>());
+            Assert.That(() => eventPublisher.Publish<IDomainEvent>(null), Throws.TypeOf<ArgumentNullException>());
         }
 
         [Test]
@@ -26,25 +26,25 @@ namespace Weapsy.Infrastructure.Tests.Dispatcher
         {
             var fakeEvent = new FakeEvent();
 
-            var eventHandler1Mock = new Mock<IEventHandler<IEvent>>();
+            var eventHandler1Mock = new Mock<IEventHandler<IDomainEvent>>();
             eventHandler1Mock.Setup(x => x.Handle(fakeEvent));
 
-            var eventHandler2Mock = new Mock<IEventHandler<IEvent>>();
+            var eventHandler2Mock = new Mock<IEventHandler<IDomainEvent>>();
             eventHandler2Mock.Setup(x => x.Handle(fakeEvent));
 
-            var eventHandlers = new List<IEventHandler<IEvent>> { eventHandler1Mock.Object, eventHandler2Mock.Object };
+            var eventHandlers = new List<IEventHandler<IDomainEvent>> { eventHandler1Mock.Object, eventHandler2Mock.Object };
 
             var resolverMock = new Mock<IResolver>();
-            resolverMock.Setup(x => x.ResolveAll<IEventHandler<IEvent>>()).Returns(eventHandlers);
+            resolverMock.Setup(x => x.ResolveAll<IEventHandler<IDomainEvent>>()).Returns(eventHandlers);
 
             var eventPublisher = new EventPublisher(resolverMock.Object);
 
-            eventPublisher.Publish<IEvent>(fakeEvent);
+            eventPublisher.Publish<IDomainEvent>(fakeEvent);
 
             eventHandler1Mock.Verify(x => x.Handle(fakeEvent), Times.Once);
             eventHandler2Mock.Verify(x => x.Handle(fakeEvent), Times.Once);
         }
 
-        private class FakeEvent : Event {}
+        private class FakeEvent : DomainEvent {}
     }
 }

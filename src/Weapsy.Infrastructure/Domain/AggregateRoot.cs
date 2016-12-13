@@ -6,7 +6,7 @@ namespace Weapsy.Infrastructure.Domain
     public abstract class AggregateRoot : IAggregateRoot
     {
         public Guid Id { get; protected set; }
-        public ICollection<IEvent> Events { get; protected set; } = new List<IEvent>();
+        public ICollection<IDomainEvent> Events { get; protected set; } = new List<IDomainEvent>();
 
         protected AggregateRoot()
         {
@@ -21,7 +21,7 @@ namespace Weapsy.Infrastructure.Domain
             Id = id;
         }
 
-        protected void AddEvent(IEvent @event)
+        protected void AddEvent(IDomainEvent @event)
         {
             Events.Add(@event);
         }

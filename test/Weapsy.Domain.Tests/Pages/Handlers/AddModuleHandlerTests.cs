@@ -181,7 +181,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var events = addModuleHandler.Handle(command);
 
-            var enumerable = events as IList<IEvent> ?? events.ToList();
+            var enumerable = events as IList<IDomainEvent> ?? events.ToList();
             Assert.AreEqual(typeof(ModuleCreated), enumerable.FirstOrDefault().GetType());
             Assert.AreEqual(typeof(PageModuleAdded), enumerable.Skip(1).FirstOrDefault().GetType());
         }

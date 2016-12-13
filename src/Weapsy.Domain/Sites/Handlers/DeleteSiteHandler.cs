@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _siteRepository = siteRepository;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteSite command)
+        public IEnumerable<IDomainEvent> Handle(DeleteSite command)
         {
             var site = _siteRepository.GetById(command.Id);
 

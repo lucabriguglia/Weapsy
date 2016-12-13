@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(ReorderPageModules cmd)
+        public IEnumerable<IDomainEvent> Handle(ReorderPageModules cmd)
         {
             var page = _pageRepository.GetById(cmd.SiteId, cmd.PageId);
 

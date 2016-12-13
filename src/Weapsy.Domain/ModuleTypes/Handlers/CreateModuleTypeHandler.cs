@@ -16,7 +16,7 @@ namespace Weapsy.Domain.ModuleTypes.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateModuleType command)
+        public IEnumerable<IDomainEvent> Handle(CreateModuleType command)
         {
             var moduleType = ModuleType.CreateNew(command, _validator);
 

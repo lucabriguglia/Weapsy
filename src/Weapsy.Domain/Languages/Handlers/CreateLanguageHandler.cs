@@ -21,7 +21,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _sortOrderGenerator = sortOrderGenerator;
         }
 
-        public async Task<IEnumerable<IEvent>> HandleAsync(CreateLanguage command)
+        public async Task<IEnumerable<IDomainEvent>> HandleAsync(CreateLanguage command)
         {
             var language = Language.CreateNew(command, _validator, _sortOrderGenerator);
 

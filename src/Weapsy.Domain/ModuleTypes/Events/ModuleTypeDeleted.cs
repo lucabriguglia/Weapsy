@@ -2,7 +2,7 @@
 
 namespace Weapsy.Domain.ModuleTypes.Events
 {
-    public class ModuleTypeDeleted : Event
+    public class ModuleTypeDeleted : DomainEvent
     {
     }
 }

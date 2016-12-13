@@ -2,7 +2,7 @@
 
 namespace Weapsy.Infrastructure.Domain
 {
-    public interface IEvent
+    public interface IDomainEvent
     {
         Guid AggregateRootId { get; set; }
         int Version { get; set; }

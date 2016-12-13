@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _siteRepository = siteRepository;
         }
 
-        public IEnumerable<IEvent> Handle(ReopenSite command)
+        public IEnumerable<IDomainEvent> Handle(ReopenSite command)
         {
             var site = _siteRepository.GetById(command.Id);
 

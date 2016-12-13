@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _templateRepository = templateRepository;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteTemplate command)
+        public IEnumerable<IDomainEvent> Handle(DeleteTemplate command)
         {
             var template = _templateRepository.GetById(command.Id);
 

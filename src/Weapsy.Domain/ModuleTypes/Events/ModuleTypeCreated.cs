@@ -3,7 +3,7 @@ using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.ModuleTypes.Events
 {
-    public class ModuleTypeCreated : Event
+    public class ModuleTypeCreated : DomainEvent
     {
         public Guid? AppId { get; set; }
         public string Name { get; set; }

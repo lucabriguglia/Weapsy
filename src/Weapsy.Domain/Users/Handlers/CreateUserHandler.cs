@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Users.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateUser command)
+        public IEnumerable<IDomainEvent> Handle(CreateUser command)
         {
             var user = User.CreateNew(command, _validator);
 

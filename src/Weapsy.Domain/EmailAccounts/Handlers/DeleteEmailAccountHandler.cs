@@ -17,7 +17,7 @@ namespace Weapsy.Domain.EmailAccounts.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteEmailAccount command)
+        public IEnumerable<IDomainEvent> Handle(DeleteEmailAccount command)
         {
             var emailAccount = _emailAccountRepository.GetById(command.SiteId, command.Id);
 

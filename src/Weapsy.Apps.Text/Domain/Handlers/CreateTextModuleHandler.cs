@@ -17,7 +17,7 @@ namespace Weapsy.Apps.Text.Domain.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateTextModule command)
+        public IEnumerable<IDomainEvent> Handle(CreateTextModule command)
         {
             var textModule = TextModule.CreateNew(command, _validator);
 

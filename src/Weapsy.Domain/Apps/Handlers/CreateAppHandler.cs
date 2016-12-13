@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Apps.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateApp command)
+        public IEnumerable<IDomainEvent> Handle(CreateApp command)
         {
             var app = App.CreateNew(command, _validator);
 

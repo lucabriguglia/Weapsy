@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _themeRepository = themeRepository;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteTheme command)
+        public IEnumerable<IDomainEvent> Handle(DeleteTheme command)
         {
             var theme = _themeRepository.GetById(command.Id);
 

@@ -3,7 +3,7 @@ using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Sites.Events
 {
-    public class SiteDetailsUpdated : Event
+    public class SiteDetailsUpdated : DomainEvent
     {
         public string Name { get; set; }
         public string Url { get; set; }

@@ -3,7 +3,7 @@ using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Menus.Events
 {
-    public class MenuDeleted : Event
+    public class MenuDeleted : DomainEvent
     {
         public Guid SiteId { get; set; }
         public string Name { get; set; }

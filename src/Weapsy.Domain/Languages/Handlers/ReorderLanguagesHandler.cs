@@ -17,12 +17,12 @@ namespace Weapsy.Domain.Languages.Handlers
             _siteRules = siteRules;
         }
 
-        public IEnumerable<IEvent> Handle(ReorderLanguages cmd)
+        public IEnumerable<IDomainEvent> Handle(ReorderLanguages cmd)
         {
             if (!_siteRules.DoesSiteExist(cmd.SiteId))
                 throw new Exception("Site does not exist.");
 
-            var events = new List<IEvent>();
+            var events = new List<IDomainEvent>();
             var updatedLanguages = new List<Language>();
 
             for (int i = 0; i < cmd.Languages.Count; i++)

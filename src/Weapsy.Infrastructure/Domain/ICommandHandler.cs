@@ -5,6 +5,6 @@ namespace Weapsy.Infrastructure.Domain
 {
     public interface ICommandHandler<in TCommand> where TCommand : ICommand
     {
-        IEnumerable<IEvent> Handle(TCommand command);
+        IEnumerable<IDomainEvent> Handle(TCommand command);
     }
 }

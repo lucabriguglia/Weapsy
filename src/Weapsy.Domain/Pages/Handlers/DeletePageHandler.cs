@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeletePage command)
+        public IEnumerable<IDomainEvent> Handle(DeletePage command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.Id);
 

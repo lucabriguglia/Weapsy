@@ -2,7 +2,7 @@
 
 namespace Weapsy.Domain.Sites.Events
 {
-    public class SiteDeleted : Event
+    public class SiteDeleted : DomainEvent
     {
         public string Name { get; set; }
     }

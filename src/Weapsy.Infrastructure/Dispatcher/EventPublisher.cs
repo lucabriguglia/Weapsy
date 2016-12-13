@@ -14,7 +14,7 @@ namespace Weapsy.Infrastructure.Dispatcher
             _resolver = resolver;
         }
 
-        public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
+        public void Publish<TEvent>(TEvent @event) where TEvent : IDomainEvent
         {
             if (@event == null)
                 throw new ArgumentNullException(nameof(@event));
@@ -25,7 +25,7 @@ namespace Weapsy.Infrastructure.Dispatcher
                 handler.Handle(@event);
         }
 
-        public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
+        public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IDomainEvent
         {
             if (@event == null)
                 throw new ArgumentNullException(nameof(@event));

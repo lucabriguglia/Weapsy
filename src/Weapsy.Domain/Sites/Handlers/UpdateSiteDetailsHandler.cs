@@ -18,7 +18,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateSiteDetails cmd)
+        public IEnumerable<IDomainEvent> Handle(UpdateSiteDetails cmd)
         {
             var site = _siteRepository.GetById(cmd.SiteId);
 

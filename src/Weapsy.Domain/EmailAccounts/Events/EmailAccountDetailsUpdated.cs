@@ -3,7 +3,7 @@ using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.EmailAccounts.Events
 {
-    public class EmailAccountDetailsUpdated : Event
+    public class EmailAccountDetailsUpdated : DomainEvent
     {
         public Guid SiteId { get; set; }
         public string Address { get; set; }

@@ -18,7 +18,7 @@ namespace Weapsy.Domain.ModuleTypes.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateModuleTypeDetails command)
+        public IEnumerable<IDomainEvent> Handle(UpdateModuleTypeDetails command)
         {
             var page = _moduleTypeRepository.GetById(command.Id);
 

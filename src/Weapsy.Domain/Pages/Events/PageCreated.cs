@@ -4,7 +4,7 @@ using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Pages.Events
 {
-    public class PageCreated : Event
+    public class PageCreated : DomainEvent
     {
         public Guid SiteId { get; set; }
         public string Name { get; set; }

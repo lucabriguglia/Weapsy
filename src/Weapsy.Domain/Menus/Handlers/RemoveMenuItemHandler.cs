@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(RemoveMenuItem command)
+        public IEnumerable<IDomainEvent> Handle(RemoveMenuItem command)
         {
             var menu = _menuRepository.GetById(command.MenuId);
 

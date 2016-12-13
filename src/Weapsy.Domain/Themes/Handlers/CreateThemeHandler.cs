@@ -20,7 +20,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _sortOrderGenerator = sortOrderGenerator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateTheme command)
+        public IEnumerable<IDomainEvent> Handle(CreateTheme command)
         {
             var theme = Theme.CreateNew(command, _validator, _sortOrderGenerator);
 

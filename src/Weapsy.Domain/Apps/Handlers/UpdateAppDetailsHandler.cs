@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Apps.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateAppDetails cmd)
+        public IEnumerable<IDomainEvent> Handle(UpdateAppDetails cmd)
         {
             var app = _repository.GetById(cmd.Id);
 

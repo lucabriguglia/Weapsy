@@ -349,7 +349,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var events = removeModuleHandler.Handle(command);
 
-            var enumerable = events as IList<IEvent> ?? events.ToList();
+            var enumerable = events as IList<IDomainEvent> ?? events.ToList();
             Assert.AreEqual(typeof(PageModuleRemoved), enumerable.FirstOrDefault().GetType());
             Assert.AreEqual(typeof(ModuleDeleted), enumerable.Skip(1).FirstOrDefault().GetType());
         }

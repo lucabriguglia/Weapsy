@@ -1,8 +1,9 @@
 ﻿using System;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Infrastructure.Domain
 {
-    public class Event : IEvent
+    public class DomainEvent : IDomainEvent, IEvent
     {
         public Guid AggregateRootId { get; set; }
         public int Version { get; set; }
