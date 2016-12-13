@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Sites.Commands;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.Sites.Handlers
 {

@@ -3,6 +3,7 @@ using FluentValidation;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Apps.Text.Domain.Commands;
 using System;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Apps.Text.Domain.Handlers
 {

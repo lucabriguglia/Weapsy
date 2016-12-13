@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Apps.Commands;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.Apps.Handlers
 {

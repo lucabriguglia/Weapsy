@@ -3,6 +3,7 @@ using FluentValidation;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.EmailAccounts.Commands;
 using System;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.EmailAccounts.Handlers
 {

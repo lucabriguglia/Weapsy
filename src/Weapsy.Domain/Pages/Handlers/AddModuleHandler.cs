@@ -5,6 +5,8 @@ using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Pages.Commands;
+using Weapsy.Infrastructure.Dispatcher;
+
 //using System.Transactions;
 
 namespace Weapsy.Domain.Pages.Handlers

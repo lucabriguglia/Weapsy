@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Domain;
 
-namespace Weapsy.Infrastructure.Domain
+namespace Weapsy.Infrastructure.Dispatcher
 {
     public interface ICommandHandler<in TCommand> where TCommand : ICommand
     {

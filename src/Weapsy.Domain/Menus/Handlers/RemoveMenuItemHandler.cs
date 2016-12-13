@@ -3,6 +3,7 @@ using Weapsy.Infrastructure.Domain;
 using System;
 using Weapsy.Domain.Menus.Commands;
 using FluentValidation;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.Menus.Handlers
 {

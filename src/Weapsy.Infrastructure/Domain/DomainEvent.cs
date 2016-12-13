@@ -3,7 +3,7 @@ using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Infrastructure.Domain
 {
-    public class DomainEvent : IDomainEvent, IEvent
+    public class DomainEvent : IDomainEvent
     {
         public Guid AggregateRootId { get; set; }
         public int Version { get; set; }
