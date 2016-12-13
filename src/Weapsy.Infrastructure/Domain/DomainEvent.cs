@@ -1,5 +1,4 @@
 ﻿using System;
-using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Infrastructure.Domain
 {
