@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Infrastructure.Domain
 {

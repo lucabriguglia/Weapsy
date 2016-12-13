@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Themes.Commands

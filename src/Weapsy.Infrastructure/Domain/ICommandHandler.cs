@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Infrastructure.Domain
 {
