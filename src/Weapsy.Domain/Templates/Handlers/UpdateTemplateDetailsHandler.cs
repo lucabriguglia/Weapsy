@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Templates.Commands;
 using System;
 using Weapsy.Infrastructure.Dispatcher;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IDomainEvent> Handle(UpdateTemplateDetails cmd)
+        public IEnumerable<IEvent> Handle(UpdateTemplateDetails cmd)
         {
             var template = _templateRepository.GetById(cmd.Id);
 

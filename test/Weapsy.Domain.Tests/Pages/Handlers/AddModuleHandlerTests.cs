@@ -12,6 +12,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using Weapsy.Domain.Pages.Handlers;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Tests.Factories;
 
@@ -181,7 +182,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var events = addModuleHandler.Handle(command);
 
-            var enumerable = events as IList<IDomainEvent> ?? events.ToList();
+            var enumerable = events as IList<IEvent> ?? events.ToList();
             Assert.AreEqual(typeof(ModuleCreated), enumerable.FirstOrDefault().GetType());
             Assert.AreEqual(typeof(PageModuleAdded), enumerable.Skip(1).FirstOrDefault().GetType());
         }

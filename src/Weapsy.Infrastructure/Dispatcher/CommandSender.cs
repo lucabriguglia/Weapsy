@@ -36,8 +36,11 @@ namespace Weapsy.Infrastructure.Dispatcher
 
             foreach (var @event in events)
             {
-                _eventStore.SaveEvent<TAggregate>(@event);
-
+                if (@event.GetType() == typeof(IDomainEvent))
+                {
+                    _eventStore.SaveEvent<TAggregate>((IDomainEvent)@event);
+                }
+                
                 if (!publishEvents)
                     continue;
 
@@ -63,8 +66,11 @@ namespace Weapsy.Infrastructure.Dispatcher
 
             foreach (var @event in events)
             {
-                await _eventStore.SaveEventAsync<TAggregate>(@event);
-
+                if (@event.GetType() == typeof(IDomainEvent))
+                {
+                    await _eventStore.SaveEventAsync<TAggregate>((IDomainEvent)@event);
+                }
+                
                 if (!publishEvents)
                     continue;
 

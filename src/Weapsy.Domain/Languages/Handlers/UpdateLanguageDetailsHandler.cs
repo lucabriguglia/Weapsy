@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Languages.Commands;
 using System;
 using Weapsy.Infrastructure.Dispatcher;
@@ -19,7 +18,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IDomainEvent> Handle(UpdateLanguageDetails command)
+        public IEnumerable<IEvent> Handle(UpdateLanguageDetails command)
         {
             var language = _languageRepository.GetById(command.SiteId, command.Id);
 

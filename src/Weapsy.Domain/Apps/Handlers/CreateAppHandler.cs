@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Infrastructure.Dispatcher;
 
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Apps.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IDomainEvent> Handle(CreateApp command)
+        public IEnumerable<IEvent> Handle(CreateApp command)
         {
             var app = App.CreateNew(command, _validator);
 

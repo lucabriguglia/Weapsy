@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.ModuleTypes.Commands;
 using System;
 using Weapsy.Infrastructure.Dispatcher;
@@ -19,7 +18,7 @@ namespace Weapsy.Domain.ModuleTypes.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IDomainEvent> Handle(UpdateModuleTypeDetails command)
+        public IEnumerable<IEvent> Handle(UpdateModuleTypeDetails command)
         {
             var page = _moduleTypeRepository.GetById(command.Id);
 

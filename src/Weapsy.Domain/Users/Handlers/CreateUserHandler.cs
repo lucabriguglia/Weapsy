@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Infrastructure.Dispatcher;
 
@@ -17,7 +16,7 @@ namespace Weapsy.Domain.Users.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IDomainEvent> Handle(CreateUser command)
+        public IEnumerable<IEvent> Handle(CreateUser command)
         {
             var user = User.CreateNew(command, _validator);
 

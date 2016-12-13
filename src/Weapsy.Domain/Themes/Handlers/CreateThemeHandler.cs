@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Infrastructure.Dispatcher;
 
@@ -21,7 +20,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _sortOrderGenerator = sortOrderGenerator;
         }
 
-        public IEnumerable<IDomainEvent> Handle(CreateTheme command)
+        public IEnumerable<IEvent> Handle(CreateTheme command)
         {
             var theme = Theme.CreateNew(command, _validator, _sortOrderGenerator);
 

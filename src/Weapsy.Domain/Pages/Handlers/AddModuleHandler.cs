@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _addPageModuleValidator = addPageModuleValidator;
         }
 
-        public IEnumerable<IDomainEvent> Handle(AddModule cmd)
+        public IEnumerable<IEvent> Handle(AddModule cmd)
         {
             var events = new List<IDomainEvent>();
 

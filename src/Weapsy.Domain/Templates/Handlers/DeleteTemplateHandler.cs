@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Templates.Commands;
 using Weapsy.Infrastructure.Dispatcher;
 
@@ -15,7 +14,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _templateRepository = templateRepository;
         }
 
-        public IEnumerable<IDomainEvent> Handle(DeleteTemplate command)
+        public IEnumerable<IEvent> Handle(DeleteTemplate command)
         {
             var template = _templateRepository.GetById(command.Id);
 

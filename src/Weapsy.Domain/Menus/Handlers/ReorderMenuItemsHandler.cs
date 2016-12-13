@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 using System;
 using Weapsy.Domain.Menus.Commands;
 using FluentValidation;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IDomainEvent> Handle(ReorderMenuItems command)
+        public IEnumerable<IEvent> Handle(ReorderMenuItems command)
         {
             var menu = _menuRepository.GetById(command.Id);
 

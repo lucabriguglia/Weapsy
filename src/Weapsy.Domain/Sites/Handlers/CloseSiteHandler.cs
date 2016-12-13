@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Sites.Commands;
 using Weapsy.Infrastructure.Dispatcher;
 
@@ -15,7 +14,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _siteRepository = siteRepository;
         }
 
-        public IEnumerable<IDomainEvent> Handle(CloseSite command)
+        public IEnumerable<IEvent> Handle(CloseSite command)
         {
             var site = _siteRepository.GetById(command.Id);
 

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Infrastructure.Dispatcher;
 
@@ -15,7 +14,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _themeRepository = themeRepository;
         }
 
-        public IEnumerable<IDomainEvent> Handle(ActivateTheme command)
+        public IEnumerable<IEvent> Handle(ActivateTheme command)
         {
             var theme = _themeRepository.GetById(command.Id);
 
