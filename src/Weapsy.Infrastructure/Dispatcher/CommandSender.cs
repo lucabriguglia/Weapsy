@@ -36,15 +36,15 @@ namespace Weapsy.Infrastructure.Dispatcher
 
             foreach (var @event in events)
             {
-                if (@event.GetType() == typeof(IDomainEvent))
+                var concreteEvent = EventFactory.CreateConcreteEvent(@event);
+
+                if (concreteEvent is IDomainEvent)
                 {
-                    _eventStore.SaveEvent<TAggregate>((IDomainEvent)@event);
+                    _eventStore.SaveEvent<TAggregate>((IDomainEvent)concreteEvent);
                 }
                 
                 if (!publishEvents)
                     continue;
-
-                var concreteEvent = EventFactory.CreateConcreteEvent(@event);
 
                 _eventPublisher.Publish(concreteEvent);
             }
@@ -66,15 +66,15 @@ namespace Weapsy.Infrastructure.Dispatcher
 
             foreach (var @event in events)
             {
-                if (@event.GetType() == typeof(IDomainEvent))
+                var concreteEvent = EventFactory.CreateConcreteEvent(@event);
+
+                if (concreteEvent is IDomainEvent)
                 {
-                    await _eventStore.SaveEventAsync<TAggregate>((IDomainEvent)@event);
+                    await _eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
                 }
                 
                 if (!publishEvents)
                     continue;
-
-                var concreteEvent = EventFactory.CreateConcreteEvent(@event);
 
                 await _eventPublisher.PublishAsync(concreteEvent);
             }
