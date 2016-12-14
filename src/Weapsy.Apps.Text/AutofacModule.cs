@@ -8,9 +8,8 @@ using Weapsy.Apps.Text.Domain.Rules;
 using Weapsy.Apps.Text.Domain.Validators;
 using Weapsy.Apps.Text.Reporting;
 using Weapsy.Infrastructure.Dispatcher;
-using Weapsy.Infrastructure.Domain;
 
-namespace Weapsy.Apps.Text.DependencyConfigurator
+namespace Weapsy.Apps.Text
 {
     public class AutofacModule : Autofac.Module
     {

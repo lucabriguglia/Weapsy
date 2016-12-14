@@ -8,7 +8,7 @@ namespace Weapsy.Apps.Text.Data
 {
     public class AutoMapperProfile : Profile
     {
-        protected override void Configure()
+        public AutoMapperProfile()
         {
             CreateMap<TextModule, TextModuleDbEntity>();
             CreateMap<TextModuleDbEntity, TextModule>().ConstructUsing(x => new TextModule());

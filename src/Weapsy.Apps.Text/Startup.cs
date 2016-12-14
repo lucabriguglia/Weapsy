@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Mvc.Apps;
 
-namespace Weapsy.Apps.Text.DependencyConfigurator
+namespace Weapsy.Apps.Text
 {
     public class Startup : StartupBase
     {
