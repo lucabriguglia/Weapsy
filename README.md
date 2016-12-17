@@ -48,6 +48,7 @@ https://github.com/weapsy/Weapsy/wiki
 - Create a SQL database (weapsy.dev)
 - Run install-full.sql script (in scripts folder)
 - Open the Weapsy.sln solution in Visual Studio
+- Build the solution (default apps will be copied to the "Apps" folder)
 - Run (F5 or Ctrl+F5)
 - Login using these credentials:
   - email: admin@default.com
