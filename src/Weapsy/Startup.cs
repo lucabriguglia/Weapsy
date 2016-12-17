@@ -26,10 +26,7 @@ using Weapsy.Domain.Sites;
 using Weapsy.Extensions;
 using Weapsy.Services.Installation;
 using Weapsy.Mvc.Apps;
-using System.Linq;
-using System.Reflection;
 using Autofac.Core;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.FileProviders;
 
 namespace Weapsy

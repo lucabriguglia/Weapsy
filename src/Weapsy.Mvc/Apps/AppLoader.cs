@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -38,15 +39,22 @@ namespace Weapsy.Mvc.Apps
             {
                 AppDescriptors.Add(new AppDescriptor(appFolder.Name));
 
-                foreach (var file in appFolder.GetFiles("*.dll", SearchOption.AllDirectories))
+                foreach (var file in appFolder.GetFiles("*.dll", SearchOption.TopDirectoryOnly))
                 {
                     if (_loadedAssemblies.FirstOrDefault(x => x == file.Name) != null)
                         continue;
 
                     _loadedAssemblies.Add(file.Name);
 
-                    var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(file.FullName);
-                    AppAssemblies.Add(assembly);
+                    try
+                    {
+                        var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(file.FullName);
+                        AppAssemblies.Add(assembly);
+                    }
+                    catch (Exception)
+                    {
+                        // ignored
+                    }
                 }
             }
         }
