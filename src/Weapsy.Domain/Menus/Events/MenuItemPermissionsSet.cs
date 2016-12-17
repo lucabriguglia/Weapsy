@@ -4,7 +4,7 @@ using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Menus.Events
 {
-    public class MenuItemPermissionsSet : Event
+    public class MenuItemPermissionsSet : DomainEvent
     {
         public Guid SiteId { get; set; }
         public Guid MenuItemId { get; set; }

@@ -4,7 +4,7 @@ using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Pages.Events
 {
-    public class PageModulePermissionsSet : Event
+    public class PageModulePermissionsSet : DomainEvent
     {
         public Guid SiteId { get; set; }
         public Guid PageModuleId { get; set; }

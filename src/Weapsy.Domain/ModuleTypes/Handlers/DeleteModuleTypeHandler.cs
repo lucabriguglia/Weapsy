@@ -1,8 +1,8 @@
 using FluentValidation;
 using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.ModuleTypes.Handlers
 {

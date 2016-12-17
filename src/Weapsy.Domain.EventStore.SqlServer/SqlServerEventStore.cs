@@ -21,7 +21,7 @@ namespace Weapsy.Domain.EventStore.SqlServer
             _events = context.Set<DomainEvent>();
         }
 
-        public void SaveEvent<TAggregate>(IEvent @event) where TAggregate : IAggregateRoot
+        public void SaveEvent<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot
         {
             var aggregate = _aggregates.FirstOrDefault(x => x.Id == @event.AggregateRootId);
 
@@ -49,7 +49,7 @@ namespace Weapsy.Domain.EventStore.SqlServer
             _context.SaveChanges();     
         }
 
-        public async Task SaveEventAsync<TAggregate>(IEvent @event) where TAggregate : IAggregateRoot
+        public async Task SaveEventAsync<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot
         {
             var aggregate = await _aggregates.FirstOrDefaultAsync(x => x.Id == @event.AggregateRootId);
 
@@ -77,9 +77,9 @@ namespace Weapsy.Domain.EventStore.SqlServer
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<IEvent>> GetEvents(Guid aggregateId)
+        public async Task<IEnumerable<IDomainEvent>> GetEvents(Guid aggregateId)
         {
-            var result = new List<IEvent>();
+            var result = new List<IDomainEvent>();
 
             var entities = await _events
                 .Where(x => x.AggregateId == aggregateId)
@@ -89,13 +89,13 @@ namespace Weapsy.Domain.EventStore.SqlServer
             foreach (var entity in entities)
             {
                 var @event = JsonConvert.DeserializeObject(entity.Body, Type.GetType(entity.Type));
-                result.Add((IEvent)@event);
+                result.Add((IDomainEvent)@event);
             }
 
             return result;
         }
 
-        public Task<IEnumerable<IEvent>> GetEventsAsync(Guid aggregateId)
+        public Task<IEnumerable<IDomainEvent>> GetEventsAsync(Guid aggregateId)
         {
             throw new NotImplementedException();
         }

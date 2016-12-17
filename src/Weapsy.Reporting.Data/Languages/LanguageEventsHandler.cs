@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Weapsy.Domain.Languages.Events;
 using Weapsy.Infrastructure.Caching;
+using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Reporting.Data.Languages

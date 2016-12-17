@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using System.Threading.Tasks;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users.Events;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.Users.Handlers
 {

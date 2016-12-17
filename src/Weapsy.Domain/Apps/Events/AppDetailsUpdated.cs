@@ -2,7 +2,7 @@
 
 namespace Weapsy.Domain.Apps.Events
 {
-    public class AppDetailsUpdated : Event
+    public class AppDetailsUpdated : DomainEvent
     {
         public string Name { get; set; }
         public string Description { get; set; }

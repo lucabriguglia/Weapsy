@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.1",
+    "Weapsy.Domain": "1.0.0-*",
+    "Weapsy.Mvc": "1.0.0-*",
+    "Weapsy.Infrastructure": "1.0.0-*",
+    "Microsoft.AspNetCore.Mvc": "1.1.0",
+    "Microsoft.AspNetCore.Hosting": "1.1.0"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

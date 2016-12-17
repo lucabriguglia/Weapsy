@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Pages.Commands;
 using System;
 using FluentValidation;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.Pages.Handlers
 {

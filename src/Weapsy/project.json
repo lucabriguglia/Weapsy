@@ -1,12 +1,10 @@
 {
   "userSecretsId": "aspnet-Weapsy-ede6703b-2032-43dc-9b91-f13a742d5e43",
   "tools": {
-    "BundlerMinifier.Core": "2.2.281"
   },
   "frameworks": {
     "netcoreapp1.1": {
       "dependencies": {
-        "Weapsy.Apps.Text": "1.0.0-*",
         "Weapsy.DependencyConfigurator": "1.0.0-*",
         "Weapsy.Domain": "1.0.0-*",
         "Weapsy.Domain.Data": "1.0.0-*",
@@ -15,7 +13,6 @@
         "Weapsy.Reporting": "1.0.0-*",
         "Weapsy.Reporting.Data": "1.0.0-*",
         "Weapsy.Services": "1.0.0-*",
-        "Weapsy.Apps.Text.Data": "1.0.0-*",
         "Weapsy.Infrastructure": "1.0.0-*"
       },
       "imports": [
@@ -72,11 +69,11 @@
     "Microsoft.NETCore.App": "1.1.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
     "Microsoft.VisualStudio.Web.CodeGeneration.Tools": "1.1.0-preview4-final",
-    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": "1.1.0-preview4-final",
-    "Weapsy.Apps.Text.DependencyConfigurator": "1.0.0-*"
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": "1.1.0-preview4-final"
   },
   "runtimes": {
     "win10-x64": {},
-    "win7-x64": {} 
+    "win7-x64": {},
+    "win7-x86":  {}  
   }
 }

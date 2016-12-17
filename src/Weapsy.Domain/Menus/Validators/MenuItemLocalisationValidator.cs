@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Domain.Languages.Rules;
-using Weapsy.Domain.Menus.Commands;
 
 namespace Weapsy.Domain.Menus.Validators
 {

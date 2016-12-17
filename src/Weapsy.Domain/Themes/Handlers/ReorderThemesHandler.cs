@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Themes.Commands;
 using System;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
@@ -16,7 +17,7 @@ namespace Weapsy.Domain.Themes.Handlers
 
         public IEnumerable<IEvent> Handle(ReorderThemes cmd)
         {
-            var events = new List<IEvent>();
+            var events = new List<IDomainEvent>();
             var updatedThemes = new List<Theme>();
 
             for (int i = 0; i < cmd.Themes.Count; i++)

@@ -55,21 +55,6 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        public Page GetByName(Guid siteId, string name)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntity = context.Set<PageDbEntity>()
-                    .Include(x => x.PageLocalisations)
-                    .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.SiteId == siteId && x.Name == name && x.Status != PageStatus.Deleted);
-
-                LoadActivePageModules(context, dbEntity);
-
-                return dbEntity != null ? _mapper.Map<Page>(dbEntity) : null;
-            }
-        }
-
         public Guid GetPageIdByName(Guid siteId, string name)
         {
             using (var context = _dbContextFactory.Create())

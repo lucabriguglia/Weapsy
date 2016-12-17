@@ -6,6 +6,6 @@ namespace Weapsy.Infrastructure.Domain
     public interface IAggregateRoot
     {
         Guid Id { get; }
-        ICollection<IEvent> Events { get; }
+        ICollection<IDomainEvent> Events { get; }
     }
 }

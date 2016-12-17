@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Weapsy.Infrastructure.DependencyResolver;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Infrastructure.Dispatcher
 {

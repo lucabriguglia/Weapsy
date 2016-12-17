@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FluentValidation;
 using FluentValidation.Results;
 using System.Linq;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Infrastructure.Domain
 {

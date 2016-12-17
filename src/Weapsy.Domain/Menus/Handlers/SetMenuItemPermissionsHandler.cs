@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Menus.Commands;
 using System;
+using Weapsy.Infrastructure.Dispatcher;
 
 namespace Weapsy.Domain.Menus.Handlers
 {

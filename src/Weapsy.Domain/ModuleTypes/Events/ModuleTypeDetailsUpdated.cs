@@ -2,7 +2,7 @@
 
 namespace Weapsy.Domain.ModuleTypes.Events
 {
-    public class ModuleTypeDetailsUpdated : Event
+    public class ModuleTypeDetailsUpdated : DomainEvent
     {
         public string Name { get; set; }
         public string Title { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Weapsy.Domain.Themes.Events
 {
-    public class ThemeCreated : Event
+    public class ThemeCreated : DomainEvent
     {
         public string Name { get; set; }
         public string Description { get; set; }
