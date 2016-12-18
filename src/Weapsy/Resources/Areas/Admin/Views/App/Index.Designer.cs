@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Weapsy.Resources.Areas.Admin {
+namespace Weapsy.Resources.Areas.Admin.Views.App {
     using System;
     using System.Reflection;
     
@@ -22,13 +22,13 @@ namespace Weapsy.Resources.Areas.Admin {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class App {
+    public class Index {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal App() {
+        internal Index() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace Weapsy.Resources.Areas.Admin {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Weapsy.Resources.Areas.Admin.App", typeof(App).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Weapsy.Resources.Areas.Admin.Views.App.Index", typeof(Index).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,29 +60,47 @@ namespace Weapsy.Resources.Areas.Admin {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Are you sure you want to delete this app?.
+        ///    Looks up a localized string similar to New App.
         /// </summary>
-        public static string ConfirmDelete_Message {
+        public static string Button_NewApp {
             get {
-                return ResourceManager.GetString("ConfirmDelete_Message", resourceCulture);
+                return ResourceManager.GetString("Button_NewApp", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Confirm Delete.
+        ///    Looks up a localized string similar to Add New App.
         /// </summary>
-        public static string ConfirmDelete_Title {
+        public static string Button_NewApp_Title {
             get {
-                return ResourceManager.GetString("ConfirmDelete_Title", resourceCulture);
+                return ResourceManager.GetString("Button_NewApp_Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Enter the App Name.
+        ///    Looks up a localized string similar to Description.
         /// </summary>
-        public static string Validation_NameRequired {
+        public static string Grid_Description {
             get {
-                return ResourceManager.GetString("Validation_NameRequired", resourceCulture);
+                return ResourceManager.GetString("Grid_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Grid_Name {
+            get {
+                return ResourceManager.GetString("Grid_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Apps.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Weapsy.Resources.Areas.Admin {
+namespace Weapsy.Resources.Areas.Admin.Views.App {
     using System;
     using System.Reflection;
     
@@ -22,13 +22,13 @@ namespace Weapsy.Resources.Areas.Admin {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class App {
+    public class _App {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal App() {
+        internal _App() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace Weapsy.Resources.Areas.Admin {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Weapsy.Resources.Areas.Admin.App", typeof(App).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Weapsy.Resources.Areas.Admin.Views.App._App", typeof(_App).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,29 +60,56 @@ namespace Weapsy.Resources.Areas.Admin {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Are you sure you want to delete this app?.
+        ///    Looks up a localized string similar to Description.
         /// </summary>
-        public static string ConfirmDelete_Message {
+        public static string Field_Description {
             get {
-                return ResourceManager.GetString("ConfirmDelete_Message", resourceCulture);
+                return ResourceManager.GetString("Field_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Confirm Delete.
+        ///    Looks up a localized string similar to Description Help....
         /// </summary>
-        public static string ConfirmDelete_Title {
+        public static string Field_Description_Help {
             get {
-                return ResourceManager.GetString("ConfirmDelete_Title", resourceCulture);
+                return ResourceManager.GetString("Field_Description_Help", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Enter the App Name.
+        ///    Looks up a localized string similar to Folder.
         /// </summary>
-        public static string Validation_NameRequired {
+        public static string Field_Folder {
             get {
-                return ResourceManager.GetString("Validation_NameRequired", resourceCulture);
+                return ResourceManager.GetString("Field_Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Folder Help....
+        /// </summary>
+        public static string Field_Folder_Help {
+            get {
+                return ResourceManager.GetString("Field_Folder_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Field_Name {
+            get {
+                return ResourceManager.GetString("Field_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Name Help....
+        /// </summary>
+        public static string Field_Name_Help {
+            get {
+                return ResourceManager.GetString("Field_Name_Help", resourceCulture);
             }
         }
     }

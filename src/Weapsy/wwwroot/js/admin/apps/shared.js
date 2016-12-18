@@ -19,7 +19,7 @@ weapsy.admin.apps = (function ($) {
             folder: {
                 required: true,
                 rangelength: [1, 100],
-                regex: /^[A-Za-z\d_-]+$/,
+                regex: /^[A-Za-z\.\d_-]+$/,
                 remote: {
                     param: {
                         url: '/api/app/IsAppFolderUnique/'

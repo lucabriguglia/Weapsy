@@ -80,7 +80,7 @@ namespace Weapsy
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = "Resources")
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
                 .AddJsonOptions(options =>
                 {

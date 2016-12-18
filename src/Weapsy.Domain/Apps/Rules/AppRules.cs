@@ -32,7 +32,7 @@ namespace Weapsy.Domain.Apps.Rules
         public bool IsAppFolderValid(string folder)
         {
             if (string.IsNullOrWhiteSpace(folder)) return false;
-            var regex = new Regex(@"^[A-Za-z\d_-]+$");
+            var regex = new Regex(@"^[A-Za-z\.\d_-]+$");
             var match = regex.Match(folder);
             return match.Success;
         }

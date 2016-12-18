@@ -77,7 +77,7 @@ namespace Weapsy.Api
         }
 
         [HttpGet("{folder}")]
-        [Route("isAppFolderUnique")]
+        [Route("isAppFolderValid")]
         public IActionResult IsAppFolderValid(string folder)
         {
             var isAppFolderValid = _appRules.IsAppFolderValid(folder);

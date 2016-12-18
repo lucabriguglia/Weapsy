@@ -1,9 +1,8 @@
 ﻿@model Weapsy.Reporting.Apps.AppAdminModel
-@inject IHtmlLocalizer<Weapsy.Resources.Areas.Admin.App> AppLocalizer
 
 <div class="form-group has-feedback">
-    <a href="#" data-toggle="tooltip" title="@AppLocalizer["Field_Name_Help"]">Help</a>
-    <label for="name" class="col-md-2 control-label">@AppLocalizer["Field_Name"]</label>
+    <a href="#" data-toggle="tooltip" title="@Localizer["Field_Name_Help"]">Help</a>
+    <label for="name" class="col-md-2 control-label">@Localizer["Field_Name"]</label>
     <div class="col-md-4">
         <input id="originalName" type="hidden" value="@Model.Name">
         <input id="name" name="name" type="text" class="form-control" placeholder="Enter Name" value="@Model.Name">
@@ -15,7 +14,7 @@
 </div>
 
 <div class="form-group has-feedback">
-    <label for="description" class="col-md-2 control-label">@AppLocalizer["Field_Description"]</label>
+    <label for="description" class="col-md-2 control-label">@Localizer["Field_Description"]</label>
     <div class="col-md-4">
         <input id="originalDescription" type="hidden" value="@Model.Description">
         <textarea id="description" name="description" type="text" class="form-control" placeholder="Enter Description">@Model.Description</textarea>
@@ -27,7 +26,7 @@
 </div>
 
 <div class="form-group has-feedback">
-    <label for="description" class="col-md-2 control-label">@AppLocalizer["Field_Folder"]</label>
+    <label for="description" class="col-md-2 control-label">@Localizer["Field_Folder"]</label>
     <div class="col-md-4">
         <input id="originalFolder" type="hidden" value="@Model.Folder">
         <input id="folder" name="folder" type="text" class="form-control" placeholder="Enter Folder" value="@Model.Folder">

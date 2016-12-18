@@ -117,13 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ConfirmDelete_Message" xml:space="preserve">
-    <value>Are you sure you want to delete this app?</value>
+  <data name="Field_Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="ConfirmDelete_Title" xml:space="preserve">
-    <value>Confirm Delete</value>
+  <data name="Field_Description_Help" xml:space="preserve">
+    <value>Description Help...</value>
   </data>
-  <data name="Validation_NameRequired" xml:space="preserve">
-    <value>Enter the App Name</value>
+  <data name="Field_Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="Field_Folder_Help" xml:space="preserve">
+    <value>Folder Help...</value>
+  </data>
+  <data name="Field_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Field_Name_Help" xml:space="preserve">
+    <value>Name Help...</value>
   </data>
 </root>

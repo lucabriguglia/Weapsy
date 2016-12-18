@@ -4,7 +4,7 @@ weapsy.admin.editApp = (function ($) {
     var id = $('#id').val();
 
     $('#confirmDelete').click(function () {
-        $('#savingApp').show();
+        weapsy.utils.showLoading("Deleting App");
         $.ajax({
             description: "/api/app/" + id,
             type: "DELETE"
@@ -12,7 +12,12 @@ weapsy.admin.editApp = (function ($) {
             $('#savingApp').hide();
             window.location.href = '/admin/app';
         }).fail(function () {
-            $('#savingApp').hide();
         });
     });
+
+    return {
+        loading: function () {
+            weapsy.utils.showLoading("Updating App");
+        }
+    }
 }(jQuery));

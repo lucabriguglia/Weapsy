@@ -1,8 +1,7 @@
 ﻿@model Weapsy.Reporting.Apps.AppAdminModel
-@inject IHtmlLocalizer<Weapsy.Resources.Areas.Admin.App> AppLocalizer
 
 @{
-    ViewBag.Title = AppLocalizer["Title_Create"];
+    ViewBag.Title = Localizer["Title"];
 }
 
 @section scripts {
@@ -12,22 +11,15 @@
 }
 
 <div class="page-header">
-    <h1>@AppLocalizer["Title_Create"]</h1>
+    <h1>@Localizer["Title"]</h1>
 </div>
 
-<form id="createAppForm" name="createAppForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="/Admin/App/Save" data-ajax-loading="#savingApp" data-ajax-success="weapsy.admin.apps.redirectToIndex" class="form-horizontal validate-form" role="form">
+<form id="createAppForm" name="createAppForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="/Admin/App/Save" data-ajax-begin="weapsy.admin.createApp.loading" data-ajax-success="weapsy.admin.apps.redirectToIndex" class="form-horizontal validate-form" role="form">
     @await Html.PartialAsync("_App")
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <button id="save" type="submit" class="btn btn-primary" title="@SharedLocalizer["Button_Save"]">@SharedLocalizer["Button_Save"]</button>
-            <a href="@Url.Action("Index", "App", new { area = "Admin" })" class="btn btn-default" title="@SharedLocalizer["Button_Cancel"]">@SharedLocalizer["Button_Cancel"]</a>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <span id="savingApp" style="display:none;">
-                @AppLocalizer["Saving"]
-            </span>
+            <button id="save" type="submit" class="btn btn-primary" title="@Localizer["Button_Save"]">@Localizer["Button_Save"]</button>
+            <a href="@Url.Action("Index", "App", new { area = "Admin" })" class="btn btn-default" title="@Localizer["Button_Cancel"]">@Localizer["Button_Cancel"]</a>
         </div>
     </div>
 </form>

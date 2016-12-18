@@ -46,7 +46,7 @@ namespace Weapsy.Services.Installation
                 Id = textAppId,
                 Name = "Text",
                 Description = "Text",
-                Folder = "Text"
+                Folder = "Weapsy.Apps.Text"
             }, _createAppValidator);
 
             _appRepository.Create(textApp);

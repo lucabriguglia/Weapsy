@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Weapsy.Resources.Areas.Admin {
+namespace Weapsy.Resources.Areas.Admin.Views.App {
     using System;
     using System.Reflection;
     
@@ -22,13 +22,13 @@ namespace Weapsy.Resources.Areas.Admin {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class App {
+    public class Edit {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal App() {
+        internal Edit() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace Weapsy.Resources.Areas.Admin {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Weapsy.Resources.Areas.Admin.App", typeof(App).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Weapsy.Resources.Areas.Admin.Views.App.Edit", typeof(Edit).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,29 +60,11 @@ namespace Weapsy.Resources.Areas.Admin {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Are you sure you want to delete this app?.
+        ///    Looks up a localized string similar to Edit App.
         /// </summary>
-        public static string ConfirmDelete_Message {
+        public static string Title {
             get {
-                return ResourceManager.GetString("ConfirmDelete_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Confirm Delete.
-        /// </summary>
-        public static string ConfirmDelete_Title {
-            get {
-                return ResourceManager.GetString("ConfirmDelete_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Enter the App Name.
-        /// </summary>
-        public static string Validation_NameRequired {
-            get {
-                return ResourceManager.GetString("Validation_NameRequired", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }
