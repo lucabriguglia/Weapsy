@@ -16,9 +16,6 @@ Right after the first RTM my plan is to develop a Blog and a Forum app.
 # Demo
 Coming Soon
 
-# Trello Board
-https://trello.com/b/jL79sV09/weapsy (work in progress)
-
 # Roadmap
 
 https://github.com/weapsy/Weapsy/wiki/Roadmap
