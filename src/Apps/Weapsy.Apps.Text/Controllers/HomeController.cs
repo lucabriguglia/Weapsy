@@ -11,7 +11,7 @@ using Weapsy.Mvc.Apps;
 
 namespace Weapsy.Apps.Text.Controllers
 {
-    [App("Text")]
+    [App("Weapsy.Apps.Text")]
     public class HomeController : BaseAdminController
     {
         private readonly ITextModuleFacade _textFacade;

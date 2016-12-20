@@ -15,7 +15,8 @@ namespace Weapsy.Apps.Text
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<TextModuleDbContext>().As<TextModuleDbContext>();
+            builder.RegisterType<TextDbContext>().As<TextDbContext>();
+            builder.RegisterType<TextDbContextFactory>().As<ITextDbContextFactory>();
 
             builder.RegisterAssemblyTypes(typeof(CreateTextModuleHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
             builder.RegisterAssemblyTypes(typeof(CreateTextModuleValidator).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IValidator<>));

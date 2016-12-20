@@ -5,16 +5,16 @@ using Weapsy.Infrastructure.Configuration;
 
 namespace Weapsy.Apps.Text.Data
 {
-    public class TextModuleDbContext : DbContext
+    public class TextDbContext : DbContext
     {
         private ConnectionStrings ConnectionStrings { get; set; }
 
-        public TextModuleDbContext(IOptions<ConnectionStrings> settings)
+        public TextDbContext(IOptions<ConnectionStrings> settings)
         {
             ConnectionStrings = settings.Value;
         }
 
-        public TextModuleDbContext(DbContextOptions<TextModuleDbContext> options) : base(options) {}
+        public TextDbContext(DbContextOptions<TextDbContext> options) : base(options) {}
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
@@ -37,5 +37,9 @@ namespace Weapsy.Apps.Text.Data
                 .ToTable("TextLocalisation")
                 .HasKey(x => new { x.TextVersionId, x.LanguageId });
         }
+
+        public DbSet<TextModule> TextModules { get; set; }
+        public DbSet<TextVersion> TextVersions { get; set; }
+        public DbSet<TextLocalisation> TextLocalisations { get; set; }
     }
 }

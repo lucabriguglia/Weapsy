@@ -63,7 +63,7 @@ namespace Weapsy.Services.Installation
                 ViewType = ViewType.ViewComponent,
                 ViewName = "TextModule",
                 EditType = EditType.Modal,
-                EditUrl = "Text/Home/Index"
+                EditUrl = "Weapsy.Apps.Text/Home/Index"
             }, _createModuleTypeValidator);
 
             _moduleTypeRepository.Create(textModuleType);

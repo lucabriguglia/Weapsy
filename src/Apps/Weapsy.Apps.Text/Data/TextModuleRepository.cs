@@ -12,62 +12,68 @@ namespace Weapsy.Apps.Text.Data
 {
     public class TextModuleRepository : ITextModuleRepository
     {
-        private readonly TextModuleDbContext _context;
-        private readonly DbSet<TextModuleDbEntity> _texts;
-        private readonly DbSet<TextVersionDbEntity> _textVersions;
-        private readonly DbSet<TextLocalisationDbEntity> _textVersionLocalisations;
+        private readonly ITextDbContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public TextModuleRepository(TextModuleDbContext context, IMapper mapper)
+        public TextModuleRepository(ITextDbContextFactory dbContextFactory, IMapper mapper)
         {
-            _context = context;
-            _texts = context.Set<TextModuleDbEntity>();
-            _textVersions = context.Set<TextVersionDbEntity>();
-            _textVersionLocalisations = context.Set<TextLocalisationDbEntity>();
+            _dbContextFactory = dbContextFactory;
             _mapper = mapper;
         }
 
         public TextModule GetById(Guid id)
         {
-            var dbEntity = _texts.FirstOrDefault(x => x.Id == id);
-            LoadTextVersions(dbEntity);
-            return dbEntity != null ? _mapper.Map<TextModule>(dbEntity) : null;
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.TextModules.FirstOrDefault(x => x.Id == id);
+                LoadTextVersions(context, dbEntity);
+                return dbEntity != null ? _mapper.Map<TextModule>(dbEntity) : null;                
+            }
         }
 
         public TextModule GetByModuleId(Guid moduleId)
         {
-            var dbEntity = _texts.FirstOrDefault(x => x.ModuleId == moduleId);
-            LoadTextVersions(dbEntity);
-            return dbEntity != null ? _mapper.Map<TextModule>(dbEntity) : null;
+            using (var context = _dbContextFactory.Create())
+            {
+                var dbEntity = context.TextModules.FirstOrDefault(x => x.ModuleId == moduleId);
+                LoadTextVersions(context, dbEntity);
+                return dbEntity != null ? _mapper.Map<TextModule>(dbEntity) : null;
+            }
         }
 
         public void Create(TextModule text)
         {
-            var textDbEntity = _mapper.Map<TextModuleDbEntity>(text);
-            _texts.Add(textDbEntity);
-            _context.SaveChanges();
+            using (var context = _dbContextFactory.Create())
+            {
+                var textDbEntity = _mapper.Map<TextModuleDbEntity>(text);
+                context.TextModules.Add(textDbEntity);
+                context.SaveChanges();
+            }
         }
 
         public void Update(TextModule textModule)
         {
-            var textDbEntity = _texts.FirstOrDefault(x => x.Id == textModule.Id);
+            using (var context = _dbContextFactory.Create())
+            {
+                var textDbEntity = context.TextModules.FirstOrDefault(x => x.Id == textModule.Id);
 
-            textDbEntity.Status = textModule.Status;
+                textDbEntity.Status = textModule.Status;
 
-            UpdateTextVersions(textModule.TextVersions);
+                UpdateTextVersions(context, textModule.TextVersions);
 
-            _context.SaveChanges();
+                context.SaveChanges();
+            }
         }
 
-        private void UpdateTextVersions(IList<TextVersion> textVersions)
+        private void UpdateTextVersions(TextDbContext context, IList<TextVersion> textVersions)
         {
             foreach (var textVersion in textVersions)
             {
-                var textVersionDbEntity = _textVersions.FirstOrDefault(x => x.Id == textVersion.Id);
+                var textVersionDbEntity = context.TextVersions.FirstOrDefault(x => x.Id == textVersion.Id);
 
                 if (textVersionDbEntity == null)
                 {
-                    _textVersions.Add(_mapper.Map<TextVersionDbEntity>(textVersion));
+                    context.TextVersions.Add(_mapper.Map<TextVersionDbEntity>(textVersion));
                 }
                 else
                 {
@@ -75,23 +81,23 @@ namespace Weapsy.Apps.Text.Data
                     textVersionDbEntity.Content = textVersion.Content;
                     textVersionDbEntity.Status = textVersion.Status;
 
-                    UpdateTextVersionLocalisations(textVersion.TextLocalisations);
+                    UpdateTextVersionLocalisations(context, textVersion.TextLocalisations);
                 }
             }
         }
 
-        private void UpdateTextVersionLocalisations(ICollection<TextLocalisation> textVersionLocalisations)
+        private void UpdateTextVersionLocalisations(TextDbContext context, ICollection<TextLocalisation> textVersionLocalisations)
         {
             foreach (var textVersionLocalisation in textVersionLocalisations)
             {
-                var textVersionLocalisationDbEntity = _textVersionLocalisations
+                var textVersionLocalisationDbEntity = context.TextLocalisations
                     .FirstOrDefault(x =>
                         x.TextVersionId == textVersionLocalisation.TextVersionId &&
                         x.LanguageId == textVersionLocalisation.LanguageId);
 
                 if (textVersionLocalisationDbEntity == null)
                 {
-                    _textVersionLocalisations.Add(_mapper.Map<TextLocalisationDbEntity>(textVersionLocalisation));
+                    context.TextLocalisations.Add(_mapper.Map<TextLocalisationDbEntity>(textVersionLocalisation));
                 }
                 else
                 {
@@ -100,11 +106,11 @@ namespace Weapsy.Apps.Text.Data
             }
         }
 
-        private void LoadTextVersions(TextModuleDbEntity textDbEntity)
+        private void LoadTextVersions(TextDbContext context, TextModuleDbEntity textDbEntity)
         {
             if (textDbEntity != null)
             {
-                textDbEntity.TextVersions = _textVersions
+                textDbEntity.TextVersions = context.TextVersions
                     .Include(y => y.TextLocalisations)
                     .Where(x => x.TextModuleId == textDbEntity.Id && x.Status != TextVersionStatus.Deleted)
                     .ToList();
@@ -112,3 +118,4 @@ namespace Weapsy.Apps.Text.Data
         }
     }
 }
+
