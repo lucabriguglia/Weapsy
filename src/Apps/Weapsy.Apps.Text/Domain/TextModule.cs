@@ -67,7 +67,7 @@ namespace Weapsy.Apps.Text.Domain
             if (newVersion.Status == TextVersionStatus.Published)
             {
                 var currentPublishedVersion = TextVersions.FirstOrDefault(x => x.Status == TextVersionStatus.Published);
-                if (currentPublishedVersion != null) currentPublishedVersion.UnPublish();
+                currentPublishedVersion?.UnPublish();
             }
 
             AddEvent(new VersionAdded

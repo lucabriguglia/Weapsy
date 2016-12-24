@@ -27,7 +27,7 @@ namespace Weapsy.Services.Installation
 
         public void VerifyAppInstallation()
         {
-            if (_appRepository.GetByName("Text") == null)
+            if (_appRepository.GetByName("Weapsy.Apps.Text") == null)
                 InstallDefaultApps();
         }
 
@@ -44,8 +44,8 @@ namespace Weapsy.Services.Installation
             var textApp = App.CreateNew(new CreateApp
             {
                 Id = textAppId,
-                Name = "Text",
-                Description = "Text",
+                Name = "Weapsy.Apps.Text",
+                Description = "Text App",
                 Folder = "Weapsy.Apps.Text"
             }, _createAppValidator);
 

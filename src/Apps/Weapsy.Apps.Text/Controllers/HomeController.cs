@@ -1,6 +1,5 @@
 ﻿using System;
 using Weapsy.Mvc.Controllers;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Domain.Commands;
@@ -26,17 +25,17 @@ namespace Weapsy.Apps.Text.Controllers
             _commandSender = commandSender;
         }
 
-        public async Task<IActionResult> Index(Guid moduleId)
+        public IActionResult Index(Guid moduleId)
         {
-            var model = await Task.Run(() => _textFacade.GetAdminModel(SiteId, moduleId));
+            var model = _textFacade.GetAdminModel(SiteId, moduleId);
             return View(model);
         }
 
-        public async Task<IActionResult> Save(AddVersion model)
+        public IActionResult Save(AddVersion model)
         {
             model.SiteId = SiteId;
             model.VersionId = Guid.NewGuid();
-            await Task.Run(() => _commandSender.Send<AddVersion, TextModule>(model));
+            _commandSender.Send<AddVersion, TextModule>(model);
             return Ok(string.Empty);
         }
     }

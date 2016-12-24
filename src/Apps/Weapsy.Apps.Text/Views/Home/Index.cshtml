@@ -1,4 +1,4 @@
-﻿@model Weapsy.Apps.Text.Reporting.TextModuleAdminModel
+﻿@model Weapsy.Apps.Text.Domain.Commands.AddVersion
 
 <script>
     $(document).ready(function () {
@@ -28,7 +28,7 @@
     });
 </script>
 
-<form id="textModuleForm" name="textModuleForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="/Weapsy.Apps.Text/Home/Save" data-ajax-loading="#savingText" data-ajax-success="weapsy.controlPanel.refresh" class="form-horizontal validate-form" role="form">
+<form id="textModuleForm" name="textModuleForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Weapsy.Apps.Text/Home/Save" data-ajax-loading="#savingText" data-ajax-success="weapsy.controlPanel.refresh" class="form-horizontal validate-form" role="form">
     <input type="hidden" id="id" name="id" value="@Model.Id" />
     <input type="hidden" id="moduleId" name="moduleId" value="@Model.ModuleId" />
     <input type="hidden" id="status" name="status" value="2" />
@@ -47,11 +47,11 @@
         <div id="Default" class="tab-pane active">
             <div class="form-group has-feedback">
                 <div class="col-md-12">
-                    <textarea id="content" name="content" rows="10" class="form-control validate-content" placeholder="Enter Content">@Model.Content</textarea>
+                    <textarea asp-for="Content" rows="10" class="form-control validate-content" placeholder="Enter Content">@Model.Content</textarea>
                     <i class="form-control-feedback glyphicon"></i>
                 </div>
                 <div class="col-md-12 help-block">
-                    <label id="content-error" for="content" class="text-danger" style="display:none;"></label>
+                    <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
             </div>
         </div>

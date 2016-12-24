@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Weapsy.Apps.Text.Domain;
+using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Reporting;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Modules;
@@ -52,26 +53,26 @@ namespace Weapsy.Apps.Text.Data
             });
         }
 
-        public TextModuleAdminModel GetAdminModel(Guid siteId, Guid moduleId, Guid versionId = new Guid())
+        public AddVersion GetAdminModel(Guid siteId, Guid moduleId, Guid versionId = new Guid())
         {
             var module = _moduleRepository.GetById(siteId, moduleId);
 
             if (module == null || module.Status == ModuleStatus.Deleted)
-                return new TextModuleAdminModel();
+                return new AddVersion();
 
             var textModule = _textRepository.GetByModuleId(moduleId);
 
             if (textModule == null || textModule.Status == TextModuleStatus.Deleted)
-                return new TextModuleAdminModel();
+                return new AddVersion();
 
             var version = versionId != Guid.Empty 
                 ? textModule.TextVersions.FirstOrDefault(x => x.Id == versionId) 
                 : textModule.TextVersions.FirstOrDefault(x => x.Status == TextVersionStatus.Published);
 
             if (version == null || version.Status == TextVersionStatus.Deleted)
-                return new TextModuleAdminModel();
+                return new AddVersion();
 
-            var result = new TextModuleAdminModel
+            var result = new AddVersion
             {
                 Id = textModule.Id,
                 ModuleId = textModule.ModuleId,
@@ -94,7 +95,7 @@ namespace Weapsy.Apps.Text.Data
                     content = existingLocalisation.Content;
                 }
 
-                result.VersionLocalisations.Add(new TextModuleAdminModel.VersionLocalisation
+                result.VersionLocalisations.Add(new AddVersion.VersionLocalisation
                 {
                     LanguageId = language.Id,
                     LanguageName = language.Name,
