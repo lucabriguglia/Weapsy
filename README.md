@@ -1,3 +1,6 @@
+#PARTNERS WANTED 
+https://github.com/weapsy/Weapsy/issues/23
+
 # Weapsy
 Weapsy is an ASP.NET Core CMS based on DDD and CQRS.
 
