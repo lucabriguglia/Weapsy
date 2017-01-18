@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ThemeDbEntity>()
+                var dbEntity = context.Themes
                     .FirstOrDefault(x => x.Id == id && x.Status != ThemeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Theme>(dbEntity) : null;
             }
@@ -34,7 +34,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ThemeDbEntity>()
+                var dbEntity = context.Themes
                     .FirstOrDefault(x => x.Name == name && x.Status != ThemeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Theme>(dbEntity) : null;
             }
@@ -44,7 +44,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ThemeDbEntity>()
+                var dbEntity = context.Themes
                     .FirstOrDefault(x => x.Folder == folder && x.Status != ThemeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Theme>(dbEntity) : null;
             }
@@ -54,7 +54,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                return context.Set<ThemeDbEntity>().Count(x => x.Status != ThemeStatus.Deleted);
+                return context.Themes.Count(x => x.Status != ThemeStatus.Deleted);
             }
         }
 

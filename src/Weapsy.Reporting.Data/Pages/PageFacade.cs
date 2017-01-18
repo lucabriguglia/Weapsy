@@ -180,7 +180,7 @@ namespace Weapsy.Reporting.Data.Pages
             }
         }
 
-        private Page GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
+        private Page GetPage(BaseDbContext context, Guid siteId, Guid pageId)
         {
             var page = context.Pages
                 .Include(x => x.PageLocalisations)

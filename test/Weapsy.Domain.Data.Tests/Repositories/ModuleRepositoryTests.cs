@@ -35,7 +35,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
                 _moduleTypeId2 = Guid.NewGuid();
                 _deletedModuleId = Guid.NewGuid();
 
-                context.Set<ModuleDbEntity>().AddRange(
+                context.Modules.AddRange(
                     new ModuleDbEntity
                     {
                         SiteId = _siteId,

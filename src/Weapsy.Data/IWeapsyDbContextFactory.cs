@@ -4,7 +4,7 @@ namespace Weapsy.Data
 {
     public interface IWeapsyDbContextFactory
     {
-        WeapsyDbContext Create();
-        WeapsyDbContext Create(DbContextOptions<WeapsyDbContext> options);
+        BaseDbContext Create();
+        BaseDbContext Create(DbContextOptions options);
     }
 }

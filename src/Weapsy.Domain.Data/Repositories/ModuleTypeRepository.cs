@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ModuleTypeDbEntity>()
+                var dbEntity = context.ModuleTypes
                     .FirstOrDefault(x => x.Id == id && x.Status != ModuleTypeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<ModuleType>(dbEntity) : null;
             }
@@ -34,7 +34,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ModuleTypeDbEntity>()
+                var dbEntity = context.ModuleTypes
                     .FirstOrDefault(x => x.Name == name && x.Status != ModuleTypeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<ModuleType>(dbEntity) : null;
             }
@@ -44,7 +44,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<ModuleTypeDbEntity>()
+                var dbEntity = context.ModuleTypes
                     .FirstOrDefault(x => x.ViewName == viewComponentName 
                         && x.ViewType == ViewType.ViewComponent
                         && x.Status != ModuleTypeStatus.Deleted);

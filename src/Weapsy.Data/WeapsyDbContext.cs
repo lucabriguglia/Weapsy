@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
 using Weapsy.Data.Entities;
 using Weapsy.Infrastructure.Configuration;
 
 namespace Weapsy.Data
 {
-    public class WeapsyDbContext : DbContext
+    public class WeapsyDbContext : BaseDbContext
     {
         private ConnectionStrings ConnectionStrings { get; }
 
@@ -15,7 +14,7 @@ namespace Weapsy.Data
             ConnectionStrings = settings.Value;
         }
 
-        public WeapsyDbContext(DbContextOptions<WeapsyDbContext> options)
+        public WeapsyDbContext(DbContextOptions options)
             : base(options)
         {            
         }
@@ -96,35 +95,5 @@ namespace Weapsy.Data
             builder.Entity<User>()
                 .ToTable("User");
         }
-
-        public new DbSet<T> Set<T>() where T : class, IDbEntity
-        {
-            return base.Set<T>();
-        }
-
-        public new EntityEntry<T> Entry<T>(T entity) where T : class, IDbEntity
-        {
-            return base.Entry(entity);
-        }
-
-        public DbSet<App> Apps { get; set; }
-        public DbSet<EmailAccount> EmailAccounts { get; set; }
-        public DbSet<Language> Languages { get; set; }
-        public DbSet<Menu> Menus { get; set; }
-        public DbSet<MenuItem> MenuItems { get; set; }
-        public DbSet<MenuItemLocalisation> MenuItemLocalisations { get; set; }
-        public DbSet<MenuItemPermission> MenuItemPermissions { get; set; }
-        public DbSet<Module> Modules { get; set; }
-        public DbSet<ModuleType> ModuleTypes { get; set; }
-        public DbSet<Page> Pages { get; set; }
-        public DbSet<PageLocalisation> PageLocalisations { get; set; }
-        public DbSet<PageModule> PageModules { get; set; }
-        public DbSet<PageModuleLocalisation> PageModuleLocalisations { get; set; }
-        public DbSet<PageModulePermission> PageModulePermission { get; set; }
-        public DbSet<PagePermission> PagePermissions { get; set; }
-        public DbSet<Site> Sites { get; set; }
-        public DbSet<SiteLocalisation> SiteLocalisations { get; set; }
-        public DbSet<Theme> Themes { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

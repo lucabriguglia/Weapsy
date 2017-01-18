@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
                 _siteId2 = Guid.NewGuid();
                 _deletedSiteId = Guid.NewGuid();
 
-                context.Set<SiteDbEntity>().AddRange(
+                context.Sites.AddRange(
                     new SiteDbEntity
                     {
                         Id = _siteId1,

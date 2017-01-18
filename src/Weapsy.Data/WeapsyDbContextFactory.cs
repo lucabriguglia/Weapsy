@@ -13,7 +13,7 @@ namespace Weapsy.Data
             ConnectionStrings = settings.Value;
         }
 
-        public WeapsyDbContext Create()
+        public BaseDbContext Create()
         {
             var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
             optionsBuilder.UseSqlServer(ConnectionStrings.DefaultConnection);
@@ -21,7 +21,7 @@ namespace Weapsy.Data
             return new WeapsyDbContext(optionsBuilder.Options);
         }
 
-        public WeapsyDbContext Create(DbContextOptions<WeapsyDbContext> options)
+        public BaseDbContext Create(DbContextOptions options)
         {
             return new WeapsyDbContext(options);
         }

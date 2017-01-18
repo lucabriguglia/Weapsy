@@ -41,7 +41,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
                 _language1 = Guid.NewGuid();
                 _deletedMenuId = Guid.NewGuid();
 
-                context.Set<MenuDbEntity>().AddRange(
+                context.Menus.AddRange(
                     new MenuDbEntity
                     {
                         SiteId = _siteId,

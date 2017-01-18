@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<MenuDbEntity>()
+                var dbEntity = context.Menus
                     .FirstOrDefault(x => x.Id == id && x.Status != MenuStatus.Deleted);
 
                 LoadMenuItems(context, dbEntity);
@@ -40,7 +40,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<MenuDbEntity>()
+                var dbEntity = context.Menus
                     .FirstOrDefault(x => x.SiteId == siteId &&  x.Id == id && x.Status != MenuStatus.Deleted);
 
                 LoadMenuItems(context, dbEntity);
@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<MenuDbEntity>()
+                var dbEntity = context.Menus
                     .FirstOrDefault(x => x.SiteId == siteId && x.Name == name && x.Status != MenuStatus.Deleted);
 
                 LoadMenuItems(context, dbEntity);
@@ -67,7 +67,7 @@ namespace Weapsy.Domain.Data.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = _mapper.Map<MenuDbEntity>(menu);
-                context.Set<MenuDbEntity>().Add(dbEntity);
+                context.Menus.Add(dbEntity);
                 context.SaveChanges();
             }
         }
@@ -86,7 +86,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdateMenuItems(WeapsyDbContext context, IEnumerable<MenuItemDbEntity> menuItemDbEntities)
+        private void UpdateMenuItems(BaseDbContext context, IEnumerable<MenuItemDbEntity> menuItemDbEntities)
         {
             foreach (var menuItemDbEntity in menuItemDbEntities)
             {
@@ -105,7 +105,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdateMenuItemLocalisations(WeapsyDbContext context, Guid menuItemId, IEnumerable<MenuItemLocalisationDbEntity> menuItemLocalisations)
+        private void UpdateMenuItemLocalisations(BaseDbContext context, Guid menuItemId, IEnumerable<MenuItemLocalisationDbEntity> menuItemLocalisations)
         {
             var currentMenuItemLocalisations = context.MenuItemLocalisations
                 .AsNoTracking()
@@ -135,7 +135,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdateMenuItemPermissions(WeapsyDbContext context, Guid menuItemId, IEnumerable<MenuItemPermissionDbEntity> menuItemPermissions)
+        private void UpdateMenuItemPermissions(BaseDbContext context, Guid menuItemId, IEnumerable<MenuItemPermissionDbEntity> menuItemPermissions)
         {
             var currentMenuItemPermissions = context.MenuItemPermissions
                 .AsNoTracking()
@@ -163,12 +163,12 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void LoadMenuItems(WeapsyDbContext context, MenuDbEntity menu)
+        private void LoadMenuItems(BaseDbContext context, MenuDbEntity menu)
         {
             if (menu == null)
                 return;
 
-            menu.MenuItems = context.Set<MenuItemDbEntity>()
+            menu.MenuItems = context.MenuItems
                 .Include(x => x.MenuItemLocalisations)
                 .Include(x => x.MenuItemPermissions)
                 .Where(x => x.MenuId == menu.Id && x.Status != MenuItemStatus.Deleted)

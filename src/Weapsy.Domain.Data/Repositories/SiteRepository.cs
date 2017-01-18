@@ -25,7 +25,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<SiteDbEntity>()
+                var dbEntity = context.Sites
                     .Include(x => x.SiteLocalisations)
                     .FirstOrDefault(x => x.Id == id && x.Status != SiteStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<SiteDbEntity>()
+                var dbEntity = context.Sites
                     .Include(x => x.SiteLocalisations)
                     .FirstOrDefault(x => x.Name == name && x.Status != SiteStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
@@ -47,7 +47,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<SiteDbEntity>()
+                var dbEntity = context.Sites
                     .Include(x => x.SiteLocalisations)
                     .FirstOrDefault(x => x.Url == url && x.Status != SiteStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<Site>(dbEntity) : null;
@@ -59,7 +59,7 @@ namespace Weapsy.Domain.Data.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = _mapper.Map<SiteDbEntity>(site);
-                context.Set<SiteDbEntity>().Add(dbEntity);
+                context.Sites.Add(dbEntity);
                 context.SaveChanges();
             }
         }
@@ -78,7 +78,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdateSiteLocalisations(WeapsyDbContext context, Guid siteId, IEnumerable<SiteLocalisationDbEntity> siteLocalisations)
+        private void UpdateSiteLocalisations(BaseDbContext context, Guid siteId, IEnumerable<SiteLocalisationDbEntity> siteLocalisations)
         {
             var currentSiteLocalisations = context.SiteLocalisations
                 .AsNoTracking()

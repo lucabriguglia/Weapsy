@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
                 _themeId2 = Guid.NewGuid();
                 _deletedThemeId = Guid.NewGuid();
 
-                context.Set<ThemeDbEntity>().AddRange
+                context.Themes.AddRange
                 (
                     new ThemeDbEntity
                     {

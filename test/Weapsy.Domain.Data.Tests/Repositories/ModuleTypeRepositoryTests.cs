@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
                 _moduleTypeId2 = Guid.NewGuid();
                 _deletedModuleTypeId = Guid.NewGuid();
 
-                context.Set<ModuleTypeDbEntity>().AddRange(
+                context.ModuleTypes.AddRange(
                     new ModuleTypeDbEntity
                     {
                         Id = _moduleTypeId1,

@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<PageDbEntity>()
+                var dbEntity = context.Pages
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
                     .FirstOrDefault(x => x.Id == id && x.Status != PageStatus.Deleted);
@@ -44,7 +44,7 @@ namespace Weapsy.Domain.Data.Repositories
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Set<PageDbEntity>()
+                var dbEntity = context.Pages
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
                     .FirstOrDefault(x => x.SiteId == siteId && x.Id == id && x.Status != PageStatus.Deleted);
@@ -93,7 +93,7 @@ namespace Weapsy.Domain.Data.Repositories
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = _mapper.Map<PageDbEntity>(page);
-                context.Set<PageDbEntity>().Add(dbEntity);
+                context.Pages.Add(dbEntity);
                 context.SaveChanges();
             }
         }
@@ -114,7 +114,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageLocalisations(WeapsyDbContext context, Guid pageId, IEnumerable<PageLocalisationDbEntity> pageLocalisations)
+        private void UpdatePageLocalisations(BaseDbContext context, Guid pageId, IEnumerable<PageLocalisationDbEntity> pageLocalisations)
         {
             var currentPageLocalisations = context.PageLocalisations
                 .AsNoTracking()
@@ -132,7 +132,7 @@ namespace Weapsy.Domain.Data.Repositories
 
             foreach (var pageLocalisation in pageLocalisations)
             {
-                var currentPageLocalisation = context.Set<PageLocalisationDbEntity>()
+                var currentPageLocalisation = context.PageLocalisations
                     .AsNoTracking()
                     .FirstOrDefault(x =>
                         x.PageId == pageLocalisation.PageId &&
@@ -145,11 +145,11 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageModules(WeapsyDbContext context, IEnumerable<PageModuleDbEntity> pageModules)
+        private void UpdatePageModules(BaseDbContext context, IEnumerable<PageModuleDbEntity> pageModules)
         {
             foreach (var pageModule in pageModules)
             {
-                var currentPageModule = context.Set<PageModuleDbEntity>()
+                var currentPageModule = context.PageModules
                     .AsNoTracking()
                     .FirstOrDefault(x =>
                         x.ModuleId == pageModule.ModuleId &&
@@ -168,7 +168,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageModuleLocalisations(WeapsyDbContext context, Guid pageModuleId, IEnumerable<PageModuleLocalisationDbEntity> pageModuleLocalisations)
+        private void UpdatePageModuleLocalisations(BaseDbContext context, Guid pageModuleId, IEnumerable<PageModuleLocalisationDbEntity> pageModuleLocalisations)
         {
             var currentPageModuleLocalisations = context.PageModuleLocalisations
                 .AsNoTracking()
@@ -187,7 +187,7 @@ namespace Weapsy.Domain.Data.Repositories
 
             foreach (var pageModuleLocalisation in pageModuleLocalisations)
             {
-                var currentPageModuleLocalisation = context.Set<PageModuleLocalisationDbEntity>()
+                var currentPageModuleLocalisation = context.PageModuleLocalisations
                     .AsNoTracking()
                     .FirstOrDefault(x =>
                         x.PageModuleId == pageModuleLocalisation.PageModuleId &&
@@ -200,9 +200,9 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageModulePermissions(WeapsyDbContext context, Guid pageModuleId, IEnumerable<PageModulePermissionDbEntity> pageModulePermissions)
+        private void UpdatePageModulePermissions(BaseDbContext context, Guid pageModuleId, IEnumerable<PageModulePermissionDbEntity> pageModulePermissions)
         {
-            var currentPageModulePermissions = context.Set<PageModulePermissionDbEntity>()
+            var currentPageModulePermissions = context.PageModulePermissions
                 .AsNoTracking()
                 .Where(x => x.PageModuleId == pageModuleId)
                 .ToList();
@@ -230,9 +230,9 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePagePermissions(WeapsyDbContext context, Guid pageId, IEnumerable<PagePermissionDbEntity> pagePermissions)
+        private void UpdatePagePermissions(BaseDbContext context, Guid pageId, IEnumerable<PagePermissionDbEntity> pagePermissions)
         {
-            var currentPagePermissions = context.Set<PagePermissionDbEntity>()
+            var currentPagePermissions = context.PagePermissions
                 .AsNoTracking()
                 .Where(x => x.PageId == pageId)
                 .ToList();
@@ -260,12 +260,12 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void LoadActivePageModules(WeapsyDbContext context, PageDbEntity pageDbEntity)
+        private void LoadActivePageModules(BaseDbContext context, PageDbEntity pageDbEntity)
         {
             if (pageDbEntity == null)
                 return;
 
-            pageDbEntity.PageModules = context.Set<PageModuleDbEntity>()
+            pageDbEntity.PageModules = context.PageModules
                 .Include(y => y.PageModuleLocalisations)
                 .Include(y => y.PageModulePermissions)
                 .Where(x => x.PageId == pageDbEntity.Id && x.Status != PageModuleStatus.Deleted)
