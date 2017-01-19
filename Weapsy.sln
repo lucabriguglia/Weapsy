@@ -77,6 +77,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{ADF8C7D6-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{C8FD0F0C-9C57-4AEC-887D-3105CA866533}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Data.Providers.SqlServer", "src\Weapsy.Data.Providers.SqlServer\Weapsy.Data.Providers.SqlServer.xproj", "{857BB2C9-59C5-46A9-9E67-1A923122C166}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,10 @@ Global
 		{78BB78D3-B95D-4ED6-88B7-38062D0F8469}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78BB78D3-B95D-4ED6-88B7-38062D0F8469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78BB78D3-B95D-4ED6-88B7-38062D0F8469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{857BB2C9-59C5-46A9-9E67-1A923122C166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{857BB2C9-59C5-46A9-9E67-1A923122C166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{857BB2C9-59C5-46A9-9E67-1A923122C166}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{857BB2C9-59C5-46A9-9E67-1A923122C166}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -201,5 +207,6 @@ Global
 		{406119AC-E813-4C20-979B-DC21AE95A80B} = {DB8FBD26-B48B-4B13-A4FE-F666194245AB}
 		{ADF8C7D6-E4EE-4E8A-91D2-143603474EC7} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{C8FD0F0C-9C57-4AEC-887D-3105CA866533} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
+		{857BB2C9-59C5-46A9-9E67-1A923122C166} = {72F87378-93E9-4893-BE86-61A6723DD348}
 	EndGlobalSection
 EndGlobal
