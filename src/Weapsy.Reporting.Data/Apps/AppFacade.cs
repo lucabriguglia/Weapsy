@@ -10,10 +10,10 @@ namespace Weapsy.Reporting.Data.Apps
 {
     public class AppFacade : IAppFacade
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public AppFacade(IWeapsyDbContextFactory dbContextFactory, IMapper mapper)
+        public AppFacade(IDbContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;

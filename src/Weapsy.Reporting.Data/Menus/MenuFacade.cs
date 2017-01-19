@@ -19,12 +19,12 @@ namespace Weapsy.Reporting.Data.Menus
 {
     public class MenuFacade : IMenuFacade
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
 
-        public MenuFacade(IWeapsyDbContextFactory dbContextFactory, 
+        public MenuFacade(IDbContextFactory dbContextFactory, 
             ICacheManager cacheManager, 
             IMapper mapper, 
             IRoleService roleService)

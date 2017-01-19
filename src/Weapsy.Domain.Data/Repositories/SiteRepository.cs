@@ -12,10 +12,10 @@ namespace Weapsy.Domain.Data.Repositories
 {
     public class SiteRepository : ISiteRepository
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public SiteRepository(IWeapsyDbContextFactory dbContextFactory, IMapper mapper)
+        public SiteRepository(IDbContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;

@@ -22,9 +22,9 @@ namespace Weapsy.Tests.Shared
             return builder.Options;
         }
 
-        public static IWeapsyDbContextFactory CreateNewContextFactory(WeapsyDbContext context)
+        public static IDbContextFactory CreateNewContextFactory(WeapsyDbContext context)
         {
-            var dbContextFactoryMock = new Mock<IWeapsyDbContextFactory>();
+            var dbContextFactoryMock = new Mock<IDbContextFactory>();
             dbContextFactoryMock.Setup(x => x.Create()).Returns(context);
             return dbContextFactoryMock.Object;
         }

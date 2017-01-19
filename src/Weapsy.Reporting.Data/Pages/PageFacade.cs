@@ -16,14 +16,14 @@ namespace Weapsy.Reporting.Data.Pages
 {
     public class PageFacade : IPageFacade
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
         private readonly IPageInfoFactory _pageViewFactory;
         private readonly IPageAdminFactory _pageAdminFactory;
 
-        public PageFacade(IWeapsyDbContextFactory dbContextFactory,
+        public PageFacade(IDbContextFactory dbContextFactory,
             ICacheManager cacheManager,
             IMapper mapper,
             IRoleService roleService,

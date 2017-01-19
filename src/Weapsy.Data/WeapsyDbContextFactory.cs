@@ -1,29 +1,36 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Weapsy.Infrastructure.Configuration;
+using Weapsy.Infrastructure.DependencyResolver;
 
 namespace Weapsy.Data
 {
-    public class WeapsyDbContextFactory : IWeapsyDbContextFactory
+    public class DbContextFactory : IDbContextFactory
     {
-        private ConnectionStrings ConnectionStrings { get; }
+        private Infrastructure.Configuration.Data DataConfiguration { get; }
+        private readonly IResolver _resolver;
 
-        public WeapsyDbContextFactory(IOptions<ConnectionStrings> settings)
+        public DbContextFactory(IOptions<Infrastructure.Configuration.Data> dataConfiguration, 
+            IResolver resolver)
         {
-            ConnectionStrings = settings.Value;
+            DataConfiguration = dataConfiguration.Value;
+            _resolver = resolver;            
         }
 
         public BaseDbContext Create()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<WeapsyDbContext>();
-            optionsBuilder.UseSqlServer(ConnectionStrings.DefaultConnection);
+            var dataProvider = _resolver.ResolveAll<IDataProvider>().SingleOrDefault(x => x.Provider == DataConfiguration.Provider);
 
-            return new WeapsyDbContext(optionsBuilder.Options);
+            if (dataProvider == null)
+                throw new Exception("The DataProvider in appsettings.json is empty or the one specified has not been found!");
+
+            return dataProvider.DbContext();
         }
 
         public BaseDbContext Create(DbContextOptions options)
         {
-            return new WeapsyDbContext(options);
+            throw new NotImplementedException();
         }
     }
 }

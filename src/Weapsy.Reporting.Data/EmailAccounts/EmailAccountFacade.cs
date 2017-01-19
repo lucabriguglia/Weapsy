@@ -11,11 +11,11 @@ namespace Weapsy.Reporting.Data.EmailAccounts
 {
     public class EmailAccountFacade : IEmailAccountFacade
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public EmailAccountFacade(IWeapsyDbContextFactory dbContextFactory, 
+        public EmailAccountFacade(IDbContextFactory dbContextFactory, 
             ICacheManager cacheManager, 
             IMapper mapper)
         {

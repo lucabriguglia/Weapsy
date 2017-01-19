@@ -13,11 +13,11 @@ namespace Weapsy.Reporting.Data.Sites
 {
     public class SiteFacade : ISiteFacade
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public SiteFacade(IWeapsyDbContextFactory dbContextFactory,
+        public SiteFacade(IDbContextFactory dbContextFactory,
             ICacheManager cacheManager,
             IMapper mapper)
         {

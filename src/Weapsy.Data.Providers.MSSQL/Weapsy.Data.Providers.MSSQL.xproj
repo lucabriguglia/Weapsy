@@ -7,8 +7,8 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>857bb2c9-59c5-46a9-9e67-1a923122c166</ProjectGuid>
-    <RootNamespace>Weapsy.Data.Providers.SqlServer</RootNamespace>
+    <ProjectGuid>74961ddf-81a3-4422-8123-34f8782019d2</ProjectGuid>
+    <RootNamespace>Weapsy.Data.Providers.MSSQL</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>

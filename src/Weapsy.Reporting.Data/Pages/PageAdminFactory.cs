@@ -13,10 +13,10 @@ namespace Weapsy.Reporting.Data.Pages
 {
     public class PageAdminFactory : IPageAdminFactory
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly IRoleService _roleService;
 
-        public PageAdminFactory(IWeapsyDbContextFactory dbContextFactory,
+        public PageAdminFactory(IDbContextFactory dbContextFactory,
             IRoleService roleService)
         {
             _dbContextFactory = dbContextFactory;

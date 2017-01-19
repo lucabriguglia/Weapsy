@@ -13,11 +13,11 @@ namespace Weapsy.Reporting.Data.Languages
 {
     public class LanguageFacade : ILanguageFacade
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public LanguageFacade(IWeapsyDbContextFactory dbContextFactory,
+        public LanguageFacade(IDbContextFactory dbContextFactory,
             ICacheManager cacheManager, 
             IMapper mapper)
         {

@@ -2,10 +2,9 @@
 {
     public enum DataProvider
     {
-        SqlServer,
-        Sqlite,
-        MySql,
-        PostgreSql,
-        Oracle
+        MSSQL,
+        SQLite,
+        MySQL,
+        PostgreSQL
     }
 }

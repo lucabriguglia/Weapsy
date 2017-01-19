@@ -5,6 +5,7 @@
     "Autofac": "4.2.1",
     "NETStandard.Library": "1.6.1",
     "Weapsy.Data": "1.0.0-*",
+    "Weapsy.Data.Providers.MSSQL": "1.0.0-*",
     "Weapsy.Domain": "1.0.0-*",
     "Weapsy.Domain.Data": "1.0.0-*",
     "Weapsy.Domain.EventStore.SqlServer": "1.0.0-*",

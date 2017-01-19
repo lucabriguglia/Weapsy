@@ -11,11 +11,11 @@ namespace Weapsy.Reporting.Data.Themes
 {
     public class ThemeFacade : IThemeFacade
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public ThemeFacade(IWeapsyDbContextFactory dbContextFactory, 
+        public ThemeFacade(IDbContextFactory dbContextFactory, 
             ICacheManager cacheManager,
             IMapper mapper)
         {

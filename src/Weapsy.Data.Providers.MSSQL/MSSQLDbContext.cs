@@ -3,18 +3,18 @@ using Microsoft.Extensions.Options;
 using Weapsy.Data.Entities;
 using Weapsy.Infrastructure.Configuration;
 
-namespace Weapsy.Data.Providers.SqlServer
+namespace Weapsy.Data.Providers.MSSQL
 {
-    public class SqlServerDbContext : BaseDbContext
+    public class MSSQLDbContext : BaseDbContext
     {
         private ConnectionStrings ConnectionStrings { get; }
 
-        public SqlServerDbContext(IOptions<ConnectionStrings> settings)
+        public MSSQLDbContext(IOptions<ConnectionStrings> settings)
         {
             ConnectionStrings = settings.Value;
         }
 
-        public SqlServerDbContext(DbContextOptions options)
+        public MSSQLDbContext(DbContextOptions options)
             : base(options)
         {            
         }

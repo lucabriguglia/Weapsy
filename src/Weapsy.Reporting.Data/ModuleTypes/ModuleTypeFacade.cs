@@ -12,11 +12,11 @@ namespace Weapsy.Reporting.Data.ModuleTypes
 {
     public class ModuleTypeFacade : IModuleTypeFacade
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IMapper _mapper;
 
-        public ModuleTypeFacade(IWeapsyDbContextFactory dbContextFactory,
+        public ModuleTypeFacade(IDbContextFactory dbContextFactory,
             ICacheManager cacheManager,
             IMapper mapper)
         {

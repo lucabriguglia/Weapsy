@@ -11,6 +11,7 @@ using Weapsy.Reporting.Sites;
 using Weapsy.Domain.EventStore.SqlServer;
 using System.Reflection;
 using Weapsy.Data;
+using Weapsy.Data.Providers.MSSQL;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.Apps;
@@ -39,7 +40,7 @@ namespace Weapsy.DependencyConfigurator
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<WeapsyDbContext>().As<WeapsyDbContext>();
-            builder.RegisterType<WeapsyDbContextFactory>().As<IWeapsyDbContextFactory>();
+            builder.RegisterType<DbContextFactory>().As<IDbContextFactory>();
             builder.RegisterType<EventStoreDbContext>().As<EventStoreDbContext>();
 
             builder.RegisterType<AutofacResolver>().As<IResolver>();
@@ -57,6 +58,8 @@ namespace Weapsy.DependencyConfigurator
             builder.RegisterAssemblyTypes(typeof(SiteEventsHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandlerAsync<>));
             builder.RegisterAssemblyTypes(typeof(UserRegisteredHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandler<>));
             builder.RegisterAssemblyTypes(typeof(UserRegisteredHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandlerAsync<>));
+
+            builder.RegisterType<MSSQLDataProvider>().As<IDataProvider>();
 
             builder.RegisterType<LanguageSortOrderGenerator>().As<ILanguageSortOrderGenerator>();
 

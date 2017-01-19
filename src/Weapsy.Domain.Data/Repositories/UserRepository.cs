@@ -9,10 +9,10 @@ namespace Weapsy.Domain.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IWeapsyDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public UserRepository(IWeapsyDbContextFactory dbContextFactory, IMapper mapper)
+        public UserRepository(IDbContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;
