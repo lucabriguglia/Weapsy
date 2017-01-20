@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
+using Weapsy.Data.Providers.MSSQL;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Menus;
 using Weapsy.Tests.Factories;
@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
     [TestFixture]
     public class MenuRepositoryTests
     {
-        private DbContextOptions<WeapsyDbContext> _contextOptions;
+        private DbContextOptions<MSSQLDbContext> _contextOptions;
         private Guid _siteId;
         private Guid _menuId1;
         private Guid _menuId2;
@@ -31,7 +31,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             _contextOptions = DbContextShared.CreateContextOptions();
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 _siteId = Guid.NewGuid();
                 _menuId1 = Guid.NewGuid();
@@ -102,7 +102,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_null_if_menu_is_deleted()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_deletedMenuId);
@@ -114,7 +114,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_menu_by_id_only()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_menuId1);
@@ -126,7 +126,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_menu_by_id_only_with_no_deleted_menu_items()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_menuId1);
@@ -138,7 +138,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_menu_by_id()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_siteId, _menuId1);
@@ -150,7 +150,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_menu_by_id_with_no_deleted_menu_items()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_siteId, _menuId1);
@@ -162,7 +162,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_menu_by_name()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetByName(_siteId, "Menu 1");
@@ -174,7 +174,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_menu_by_name_with_no_deleted_menu_items()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetByName(_siteId, "Menu 1");
@@ -188,13 +188,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             var newMenu = MenuFactory.Menu(_siteId, Guid.NewGuid(), "Menu 3", "Item", "");
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newMenu);
             }
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var menu = repository.GetById(_siteId, newMenu.Id);
@@ -212,13 +212,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             var menuToUpdate = MenuFactory.Menu(_siteId, _menuId1, newMenuName, newMenuItemText, newMenuItemLocalisationText, _menuItemId1, _language1);
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(menuToUpdate);
             }
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new MenuRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
 

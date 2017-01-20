@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
+using Weapsy.Data.Providers.MSSQL;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Tests.Shared;
 using ModuleType = Weapsy.Data.Entities.ModuleType;
@@ -11,7 +11,7 @@ namespace Weapsy.Reporting.Data.Tests.Facades
     [TestFixture]
     public class ModuleTypeFacadeTests
     {
-        private DbContextOptions<WeapsyDbContext> _contextOptions;
+        private DbContextOptions<MSSQLDbContext> _contextOptions;
         private Guid _moduleTypeId;
 
         [SetUp]
@@ -19,7 +19,7 @@ namespace Weapsy.Reporting.Data.Tests.Facades
         {
             _contextOptions = DbContextShared.CreateContextOptions();
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 _moduleTypeId = Guid.NewGuid();
 

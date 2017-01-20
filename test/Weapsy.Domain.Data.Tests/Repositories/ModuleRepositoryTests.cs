@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
+using Weapsy.Data.Providers.MSSQL;
 using Weapsy.Domain.Data.Repositories;
 using Weapsy.Domain.Modules;
 using Weapsy.Tests.Factories;
@@ -13,7 +13,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
     [TestFixture]
     public class ModuleRepositoryTests
     {
-        private DbContextOptions<WeapsyDbContext> _contextOptions;
+        private DbContextOptions<MSSQLDbContext> _contextOptions;
         private Guid _siteId;
         private Guid _moduleId1;
         private Guid _moduleId2;
@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             _contextOptions = DbContextShared.CreateContextOptions();
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 _siteId = Guid.NewGuid();
                 _moduleId1 = Guid.NewGuid();
@@ -66,7 +66,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_null_if_module_is_deleted()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var module = repository.GetById(_deletedModuleId);
@@ -78,7 +78,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_module_by_id()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var module = repository.GetById(_moduleId1);
@@ -90,7 +90,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_count_by_module_type_id()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var count = repository.GetCountByModuleTypeId(_moduleTypeId1);
@@ -102,7 +102,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_count_by_module_id()
         {
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var count = repository.GetCountByModuleId(_moduleId1);
@@ -116,13 +116,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             var newModule = ModuleFactory.Module(_siteId, Guid.NewGuid(), Guid.NewGuid(), "Title 3");
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newModule);
             }
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var module = repository.GetById(newModule.Id);
@@ -138,13 +138,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             var moduleToUpdate = ModuleFactory.Module(_siteId, _moduleTypeId1, _moduleId1, newModuleTitle);
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(moduleToUpdate);
             }
 
-            using (var context = new WeapsyDbContext(_contextOptions))
+            using (var context = new MSSQLDbContext(_contextOptions))
             {
                 var repository = new ModuleRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedModule = repository.GetById(_moduleId1);

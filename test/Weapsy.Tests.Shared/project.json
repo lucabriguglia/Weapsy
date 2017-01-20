@@ -6,6 +6,7 @@
     "Moq": "4.6.38-alpha",
     "NETStandard.Library": "1.6.0",
     "Weapsy.Data": "1.0.0-*",
+    "Weapsy.Data.Providers.MSSQL": "1.0.0-*",
     "Weapsy.Infrastructure": "1.0.0-*"
   },
 
