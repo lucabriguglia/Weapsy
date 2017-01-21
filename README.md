@@ -33,7 +33,7 @@ https://github.com/weapsy/Weapsy/wiki
 - ASP.NET Core
 - JavaScript, jQuery
 - Entity Framework Core
-- SQL Server
+- MSSQL, MySQL, SQLite, PostgreSQL
 - DDD
 - CQRS
 
