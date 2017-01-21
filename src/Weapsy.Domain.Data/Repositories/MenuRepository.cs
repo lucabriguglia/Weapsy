@@ -86,7 +86,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdateMenuItems(BaseDbContext context, IEnumerable<MenuItemDbEntity> menuItemDbEntities)
+        private void UpdateMenuItems(WeapsyDbContext context, IEnumerable<MenuItemDbEntity> menuItemDbEntities)
         {
             foreach (var menuItemDbEntity in menuItemDbEntities)
             {
@@ -105,7 +105,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdateMenuItemLocalisations(BaseDbContext context, Guid menuItemId, IEnumerable<MenuItemLocalisationDbEntity> menuItemLocalisations)
+        private void UpdateMenuItemLocalisations(WeapsyDbContext context, Guid menuItemId, IEnumerable<MenuItemLocalisationDbEntity> menuItemLocalisations)
         {
             var currentMenuItemLocalisations = context.MenuItemLocalisations
                 .AsNoTracking()
@@ -135,7 +135,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdateMenuItemPermissions(BaseDbContext context, Guid menuItemId, IEnumerable<MenuItemPermissionDbEntity> menuItemPermissions)
+        private void UpdateMenuItemPermissions(WeapsyDbContext context, Guid menuItemId, IEnumerable<MenuItemPermissionDbEntity> menuItemPermissions)
         {
             var currentMenuItemPermissions = context.MenuItemPermissions
                 .AsNoTracking()
@@ -163,7 +163,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void LoadMenuItems(BaseDbContext context, MenuDbEntity menu)
+        private void LoadMenuItems(WeapsyDbContext context, MenuDbEntity menu)
         {
             if (menu == null)
                 return;

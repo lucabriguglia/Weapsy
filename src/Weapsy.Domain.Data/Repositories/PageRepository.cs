@@ -114,7 +114,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageLocalisations(BaseDbContext context, Guid pageId, IEnumerable<PageLocalisationDbEntity> pageLocalisations)
+        private void UpdatePageLocalisations(WeapsyDbContext context, Guid pageId, IEnumerable<PageLocalisationDbEntity> pageLocalisations)
         {
             var currentPageLocalisations = context.PageLocalisations
                 .AsNoTracking()
@@ -145,7 +145,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageModules(BaseDbContext context, IEnumerable<PageModuleDbEntity> pageModules)
+        private void UpdatePageModules(WeapsyDbContext context, IEnumerable<PageModuleDbEntity> pageModules)
         {
             foreach (var pageModule in pageModules)
             {
@@ -168,7 +168,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageModuleLocalisations(BaseDbContext context, Guid pageModuleId, IEnumerable<PageModuleLocalisationDbEntity> pageModuleLocalisations)
+        private void UpdatePageModuleLocalisations(WeapsyDbContext context, Guid pageModuleId, IEnumerable<PageModuleLocalisationDbEntity> pageModuleLocalisations)
         {
             var currentPageModuleLocalisations = context.PageModuleLocalisations
                 .AsNoTracking()
@@ -200,7 +200,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePageModulePermissions(BaseDbContext context, Guid pageModuleId, IEnumerable<PageModulePermissionDbEntity> pageModulePermissions)
+        private void UpdatePageModulePermissions(WeapsyDbContext context, Guid pageModuleId, IEnumerable<PageModulePermissionDbEntity> pageModulePermissions)
         {
             var currentPageModulePermissions = context.PageModulePermissions
                 .AsNoTracking()
@@ -230,7 +230,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdatePagePermissions(BaseDbContext context, Guid pageId, IEnumerable<PagePermissionDbEntity> pagePermissions)
+        private void UpdatePagePermissions(WeapsyDbContext context, Guid pageId, IEnumerable<PagePermissionDbEntity> pagePermissions)
         {
             var currentPagePermissions = context.PagePermissions
                 .AsNoTracking()
@@ -260,7 +260,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void LoadActivePageModules(BaseDbContext context, PageDbEntity pageDbEntity)
+        private void LoadActivePageModules(WeapsyDbContext context, PageDbEntity pageDbEntity)
         {
             if (pageDbEntity == null)
                 return;

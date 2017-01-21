@@ -94,7 +94,7 @@ namespace Weapsy.Reporting.Data.Pages
             }
         }
 
-        private ICollection<ZoneModel> CreateZones(BaseDbContext context, Page page, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private ICollection<ZoneModel> CreateZones(WeapsyDbContext context, Page page, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new List<ZoneModel>();
 
@@ -109,7 +109,7 @@ namespace Weapsy.Reporting.Data.Pages
             return result;
         }
 
-        private ZoneModel CreateZone(BaseDbContext context, IGrouping<string, PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private ZoneModel CreateZone(WeapsyDbContext context, IGrouping<string, PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new ZoneModel
             {
@@ -129,7 +129,7 @@ namespace Weapsy.Reporting.Data.Pages
             return result;
         }
 
-        private ModuleModel CreateModule(BaseDbContext context, PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private ModuleModel CreateModule(WeapsyDbContext context, PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var module = context.Modules.FirstOrDefault(x => x.Id == pageModule.ModuleId && x.Status != ModuleStatus.Deleted);
 
@@ -195,7 +195,7 @@ namespace Weapsy.Reporting.Data.Pages
             return moduleModel;
         }
 
-        private Page GetPage(BaseDbContext context, Guid siteId, Guid pageId)
+        private Page GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
         {
             var page = context.Pages
                 .Include(x => x.PageLocalisations)

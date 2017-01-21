@@ -66,7 +66,7 @@ namespace Weapsy.Reporting.Data.Menus
         }
 
         // UNDER DEVELOPMENT/REFACTORING
-        private List<MenuViewModel.MenuItem> PopulateMenuItems(BaseDbContext context, IEnumerable<MenuItem> source, Guid parentId, Language language, bool addLanguageSlug)
+        private List<MenuViewModel.MenuItem> PopulateMenuItems(WeapsyDbContext context, IEnumerable<MenuItem> source, Guid parentId, Language language, bool addLanguageSlug)
         {
             var result = new List<MenuViewModel.MenuItem>();
 
@@ -319,7 +319,7 @@ namespace Weapsy.Reporting.Data.Menus
             throw new NotImplementedException();
         }
 
-        private void LoadMenuItems(BaseDbContext context, Menu menu)
+        private void LoadMenuItems(WeapsyDbContext context, Menu menu)
         {
             if (menu == null)
                 return;

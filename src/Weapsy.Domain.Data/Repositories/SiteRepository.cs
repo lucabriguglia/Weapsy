@@ -78,7 +78,7 @@ namespace Weapsy.Domain.Data.Repositories
             }
         }
 
-        private void UpdateSiteLocalisations(BaseDbContext context, Guid siteId, IEnumerable<SiteLocalisationDbEntity> siteLocalisations)
+        private void UpdateSiteLocalisations(WeapsyDbContext context, Guid siteId, IEnumerable<SiteLocalisationDbEntity> siteLocalisations)
         {
             var currentSiteLocalisations = context.SiteLocalisations
                 .AsNoTracking()

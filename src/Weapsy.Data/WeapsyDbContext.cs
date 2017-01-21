@@ -3,13 +3,13 @@ using Weapsy.Data.Entities;
 
 namespace Weapsy.Data
 {
-    public abstract class BaseDbContext : DbContext
+    public abstract class WeapsyDbContext : DbContext
     {
-        protected BaseDbContext()
+        protected WeapsyDbContext()
         {
         }
 
-        protected BaseDbContext(DbContextOptions options)
+        protected WeapsyDbContext(DbContextOptions options)
             : base(options)
         {            
         }

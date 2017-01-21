@@ -14,7 +14,7 @@ namespace Weapsy.Data.Providers.MSSQL
             ConnectionStrings = settings.Value;
         }
 
-        public BaseDbContext DbContext()
+        public WeapsyDbContext DbContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<MSSQLDbContext>();
             optionsBuilder.UseSqlServer(ConnectionStrings.DefaultConnection);

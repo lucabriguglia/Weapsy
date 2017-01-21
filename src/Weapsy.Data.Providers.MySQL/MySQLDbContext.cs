@@ -1,20 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using MySQL.Data.EntityFrameworkCore.Extensions;
 using Weapsy.Data.Entities;
 using Weapsy.Infrastructure.Configuration;
 
-namespace Weapsy.Data.Providers.MSSQL
+namespace Weapsy.Data.Providers.MySQL
 {
-    public class MSSQLDbContext : WeapsyDbContext
+    public class MySQLDbContext : WeapsyDbContext
     {
         private ConnectionStrings ConnectionStrings { get; }
 
-        public MSSQLDbContext(IOptions<ConnectionStrings> settings)
+        public MySQLDbContext(IOptions<ConnectionStrings> settings)
         {
             ConnectionStrings = settings.Value;
         }
 
-        public MSSQLDbContext(DbContextOptions options)
+        public MySQLDbContext(DbContextOptions options)
             : base(options)
         {            
         }
@@ -22,7 +23,7 @@ namespace Weapsy.Data.Providers.MSSQL
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             if (!string.IsNullOrEmpty(ConnectionStrings?.DefaultConnection))
-                builder.UseSqlServer(ConnectionStrings.DefaultConnection);
+                builder.UseMySQL(ConnectionStrings.DefaultConnection);
 
             base.OnConfiguring(builder);
         }

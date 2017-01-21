@@ -5,6 +5,6 @@ namespace Weapsy.Data
     public interface IDataProvider
     {
         DataProvider Provider { get; }
-        BaseDbContext DbContext();
+        WeapsyDbContext DbContext();
     }
 }

@@ -18,7 +18,7 @@ namespace Weapsy.Data
             _resolver = resolver;            
         }
 
-        public BaseDbContext Create()
+        public WeapsyDbContext Create()
         {
             var dataProvider = _resolver.ResolveAll<IDataProvider>().SingleOrDefault(x => x.Provider == DataConfiguration.Provider);
 
@@ -28,7 +28,7 @@ namespace Weapsy.Data
             return dataProvider.DbContext();
         }
 
-        public BaseDbContext Create(DbContextOptions options)
+        public WeapsyDbContext Create(DbContextOptions options)
         {
             throw new NotImplementedException();
         }
