@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Infrastructure.Domain
 {

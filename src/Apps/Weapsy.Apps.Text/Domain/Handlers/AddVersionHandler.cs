@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Infrastructure.Domain;
 using Weapsy.Apps.Text.Domain.Commands;
 using System;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Apps.Text.Domain.Handlers
 {

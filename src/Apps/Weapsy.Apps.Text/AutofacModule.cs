@@ -7,7 +7,8 @@ using Weapsy.Apps.Text.Domain.Handlers;
 using Weapsy.Apps.Text.Domain.Rules;
 using Weapsy.Apps.Text.Domain.Validators;
 using Weapsy.Apps.Text.Reporting;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Apps.Text
 {

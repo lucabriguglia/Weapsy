@@ -1,6 +1,5 @@
 ﻿using System;
 using Weapsy.Domain;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Apps.Text.Domain.Commands
 {

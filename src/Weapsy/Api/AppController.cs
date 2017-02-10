@@ -2,10 +2,10 @@
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Apps;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Apps.Rules;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Api

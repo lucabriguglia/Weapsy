@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using Weapsy.Infrastructure.DependencyResolver;
 using Weapsy.Infrastructure.Domain;
+using Weapsy.Infrastructure.Events;
 
-namespace Weapsy.Infrastructure.Dispatcher
+namespace Weapsy.Infrastructure.Commands
 {
     public class CommandSender : ICommandSender
     {

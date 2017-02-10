@@ -1,7 +1,7 @@
 ﻿using System;
 using AutoMapper;
 
-namespace Weapsy.Infrastructure.Dispatcher
+namespace Weapsy.Infrastructure.Events
 {
     public static class EventFactory
     {

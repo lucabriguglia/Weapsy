@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Mvc.Context;
 using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain;
+using Weapsy.Infrastructure.Commands;
 
 namespace Weapsy.Apps.Text.Api
 {

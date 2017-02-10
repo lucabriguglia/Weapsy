@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Apps;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Areas.Admin.Controllers

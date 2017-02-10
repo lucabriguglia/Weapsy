@@ -3,10 +3,10 @@ using Weapsy.Mvc.Controllers;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Themes;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Themes.Rules;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Domain.Themes;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Api

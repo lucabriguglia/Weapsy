@@ -3,8 +3,9 @@ using Autofac;
 using FluentValidation;
 using Weapsy.Data;
 using Weapsy.Domain.Sites.Commands;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Infrastructure.Domain;
+using Weapsy.Infrastructure.Events;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Services;
 

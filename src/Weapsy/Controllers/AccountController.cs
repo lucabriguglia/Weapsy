@@ -10,12 +10,12 @@ using Weapsy.Models;
 using Weapsy.Models.AccountViewModels;
 using Weapsy.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Users.Events;
 using System;
 using FluentValidation;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Controllers
 {

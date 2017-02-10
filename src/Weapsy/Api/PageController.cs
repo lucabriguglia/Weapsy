@@ -2,10 +2,10 @@
 using System;
 using System.Threading.Tasks;
 using Weapsy.Data.Identity;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Pages;

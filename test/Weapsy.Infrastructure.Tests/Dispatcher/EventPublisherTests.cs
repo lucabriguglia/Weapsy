@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Infrastructure.DependencyResolver;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Infrastructure.Domain;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Infrastructure.Tests.Dispatcher
 {

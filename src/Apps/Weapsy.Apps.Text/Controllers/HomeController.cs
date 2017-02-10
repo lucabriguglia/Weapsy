@@ -3,9 +3,9 @@ using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Domain.Commands;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Mvc.Context;
 using Weapsy.Apps.Text.Domain;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Mvc.Apps;
 
 namespace Weapsy.Apps.Text.Controllers

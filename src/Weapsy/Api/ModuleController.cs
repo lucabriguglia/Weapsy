@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Modules.Rules;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Modules;

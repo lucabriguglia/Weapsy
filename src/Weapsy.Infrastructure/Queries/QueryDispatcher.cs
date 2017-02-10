@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Weapsy.Infrastructure.DependencyResolver;
 
 namespace Weapsy.Infrastructure.Queries
 {

@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Infrastructure.Dispatcher
+﻿namespace Weapsy.Infrastructure.Events
 {
     public interface IEventHandler<in TEvent> where TEvent : IEvent
     {

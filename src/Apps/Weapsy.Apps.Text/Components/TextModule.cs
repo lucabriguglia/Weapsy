@@ -4,10 +4,10 @@ using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Pages;
 using Weapsy.Apps.Text.Reporting;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Apps.Text.Domain.Commands;
 using System;
 using Weapsy.Apps.Text.Domain;
+using Weapsy.Infrastructure.Commands;
 
 namespace Weapsy.Apps.Text.Components
 {

@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Languages;
 using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Languages;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Languages.Rules;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Api

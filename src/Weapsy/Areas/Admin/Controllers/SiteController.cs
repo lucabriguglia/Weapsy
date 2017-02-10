@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Sites;

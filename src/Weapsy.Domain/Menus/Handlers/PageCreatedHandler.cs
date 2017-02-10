@@ -2,7 +2,8 @@ using System;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Pages.Events;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Domain.Menus.Handlers
 {

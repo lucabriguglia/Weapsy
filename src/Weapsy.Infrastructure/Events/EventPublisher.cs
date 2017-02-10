@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Weapsy.Infrastructure.DependencyResolver;
 
-namespace Weapsy.Infrastructure.Dispatcher
+namespace Weapsy.Infrastructure.Events
 {
     public class EventPublisher : IEventPublisher
     {

@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Infrastructure.Dispatcher
+﻿namespace Weapsy.Infrastructure.Commands
 {
     public interface ICommand
     {

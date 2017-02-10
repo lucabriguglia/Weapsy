@@ -1,7 +1,7 @@
 ﻿using System;
 using Weapsy.Domain.Menus.Events;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Events;
 using Weapsy.Reporting.Languages;
 
 namespace Weapsy.Data.Reporting.Menus

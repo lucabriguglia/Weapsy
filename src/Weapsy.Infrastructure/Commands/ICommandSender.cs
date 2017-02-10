@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Weapsy.Infrastructure.Domain;
 
-namespace Weapsy.Infrastructure.Dispatcher
+namespace Weapsy.Infrastructure.Commands
 {
     public interface ICommandSender
     {

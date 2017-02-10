@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users.Events;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Domain.Users.Handlers
 {

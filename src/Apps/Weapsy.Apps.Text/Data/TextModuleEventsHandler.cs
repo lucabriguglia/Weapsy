@@ -1,8 +1,7 @@
 ﻿using System;
 using Weapsy.Apps.Text.Domain.Events;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Infrastructure.Dispatcher;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Infrastructure.Events;
 using Weapsy.Reporting.Languages;
 
 namespace Weapsy.Apps.Text.Data

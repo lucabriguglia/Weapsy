@@ -4,7 +4,7 @@ using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 using Weapsy.Domain.Sites.Events;
 using Weapsy.Infrastructure.Caching;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Data.Reporting.Sites
 {

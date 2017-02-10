@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Weapsy.Infrastructure.Dispatcher
+namespace Weapsy.Infrastructure.Events
 {
     public interface IEventPublisher
     {

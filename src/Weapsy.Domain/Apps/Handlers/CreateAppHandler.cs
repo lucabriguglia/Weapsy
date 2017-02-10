@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Domain.Apps.Commands;
-using Weapsy.Infrastructure.Dispatcher;
+using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Domain.Apps.Handlers
 {

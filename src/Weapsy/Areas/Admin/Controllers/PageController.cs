@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Pages;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
-using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Mvc.Context;
 using AutoMapper;
+using Weapsy.Infrastructure.Commands;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
