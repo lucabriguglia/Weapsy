@@ -119,7 +119,7 @@ namespace Weapsy
                 builder.RegisterModule(module);
             }
 
-            builder.RegisterModule(new WeapsyModule());
+            builder.RegisterModule(new AutofacModule());
             builder.Populate(services);
 
             var container = builder.Build();

@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Weapsy.Infrastructure.Queries
+﻿namespace Weapsy.Infrastructure.Queries
 {
-    public interface IQueryHandler<in TQuery, TResult> where TQuery : IQuery
+    public interface IQueryHandler<in TQuery, out TResult> where TQuery : IQuery
     {
-        Task<TResult> Retrieve(TQuery query);
+        TResult Retrieve(TQuery query);
     }
 }
