@@ -1,14 +1,16 @@
 using System;
 
-namespace Weapsy.Domain.EventStore.SqlServer
+namespace Weapsy.Data.Entities
 {
     public class DomainEvent
     {
-        public Guid AggregateId { get; set; }
+        public string DomainAggregateId { get; set; }
         public int SequenceNumber { get; set; }
         public string Type { get; set; }
         public string Body { get; set; }
         public DateTime TimeStamp { get; set; }
-        public Guid UserId { get; set; }        
+        public string UserId { get; set; }
+
+        public virtual DomainAggregate DomainAggregate { get; set; }
     }
 }

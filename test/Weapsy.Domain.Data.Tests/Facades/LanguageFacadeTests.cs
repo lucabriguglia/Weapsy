@@ -3,13 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
-using Weapsy.Data;
 using Weapsy.Data.Reporting.Languages;
 using Weapsy.Domain.Languages;
 using Weapsy.Infrastructure.Caching;
 using Language = Weapsy.Data.Entities.Language;
 
-namespace Weapsy.Domain.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Facades
 {
     [TestFixture]
     public class LanguageFacadeTests

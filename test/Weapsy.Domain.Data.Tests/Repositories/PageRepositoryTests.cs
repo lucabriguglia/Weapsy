@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
 using Weapsy.Data.Repositories;
 using Weapsy.Domain.Pages;
 using Weapsy.Tests.Factories;
@@ -11,8 +9,9 @@ using PageDbEntity = Weapsy.Data.Entities.Page;
 using PageLocalisation = Weapsy.Data.Entities.PageLocalisation;
 using PageModuleDbEntity = Weapsy.Data.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Data.Entities.PageModuleLocalisation;
+using System.Linq;
 
-namespace Weapsy.Domain.Data.Tests.Repositories
+namespace Weapsy.Data.Tests.Repositories
 {
     [TestFixture]
     public class PageRepositoryTests

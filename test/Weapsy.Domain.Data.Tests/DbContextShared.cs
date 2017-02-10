@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using Weapsy.Data;
 
-namespace Weapsy.Domain.Data.Tests
+namespace Weapsy.Data.Tests
 {
     public static class DbContextShared
     {

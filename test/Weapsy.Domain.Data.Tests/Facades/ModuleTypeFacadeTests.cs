@@ -1,11 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
 using Weapsy.Domain.ModuleTypes;
 using ModuleType = Weapsy.Data.Entities.ModuleType;
 
-namespace Weapsy.Domain.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Facades
 {
     [TestFixture]
     public class ModuleTypeFacadeTests

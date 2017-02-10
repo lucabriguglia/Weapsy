@@ -13,7 +13,6 @@ using Weapsy.Data.Reporting.Pages;
 using Weapsy.Data.Reporting.Sites;
 using Weapsy.Data.Reporting.Themes;
 using Weapsy.Data.Repositories;
-using Weapsy.Domain.EventStore.SqlServer;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Sites.Handlers;
 using Weapsy.Domain.Sites.Rules;
@@ -40,13 +39,12 @@ namespace Weapsy
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<DbContextFactory>().As<IDbContextFactory>();
-            builder.RegisterType<EventStoreDbContext>().As<EventStoreDbContext>();
 
             builder.RegisterType<AutofacResolver>().As<IResolver>();
             builder.RegisterType<CommandSender>().As<ICommandSender>();
             builder.RegisterType<EventPublisher>().As<IEventPublisher>();
             builder.RegisterType<MemoryCacheManager>().As<ICacheManager>();
-            builder.RegisterType<SqlServerEventStore>().As<IEventStore>();
+            builder.RegisterType<EventStore>().As<IEventStore>();
 
             builder.RegisterAssemblyTypes(typeof(CreateSiteHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
             builder.RegisterAssemblyTypes(typeof(CreateSiteHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(ICommandHandlerAsync<>));

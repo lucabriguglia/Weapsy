@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
 using Weapsy.Data.Repositories;
 using Weapsy.Domain.Languages;
 using Weapsy.Tests.Factories;
 using LanguageDbEntity = Weapsy.Data.Entities.Language;
 
-namespace Weapsy.Domain.Data.Tests.Repositories
+namespace Weapsy.Data.Tests.Repositories
 {
     [TestFixture]
     public class LanguageRepositoryTests

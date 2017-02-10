@@ -22,7 +22,7 @@ namespace Weapsy.Api
         [HttpGet("{aggregateId}")]
         public async Task<IActionResult> Get(Guid aggregateId)
         {
-            var events = await _eventStore.GetEventsAsync(aggregateId);
+            var events = await _eventStore.GetEventsAsync(aggregateId.ToString());
             return Ok(events);
         }
     }

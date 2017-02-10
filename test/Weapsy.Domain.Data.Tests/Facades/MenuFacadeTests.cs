@@ -1,11 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
 using Weapsy.Domain.Menus;
 using Menu = Weapsy.Data.Entities.Menu;
 
-namespace Weapsy.Domain.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Facades
 {
     [TestFixture]
     public class MenuFacadeTests

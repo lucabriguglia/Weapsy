@@ -1,14 +1,13 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Moq;
+﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
+using System;
+using Moq;
 using Weapsy.Data.Reporting.EmailAccounts;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Infrastructure.Caching;
 using EmailAccount = Weapsy.Data.Entities.EmailAccount;
 
-namespace Weapsy.Domain.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Facades
 {
     [TestFixture]
     public class EmailAccountFacadeTests

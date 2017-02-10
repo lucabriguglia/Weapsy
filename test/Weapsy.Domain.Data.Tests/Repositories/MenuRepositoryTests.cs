@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
 using Weapsy.Data.Repositories;
 using Weapsy.Domain.Menus;
 using Weapsy.Tests.Factories;
@@ -11,7 +10,7 @@ using MenuItemDbEntity = Weapsy.Data.Entities.MenuItem;
 using MenuItemLocalisationDbEntity = Weapsy.Data.Entities.MenuItemLocalisation;
 using System.Linq;
 
-namespace Weapsy.Domain.Data.Tests.Repositories
+namespace Weapsy.Data.Tests.Repositories
 {
     [TestFixture]
     public class MenuRepositoryTests

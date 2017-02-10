@@ -30,22 +30,22 @@ namespace Weapsy.Data.Extensions
             return services;
         }
 
-        public static IServiceCollection AddAutoMapper(this IServiceCollection services)
-        {
-            var autoMapperConfig = new MapperConfiguration(cfg =>
-            {
-                var currentAssembly = typeof(ServiceCollectionExtensions).GetTypeInfo().Assembly;
-                var profiles = currentAssembly.GetTypes<Profile>();
+        //public static IServiceCollection AddAutoMapper(this IServiceCollection services)
+        //{
+        //    var autoMapperConfig = new MapperConfiguration(cfg =>
+        //    {
+        //        var currentAssembly = typeof(ServiceCollectionExtensions).GetTypeInfo().Assembly;
+        //        var profiles = currentAssembly.GetTypes<Profile>();
 
-                foreach (var profile in profiles)
-                {
-                    cfg.AddProfile(profile);
-                }
-            });
+        //        foreach (var profile in profiles)
+        //        {
+        //            cfg.AddProfile(profile);
+        //        }
+        //    });
 
-            services.AddSingleton(sp => autoMapperConfig.CreateMapper());
+        //    services.AddSingleton(sp => autoMapperConfig.CreateMapper());
 
-            return services;
-        }
+        //    return services;
+        //}
     }
 }

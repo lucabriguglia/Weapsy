@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Weapsy.Data.Repositories;
 
-namespace Weapsy.Domain.Data.Tests
+namespace Weapsy.Data.Tests
 {
     public static class Shared
     {

@@ -1,11 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
 using Weapsy.Domain.Sites;
 using Site = Weapsy.Data.Entities.Site;
 
-namespace Weapsy.Domain.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Facades
 {
     [TestFixture]
     public class SiteFacadeTests

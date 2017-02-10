@@ -27,6 +27,7 @@ using Weapsy.Services.Installation;
 using Weapsy.Mvc.Apps;
 using Autofac.Core;
 using Microsoft.Extensions.FileProviders;
+using Weapsy.Data.Extensions;
 
 namespace Weapsy
 {
@@ -187,6 +188,8 @@ namespace Weapsy
             });
 
             app.UseIdentity();
+
+            app.EnsureDbCreated(Configuration);
 
             var site = siteRepository.GetByName("Default");
             var activeLanguages = languageFacade.GetAllActiveAsync(site.Id).Result;
