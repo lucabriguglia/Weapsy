@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.CodeAnalysis;
 using Weapsy.Data;
-using Weapsy.DependencyConfigurator;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.ViewEngine;
 using Weapsy.Reporting.Pages;

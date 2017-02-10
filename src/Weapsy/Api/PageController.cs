@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Weapsy.Data.Identity;
 using Weapsy.Infrastructure.Dispatcher;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
@@ -8,7 +9,6 @@ using Weapsy.Domain.Pages.Rules;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Pages;
-using Weapsy.Services.Identity;
 
 namespace Weapsy.Api
 {

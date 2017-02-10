@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Weapsy.Data.Identity;
 using Weapsy.Domain.Pages;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Pages;
-using Weapsy.Services.Identity;
 
 namespace Weapsy.Components
 {

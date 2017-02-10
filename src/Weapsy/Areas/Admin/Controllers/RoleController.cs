@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Weapsy.Data.Identity;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
-using Weapsy.Services.Identity;
 
 namespace Weapsy.Areas.Admin.Controllers
 {

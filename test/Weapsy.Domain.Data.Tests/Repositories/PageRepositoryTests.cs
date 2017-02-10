@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data.Providers.MSSQL;
-using Weapsy.Domain.Data.Repositories;
+using Weapsy.Data;
+using Weapsy.Data.Repositories;
 using Weapsy.Domain.Pages;
 using Weapsy.Tests.Factories;
-using Weapsy.Tests.Shared;
 using PageDbEntity = Weapsy.Data.Entities.Page;
 using PageLocalisation = Weapsy.Data.Entities.PageLocalisation;
 using PageModuleDbEntity = Weapsy.Data.Entities.PageModule;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
     [TestFixture]
     public class PageRepositoryTests
     {
-        private DbContextOptions<MSSQLDbContext> _contextOptions;
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId;
         private Guid _pageId1;
         private Guid _pageId2;
@@ -32,7 +31,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             _contextOptions = DbContextShared.CreateContextOptions();
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 _siteId = Guid.NewGuid();
                 _pageId1 = Guid.NewGuid();
@@ -114,7 +113,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_null_if_page_is_deleted()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_deletedPageId);
@@ -126,7 +125,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_page_by_id_only()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_pageId1);
@@ -138,7 +137,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_page_by_id_only_with_no_deleted_page_modules()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_pageId1);
@@ -150,7 +149,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_page_by_id()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_siteId, _pageId1);
@@ -162,7 +161,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_page_by_id_with_no_deleted_page_modules()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_siteId, _pageId1);
@@ -174,7 +173,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_page_id_by_name()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var pageId = repository.GetPageIdByName(_siteId, "Name 2");
@@ -186,7 +185,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_page_id_by_slug()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var pageId = repository.GetPageIdBySlug(_siteId, "Url 2");
@@ -198,7 +197,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_page_id_by_localised_slug()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var pageId = repository.GetPageIdByLocalisedSlug(_siteId, "localised-url-1");
@@ -212,13 +211,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             var newPage = PageFactory.Page(_siteId, Guid.NewGuid(), "Name 3");
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newPage);
             }
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var page = repository.GetById(_siteId, newPage.Id);
@@ -234,13 +233,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             var pageToUpdate = PageFactory.Page(_siteId, _pageId1, newPageName);
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(pageToUpdate);
             }
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new PageRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedPage = repository.GetById(_siteId, _pageId1);

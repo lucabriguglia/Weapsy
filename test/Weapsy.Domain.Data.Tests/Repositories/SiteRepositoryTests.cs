@@ -1,11 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data.Providers.MSSQL;
-using Weapsy.Domain.Data.Repositories;
+using Weapsy.Data;
+using Weapsy.Data.Repositories;
 using Weapsy.Domain.Sites;
 using Weapsy.Tests.Factories;
-using Weapsy.Tests.Shared;
 using SiteDbEntity = Weapsy.Data.Entities.Site;
 
 namespace Weapsy.Domain.Data.Tests.Repositories
@@ -13,7 +12,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
     [TestFixture]
     public class SiteRepositoryTests
     {
-        private DbContextOptions<MSSQLDbContext> _contextOptions;
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId1;
         private Guid _siteId2;
         private Guid _deletedSiteId;
@@ -23,7 +22,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             _contextOptions = DbContextShared.CreateContextOptions();
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 _siteId1 = Guid.NewGuid();
                 _siteId2 = Guid.NewGuid();
@@ -60,7 +59,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_null_if_site_is_deleted()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var site = repository.GetById(_deletedSiteId);
@@ -72,7 +71,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_site_by_id()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var site = repository.GetById(_siteId1);
@@ -84,7 +83,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_site_by_name()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var site = repository.GetByName("Name 1");
@@ -96,7 +95,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_site_by_url()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var site = repository.GetByUrl("Url 1");
@@ -110,13 +109,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             var newSite = SiteFactory.CreateNew(Guid.NewGuid(), "Name 3");
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newSite);
             }
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var language = repository.GetById(newSite.Id);
@@ -132,13 +131,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             var siteToUpdate = SiteFactory.CreateNew(_siteId1, newSiteName);
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(siteToUpdate);
             }
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new SiteRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedSite = repository.GetById(_siteId1);

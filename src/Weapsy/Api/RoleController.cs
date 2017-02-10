@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using System.Linq;
-using Weapsy.Services.Identity;
+using Weapsy.Data.Identity;
 
 namespace Weapsy.Api
 {

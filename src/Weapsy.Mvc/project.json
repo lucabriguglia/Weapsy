@@ -6,10 +6,7 @@
     "Microsoft.AspNetCore.Mvc.Razor": "1.1.0",
     "Microsoft.AspNetCore.Mvc.ViewFeatures": "1.1.0",
     "NETStandard.Library": "1.6.1",
-    "Weapsy.DependencyConfigurator": "1.0.0-*",
-    "Weapsy.Domain.Data": "1.0.0-*",
-    "Weapsy.Reporting": "1.0.0-*",
-    "Weapsy.Reporting.Data": "1.0.0-*"
+    "Weapsy.Reporting": "1.0.0-*"
   },
 
   "frameworks": {

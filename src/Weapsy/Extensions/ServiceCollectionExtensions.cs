@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Api;
+using Weapsy.Data.Reporting;
 using Weapsy.Domain.Data;
 using Weapsy.Mvc.Apps;
-using Weapsy.Reporting.Data;
 
 namespace Weapsy.Extensions
 {

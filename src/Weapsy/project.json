@@ -5,13 +5,10 @@
   "frameworks": {
     "netcoreapp1.1": {
       "dependencies": {
-        "Weapsy.DependencyConfigurator": "1.0.0-*",
         "Weapsy.Domain": "1.0.0-*",
-        "Weapsy.Domain.Data": "1.0.0-*",
         "Weapsy.Domain.EventStore.SqlServer": "1.0.0-*",
         "Weapsy.Mvc": "1.0.0-*",
         "Weapsy.Reporting": "1.0.0-*",
-        "Weapsy.Reporting.Data": "1.0.0-*",
         "Weapsy.Services": "1.0.0-*",
         "Weapsy.Infrastructure": "1.0.0-*"
       },
@@ -69,7 +66,8 @@
     "Microsoft.NETCore.App": "1.1.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
     "Microsoft.VisualStudio.Web.CodeGeneration.Tools": "1.1.0-preview4-final",
-    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": "1.1.0-preview4-final"
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": "1.1.0-preview4-final",
+    "Weapsy.Data": "1.0.0-*"
   },
   "runtimes": {
     "win10-x64": {},

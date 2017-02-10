@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Weapsy.Data.Identity;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
-using Weapsy.Services.Identity;
 
 namespace Weapsy.Api
 {

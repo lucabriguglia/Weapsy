@@ -2,10 +2,10 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Weapsy.Data.Identity;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Menus;
-using Weapsy.Services.Identity;
 
 namespace Weapsy.Components
 {

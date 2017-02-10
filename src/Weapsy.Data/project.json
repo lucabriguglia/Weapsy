@@ -1,18 +1,43 @@
 {
   "version": "1.0.0-*",
 
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
   "dependencies": {
-    "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0",
-    "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
-    "MySql.Data.EntityFrameworkCore": "7.0.6-IR31",
-    "NETStandard.Library": "1.6.1",
     "Weapsy.Domain": "1.0.0-*",
-    "Weapsy.Infrastructure": "1.0.0-*"
+    "Weapsy.Infrastructure": "1.0.0-*",
+    "NETStandard.Library": "1.6.1",
+    "Microsoft.EntityFrameworkCore": "1.0.1",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
+    "Microsoft.EntityFrameworkCore.Sqlite": "1.0.1",
+    "MySql.Data.EntityFrameworkCore": "7.0.6-IR31",
+    "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.1",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
+    "Microsoft.EntityFrameworkCore.SqlServer.Design": {
+      "version": "1.0.1",
+      "type": "build"
+    },
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "version": "1.0.0-preview2-final",
+      "type": "build"
+    },
+    "Weapsy.Reporting": "1.0.0-*"
+  },
+
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": "1.0.0-preview2-final"
   },
 
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.1",
+          "type": "platform"
+        }
+      }
     }
   }
 }

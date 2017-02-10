@@ -1,11 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data.Providers.MSSQL;
-using Weapsy.Domain.Data.Repositories;
+using Weapsy.Data;
+using Weapsy.Data.Repositories;
 using Weapsy.Domain.Themes;
 using Weapsy.Tests.Factories;
-using Weapsy.Tests.Shared;
 using ThemeDbEntity = Weapsy.Data.Entities.Theme;
 
 namespace Weapsy.Domain.Data.Tests.Repositories
@@ -13,7 +12,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
     [TestFixture]
     public class ThemeRepositoryTests
     {
-        private DbContextOptions<MSSQLDbContext> _contextOptions;
+        private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _themeId1;
         private Guid _themeId2;
         private Guid _deletedThemeId;
@@ -23,7 +22,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             _contextOptions = DbContextShared.CreateContextOptions();
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 _themeId1 = Guid.NewGuid();
                 _themeId2 = Guid.NewGuid();
@@ -61,7 +60,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_null_if_theme_is_deleted()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetById(_deletedThemeId);
@@ -73,7 +72,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_theme_by_id()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetById(_themeId1);
@@ -85,7 +84,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_theme_by_name()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetByName("Name 1");
@@ -97,7 +96,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_theme_by_folder()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetByFolder("Folder 1");
@@ -109,7 +108,7 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         [Test]
         public void Should_return_themes_count()
         {
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var count = repository.GetThemesCount();
@@ -123,13 +122,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
         {
             var newTheme = ThemeFactory.Theme(Guid.NewGuid(), "Name 3", "Description 3", "Folder 3");
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Create(newTheme);
             }
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var theme = repository.GetById(newTheme.Id);
@@ -145,13 +144,13 @@ namespace Weapsy.Domain.Data.Tests.Repositories
 
             var themeToUpdate = ThemeFactory.Theme(_themeId1, "Name 1", newThemeDescription, "Folder 1");
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 repository.Update(themeToUpdate);
             }
 
-            using (var context = new MSSQLDbContext(_contextOptions))
+            using (var context = new WeapsyDbContext(_contextOptions))
             {
                 var repository = new ThemeRepository(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
                 var updatedTheme = repository.GetById(_themeId1);

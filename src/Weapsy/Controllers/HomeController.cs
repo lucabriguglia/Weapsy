@@ -5,8 +5,8 @@ using Weapsy.Reporting.Pages;
 using Weapsy.Mvc.Context;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
+using Weapsy.Data.Identity;
 using Weapsy.Domain.Pages;
-using Weapsy.Services.Identity;
 
 namespace Weapsy.Controllers
 {
