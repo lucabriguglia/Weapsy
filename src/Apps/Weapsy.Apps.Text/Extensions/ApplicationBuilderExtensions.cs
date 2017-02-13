@@ -1,13 +1,13 @@
 ﻿using System;
-using FluentValidation;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Apps.Text.Data;
-using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.ModuleTypes.Commands;
+using Weapsy.Services.Installation;
 
 namespace Weapsy.Apps.Text.Extensions
 {
@@ -24,41 +24,33 @@ namespace Weapsy.Apps.Text.Extensions
 
         public static IApplicationBuilder EnsureAppInstalled(this IApplicationBuilder builder)
         {
-            var appRepository = builder.ApplicationServices.GetRequiredService<IAppRepository>();
+            var appInstallationService = builder.ApplicationServices.GetRequiredService<IAppInstallationService>();
 
-            if (appRepository.GetByName("Weapsy.Apps.Text") != null)
-                return builder;
-
-            var createAppValidator = builder.ApplicationServices.GetRequiredService<IValidator<CreateApp>>();
-            var createModuleTypeValidator = builder.ApplicationServices.GetRequiredService<IValidator<CreateModuleType>>();            
-            var moduleTypeRepository = builder.ApplicationServices.GetRequiredService<IModuleTypeRepository>();
-
-            var appId = Guid.NewGuid();
-
-            var textApp = App.CreateNew(new CreateApp
+            var createApp = new CreateApp
             {
-                Id = appId,
+                Id = Guid.NewGuid(),
                 Name = "Weapsy.Apps.Text",
                 Description = "Text App",
                 Folder = "Weapsy.Apps.Text"
-            }, createAppValidator);
+            };
 
-            appRepository.Create(textApp);
-
-            var moduleType = ModuleType.CreateNew(new CreateModuleType
+            var createModuleTypes = new List<CreateModuleType>
             {
-                AppId = appId,
-                Id = Guid.NewGuid(),
-                Name = "Text",
-                Title = "Text Module",
-                Description = "Text Module",
-                ViewType = ViewType.ViewComponent,
-                ViewName = "TextModule",
-                EditType = EditType.Modal,
-                EditUrl = "Weapsy.Apps.Text/Home/Index"
-            }, createModuleTypeValidator);
+                new CreateModuleType
+                {
+                    AppId = createApp.Id,
+                    Id = Guid.NewGuid(),
+                    Name = "Text",
+                    Title = "Text Module",
+                    Description = "Text Module",
+                    ViewType = ViewType.ViewComponent,
+                    ViewName = "TextModule",
+                    EditType = EditType.Modal,
+                    EditUrl = "Weapsy.Apps.Text/Home/Index"
+                }
+            };
 
-            moduleTypeRepository.Create(moduleType);
+            appInstallationService.EnsureAppInstalled(createApp, createModuleTypes);
 
             return builder;
         }

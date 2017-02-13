@@ -28,7 +28,6 @@ using Weapsy.Mvc.Apps;
 using Autofac.Core;
 using Microsoft.Extensions.FileProviders;
 using Weapsy.Data.Extensions;
-using Weapsy.Data.Identity;
 
 namespace Weapsy
 {
