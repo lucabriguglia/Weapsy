@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Weapsy.Apps.Text.Data;
 using Weapsy.Mvc.Apps;
 
 namespace Weapsy.Apps.Text
@@ -10,8 +12,11 @@ namespace Weapsy.Apps.Text
         {
         }
 
-        public override void Configure(IApplicationBuilder builder)
+        public override void Configure(IApplicationBuilder app)
         {
+            var dbContext = app.ApplicationServices.GetRequiredService<TextDbContext>();
+
+            dbContext.Database.Migrate();
         }
     }
 }
