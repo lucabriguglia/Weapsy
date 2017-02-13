@@ -40,6 +40,8 @@ gulp.task('copy-apps', ['clean-apps'], function () {
             .pipe(gulp.dest(paths.clientApps + app));
         gulp.src(paths.devApps + app + '/bin/Debug/netstandard1.6/**/*.*')
             .pipe(gulp.dest(paths.clientApps + app));
+        gulp.src(paths.devApps + app + '/bin/Debug/netcoreapp1.0/**/*.*')
+            .pipe(gulp.dest(paths.clientApps + app));
     });
 });
 
