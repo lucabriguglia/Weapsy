@@ -2,7 +2,6 @@
 using Autofac;
 using FluentValidation;
 using Weapsy.Data;
-using Weapsy.Data.Providers;
 using Weapsy.Data.Reporting.Apps;
 using Weapsy.Data.Reporting.Languages;
 using Weapsy.Data.Reporting.Menus;
@@ -59,7 +58,6 @@ namespace Weapsy
 
             builder.RegisterType<LanguageSortOrderGenerator>().As<ILanguageSortOrderGenerator>();
 
-            builder.RegisterType<AppInstallationService>().As<IAppInstallationService>();
             builder.RegisterType<SiteInstallationService>().As<ISiteInstallationService>();
             builder.RegisterType<MembershipInstallationService>().As<IMembershipInstallationService>();
 

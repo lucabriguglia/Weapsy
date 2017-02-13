@@ -20,6 +20,7 @@ namespace Weapsy.Apps.Text.Data
         {
             if (ConnectionStrings != null && !string.IsNullOrEmpty(ConnectionStrings.DefaultConnection))
                 builder.UseSqlServer(ConnectionStrings.DefaultConnection);
+
             base.OnConfiguring(builder);
         }
 

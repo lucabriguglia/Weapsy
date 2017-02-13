@@ -134,12 +134,14 @@ namespace Weapsy
             IHostingEnvironment hostingEnvironment,
             ILoggerFactory loggerFactory,
             ISiteInstallationService siteInstallationService,
-            IAppInstallationService appInstallationService,
             IMembershipInstallationService membershipInstallationService,
             ISiteRepository siteRepository,
             ILanguageFacade languageFacade,
             IPageFacade pageFacade)
         {
+            app.EnsureApplicationDbCreated();
+            app.EnsureDbCreated();
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -188,11 +190,7 @@ namespace Weapsy
 
             app.UseIdentity();
 
-            app.EnsureApplicationDbCreated();
-            app.EnsureDbCreated();
-
             membershipInstallationService.VerifyUserCreation();
-            appInstallationService.VerifyAppInstallation();
             siteInstallationService.VerifySiteInstallation();
 
             var site = siteRepository.GetByName("Default");
