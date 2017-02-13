@@ -28,6 +28,7 @@ using Weapsy.Mvc.Apps;
 using Autofac.Core;
 using Microsoft.Extensions.FileProviders;
 using Weapsy.Data.Extensions;
+using Weapsy.Data.Identity;
 
 namespace Weapsy
 {
@@ -69,6 +70,8 @@ namespace Weapsy
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddApplicationInsightsTelemetry(Configuration);
+
+            services.AddEntityFramework(Configuration);
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -137,10 +140,6 @@ namespace Weapsy
             ILanguageFacade languageFacade,
             IPageFacade pageFacade)
         {
-            membershipInstallationService.VerifyUserCreation();
-            appInstallationService.VerifyAppInstallation();
-            siteInstallationService.VerifySiteInstallation();
-
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -189,7 +188,12 @@ namespace Weapsy
 
             app.UseIdentity();
 
-            app.EnsureDbCreated(Configuration);
+            app.EnsureApplicationDbCreated();
+            app.EnsureDbCreated();
+
+            membershipInstallationService.VerifyUserCreation();
+            appInstallationService.VerifyAppInstallation();
+            siteInstallationService.VerifySiteInstallation();
 
             var site = siteRepository.GetByName("Default");
             var activeLanguages = languageFacade.GetAllActiveAsync(site.Id).Result;

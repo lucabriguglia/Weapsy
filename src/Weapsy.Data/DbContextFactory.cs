@@ -15,7 +15,7 @@ namespace Weapsy.Data
         private readonly IResolver _resolver;
         private const string ErrorMessage = "The Data Provider entry in appsettings.json is empty or the one specified has not been found!";
 
-        public DbContextFactory(IOptions<Weapsy.Infrastructure.Configuration.Data> dataOptions,
+        public DbContextFactory(IOptions<Infrastructure.Configuration.Data> dataOptions,
             IResolver resolver, IOptions<ConnectionStrings> connectionStringsOption)
         {
             DataConfiguration = dataOptions.Value;
@@ -34,7 +34,7 @@ namespace Weapsy.Data
         }
     }
 
-    public class MigrationsDbContextFactory : IDbContextFactory<WeapsyDbContext>
+    public class MigrationsWeapsyDbContextFactory : IDbContextFactory<WeapsyDbContext>
     {
         public WeapsyDbContext Create(DbContextFactoryOptions options)
         {
@@ -42,6 +42,17 @@ namespace Weapsy.Data
             builder.UseSqlServer("UsedForMigrationsOnlyUntilClassLibraryBugIsFixed");
 
             return new WeapsyDbContext(builder.Options);
+        }
+    }
+
+    public class MigrationsApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
+    {
+        public ApplicationDbContext Create(DbContextFactoryOptions options)
+        {
+            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            builder.UseSqlServer("UsedForMigrationsOnlyUntilClassLibraryBugIsFixed");
+
+            return new ApplicationDbContext(builder.Options);
         }
     }
 }

@@ -23,9 +23,9 @@ namespace Weapsy.Data.Extensions
 
             dataProvider.RegisterDbContext(services, connectionStringConfig);
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<WeapsyDbContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<User, IdentityRole>()
+            //    .AddEntityFrameworkStores<WeapsyDbContext>()
+            //    .AddDefaultTokenProviders();
 
             return services;
         }

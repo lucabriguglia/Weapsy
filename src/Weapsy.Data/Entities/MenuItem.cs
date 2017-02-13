@@ -21,6 +21,6 @@ namespace Weapsy.Data.Entities
         public ICollection<MenuItemPermission> MenuItemPermissions { get; set; } = new HashSet<MenuItemPermission>();
 
         public virtual Menu Menu { get; set; }
-        public virtual Page Page { get; set; }
+        //public virtual Page Page { get; set; }
     }
 }

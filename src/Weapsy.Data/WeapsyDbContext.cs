@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using System.Linq;
 using Weapsy.Data.Entities;
 
 namespace Weapsy.Data
 {
     public class WeapsyDbContext : DbContext
     {
-        public WeapsyDbContext(DbContextOptions options)
+        public WeapsyDbContext(DbContextOptions<WeapsyDbContext> options)
             : base(options)
         {            
         }
@@ -14,8 +16,20 @@ namespace Weapsy.Data
         {
             base.OnModelCreating(builder);
 
+            //foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            //{
+            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
+
             builder.Entity<App>()
                 .ToTable("App");
+
+            builder.Entity<DomainAggregate>()
+                .ToTable("DomainAggregate");
+
+            builder.Entity<DomainEvent>()
+                .ToTable("DomainEvent")
+                .HasKey(x => new { x.DomainAggregateId, x.SequenceNumber });
 
             builder.Entity<EmailAccount>()
                 .ToTable("EmailAccount");

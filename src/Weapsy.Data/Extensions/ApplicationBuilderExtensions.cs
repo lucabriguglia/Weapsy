@@ -7,9 +7,18 @@ namespace Weapsy.Data.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
-        public static IApplicationBuilder EnsureDbCreated(this IApplicationBuilder app, IConfigurationRoot configuration)
+        public static IApplicationBuilder EnsureDbCreated(this IApplicationBuilder app)
         {
             var dbContext = app.ApplicationServices.GetRequiredService<WeapsyDbContext>();
+
+            dbContext.Database.Migrate();
+
+            return app;
+        }
+
+        public static IApplicationBuilder EnsureApplicationDbCreated(this IApplicationBuilder app)
+        {
+            var dbContext = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
 
             dbContext.Database.Migrate();
 

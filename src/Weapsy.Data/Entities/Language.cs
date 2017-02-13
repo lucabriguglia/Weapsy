@@ -13,6 +13,6 @@ namespace Weapsy.Data.Entities
         public int SortOrder { get; set; }
         public LanguageStatus Status { get; set; }
 
-        public virtual Site Site { get; set; }
+        //public virtual Site Site { get; set; }
     }
 }

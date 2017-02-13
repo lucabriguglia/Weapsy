@@ -10,7 +10,7 @@ namespace Weapsy.Data.Entities
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
 
-        public virtual Site Site { get; set; }
-        public virtual Language Language { get; set; }
+        //public virtual Site Site { get; set; }
+        //public virtual Language Language { get; set; }
     }
 }
