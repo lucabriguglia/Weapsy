@@ -22,8 +22,7 @@
     "Microsoft.EntityFrameworkCore.Tools": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    },
-    "Weapsy.Reporting": "1.0.0-*"
+    }
   },
 
   "tools": {
