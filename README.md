@@ -37,14 +37,12 @@ https://github.com/weapsy/Weapsy/wiki
 
 - Visual Studio 2015 Update 3
 - .NET Core 1.1 for Visual Studio (https://www.microsoft.com/net/download/core)
-- SQL Server
 
 # How to run on local
 
-- Create a SQL database (weapsy.dev)
-- Run install-full.sql script (in scripts folder)
 - Open the Weapsy.sln solution in Visual Studio
 - Build the solution (default apps will be copied to the "Apps" folder)
+- Choose the data provider in the appsettings file (default is MSSQL) and modify the default connection string accordingly.
 - Run (F5 or Ctrl+F5)
 - Login using these credentials:
   - email: admin@default.com
