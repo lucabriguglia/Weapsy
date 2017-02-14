@@ -27,7 +27,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Domain", "src\Weapsy
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Reporting", "src\Weapsy.Reporting\Weapsy.Reporting.xproj", "{EBC6DF39-AC4B-47F7-AA49-7A006C581FFE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Data.Tests", "test\Weapsy.Domain.Data.Tests\Weapsy.Data.Tests.xproj", "{36C51DBE-A282-4799-82DE-2DE0F922061C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Data.Tests", "test\Weapsy.Data.Tests\Weapsy.Data.Tests.xproj", "{36C51DBE-A282-4799-82DE-2DE0F922061C}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Weapsy.Domain.Tests", "test\Weapsy.Domain.Tests\Weapsy.Domain.Tests.xproj", "{33816E01-0D28-4179-BC0C-148AE304DD31}"
 EndProject
