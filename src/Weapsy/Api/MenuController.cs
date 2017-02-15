@@ -8,7 +8,9 @@ using Weapsy.Domain.Menus;
 using Weapsy.Reporting.Menus;
 using Weapsy.Domain.Menus.Rules;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.Menus.Queries;
 
 namespace Weapsy.Api
 {
@@ -16,10 +18,12 @@ namespace Weapsy.Api
     public class MenuController : BaseAdminController
     {
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly IMenuFacade _menuFacade;        
         private readonly IMenuRules _menuRules;
 
-        public MenuController(ICommandSender commandSender, 
+        public MenuController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
             IMenuFacade menuFacade,            
             IMenuRules menuRules,
             IContextService contextService)
@@ -28,14 +32,15 @@ namespace Weapsy.Api
             _commandSender = commandSender;
             _menuFacade = menuFacade;            
             _menuRules = menuRules;
+            _queryDispatcher = queryDispatcher;
         }
 
         [HttpGet]
         [Route("{name}")]
-        public IActionResult Get(string name)
+        public async Task<IActionResult> Get(string name)
         {
-            var menu = _menuFacade.GetByName(SiteId, name);
-            return Ok(menu);
+            var model = await _queryDispatcher.DispatchAsync<GetViewModel, IEnumerable<MenuViewModel>>(new GetViewModel { SiteId = SiteId, Name = name });
+            return Ok(model);
         }
 
         [HttpGet]
