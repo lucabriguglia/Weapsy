@@ -16,19 +16,16 @@ namespace Weapsy.Components
     {
         private readonly IContextService _contextService;
         private readonly IQueryDispatcher _queryDispatcher;
-        private readonly IMenuFacade _menuFacade;
         private readonly IUserService _userService;
 
         public NavigationViewComponent(IContextService contextService,
             IQueryDispatcher queryDispatcher,
-            IMenuFacade menuFacade,
             IUserService userService)
             : base(contextService)
         {
             _contextService = contextService;
-            _menuFacade = menuFacade;
-            _userService = userService;
             _queryDispatcher = queryDispatcher;
+            _userService = userService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string name, string viewName = "Default")
