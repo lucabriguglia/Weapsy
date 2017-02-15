@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Apps;
@@ -6,42 +8,40 @@ using Weapsy.Domain.Apps.Rules;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.Apps.Queries;
 
 namespace Weapsy.Api
 {
     [Route("api/[controller]")]
     public class AppController : BaseAdminController
     {
-        private readonly IAppFacade _appFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly IAppRules _appRules;
 
-        public AppController(IAppFacade appFacade,
-            ICommandSender commandSender,
+        public AppController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
             IAppRules appRules,
             IContextService contextService)
             : base(contextService)
         {
-            _appFacade = appFacade;
             _commandSender = commandSender;
+            _queryDispatcher = queryDispatcher;
             _appRules = appRules;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            var apps = _appFacade.GetAllForAdmin();
-            return Ok(apps);
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
-            var app = _appFacade.GetForAdmin(id);
-            if (app == null)
-                return NotFound();
-            return Ok(app);
+            throw new NotImplementedException();
         }
 
         [HttpPost]
@@ -85,18 +85,18 @@ namespace Weapsy.Api
         }
 
         [HttpGet]
-        [Route("{id}/admin-list")]
-        public IActionResult AdminList()
+        [Route("admin-list")]
+        public async Task<IActionResult> AdminList()
         {
-            var model = _appFacade.GetAllForAdmin();
+            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<AppAdminListModel>>(new GetAllForAdmin());
             return Ok(model);
         }
 
         [HttpGet]
         [Route("{id}/admin-edit")]
-        public IActionResult AdminEdit(Guid id)
+        public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = _appFacade.GetForAdmin(id);
+            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, AppAdminModel>(new GetForAdmin {Id = id});
             if (model == null)
                 return NotFound();
             return Ok(model);

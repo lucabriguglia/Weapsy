@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NUnit.Framework;
+using Weapsy.Data;
 using Weapsy.Data.Reporting.Languages;
+using Weapsy.Data.Tests;
 using Weapsy.Domain.Languages;
-using Weapsy.Infrastructure.Caching;
+using Weapsy.Reporting.Languages.Queries;
 using Language = Weapsy.Data.Entities.Language;
 
-namespace Weapsy.Data.Tests.Facades
+namespace Weapsy.Reporting.Tests.Facades
 {
     [TestFixture]
     public class LanguageFacadeTests
@@ -48,19 +49,19 @@ namespace Weapsy.Data.Tests.Facades
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var facade = new LanguageFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
-                var models = await facade.GetAllForAdminAsync(_siteId);
+                var handler = new GetAllForAdminHandler(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var models = await handler.RetrieveAsync(new GetAllForAdmin {SiteId = _siteId});
                 Assert.IsNotEmpty(models);
             }
         }
 
         [Test]
-        public void Should_return_model_for_admin()
+        public async Task Should_return_model_for_admin()
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var facade = new LanguageFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
-                var model = facade.GetForAdminAsync(_siteId, _languageId);
+                var handler = new GetForAdminHandler(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var model = await handler.RetrieveAsync(new GetForAdmin { SiteId = _siteId, Id = _languageId});
                 Assert.NotNull(model);
             }
         }

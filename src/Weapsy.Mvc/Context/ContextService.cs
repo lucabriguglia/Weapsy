@@ -3,9 +3,12 @@ using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Languages;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Localization;
 using Weapsy.Domain.Languages;
+using Weapsy.Infrastructure.Queries;
+using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Reporting.Users;
 
 namespace Weapsy.Mvc.Context
@@ -13,19 +16,19 @@ namespace Weapsy.Mvc.Context
     public class ContextService : IContextService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly ISiteFacade _siteFacade;
-        private readonly ILanguageFacade _languageFacade;
         private readonly IThemeFacade _themeFacade;
 
         public ContextService(IHttpContextAccessor httpContextAccessor, 
+            IQueryDispatcher queryDispatcher, 
             ISiteFacade siteFacade,
-            ILanguageFacade languageFacade,
             IThemeFacade themeFacade)
         {
             _httpContextAccessor = httpContextAccessor;
+            _queryDispatcher = queryDispatcher;
             _siteFacade = siteFacade;
-            _languageFacade = languageFacade;
-            _themeFacade = themeFacade;
+            _themeFacade = themeFacade;            
         }
 
         private const string SiteInfoKey = "Weapsy|SiteInfo";
@@ -47,7 +50,7 @@ namespace Weapsy.Mvc.Context
         {
             return GetInfo(LanguageInfoKey, () =>
             {
-                var languages = _languageFacade.GetAllActiveAsync(GetCurrentSiteInfo().Id).Result;
+                var languages = _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = GetCurrentSiteInfo().Id }).Result;
                 var userCoockie = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
                 if (!string.IsNullOrEmpty(userCoockie))

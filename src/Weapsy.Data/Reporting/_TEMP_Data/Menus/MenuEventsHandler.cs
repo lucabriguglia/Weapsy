@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Weapsy.Domain.Menus.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Events;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages;
+using Weapsy.Reporting.Languages.Queries;
 
 namespace Weapsy.Data.Reporting.Menus
 {
@@ -15,13 +18,13 @@ namespace Weapsy.Data.Reporting.Menus
         IEventHandler<MenuDeleted>        
     {
         private readonly ICacheManager _cacheManager;
-        private readonly ILanguageFacade _languageFacade;
+        private readonly IQueryDispatcher _queryDispatcher;
 
         public MenuEventsHandler(ICacheManager cacheManager, 
-            ILanguageFacade languageFacade)
+            IQueryDispatcher queryDispatcher)
         {
             _cacheManager = cacheManager;
-            _languageFacade = languageFacade;
+            _queryDispatcher = queryDispatcher;
         }
 
         public void Handle(MenuCreated @event)
@@ -56,7 +59,8 @@ namespace Weapsy.Data.Reporting.Menus
 
         private void ClearCache(Guid siteId, string name)
         {
-            foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
+            var languages = _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = siteId }).Result;
+            foreach (var language in languages)
                 _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, language.Id));
 
             _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, Guid.Empty));

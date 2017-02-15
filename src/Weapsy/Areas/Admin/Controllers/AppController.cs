@@ -1,39 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Reporting.Apps;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.Apps;
+using Weapsy.Reporting.Apps.Queries;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AppController : BaseAdminController
     {
-        private readonly IAppFacade _appFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public AppController(IAppFacade appFacade,
-            ICommandSender commandSender,
+        public AppController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _appFacade = appFacade;
             _commandSender = commandSender;
+            _queryDispatcher = queryDispatcher;
         }
 
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            var model = _appFacade.GetAllForAdmin();
+            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<AppAdminListModel>>(new GetAllForAdmin());
             return View(model);
         }
 
         public IActionResult Create()
         {
-            var model = _appFacade.GetDefaultForAdmin();
-            return View(model);
+            return View(new AppAdminModel());
         }
 
         public IActionResult Save(CreateApp model)
@@ -43,9 +47,9 @@ namespace Weapsy.Areas.Admin.Controllers
             return new NoContentResult();
         }
 
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var model = _appFacade.GetForAdmin(id);
+            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, AppAdminModel>(new GetForAdmin { Id = id });
             if (model == null)
                 return NotFound();
             return View(model);

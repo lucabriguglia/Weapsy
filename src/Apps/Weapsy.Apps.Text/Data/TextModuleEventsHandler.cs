@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using Weapsy.Apps.Text.Domain.Events;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Events;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages;
+using Weapsy.Reporting.Languages.Queries;
 
 namespace Weapsy.Apps.Text.Data
 {
@@ -11,13 +14,13 @@ namespace Weapsy.Apps.Text.Data
         IEventHandler<VersionAdded>       
     {
         private readonly ICacheManager _cacheManager;
-        private readonly ILanguageFacade _languageFacade;
+        private readonly IQueryDispatcher _queryDispatcher;
 
         public TextModuleEventsHandler(ICacheManager cacheManager, 
-            ILanguageFacade languageFacade)
+            IQueryDispatcher queryDispatcher)
         {
             _cacheManager = cacheManager;
-            _languageFacade = languageFacade;
+            _queryDispatcher = queryDispatcher;
         }
 
         public void Handle(TextModuleCreated @event)
@@ -32,7 +35,8 @@ namespace Weapsy.Apps.Text.Data
 
         private void ClearCache(Guid siteId, Guid moduleId)
         {
-            foreach (var language in _languageFacade.GetAllActiveAsync(siteId).Result)
+            var languages = _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = siteId }).Result;
+            foreach (var language in languages)
                 _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, language.Id));
 
             _cacheManager.Remove(string.Format(CacheKeys.TextModuleCacheKey, moduleId, Guid.Empty));

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages;
+using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Reporting.Pages;
 
 namespace Weapsy.Extensions
@@ -24,7 +27,7 @@ namespace Weapsy.Extensions
             string path = GetPath(context);
 
             var contextService = context.HttpContext.RequestServices.GetService<IContextService>();
-            var languageFacade = context.HttpContext.RequestServices.GetService<ILanguageFacade>();
+            var queryDispatcher = context.HttpContext.RequestServices.GetService<IQueryDispatcher>();
             var pageFacade = context.HttpContext.RequestServices.GetService<IPageFacade>();
 
             var pathParts = path.Split('/');
@@ -32,7 +35,7 @@ namespace Weapsy.Extensions
             var pageSlug = path;
 
             var site = contextService.GetCurrentSiteInfo();
-            var languages = await languageFacade.GetAllActiveAsync(site.Id);
+            var languages = await queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = site.Id });
             var language = languages.FirstOrDefault(x => x.Url == languageSlug);
             Guid? pageId = null;
 

@@ -6,7 +6,7 @@ using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Data.Reporting.Languages
 {
-    public class LanguageEventsHandler : 
+    public class LanguageEventsHandlers : 
         IEventHandlerAsync<LanguageCreated>,
         IEventHandler<LanguageDetailsUpdated>,
         IEventHandler<LanguageDeleted>,
@@ -14,7 +14,7 @@ namespace Weapsy.Data.Reporting.Languages
     {
         private readonly ICacheManager _cacheManager;
 
-        public LanguageEventsHandler(ICacheManager cacheManager)
+        public LanguageEventsHandlers(ICacheManager cacheManager)
         {
             _cacheManager = cacheManager;
         }

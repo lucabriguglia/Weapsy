@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
@@ -28,6 +29,8 @@ using Weapsy.Mvc.Apps;
 using Autofac.Core;
 using Microsoft.Extensions.FileProviders;
 using Weapsy.Data.Extensions;
+using Weapsy.Infrastructure.Queries;
+using Weapsy.Reporting.Languages.Queries;
 
 namespace Weapsy
 {
@@ -135,7 +138,7 @@ namespace Weapsy
             ISiteInstallationService siteInstallationService,
             IMembershipInstallationService membershipInstallationService,
             ISiteRepository siteRepository,
-            ILanguageFacade languageFacade,
+            IQueryDispatcher queryDispatcher,
             IPageFacade pageFacade)
         {
             app.EnsureApplicationDbCreated();
@@ -193,7 +196,7 @@ namespace Weapsy
             siteInstallationService.VerifySiteInstallation();
 
             var site = siteRepository.GetByName("Default");
-            var activeLanguages = languageFacade.GetAllActiveAsync(site.Id).Result;
+            var activeLanguages = queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = site.Id }).Result;
 
             app.AddRoutes();
             app.AddLocalisation(activeLanguages);

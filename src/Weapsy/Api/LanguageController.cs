@@ -9,39 +9,41 @@ using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Languages.Rules;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.Languages.Queries;
 
 namespace Weapsy.Api
 {
     [Route("api/[controller]")]
     public class LanguageController : BaseAdminController
     {
-        private readonly ILanguageFacade _languageFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly ILanguageRules _languageRules;
 
-        public LanguageController(ILanguageFacade languageFacade,
-            ICommandSender commandSender,
+        public LanguageController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
             ILanguageRules languageRules,
             IContextService contextService)
             : base(contextService)
         {
-            _languageFacade = languageFacade;
             _commandSender = commandSender;
+            _queryDispatcher = queryDispatcher;
             _languageRules = languageRules;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var languages = await _languageFacade.GetAllActiveAsync(SiteId);
-            return Ok(languages);
+            var model = await _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive {SiteId = SiteId});
+            return Ok(model);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var languages = await _languageFacade.GetAllActiveAsync(SiteId);
+            var languages = await _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = SiteId });
 
             var language = languages.FirstOrDefault(x => x.Id == id);
 
@@ -164,10 +166,10 @@ namespace Weapsy.Api
         }
 
         [HttpGet]
-        [Route("{id}/admin-list")]
+        [Route("admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var models = await _languageFacade.GetAllForAdminAsync(SiteId);
+            var models = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<LanguageAdminModel>>(new GetAllForAdmin { SiteId = SiteId });
             return Ok(models);
         }
 
@@ -175,7 +177,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _languageFacade.GetForAdminAsync(SiteId, id);
+            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, LanguageAdminModel>(new GetForAdmin { SiteId = SiteId, Id = id});
 
             if (model == null)
                 return NotFound();
