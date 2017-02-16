@@ -1,16 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Moq;
+using NUnit.Framework;
 using Weapsy.Data.Reporting.EmailAccounts;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Infrastructure.Caching;
 using EmailAccount = Weapsy.Data.Entities.EmailAccount;
 
-namespace Weapsy.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Reporting
 {
     [TestFixture]
-    public class EmailAccountFacadeTests
+    public class EmailAccountHandlersTests
     {
         private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId;

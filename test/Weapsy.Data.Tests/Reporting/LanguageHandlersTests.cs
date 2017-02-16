@@ -2,17 +2,15 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data;
 using Weapsy.Data.Reporting.Languages;
-using Weapsy.Data.Tests;
 using Weapsy.Domain.Languages;
 using Weapsy.Reporting.Languages.Queries;
 using Language = Weapsy.Data.Entities.Language;
 
-namespace Weapsy.Reporting.Tests.Facades
+namespace Weapsy.Data.Tests.Reporting
 {
     [TestFixture]
-    public class LanguageFacadeTests
+    public class LanguageHandlersTests
     {
         private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId;

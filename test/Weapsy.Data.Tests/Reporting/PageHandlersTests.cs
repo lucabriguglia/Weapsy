@@ -1,16 +1,16 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Domain.Sites;
-using Site = Weapsy.Data.Entities.Site;
+using Weapsy.Domain.Pages;
+using Page = Weapsy.Data.Entities.Page;
 
-namespace Weapsy.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Reporting
 {
     [TestFixture]
-    public class SiteFacadeTests
+    public class PageHandlersTests
     {
         private DbContextOptions<WeapsyDbContext> _contextOptions;
-        private Guid _siteId;
+        private Guid _pageId;
 
         [SetUp]
         public void Setup()
@@ -19,14 +19,14 @@ namespace Weapsy.Data.Tests.Facades
 
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                _siteId = Guid.NewGuid();
+                _pageId = Guid.NewGuid();
 
-                context.Sites.AddRange(
-                    new Site
+                context.Pages.AddRange(
+                    new Page
                     {
-                        Id = _siteId,
-                        Name = "Site 1",
-                        Status = SiteStatus.Active
+                        Id = _pageId,
+                        Name = "Page 1",
+                        Status = PageStatus.Active
                     }
                 );
 

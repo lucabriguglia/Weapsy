@@ -1,17 +1,16 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Domain.Menus;
-using Menu = Weapsy.Data.Entities.Menu;
+using Weapsy.Domain.Sites;
+using Site = Weapsy.Data.Entities.Site;
 
-namespace Weapsy.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Reporting
 {
     [TestFixture]
-    public class MenuFacadeTests
+    public class SiteHandlersTests
     {
         private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _siteId;
-        private Guid _menuId;
 
         [SetUp]
         public void Setup()
@@ -21,15 +20,13 @@ namespace Weapsy.Data.Tests.Facades
             using (var context = new WeapsyDbContext(_contextOptions))
             {
                 _siteId = Guid.NewGuid();
-                _menuId = Guid.NewGuid();
 
-                context.Menus.AddRange(
-                    new Menu
+                context.Sites.AddRange(
+                    new Site
                     {
-                        SiteId = _siteId,
-                        Id = _menuId,
-                        Name = "Menu Name 1",
-                        Status = MenuStatus.Active
+                        Id = _siteId,
+                        Name = "Site 1",
+                        Status = SiteStatus.Active
                     }
                 );
 

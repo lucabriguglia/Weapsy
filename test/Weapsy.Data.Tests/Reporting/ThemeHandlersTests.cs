@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using System;
 using Weapsy.Domain.Themes;
 using Theme = Weapsy.Data.Entities.Theme;
 
-namespace Weapsy.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Reporting
 {
     [TestFixture]
-    public class ThemeFacadeTests
+    public class ThemeHandlersTests
     {
         private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _themeId;

@@ -1,77 +1,44 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data.Identity;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Sites;
 using Weapsy.Infrastructure.Caching;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Sites;
+using Weapsy.Reporting.Sites.Queries;
 
 namespace Weapsy.Data.Reporting.Sites
 {
-    public class SiteFacade : ISiteFacade
+    public class GetAdminModelHandler : IQueryHandlerAsync<GetAdminModel, SiteAdminModel>
     {
-        private readonly IDbContextFactory _dbContextFactory;
-        private readonly ICacheManager _cacheManager;
+        private readonly IDbContextFactory _contextFactory;
         private readonly IMapper _mapper;
+        private readonly ICacheManager _cacheManager;
+        private readonly IRoleService _roleService;
 
-        public SiteFacade(IDbContextFactory dbContextFactory,
-            ICacheManager cacheManager,
-            IMapper mapper)
+        public GetAdminModelHandler(IDbContextFactory contextFactory, 
+            IMapper mapper, 
+            ICacheManager cacheManager, 
+            IRoleService roleService)
         {
-            _dbContextFactory = dbContextFactory;
-            _cacheManager = cacheManager;
+            _contextFactory = contextFactory;
             _mapper = mapper;
+            _cacheManager = cacheManager;
+            _roleService = roleService;
         }
 
-        public SiteInfo GetSiteInfo(string name, Guid languageId = new Guid())
+        public async Task<SiteAdminModel> RetrieveAsync(GetAdminModel query)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.SiteInfoCacheKey, name, languageId), () =>
-            {
-                using (var context = _dbContextFactory.Create())
-                {
-                    var site = context.Sites
-                        .Include(x => x.SiteLocalisations)
-                        .FirstOrDefault(x => x.Name == name && x.Status == SiteStatus.Active);
-
-                    if (site == null)
-                        return null;
-
-                    var siteInfo = _mapper.Map<SiteInfo>(site);
-
-                    var title = site.Title;
-                    var metaDescription = site.MetaDescription;
-                    var metaKeywords = site.MetaKeywords;
-
-                    if (languageId != Guid.Empty)
-                    {
-                        var siteLocalisation = site.SiteLocalisations.FirstOrDefault(x => x.LanguageId == languageId);
-
-                        if (siteLocalisation != null)
-                        {
-                            title = !string.IsNullOrWhiteSpace(siteLocalisation.Title) ? siteLocalisation.Title : title;
-                            metaDescription = !string.IsNullOrWhiteSpace(siteLocalisation.MetaDescription) ? siteLocalisation.MetaDescription : metaDescription;
-                            metaKeywords = !string.IsNullOrWhiteSpace(siteLocalisation.MetaKeywords) ? siteLocalisation.MetaKeywords : metaKeywords;
-                        }
-                    }
-
-                    siteInfo.Title = title;
-                    siteInfo.MetaDescription = metaDescription;
-                    siteInfo.MetaKeywords = metaKeywords;
-
-                    return siteInfo;
-                }
-            });
-        }
-
-        public SiteAdminModel GetAdminModel(Guid id)
-        {
-            using (var context = _dbContextFactory.Create())
+            using (var context = _contextFactory.Create())
             {
                 var site = context.Sites
                     .Include(x => x.SiteLocalisations)
-                    .FirstOrDefault(x => x.Id == id && x.Status == SiteStatus.Active);
+                    .FirstOrDefault(x => x.Id == query.Id && x.Status == SiteStatus.Active);
 
                 if (site == null)
                     return null;

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Localization;
 using Weapsy.Domain.Languages;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages.Queries;
+using Weapsy.Reporting.Sites.Queries;
 using Weapsy.Reporting.Users;
 
 namespace Weapsy.Mvc.Context
@@ -17,18 +18,12 @@ namespace Weapsy.Mvc.Context
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IQueryDispatcher _queryDispatcher;
-        private readonly ISiteFacade _siteFacade;
-        private readonly IThemeFacade _themeFacade;
 
         public ContextService(IHttpContextAccessor httpContextAccessor, 
-            IQueryDispatcher queryDispatcher, 
-            ISiteFacade siteFacade,
-            IThemeFacade themeFacade)
+            IQueryDispatcher queryDispatcher)
         {
             _httpContextAccessor = httpContextAccessor;
-            _queryDispatcher = queryDispatcher;
-            _siteFacade = siteFacade;
-            _themeFacade = themeFacade;            
+            _queryDispatcher = queryDispatcher;           
         }
 
         private const string SiteInfoKey = "Weapsy|SiteInfo";
@@ -38,7 +33,7 @@ namespace Weapsy.Mvc.Context
 
         public SiteInfo GetCurrentSiteInfo()
         {
-            return GetInfo(SiteInfoKey, () => _siteFacade.GetSiteInfo("Default"));
+            return GetInfo(SiteInfoKey, () => _queryDispatcher.DispatchAsync<GetSiteInfo, SiteInfo>(new GetSiteInfo { Name = "Default" }).Result);
         }
 
         public void SetLanguageInfo(LanguageInfo languageInfo)

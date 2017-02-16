@@ -6,7 +6,9 @@ using Weapsy.Domain.Sites.Rules;
 using Weapsy.Domain.Sites.Commands;
 using Weapsy.Domain.Sites;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.Sites.Queries;
 
 namespace Weapsy.Api
 {
@@ -14,18 +16,19 @@ namespace Weapsy.Api
     public class SiteController : BaseAdminController
     {
         private readonly ICommandSender _commandSender;
-        private readonly ISiteFacade _siteFacade;        
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly ISiteRules _siteRules;
 
         public SiteController(ICommandSender commandSender,
-            ISiteFacade siteFacade,
+            IQueryDispatcher queryDispatcher,
             ISiteRules siteRules,
             IContextService contextService)
             : base(contextService)
         {
-            _siteFacade = siteFacade;
             _commandSender = commandSender;
+            _queryDispatcher = queryDispatcher;
             _siteRules = siteRules;
+            
         }
 
         [HttpGet]
@@ -75,9 +78,11 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public IActionResult AdminEdit(Guid id)
         {
-            var model = _siteFacade.GetAdminModel(id);
+            var model = _queryDispatcher.DispatchAsync<GetAdminModel, SiteAdminModel>(new GetAdminModel { Id = id });
+
             if (model == null)
                 return NotFound();
+
             return Ok(model);
         }
     }

@@ -4,10 +4,10 @@ using NUnit.Framework;
 using Weapsy.Domain.ModuleTypes;
 using ModuleType = Weapsy.Data.Entities.ModuleType;
 
-namespace Weapsy.Data.Tests.Facades
+namespace Weapsy.Data.Tests.Reporting
 {
     [TestFixture]
-    public class ModuleTypeFacadeTests
+    public class ModuleTypeHandlersTests
     {
         private DbContextOptions<WeapsyDbContext> _contextOptions;
         private Guid _moduleTypeId;
