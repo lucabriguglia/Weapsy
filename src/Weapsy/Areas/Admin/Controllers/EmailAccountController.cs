@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Weapsy.Mvc.Controllers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,28 +7,30 @@ using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.EmailAccounts.Queries;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class EmailAccountController : BaseAdminController
     {
-        private readonly IEmailAccountFacade _emailAccountFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public EmailAccountController(IEmailAccountFacade emailAccountFacade,
-            ICommandSender commandSender,
+        public EmailAccountController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _emailAccountFacade = emailAccountFacade;
             _commandSender = commandSender;
+            _queryDispatcher = queryDispatcher;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = _emailAccountFacade.GetAll(SiteId);
+            var model = await _queryDispatcher.DispatchAsync<GetAllEmailAccounts, IEnumerable<EmailAccountModel>>(new GetAllEmailAccounts { SiteId = SiteId });
             return View(model);
         }
 
@@ -45,9 +48,9 @@ namespace Weapsy.Areas.Admin.Controllers
             return new NoContentResult();
         }
 
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var model = _emailAccountFacade.Get(SiteId, id);
+            var model = await _queryDispatcher.DispatchAsync<GetEmailAccount, EmailAccountModel>(new GetEmailAccount { SiteId = SiteId, Id = id });
 
             if (model == null)
                 return NotFound();

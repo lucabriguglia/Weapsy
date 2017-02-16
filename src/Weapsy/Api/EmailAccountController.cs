@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -7,42 +8,46 @@ using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Rules;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.EmailAccounts.Queries;
 
 namespace Weapsy.Api
 {
     [Route("api/[controller]")]
     public class EmailAccountController : BaseAdminController
     {
-        private readonly IEmailAccountFacade _emailAccountFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly IEmailAccountRules _emailAccountRules;
 
-        public EmailAccountController(IEmailAccountFacade emailAccountFacade,
-            ICommandSender commandSender,
+        public EmailAccountController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
             IEmailAccountRules emailAccountRules,
             IContextService contextService)
             : base(contextService)
         {
-            _emailAccountFacade = emailAccountFacade;
             _commandSender = commandSender;
-            _emailAccountRules = emailAccountRules;
+            _queryDispatcher = queryDispatcher;
+            _emailAccountRules = emailAccountRules;            
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var emailAccounts = _emailAccountFacade.GetAll(SiteId);
-            return Ok(emailAccounts);
+            var model = await _queryDispatcher.DispatchAsync<GetAllEmailAccounts, IEnumerable<EmailAccountModel>>(new GetAllEmailAccounts { SiteId = SiteId });
+            return Ok(model);
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            var emailAccount = _emailAccountFacade.Get(SiteId, id);
-            if (emailAccount == null)
+            var model = await _queryDispatcher.DispatchAsync<GetEmailAccount, EmailAccountModel>(new GetEmailAccount { SiteId = SiteId, Id = id });
+
+            if (model == null)
                 return NotFound();
-            return Ok(emailAccount);
+
+            return Ok(model);
         }
 
         [HttpPost]

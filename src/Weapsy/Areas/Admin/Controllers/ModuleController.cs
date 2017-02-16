@@ -1,7 +1,6 @@
 ﻿using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Weapsy.Infrastructure.Commands;
-using Weapsy.Reporting.Modules;
 using Weapsy.Mvc.Context;
 
 namespace Weapsy.Areas.Admin.Controllers
@@ -9,15 +8,12 @@ namespace Weapsy.Areas.Admin.Controllers
     [Area("Admin")]
     public class ModuleController : BaseAdminController
     {
-        private readonly IModuleFacade _moduleFacade;
         private readonly ICommandSender _commandSender;
 
-        public ModuleController(IModuleFacade moduleFacade,
-            ICommandSender commandSender,
+        public ModuleController(ICommandSender commandSender,
             IContextService contextService)
             : base(contextService)
         {
-            _moduleFacade = moduleFacade;
             _commandSender = commandSender;
         }
     }

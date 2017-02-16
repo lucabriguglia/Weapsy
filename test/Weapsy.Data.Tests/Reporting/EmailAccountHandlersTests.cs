@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NUnit.Framework;
 using Weapsy.Data.Reporting.EmailAccounts;
 using Weapsy.Domain.EmailAccounts;
-using Weapsy.Infrastructure.Caching;
+using Weapsy.Reporting.EmailAccounts.Queries;
 using EmailAccount = Weapsy.Data.Entities.EmailAccount;
 
 namespace Weapsy.Data.Tests.Reporting
@@ -40,12 +40,12 @@ namespace Weapsy.Data.Tests.Reporting
         }
 
         [Test]
-        public void Should_return_all_models()
+        public async Task Should_return_all_models()
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var facade = new EmailAccountFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
-                var models = facade.GetAll(_siteId);
+                var handler = new GetAllEmailAccountsHandler(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var models = await handler.RetrieveAsync(new GetAllEmailAccounts {SiteId = _siteId});
                 Assert.IsNotEmpty(models);
             }
         }
@@ -55,8 +55,8 @@ namespace Weapsy.Data.Tests.Reporting
         {
             using (var context = new WeapsyDbContext(_contextOptions))
             {
-                var facade = new EmailAccountFacade(DbContextShared.CreateNewContextFactory(context), new Mock<ICacheManager>().Object, Shared.CreateNewMapper());
-                var model = facade.Get(_siteId, _emailAccountId);
+                var handler = new GetEmailAccountHandler(DbContextShared.CreateNewContextFactory(context), Shared.CreateNewMapper());
+                var model = handler.RetrieveAsync(new GetEmailAccount { SiteId = _siteId, Id = _emailAccountId});
                 Assert.NotNull(model);
             }
         }
