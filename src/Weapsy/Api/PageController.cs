@@ -1,14 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Weapsy.Data.Identity;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
+using Weapsy.Reporting.Menus.Queries;
 using Weapsy.Reporting.Pages;
+using Weapsy.Reporting.Pages.Queries;
 
 namespace Weapsy.Api
 {
@@ -16,12 +20,14 @@ namespace Weapsy.Api
     public class PageController : BaseAdminController
     {
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly IPageFacade _pageFacade;        
         private readonly IPageRules _pageRules;
         private readonly IPageRepository _pageRepository;
         private readonly IRoleService _roleService;
 
         public PageController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
             IPageFacade pageFacade,            
             IPageRules pageRules,
             IPageRepository pageRepository,
@@ -34,6 +40,7 @@ namespace Weapsy.Api
             _pageRules = pageRules;
             _pageRepository = pageRepository;
             _roleService = roleService;
+            _queryDispatcher = queryDispatcher;
         }
 
         [HttpGet]
@@ -190,11 +197,17 @@ namespace Weapsy.Api
 
         [HttpGet]
         [Route("{id}/view")]
-        public IActionResult ViewById(Guid id)
+        public async Task<IActionResult> ViewById(Guid id)
         {
-            var model = _pageFacade.GetPageInfo(SiteId, id);
+            var model = await _queryDispatcher.DispatchAsync<GetPageInfo, PageInfo>(new GetPageInfo
+            {
+                SiteId = SiteId,
+                PageId = id
+            });
+
             if (model == null)
                 return NotFound();
+
             return Ok(model);
         }
 
@@ -202,10 +215,7 @@ namespace Weapsy.Api
         [Route("{name}/view")]
         public IActionResult ViewByName(string name)
         {
-            var model = _pageFacade.GetPageInfo(SiteId, name);
-            if (model == null)
-                return NotFound();
-            return Ok(model);
+            throw new NotImplementedException();
         }
 
         [HttpGet]

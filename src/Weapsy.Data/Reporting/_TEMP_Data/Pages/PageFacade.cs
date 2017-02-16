@@ -37,19 +37,6 @@ namespace Weapsy.Data.Reporting.Pages
             _pageAdminFactory = pageAdminFactory;
         }
 
-        public PageInfo GetPageInfo(Guid siteId, Guid pageId, Guid languageId = new Guid())
-        {
-            return _cacheManager.Get(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, languageId), () =>
-            {
-                return _pageViewFactory.CreatePageInfo(siteId, pageId, languageId);
-            });
-        }
-
-        public PageInfo GetPageInfo(Guid siteId, string name, Guid languageId = new Guid())
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<PageAdminListModel> GetAllForAdmin(Guid siteId)
         {
             using (var context = _dbContextFactory.Create())
