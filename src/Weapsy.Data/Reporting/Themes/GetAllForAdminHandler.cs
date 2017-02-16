@@ -6,6 +6,7 @@ using Weapsy.Domain.Themes;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Themes.Queries;
+using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.Themes
 {
@@ -24,9 +25,9 @@ namespace Weapsy.Data.Reporting.Themes
         {
             using (var context = _contextFactory.Create())
             {
-                var dbEntities = context.Themes
+                var dbEntities = await context.Themes
                     .Where(x => x.Status != ThemeStatus.Deleted)
-                    .ToList();
+                    .ToListAsync();
 
                 return _mapper.Map<IEnumerable<ThemeAdminModel>>(dbEntities);
             }

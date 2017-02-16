@@ -6,6 +6,7 @@ using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes.Queries;
 using System.Linq;
 using Weapsy.Domain.Apps;
+using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.ModuleTypes
 {
@@ -24,21 +25,21 @@ namespace Weapsy.Data.Reporting.ModuleTypes
         {
             using (var context = _contextFactory.Create())
             {
-                var dbEntity = context.ModuleTypes
-                    .FirstOrDefault(x => x.Id == query.Id && x.Status != ModuleTypeStatus.Deleted);
+                var dbEntity = await context.ModuleTypes
+                    .FirstOrDefaultAsync(x => x.Id == query.Id && x.Status != ModuleTypeStatus.Deleted);
 
                 if (dbEntity == null)
                     return null;
 
                 var result = _mapper.Map<ModuleTypeAdminModel>(dbEntity);
 
-                var apps = context.Apps
+                var apps = await context.Apps
                     .Where(x => x.Status != AppStatus.Deleted)
                     .Select(app => new ModuleTypeAdminModel.App
                     {
                         Id = app.Id,
                         Name = app.Name
-                    }).ToList();
+                    }).ToListAsync();
 
                 result.AvailableApps.AddRange(apps);
 

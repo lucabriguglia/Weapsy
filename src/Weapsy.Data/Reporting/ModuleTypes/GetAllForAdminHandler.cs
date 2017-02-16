@@ -6,6 +6,7 @@ using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes.Queries;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.ModuleTypes
 {
@@ -24,9 +25,9 @@ namespace Weapsy.Data.Reporting.ModuleTypes
         {
             using (var context = _contextFactory.Create())
             {
-                var dbEntities = context.ModuleTypes
+                var dbEntities = await context.ModuleTypes
                     .Where(x => x.Status != ModuleTypeStatus.Deleted)
-                    .ToList();
+                    .ToListAsync();
 
                 return _mapper.Map<IEnumerable<ModuleTypeAdminListModel>>(dbEntities);
             }

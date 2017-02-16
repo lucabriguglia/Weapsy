@@ -36,9 +36,9 @@ namespace Weapsy.Data.Reporting.Sites
         {
             using (var context = _contextFactory.Create())
             {
-                var site = context.Sites
+                var site = await context.Sites
                     .Include(x => x.SiteLocalisations)
-                    .FirstOrDefault(x => x.Id == query.Id && x.Status == SiteStatus.Active);
+                    .FirstOrDefaultAsync(x => x.Id == query.Id && x.Status == SiteStatus.Active);
 
                 if (site == null)
                     return null;
@@ -47,10 +47,10 @@ namespace Weapsy.Data.Reporting.Sites
 
                 model.SiteLocalisations.Clear();
 
-                var languages = context.Languages
+                var languages = await context.Languages
                     .Where(x => x.SiteId == site.Id && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
-                    .ToList();
+                    .ToListAsync();
 
                 foreach (var language in languages)
                 {
@@ -81,13 +81,13 @@ namespace Weapsy.Data.Reporting.Sites
                     });
                 }
 
-                var pages = context.Pages
+                var pages = await context.Pages
                     .Where(x => x.SiteId == site.Id && x.Status == PageStatus.Active)
                     .Select(page => new PageListAdminModel
                     {
                         Id = page.Id,
                         Name = page.Name
-                    }).ToList();
+                    }).ToListAsync();
 
                 model.Pages.AddRange(pages);
 

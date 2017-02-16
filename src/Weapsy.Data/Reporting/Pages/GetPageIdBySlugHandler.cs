@@ -1,31 +1,19 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Pages;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Pages.Queries;
+using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.Pages
 {
     public class GetPageIdBySlugHandler : IQueryHandlerAsync<GetPageIdBySlug, Guid?>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
-        private readonly ICacheManager _cacheManager;
-        private readonly IRoleService _roleService;
 
-        public GetPageIdBySlugHandler(IDbContextFactory contextFactory, 
-            IMapper mapper, 
-            ICacheManager cacheManager, 
-            IRoleService roleService)
+        public GetPageIdBySlugHandler(IDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
-            _cacheManager = cacheManager;
-            _roleService = roleService;
         }
 
         public async Task<Guid?> RetrieveAsync(GetPageIdBySlug query)
@@ -34,8 +22,8 @@ namespace Weapsy.Data.Reporting.Pages
             {
                 if (query.LanguageId == Guid.Empty)
                 {
-                    var dbEntity = context.Pages
-                        .FirstOrDefault(x => x.SiteId == query.SiteId
+                    var dbEntity = await context.Pages
+                        .FirstOrDefaultAsync(x => x.SiteId == query.SiteId
                         && x.Status == PageStatus.Active
                         && x.Url == query.Slug);
 
@@ -43,8 +31,8 @@ namespace Weapsy.Data.Reporting.Pages
                 }
                 else
                 {
-                    var dbEntity = context.PageLocalisations
-                        .FirstOrDefault(x => x.Page.SiteId == query.SiteId
+                    var dbEntity = await context.PageLocalisations
+                        .FirstOrDefaultAsync(x => x.Page.SiteId == query.SiteId
                         && x.Page.Status == PageStatus.Active
                         && x.Url == query.Slug
                         && x.LanguageId == query.LanguageId);

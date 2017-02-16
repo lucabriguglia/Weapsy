@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using System.Threading.Tasks;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 using Weapsy.Infrastructure.Identity;
@@ -16,13 +14,11 @@ namespace Weapsy.Data.Reporting.Menus
     public class GetDefaultItemForAdminHandler : IQueryHandlerAsync<GetDefaultItemForAdmin, MenuItemAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
 
-        public GetDefaultItemForAdminHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
+        public GetDefaultItemForAdminHandler(IDbContextFactory contextFactory, IRoleService roleService)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
             _roleService = roleService;
         }
 
@@ -30,17 +26,17 @@ namespace Weapsy.Data.Reporting.Menus
         {
             using (var context = _contextFactory.Create())
             {
-                var menu = context.Menus.FirstOrDefault(x => x.SiteId == query.SiteId && x.Id == query.MenuId && x.Status != MenuStatus.Deleted);
+                var menu = await context.Menus.FirstOrDefaultAsync(x => x.SiteId == query.SiteId && x.Id == query.MenuId && x.Status != MenuStatus.Deleted);
 
                 if (menu == null)
                     return new MenuItemAdminModel();
 
                 var result = new MenuItemAdminModel();
 
-                var languages = context.Languages
+                var languages = await context.Languages
                     .Where(x => x.SiteId == query.SiteId && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
-                    .ToList();
+                    .ToListAsync();
 
                 foreach (var language in languages)
                 {

@@ -1,25 +1,20 @@
 ﻿using System.Threading.Tasks;
-using AutoMapper;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.ModuleTypes.Queries;
 using System.Linq;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Apps;
+using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.ModuleTypes
 {
     public class GetDefaultForAdminHandler : IQueryHandlerAsync<GetDefaultForAdmin, ModuleTypeAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
-        private readonly IRoleService _roleService;
 
-        public GetDefaultForAdminHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
+        public GetDefaultForAdminHandler(IDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
-            _roleService = roleService;
         }
 
         public async Task<ModuleTypeAdminModel> RetrieveAsync(GetDefaultForAdmin query)
@@ -28,13 +23,13 @@ namespace Weapsy.Data.Reporting.ModuleTypes
             {
                 var result = new ModuleTypeAdminModel();
 
-                var apps = context.Apps
+                var apps = await context.Apps
                     .Where(x => x.Status != AppStatus.Deleted)
                     .Select(app => new ModuleTypeAdminModel.App
                     {
                         Id = app.Id,
                         Name = app.Name
-                    }).ToList();
+                    }).ToListAsync();
 
                 result.AvailableApps.AddRange(apps);
 

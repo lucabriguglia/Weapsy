@@ -8,6 +8,7 @@ using Weapsy.Reporting.ModuleTypes.Queries;
 using System.Linq;
 using Weapsy.Domain.Apps;
 using Weapsy.Infrastructure.Caching;
+using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.ModuleTypes
 {
@@ -26,18 +27,18 @@ namespace Weapsy.Data.Reporting.ModuleTypes
 
         public async Task<IEnumerable<ModuleTypeControlPanelModel>> RetrieveAsync(GetControlPanelModel query)
         {
-            return _cacheManager.Get(CacheKeys.ModuleTypesCacheKey, () =>
+            return await _cacheManager.Get(CacheKeys.ModuleTypesCacheKey, async () =>
             {
                 using (var context = _contextFactory.Create())
                 {
-                    return context.ModuleTypes
+                    return await context.ModuleTypes
                         .Where(x => x.Status != ModuleTypeStatus.Deleted)
                         .Select(moduleType => new ModuleTypeControlPanelModel
                         {
                             Id = moduleType.Id,
                             Title = moduleType.Title
                         })
-                        .ToList();
+                        .ToListAsync();
                 }
             });
         }

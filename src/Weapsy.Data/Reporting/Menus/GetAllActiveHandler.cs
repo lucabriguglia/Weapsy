@@ -21,25 +21,23 @@ namespace Weapsy.Data.Reporting.Menus
     public class GetViewModelHandler : IQueryHandlerAsync<GetViewModel, MenuViewModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
         private readonly IRoleService _roleService;
 
-        public GetViewModelHandler(IDbContextFactory contextFactory, IMapper mapper, ICacheManager cacheManager, IRoleService roleService)
+        public GetViewModelHandler(IDbContextFactory contextFactory, ICacheManager cacheManager, IRoleService roleService)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
             _cacheManager = cacheManager;
             _roleService = roleService;
         }
 
         public async Task<MenuViewModel> RetrieveAsync(GetViewModel query)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, query.SiteId, query.Name, query.LanguageId), () =>
+            return await _cacheManager.Get(string.Format(CacheKeys.MenuCacheKey, query.SiteId, query.Name, query.LanguageId), async () =>
             {
                 using (var context = _contextFactory.Create())
                 {
-                    var menu = context.Menus.FirstOrDefault(x => x.SiteId == query.SiteId && x.Name == query.Name && x.Status != MenuStatus.Deleted);
+                    var menu = await context.Menus.FirstOrDefaultAsync(x => x.SiteId == query.SiteId && x.Name == query.Name && x.Status != MenuStatus.Deleted);
 
                     if (menu == null)
                         return new MenuViewModel();
@@ -47,10 +45,10 @@ namespace Weapsy.Data.Reporting.Menus
                     LoadMenuItems(context, menu);
 
                     var language = query.LanguageId != Guid.Empty
-                        ? context.Languages.FirstOrDefault(x => x.SiteId == query.SiteId && x.Id == query.LanguageId && x.Status == LanguageStatus.Active)
+                        ? await context.Languages.FirstOrDefaultAsync(x => x.SiteId == query.SiteId && x.Id == query.LanguageId && x.Status == LanguageStatus.Active)
                         : null;
 
-                    bool addLanguageSlug = context.Sites.Where(x => x.Id == query.SiteId).Select(site => site.AddLanguageSlug).FirstOrDefault();
+                    bool addLanguageSlug = await context.Sites.Where(x => x.Id == query.SiteId).Select(site => site.AddLanguageSlug).FirstOrDefaultAsync();
 
                     var menuModel = new MenuViewModel
                     {
@@ -63,7 +61,7 @@ namespace Weapsy.Data.Reporting.Menus
             });
         }
 
-        private List<MenuViewModel.MenuItem> PopulateMenuItems(WeapsyDbContext context, IEnumerable<Entities.MenuItem> source, Guid parentId, Language language, bool addLanguageSlug)
+        private List<MenuViewModel.MenuItem> PopulateMenuItems(WeapsyDbContext context, IEnumerable<MenuItem> source, Guid parentId, Language language, bool addLanguageSlug)
         {
             var result = new List<MenuViewModel.MenuItem>();
 

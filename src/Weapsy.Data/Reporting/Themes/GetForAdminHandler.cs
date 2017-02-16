@@ -5,6 +5,7 @@ using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Themes.Queries;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.Themes
 {
@@ -23,7 +24,7 @@ namespace Weapsy.Data.Reporting.Themes
         {
             using (var context = _contextFactory.Create())
             {
-                var dbEntity = context.Themes.FirstOrDefault(x => x.Id == query.Id && x.Status != ThemeStatus.Deleted);
+                var dbEntity = await context.Themes.FirstOrDefaultAsync(x => x.Id == query.Id && x.Status != ThemeStatus.Deleted);
                 return dbEntity != null ? _mapper.Map<ThemeAdminModel>(dbEntity) : null;
             }
         }

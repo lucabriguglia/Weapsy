@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
@@ -16,13 +15,11 @@ namespace Weapsy.Data.Reporting.Pages
     public class GetPageModuleAdminModelHandler : IQueryHandlerAsync<GetPageModuleAdminModel, PageModuleAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
 
-        public GetPageModuleAdminModelHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
+        public GetPageModuleAdminModelHandler(IDbContextFactory contextFactory, IRoleService roleService)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
             _roleService = roleService;
         }
 
@@ -49,10 +46,10 @@ namespace Weapsy.Data.Reporting.Pages
                     InheritPermissions = pageModule.InheritPermissions
                 };
 
-                var languages = context.Languages
+                var languages = await context.Languages
                     .Where(x => x.SiteId == query.SiteId && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
-                    .ToList();
+                    .ToListAsync();
 
                 foreach (var language in languages)
                 {

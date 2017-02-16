@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Data.Identity;
 using Weapsy.Domain.Modules;
@@ -21,24 +20,21 @@ namespace Weapsy.Data.Reporting.Pages
     public class GetPageInfoHandler : IQueryHandlerAsync<GetPageInfo, PageInfo>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
         private readonly IRoleService _roleService;
 
-        public GetPageInfoHandler(IDbContextFactory contextFactory, 
-            IMapper mapper, 
+        public GetPageInfoHandler(IDbContextFactory contextFactory,
             ICacheManager cacheManager, 
             IRoleService roleService)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
             _cacheManager = cacheManager;
             _roleService = roleService;
         }
 
         public async Task<PageInfo> RetrieveAsync(GetPageInfo query)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.PageInfoCacheKey, query.SiteId, query.PageId, query.LanguageId), () =>
+            return await _cacheManager.Get(string.Format(CacheKeys.PageInfoCacheKey, query.SiteId, query.PageId, query.LanguageId), async () =>
             {
                 using (var context = _contextFactory.Create())
                 {
@@ -55,7 +51,7 @@ namespace Weapsy.Data.Reporting.Pages
                         roles.Add(permisisonType, pageRoles.Select(x => x.Name));
                     }
 
-                    var site = context.Sites.FirstOrDefault(x => x.Id == query.SiteId && x.Status == SiteStatus.Active);
+                    var site = await context.Sites.FirstOrDefaultAsync(x => x.Id == query.SiteId && x.Status == SiteStatus.Active);
 
                     if (site == null)
                         return null;
@@ -121,7 +117,7 @@ namespace Weapsy.Data.Reporting.Pages
             return result;
         }
 
-        private ZoneModel CreateZone(WeapsyDbContext context, IGrouping<string, Entities.PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private ZoneModel CreateZone(WeapsyDbContext context, IGrouping<string, PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new ZoneModel
             {

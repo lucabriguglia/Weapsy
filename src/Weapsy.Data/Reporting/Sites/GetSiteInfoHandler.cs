@@ -32,13 +32,13 @@ namespace Weapsy.Data.Reporting.Sites
 
         public async Task<SiteInfo> RetrieveAsync(GetSiteInfo query)
         {
-            return _cacheManager.Get(string.Format(CacheKeys.SiteInfoCacheKey, query.Name, query.LanguageId), () =>
+            return await _cacheManager.Get(string.Format(CacheKeys.SiteInfoCacheKey, query.Name, query.LanguageId), async () =>
             {
                 using (var context = _contextFactory.Create())
                 {
-                    var site = context.Sites
+                    var site = await context.Sites
                         .Include(x => x.SiteLocalisations)
-                        .FirstOrDefault(x => x.Name == query.Name && x.Status == SiteStatus.Active);
+                        .FirstOrDefaultAsync(x => x.Name == query.Name && x.Status == SiteStatus.Active);
 
                     if (site == null)
                         return null;

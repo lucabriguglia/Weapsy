@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Infrastructure.Identity;
@@ -10,19 +9,18 @@ using Weapsy.Reporting.Pages.Queries;
 using System.Linq;
 using Weapsy.Data.Identity;
 using Weapsy.Domain.Menus;
+using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.Pages
 {
     public class GetDefaultForAdminHandler : IQueryHandlerAsync<GetDefaultForAdmin, PageAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
 
-        public GetDefaultForAdminHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
+        public GetDefaultForAdminHandler(IDbContextFactory contextFactory, IRoleService roleService)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
             _roleService = roleService;
         }
 
@@ -32,10 +30,10 @@ namespace Weapsy.Data.Reporting.Pages
             {
                 var result = new PageAdminModel();
 
-                var languages = context.Languages
+                var languages = await context.Languages
                     .Where(x => x.SiteId == query.SiteId && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
-                    .ToList();
+                    .ToListAsync();
 
                 foreach (var language in languages)
                 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using System.Threading.Tasks;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 using Weapsy.Infrastructure.Identity;
@@ -16,13 +14,11 @@ namespace Weapsy.Data.Reporting.Menus
     public class GetItemForAdminHandler : IQueryHandlerAsync<GetItemForAdmin, MenuItemAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
 
-        public GetItemForAdminHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
+        public GetItemForAdminHandler(IDbContextFactory contextFactory, IRoleService roleService)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
             _roleService = roleService;
         }
 
@@ -30,15 +26,15 @@ namespace Weapsy.Data.Reporting.Menus
         {
             using (var context = _contextFactory.Create())
             {
-                var menu = context.Menus.FirstOrDefault(x => x.SiteId == query.SiteId && x.Id == query.MenuId && x.Status != MenuStatus.Deleted);
+                var menu = await context.Menus.FirstOrDefaultAsync(x => x.SiteId == query.SiteId && x.Id == query.MenuId && x.Status != MenuStatus.Deleted);
 
                 if (menu == null)
                     return new MenuItemAdminModel();
 
-                var menuItem = context.MenuItems
+                var menuItem = await context.MenuItems
                     .Include(x => x.MenuItemLocalisations)
                     .Include(x => x.MenuItemPermissions)
-                    .FirstOrDefault(x => x.MenuId == query.MenuId && x.Id == query.MenuItemId && x.Status != MenuItemStatus.Deleted);
+                    .FirstOrDefaultAsync(x => x.MenuId == query.MenuId && x.Id == query.MenuItemId && x.Status != MenuItemStatus.Deleted);
 
                 if (menuItem == null)
                     return new MenuItemAdminModel();
@@ -53,10 +49,10 @@ namespace Weapsy.Data.Reporting.Menus
                     Title = menuItem.Title
                 };
 
-                var languages = context.Languages
+                var languages = await context.Languages
                     .Where(x => x.SiteId == query.SiteId && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
-                    .ToList();
+                    .ToListAsync();
 
                 foreach (var language in languages)
                 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
@@ -16,13 +15,11 @@ namespace Weapsy.Data.Reporting.Pages
     public class GetForAdminHandler : IQueryHandlerAsync<GetForAdmin, PageAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
 
-        public GetForAdminHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
+        public GetForAdminHandler(IDbContextFactory contextFactory, IRoleService roleService)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
             _roleService = roleService;
         }
 
@@ -30,10 +27,10 @@ namespace Weapsy.Data.Reporting.Pages
         {
             using (var context = _contextFactory.Create())
             {
-                var page = context.Pages
+                var page = await context.Pages
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.SiteId == query.SiteId && x.Id == query.Id && x.Status != PageStatus.Deleted);
+                    .FirstOrDefaultAsync(x => x.SiteId == query.SiteId && x.Id == query.Id && x.Status != PageStatus.Deleted);
 
                 if (page == null)
                     return null;
@@ -49,10 +46,10 @@ namespace Weapsy.Data.Reporting.Pages
                     MetaKeywords = page.MetaKeywords
                 };
 
-                var languages = context.Languages
+                var languages = await context.Languages
                     .Where(x => x.SiteId == query.SiteId && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
-                    .ToList();
+                    .ToListAsync();
 
                 foreach (var language in languages)
                 {

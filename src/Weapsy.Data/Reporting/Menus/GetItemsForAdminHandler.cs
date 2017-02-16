@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
-using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
-using Weapsy.Infrastructure.Identity;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Identity;
 using MenuItem = Weapsy.Data.Entities.MenuItem;
 
 namespace Weapsy.Data.Reporting.Menus
@@ -18,23 +14,19 @@ namespace Weapsy.Data.Reporting.Menus
     public class GetItemsForAdminHandler : IQueryHandlerAsync<GetItemsForAdmin, IEnumerable<MenuItemAdminListModel>>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IMapper _mapper;
-        private readonly IRoleService _roleService;
 
-        public GetItemsForAdminHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
+        public GetItemsForAdminHandler(IDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
-            _mapper = mapper;
-            _roleService = roleService;
         }
 
         public async Task<IEnumerable<MenuItemAdminListModel>> RetrieveAsync(GetItemsForAdmin query)
         {
             using (var context = _contextFactory.Create())
             {
-                var menu =
-                    context.Menus.Include(x => x.MenuItems).FirstOrDefault(
-                        x => x.SiteId == query.SiteId && x.Id == query.Id && x.Status != MenuStatus.Deleted);
+                var menu = await context.Menus
+                    .Include(x => x.MenuItems)
+                    .FirstOrDefaultAsync(x => x.SiteId == query.SiteId && x.Id == query.Id && x.Status != MenuStatus.Deleted);
 
                 if (menu == null)
                     return new List<MenuItemAdminListModel>();
