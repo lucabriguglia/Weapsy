@@ -1,0 +1,35 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using Weapsy.Domain.Themes;
+using Weapsy.Infrastructure.Queries;
+using Weapsy.Reporting.Themes;
+using Weapsy.Reporting.Themes.Queries;
+
+namespace Weapsy.Data.Reporting.Themes
+{
+    public class GetAllForAdminHandler : IQueryHandlerAsync<GetAllForAdmin, IEnumerable<ThemeAdminModel>>
+    {
+        private readonly IDbContextFactory _contextFactory;
+        private readonly IMapper _mapper;
+
+        public GetAllForAdminHandler(IDbContextFactory contextFactory, IMapper mapper)
+        {
+            _contextFactory = contextFactory;
+            _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<ThemeAdminModel>> RetrieveAsync(GetAllForAdmin query)
+        {
+            using (var context = _contextFactory.Create())
+            {
+                var dbEntities = context.Themes
+                    .Where(x => x.Status != ThemeStatus.Deleted)
+                    .ToList();
+
+                return _mapper.Map<IEnumerable<ThemeAdminModel>>(dbEntities);
+            }
+        }
+    }
+}

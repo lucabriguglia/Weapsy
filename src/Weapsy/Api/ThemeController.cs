@@ -1,13 +1,16 @@
 ﻿using System;
 using Weapsy.Mvc.Controllers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Reporting.Themes;
 using Weapsy.Domain.Themes.Rules;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Domain.Themes;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
+using Weapsy.Reporting.Themes;
+using Weapsy.Reporting.Themes.Queries;
 
 namespace Weapsy.Api
 {
@@ -15,17 +18,17 @@ namespace Weapsy.Api
     public class ThemeController : BaseAdminController
     {
         private readonly ICommandSender _commandSender;
-        private readonly IThemeFacade _themeFacade;        
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly IThemeRules _themeRules;
 
-        public ThemeController(ICommandSender commandSender, 
-            IThemeFacade themeFacade,           
+        public ThemeController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,           
             IThemeRules themeRules,
             IContextService contextService)
             : base(contextService)
         {
             _commandSender = commandSender;
-            _themeFacade = themeFacade;
+            _queryDispatcher = queryDispatcher;
             _themeRules = themeRules;
         }
 
@@ -113,20 +116,22 @@ namespace Weapsy.Api
         }
 
         [HttpGet]
-        [Route("{id}/admin-list")]
-        public IActionResult AdminList()
+        [Route("admin-list")]
+        public async Task<IActionResult> AdminList()
         {
-            var model = _themeFacade.GetAllForAdmin();
-            return Ok(model);
+            var models = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<ThemeAdminModel>>(new GetAllForAdmin());
+            return Ok(models);
         }
 
         [HttpGet]
         [Route("{id}/admin-edit")]
-        public IActionResult AdminEdit(Guid id)
+        public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = _themeFacade.GetForAdmin(id);
+            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, ThemeAdminModel>(new GetForAdmin { Id = id });
+
             if (model == null)
                 return NotFound();
+
             return Ok(model);
         }
     }
