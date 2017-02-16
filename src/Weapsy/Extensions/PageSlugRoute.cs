@@ -49,10 +49,10 @@ namespace Weapsy.Extensions
             }
 
             if (!string.IsNullOrEmpty(pageSlug))
-                pageId = await queryDispatcher.DispatchAsync<GetPageIdBySlug, Guid>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug, LanguageId = language.Id });
+                pageId = await queryDispatcher.DispatchAsync<GetPageIdBySlug, Guid?>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug, LanguageId = language.Id });
 
             if (pageId == null && !string.IsNullOrEmpty(pageSlug))
-                pageId = await queryDispatcher.DispatchAsync<GetPageIdBySlug, Guid>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug });
+                pageId = await queryDispatcher.DispatchAsync<GetPageIdBySlug, Guid?>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug });
 
             if (pageId == null && string.IsNullOrEmpty(pageSlug))
                 pageId = site.HomePageId;
