@@ -1,35 +1,39 @@
 ﻿using System;
-using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Languages;
-using Weapsy.Domain.Menus;
 using Weapsy.Domain.Pages;
 using Weapsy.Infrastructure.Identity;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Pages;
+using Weapsy.Reporting.Pages.Queries;
+using System.Linq;
+using Weapsy.Data.Identity;
 
 namespace Weapsy.Data.Reporting.Pages
 {
-    public class PageAdminFactory : IPageAdminFactory
+    public class GetForAdminHandler : IQueryHandlerAsync<GetForAdmin, PageAdminModel>
     {
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IDbContextFactory _contextFactory;
+        private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
 
-        public PageAdminFactory(IDbContextFactory dbContextFactory,
-            IRoleService roleService)
+        public GetForAdminHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
         {
-            _dbContextFactory = dbContextFactory;
+            _contextFactory = contextFactory;
+            _mapper = mapper;
             _roleService = roleService;
         }
 
-        public PageAdminModel GetAdminModel(Guid siteId, Guid pageId)
+        public async Task<PageAdminModel> RetrieveAsync(GetForAdmin query)
         {
-            using (var context = _dbContextFactory.Create())
+            using (var context = _contextFactory.Create())
             {
                 var page = context.Pages
                     .Include(x => x.PageLocalisations)
                     .Include(x => x.PagePermissions)
-                    .FirstOrDefault(x => x.SiteId == siteId && x.Id == pageId && x.Status != PageStatus.Deleted);
+                    .FirstOrDefault(x => x.SiteId == query.SiteId && x.Id == query.Id && x.Status != PageStatus.Deleted);
 
                 if (page == null)
                     return null;
@@ -46,7 +50,7 @@ namespace Weapsy.Data.Reporting.Pages
                 };
 
                 var languages = context.Languages
-                    .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
+                    .Where(x => x.SiteId == query.SiteId && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
                     .ToList();
 
@@ -105,63 +109,6 @@ namespace Weapsy.Data.Reporting.Pages
 
                     result.PagePermissions.Add(pagePermission);
                 }
-
-                return result;
-            }
-        }
-
-        public PageAdminModel GetDefaultAdminModel(Guid siteId)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var result = new PageAdminModel();
-
-                var languages = context.Languages
-                    .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
-                    .OrderBy(x => x.SortOrder)
-                    .ToList();
-
-                foreach (var language in languages)
-                {
-                    result.PageLocalisations.Add(new PageLocalisationAdminModel
-                    {
-                        LanguageId = language.Id,
-                        LanguageName = language.Name,
-                        LanguageStatus = language.Status
-                    });
-                }
-
-                foreach (var role in _roleService.GetAllRoles())
-                {
-                    var pagePermission = new PagePermissionModel
-                    {
-                        RoleId = role.Id,
-                        RoleName = role.Name,
-                        Disabled = role.Name == DefaultRoleNames.Administrator
-                    };
-
-                    foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
-                    {
-                        pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
-                        {
-                            Type = permisisonType,
-                            Selected = role.Name == DefaultRoleNames.Administrator
-                        });
-                    }
-
-                    result.PagePermissions.Add(pagePermission);
-                }
-
-                var menus =
-                    context.Menus.Where(x => x.SiteId == siteId && x.Status == MenuStatus.Active)
-                        .Select(menu => new MenuModel
-                        {
-                            MenuId = menu.Id,
-                            MenuName = menu.Name,
-                            Selected = false
-                        });
-
-                result.Menus.AddRange(menus);
 
                 return result;
             }

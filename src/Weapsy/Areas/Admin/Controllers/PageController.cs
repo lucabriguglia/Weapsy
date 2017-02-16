@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Weapsy.Mvc.Controllers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,36 +9,45 @@ using Weapsy.Domain.Pages.Commands;
 using Weapsy.Mvc.Context;
 using AutoMapper;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
+using Weapsy.Reporting.Pages.Queries;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class PageController : BaseAdminController
     {
-        private readonly IPageFacade _pageFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
         private readonly IMapper _mapper;
 
-        public PageController(IPageFacade pageFacade,
-            ICommandSender commandSender,
+        public PageController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
             IMapper mapper,
             IContextService contextService)
             : base(contextService)
         {
-            _pageFacade = pageFacade;
             _commandSender = commandSender;
-            _mapper = mapper;
+            _queryDispatcher = queryDispatcher;
+            _mapper = mapper;            
         }
 
         public async Task<IActionResult> Index()
         {
-            var model = await Task.Run(() => _pageFacade.GetAllForAdmin(SiteId));
+            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<PageAdminListModel>>(new GetAllForAdmin
+            {
+                SiteId = SiteId
+            });
             return View(model);
         }
 
         public async Task<IActionResult> Create()
         {
-            var model = await Task.Run(() => _pageFacade.GetDefaultAdminModel(SiteId));
+            var model = await _queryDispatcher.DispatchAsync<GetDefaultForAdmin, PageAdminModel>(new GetDefaultForAdmin
+            {
+                SiteId = SiteId
+            });
+
             return View(model);
         }
 
@@ -54,7 +64,11 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await Task.Run(() => _pageFacade.GetAdminModel(SiteId, id));
+            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, PageAdminModel>(new GetForAdmin
+            {
+                SiteId = SiteId,
+                Id = id
+            });
 
             if (model == null)
                 return NotFound();
@@ -73,7 +87,12 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> EditModule(Guid pageId, Guid pageModuleId)
         {
-            var model = await Task.Run(() => _pageFacade.GetModuleAdminModel(SiteId, pageId, pageModuleId));
+            var model = await _queryDispatcher.DispatchAsync<GetPageModuleAdminModel, PageModuleAdminModel>(new GetPageModuleAdminModel
+            {
+                SiteId = SiteId,
+                PageId = pageId,
+                PageModuleId = pageModuleId
+            });
 
             if (model == null)
                 return NotFound();

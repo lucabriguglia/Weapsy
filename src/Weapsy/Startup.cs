@@ -138,8 +138,7 @@ namespace Weapsy
             ISiteInstallationService siteInstallationService,
             IMembershipInstallationService membershipInstallationService,
             ISiteRepository siteRepository,
-            IQueryDispatcher queryDispatcher,
-            IPageFacade pageFacade)
+            IQueryDispatcher queryDispatcher)
         {
             app.EnsureApplicationDbCreated();
             app.EnsureDbCreated();

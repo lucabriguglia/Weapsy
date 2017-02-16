@@ -1,75 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
-using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Identity;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Pages;
-using Page = Weapsy.Data.Entities.Page;
+using Weapsy.Reporting.Pages.Queries;
+using System.Linq;
+using Weapsy.Data.Identity;
 
 namespace Weapsy.Data.Reporting.Pages
 {
-    public class PageFacade : IPageFacade
+    public class GetPageModuleAdminModelHandler : IQueryHandlerAsync<GetPageModuleAdminModel, PageModuleAdminModel>
     {
-        private readonly IDbContextFactory _dbContextFactory;
-        private readonly ICacheManager _cacheManager;
+        private readonly IDbContextFactory _contextFactory;
         private readonly IMapper _mapper;
         private readonly IRoleService _roleService;
-        private readonly IPageInfoFactory _pageViewFactory;
-        private readonly IPageAdminFactory _pageAdminFactory;
 
-        public PageFacade(IDbContextFactory dbContextFactory,
-            ICacheManager cacheManager,
-            IMapper mapper,
-            IRoleService roleService,
-            IPageInfoFactory pageViewFactory,
-            IPageAdminFactory pageAdminFactory)
+        public GetPageModuleAdminModelHandler(IDbContextFactory contextFactory, IMapper mapper, IRoleService roleService)
         {
-            _dbContextFactory = dbContextFactory;
-            _cacheManager = cacheManager;
+            _contextFactory = contextFactory;
             _mapper = mapper;
             _roleService = roleService;
-            _pageViewFactory = pageViewFactory;
-            _pageAdminFactory = pageAdminFactory;
         }
 
-        public IEnumerable<PageAdminListModel> GetAllForAdmin(Guid siteId)
+        public async Task<PageModuleAdminModel> RetrieveAsync(GetPageModuleAdminModel query)
         {
-            using (var context = _dbContextFactory.Create())
+            using (var context = _contextFactory.Create())
             {
-                var pages = context.Pages
-                    .Include(x => x.PageLocalisations)
-                    .Where(x => x.SiteId == siteId && x.Status != PageStatus.Deleted)
-                    .OrderBy(x => x.Name).ToList();
-
-                return _mapper.Map<IEnumerable<PageAdminListModel>>(pages);
-            }            
-        }
-
-        public PageAdminModel GetAdminModel(Guid siteId, Guid pageId)
-        {
-            return _pageAdminFactory.GetAdminModel(siteId, pageId);
-        }
-
-        public PageAdminModel GetDefaultAdminModel(Guid siteId)
-        {
-            return _pageAdminFactory.GetDefaultAdminModel(siteId);
-        }
-
-        public PageModuleAdminModel GetModuleAdminModel(Guid siteId, Guid pageId, Guid pageModuleId)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var page = GetPage(context, siteId, pageId);
+                var page = GetPage(context, query.SiteId, query.PageId);
 
                 if (page == null)
                     return null;
 
-                var pageModule = page.PageModules.FirstOrDefault(x => x.Id == pageModuleId);
+                var pageModule = page.PageModules.FirstOrDefault(x => x.Id == query.PageModuleId);
 
                 if (pageModule == null)
                     return null;
@@ -84,7 +50,7 @@ namespace Weapsy.Data.Reporting.Pages
                 };
 
                 var languages = context.Languages
-                    .Where(x => x.SiteId == siteId && x.Status != LanguageStatus.Deleted)
+                    .Where(x => x.SiteId == query.SiteId && x.Status != LanguageStatus.Deleted)
                     .OrderBy(x => x.SortOrder)
                     .ToList();
 
@@ -139,34 +105,7 @@ namespace Weapsy.Data.Reporting.Pages
             }
         }
 
-        public Guid? GetIdBySlug(Guid siteId, string slug)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntity = context.Pages
-                    .FirstOrDefault(x => x.SiteId == siteId
-                    && x.Status == PageStatus.Active
-                    && x.Url == slug);
-
-                return dbEntity?.Id;
-            }
-        }
-
-        public Guid? GetIdBySlug(Guid siteId, string slug, Guid languageId)
-        {
-            using (var context = _dbContextFactory.Create())
-            {
-                var dbEntity = context.PageLocalisations
-                    .FirstOrDefault(x => x.Page.SiteId == siteId
-                    && x.Page.Status == PageStatus.Active
-                    && x.Url == slug
-                    && x.LanguageId == languageId);
-
-                return dbEntity?.PageId;
-            }
-        }
-
-        private Page GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
+        private Entities.Page GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
         {
             var page = context.Pages
                 .Include(x => x.PageLocalisations)

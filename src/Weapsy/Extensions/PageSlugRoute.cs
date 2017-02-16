@@ -8,7 +8,7 @@ using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
-using Weapsy.Reporting.Pages;
+using Weapsy.Reporting.Pages.Queries;
 
 namespace Weapsy.Extensions
 {
@@ -28,7 +28,6 @@ namespace Weapsy.Extensions
 
             var contextService = context.HttpContext.RequestServices.GetService<IContextService>();
             var queryDispatcher = context.HttpContext.RequestServices.GetService<IQueryDispatcher>();
-            var pageFacade = context.HttpContext.RequestServices.GetService<IPageFacade>();
 
             var pathParts = path.Split('/');
             var languageSlug = pathParts.Length > 1 ? pathParts[0] : path;
@@ -50,10 +49,10 @@ namespace Weapsy.Extensions
             }
 
             if (!string.IsNullOrEmpty(pageSlug))
-                pageId = pageFacade.GetIdBySlug(site.Id, pageSlug, language.Id);
+                pageId = await queryDispatcher.DispatchAsync<GetPageIdBySlug, Guid>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug, LanguageId = language.Id });
 
             if (pageId == null && !string.IsNullOrEmpty(pageSlug))
-                pageId = pageFacade.GetIdBySlug(site.Id, pageSlug);
+                pageId = await queryDispatcher.DispatchAsync<GetPageIdBySlug, Guid>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug });
 
             if (pageId == null && string.IsNullOrEmpty(pageSlug))
                 pageId = site.HomePageId;

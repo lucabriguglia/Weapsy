@@ -10,7 +10,6 @@ using Weapsy.Infrastructure.Commands;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
-using Weapsy.Reporting.Menus.Queries;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Pages.Queries;
 
@@ -20,25 +19,19 @@ namespace Weapsy.Api
     public class PageController : BaseAdminController
     {
         private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
-        private readonly IPageFacade _pageFacade;        
+        private readonly IQueryDispatcher _queryDispatcher;      
         private readonly IPageRules _pageRules;
-        private readonly IPageRepository _pageRepository;
         private readonly IRoleService _roleService;
 
         public PageController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
-            IPageFacade pageFacade,            
+            IQueryDispatcher queryDispatcher,           
             IPageRules pageRules,
-            IPageRepository pageRepository,
             IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
-            _pageFacade = pageFacade;
             _commandSender = commandSender;
             _pageRules = pageRules;
-            _pageRepository = pageRepository;
             _roleService = roleService;
             _queryDispatcher = queryDispatcher;
         }
@@ -220,19 +213,28 @@ namespace Weapsy.Api
 
         [HttpGet]
         [Route("admin-list")]
-        public IActionResult AdminList()
+        public async Task<IActionResult> AdminList()
         {
-            var model = _pageFacade.GetAllForAdmin(SiteId);
+            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<PageAdminListModel>>(new GetAllForAdmin
+            {
+                SiteId = SiteId
+            });
             return Ok(model);
         }
 
         [HttpGet]
         [Route("{id}/admin-edit")]
-        public IActionResult AdminEdit(Guid id)
+        public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = _pageFacade.GetAdminModel(SiteId, id);
+            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, PageAdminModel>(new GetForAdmin
+            {
+                SiteId = SiteId,
+                Id = id
+            });
+
             if (model == null)
                 return NotFound();
+
             return Ok(model);
         }
     }
