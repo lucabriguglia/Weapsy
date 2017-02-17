@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Reporting.ModuleTypes
+namespace Weapsy.Reporting.Apps
 {
     public class ModuleTypeAdminListModel
     {

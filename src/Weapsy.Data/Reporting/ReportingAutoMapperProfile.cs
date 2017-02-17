@@ -4,7 +4,6 @@ using Weapsy.Reporting.Apps;
 using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Menus;
-using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
 

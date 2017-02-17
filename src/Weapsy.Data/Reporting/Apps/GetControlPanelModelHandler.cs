@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Weapsy.Domain.ModuleTypes;
-using Weapsy.Infrastructure.Queries;
-using Weapsy.Reporting.ModuleTypes;
-using Weapsy.Reporting.ModuleTypes.Queries;
-using System.Linq;
-using Weapsy.Domain.Apps;
-using Weapsy.Infrastructure.Caching;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.ModuleTypes;
+using Weapsy.Infrastructure.Caching;
+using Weapsy.Infrastructure.Queries;
+using Weapsy.Reporting.Apps;
+using Weapsy.Reporting.Apps.Queries;
 
-namespace Weapsy.Data.Reporting.ModuleTypes
+namespace Weapsy.Data.Reporting.Apps
 {
     public class GetControlPanelModelHandler : IQueryHandlerAsync<GetControlPanelModel, IEnumerable<ModuleTypeControlPanelModel>>
     {

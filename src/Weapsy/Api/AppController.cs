@@ -88,7 +88,7 @@ namespace Weapsy.Api
         [Route("admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<AppAdminListModel>>(new GetAllForAdmin());
+            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModelList, IEnumerable<AppAdminListModel>>(new GetAppAdminModelList());
             return Ok(model);
         }
 
@@ -96,7 +96,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, AppAdminModel>(new GetForAdmin {Id = id});
+            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModel, AppAdminModel>(new GetAppAdminModel {Id = id});
             if (model == null)
                 return NotFound();
             return Ok(model);

@@ -9,8 +9,8 @@ using Weapsy.Infrastructure.Commands;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
-using Weapsy.Reporting.ModuleTypes;
-using Weapsy.Reporting.ModuleTypes.Queries;
+using Weapsy.Reporting.Apps;
+using Weapsy.Reporting.Apps.Queries;
 
 namespace Weapsy.Api
 {
@@ -73,7 +73,7 @@ namespace Weapsy.Api
         [Route("{appId}/admin-list")]
         public async Task<IActionResult> AdminList(Guid appId)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<ModuleTypeAdminListModel>>(new GetAllForAdmin
+            var model = await _queryDispatcher.DispatchAsync<GetModuleTypeAdminListModel, IEnumerable<ModuleTypeAdminListModel>>(new GetModuleTypeAdminListModel
             {
                 AppId = appId
             });
@@ -85,7 +85,7 @@ namespace Weapsy.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, ModuleTypeAdminModel>(new GetForAdmin
+            var model = await _queryDispatcher.DispatchAsync<GetModuleTypeAdminModel, ModuleTypeAdminModel>(new GetModuleTypeAdminModel
             {
                 Id = id
             });

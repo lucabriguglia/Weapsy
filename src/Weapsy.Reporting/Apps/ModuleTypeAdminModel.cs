@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Domain.ModuleTypes;
 
-namespace Weapsy.Reporting.ModuleTypes
+namespace Weapsy.Reporting.Apps
 {
     public class ModuleTypeAdminModel
     {

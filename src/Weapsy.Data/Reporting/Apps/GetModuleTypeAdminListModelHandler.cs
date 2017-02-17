@@ -3,33 +3,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Domain.Apps;
+using Weapsy.Domain.ModuleTypes;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Apps;
 using Weapsy.Reporting.Apps.Queries;
 
 namespace Weapsy.Data.Reporting.Apps
 {
-    public class GetAllForAdminHandler : IQueryHandlerAsync<GetAllForAdmin, IEnumerable<AppAdminListModel>>
+    public class GetModuleTypeAdminListModelHandler : IQueryHandlerAsync<GetModuleTypeAdminListModel, IEnumerable<ModuleTypeAdminListModel>>
     {
         private readonly IDbContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public GetAllForAdminHandler(IDbContextFactory contextFactory, IMapper mapper)
+        public GetModuleTypeAdminListModelHandler(IDbContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<AppAdminListModel>> RetrieveAsync(GetAllForAdmin query)
+        public async Task<IEnumerable<ModuleTypeAdminListModel>> RetrieveAsync(GetModuleTypeAdminListModel query)
         {
             using (var context = _contextFactory.Create())
             {
-                var entities = await context.Apps
-                    .Where(x => x.Status != AppStatus.Deleted)
+                var dbEntities = await context.ModuleTypes
+                    .Where(x => x.Status != ModuleTypeStatus.Deleted)
                     .ToListAsync();
 
-                return _mapper.Map<IEnumerable<AppAdminListModel>>(entities);
+                return _mapper.Map<IEnumerable<ModuleTypeAdminListModel>>(dbEntities);
             }
         }
     }

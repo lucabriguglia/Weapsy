@@ -1,27 +1,27 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Apps;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Infrastructure.Queries;
-using Weapsy.Reporting.ModuleTypes;
-using Weapsy.Reporting.ModuleTypes.Queries;
-using System.Linq;
-using Weapsy.Domain.Apps;
-using Microsoft.EntityFrameworkCore;
+using Weapsy.Reporting.Apps;
+using Weapsy.Reporting.Apps.Queries;
 
-namespace Weapsy.Data.Reporting.ModuleTypes
+namespace Weapsy.Data.Reporting.Apps
 {
-    public class GetForAdminHandler : IQueryHandlerAsync<GetForAdmin, ModuleTypeAdminModel>
+    public class GetModuleTypeAdminModelHandler : IQueryHandlerAsync<GetModuleTypeAdminModel, ModuleTypeAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public GetForAdminHandler(IDbContextFactory contextFactory, IMapper mapper)
+        public GetModuleTypeAdminModelHandler(IDbContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;
         }
 
-        public async Task<ModuleTypeAdminModel> RetrieveAsync(GetForAdmin query)
+        public async Task<ModuleTypeAdminModel> RetrieveAsync(GetModuleTypeAdminModel query)
         {
             using (var context = _contextFactory.Create())
             {

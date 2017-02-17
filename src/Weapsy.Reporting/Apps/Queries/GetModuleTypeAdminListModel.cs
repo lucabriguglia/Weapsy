@@ -3,8 +3,8 @@ using Weapsy.Infrastructure.Queries;
 
 namespace Weapsy.Reporting.Apps.Queries
 {
-    public class GetForAdmin : IQuery
+    public class GetModuleTypeAdminListModel : IQuery
     {
-        public Guid Id { get; set; }
+        public Guid AppId { get; set; }
     }
 }

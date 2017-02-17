@@ -8,18 +8,18 @@ using Weapsy.Reporting.Apps.Queries;
 
 namespace Weapsy.Data.Reporting.Apps
 {
-    public class GetForAdminHandler : IQueryHandlerAsync<GetForAdmin, AppAdminModel>
+    public class GetAppAdminModelHandler : IQueryHandlerAsync<GetAppAdminModel, AppAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public GetForAdminHandler(IDbContextFactory contextFactory, IMapper mapper)
+        public GetAppAdminModelHandler(IDbContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;
         }
 
-        public async Task<AppAdminModel> RetrieveAsync(GetForAdmin query)
+        public async Task<AppAdminModel> RetrieveAsync(GetAppAdminModel query)
         {
             using (var context = _contextFactory.Create())
             {

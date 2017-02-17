@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Reporting.ModuleTypes;
 using Weapsy.Mvc.Context;
 using Weapsy.Domain.ModuleTypes.Commands;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Infrastructure.Commands;
 using Weapsy.Infrastructure.Queries;
-using Weapsy.Reporting.ModuleTypes.Queries;
+using Weapsy.Reporting.Apps;
+using Weapsy.Reporting.Apps.Queries;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
@@ -30,13 +30,13 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<ModuleTypeAdminListModel>>(new GetAllForAdmin());
+            var model = await _queryDispatcher.DispatchAsync<GetModuleTypeAdminListModel, IEnumerable<ModuleTypeAdminListModel>>(new GetModuleTypeAdminListModel());
             return Ok(model);
         }
 
         public async Task<IActionResult> Create()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetDefaultForAdmin, ModuleTypeAdminModel>(new GetDefaultForAdmin());
+            var model = await _queryDispatcher.DispatchAsync<GetDefaultModuleTypeAdminModel, ModuleTypeAdminModel>(new GetDefaultModuleTypeAdminModel());
             return Ok(model);
         }
 
@@ -49,7 +49,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, ModuleTypeAdminModel>(new GetForAdmin
+            var model = await _queryDispatcher.DispatchAsync<GetModuleTypeAdminModel, ModuleTypeAdminModel>(new GetModuleTypeAdminModel
             {
                 Id = id
             });

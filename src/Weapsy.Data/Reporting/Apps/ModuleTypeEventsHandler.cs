@@ -2,7 +2,7 @@
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Events;
 
-namespace Weapsy.Data.Reporting.ModuleTypes
+namespace Weapsy.Data.Reporting.Apps
 {
     public class ModuleTypeEventsHandler : 
         IEventHandler<ModuleTypeCreated>,

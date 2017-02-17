@@ -1,23 +1,23 @@
-﻿using System.Threading.Tasks;
-using Weapsy.Infrastructure.Queries;
-using Weapsy.Reporting.ModuleTypes;
-using Weapsy.Reporting.ModuleTypes.Queries;
-using System.Linq;
-using Weapsy.Domain.Apps;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Apps;
+using Weapsy.Infrastructure.Queries;
+using Weapsy.Reporting.Apps;
+using Weapsy.Reporting.Apps.Queries;
 
-namespace Weapsy.Data.Reporting.ModuleTypes
+namespace Weapsy.Data.Reporting.Apps
 {
-    public class GetDefaultForAdminHandler : IQueryHandlerAsync<GetDefaultForAdmin, ModuleTypeAdminModel>
+    public class GetDefaultModuleTypeAdminModelHandler : IQueryHandlerAsync<GetDefaultModuleTypeAdminModel, ModuleTypeAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
 
-        public GetDefaultForAdminHandler(IDbContextFactory contextFactory)
+        public GetDefaultModuleTypeAdminModelHandler(IDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
 
-        public async Task<ModuleTypeAdminModel> RetrieveAsync(GetDefaultForAdmin query)
+        public async Task<ModuleTypeAdminModel> RetrieveAsync(GetDefaultModuleTypeAdminModel query)
         {
             using (var context = _contextFactory.Create())
             {

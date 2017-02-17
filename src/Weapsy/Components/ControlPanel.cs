@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
-using Weapsy.Reporting.ModuleTypes;
-using Weapsy.Reporting.ModuleTypes.Queries;
+using Weapsy.Reporting.Apps;
+using Weapsy.Reporting.Apps.Queries;
 
 namespace Weapsy.Components
 {

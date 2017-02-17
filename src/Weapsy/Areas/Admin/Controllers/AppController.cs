@@ -31,7 +31,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<AppAdminListModel>>(new GetAllForAdmin());
+            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModelList, IEnumerable<AppAdminListModel>>(new GetAppAdminModelList());
             return View(model);
         }
 
@@ -49,7 +49,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, AppAdminModel>(new GetForAdmin { Id = id });
+            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModel, AppAdminModel>(new GetAppAdminModel { Id = id });
             if (model == null)
                 return NotFound();
             return View(model);

@@ -2,7 +2,7 @@
 
 namespace Weapsy.Reporting.Apps.Queries
 {
-    public class GetAllForAdmin : IQuery
+    public class GetDefaultModuleTypeAdminModel : IQuery
     {
     }
 }

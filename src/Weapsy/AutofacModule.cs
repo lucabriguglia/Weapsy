@@ -20,7 +20,7 @@ namespace Weapsy
             var infrastructureAssembly = typeof(AggregateRoot).GetTypeInfo().Assembly;
             var domainAssembly = typeof(CreateSite).GetTypeInfo().Assembly;
             var dataAssembly = typeof(IDataProvider).GetTypeInfo().Assembly;
-            var reportingAssembly = typeof(GetForAdmin).GetTypeInfo().Assembly;
+            var reportingAssembly = typeof(GetAppAdminModel).GetTypeInfo().Assembly;
 
             builder.RegisterAssemblyTypes(domainAssembly).AsClosedTypesOf(typeof(ICommandHandler<>));
             builder.RegisterAssemblyTypes(domainAssembly).AsClosedTypesOf(typeof(ICommandHandlerAsync<>));
