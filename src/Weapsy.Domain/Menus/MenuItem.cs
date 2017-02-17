@@ -84,7 +84,7 @@ namespace Weapsy.Domain.Menus
                 MenuItemPermissions.Add(new MenuItemPermission
                 {
                     MenuItemId = Id,
-                    RoleId = ((int)DefaultRoles.Everyone).ToString()
+                    RoleId = Everyone.Id.ToString()
                 });
         }
 

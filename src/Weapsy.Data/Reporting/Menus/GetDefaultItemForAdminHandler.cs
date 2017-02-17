@@ -54,10 +54,10 @@ namespace Weapsy.Data.Reporting.Menus
                 {
                     result.MenuItemPermissions.Add(new MenuItemAdminModel.MenuItemPermission
                     {
-                        RoleId = role.Id,
+                        RoleId = role.Id.ToString(),
                         RoleName = role.Name,
-                        Selected = role.Name == DefaultRoleNames.Administrator,
-                        Disabled = role.Name == DefaultRoleNames.Administrator
+                        Selected = role.Name == Administrator.Name,
+                        Disabled = role.Name == Administrator.Name
                     });
                 }
 

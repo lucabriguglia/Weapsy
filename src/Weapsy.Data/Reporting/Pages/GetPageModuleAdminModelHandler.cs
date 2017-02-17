@@ -78,15 +78,15 @@ namespace Weapsy.Data.Reporting.Pages
                 {
                     var pageModulePermission = new PageModulePermissionModel
                     {
-                        RoleId = role.Id,
+                        RoleId = role.Id.ToString(),
                         RoleName = role.Name,
-                        Disabled = role.Name == DefaultRoleNames.Administrator
+                        Disabled = role.Name == Administrator.Name
                     };
 
                     foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
                     {
                         bool selected = pageModule.PageModulePermissions
-                            .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;
+                            .FirstOrDefault(x => x.RoleId == role.Id.ToString() && x.Type == permisisonType) != null;
 
                         pageModulePermission.PageModulePermissionTypes.Add(new PageModulePermissionTypeModel
                         {

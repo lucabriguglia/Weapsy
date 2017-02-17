@@ -80,15 +80,15 @@ namespace Weapsy.Data.Reporting.Menus
 
                 foreach (var role in _roleService.GetAllRoles())
                 {
-                    bool selected = menuItem.MenuItemPermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
+                    bool selected = menuItem.MenuItemPermissions.FirstOrDefault(x => x.RoleId == role.Id.ToString()) != null;
 
                     result.MenuItemPermissions.Add(new MenuItemAdminModel.MenuItemPermission
                     {
                         MenuItemId = menuItem.Id,
-                        RoleId = role.Id,
+                        RoleId = role.Id.ToString(),
                         RoleName = role.Name,
-                        Selected = selected || role.Name == DefaultRoleNames.Administrator,
-                        Disabled = role.Name == DefaultRoleNames.Administrator
+                        Selected = selected || role.Name == Administrator.Name,
+                        Disabled = role.Name == Administrator.Name
                     });
                 }
 

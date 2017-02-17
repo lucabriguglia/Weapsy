@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,9 +31,9 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task UpdateRoleNameAsync(string id, string name)
+        public async Task UpdateRoleNameAsync(Guid id, string name)
         {
-            var role = await _roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id.ToString());
 
             if (role == null)
                 throw new Exception("Role not found.");
@@ -47,9 +46,9 @@ namespace Weapsy.Services.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task DeleteRoleAsync(string id)
+        public async Task DeleteRoleAsync(Guid id)
         {
-            var role = await _roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id.ToString());
 
             if (role == null)
                 throw new Exception("Role not found.");
@@ -80,11 +79,11 @@ namespace Weapsy.Services.Identity
             return model;
         }
 
-        public async Task<IList<string>> GetDefaultPageViewPermissionRoleIdsAsync()
+        public async Task<IList<Guid>> GetDefaultPageViewPermissionRoleIdsAsync()
         {
-            var result = new List<string>();
+            var result = new List<Guid>();
 
-            var adminRole = await _roleManager.FindByNameAsync(DefaultRoleNames.Administrator);
+            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
             if (adminRole != null)
                 result.Add(adminRole.Id);
 
@@ -93,22 +92,22 @@ namespace Weapsy.Services.Identity
             return result;
         }
 
-        public async Task<IList<string>> GetDefaultPageEditPermissionRoleIdsAsync()
+        public async Task<IList<Guid>> GetDefaultPageEditPermissionRoleIdsAsync()
         {
-            var result = new List<string>();
+            var result = new List<Guid>();
 
-            var adminRole = await _roleManager.FindByNameAsync(DefaultRoleNames.Administrator);
+            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
             if (adminRole != null)
                 result.Add(adminRole.Id);
 
             return result;
         }
 
-        public async Task<IList<string>> GetDefaultModuleViewPermissionRoleIdsAsync()
+        public async Task<IList<Guid>> GetDefaultModuleViewPermissionRoleIdsAsync()
         {
-            var result = new List<string>();
+            var result = new List<Guid>();
 
-            var adminRole = await _roleManager.FindByNameAsync(DefaultRoleNames.Administrator);
+            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
             if (adminRole != null)
                 result.Add(adminRole.Id);
 
@@ -117,11 +116,11 @@ namespace Weapsy.Services.Identity
             return result;
         }
 
-        public async Task<IList<string>> GetDefaultModuleEditPermissionRoleIdsAsync()
+        public async Task<IList<Guid>> GetDefaultModuleEditPermissionRoleIdsAsync()
         {
-            var result = new List<string>();
+            var result = new List<Guid>();
 
-            var adminRole = await _roleManager.FindByNameAsync(DefaultRoleNames.Administrator);
+            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
             if (adminRole != null)
                 result.Add(adminRole.Id);
 
@@ -142,42 +141,66 @@ namespace Weapsy.Services.Identity
         {
             var result = _roleManager.Roles.ToList();
 
-            var defaultRoles = Enum.GetValues(typeof(DefaultRoles)).Cast<DefaultRoles>();
+            result.Add(new Role
+            {
+                Id = Everyone.Id,
+                Name = Everyone.Name
+            });
 
-            foreach (var role in defaultRoles)
-                result.Add(new Role
-                {
-                    Id = ((int)role).ToString(),
-                    Name = role.ToString()
-                });
+            result.Add(new Role
+            {
+                Id = Registered.Id,
+                Name = Registered.Name
+            });
+
+            result.Add(new Role
+            {
+                Id = Anonymous.Id,
+                Name = Anonymous.Name
+            });
 
             return result.OrderBy(x => x.Name).ToList();
         }
 
-        public IList<Role> GetRolesFromIds(IEnumerable<string> roleIds)
+        public IList<Role> GetRolesFromIds(IEnumerable<Guid> roleIds)
         {
             var result = new List<Role>();
 
             foreach (var roleId in roleIds)
             {
-                int id;
-
-                if (int.TryParse(roleId, out id))
+                if (Everyone.Id == roleId)
                 {
-                    if (Enum.IsDefined(typeof(DefaultRoles), id))
+                    result.Add(new Role
                     {
-                        result.Add(new Role
-                        {
-                            Id = id.ToString(),
-                            Name = Enum.GetName(typeof(DefaultRoles), id)
-                        });
-                        continue;
-                    }
+                        Id = Everyone.Id,
+                        Name = Everyone.Name
+                    });
                 }
 
-                var role = _roleManager.FindByIdAsync(roleId).Result;
+                if (Registered.Id == roleId)
+                {
+                    result.Add(new Role
+                    {
+                        Id = Registered.Id,
+                        Name = Registered.Name
+                    });
+                }
+
+                if (Anonymous.Id == roleId)
+                {
+                    result.Add(new Role
+                    {
+                        Id = Anonymous.Id,
+                        Name = Anonymous.Name
+                    });
+                }
+
+                var role = _roleManager.FindByIdAsync(roleId.ToString()).Result;
+
                 if (role != null)
+                {
                     result.Add(role);
+                }
             }
 
             return result;

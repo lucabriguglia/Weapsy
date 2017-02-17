@@ -5,18 +5,18 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Weapsy.Data.Entities;
 using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Data.Identity
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public UserService(UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+        public UserService(UserManager<User> userManager,
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -28,7 +28,7 @@ namespace Weapsy.Data.Identity
             {
                 return new UsersViewModel
                 {
-                    Users = new List<IdentityUser>(),
+                    Users = new List<User>(),
                     TotalRecords = 0,
                     NumberOfPages = 0
                 };
@@ -55,9 +55,9 @@ namespace Weapsy.Data.Identity
             return viewModel;
         }
 
-        public async Task<UserRolesViewModel> GetUserRolesViewModelAsync(string id)
+        public async Task<UserRolesViewModel> GetUserRolesViewModelAsync(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
 
             if (user == null)
                 return null;
@@ -75,25 +75,25 @@ namespace Weapsy.Data.Identity
             return model;
         }
 
-        public bool IsUserAuthorized(IPrincipal user, IEnumerable<IdentityRole> roles)
+        public bool IsUserAuthorized(IPrincipal user, IEnumerable<Role> roleNames)
         {
-            return IsUserAuthorized(user, roles.Select(x => x.Name));
+            return IsUserAuthorized(user, roleNames.Select(x => x.Name));
         }
 
-        public bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roles)
+        public bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roleNames)
         {
-            if (user == null || roles == null || !roles.Any())
+            if (user == null || roleNames == null || !roleNames.Any())
                 return false;
 
-            foreach (var role in roles)
+            foreach (var role in roleNames)
             {
-                if (role == DefaultRoles.Everyone.ToString())
+                if (role == Everyone.Name)
                     return true;
 
-                if (role == DefaultRoles.Registered.ToString() && user.Identity.IsAuthenticated)
+                if (role != Registered.Name && user.Identity.IsAuthenticated)
                     return true;
 
-                if (role == DefaultRoles.Anonymous.ToString() && !user.Identity.IsAuthenticated)
+                if (role == Anonymous.Name && !user.Identity.IsAuthenticated)
                     return true;
 
                 if (user.IsInRole(role))
@@ -105,7 +105,7 @@ namespace Weapsy.Data.Identity
 
         public async Task CreateUserAsync(string email)
         {
-            var user = new IdentityUser { UserName = email, Email = email };
+            var user = new User { UserName = email, Email = email };
 
             var result = await _userManager.CreateAsync(user);
 
@@ -113,9 +113,9 @@ namespace Weapsy.Data.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task AddUserToRoleAsync(string id, string roleName)
+        public async Task AddUserToRoleAsync(Guid id, string roleName)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
                 throw new Exception("User Not Found.");
 
@@ -124,9 +124,9 @@ namespace Weapsy.Data.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task RemoveUserFromRoleAsync(string id, string roleName)
+        public async Task RemoveUserFromRoleAsync(Guid id, string roleName)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
                 throw new Exception("User Not Found.");
 
@@ -135,9 +135,9 @@ namespace Weapsy.Data.Identity
                 throw new Exception(GetErrorMessage(result));
         }
 
-        public async Task DeleteUserAsync(string id)
+        public async Task DeleteUserAsync(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null)
                 throw new Exception("User Not Found.");
 
