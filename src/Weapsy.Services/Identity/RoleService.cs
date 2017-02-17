@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using Weapsy.Data.Entities;
 using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Services.Identity
 {
     public class RoleService : IRoleService
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public RoleService(UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+        public RoleService(UserManager<User> userManager,
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -23,7 +24,7 @@ namespace Weapsy.Services.Identity
 
         public async Task CreateRoleAsync(string name)
         {
-            var role = new IdentityRole(name);
+            var role = new Role {Name = name};
 
             var result = await _roleManager.CreateAsync(role);
 
@@ -137,14 +138,14 @@ namespace Weapsy.Services.Identity
             return builder.ToString();
         }
 
-        public IList<IdentityRole> GetAllRoles()
+        public IList<Role> GetAllRoles()
         {
             var result = _roleManager.Roles.ToList();
 
             var defaultRoles = Enum.GetValues(typeof(DefaultRoles)).Cast<DefaultRoles>();
 
             foreach (var role in defaultRoles)
-                result.Add(new IdentityRole
+                result.Add(new Role
                 {
                     Id = ((int)role).ToString(),
                     Name = role.ToString()
@@ -153,9 +154,9 @@ namespace Weapsy.Services.Identity
             return result.OrderBy(x => x.Name).ToList();
         }
 
-        public IList<IdentityRole> GetRolesFromIds(IEnumerable<string> roleIds)
+        public IList<Role> GetRolesFromIds(IEnumerable<string> roleIds)
         {
-            var result = new List<IdentityRole>();
+            var result = new List<Role>();
 
             foreach (var roleId in roleIds)
             {
@@ -165,7 +166,7 @@ namespace Weapsy.Services.Identity
                 {
                     if (Enum.IsDefined(typeof(DefaultRoles), id))
                     {
-                        result.Add(new IdentityRole
+                        result.Add(new Role
                         {
                             Id = id.ToString(),
                             Name = Enum.GetName(typeof(DefaultRoles), id)

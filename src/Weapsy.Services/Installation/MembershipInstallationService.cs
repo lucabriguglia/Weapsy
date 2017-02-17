@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Weapsy.Data.Entities;
 
 namespace Weapsy.Services.Installation
 {
     public class MembershipInstallationService : IMembershipInstallationService
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public MembershipInstallationService(UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+        public MembershipInstallationService(UserManager<User> userManager,
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -18,10 +18,10 @@ namespace Weapsy.Services.Installation
         public async void VerifyUserCreation()
         {
             var adminEmail = "admin@default.com";
-            var adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail };
+            var adminUser = new User { UserName = adminEmail, Email = adminEmail };
 
             var adminRoleName = "Administrator";
-            var adminRole = new IdentityRole(adminRoleName);
+            var adminRole = new Role { Name = adminRoleName };
 
             if (await _userManager.FindByEmailAsync(adminEmail) == null)
             {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using System.Linq;
+using Weapsy.Data.Entities;
 using Weapsy.Data.Identity;
 
 namespace Weapsy.Api
@@ -13,10 +14,10 @@ namespace Weapsy.Api
     public class RoleController : BaseAdminController
     {
         private readonly IRoleService _roleService;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
 
         public RoleController(IRoleService roleService,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<Role> roleManager,
             IContextService contextService)
             : base(contextService)
         {
@@ -56,14 +57,14 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]IdentityRole model)
+        public async Task<IActionResult> Post([FromBody]Role model)
         {
             await _roleService.CreateRoleAsync(model.Name);
             return new NoContentResult();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody]IdentityRole model)
+        public async Task<IActionResult> Put([FromBody]Role model)
         {
             await _roleService.UpdateRoleNameAsync(model.Id, model.Name);
             return new NoContentResult();

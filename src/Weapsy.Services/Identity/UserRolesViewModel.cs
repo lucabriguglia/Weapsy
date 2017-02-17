@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Weapsy.Data.Entities;
 
 namespace Weapsy.Services.Identity
 {
     public class UserRolesViewModel
     {
-        public IdentityUser User { get; set; }
-        public IList<IdentityRole> AvailableRoles { get; set; }
+        public User User { get; set; }
+        public IList<Role> AvailableRoles { get; set; }
         public IList<string> UserRoles { get; set; }
     }
 }

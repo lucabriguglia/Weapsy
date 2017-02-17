@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Weapsy.Data.Entities;
 
 namespace Weapsy.Services.Identity
 {
@@ -13,7 +13,7 @@ namespace Weapsy.Services.Identity
         Task<IList<string>> GetDefaultPageEditPermissionRoleIdsAsync();
         Task<IList<string>> GetDefaultModuleViewPermissionRoleIdsAsync();
         Task<IList<string>> GetDefaultModuleEditPermissionRoleIdsAsync();
-        IList<IdentityRole> GetAllRoles();
-        IList<IdentityRole> GetRolesFromIds(IEnumerable<string> roleIds);
+        IList<Role> GetAllRoles();
+        IList<Role> GetRolesFromIds(IEnumerable<string> roleIds);
     }
 }

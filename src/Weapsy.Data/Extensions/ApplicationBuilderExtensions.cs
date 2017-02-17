@@ -15,14 +15,5 @@ namespace Weapsy.Data.Extensions
 
             return app;
         }
-
-        public static IApplicationBuilder EnsureApplicationDbCreated(this IApplicationBuilder app)
-        {
-            var dbContext = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
-
-            dbContext.Database.Migrate();
-
-            return app;
-        }
     }
 }

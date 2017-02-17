@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using Weapsy.Data.Entities;
 using Weapsy.Data.Identity;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -12,13 +13,13 @@ namespace Weapsy.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : BaseAdminController
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
 
-        public UserController(UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager,
+        public UserController(UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             IUserService userService,
             IRoleService roleService,
             IContextService contextService)
@@ -37,7 +38,7 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult Create()
         {
-            return View(new IdentityUser());
+            return View(new User());
         }
 
         public async Task<IActionResult> Edit(string id)

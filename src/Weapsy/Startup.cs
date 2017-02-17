@@ -75,13 +75,6 @@ namespace Weapsy
 
             services.AddEntityFramework(Configuration);
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc()
@@ -140,7 +133,6 @@ namespace Weapsy
             ISiteRepository siteRepository,
             IQueryDispatcher queryDispatcher)
         {
-            app.EnsureApplicationDbCreated();
             app.EnsureDbCreated();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Weapsy.Data.Entities;
 using Weapsy.Data.Identity;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -14,10 +15,10 @@ namespace Weapsy.Areas.Admin.Controllers
     [Area("Admin")]
     public class RoleController : BaseAdminController
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IRoleService _roleService;
 
-        public RoleController(RoleManager<IdentityRole> roleManager,
+        public RoleController(RoleManager<Role> roleManager,
             IRoleService roleService,
             IContextService contextService)
             : base(contextService)
@@ -33,16 +34,16 @@ namespace Weapsy.Areas.Admin.Controllers
                 var model = _roleManager.Roles.OrderBy(x => x.Name).ToList();
                 return View(model);
             }
-            return View(new List<IdentityRole>());
+            return View(new List<Role>());
         }
 
         public IActionResult Create()
         {
-            return View(new IdentityRole());
+            return View(new Role());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(IdentityRole model)
+        public async Task<IActionResult> Save(Role model)
         {
             await _roleService.CreateRoleAsync(model.Name);
             return new NoContentResult();
@@ -57,7 +58,7 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Update(IdentityRole model)
+        public async Task<IActionResult> Update(Role model)
         {
             await _roleService.UpdateRoleNameAsync(model.Id, model.Name);
             return new NoContentResult();

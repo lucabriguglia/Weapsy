@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using System.Linq;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Data.Entities;
 
 namespace Weapsy.Data
 {
-    public class WeapsyDbContext : DbContext
+    public class WeapsyDbContext : IdentityDbContext<User, Role, Guid>
     {
         public WeapsyDbContext(DbContextOptions<WeapsyDbContext> options)
             : base(options)
@@ -78,6 +78,9 @@ namespace Weapsy.Data
             builder.Entity<PagePermission>()
                 .ToTable("PagePermission")
                 .HasKey(x => new { x.PageId, x.RoleId, x.Type });
+
+            builder.Entity<Role>()
+                .ToTable("Role");
 
             builder.Entity<Site>()
                 .ToTable("Site");
