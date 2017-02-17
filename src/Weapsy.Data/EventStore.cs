@@ -21,67 +21,67 @@ namespace Weapsy.Data
 
         public void SaveEvent<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot
         {
-            //using (var context = _contextFactory.Create())
-            //{
-            //    var aggregate = context.DomainAggregates.FirstOrDefault(x => x.Id == @event.AggregateRootId);
+            using (var context = _contextFactory.Create())
+            {
+                var aggregate = context.DomainAggregates.FirstOrDefault(x => x.Id == @event.AggregateRootId);
 
-            //    if (aggregate == null)
-            //    {
-            //        context.DomainAggregates.Add(new DomainAggregate
-            //        {
-            //            Id = @event.AggregateRootId,
-            //            Type = typeof(TAggregate).AssemblyQualifiedName
-            //        });
-            //    }
+                if (aggregate == null)
+                {
+                    context.DomainAggregates.Add(new DomainAggregate
+                    {
+                        Id = @event.AggregateRootId,
+                        Type = typeof(TAggregate).AssemblyQualifiedName
+                    });
+                }
 
-            //    var currentSequenceCount = context.DomainEvents.Count(x => x.DomainAggregateId == @event.AggregateRootId);
+                var currentSequenceCount = context.DomainEvents.Count(x => x.DomainAggregateId == @event.AggregateRootId);
 
-            //    context.DomainEvents.Add(new DomainEvent
-            //    {
-            //        DomainAggregateId = @event.AggregateRootId,
-            //        SequenceNumber = currentSequenceCount + 1,
-            //        Type = @event.GetType().AssemblyQualifiedName,
-            //        Body = JsonConvert.SerializeObject(@event),
-            //        TimeStamp = @event.TimeStamp
-            //        //UserId = @event.UserId
-            //    });
+                context.DomainEvents.Add(new DomainEvent
+                {
+                    DomainAggregateId = @event.AggregateRootId,
+                    SequenceNumber = currentSequenceCount + 1,
+                    Type = @event.GetType().AssemblyQualifiedName,
+                    Body = JsonConvert.SerializeObject(@event),
+                    TimeStamp = @event.TimeStamp
+                    //UserId = @event.UserId
+                });
 
-            //    context.SaveChanges();
-            //}
+                context.SaveChanges();
+            }
         }
 
         public async Task SaveEventAsync<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot
         {
-            //using (var context = _contextFactory.Create())
-            //{
-            //    var aggregate = await context.DomainAggregates.FirstOrDefaultAsync(x => x.Id == @event.AggregateRootId);
+            using (var context = _contextFactory.Create())
+            {
+                var aggregate = await context.DomainAggregates.FirstOrDefaultAsync(x => x.Id == @event.AggregateRootId);
 
-            //    if (aggregate == null)
-            //    {
-            //        context.DomainAggregates.Add(new DomainAggregate
-            //        {
-            //            Id = @event.AggregateRootId,
-            //            Type = typeof(TAggregate).AssemblyQualifiedName
-            //        });
-            //    }
+                if (aggregate == null)
+                {
+                    context.DomainAggregates.Add(new DomainAggregate
+                    {
+                        Id = @event.AggregateRootId,
+                        Type = typeof(TAggregate).AssemblyQualifiedName
+                    });
+                }
 
-            //    var currentSequenceCount = await context.DomainEvents.CountAsync(x => x.DomainAggregateId == @event.AggregateRootId);
+                var currentSequenceCount = await context.DomainEvents.CountAsync(x => x.DomainAggregateId == @event.AggregateRootId);
 
-            //    context.DomainEvents.Add(new DomainEvent
-            //    {
-            //        DomainAggregateId = @event.AggregateRootId,
-            //        SequenceNumber = currentSequenceCount + 1,
-            //        Type = @event.GetType().AssemblyQualifiedName,
-            //        Body = JsonConvert.SerializeObject(@event),
-            //        TimeStamp = @event.TimeStamp
-            //        //UserId = @event.UserId
-            //    });
+                context.DomainEvents.Add(new DomainEvent
+                {
+                    DomainAggregateId = @event.AggregateRootId,
+                    SequenceNumber = currentSequenceCount + 1,
+                    Type = @event.GetType().AssemblyQualifiedName,
+                    Body = JsonConvert.SerializeObject(@event),
+                    TimeStamp = @event.TimeStamp
+                    //UserId = @event.UserId
+                });
 
-            //    await context.SaveChangesAsync();
-            //}
+                await context.SaveChangesAsync();
+            }
         }
 
-        public IEnumerable<IDomainEvent> GetEvents(string aggregateId)
+        public IEnumerable<IDomainEvent> GetEvents(Guid aggregateId)
         {
             using (var context = _contextFactory.Create())
             {
@@ -102,7 +102,7 @@ namespace Weapsy.Data
             }
         }
 
-        public async Task<IEnumerable<IDomainEvent>> GetEventsAsync(string aggregateId)
+        public async Task<IEnumerable<IDomainEvent>> GetEventsAsync(Guid aggregateId)
         {
             using (var context = _contextFactory.Create())
             {

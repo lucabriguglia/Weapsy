@@ -27,7 +27,7 @@ namespace Weapsy.Data.Migrations
                 name: "DomainAggregate",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -130,12 +130,12 @@ namespace Weapsy.Data.Migrations
                 name: "DomainEvent",
                 columns: table => new
                 {
-                    DomainAggregateId = table.Column<string>(nullable: false),
+                    DomainAggregateId = table.Column<Guid>(nullable: false),
                     SequenceNumber = table.Column<int>(nullable: false),
                     Body = table.Column<string>(nullable: true),
                     TimeStamp = table.Column<DateTime>(nullable: false),
                     Type = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

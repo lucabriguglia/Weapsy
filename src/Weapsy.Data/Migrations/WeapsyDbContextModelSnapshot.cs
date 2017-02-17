@@ -36,7 +36,8 @@ namespace Weapsy.Data.Migrations
 
             modelBuilder.Entity("Weapsy.Data.Entities.DomainAggregate", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Type");
 
@@ -47,7 +48,7 @@ namespace Weapsy.Data.Migrations
 
             modelBuilder.Entity("Weapsy.Data.Entities.DomainEvent", b =>
                 {
-                    b.Property<string>("DomainAggregateId");
+                    b.Property<Guid>("DomainAggregateId");
 
                     b.Property<int>("SequenceNumber");
 
@@ -57,7 +58,7 @@ namespace Weapsy.Data.Migrations
 
                     b.Property<string>("Type");
 
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("DomainAggregateId", "SequenceNumber");
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Weapsy.Infrastructure.Domain
@@ -7,7 +8,7 @@ namespace Weapsy.Infrastructure.Domain
     {
         void SaveEvent<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot;
         Task SaveEventAsync<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot;
-        IEnumerable<IDomainEvent> GetEvents(string aggregateId);
-        Task<IEnumerable<IDomainEvent>> GetEventsAsync(string aggregateId);
+        IEnumerable<IDomainEvent> GetEvents(Guid aggregateId);
+        Task<IEnumerable<IDomainEvent>> GetEventsAsync(Guid aggregateId);
     }
 }
