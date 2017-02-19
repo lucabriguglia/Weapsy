@@ -75,9 +75,9 @@ namespace Weapsy.Data.Identity
             return model;
         }
 
-        public bool IsUserAuthorized(IPrincipal user, IEnumerable<Role> roleNames)
+        public bool IsUserAuthorized(IPrincipal user, IEnumerable<Role> roles)
         {
-            return IsUserAuthorized(user, roleNames.Select(x => x.Name));
+            return IsUserAuthorized(user, roles.Select(x => x.Name));
         }
 
         public bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roleNames)
@@ -90,7 +90,7 @@ namespace Weapsy.Data.Identity
                 if (role == Everyone.Name)
                     return true;
 
-                if (role != Registered.Name && user.Identity.IsAuthenticated)
+                if (role == Registered.Name && user.Identity.IsAuthenticated)
                     return true;
 
                 if (role == Anonymous.Name && !user.Identity.IsAuthenticated)
