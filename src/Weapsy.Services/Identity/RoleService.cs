@@ -83,11 +83,13 @@ namespace Weapsy.Services.Identity
         {
             var result = new List<Guid>();
 
-            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
-            if (adminRole != null)
-                result.Add(adminRole.Id);
+            //var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
+            //if (adminRole != null)
+            //    result.Add(adminRole.Id);
 
             //result.Add(((int)DefaultRoles.Everyone).ToString());
+
+            result.Add(Administrator.Id);
 
             return result;
         }
@@ -96,9 +98,11 @@ namespace Weapsy.Services.Identity
         {
             var result = new List<Guid>();
 
-            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
-            if (adminRole != null)
-                result.Add(adminRole.Id);
+            //var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
+            //if (adminRole != null)
+            //    result.Add(adminRole.Id);
+
+            result.Add(Administrator.Id);
 
             return result;
         }
@@ -107,11 +111,13 @@ namespace Weapsy.Services.Identity
         {
             var result = new List<Guid>();
 
-            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
-            if (adminRole != null)
-                result.Add(adminRole.Id);
+            //var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
+            //if (adminRole != null)
+            //    result.Add(adminRole.Id);
 
             //result.Add(((int)DefaultRoles.Everyone).ToString());
+
+            result.Add(Administrator.Id);
 
             return result;
         }
@@ -120,9 +126,11 @@ namespace Weapsy.Services.Identity
         {
             var result = new List<Guid>();
 
-            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
-            if (adminRole != null)
-                result.Add(adminRole.Id);
+            //var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
+            //if (adminRole != null)
+            //    result.Add(adminRole.Id);
+
+            result.Add(Administrator.Id);
 
             return result;
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Weapsy.Data.Entities;
+using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Services.Installation
 {
@@ -20,24 +21,23 @@ namespace Weapsy.Services.Installation
             var adminEmail = "admin@default.com";
             var adminUser = new User { UserName = adminEmail, Email = adminEmail };
 
-            var adminRoleName = "Administrator";
-            var adminRole = new Role { Name = adminRoleName };
+            var adminRole = new Role { Id = Administrator.Id, Name = Administrator.Name };
 
             if (await _userManager.FindByEmailAsync(adminEmail) == null)
             {
                 await _userManager.CreateAsync(adminUser, "Ab1234567!");
             }
 
-            if (!await _roleManager.RoleExistsAsync(adminRoleName))
+            if (!await _roleManager.RoleExistsAsync(adminRole.Name))
             {
                 await _roleManager.CreateAsync(adminRole);
             }
 
             adminUser = await _userManager.FindByEmailAsync(adminEmail);
 
-            if (!await _userManager.IsInRoleAsync(adminUser, adminRoleName))
+            if (!await _userManager.IsInRoleAsync(adminUser, adminRole.Name))
             {
-                await _userManager.AddToRoleAsync(adminUser, adminRoleName);
+                await _userManager.AddToRoleAsync(adminUser, adminRole.Name);
             }
         }
     }

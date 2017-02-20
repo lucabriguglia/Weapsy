@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Weapsy.Data.Entities;
 using Weapsy.Data.Identity;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -12,11 +13,11 @@ namespace Weapsy.Api
     [Route("api/[controller]")]
     public class UserController : BaseAdminController
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
 
-        public UserController(UserManager<IdentityUser> userManager,
+        public UserController(UserManager<User> userManager,
             IUserService userService,
             IRoleService roleService,
             IContextService contextService)

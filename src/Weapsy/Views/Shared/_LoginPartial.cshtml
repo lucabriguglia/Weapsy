@@ -1,5 +1,6 @@
-﻿@inject SignInManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> SignInManager
-@inject UserManager<Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser> UserManager
+﻿@using Weapsy.Data.Entities
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
