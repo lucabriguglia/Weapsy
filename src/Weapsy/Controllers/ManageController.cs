@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Weapsy.Models;
 using Weapsy.Models.ManageViewModels;
 using Weapsy.Services;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Data.Entities;
 
 namespace Weapsy.Controllers
