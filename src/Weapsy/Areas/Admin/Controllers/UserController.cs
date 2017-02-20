@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -51,7 +52,7 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Roles(string id)
+        public async Task<IActionResult> Roles(Guid id)
         {
             var model = await _userService.GetUserRolesViewModelAsync(id);
 

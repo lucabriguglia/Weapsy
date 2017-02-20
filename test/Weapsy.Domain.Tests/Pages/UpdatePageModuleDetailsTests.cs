@@ -8,6 +8,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using System.Collections.Generic;
+using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Domain.Tests.Pages
 {
@@ -61,7 +62,7 @@ namespace Weapsy.Domain.Tests.Pages
                 {
                     new PageModulePermission
                     {
-                        RoleId = "-1",
+                        RoleId = Everyone.Id,
                         Type = PermissionType.View
                     }
                 }

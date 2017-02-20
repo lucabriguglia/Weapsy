@@ -275,7 +275,7 @@ namespace Weapsy.Data.Migrations
                 {
                     b.Property<Guid>("MenuItemId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("MenuItemId", "RoleId");
 
@@ -432,7 +432,7 @@ namespace Weapsy.Data.Migrations
                 {
                     b.Property<Guid>("PageModuleId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.Property<int>("Type");
 
@@ -447,7 +447,7 @@ namespace Weapsy.Data.Migrations
                 {
                     b.Property<Guid>("PageId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.Property<int>("Type");
 

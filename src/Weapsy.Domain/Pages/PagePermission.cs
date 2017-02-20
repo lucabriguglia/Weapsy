@@ -7,6 +7,6 @@ namespace Weapsy.Domain.Pages
     {
         public Guid PageId { get; set; }  
         public PermissionType Type { get; set; }
-        public string RoleId { get; set; }
+        public Guid RoleId { get; set; }
     }
 }

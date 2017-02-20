@@ -80,7 +80,7 @@ namespace Weapsy.Data.Reporting.Menus
 
                 foreach (var role in _roleService.GetAllRoles())
                 {
-                    bool selected = menuItem.MenuItemPermissions.FirstOrDefault(x => x.RoleId == role.Id.ToString()) != null;
+                    bool selected = menuItem.MenuItemPermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
 
                     result.MenuItemPermissions.Add(new MenuItemAdminModel.MenuItemPermission
                     {

@@ -12,7 +12,7 @@ namespace Weapsy.Domain.Pages.Commands
         public string Title { get; set; }
         public IList<PageModulePermission> PageModulePermissions { get; set; } = new List<PageModulePermission>();
 
-        public void SetPageModulePermissions(IList<string> viewRoleIds, IList<string> editRoleIds)
+        public void SetPageModulePermissions(IList<Guid> viewRoleIds, IList<Guid> editRoleIds)
         {
             foreach (var viewRoleId in viewRoleIds)
                 PageModulePermissions.Add(new PageModulePermission

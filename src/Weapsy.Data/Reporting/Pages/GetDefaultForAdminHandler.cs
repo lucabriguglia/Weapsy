@@ -49,7 +49,7 @@ namespace Weapsy.Data.Reporting.Pages
                 {
                     var pagePermission = new PagePermissionModel
                     {
-                        RoleId = role.Id.ToString(),
+                        RoleId = role.Id,
                         RoleName = role.Name,
                         Disabled = role.Name == Administrator.Name
                     };

@@ -87,7 +87,7 @@ namespace Weapsy.Data.Reporting.Pages
                 {
                     var pagePermission = new PagePermissionModel
                     {
-                        RoleId = role.Id.ToString(),
+                        RoleId = role.Id,
                         RoleName = role.Name,
                         Disabled = role.Name == Administrator.Name
                     };
@@ -95,7 +95,7 @@ namespace Weapsy.Data.Reporting.Pages
                     foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
                     {
                         bool selected = page.PagePermissions
-                            .FirstOrDefault(x => x.RoleId == role.Id.ToString() && x.Type == permisisonType) != null;
+                            .FirstOrDefault(x => x.RoleId == role.Id && x.Type == permisisonType) != null;
 
                         pagePermission.PagePermissionTypes.Add(new PagePermissionTypeModel
                         {

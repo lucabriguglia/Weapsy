@@ -473,7 +473,7 @@ namespace Weapsy.Data.Migrations
                 columns: table => new
                 {
                     PageId = table.Column<Guid>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false),
                     Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -518,7 +518,7 @@ namespace Weapsy.Data.Migrations
                 columns: table => new
                 {
                     MenuItemId = table.Column<Guid>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -561,7 +561,7 @@ namespace Weapsy.Data.Migrations
                 columns: table => new
                 {
                     PageModuleId = table.Column<Guid>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false),
                     Type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

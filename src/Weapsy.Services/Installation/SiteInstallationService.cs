@@ -126,7 +126,7 @@ namespace Weapsy.Services.Installation
             {
                 new PagePermission
                 {
-                    RoleId = ((int) DefaultRoles.Everyone).ToString(),
+                    RoleId = Everyone.Id,
                     Type = PermissionType.View
                 }
             };
@@ -221,7 +221,7 @@ namespace Weapsy.Services.Installation
             {
                 new PageModulePermission
                 {
-                    RoleId = ((int) DefaultRoles.Everyone).ToString(),
+                    RoleId = Everyone.Id,
                     Type = PermissionType.View
                 }
             };
@@ -308,7 +308,7 @@ namespace Weapsy.Services.Installation
                 {
                     new MenuItemPermission
                     {
-                        RoleId = DefaultRoles.Everyone.ToString()
+                        RoleId = Everyone.Id
                     }
                 }
             }, _addMenuItemValidator);
