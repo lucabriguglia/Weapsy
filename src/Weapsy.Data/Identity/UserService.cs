@@ -22,39 +22,6 @@ namespace Weapsy.Data.Identity
             _roleManager = roleManager;
         }
 
-        public UsersViewModel GetUsersViewModel(UsersQuery query)
-        {
-            if (!_userManager.SupportsQueryableUsers)
-            {
-                return new UsersViewModel
-                {
-                    Users = new List<User>(),
-                    TotalRecords = 0,
-                    NumberOfPages = 0
-                };
-            }
-
-            var totalRecords = _userManager.Users.Count();
-
-            var q = _userManager.Users
-                .OrderBy(x => x.Email)
-                .Skip(query.StartIndex);
-
-            // Part-1: If 0 (zero) is passed for query.NumberOfUsers, we load all users
-
-            if (query.NumberOfUsers > 0)
-                q = q.Take(query.NumberOfUsers);
-
-            var viewModel = new UsersViewModel
-            {
-                Users = q.ToList(),
-                TotalRecords = totalRecords,
-                NumberOfPages = (int)Math.Ceiling((double)totalRecords / query.NumberOfUsers)
-            };
-
-            return viewModel;
-        }
-
         public async Task<UserRolesViewModel> GetUserRolesViewModelAsync(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
