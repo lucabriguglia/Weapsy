@@ -183,7 +183,7 @@ namespace Weapsy
 
             app.UseIdentity();
 
-            membershipInstallationService.VerifyUserCreation();
+            membershipInstallationService.EnsureIdentityInstalled();
             siteInstallationService.VerifySiteInstallation();
 
             var site = siteRepository.GetByName("Default");

@@ -68,7 +68,7 @@ namespace Weapsy.Domain.Tests.Pages
                 }
             };
             _validatorMock = new Mock<IValidator<UpdatePageModuleDetails>>();
-            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());            
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _page.UpdateModule(_command, _validatorMock.Object);
             _pageModule = _page.PageModules.FirstOrDefault(x => x.ModuleId == moduleId);
             _event = _page.Events.OfType<PageModuleDetailsUpdated>().SingleOrDefault();

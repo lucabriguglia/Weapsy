@@ -16,29 +16,63 @@ namespace Weapsy.Services.Installation
             _roleManager = roleManager;
         }
 
-        public async void VerifyUserCreation()
+        public async void EnsureIdentityInstalled()
         {
+            EnsureDefaultRolesCreated();
+
             var adminEmail = "admin@default.com";
             var adminUser = new User { UserName = adminEmail, Email = adminEmail };
-
-            var adminRole = new Role { Id = Administrator.Id, Name = Administrator.Name };
 
             if (await _userManager.FindByEmailAsync(adminEmail) == null)
             {
                 await _userManager.CreateAsync(adminUser, "Ab1234567!");
             }
 
-            if (!await _roleManager.RoleExistsAsync(adminRole.Name))
-            {
-                await _roleManager.CreateAsync(adminRole);
-            }
-
             adminUser = await _userManager.FindByEmailAsync(adminEmail);
 
-            if (!await _userManager.IsInRoleAsync(adminUser, adminRole.Name))
+            if (!await _userManager.IsInRoleAsync(adminUser, Administrator.Name))
             {
-                await _userManager.AddToRoleAsync(adminUser, adminRole.Name);
+                await _userManager.AddToRoleAsync(adminUser, Administrator.Name);
             }
+        }
+
+        private async void EnsureDefaultRolesCreated()
+        {
+            if (!await _roleManager.RoleExistsAsync(Administrator.Name))
+            {
+                await _roleManager.CreateAsync(new Role
+                {
+                    Id = Administrator.Id,
+                    Name = Administrator.Name
+                });
+            }
+
+            //if (!await _roleManager.RoleExistsAsync(Everyone.Name))
+            //{
+            //    await _roleManager.CreateAsync(new Role
+            //    {
+            //        Id = Everyone.Id,
+            //        Name = Everyone.Name
+            //    });
+            //}
+
+            //if (!await _roleManager.RoleExistsAsync(Registered.Name))
+            //{
+            //    await _roleManager.CreateAsync(new Role
+            //    {
+            //        Id = Registered.Id,
+            //        Name = Registered.Name
+            //    });
+            //}
+
+            //if (!await _roleManager.RoleExistsAsync(Anonymous.Name))
+            //{
+            //    await _roleManager.CreateAsync(new Role
+            //    {
+            //        Id = Anonymous.Id,
+            //        Name = Anonymous.Name
+            //    });
+            //}
         }
     }
 }
