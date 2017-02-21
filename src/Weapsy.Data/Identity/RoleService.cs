@@ -21,44 +21,6 @@ namespace Weapsy.Data.Identity
             _roleManager = roleManager;
         }
 
-        public async Task CreateRoleAsync(string name)
-        {
-            var role = new Role { Name = name };
-
-            var result = await _roleManager.CreateAsync(role);
-
-            if (!result.Succeeded)
-                throw new Exception(GetErrorMessage(result));
-        }
-
-        public async Task UpdateRoleNameAsync(Guid id, string name)
-        {
-            var role = await _roleManager.FindByIdAsync(id.ToString());
-
-            if (role == null)
-                throw new Exception("Role not found.");
-
-            role.Name = name;
-
-            var result = await _roleManager.UpdateAsync(role);
-
-            if (!result.Succeeded)
-                throw new Exception(GetErrorMessage(result));
-        }
-
-        public async Task DeleteRoleAsync(Guid id)
-        {
-            var role = await _roleManager.FindByIdAsync(id.ToString());
-
-            if (role == null)
-                throw new Exception("Role not found.");
-
-            var result = await _roleManager.DeleteAsync(role);
-
-            if (!result.Succeeded)
-                throw new Exception(GetErrorMessage(result));
-        }
-
         public async Task<UserRolesViewModel> GetUserRolesViewModel(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -77,54 +39,6 @@ namespace Weapsy.Data.Identity
             };
 
             return model;
-        }
-
-        public async Task<IList<Guid>> GetDefaultPageViewPermissionRoleIdsAsync()
-        {
-            var result = new List<Guid>();
-
-            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
-            if (adminRole != null)
-                result.Add(adminRole.Id);
-
-            //result.Add(((int)DefaultRoles.Everyone).ToString());
-
-            return result;
-        }
-
-        public async Task<IList<Guid>> GetDefaultPageEditPermissionRoleIdsAsync()
-        {
-            var result = new List<Guid>();
-
-            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
-            if (adminRole != null)
-                result.Add(adminRole.Id);
-
-            return result;
-        }
-
-        public async Task<IList<Guid>> GetDefaultModuleViewPermissionRoleIdsAsync()
-        {
-            var result = new List<Guid>();
-
-            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
-            if (adminRole != null)
-                result.Add(adminRole.Id);
-
-            //result.Add(((int)DefaultRoles.Everyone).ToString());
-
-            return result;
-        }
-
-        public async Task<IList<Guid>> GetDefaultModuleEditPermissionRoleIdsAsync()
-        {
-            var result = new List<Guid>();
-
-            var adminRole = await _roleManager.FindByNameAsync(Administrator.Name);
-            if (adminRole != null)
-                result.Add(adminRole.Id);
-
-            return result;
         }
 
         private string GetErrorMessage(IdentityResult result)

@@ -7,6 +7,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Identity;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -70,8 +71,8 @@ namespace Weapsy.Api
         public async Task<IActionResult> AddModule([FromBody] AddModule model)
         {
             model.SiteId = SiteId;
-            var defaultViewRoleIds = await _roleService.GetDefaultModuleViewPermissionRoleIdsAsync();
-            var defaultEditRoleIds = await _roleService.GetDefaultModuleEditPermissionRoleIdsAsync();
+            var defaultViewRoleIds = new List<Guid> { Administrator.Id };
+            var defaultEditRoleIds = new List<Guid> { Administrator.Id };
             model.SetPageModulePermissions(defaultViewRoleIds, defaultEditRoleIds);
             await Task.Run(() => _commandSender.Send<AddModule, Page>(model));
             return new NoContentResult();

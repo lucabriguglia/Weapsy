@@ -128,24 +128,6 @@ namespace Weapsy.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //_eventPublisher.Publish(new UserRegistered
-                    //{
-                    //    AggregateRootId = new Guid(user.Id),
-                    //    Email = user.Email,
-                    //    UserName = user.UserName
-                    //});
-
-                    var command = new CreateUser
-                    {
-                        Id = user.Id,
-                        Email = user.Email,
-                        UserName = user.UserName
-                    };
-
-                    var newUser = Weapsy.Domain.Users.User.CreateNew(command, _validator);
-
-                    _userRepository.Create(newUser);
-
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
