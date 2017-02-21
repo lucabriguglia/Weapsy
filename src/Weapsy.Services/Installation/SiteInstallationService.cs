@@ -13,7 +13,6 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
-using Weapsy.Services.Identity;
 
 namespace Weapsy.Services.Installation
 {
@@ -37,7 +36,6 @@ namespace Weapsy.Services.Installation
         private readonly IValidator<CreateMenu> _createMenuValidator;
         private readonly IValidator<AddMenuItem> _addMenuItemValidator;
         private readonly IModuleTypeRepository _moduleTypeRepository;
-        private readonly IRoleService _roleService;
 
         public SiteInstallationService(ISiteRepository siteRepository,
             IValidator<CreateSite> createSiteValidator,
@@ -55,8 +53,7 @@ namespace Weapsy.Services.Installation
             IMenuRepository menuRepository,
             IValidator<CreateMenu> createMenuValidator,
             IValidator<AddMenuItem> addMenuItemValidator,
-            IModuleTypeRepository moduleTypeRepository,
-            IRoleService roleService)
+            IModuleTypeRepository moduleTypeRepository)
         {
             _siteRepository = siteRepository;
             _createSiteValidator = createSiteValidator;
@@ -75,7 +72,6 @@ namespace Weapsy.Services.Installation
             _createMenuValidator = createMenuValidator;
             _addMenuItemValidator = addMenuItemValidator;
             _moduleTypeRepository = moduleTypeRepository;
-            _roleService = roleService;
         }
 
         public void VerifySiteInstallation()
@@ -131,19 +127,17 @@ namespace Weapsy.Services.Installation
                 }
             };
 
-            foreach (var roleId in _roleService.GetDefaultPageViewPermissionRoleIdsAsync().Result)
-                pagePermisisons.Add(new PagePermission
-                {
-                    RoleId = roleId,
-                    Type = PermissionType.View
-                });
+            pagePermisisons.Add(new PagePermission
+            {
+                RoleId = Administrator.Id,
+                Type = PermissionType.View
+            });
 
-            foreach (var roleId in _roleService.GetDefaultPageEditPermissionRoleIdsAsync().Result)
-                pagePermisisons.Add(new PagePermission
-                {
-                    RoleId = roleId,
-                    Type = PermissionType.Edit
-                });
+            pagePermisisons.Add(new PagePermission
+            {
+                RoleId = Administrator.Id,
+                Type = PermissionType.Edit
+            });
 
             var homePage = Page.CreateNew(new CreatePage
             {
@@ -226,19 +220,17 @@ namespace Weapsy.Services.Installation
                 }
             };
 
-            foreach (var roleId in _roleService.GetDefaultModuleViewPermissionRoleIdsAsync().Result)
-                pageModulePermisisons.Add(new PageModulePermission
-                {
-                    RoleId = roleId,
-                    Type = PermissionType.View
-                });
+            pageModulePermisisons.Add(new PageModulePermission
+            {
+                RoleId = Administrator.Id,
+                Type = PermissionType.View
+            });
 
-            foreach (var roleId in _roleService.GetDefaultModuleEditPermissionRoleIdsAsync().Result)
-                pageModulePermisisons.Add(new PageModulePermission
-                {
-                    RoleId = roleId,
-                    Type = PermissionType.Edit
-                });
+            pageModulePermisisons.Add(new PageModulePermission
+            {
+                RoleId = Administrator.Id,
+                Type = PermissionType.Edit
+            });
 
             homePage.AddModule(new AddPageModule
             {
