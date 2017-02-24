@@ -1,12 +1,16 @@
 # Weapsy
 Weapsy is an ASP.NET Core CMS based on DDD and CQRS.
 
-Each writing operation is represented by a command. After the operation is completed successfully one or more events are published by an internal dispatcher.
-It's extremely easy to subscribe to domain events.
+Each writing operation is represented by a command handle by a command handler.
+After the operation is completed successfully one or more events are published by an internal event publisher.
+It's extremely easy to subscribe to those events.
+The same way each reading operation is fulfilled by a query handle by a query handler.
 
 Weapsy will be extendable with custom apps.
 An app can display content through modules added to dynamic pages or through static pages of the app itself.
 The first one included is the Text app used to add html modules.
+
+For any queries please visit my LinkedIn profile where you can find all my contact details: https://www.linkedin.com/in/lucabriguglia/
 
 [![Join the chat at https://gitter.im/weapsy](https://badges.gitter.im/weapsy.svg)](https://gitter.im/weapsy/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
