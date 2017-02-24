@@ -42,33 +42,28 @@ namespace Weapsy.Data.Identity
             return model;
         }
 
-        public bool IsUserAuthorized(IPrincipal user, IEnumerable<Role> roles)
-        {
-            return IsUserAuthorized(user, roles.Select(x => x.Name));
-        }
+        //public bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roleNames)
+        //{
+        //    if (user == null || roleNames == null || !roleNames.Any())
+        //        return false;
 
-        public bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roleNames)
-        {
-            if (user == null || roleNames == null || !roleNames.Any())
-                return false;
+        //    foreach (var role in roleNames)
+        //    {
+        //        if (role == Everyone.Name)
+        //            return true;
 
-            foreach (var role in roleNames)
-            {
-                if (role == Everyone.Name)
-                    return true;
+        //        if (role == Registered.Name && user.Identity.IsAuthenticated)
+        //            return true;
 
-                if (role == Registered.Name && user.Identity.IsAuthenticated)
-                    return true;
+        //        if (role == Anonymous.Name && !user.Identity.IsAuthenticated)
+        //            return true;
 
-                if (role == Anonymous.Name && !user.Identity.IsAuthenticated)
-                    return true;
+        //        if (user.IsInRole(role))
+        //            return true;
+        //    }
 
-                if (user.IsInRole(role))
-                    return true;
-            }
-
-            return false;
-        }
+        //    return false;
+        //}
 
         public async Task CreateUserAsync(string email)
         {

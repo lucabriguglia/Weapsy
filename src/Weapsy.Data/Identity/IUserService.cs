@@ -9,8 +9,7 @@ namespace Weapsy.Data.Identity
     public interface IUserService
     {
         Task<UserRolesViewModel> GetUserRolesViewModelAsync(Guid id);
-        bool IsUserAuthorized(IPrincipal user, IEnumerable<Role> roles);
-        bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roleNames);
+        //bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roleNames);
         Task CreateUserAsync(string email);
         Task AddUserToRoleAsync(Guid id, string roleName);
         Task RemoveUserFromRoleAsync(Guid id, string roleName);
