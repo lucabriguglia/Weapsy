@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Weapsy.Data.Entities;
 
-namespace Weapsy.Data.Identity
+namespace Weapsy.Services.Identity
 {
     public interface IRoleService
     {

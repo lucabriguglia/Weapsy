@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Weapsy.Data.Entities;
-using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Data.Identity
 {
@@ -41,29 +38,6 @@ namespace Weapsy.Data.Identity
 
             return model;
         }
-
-        //public bool IsUserAuthorized(IPrincipal user, IEnumerable<string> roleNames)
-        //{
-        //    if (user == null || roleNames == null || !roleNames.Any())
-        //        return false;
-
-        //    foreach (var role in roleNames)
-        //    {
-        //        if (role == Everyone.Name)
-        //            return true;
-
-        //        if (role == Registered.Name && user.Identity.IsAuthenticated)
-        //            return true;
-
-        //        if (role == Anonymous.Name && !user.Identity.IsAuthenticated)
-        //            return true;
-
-        //        if (user.IsInRole(role))
-        //            return true;
-        //    }
-
-        //    return false;
-        //}
 
         public async Task CreateUserAsync(string email)
         {
