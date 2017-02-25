@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
 using Weapsy.Infrastructure.Caching;
@@ -10,11 +9,11 @@ using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Pages;
 using Language = Weapsy.Data.Entities.Language;
 using Menu = Weapsy.Data.Entities.Menu;
 using MenuItem = Weapsy.Data.Entities.MenuItem;
+using Weapsy.Reporting.Roles.Queries;
 
 namespace Weapsy.Data.Reporting.Menus
 {
@@ -22,13 +21,15 @@ namespace Weapsy.Data.Reporting.Menus
     {
         private readonly IDbContextFactory _contextFactory;
         private readonly ICacheManager _cacheManager;
-        private readonly IRoleService _roleService;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetViewModelHandler(IDbContextFactory contextFactory, ICacheManager cacheManager, IRoleService roleService)
+        public GetViewModelHandler(IDbContextFactory contextFactory, 
+            ICacheManager cacheManager, 
+            IQueryDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _cacheManager = cacheManager;
-            _roleService = roleService;
+            _queryDispatcher = queryDispatcher;
         }
 
         public async Task<MenuViewModel> RetrieveAsync(GetViewModel query)
@@ -53,7 +54,7 @@ namespace Weapsy.Data.Reporting.Menus
                     var menuModel = new MenuViewModel
                     {
                         Name = menu.Name,
-                        MenuItems = PopulateMenuItems(context, menu.MenuItems, Guid.Empty, language, addLanguageSlug)
+                        MenuItems = await PopulateMenuItems(context, menu.MenuItems, Guid.Empty, language, addLanguageSlug)
                     };
 
                     return menuModel;
@@ -61,7 +62,7 @@ namespace Weapsy.Data.Reporting.Menus
             });
         }
 
-        private List<MenuViewModel.MenuItem> PopulateMenuItems(WeapsyDbContext context, IEnumerable<MenuItem> source, Guid parentId, Language language, bool addLanguageSlug)
+        private async Task<List<MenuViewModel.MenuItem>> PopulateMenuItems(WeapsyDbContext context, IEnumerable<MenuItem> source, Guid parentId, Language language, bool addLanguageSlug)
         {
             var result = new List<MenuViewModel.MenuItem>();
 
@@ -121,17 +122,18 @@ namespace Weapsy.Data.Reporting.Menus
                     url = menuItem.Link;
                 }
 
-                var menuItemRoles = _roleService.GetRolesFromIds(menuItemRoleIds);
+                var menuItemRoleNames = await _queryDispatcher
+                    .DispatchAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = menuItemRoleIds });
 
                 var menuItemModel = new MenuViewModel.MenuItem
                 {
                     Text = text,
                     Title = title,
                     Url = url,
-                    ViewRoles = menuItemRoles.Select(x => x.Name)
+                    ViewRoles = menuItemRoleNames
                 };
 
-                menuItemModel.Children.AddRange(PopulateMenuItems(context, menuItems, menuItem.Id, language, addLanguageSlug));
+                menuItemModel.Children.AddRange(await PopulateMenuItems(context, menuItems, menuItem.Id, language, addLanguageSlug));
 
                 result.Add(menuItemModel);
             }

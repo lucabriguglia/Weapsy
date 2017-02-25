@@ -44,15 +44,4 @@ namespace Weapsy.Data
             return new WeapsyDbContext(builder.Options);
         }
     }
-
-    public class MigrationsApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
-    {
-        public ApplicationDbContext Create(DbContextFactoryOptions options)
-        {
-            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            builder.UseSqlServer("UsedForMigrationsOnlyUntilClassLibraryBugIsFixed");
-
-            return new ApplicationDbContext(builder.Options);
-        }
-    }
 }

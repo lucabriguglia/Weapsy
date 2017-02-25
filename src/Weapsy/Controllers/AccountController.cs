@@ -13,18 +13,20 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Domain.Users.Events;
 using System;
 using FluentValidation;
+using Weapsy.Data.Entities;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users;
 using Weapsy.Infrastructure.Events;
+using User = Weapsy.Data.Entities.User;
 
 namespace Weapsy.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
@@ -33,9 +35,9 @@ namespace Weapsy.Controllers
         private readonly IValidator<CreateUser> _validator;
 
         public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            RoleManager<IdentityRole> roleManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            RoleManager<Role> roleManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory,
@@ -122,28 +124,10 @@ namespace Weapsy.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //_eventPublisher.Publish(new UserRegistered
-                    //{
-                    //    AggregateRootId = new Guid(user.Id),
-                    //    Email = user.Email,
-                    //    UserName = user.UserName
-                    //});
-
-                    var command = new CreateUser
-                    {
-                        Id = new Guid(user.Id),
-                        Email = user.Email,
-                        UserName = user.UserName
-                    };
-
-                    var newUser = Weapsy.Domain.Users.User.CreateNew(command, _validator);
-
-                    _userRepository.Create(newUser);
-
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -242,7 +226,7 @@ namespace Weapsy.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -481,7 +465,7 @@ namespace Weapsy.Controllers
             }
         }
 
-        private Task<IdentityUser> GetCurrentUserAsync()
+        private Task<User> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
         }

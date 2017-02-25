@@ -28,7 +28,7 @@ weapsy.admin.userIndex = (function ($, ko) {
 
         self.loadUsers = function () {
             self.startIndex(self.pageIndex() * self.numberOfUsers());
-            $.getJSON("/api/user?startIndex=" + self.startIndex() + "&numberOfUsers=" + self.numberOfUsers(), function (data) {
+            $.getJSON("/api/user/admin-list?startIndex=" + self.startIndex() + "&numberOfUsers=" + self.numberOfUsers(), function (data) {
                 var mappedUsers = $.map(data.users, function (item) { return new User(item) });
                 self.users(mappedUsers);
                 self.totalRecords = data.totalRecords;

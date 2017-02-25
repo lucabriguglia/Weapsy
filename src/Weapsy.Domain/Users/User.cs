@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Collections.Generic;
+using FluentValidation;
 using Weapsy.Infrastructure.Domain;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users.Events;
@@ -9,7 +10,14 @@ namespace Weapsy.Domain.Users
     {
         public string Email { get; private set; }
         public string UserName { get; private set; }
+        public string Prefix { get; private set; }
+        public string FirstName { get; private set; }
+        public string MiddleName { get; private set; }
+        public string Surname { get; private set; }
         public UserStatus Status { get; private set; }
+
+        public IList<Address> Addresses { get; private set; } = new List<Address>();
+        public IList<ContactNumber> ContactNumbers { get; private set; } = new List<ContactNumber>();
 
         public User(){}
 

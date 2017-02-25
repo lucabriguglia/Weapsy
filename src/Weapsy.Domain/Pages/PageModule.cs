@@ -89,7 +89,7 @@ namespace Weapsy.Domain.Pages
                 PageModulePermissions.Add(new PageModulePermission
                 {
                     PageModuleId = Id,
-                    RoleId = ((int)DefaultRoles.Everyone).ToString(),
+                    RoleId = Everyone.Id,
                     Type = PermissionType.View
                 });
         }

@@ -8,6 +8,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using System.Collections.Generic;
+using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Domain.Tests.Pages
 {
@@ -61,13 +62,13 @@ namespace Weapsy.Domain.Tests.Pages
                 {
                     new PageModulePermission
                     {
-                        RoleId = "-1",
+                        RoleId = Everyone.Id,
                         Type = PermissionType.View
                     }
                 }
             };
             _validatorMock = new Mock<IValidator<UpdatePageModuleDetails>>();
-            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());            
+            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _page.UpdateModule(_command, _validatorMock.Object);
             _pageModule = _page.PageModules.FirstOrDefault(x => x.ModuleId == moduleId);
             _event = _page.Events.OfType<PageModuleDetailsUpdated>().SingleOrDefault();

@@ -1,13 +1,11 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Domain.Users;
 
 namespace Weapsy.Data.Entities
 {
-    public class User : IDbEntity
+    public class User : IdentityUser<Guid>, IDbEntity
     {
-        public Guid Id { get; set; }
-        public string Email { get; set; }
-        public string UserName { get; set; }
         public UserStatus Status { get; set; }
     }
 }

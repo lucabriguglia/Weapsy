@@ -4,25 +4,24 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Weapsy.Models;
 using Weapsy.Models.ManageViewModels;
 using Weapsy.Services;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Weapsy.Data.Entities;
 
 namespace Weapsy.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
 
         public ManageController(
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        UserManager<User> userManager,
+        SignInManager<User> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
         ILoggerFactory loggerFactory)
@@ -336,7 +335,7 @@ namespace Weapsy.Controllers
             Error
         }
 
-        private Task<IdentityUser> GetCurrentUserAsync()
+        private Task<User> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
         }

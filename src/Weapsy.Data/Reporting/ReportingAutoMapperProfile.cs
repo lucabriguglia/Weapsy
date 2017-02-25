@@ -6,6 +6,7 @@ using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Sites;
+using Weapsy.Reporting.Users;
 
 namespace Weapsy.Data.Reporting
 {
@@ -28,6 +29,8 @@ namespace Weapsy.Data.Reporting
             CreateMap<Site, SiteAdminModel>();
             CreateMap<SiteLocalisation, SiteLocalisationAdminModel>();
             CreateMap<Site, SiteInfo>();
+            CreateMap<User, UserAdminModel>();
+            CreateMap<User, UserInfo>();
         }
     }
 }

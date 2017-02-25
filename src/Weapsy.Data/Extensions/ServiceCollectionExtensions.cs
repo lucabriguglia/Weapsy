@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Data.Entities;
@@ -23,9 +22,9 @@ namespace Weapsy.Data.Extensions
 
             dataProvider.RegisterDbContext(services, connectionStringConfig);
 
-            //services.AddIdentity<User, IdentityRole>()
-            //    .AddEntityFrameworkStores<WeapsyDbContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<WeapsyDbContext, Guid>()
+                .AddDefaultTokenProviders();
 
             return services;
         }

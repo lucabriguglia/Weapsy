@@ -47,7 +47,7 @@ namespace Weapsy.Domain.Tests.Pages
                 {
                     new PagePermission
                     {
-                        RoleId = Guid.NewGuid().ToString(),
+                        RoleId = Guid.NewGuid(),
                         Type = PermissionType.View
                     }
                 },

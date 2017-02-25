@@ -7,19 +7,21 @@ using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Identity;
+using Weapsy.Reporting.Roles.Queries;
+using System.Collections.Generic;
+using Weapsy.Data.Entities;
 
 namespace Weapsy.Data.Reporting.Menus
 {
     public class GetItemForAdminHandler : IQueryHandlerAsync<GetItemForAdmin, MenuItemAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IRoleService _roleService;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetItemForAdminHandler(IDbContextFactory contextFactory, IRoleService roleService)
+        public GetItemForAdminHandler(IDbContextFactory contextFactory, IQueryDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
-            _roleService = roleService;
+            _queryDispatcher = queryDispatcher;
         }
 
         public async Task<MenuItemAdminModel> RetrieveAsync(GetItemForAdmin query)
@@ -78,17 +80,17 @@ namespace Weapsy.Data.Reporting.Menus
                     });
                 }
 
-                foreach (var role in _roleService.GetAllRoles())
+                foreach (var role in await _queryDispatcher.DispatchAsync<GetAllRoles, IEnumerable<Role>>(new GetAllRoles()))
                 {
                     bool selected = menuItem.MenuItemPermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
 
                     result.MenuItemPermissions.Add(new MenuItemAdminModel.MenuItemPermission
                     {
                         MenuItemId = menuItem.Id,
-                        RoleId = role.Id,
+                        RoleId = role.Id.ToString(),
                         RoleName = role.Name,
-                        Selected = selected || role.Name == DefaultRoleNames.Administrator,
-                        Disabled = role.Name == DefaultRoleNames.Administrator
+                        Selected = selected || role.Name == Administrator.Name,
+                        Disabled = role.Name == Administrator.Name
                     });
                 }
 

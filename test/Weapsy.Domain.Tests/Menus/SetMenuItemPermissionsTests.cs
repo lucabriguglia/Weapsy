@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Weapsy.Tests.Factories;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus.Events;
+using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Domain.Tests.Menus
 {
@@ -38,7 +39,7 @@ namespace Weapsy.Domain.Tests.Menus
                     new MenuItemPermission
                     {
                         MenuItemId = menuItemId,
-                        RoleId = "1"
+                        RoleId = Everyone.Id
                     }
                 }
             };

@@ -6,25 +6,25 @@ using Weapsy.Reporting.Pages;
 using Weapsy.Mvc.Context;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Pages;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Pages.Queries;
+using Weapsy.Services.Security;
 
 namespace Weapsy.Controllers
 {
     public class HomeController : BaseController
     {
         private readonly IQueryDispatcher _queryDispatcher;
-        private readonly IUserService _userService;
+        private readonly ISecurityService _securityService;
 
         public HomeController(IQueryDispatcher queryDispatcher,
-            IUserService userService,
+            ISecurityService securityService,
             IContextService contextService)
             : base(contextService)
         {
             _queryDispatcher = queryDispatcher;
-            _userService = userService;            
+            _securityService = securityService;            
         }
 
         public async Task<IActionResult> Index(Guid pageId, Guid languageId)
@@ -39,7 +39,7 @@ namespace Weapsy.Controllers
                 LanguageId = languageId
             });
 
-            if (pageInfo == null || !_userService.IsUserAuthorized(User, pageInfo.Page.Roles[PermissionType.View]))
+            if (pageInfo == null || !_securityService.IsUserAuthorized(User, pageInfo.Page.Roles[PermissionType.View]))
                 return NotFound();
 
             ViewBag.Title = pageInfo.Page.Title;

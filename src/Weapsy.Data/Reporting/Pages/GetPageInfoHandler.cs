@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
@@ -14,6 +13,7 @@ using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Pages.Queries;
 using Page = Weapsy.Data.Entities.Page;
 using PageModule = Weapsy.Data.Entities.PageModule;
+using Weapsy.Reporting.Roles.Queries;
 
 namespace Weapsy.Data.Reporting.Pages
 {
@@ -21,15 +21,15 @@ namespace Weapsy.Data.Reporting.Pages
     {
         private readonly IDbContextFactory _contextFactory;
         private readonly ICacheManager _cacheManager;
-        private readonly IRoleService _roleService;
+        private readonly IQueryDispatcher _queryDispatcher;
 
         public GetPageInfoHandler(IDbContextFactory contextFactory,
-            ICacheManager cacheManager, 
-            IRoleService roleService)
+            ICacheManager cacheManager,
+            IQueryDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _cacheManager = cacheManager;
-            _roleService = roleService;
+            _queryDispatcher = queryDispatcher;
         }
 
         public async Task<PageInfo> RetrieveAsync(GetPageInfo query)
@@ -47,8 +47,9 @@ namespace Weapsy.Data.Reporting.Pages
                     foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
                     {
                         var pageRoleIds = page.PagePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
-                        var pageRoles = _roleService.GetRolesFromIds(pageRoleIds);
-                        roles.Add(permisisonType, pageRoles.Select(x => x.Name));
+                        var pageRoleNames = await _queryDispatcher
+                            .DispatchAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = pageRoleIds });
+                        roles.Add(permisisonType, pageRoleNames);
                     }
 
                     var site = await context.Sites.FirstOrDefaultAsync(x => x.Id == query.SiteId && x.Status == SiteStatus.Active);
@@ -94,7 +95,7 @@ namespace Weapsy.Data.Reporting.Pages
                         {
                             ViewName = "Default"
                         },
-                        Zones = CreateZones(context, page, roles, query.LanguageId)
+                        Zones = await CreateZones(context, page, roles, query.LanguageId)
                     };
 
                     return result;
@@ -102,7 +103,7 @@ namespace Weapsy.Data.Reporting.Pages
             });
         }
 
-        private ICollection<ZoneModel> CreateZones(WeapsyDbContext context, Page page, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private async Task<ICollection<ZoneModel>> CreateZones(WeapsyDbContext context, Page page, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new List<ZoneModel>();
 
@@ -111,13 +112,13 @@ namespace Weapsy.Data.Reporting.Pages
             foreach (var zone in zones)
             {
                 var zoneModel = CreateZone(context, zone, roles, languageId);
-                result.Add(zoneModel);
+                result.Add(await zoneModel);
             }
 
             return result;
         }
 
-        private ZoneModel CreateZone(WeapsyDbContext context, IGrouping<string, PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private async Task<ZoneModel> CreateZone(WeapsyDbContext context, IGrouping<string, PageModule> zone, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var result = new ZoneModel
             {
@@ -126,7 +127,7 @@ namespace Weapsy.Data.Reporting.Pages
 
             foreach (var pageModule in zone.OrderBy(x => x.SortOrder))
             {
-                var moduleModel = CreateModule(context, pageModule, roles, languageId);
+                var moduleModel = await CreateModule(context, pageModule, roles, languageId);
 
                 if (moduleModel == null)
                     continue;
@@ -137,7 +138,7 @@ namespace Weapsy.Data.Reporting.Pages
             return result;
         }
 
-        private ModuleModel CreateModule(WeapsyDbContext context, PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
+        private async Task<ModuleModel> CreateModule(WeapsyDbContext context, PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
             var module = context.Modules.FirstOrDefault(x => x.Id == pageModule.ModuleId && x.Status != ModuleStatus.Deleted);
 
@@ -160,8 +161,9 @@ namespace Weapsy.Data.Reporting.Pages
                 foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
                 {
                     var pageRoleIds = pageModule.PageModulePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
-                    var pageRoles = _roleService.GetRolesFromIds(pageRoleIds);
-                    moduleRoles.Add(permisisonType, pageRoles.Select(x => x.Name));
+                    var pageRoles = await _queryDispatcher
+                            .DispatchAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = pageRoleIds });
+                    moduleRoles.Add(permisisonType, pageRoles);
                 }
             }
 

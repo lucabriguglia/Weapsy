@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Sites;
 using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Queries;
@@ -17,17 +16,17 @@ namespace Weapsy.Data.Reporting.Sites
         private readonly IDbContextFactory _contextFactory;
         private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
-        private readonly IRoleService _roleService;
+        private readonly IQueryDispatcher _queryDispatcher;
 
         public GetSiteInfoHandler(IDbContextFactory contextFactory, 
             IMapper mapper, 
             ICacheManager cacheManager, 
-            IRoleService roleService)
+            IQueryDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;
             _cacheManager = cacheManager;
-            _roleService = roleService;
+            _queryDispatcher = queryDispatcher;
         }
 
         public async Task<SiteInfo> RetrieveAsync(GetSiteInfo query)

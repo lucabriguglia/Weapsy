@@ -4,7 +4,6 @@ using Weapsy.Domain.Themes;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Themes.Queries;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace Weapsy.Data.Reporting.Themes

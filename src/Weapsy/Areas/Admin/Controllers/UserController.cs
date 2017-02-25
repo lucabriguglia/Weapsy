@@ -1,33 +1,32 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
-using Weapsy.Data.Identity;
+using Weapsy.Data.Entities;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
+using Weapsy.Infrastructure.Queries;
+using Weapsy.Reporting.Users.Queries;
+using Weapsy.Reporting.Users;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class UserController : BaseAdminController
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IUserService _userService;
-        private readonly IRoleService _roleService;
+        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public UserController(UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager,
-            IUserService userService,
-            IRoleService roleService,
+        public UserController(IQueryDispatcher queryDispatcher,
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             IContextService contextService)
             : base(contextService)
         {
+            _queryDispatcher = queryDispatcher;
             _userManager = userManager;
             _roleManager = roleManager;
-            _userService = userService;
-            _roleService = roleService;
         }
 
         public IActionResult Index()
@@ -35,14 +34,20 @@ namespace Weapsy.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View(new IdentityUser());
+            var model = await _queryDispatcher.DispatchAsync<GetDefaultUserAdminModel, UserAdminModel>(new GetDefaultUserAdminModel());
+            return View(model);
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _userManager.FindByIdAsync(id);
+            var query = new GetUserAdminModel
+            {
+                Id = id
+            };
+
+            var model = await _queryDispatcher.DispatchAsync<GetUserAdminModel, UserAdminModel>(query);
 
             if (model == null)
                 return NotFound();
@@ -50,9 +55,14 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Roles(string id)
+        public async Task<IActionResult> Roles(Guid id)
         {
-            var model = await _userService.GetUserRolesViewModelAsync(id);
+            var query = new GetUserRolesViewModel
+            {
+                Id = id
+            };
+
+            var model = await _queryDispatcher.DispatchAsync<GetUserRolesViewModel, UserRolesViewModel>(query);
 
             if (model == null)
                 return NotFound();

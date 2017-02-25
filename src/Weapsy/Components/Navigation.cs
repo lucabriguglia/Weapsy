@@ -2,12 +2,12 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Weapsy.Data.Identity;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
+using Weapsy.Services.Security;
 
 namespace Weapsy.Components
 {
@@ -16,16 +16,16 @@ namespace Weapsy.Components
     {
         private readonly IContextService _contextService;
         private readonly IQueryDispatcher _queryDispatcher;
-        private readonly IUserService _userService;
+        private readonly ISecurityService _securityService;
 
         public NavigationViewComponent(IContextService contextService,
             IQueryDispatcher queryDispatcher,
-            IUserService userService)
+            ISecurityService securityService)
             : base(contextService)
         {
             _contextService = contextService;
             _queryDispatcher = queryDispatcher;
-            _userService = userService;
+            _securityService = securityService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string name, string viewName = "Default")
@@ -40,7 +40,7 @@ namespace Weapsy.Components
             var menuItemsToRemove = new List<MenuViewModel.MenuItem>();
 
             foreach (var menuItemViewModel in viewModel.MenuItems)
-                if (!_userService.IsUserAuthorized(User, menuItemViewModel.ViewRoles))
+                if (!_securityService.IsUserAuthorized(User, menuItemViewModel.ViewRoles))
                     menuItemsToRemove.Add(menuItemViewModel);
 
             if (menuItemsToRemove.Any())

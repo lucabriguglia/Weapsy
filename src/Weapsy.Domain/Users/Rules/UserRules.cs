@@ -11,17 +11,6 @@ namespace Weapsy.Domain.Users.Rules
             _userRepository = userRepository;
         }
 
-        public bool DoesUserExist(Guid id)
-        {
-            var user = _userRepository.GetById(id);
-            return user != null && user.Status != UserStatus.Deleted;
-        }
-
-        public bool IsUserIdUnique(Guid id)
-        {
-            return _userRepository.GetById(id) == null;
-        }
-
         public bool IsUserNameUnique(string name, Guid userId = new Guid())
         {
             var user = _userRepository.GetByUserName(name);

@@ -1,62 +1,47 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Weapsy.Data.Identity;
+using Weapsy.Data.Entities;
+using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
+using Weapsy.Reporting.Users;
+using Weapsy.Reporting.Users.Queries;
 
 namespace Weapsy.Api
 {
     [Route("api/[controller]")]
     public class UserController : BaseAdminController
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IUserService _userService;
-        private readonly IRoleService _roleService;
+        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly UserManager<User> _userManager;
 
-        public UserController(UserManager<IdentityUser> userManager,
-            IUserService userService,
-            IRoleService roleService,
+        public UserController(IQueryDispatcher queryDispatcher,
+            UserManager<User> userManager,
             IContextService contextService)
             : base(contextService)
         {
+            _queryDispatcher = queryDispatcher;
             _userManager = userManager;
-            _userService = userService;
-            _roleService = roleService;
         }
 
         [HttpGet]
-        public IActionResult Get(int startIndex, int numberOfUsers)
+        public IActionResult Get()
         {
-            var query = new UsersQuery
-            {
-                StartIndex = startIndex,
-                NumberOfUsers = numberOfUsers
-            };
-
-            var model = _userService.GetUsersViewModel(query);
-
-            return Ok(model);
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        public IActionResult Get(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-
-            if (user == null)
-                return NotFound();
-
-            return Ok(user);
+            throw new NotImplementedException();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(string email)
+        public IActionResult Post(string email)
         {
-            await _userService.CreateUserAsync(email);
-            return new NoContentResult();
+            throw new NotImplementedException();
         }
 
         [HttpPut]
@@ -68,25 +53,22 @@ namespace Weapsy.Api
 
         [HttpPut]
         [Route("{id}/add-to-role")]
-        public async Task<IActionResult> AddToRole(string id, [FromBody]string roleName)
+        public IActionResult AddToRole(Guid id, [FromBody]string roleName)
         {
-            await _userService.AddUserToRoleAsync(id, roleName);
-            return new NoContentResult();
+            throw new NotImplementedException();
         }
 
         [HttpPut]
         [Route("{id}/remove-from-role")]
-        public async Task<IActionResult> RemoveFromRole(string id, [FromBody]string roleName)
+        public IActionResult RemoveFromRole(Guid id, [FromBody]string roleName)
         {
-            await _userService.RemoveUserFromRoleAsync(id, roleName);
-            return new NoContentResult();
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        public IActionResult Delete(Guid id)
         {
-            await _userService.DeleteUserAsync(id);
-            return new NoContentResult();
+            throw new NotImplementedException();
         }
 
         [HttpGet("{email}")]
@@ -95,6 +77,38 @@ namespace Weapsy.Api
         {
             var isEmailUnique = await _userManager.FindByEmailAsync(email) == null;
             return Ok(isEmailUnique);
+        }
+
+        [HttpGet]
+        [Route("admin-list")]
+        public async Task<IActionResult> AdminList(int startIndex, int numberOfUsers)
+        {
+            var query = new GetUsersAdminViewModel
+            {
+                StartIndex = startIndex,
+                NumberOfUsers = numberOfUsers
+            };
+
+            var model = await _queryDispatcher.DispatchAsync<GetUsersAdminViewModel, UsersAdminViewModel>(query);
+
+            return Ok(model);
+        }
+
+        [HttpGet]
+        [Route("{id}/admin-edit")]
+        public async Task<IActionResult> AdminEdit(Guid id)
+        {
+            var query = new GetUserAdminModel
+            {
+                Id = id
+            };
+
+            var model = await _queryDispatcher.DispatchAsync<GetUserAdminModel, UserAdminModel>(query);
+
+            if (model == null)
+                return NotFound();
+
+            return Ok(model);
         }
     }
 }

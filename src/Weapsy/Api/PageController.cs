@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Identity;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -21,18 +21,15 @@ namespace Weapsy.Api
         private readonly ICommandSender _commandSender;
         private readonly IQueryDispatcher _queryDispatcher;      
         private readonly IPageRules _pageRules;
-        private readonly IRoleService _roleService;
 
         public PageController(ICommandSender commandSender,
             IQueryDispatcher queryDispatcher,           
             IPageRules pageRules,
-            IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
             _commandSender = commandSender;
             _pageRules = pageRules;
-            _roleService = roleService;
             _queryDispatcher = queryDispatcher;
         }
 
@@ -70,8 +67,8 @@ namespace Weapsy.Api
         public async Task<IActionResult> AddModule([FromBody] AddModule model)
         {
             model.SiteId = SiteId;
-            var defaultViewRoleIds = await _roleService.GetDefaultModuleViewPermissionRoleIdsAsync();
-            var defaultEditRoleIds = await _roleService.GetDefaultModuleEditPermissionRoleIdsAsync();
+            var defaultViewRoleIds = new List<Guid> { Administrator.Id };
+            var defaultEditRoleIds = new List<Guid> { Administrator.Id };
             model.SetPageModulePermissions(defaultViewRoleIds, defaultEditRoleIds);
             await Task.Run(() => _commandSender.Send<AddModule, Page>(model));
             return new NoContentResult();

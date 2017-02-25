@@ -1,26 +1,24 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using System.Linq;
-using Weapsy.Data.Identity;
+using Weapsy.Data.Entities;
+using System.Text;
 
 namespace Weapsy.Api
 {
     [Route("api/[controller]")]
     public class RoleController : BaseAdminController
     {
-        private readonly IRoleService _roleService;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public RoleController(IRoleService roleService,
-            RoleManager<IdentityRole> roleManager,
+        public RoleController(RoleManager<Role> roleManager,
             IContextService contextService)
             : base(contextService)
         {
-            _roleService = roleService;
             _roleManager = roleManager;
         }
 
@@ -40,8 +38,10 @@ namespace Weapsy.Api
         public async Task<IActionResult> Get(string id)
         {
             var role = await _roleManager.FindByIdAsync(id);
+
             if (role == null)
                 return NotFound();
+
             return Ok(role);
         }
 
@@ -50,30 +50,56 @@ namespace Weapsy.Api
         public async Task<IActionResult> GetByName(string name)
         {
             var role = await _roleManager.FindByNameAsync(name);
+
             if (role == null)
                 return NotFound();
+
             return Ok(role);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]IdentityRole model)
+        public async Task<IActionResult> Post([FromBody]Role role)
         {
-            await _roleService.CreateRoleAsync(model.Name);
+            var result = await _roleManager.CreateAsync(role);
+
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
+
             return new NoContentResult();
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody]IdentityRole model)
+        public async Task<IActionResult> Put([FromBody]Role model)
         {
-            await _roleService.UpdateRoleNameAsync(model.Id, model.Name);
+            var role = await _roleManager.FindByIdAsync(model.Id.ToString());
+
+            if (role == null)
+                throw new Exception("Role not found.");
+
+            role.Name = model.Name;
+
+            var result = await _roleManager.UpdateAsync(role);
+
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
+
             return new NoContentResult();
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            await _roleService.DeleteRoleAsync(id);
+            var role = await _roleManager.FindByIdAsync(id.ToString());
+
+            if (role == null)
+                throw new Exception("Role not found.");
+
+            var result = await _roleManager.DeleteAsync(role);
+
+            if (!result.Succeeded)
+                throw new Exception(GetErrorMessage(result));
+
             return new NoContentResult();
         }
 
@@ -83,6 +109,16 @@ namespace Weapsy.Api
         {
             var isNameUnique = await _roleManager.FindByNameAsync(name) == null;
             return Ok(isNameUnique);
+        }
+
+        private string GetErrorMessage(IdentityResult result)
+        {
+            var builder = new StringBuilder();
+
+            foreach (var error in result.Errors)
+                builder.AppendLine(error.Description);
+
+            return builder.ToString();
         }
     }
 }

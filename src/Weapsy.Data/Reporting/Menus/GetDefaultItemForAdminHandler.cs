@@ -7,19 +7,21 @@ using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Identity;
+using Weapsy.Reporting.Roles.Queries;
+using System.Collections.Generic;
+using Weapsy.Data.Entities;
 
 namespace Weapsy.Data.Reporting.Menus
 {
     public class GetDefaultItemForAdminHandler : IQueryHandlerAsync<GetDefaultItemForAdmin, MenuItemAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IRoleService _roleService;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetDefaultItemForAdminHandler(IDbContextFactory contextFactory, IRoleService roleService)
+        public GetDefaultItemForAdminHandler(IDbContextFactory contextFactory, IQueryDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
-            _roleService = roleService;
+            _queryDispatcher = queryDispatcher;
         }
 
         public async Task<MenuItemAdminModel> RetrieveAsync(GetDefaultItemForAdmin query)
@@ -50,14 +52,14 @@ namespace Weapsy.Data.Reporting.Menus
                     });
                 }
 
-                foreach (var role in _roleService.GetAllRoles())
+                foreach (var role in await _queryDispatcher.DispatchAsync<GetAllRoles, IEnumerable<Role>>(new GetAllRoles()))
                 {
                     result.MenuItemPermissions.Add(new MenuItemAdminModel.MenuItemPermission
                     {
-                        RoleId = role.Id,
+                        RoleId = role.Id.ToString(),
                         RoleName = role.Name,
-                        Selected = role.Name == DefaultRoleNames.Administrator,
-                        Disabled = role.Name == DefaultRoleNames.Administrator
+                        Selected = role.Name == Administrator.Name,
+                        Disabled = role.Name == Administrator.Name
                     });
                 }
 
