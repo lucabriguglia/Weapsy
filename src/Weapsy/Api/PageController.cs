@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Weapsy.Data.Identity;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
@@ -22,18 +21,15 @@ namespace Weapsy.Api
         private readonly ICommandSender _commandSender;
         private readonly IQueryDispatcher _queryDispatcher;      
         private readonly IPageRules _pageRules;
-        private readonly IRoleService _roleService;
 
         public PageController(ICommandSender commandSender,
             IQueryDispatcher queryDispatcher,           
             IPageRules pageRules,
-            IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
             _commandSender = commandSender;
             _pageRules = pageRules;
-            _roleService = roleService;
             _queryDispatcher = queryDispatcher;
         }
 

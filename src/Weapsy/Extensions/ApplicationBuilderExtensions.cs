@@ -4,11 +4,6 @@ using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Weapsy.Reporting.Languages;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Weapsy.Data;
-using Weapsy.Data.Identity;
 
 namespace Weapsy.Extensions
 {

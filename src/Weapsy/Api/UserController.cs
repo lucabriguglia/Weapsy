@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using Weapsy.Data.Entities;
-using Weapsy.Data.Identity;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -17,17 +16,14 @@ namespace Weapsy.Api
     {
         private readonly IQueryDispatcher _queryDispatcher;
         private readonly UserManager<User> _userManager;
-        private readonly IRoleService _roleService;
 
         public UserController(IQueryDispatcher queryDispatcher,
             UserManager<User> userManager,
-            IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
             _queryDispatcher = queryDispatcher;
             _userManager = userManager;
-            _roleService = roleService;
         }
 
         [HttpGet]

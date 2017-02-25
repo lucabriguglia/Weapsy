@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Weapsy.Data.Entities;
-using Weapsy.Data.Identity;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Infrastructure.Queries;
@@ -18,19 +17,16 @@ namespace Weapsy.Areas.Admin.Controllers
         private readonly IQueryDispatcher _queryDispatcher;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
-        private readonly IRoleService _roleService;
 
         public UserController(IQueryDispatcher queryDispatcher,
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
-            IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
             _queryDispatcher = queryDispatcher;
             _userManager = userManager;
             _roleManager = roleManager;
-            _roleService = roleService;
         }
 
         public IActionResult Index()

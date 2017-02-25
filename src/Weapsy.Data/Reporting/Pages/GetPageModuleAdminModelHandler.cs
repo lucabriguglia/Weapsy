@@ -8,19 +8,21 @@ using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Pages.Queries;
 using System.Linq;
-using Weapsy.Data.Identity;
+using Weapsy.Reporting.Roles.Queries;
+using System.Collections.Generic;
+using Weapsy.Data.Entities;
 
 namespace Weapsy.Data.Reporting.Pages
 {
     public class GetPageModuleAdminModelHandler : IQueryHandlerAsync<GetPageModuleAdminModel, PageModuleAdminModel>
     {
         private readonly IDbContextFactory _contextFactory;
-        private readonly IRoleService _roleService;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetPageModuleAdminModelHandler(IDbContextFactory contextFactory, IRoleService roleService)
+        public GetPageModuleAdminModelHandler(IDbContextFactory contextFactory, IQueryDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
-            _roleService = roleService;
+            _queryDispatcher = queryDispatcher;
         }
 
         public async Task<PageModuleAdminModel> RetrieveAsync(GetPageModuleAdminModel query)
@@ -74,7 +76,7 @@ namespace Weapsy.Data.Reporting.Pages
                     });
                 }
 
-                foreach (var role in _roleService.GetAllRoles())
+                foreach (var role in await _queryDispatcher.DispatchAsync<GetAllRoles, IEnumerable<Role>>(new GetAllRoles()))
                 {
                     var pageModulePermission = new PageModulePermissionModel
                     {

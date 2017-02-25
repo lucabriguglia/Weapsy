@@ -2,7 +2,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Weapsy.Data.Identity;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
