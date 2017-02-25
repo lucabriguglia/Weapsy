@@ -12,24 +12,6 @@ namespace Weapsy.Domain.Tests.Users.Validators
     public class CreateUserValidatorTests
     {
         [Test]
-        public void Should_have_error_when_user_id_already_exists()
-        {
-            var command = new CreateUser
-            {
-                Id = Guid.NewGuid(),
-                Email = "my@email.com",
-                UserName = "my"
-            };
-
-            var userRules = new Mock<IUserRules>();
-            userRules.Setup(x => x.IsUserIdUnique(command.Id)).Returns(false);
-
-            var validator = new CreateUserValidator(userRules.Object);
-
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
-        }
-
-        [Test]
         public void Should_have_error_when_user_email_is_empty()
         {
             var command = new CreateUser

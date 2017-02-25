@@ -1,5 +1,4 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users.Rules;
 
@@ -13,10 +12,6 @@ namespace Weapsy.Domain.Users.Validator
         {
             _userRules = userRules;
 
-            RuleFor(c => c.Id)
-                .Must(HaveUniqueId).WithMessage("A user with the same id already exists.")
-                .When(x => x.Id != Guid.Empty);
-
             RuleFor(c => c.Email)
                 .NotEmpty().WithMessage("Email is required.")
                 .EmailAddress().WithMessage("Email not valid.")
@@ -27,11 +22,6 @@ namespace Weapsy.Domain.Users.Validator
                 .NotEmpty().WithMessage("UserName is required.")
                 .Length(1, 250).WithMessage("UserName maximum length is 250 characters.")
                 .Must(HaveUniqueUserName).WithMessage("UserName already exists.");
-        }
-
-        private bool HaveUniqueId(Guid id)
-        {
-            return _userRules.IsUserIdUnique(id);
         }
 
         private bool HaveUniqueEmail(string email)

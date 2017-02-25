@@ -10,66 +10,6 @@ namespace Weapsy.Domain.Tests.Users.Rules
     public class UserRulesTests
     {
         [Test]
-        public void Should_return_false_if_user_does_not_exists()
-        {
-            var id = Guid.NewGuid();
-
-            var repositoryMock = new Mock<IUserRepository>();
-            repositoryMock.Setup(x => x.GetById(id)).Returns((User)null);
-
-            var sut = new UserRules(repositoryMock.Object);
-
-            var actual = sut.DoesUserExist(id);
-
-            Assert.AreEqual(false, actual);
-        }
-
-        [Test]
-        public void Should_return_true_if_user_exists()
-        {
-            var id = Guid.NewGuid();
-
-            var repositoryMock = new Mock<IUserRepository>();
-            repositoryMock.Setup(x => x.GetById(id)).Returns(new User());
-
-            var sut = new UserRules(repositoryMock.Object);
-
-            var actual = sut.DoesUserExist(id);
-
-            Assert.AreEqual(true, actual);
-        }
-
-        [Test]
-        public void Should_return_false_if_user_id_is_not_unique()
-        {
-            var id = Guid.NewGuid();
-
-            var repositoryMock = new Mock<IUserRepository>();
-            repositoryMock.Setup(x => x.GetById(id)).Returns(new User());
-
-            var sut = new UserRules(repositoryMock.Object);
-
-            var actual = sut.IsUserIdUnique(id);
-
-            Assert.AreEqual(false, actual);
-        }
-
-        [Test]
-        public void Should_return_true_if_user_id_is_unique()
-        {
-            var id = Guid.NewGuid();
-
-            var repositoryMock = new Mock<IUserRepository>();
-            repositoryMock.Setup(x => x.GetById(id)).Returns((User)null);
-
-            var sut = new UserRules(repositoryMock.Object);
-
-            var actual = sut.IsUserIdUnique(id);
-
-            Assert.AreEqual(true, actual);
-        }
-
-        [Test]
         public void Should_return_false_if_user_name_is_not_unique()
         {
             var userName = "MyUser";

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Weapsy.Data.Entities;
 using Weapsy.Infrastructure.Identity;
@@ -19,16 +17,6 @@ namespace Weapsy.Data.Identity
         {
             _userManager = userManager;
             _roleManager = roleManager;
-        }
-
-        private string GetErrorMessage(IdentityResult result)
-        {
-            var builder = new StringBuilder();
-
-            foreach (var error in result.Errors)
-                builder.AppendLine(error.Description);
-
-            return builder.ToString();
         }
 
         public IList<Role> GetAllRoles()

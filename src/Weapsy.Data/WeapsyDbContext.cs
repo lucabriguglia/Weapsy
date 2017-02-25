@@ -16,11 +16,6 @@ namespace Weapsy.Data
         {
             base.OnModelCreating(builder);
 
-            //foreach (var relationship in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            //{
-            //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            //}
-
             builder.Entity<App>()
                 .ToTable("App");
 
@@ -94,6 +89,21 @@ namespace Weapsy.Data
 
             builder.Entity<User>()
                 .ToTable("User");
+
+            builder.Entity<IdentityUserClaim<Guid>>()
+                .ToTable("UserClaim");
+
+            builder.Entity<IdentityUserRole<Guid>>()
+                .ToTable("UserRole");
+
+            builder.Entity<IdentityUserLogin<Guid>>()
+                .ToTable("UserLogin");
+
+            builder.Entity<IdentityUserToken<Guid>>()
+                .ToTable("UserToken");
+
+            builder.Entity<IdentityRoleClaim<Guid>>()
+                .ToTable("RoleClaim");
         }
 
         public DbSet<App> Apps { get; set; }
@@ -116,6 +126,5 @@ namespace Weapsy.Data
         public DbSet<Site> Sites { get; set; }
         public DbSet<SiteLocalisation> SiteLocalisations { get; set; }
         public DbSet<Theme> Themes { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Users
@@ -8,7 +9,9 @@ namespace Weapsy.Domain.Users
         User GetById(Guid id);
         User GetByEmail(string email);
         User GetByUserName(string userName);
-        void Create(User user);
-        void Update(User user);
+        Task CreateAsync(User user);
+        Task UpdateAsync(User user);
+        Task AddToRoleAsync(Guid id, string roleName);
+        Task RemoveFromRoleAsync(Guid id, string roleName);
     }
 }

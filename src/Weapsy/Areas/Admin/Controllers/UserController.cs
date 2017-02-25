@@ -18,13 +18,11 @@ namespace Weapsy.Areas.Admin.Controllers
         private readonly IQueryDispatcher _queryDispatcher;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
-        private readonly IUserService _userService;
         private readonly IRoleService _roleService;
 
         public UserController(IQueryDispatcher queryDispatcher,
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
-            IUserService userService,
             IRoleService roleService,
             IContextService contextService)
             : base(contextService)
@@ -32,7 +30,6 @@ namespace Weapsy.Areas.Admin.Controllers
             _queryDispatcher = queryDispatcher;
             _userManager = userManager;
             _roleManager = roleManager;
-            _userService = userService;
             _roleService = roleService;
         }
 

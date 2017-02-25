@@ -30,11 +30,11 @@ namespace Weapsy.Domain.Tests.Users.Handlers
 
             var createUserHandler = new CreateUserHandler(userRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<Exception>(() => createUserHandler.Handle(command));
+            Assert.Throws<Exception>(async () => await createUserHandler.HandleAsync(command));
         }
 
         [Test]
-        public void Should_validate_command_and_save_new_user()
+        public async void Should_validate_command_and_save_new_user()
         {
             var command = new CreateUser
             {
@@ -44,16 +44,16 @@ namespace Weapsy.Domain.Tests.Users.Handlers
             };
 
             var userRepositoryMock = new Mock<IUserRepository>();
-            userRepositoryMock.Setup(x => x.Create(It.IsAny<User>()));
+            userRepositoryMock.Setup(x => x.CreateAsync(It.IsAny<User>()));
 
             var validatorMock = new Mock<IValidator<CreateUser>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createUserHandler = new CreateUserHandler(userRepositoryMock.Object, validatorMock.Object);
-            createUserHandler.Handle(command);
+            await createUserHandler.HandleAsync(command);
 
             validatorMock.Verify(x => x.Validate(command));
-            userRepositoryMock.Verify(x => x.Create(It.IsAny<User>()));
+            userRepositoryMock.Verify(x => x.CreateAsync(It.IsAny<User>()));
         }
     }
 }

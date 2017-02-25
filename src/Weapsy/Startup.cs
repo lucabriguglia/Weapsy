@@ -2,9 +2,7 @@
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -15,10 +13,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.CodeAnalysis;
-using Weapsy.Data;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.ViewEngine;
-using Weapsy.Reporting.Pages;
 using Weapsy.Services;
 using Weapsy.Infrastructure.Configuration;
 using Weapsy.Reporting.Languages;
@@ -129,11 +125,11 @@ namespace Weapsy
             IHostingEnvironment hostingEnvironment,
             ILoggerFactory loggerFactory,
             ISiteInstallationService siteInstallationService,
-            IMembershipInstallationService membershipInstallationService,
             ISiteRepository siteRepository,
             IQueryDispatcher queryDispatcher)
         {
             app.EnsureDbCreated();
+            app.EnsureIdentityCreated();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -183,7 +179,6 @@ namespace Weapsy
 
             app.UseIdentity();
 
-            membershipInstallationService.EnsureIdentityInstalled();
             siteInstallationService.VerifySiteInstallation();
 
             var site = siteRepository.GetByName("Default");

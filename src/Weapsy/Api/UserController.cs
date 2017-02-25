@@ -17,19 +17,16 @@ namespace Weapsy.Api
     {
         private readonly IQueryDispatcher _queryDispatcher;
         private readonly UserManager<User> _userManager;
-        private readonly IUserService _userService;
         private readonly IRoleService _roleService;
 
         public UserController(IQueryDispatcher queryDispatcher,
             UserManager<User> userManager,
-            IUserService userService,
             IRoleService roleService,
             IContextService contextService)
             : base(contextService)
         {
             _queryDispatcher = queryDispatcher;
             _userManager = userManager;
-            _userService = userService;
             _roleService = roleService;
         }
 
@@ -46,10 +43,9 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(string email)
+        public IActionResult Post(string email)
         {
-            await _userService.CreateUserAsync(email);
-            return new NoContentResult();
+            throw new NotImplementedException();
         }
 
         [HttpPut]
@@ -61,25 +57,22 @@ namespace Weapsy.Api
 
         [HttpPut]
         [Route("{id}/add-to-role")]
-        public async Task<IActionResult> AddToRole(Guid id, [FromBody]string roleName)
+        public IActionResult AddToRole(Guid id, [FromBody]string roleName)
         {
-            await _userService.AddUserToRoleAsync(id, roleName);
-            return new NoContentResult();
+            throw new NotImplementedException();
         }
 
         [HttpPut]
         [Route("{id}/remove-from-role")]
-        public async Task<IActionResult> RemoveFromRole(Guid id, [FromBody]string roleName)
+        public IActionResult RemoveFromRole(Guid id, [FromBody]string roleName)
         {
-            await _userService.RemoveUserFromRoleAsync(id, roleName);
-            return new NoContentResult();
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
-            await _userService.DeleteUserAsync(id);
-            return new NoContentResult();
+            throw new NotImplementedException();
         }
 
         [HttpGet("{email}")]
