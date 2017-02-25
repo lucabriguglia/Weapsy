@@ -34,28 +34,15 @@ namespace Weapsy.Api
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int startIndex, int numberOfUsers)
+        public IActionResult Get()
         {
-            var query = new GetUsersAdminViewModel
-            {
-                StartIndex = startIndex,
-                NumberOfUsers = numberOfUsers
-            };
-
-            var model = await _queryDispatcher.DispatchAsync<GetUsersAdminViewModel, UsersAdminViewModel>(query);
-
-            return Ok(model);
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(string id)
+        public IActionResult Get(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-
-            if (user == null)
-                return NotFound();
-
-            return Ok(user);
+            throw new NotImplementedException();
         }
 
         [HttpPost]
@@ -101,6 +88,38 @@ namespace Weapsy.Api
         {
             var isEmailUnique = await _userManager.FindByEmailAsync(email) == null;
             return Ok(isEmailUnique);
+        }
+
+        [HttpGet]
+        [Route("admin-list")]
+        public async Task<IActionResult> AdminList(int startIndex, int numberOfUsers)
+        {
+            var query = new GetUsersAdminViewModel
+            {
+                StartIndex = startIndex,
+                NumberOfUsers = numberOfUsers
+            };
+
+            var model = await _queryDispatcher.DispatchAsync<GetUsersAdminViewModel, UsersAdminViewModel>(query);
+
+            return Ok(model);
+        }
+
+        [HttpGet]
+        [Route("{id}/admin-edit")]
+        public async Task<IActionResult> AdminEdit(Guid id)
+        {
+            var query = new GetUserAdminModel
+            {
+                Id = id
+            };
+
+            var model = await _queryDispatcher.DispatchAsync<GetUserAdminModel, UserAdminModel>(query);
+
+            if (model == null)
+                return NotFound();
+
+            return Ok(model);
         }
     }
 }

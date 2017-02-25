@@ -21,26 +21,6 @@ namespace Weapsy.Data.Identity
             _roleManager = roleManager;
         }
 
-        public async Task<UserRolesViewModel> GetUserRolesViewModel(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-
-            if (user == null)
-                return null;
-
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var availableRoles = _roleManager.Roles.Where(x => !userRoles.Contains(x.Name)).ToList();
-
-            var model = new UserRolesViewModel
-            {
-                User = user,
-                AvailableRoles = availableRoles.OrderBy(x => x.Name).ToList(),
-                UserRoles = userRoles.OrderBy(x => x).ToList()
-            };
-
-            return model;
-        }
-
         private string GetErrorMessage(IdentityResult result)
         {
             var builder = new StringBuilder();
