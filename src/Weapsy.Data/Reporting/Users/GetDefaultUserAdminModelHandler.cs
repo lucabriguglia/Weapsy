@@ -3,6 +3,8 @@ using Weapsy.Infrastructure.Queries;
 using System.Threading.Tasks;
 using Weapsy.Reporting.Users.Queries;
 using Weapsy.Reporting.Users;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Weapsy.Data.Reporting.Users
 {
@@ -19,7 +21,16 @@ namespace Weapsy.Data.Reporting.Users
 
         public async Task<UserAdminModel> RetrieveAsync(GetDefaultUserAdminModel query)
         {
-            return new UserAdminModel();
+            using (var context = _contextFactory.Create())
+            {
+                var model = new UserAdminModel
+                {
+                    AllRoles = await context.Roles.Select(x => x.Name).ToListAsync()
+                };
+
+                return model;
+            }
+
         }
     }
 }

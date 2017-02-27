@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Weapsy.Reporting.Users
 {
@@ -12,5 +13,8 @@ namespace Weapsy.Reporting.Users
         public string FirstName { get; set; }
         public string MiddleNames { get; set; }
         public string Surname { get; set; }
+
+        public IEnumerable<string> AllRoles { get; set; } = new List<string>();
+        public IEnumerable<string> UserRoles { get; set; } = new List<string>();
     }
 }
