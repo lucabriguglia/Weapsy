@@ -20,7 +20,7 @@ namespace Weapsy.Infrastructure.Caching
 
         public async Task<T> GetAsync<T>(string key)
         {
-            return await Task.Run(() => (T)_memoryCache.Get(key));
+            throw new NotImplementedException();
         }
 
         public void Set(string key, object data, int cacheTime)
@@ -48,7 +48,7 @@ namespace Weapsy.Infrastructure.Caching
 
         public async Task RemoveAsync(string key)
         {
-            await Task.Run(() => _memoryCache.Remove(key));
+            throw new NotImplementedException();
         }
 
         public void RemoveByPattern(string pattern)

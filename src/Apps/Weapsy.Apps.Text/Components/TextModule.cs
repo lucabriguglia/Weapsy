@@ -36,13 +36,13 @@ namespace Weapsy.Apps.Text.Components
             {
                 var defaultContent = "Your content here...";
 
-                await Task.Run(() => _commandSender.Send<CreateTextModule, TextModule>(new CreateTextModule
+                _commandSender.Send<CreateTextModule, TextModule>(new CreateTextModule
                 {
                     SiteId = SiteId,
                     Id = Guid.NewGuid(),
                     ModuleId = model.Id,
                     Content = defaultContent
-                }));
+                });
 
                 content = defaultContent;
             }

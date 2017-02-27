@@ -51,14 +51,14 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Save(PageAdminModel model)
+        public IActionResult Save(PageAdminModel model)
         {
             var command = _mapper.Map<CreatePage>(model);
             command.SiteId = SiteId;
             command.Id = Guid.NewGuid();
             command.PagePermissions = model.PagePermissions.ToDomain();
             command.MenuIds = model.Menus.ToCommand();
-            await Task.Run(() => _commandSender.Send<CreatePage, Page>(command));
+            _commandSender.Send<CreatePage, Page>(command);
             return new NoContentResult();
         }
 
@@ -76,12 +76,12 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Update(PageAdminModel model)
+        public IActionResult Update(PageAdminModel model)
         {
             var command = _mapper.Map<UpdatePageDetails>(model);
             command.SiteId = SiteId;
             command.PagePermissions = model.PagePermissions.ToDomain();
-            await Task.Run(() => _commandSender.Send<UpdatePageDetails, Page>(command));
+            _commandSender.Send<UpdatePageDetails, Page>(command);
             return new NoContentResult();
         }
 
@@ -100,12 +100,12 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> UpdateModule(PageModuleAdminModel model)
+        public IActionResult UpdateModule(PageModuleAdminModel model)
         {
             var command = _mapper.Map<UpdatePageModuleDetails>(model);
             command.SiteId = SiteId;
             command.PageModulePermissions = model.PageModulePermissions.ToDomain();
-            await Task.Run(() => _commandSender.Send<UpdatePageModuleDetails, Page>(command));
+            _commandSender.Send<UpdatePageModuleDetails, Page>(command);
             return new NoContentResult();
         }
     }

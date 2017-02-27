@@ -26,28 +26,28 @@ namespace Weapsy.Apps.Text.Api
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public IActionResult Get(Guid id)
         {
-            var text = await Task.Run(() => _textFacade.GetContent(id));
+            var text = _textFacade.GetContent(id);
             if (text == null) return NotFound();
             return Ok(text);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateTextModule model)
+        public IActionResult Post([FromBody] CreateTextModule model)
         {
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
-            await Task.Run(() => _commandSender.Send<CreateTextModule, TextModule>(model));
+            _commandSender.Send<CreateTextModule, TextModule>(model);
             return Ok(string.Empty);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] AddVersion model)
+        public IActionResult Put([FromBody] AddVersion model)
         {
             model.SiteId = SiteId;
             model.VersionId = Guid.NewGuid();
-            await Task.Run(() => _commandSender.Send<AddVersion, TextModule>(model));
+            _commandSender.Send<AddVersion, TextModule>(model);
             return Ok(string.Empty);
         }
     }

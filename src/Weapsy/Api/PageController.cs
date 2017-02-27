@@ -64,13 +64,13 @@ namespace Weapsy.Api
 
         [HttpPut]
         [Route("{id}/add-module")]
-        public async Task<IActionResult> AddModule([FromBody] AddModule model)
+        public IActionResult AddModule([FromBody] AddModule model)
         {
             model.SiteId = SiteId;
             var defaultViewRoleIds = new List<Guid> { Administrator.Id };
             var defaultEditRoleIds = new List<Guid> { Administrator.Id };
             model.SetPageModulePermissions(defaultViewRoleIds, defaultEditRoleIds);
-            await Task.Run(() => _commandSender.Send<AddModule, Page>(model));
+            _commandSender.Send<AddModule, Page>(model);
             return new NoContentResult();
         }
 

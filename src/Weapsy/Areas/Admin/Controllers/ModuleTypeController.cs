@@ -40,10 +40,10 @@ namespace Weapsy.Areas.Admin.Controllers
             return Ok(model);
         }
 
-        public async Task<IActionResult> Save(CreateModuleType model)
+        public IActionResult Save(CreateModuleType model)
         {
             model.Id = Guid.NewGuid();
-            await Task.Run(() => _commandSender.Send<CreateModuleType, ModuleType>(model));
+            _commandSender.Send<CreateModuleType, ModuleType>(model);
             return new NoContentResult();
         }
 
@@ -60,9 +60,9 @@ namespace Weapsy.Areas.Admin.Controllers
             return Ok(model);
         }
 
-        public async Task<IActionResult> Update(UpdateModuleTypeDetails model)
+        public IActionResult Update(UpdateModuleTypeDetails model)
         {
-            await Task.Run(() => _commandSender.Send<UpdateModuleTypeDetails, ModuleType>(model));
+            _commandSender.Send<UpdateModuleTypeDetails, ModuleType>(model);
             return new NoContentResult();
         }
     }

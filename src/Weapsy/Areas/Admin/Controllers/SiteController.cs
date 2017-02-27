@@ -45,11 +45,11 @@ namespace Weapsy.Areas.Admin.Controllers
             return View("Edit", model);
         }
 
-        public async Task<IActionResult> Update(SiteAdminModel model)
+        public IActionResult Update(SiteAdminModel model)
         {
             var command = _mapper.Map<UpdateSiteDetails>(model);
             command.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<UpdateSiteDetails, Site>(command));
+            _commandSender.Send<UpdateSiteDetails, Site>(command);
             return new NoContentResult();
         }
     }

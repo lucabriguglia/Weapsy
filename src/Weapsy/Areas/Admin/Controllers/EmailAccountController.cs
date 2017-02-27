@@ -40,11 +40,11 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Save(CreateEmailAccount model)
+        public IActionResult Save(CreateEmailAccount model)
         {
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
-            await Task.Run(() => _commandSender.Send<CreateEmailAccount, EmailAccount>(model));
+            _commandSender.Send<CreateEmailAccount, EmailAccount>(model);
             return new NoContentResult();
         }
 
@@ -58,10 +58,10 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Update(UpdateEmailAccountDetails model)
+        public IActionResult Update(UpdateEmailAccountDetails model)
         {
             model.SiteId = SiteId;
-            await Task.Run(() => _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model));
+            _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model);
             return new NoContentResult();
         }
     }
