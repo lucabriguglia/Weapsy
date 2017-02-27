@@ -2,7 +2,7 @@
 
 namespace Weapsy.Data.Entities
 {
-    public class PageModuleLocalisation : IDbEntity
+    public class PageModuleLocalisation
     {
         public Guid PageModuleId { get; set; }
         public Guid LanguageId { get; set; }

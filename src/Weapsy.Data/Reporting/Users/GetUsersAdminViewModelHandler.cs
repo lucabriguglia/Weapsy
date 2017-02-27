@@ -27,7 +27,10 @@ namespace Weapsy.Data.Reporting.Users
             {
                 var totalRecords = context.Users.Count();
 
+                var allRoles = await context.Roles.ToListAsync();
+
                 var q = context.Users
+                    .Include(x => x.Roles)
                     .OrderBy(x => x.Email)
                     .Skip(query.StartIndex);
 
@@ -35,10 +38,25 @@ namespace Weapsy.Data.Reporting.Users
                     q = q.Take(query.NumberOfUsers);
 
                 var users = await q.ToListAsync();
+                var list = _mapper.Map<IEnumerable<UserAdminListModel>>(users);
+
+                foreach (var user in list)
+                {
+                    var userRoleNames = new List<string>();
+                    foreach (var roleId in user.Roles)
+                    {
+                        var userRole = allRoles.FirstOrDefault(x => x.Id.ToString() == roleId);
+                        if (userRole != null)
+                        {
+                            userRoleNames.Add(userRole.Name);
+                        }
+                    }
+                    user.Roles = userRoleNames;
+                }
 
                 var viewModel = new UsersAdminViewModel
                 {
-                    Users = _mapper.Map<IList<UserAdminModel>>(users),
+                    Users = list,
                     TotalRecords = totalRecords,
                     NumberOfPages = (int)Math.Ceiling((double)totalRecords / query.NumberOfUsers)
                 };

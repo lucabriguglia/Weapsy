@@ -4,7 +4,7 @@ using PageStatus = Weapsy.Domain.Pages.PageStatus;
 
 namespace Weapsy.Data.Entities
 {
-    public class Page : IDbEntity
+    public class Page
     {
         public Guid Id { get; set; }
         public Guid SiteId { get; set; }

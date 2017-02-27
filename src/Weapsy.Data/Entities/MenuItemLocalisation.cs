@@ -2,7 +2,7 @@
 
 namespace Weapsy.Data.Entities
 {
-    public class MenuItemLocalisation : IDbEntity
+    public class MenuItemLocalisation
     {
         public Guid MenuItemId { get; set; }
         public Guid LanguageId { get; set; }

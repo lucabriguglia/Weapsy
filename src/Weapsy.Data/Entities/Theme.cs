@@ -3,7 +3,7 @@ using Weapsy.Domain.Themes;
 
 namespace Weapsy.Data.Entities
 {
-    public class Theme : IDbEntity
+    public class Theme
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

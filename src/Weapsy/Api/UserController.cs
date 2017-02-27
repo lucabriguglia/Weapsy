@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Weapsy.Data.Entities;
+using Weapsy.Domain.Users;
+using Weapsy.Domain.Users.Commands;
+using Weapsy.Infrastructure.Commands;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
@@ -14,14 +16,17 @@ namespace Weapsy.Api
     [Route("api/[controller]")]
     public class UserController : BaseAdminController
     {
+        private readonly ICommandSender _commandSender;
         private readonly IQueryDispatcher _queryDispatcher;
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<Data.Entities.User> _userManager;
 
-        public UserController(IQueryDispatcher queryDispatcher,
-            UserManager<User> userManager,
+        public UserController(ICommandSender commandSender,
+            IQueryDispatcher queryDispatcher,
+            UserManager<Data.Entities.User> userManager,
             IContextService contextService)
             : base(contextService)
         {
+            _commandSender = commandSender;
             _queryDispatcher = queryDispatcher;
             _userManager = userManager;
         }
@@ -53,16 +58,18 @@ namespace Weapsy.Api
 
         [HttpPut]
         [Route("{id}/add-to-role")]
-        public IActionResult AddToRole(Guid id, [FromBody]string roleName)
+        public async Task<IActionResult> AddToRole(Guid id, [FromBody]string roleName)
         {
-            throw new NotImplementedException();
+            await _commandSender.SendAsync<AddUserToRole, User>(new AddUserToRole { Id = id, RoleName = roleName });
+            return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/remove-from-role")]
-        public IActionResult RemoveFromRole(Guid id, [FromBody]string roleName)
+        public async Task<IActionResult> RemoveFromRole(Guid id, [FromBody]string roleName)
         {
-            throw new NotImplementedException();
+            await _commandSender.SendAsync<RemoveUserFromRole, User>(new RemoveUserFromRole { Id = id, RoleName = roleName });
+            return new NoContentResult();
         }
 
         [HttpDelete("{id}")]

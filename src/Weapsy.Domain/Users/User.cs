@@ -10,9 +10,10 @@ namespace Weapsy.Domain.Users
     {
         public string Email { get; private set; }
         public string UserName { get; private set; }
+        public string DisplayName { get; private set; }
         public string Prefix { get; private set; }
         public string FirstName { get; private set; }
-        public string MiddleName { get; private set; }
+        public string MiddleNames { get; private set; }
         public string Surname { get; private set; }
         public UserStatus Status { get; private set; }
 

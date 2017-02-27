@@ -3,7 +3,7 @@ using Weapsy.Domain.Modules;
 
 namespace Weapsy.Data.Entities
 {
-    public class Module : IDbEntity
+    public class Module
     {
         public Guid SiteId { get; set; }
         public Guid ModuleTypeId { get; set; }

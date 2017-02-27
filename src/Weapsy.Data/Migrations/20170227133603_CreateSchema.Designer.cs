@@ -8,7 +8,7 @@ using Weapsy.Data;
 namespace Weapsy.Data.Migrations
 {
     [DbContext(typeof(WeapsyDbContext))]
-    [Migration("20170225150650_CreateSchema")]
+    [Migration("20170227133603_CreateSchema")]
     partial class CreateSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -566,14 +566,20 @@ namespace Weapsy.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("DisplayName");
+
                     b.Property<string>("Email")
                         .HasAnnotation("MaxLength", 256);
 
                     b.Property<bool>("EmailConfirmed");
 
+                    b.Property<string>("FirstName");
+
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("MiddleNames");
 
                     b.Property<string>("NormalizedEmail")
                         .HasAnnotation("MaxLength", 256);
@@ -587,9 +593,13 @@ namespace Weapsy.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<string>("Prefix");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<int>("Status");
+
+                    b.Property<string>("Surname");
 
                     b.Property<bool>("TwoFactorEnabled");
 

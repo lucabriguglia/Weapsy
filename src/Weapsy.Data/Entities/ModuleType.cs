@@ -4,7 +4,7 @@ using Weapsy.Domain.ModuleTypes;
 
 namespace Weapsy.Data.Entities
 {
-    public class ModuleType : IDbEntity
+    public class ModuleType
     {
         public Guid AppId { get; set; }
         public Guid Id { get; set; }        

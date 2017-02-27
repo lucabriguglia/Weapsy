@@ -4,7 +4,7 @@ using Weapsy.Domain.Sites;
 
 namespace Weapsy.Data.Entities
 {
-    public class Site : IDbEntity
+    public class Site
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

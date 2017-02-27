@@ -3,7 +3,7 @@ using Weapsy.Domain.Pages;
 
 namespace Weapsy.Data.Entities
 {
-    public class PageModulePermission : IDbEntity
+    public class PageModulePermission
     {
         public Guid PageModuleId { get; set; }  
         public PermissionType Type { get; set; }

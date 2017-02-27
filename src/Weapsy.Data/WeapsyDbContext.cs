@@ -74,9 +74,6 @@ namespace Weapsy.Data
                 .ToTable("PagePermission")
                 .HasKey(x => new { x.PageId, x.RoleId, x.Type });
 
-            builder.Entity<Role>()
-                .ToTable("Role");
-
             builder.Entity<Site>()
                 .ToTable("Site");
 
@@ -89,6 +86,9 @@ namespace Weapsy.Data
 
             builder.Entity<User>()
                 .ToTable("User");
+
+            builder.Entity<Role>()
+                .ToTable("Role");
 
             builder.Entity<IdentityUserClaim<Guid>>()
                 .ToTable("UserClaim");

@@ -4,7 +4,7 @@ using Weapsy.Domain.Menus;
 
 namespace Weapsy.Data.Entities
 {
-    public class MenuItem : IDbEntity
+    public class MenuItem
     {
         public Guid Id { get; set; }
         public Guid MenuId { get; set; }

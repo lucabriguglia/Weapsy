@@ -2,7 +2,7 @@
 
 namespace Weapsy.Data.Entities
 {
-    public class SiteLocalisation : IDbEntity
+    public class SiteLocalisation
     {
         public Guid SiteId { get; set; }
         public Guid LanguageId { get; set; }

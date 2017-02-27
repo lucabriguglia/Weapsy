@@ -3,7 +3,7 @@ using Weapsy.Domain.EmailAccounts;
 
 namespace Weapsy.Data.Entities
 {
-    public class EmailAccount : IDbEntity
+    public class EmailAccount
     {
         public Guid SiteId { get; set; }
         public Guid Id { get; set; }

@@ -3,7 +3,10 @@
 weapsy.admin.userIndex = (function ($, ko) {
     function User(data) {
         this.id = ko.observable(data.id);
+        this.firstName = ko.observable(data.firstName);
+        this.surname = ko.observable(data.surname);
         this.email = ko.observable(data.email);
+        this.roles = ko.observable(data.roles);
         this.editUrl = "/admin/user/edit/" + data.id;
         this.rolesUrl = "/admin/user/roles/" + data.id;
     }

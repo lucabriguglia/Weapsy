@@ -4,7 +4,7 @@ using Weapsy.Domain.Pages;
 
 namespace Weapsy.Data.Entities
 {
-    public class PageModule : IDbEntity
+    public class PageModule
     {
         public Guid Id { get; set; }
         public Guid PageId { get; set; }

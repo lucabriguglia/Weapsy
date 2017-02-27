@@ -3,7 +3,7 @@ using Weapsy.Domain.Apps;
 
 namespace Weapsy.Data.Entities
 {
-    public class App : IDbEntity
+    public class App
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
