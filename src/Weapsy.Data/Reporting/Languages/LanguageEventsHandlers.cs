@@ -10,7 +10,8 @@ namespace Weapsy.Data.Reporting.Languages
         IEventHandlerAsync<LanguageCreated>,
         IEventHandler<LanguageDetailsUpdated>,
         IEventHandler<LanguageDeleted>,
-        IEventHandler<LanguageActivated>
+        IEventHandler<LanguageActivated>,
+        IEventHandler<LanguageReordered>
     {
         private readonly ICacheManager _cacheManager;
 
@@ -35,6 +36,11 @@ namespace Weapsy.Data.Reporting.Languages
         }
 
         public void Handle(LanguageActivated @event)
+        {
+            ClearCache(@event.SiteId);
+        }
+
+        public void Handle(LanguageReordered @event)
         {
             ClearCache(@event.SiteId);
         }
