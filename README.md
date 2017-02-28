@@ -14,8 +14,6 @@ For any queries please visit my LinkedIn profile where you can find all my conta
 
 [![Join the chat at https://gitter.im/weapsy](https://badges.gitter.im/weapsy.svg)](https://gitter.im/weapsy/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
-![weapsywriting 1](https://cloud.githubusercontent.com/assets/8679253/20868301/4724a222-ba50-11e6-9a5f-61e3122f6141.png)
-
 # Demo
 Coming Soon
 
