@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
@@ -30,11 +31,11 @@ namespace Weapsy.Domain.Tests.Users.Handlers
 
             var createUserHandler = new CreateUserHandler(userRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<Exception>(async () => await createUserHandler.HandleAsync(command));
+            Assert.ThrowsAsync<Exception>(async () => await createUserHandler.HandleAsync(command));
         }
 
         [Test]
-        public async void Should_validate_command_and_save_new_user()
+        public async Task Should_validate_command_and_save_new_user()
         {
             var command = new CreateUser
             {
@@ -44,7 +45,7 @@ namespace Weapsy.Domain.Tests.Users.Handlers
             };
 
             var userRepositoryMock = new Mock<IUserRepository>();
-            userRepositoryMock.Setup(x => x.CreateAsync(It.IsAny<User>()));
+            userRepositoryMock.Setup(x => x.CreateAsync(It.IsAny<User>())).Returns(Task.FromResult(false));
 
             var validatorMock = new Mock<IValidator<CreateUser>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());

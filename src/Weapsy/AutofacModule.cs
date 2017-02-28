@@ -8,7 +8,6 @@ using Weapsy.Infrastructure.Domain;
 using Weapsy.Infrastructure.Events;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Apps.Queries;
-using Weapsy.Services.Installation;
 using Weapsy.Services.Mail;
 
 namespace Weapsy

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Weapsy.Data.Reporting;
 using Weapsy.Data.Repositories;
 
 namespace Weapsy.Data.Tests
@@ -10,6 +11,7 @@ namespace Weapsy.Data.Tests
             var autoMapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new DomainAutoMapperProfile());
+                cfg.AddProfile(new ReportingAutoMapperProfile());
             });
 
             return autoMapperConfig.CreateMapper();

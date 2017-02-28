@@ -9,7 +9,8 @@
     "dotnet-test-nunit": "3.4.0-beta-3",
     "Microsoft.NETCore.App": "1.1.0",
     "NETStandard.Library": "1.6.1",
-    "Weapsy.Tests.Factories": "1.0.0-*"
+    "Weapsy.Tests.Factories": "1.0.0-*",
+    "Microsoft.DotNet.InternalAbstractions": "1.0.0"
   },
 
   "testRunner": "nunit",
@@ -21,6 +22,7 @@
       }
     }
   },
+
   "runtimes": {
     "win10-x64": {},
     "win7-x64": {},
