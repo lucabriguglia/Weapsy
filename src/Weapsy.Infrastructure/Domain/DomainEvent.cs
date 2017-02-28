@@ -7,6 +7,6 @@ namespace Weapsy.Infrastructure.Domain
         public Guid AggregateRootId { get; set; }
         public int Version { get; set; }
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

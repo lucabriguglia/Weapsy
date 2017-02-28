@@ -21,6 +21,28 @@ namespace Weapsy.Infrastructure.Commands
             _eventStore = eventStore;
         }
 
+        public void Send<TCommand>(TCommand command, bool publishEvents = true) where TCommand : ICommand
+        {
+            if (command == null)
+                throw new ArgumentNullException(nameof(command));
+
+            var commandHandler = _resolver.Resolve<ICommandHandler<TCommand>>();
+
+            if (commandHandler == null)
+                throw new Exception($"No handler found for command '{command.GetType().FullName}'");
+
+            var events = commandHandler.Handle(command);
+
+            if (!publishEvents)
+                return;
+
+            foreach (var @event in events)
+            {
+                var concreteEvent = EventFactory.CreateConcreteEvent(@event);
+                _eventPublisher.Publish(concreteEvent);
+            }
+        }
+
         public void Send<TCommand, TAggregate>(TCommand command, bool publishEvents = true)
             where TCommand : ICommand
             where TAggregate : IAggregateRoot
@@ -39,15 +61,34 @@ namespace Weapsy.Infrastructure.Commands
             {
                 var concreteEvent = EventFactory.CreateConcreteEvent(@event);
 
-                if (concreteEvent is IDomainEvent)
-                {
-                    _eventStore.SaveEvent<TAggregate>((IDomainEvent)concreteEvent);
-                }
+                _eventStore.SaveEvent<TAggregate>((IDomainEvent)concreteEvent);
                 
                 if (!publishEvents)
                     continue;
 
                 _eventPublisher.Publish(concreteEvent);
+            }
+        }
+
+        public async Task SendAsync<TCommand>(TCommand command, bool publishEvents = true) where TCommand : ICommand
+        {
+            if (command == null)
+                throw new ArgumentNullException(nameof(command));
+
+            var commandHandler = _resolver.Resolve<ICommandHandlerAsync<TCommand>>();
+
+            if (commandHandler == null)
+                throw new Exception($"No handler found for command '{command.GetType().FullName}'");
+
+            var events = await commandHandler.HandleAsync(command);
+
+            if (!publishEvents)
+                return;
+
+            foreach (var @event in events)
+            {
+                var concreteEvent = EventFactory.CreateConcreteEvent(@event);
+                await _eventPublisher.PublishAsync(concreteEvent);
             }
         }
 
@@ -69,11 +110,8 @@ namespace Weapsy.Infrastructure.Commands
             {
                 var concreteEvent = EventFactory.CreateConcreteEvent(@event);
 
-                if (concreteEvent is IDomainEvent)
-                {
-                    await _eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
-                }
-                
+                await _eventStore.SaveEventAsync<TAggregate>((IDomainEvent)concreteEvent);
+
                 if (!publishEvents)
                     continue;
 
