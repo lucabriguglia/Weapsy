@@ -27,6 +27,7 @@ namespace Weapsy.Data.Reporting.Languages
             {
                 var entities = await context.Languages
                     .Where(x => x.Status != LanguageStatus.Deleted)
+                    .OrderBy(x => x.SortOrder)
                     .ToListAsync();
 
                 return _mapper.Map<IEnumerable<LanguageAdminModel>>(entities);

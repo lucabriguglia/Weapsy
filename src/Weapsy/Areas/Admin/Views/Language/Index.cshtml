@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Weapsy.Reporting.Languages.LanguageAdminModel>
+﻿@using Weapsy.Domain.Languages
+@model IEnumerable<Weapsy.Reporting.Languages.LanguageAdminModel>
 
 @{
     ViewBag.Title = Localizer["Title"];
@@ -16,15 +17,16 @@
 <ol id="languages" class="list-group sortable">
     @foreach (var language in Model)
     {
+        var status = language.Status == LanguageStatus.Active ? "" : " *";
         <li id="@language.Id">
             <div class="list-group-item">
                 <span class="glyphicon glyphicon-option-vertical handle" aria-hidden="true"></span>
-                <span>@language.Name</span>
+                <span>@language.Name@status</span>
                 @*<span>@language.CultureName</span>
                 <span>@language.Url</span>
                 <span>@language.LanguageStatus</span>*@
-                <a href="@Url.Action("Edit", "Language", new {area = "Admin", id = @language.Id})" class="glyphicon glyphicon-edit options" title="Edit"></a>
                 <a href="#" class="glyphicon glyphicon-remove options delete-language" data-toggle="modal" data-target="#confirm-delete" data-id="@language.Id" title="Delete"></a>                
+                <a href="@Url.Action("Edit", "Language", new {area = "Admin", id = @language.Id})" class="glyphicon glyphicon-edit options" title="Edit"></a>
             </div>
         </li>
     }
@@ -34,5 +36,12 @@
     <a href="@Url.Action("Create", "Language", new { area = "Admin" })" class="btn btn-primary" title="New Language">New Language</a>
     <a id="confirmReorder" href="#" class="btn btn-primary" title="Update Order">Update Order</a>
 </div>
+
+@if (Model.Any(x => x.Status != LanguageStatus.Active))
+{
+    <div style="margin-top: 20px; font-style: italic;">
+        * Language Not Active            
+    </div>
+}
 
 @await Html.PartialAsync("_ConfirmDelete")
