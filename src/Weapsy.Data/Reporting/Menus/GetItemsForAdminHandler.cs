@@ -41,7 +41,7 @@ namespace Weapsy.Data.Reporting.Menus
         {
             var result = new List<MenuItemAdminListModel>();
 
-            foreach (var menuItem in source.Where(x => x.ParentId == parentId).OrderBy(x => x.SortOrder).ToList())
+            foreach (var menuItem in source.Where(x => x.ParentId == parentId && x.Status != MenuItemStatus.Deleted).OrderBy(x => x.SortOrder).ToList())
             {
                 var menuItemModel = new MenuItemAdminListModel
                 {
