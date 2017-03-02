@@ -44,7 +44,7 @@ https://github.com/weapsy/Weapsy/wiki
 
 - Open the Weapsy.sln solution in Visual Studio
 - Build the solution (default apps will be copied to the "Apps" folder)
-- Choose the data provider of your choice in the appsettings file and modify the default connection string accordingly if needed (only MSSQL is working at the moment).
+- Choose the data provider of your choice in the appsettings file and modify the default connection string accordingly if needed.
 - Run (F5 or Ctrl+F5)
 - Login using these credentials:
   - email: admin@default.com
