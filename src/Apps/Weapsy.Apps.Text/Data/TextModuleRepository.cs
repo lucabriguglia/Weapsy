@@ -12,10 +12,10 @@ namespace Weapsy.Apps.Text.Data
 {
     public class TextModuleRepository : ITextModuleRepository
     {
-        private readonly ITextDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public TextModuleRepository(ITextDbContextFactory dbContextFactory, IMapper mapper)
+        public TextModuleRepository(IContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;

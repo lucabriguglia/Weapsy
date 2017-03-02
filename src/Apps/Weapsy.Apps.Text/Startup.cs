@@ -9,6 +9,7 @@ namespace Weapsy.Apps.Text
     {
         public override void ConfigureServices(IServiceCollection services)
         {
+            //services.AddEntityFramework();
         }
 
         public override void Configure(IApplicationBuilder builder)

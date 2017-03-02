@@ -2,10 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Weapsy.Apps.Text.Data;
 
-namespace Weapsy.Apps.Text.Migrations
+namespace Weapsy.Apps.Text.Data.Migrations
 {
     [DbContext(typeof(TextDbContext))]
     partial class TextDbContextModelSnapshot : ModelSnapshot

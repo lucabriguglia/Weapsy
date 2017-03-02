@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Weapsy.Apps.Text.Migrations
+namespace Weapsy.Apps.Text.Data.Migrations
 {
     public partial class CreateSchema : Migration
     {
