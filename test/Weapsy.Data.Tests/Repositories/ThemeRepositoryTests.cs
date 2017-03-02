@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data.Repositories;
+using Weapsy.Data.Domain;
 using Weapsy.Domain.Themes;
 using Weapsy.Tests.Factories;
 using ThemeDbEntity = Weapsy.Data.Entities.Theme;

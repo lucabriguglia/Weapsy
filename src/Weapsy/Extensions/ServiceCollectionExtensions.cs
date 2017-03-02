@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Api;
+using Weapsy.Data.Domain;
 using Weapsy.Data.Reporting;
-using Weapsy.Data.Repositories;
 using Weapsy.Mvc.Apps;
 
 namespace Weapsy.Extensions

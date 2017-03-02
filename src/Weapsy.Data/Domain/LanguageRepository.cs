@@ -6,7 +6,7 @@ using AutoMapper;
 using Weapsy.Domain.Languages;
 using LanguageDbEntity = Weapsy.Data.Entities.Language;
 
-namespace Weapsy.Data.Repositories
+namespace Weapsy.Data.Domain
 {
     public class LanguageRepository : ILanguageRepository
     {

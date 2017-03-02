@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using Weapsy.Domain.Apps;
 using AppDbEntity = Weapsy.Data.Entities.App;
-using System.Linq;
 
-namespace Weapsy.Data.Repositories
+namespace Weapsy.Data.Domain
 {
     public class AppRepository : IAppRepository
     {

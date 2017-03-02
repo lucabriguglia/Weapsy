@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data.Repositories;
 using Weapsy.Domain.Pages;
 using Weapsy.Tests.Factories;
 using PageDbEntity = Weapsy.Data.Entities.Page;
@@ -10,6 +9,7 @@ using PageLocalisation = Weapsy.Data.Entities.PageLocalisation;
 using PageModuleDbEntity = Weapsy.Data.Entities.PageModule;
 using PageModuleLocalisationDbEntity = Weapsy.Data.Entities.PageModuleLocalisation;
 using System.Linq;
+using Weapsy.Data.Domain;
 
 namespace Weapsy.Data.Tests.Repositories
 {

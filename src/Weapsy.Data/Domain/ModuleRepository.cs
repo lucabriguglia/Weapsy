@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using Weapsy.Domain.Modules;
 using ModuleDbEntity = Weapsy.Data.Entities.Module;
-using System.Linq;
 
-namespace Weapsy.Data.Repositories
+namespace Weapsy.Data.Domain
 {
     public class ModuleRepository : IModuleRepository
     {

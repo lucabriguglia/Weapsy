@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data.Repositories;
 using Weapsy.Domain.Menus;
 using Weapsy.Tests.Factories;
 using MenuDbEntity = Weapsy.Data.Entities.Menu;
 using MenuItemDbEntity = Weapsy.Data.Entities.MenuItem;
 using MenuItemLocalisationDbEntity = Weapsy.Data.Entities.MenuItemLocalisation;
 using System.Linq;
+using Weapsy.Data.Domain;
 
 namespace Weapsy.Data.Tests.Repositories
 {

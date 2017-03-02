@@ -7,7 +7,7 @@ using Weapsy.Domain.Sites;
 using SiteDbEntity = Weapsy.Data.Entities.Site;
 using SiteLocalisationDbEntity = Weapsy.Data.Entities.SiteLocalisation;
 
-namespace Weapsy.Data.Repositories
+namespace Weapsy.Data.Domain
 {
     public class SiteRepository : ISiteRepository
     {

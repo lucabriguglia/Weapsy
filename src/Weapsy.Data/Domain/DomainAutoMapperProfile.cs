@@ -27,7 +27,7 @@ using SiteLocalisationDbEntity = Weapsy.Data.Entities.SiteLocalisation;
 using ThemeDbEntity = Weapsy.Data.Entities.Theme;
 using UserDbEntity = Weapsy.Data.Entities.User;
 
-namespace Weapsy.Data.Repositories
+namespace Weapsy.Data.Domain
 {
     public class DomainAutoMapperProfile : Profile
     {

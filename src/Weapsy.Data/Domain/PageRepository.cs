@@ -11,7 +11,7 @@ using PageModuleLocalisationDbEntity = Weapsy.Data.Entities.PageModuleLocalisati
 using PagePermissionDbEntity = Weapsy.Data.Entities.PagePermission;
 using PageModulePermissionDbEntity = Weapsy.Data.Entities.PageModulePermission;
 
-namespace Weapsy.Data.Repositories
+namespace Weapsy.Data.Domain
 {
     public class PageRepository : IPageRepository
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using Weapsy.Data.Repositories;
+using Weapsy.Data.Domain;
 using Weapsy.Domain.Languages;
 using Weapsy.Tests.Factories;
 using LanguageDbEntity = Weapsy.Data.Entities.Language;

@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Users;
 using UserDbEntity = Weapsy.Data.Entities.User;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 
-namespace Weapsy.Data.Repositories
+namespace Weapsy.Data.Domain
 {
     public class UserRepository : IUserRepository
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Weapsy.Data.Domain;
 using Weapsy.Data.Reporting;
-using Weapsy.Data.Repositories;
 
 namespace Weapsy.Data.Tests
 {
