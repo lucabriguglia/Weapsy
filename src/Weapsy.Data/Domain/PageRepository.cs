@@ -15,10 +15,10 @@ namespace Weapsy.Data.Repositories
 {
     public class PageRepository : IPageRepository
     {
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public PageRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public PageRepository(IContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;

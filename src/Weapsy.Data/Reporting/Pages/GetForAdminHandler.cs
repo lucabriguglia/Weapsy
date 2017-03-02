@@ -16,10 +16,10 @@ namespace Weapsy.Data.Reporting.Pages
 {
     public class GetForAdminHandler : IQueryHandlerAsync<GetForAdmin, PageAdminModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetForAdminHandler(IDbContextFactory contextFactory, IQueryDispatcher queryDispatcher)
+        public GetForAdminHandler(IContextFactory contextFactory, IQueryDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _queryDispatcher = queryDispatcher;

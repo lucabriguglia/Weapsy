@@ -9,9 +9,9 @@ namespace Weapsy.Data.Reporting.Pages
 {
     public class GetPageIdBySlugHandler : IQueryHandlerAsync<GetPageIdBySlug, Guid?>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
 
-        public GetPageIdBySlugHandler(IDbContextFactory contextFactory)
+        public GetPageIdBySlugHandler(IContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }

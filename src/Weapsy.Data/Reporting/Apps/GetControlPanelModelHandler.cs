@@ -13,11 +13,11 @@ namespace Weapsy.Data.Reporting.Apps
 {
     public class GetControlPanelModelHandler : IQueryHandlerAsync<GetControlPanelModel, IEnumerable<ModuleTypeControlPanelModel>>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
 
-        public GetControlPanelModelHandler(IDbContextFactory contextFactory, IMapper mapper, ICacheManager cacheManager)
+        public GetControlPanelModelHandler(IContextFactory contextFactory, IMapper mapper, ICacheManager cacheManager)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

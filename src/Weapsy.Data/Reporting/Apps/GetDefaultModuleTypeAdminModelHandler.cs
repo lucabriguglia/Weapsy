@@ -10,9 +10,9 @@ namespace Weapsy.Data.Reporting.Apps
 {
     public class GetDefaultModuleTypeAdminModelHandler : IQueryHandlerAsync<GetDefaultModuleTypeAdminModel, ModuleTypeAdminModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
 
-        public GetDefaultModuleTypeAdminModelHandler(IDbContextFactory contextFactory)
+        public GetDefaultModuleTypeAdminModelHandler(IContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }

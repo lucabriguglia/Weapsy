@@ -13,10 +13,10 @@ namespace Weapsy.Data.Repositories
 {
     public class MenuRepository : IMenuRepository
     {
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public MenuRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public MenuRepository(IContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;

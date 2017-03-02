@@ -12,10 +12,10 @@ namespace Weapsy.Data.Reporting.Users
 {
     public class GetUserAdminModelHandler : IQueryHandlerAsync<GetUserAdminModel, UserAdminModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public GetUserAdminModelHandler(IDbContextFactory contextFactory, IMapper mapper)
+        public GetUserAdminModelHandler(IContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

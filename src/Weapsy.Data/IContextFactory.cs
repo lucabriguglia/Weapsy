@@ -1,6 +1,6 @@
 ﻿namespace Weapsy.Data
 {
-    public interface IDbContextFactory
+    public interface IContextFactory
     {
         WeapsyDbContext Create();
     }

@@ -13,9 +13,9 @@ namespace Weapsy.Data.Reporting.Menus
 {
     public class GetItemsForAdminHandler : IQueryHandlerAsync<GetItemsForAdmin, IEnumerable<MenuItemAdminListModel>>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
 
-        public GetItemsForAdminHandler(IDbContextFactory contextFactory)
+        public GetItemsForAdminHandler(IContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }

@@ -10,10 +10,10 @@ namespace Weapsy.Data.Reporting.Apps
 {
     public class GetAppAdminModelHandler : IQueryHandlerAsync<GetAppAdminModel, AppAdminModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public GetAppAdminModelHandler(IDbContextFactory contextFactory, IMapper mapper)
+        public GetAppAdminModelHandler(IContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

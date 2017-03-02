@@ -10,10 +10,10 @@ namespace Weapsy.Data.Repositories
 {
     public class LanguageRepository : ILanguageRepository
     {
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public LanguageRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public LanguageRepository(IContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;

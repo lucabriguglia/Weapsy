@@ -14,12 +14,12 @@ namespace Weapsy.Data.Reporting.Sites
 {
     public class GetAdminModelHandler : IQueryHandlerAsync<GetAdminModel, SiteAdminModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
         private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetAdminModelHandler(IDbContextFactory contextFactory, 
+        public GetAdminModelHandler(IContextFactory contextFactory, 
             IMapper mapper, 
             ICacheManager cacheManager, 
             IQueryDispatcher queryDispatcher)

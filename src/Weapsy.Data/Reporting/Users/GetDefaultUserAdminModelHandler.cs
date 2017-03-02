@@ -10,10 +10,10 @@ namespace Weapsy.Data.Reporting.Users
 {
     public class GetDefaultUserAdminModelHandler : IQueryHandlerAsync<GetDefaultUserAdminModel, UserAdminModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public GetDefaultUserAdminModelHandler(IDbContextFactory contextFactory, IMapper mapper)
+        public GetDefaultUserAdminModelHandler(IContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

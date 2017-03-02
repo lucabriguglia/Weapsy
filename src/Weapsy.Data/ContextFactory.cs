@@ -8,14 +8,14 @@ using Weapsy.Infrastructure.DependencyResolver;
 
 namespace Weapsy.Data
 {
-    public class DbContextFactory : IDbContextFactory
+    public class ContextFactory : IContextFactory
     {
         private Weapsy.Infrastructure.Configuration.Data DataConfiguration { get; }
         private Weapsy.Infrastructure.Configuration.ConnectionStrings ConnectionStrings { get; }
         private readonly IResolver _resolver;
         private const string ErrorMessage = "The Data Provider entry in appsettings.json is empty or the one specified has not been found!";
 
-        public DbContextFactory(IOptions<Infrastructure.Configuration.Data> dataOptions,
+        public ContextFactory(IOptions<Infrastructure.Configuration.Data> dataOptions,
             IResolver resolver, IOptions<ConnectionStrings> connectionStringsOption)
         {
             DataConfiguration = dataOptions.Value;

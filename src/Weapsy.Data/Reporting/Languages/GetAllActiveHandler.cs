@@ -13,11 +13,11 @@ namespace Weapsy.Data.Reporting.Languages
 {
     public class GetAllActiveHandler : IQueryHandlerAsync<GetAllActive, IEnumerable<LanguageInfo>>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
 
-        public GetAllActiveHandler(IDbContextFactory contextFactory, IMapper mapper, ICacheManager cacheManager)
+        public GetAllActiveHandler(IContextFactory contextFactory, IMapper mapper, ICacheManager cacheManager)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

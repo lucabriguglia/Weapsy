@@ -12,10 +12,10 @@ namespace Weapsy.Data.Reporting.Sites
         IEventHandler<SiteCreated>,
         IEventHandler<SiteDetailsUpdated>
     {
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
 
-        public SiteEventsHandler(IDbContextFactory dbContextFactory,
+        public SiteEventsHandler(IContextFactory dbContextFactory,
             ICacheManager cacheManager)
         {
             _dbContextFactory = dbContextFactory;

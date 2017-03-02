@@ -12,9 +12,9 @@ namespace Weapsy.Data
 {
     public class EventStore : IEventStore
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
 
-        public EventStore(IDbContextFactory contextFactory)
+        public EventStore(IContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }

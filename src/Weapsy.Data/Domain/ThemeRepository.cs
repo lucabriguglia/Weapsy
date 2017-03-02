@@ -10,10 +10,10 @@ namespace Weapsy.Data.Repositories
 {
     public class ThemeRepository : IThemeRepository
     {
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public ThemeRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public ThemeRepository(IContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;

@@ -10,10 +10,10 @@ namespace Weapsy.Data.Reporting.Themes
 {
     public class GetForAdminHandler : IQueryHandlerAsync<GetForAdmin, ThemeAdminModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public GetForAdminHandler(IDbContextFactory contextFactory, IMapper mapper)
+        public GetForAdminHandler(IContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

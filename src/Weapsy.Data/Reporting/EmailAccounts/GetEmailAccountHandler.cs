@@ -10,10 +10,10 @@ namespace Weapsy.Data.Reporting.EmailAccounts
 {
     public class GetEmailAccountHandler : IQueryHandlerAsync<GetEmailAccount, EmailAccountModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
 
-        public GetEmailAccountHandler(IDbContextFactory contextFactory, IMapper mapper)
+        public GetEmailAccountHandler(IContextFactory contextFactory, IMapper mapper)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

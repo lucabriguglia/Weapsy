@@ -19,11 +19,11 @@ namespace Weapsy.Data.Reporting.Pages
 {
     public class GetPageInfoHandler : IQueryHandlerAsync<GetPageInfo, PageInfo>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetPageInfoHandler(IDbContextFactory contextFactory,
+        public GetPageInfoHandler(IContextFactory contextFactory,
             ICacheManager cacheManager,
             IQueryDispatcher queryDispatcher)
         {

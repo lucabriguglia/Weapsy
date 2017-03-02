@@ -8,10 +8,10 @@ namespace Weapsy.Data.Repositories
 {
     public class ModuleRepository : IModuleRepository
     {
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public ModuleRepository(IDbContextFactory dbContextFactory, IMapper mapper)
+        public ModuleRepository(IContextFactory dbContextFactory, IMapper mapper)
         {
             _dbContextFactory = dbContextFactory;
             _mapper = mapper;

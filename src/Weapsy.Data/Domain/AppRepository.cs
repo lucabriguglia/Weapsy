@@ -8,10 +8,10 @@ namespace Weapsy.Data.Repositories
 {
     public class AppRepository : IAppRepository
     {
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public AppRepository(IDbContextFactory dbContextFactor, IMapper mapper)
+        public AppRepository(IContextFactory dbContextFactor, IMapper mapper)
         {
             _dbContextFactory = dbContextFactor;
             _mapper = mapper;

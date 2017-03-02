@@ -13,12 +13,12 @@ namespace Weapsy.Data.Reporting.Sites
 {
     public class GetSiteInfoHandler : IQueryHandlerAsync<GetSiteInfo, SiteInfo>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
         private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetSiteInfoHandler(IDbContextFactory contextFactory, 
+        public GetSiteInfoHandler(IContextFactory contextFactory, 
             IMapper mapper, 
             ICacheManager cacheManager, 
             IQueryDispatcher queryDispatcher)

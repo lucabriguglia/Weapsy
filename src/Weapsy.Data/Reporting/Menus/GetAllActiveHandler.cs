@@ -19,11 +19,11 @@ namespace Weapsy.Data.Reporting.Menus
 {
     public class GetViewModelHandler : IQueryHandlerAsync<GetViewModel, MenuViewModel>
     {
-        private readonly IDbContextFactory _contextFactory;
+        private readonly IContextFactory _contextFactory;
         private readonly ICacheManager _cacheManager;
         private readonly IQueryDispatcher _queryDispatcher;
 
-        public GetViewModelHandler(IDbContextFactory contextFactory, 
+        public GetViewModelHandler(IContextFactory contextFactory, 
             ICacheManager cacheManager, 
             IQueryDispatcher queryDispatcher)
         {

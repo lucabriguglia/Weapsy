@@ -13,10 +13,10 @@ namespace Weapsy.Data.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly UserManager<UserDbEntity> _userManager;
-        private readonly IDbContextFactory _dbContextFactory;
+        private readonly IContextFactory _dbContextFactory;
         private readonly IMapper _mapper;
 
-        public UserRepository(UserManager<UserDbEntity> userManager, IDbContextFactory dbContextFactory, IMapper mapper)
+        public UserRepository(UserManager<UserDbEntity> userManager, IContextFactory dbContextFactory, IMapper mapper)
         {
             _userManager = userManager;
             _dbContextFactory = dbContextFactory;

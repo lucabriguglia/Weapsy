@@ -21,9 +21,9 @@ namespace Weapsy.Data.Tests
             return builder.Options;
         }
 
-        public static IDbContextFactory CreateNewContextFactory(WeapsyDbContext context)
+        public static IContextFactory CreateNewContextFactory(WeapsyDbContext context)
         {
-            var dbContextFactoryMock = new Mock<IDbContextFactory>();
+            var dbContextFactoryMock = new Mock<IContextFactory>();
             dbContextFactoryMock.Setup(x => x.Create()).Returns(context);
             return dbContextFactoryMock.Object;
         }
