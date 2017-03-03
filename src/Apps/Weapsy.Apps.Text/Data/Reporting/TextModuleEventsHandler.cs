@@ -7,7 +7,7 @@ using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
 
-namespace Weapsy.Apps.Text.Data
+namespace Weapsy.Apps.Text.Data.Reporting
 {
     public class TextModuleEventsHandler : 
         IEventHandler<TextModuleCreated>,
