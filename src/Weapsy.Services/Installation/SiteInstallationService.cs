@@ -21,7 +21,7 @@ namespace Weapsy.Services.Installation
     {
         private readonly ISiteRepository _siteRepository;
         private readonly IValidator<CreateSite> _createSiteValidator;
-        private readonly IValidator<UpdateSiteDetails> _updateSiteDetailsSiteValidator;
+        private readonly IValidator<UpdateSiteDetails> _updateSiteDetailsValidator;
         private readonly ILanguageRepository _languageRepository;
         private readonly IValidator<CreateLanguage> _createLanguageValidator;
         private readonly IValidator<ActivateLanguage> _activateLanguageValidator;
@@ -39,7 +39,7 @@ namespace Weapsy.Services.Installation
 
         public SiteInstallationService(ISiteRepository siteRepository,
             IValidator<CreateSite> createSiteValidator,
-            IValidator<UpdateSiteDetails> updateSiteDetailsSiteValidator,
+            IValidator<UpdateSiteDetails> updateSiteDetailsValidator,
             ILanguageRepository languageRepository,
             IValidator<CreateLanguage> createLanguageValidator,
             IValidator<ActivateLanguage> activateLanguageValidator,
@@ -57,7 +57,7 @@ namespace Weapsy.Services.Installation
         {
             _siteRepository = siteRepository;
             _createSiteValidator = createSiteValidator;
-            _updateSiteDetailsSiteValidator = updateSiteDetailsSiteValidator;
+            _updateSiteDetailsValidator = updateSiteDetailsValidator;
             _languageRepository = languageRepository;
             _createLanguageValidator = createLanguageValidator;
             _activateLanguageValidator = activateLanguageValidator;
@@ -324,7 +324,7 @@ namespace Weapsy.Services.Installation
                         LanguageId = englishLanguageId
                     }
                 }
-            }, _updateSiteDetailsSiteValidator);
+            }, _updateSiteDetailsValidator);
 
             _siteRepository.Update(site);
         }
