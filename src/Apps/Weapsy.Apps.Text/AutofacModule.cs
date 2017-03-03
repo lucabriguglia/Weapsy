@@ -2,13 +2,10 @@
 using Autofac;
 using FluentValidation;
 using Weapsy.Apps.Text.Data;
-using Weapsy.Apps.Text.Domain;
-using Weapsy.Apps.Text.Domain.Handlers;
-using Weapsy.Apps.Text.Domain.Rules;
-using Weapsy.Apps.Text.Domain.Validators;
-using Weapsy.Apps.Text.Reporting;
 using Weapsy.Infrastructure.Commands;
 using Weapsy.Infrastructure.Events;
+using Weapsy.Infrastructure.Domain;
+using Weapsy.Infrastructure.Queries;
 
 namespace Weapsy.Apps.Text
 {
@@ -16,17 +13,21 @@ namespace Weapsy.Apps.Text
     {
         protected override void Load(ContainerBuilder builder)
         {
+            var assembly = typeof(AutofacModule).GetTypeInfo().Assembly;
+
             builder.RegisterType<TextDbContext>().As<TextDbContext>();
-            builder.RegisterType<TextDbContextFactory>().As<ITextDbContextFactory>();
 
-            builder.RegisterAssemblyTypes(typeof(CreateTextModuleHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
-            builder.RegisterAssemblyTypes(typeof(CreateTextModuleValidator).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IValidator<>));
-            builder.RegisterAssemblyTypes(typeof(TextModuleEventsHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandler<>));
-            builder.RegisterAssemblyTypes(typeof(TextModuleEventsHandler).GetTypeInfo().Assembly).AsClosedTypesOf(typeof(IEventHandlerAsync<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IValidator<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IRules<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IRepository<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(ICommandHandlerAsync<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IEventHandler<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IEventHandlerAsync<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IQueryHandler<,>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IQueryHandlerAsync<,>));
 
-            builder.RegisterType<TextModuleRules>().As<ITextModuleRules>();
-            builder.RegisterType<TextModuleRepository>().As<ITextModuleRepository>();
-            builder.RegisterType<TextModuleFacade>().As<ITextModuleFacade>();
+            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
         }
     }
 }

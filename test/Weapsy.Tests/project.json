@@ -7,7 +7,8 @@
     "NUnit": "3.5.0",
     "dotnet-test-nunit": "3.4.0-beta-3",
     "Weapsy.Infrastructure": "1.0.0-*",
-    "Microsoft.NETCore.App": "1.1.0"
+    "Microsoft.NETCore.App": "1.1.0",
+    "Microsoft.DotNet.InternalAbstractions": "1.0.0"
   },
 
   "testRunner": "nunit",

@@ -7,30 +7,34 @@ using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain;
 using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
 
 namespace Weapsy.Apps.Text.Api
 {
     [Route("api/apps/text/[controller]")]
     public class TextController : BaseAdminController
     {
-        private readonly ITextModuleFacade _textFacade;
         private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-        public TextController(ITextModuleFacade textFacade,
-            ICommandSender commandSender,
+        public TextController(ICommandSender commandSender, 
+            IQueryDispatcher queryDispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _textFacade = textFacade;
             _commandSender = commandSender;
+            _queryDispatcher = queryDispatcher;
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            var text = _textFacade.GetContent(id);
-            if (text == null) return NotFound();
-            return Ok(text);
+            var content = await _queryDispatcher.DispatchAsync<GetContent, string>(new GetContent {ModuleId = id});
+
+            if (content == null)
+                return NotFound();
+
+            return Ok(content);
         }
 
         [HttpPost]
