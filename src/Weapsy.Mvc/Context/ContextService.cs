@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Localization;
-using Weapsy.Domain.Languages;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Reporting.Sites.Queries;

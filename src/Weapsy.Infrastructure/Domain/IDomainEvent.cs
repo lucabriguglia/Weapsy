@@ -7,7 +7,5 @@ namespace Weapsy.Infrastructure.Domain
     {
         Guid AggregateRootId { get; set; }
         int Version { get; set; }
-        DateTime TimeStamp { get; set; }
-        Guid UserId { get; set; }
     }
 }

@@ -7,16 +7,19 @@ using Newtonsoft.Json;
 using Weapsy.Data.Entities;
 using Weapsy.Infrastructure.Domain;
 using DomainEvent = Weapsy.Data.Entities.DomainEvent;
+using Microsoft.AspNetCore.Http;
 
 namespace Weapsy.Data
 {
     public class EventStore : IEventStore
     {
         private readonly IContextFactory _contextFactory;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EventStore(IContextFactory contextFactory)
+        public EventStore(IContextFactory contextFactory, IHttpContextAccessor httpContextAccessor)
         {
             _contextFactory = contextFactory;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public void SaveEvent<TAggregate>(IDomainEvent @event) where TAggregate : IAggregateRoot
@@ -36,14 +39,24 @@ namespace Weapsy.Data
 
                 var currentSequenceCount = context.DomainEvents.Count(x => x.DomainAggregateId == @event.AggregateRootId);
 
+                var userId = Guid.Empty;
+
+                if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    userId = context.Users
+                        .Where(x => x.UserName == _httpContextAccessor.HttpContext.User.Identity.Name)
+                        .Select(x => x.Id)
+                        .FirstOrDefault();
+                }
+
                 context.DomainEvents.Add(new DomainEvent
                 {
                     DomainAggregateId = @event.AggregateRootId,
                     SequenceNumber = currentSequenceCount + 1,
                     Type = @event.GetType().AssemblyQualifiedName,
                     Body = JsonConvert.SerializeObject(@event),
-                    TimeStamp = @event.TimeStamp
-                    //UserId = @event.UserId
+                    TimeStamp = @event.TimeStamp,
+                    UserId = userId
                 });
 
                 context.SaveChanges();
@@ -67,59 +80,27 @@ namespace Weapsy.Data
 
                 var currentSequenceCount = await context.DomainEvents.CountAsync(x => x.DomainAggregateId == @event.AggregateRootId);
 
+                var userId = Guid.Empty;
+
+                if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    userId = await context.Users
+                        .Where(x => x.UserName == _httpContextAccessor.HttpContext.User.Identity.Name)
+                        .Select(x => x.Id)
+                        .FirstOrDefaultAsync();
+                }
+
                 context.DomainEvents.Add(new DomainEvent
                 {
                     DomainAggregateId = @event.AggregateRootId,
                     SequenceNumber = currentSequenceCount + 1,
                     Type = @event.GetType().AssemblyQualifiedName,
                     Body = JsonConvert.SerializeObject(@event),
-                    TimeStamp = @event.TimeStamp
-                    //UserId = @event.UserId
+                    TimeStamp = @event.TimeStamp,
+                    UserId = userId
                 });
 
                 await context.SaveChangesAsync();
-            }
-        }
-
-        public IEnumerable<IDomainEvent> GetEvents(Guid aggregateId)
-        {
-            using (var context = _contextFactory.Create())
-            {
-                var result = new List<IDomainEvent>();
-
-                var entities = context.DomainEvents
-                    .Where(x => x.DomainAggregateId == aggregateId)
-                    .OrderByDescending(x => x.SequenceNumber)
-                    .ToList();
-
-                foreach (var entity in entities)
-                {
-                    var @event = JsonConvert.DeserializeObject(entity.Body, Type.GetType(entity.Type));
-                    result.Add((IDomainEvent)@event);
-                }
-
-                return result;
-            }
-        }
-
-        public async Task<IEnumerable<IDomainEvent>> GetEventsAsync(Guid aggregateId)
-        {
-            using (var context = _contextFactory.Create())
-            {
-                var result = new List<IDomainEvent>();
-
-                var entities = await context.DomainEvents
-                    .Where(x => x.DomainAggregateId == aggregateId)
-                    .OrderByDescending(x => x.SequenceNumber)
-                    .ToListAsync();
-
-                foreach (var entity in entities)
-                {
-                    var @event = JsonConvert.DeserializeObject(entity.Body, Type.GetType(entity.Type));
-                    result.Add((IDomainEvent)@event);
-                }
-
-                return result;
             }
         }
     }
