@@ -149,8 +149,6 @@ namespace Weapsy
                 app.UseExceptionHandler("/error/500");
             }
 
-            app.UseApplicationInsightsExceptionTelemetry();
-
             app.UseStaticFiles();
 
             foreach (var appDescriptor in AppLoader.Instance(hostingEnvironment).AppDescriptors)
