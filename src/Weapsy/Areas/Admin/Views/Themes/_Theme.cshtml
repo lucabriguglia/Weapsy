@@ -1,0 +1,38 @@
+﻿@model Weapsy.Reporting.Themes.ThemeAdminModel
+
+<div class="form-group has-feedback">
+    <a href="#" data-toggle="tooltip" title="@Localizer["Field_Name_Help"]">Help</a>
+    <label for="name" class="col-md-2 control-label">@Localizer["Field_Name"]</label>
+    <div class="col-md-4">
+        <input id="originalName" type="hidden" value="@Model.Name">
+        <input id="name" name="name" type="text" class="form-control" placeholder="Enter Name" value="@Model.Name">
+        <i class="form-control-feedback glyphicon"></i>
+    </div>
+    <div class="col-md-6 help-block">
+        <label id="name-error" for="name" class="text-danger" style="display:none;"></label>
+    </div>
+</div>
+
+<div class="form-group has-feedback">
+    <label for="description" class="col-md-2 control-label">@Localizer["Field_Description"]</label>
+    <div class="col-md-4">
+        <input id="originalDescription" type="hidden" value="@Model.Description">
+        <textarea id="description" name="description" type="text" class="form-control" placeholder="Enter Description">@Model.Description</textarea>
+        <i class="form-control-feedback glyphicon"></i>
+    </div>
+    <div class="col-md-6 help-block">
+        <label id="description-error" for="description" class="text-danger" style="display:none;"></label>
+    </div>
+</div>
+
+<div class="form-group has-feedback">
+    <label for="description" class="col-md-2 control-label">@Localizer["Field_Folder"]</label>
+    <div class="col-md-4">
+        <input id="originalFolder" type="hidden" value="@Model.Folder">
+        <input id="folder" name="folder" type="text" class="form-control" placeholder="Enter Folder" value="@Model.Folder">
+        <i class="form-control-feedback glyphicon"></i>
+    </div>
+    <div class="col-md-6 help-block">
+        <label id="folder-error" for="description" class="text-danger" style="display:none;"></label>
+    </div>
+</div>

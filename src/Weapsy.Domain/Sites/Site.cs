@@ -82,10 +82,10 @@ namespace Weapsy.Domain.Sites
             HomePageId = cmd.HomePageId;
             AddLanguageSlug = cmd.AddLanguageSlug;
 
-            SetLOcalisations(cmd.SiteLocalisations);
+            SetLocalisations(cmd.SiteLocalisations);
         }
 
-        private void SetLOcalisations(IEnumerable<SiteLocalisation> localisations)
+        private void SetLocalisations(IEnumerable<SiteLocalisation> localisations)
         {
             SiteLocalisations.Clear();
 

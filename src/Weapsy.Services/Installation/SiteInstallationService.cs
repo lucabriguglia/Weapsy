@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Weapsy.Infrastructure.Identity;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Languages.Commands;
@@ -13,6 +14,9 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
+using Weapsy.Infrastructure.Commands;
+using Weapsy.Infrastructure.Queries;
+using Weapsy.Reporting.Sites.Queries;
 
 namespace Weapsy.Services.Installation
 {
@@ -36,6 +40,8 @@ namespace Weapsy.Services.Installation
         private readonly IValidator<CreateMenu> _createMenuValidator;
         private readonly IValidator<AddMenuItem> _addMenuItemValidator;
         private readonly IModuleTypeRepository _moduleTypeRepository;
+        private readonly ICommandSender _commandSender;
+        private readonly IQueryDispatcher _queryDispatcher;
 
         public SiteInstallationService(ISiteRepository siteRepository,
             IValidator<CreateSite> createSiteValidator,
@@ -53,7 +59,9 @@ namespace Weapsy.Services.Installation
             IMenuRepository menuRepository,
             IValidator<CreateMenu> createMenuValidator,
             IValidator<AddMenuItem> addMenuItemValidator,
-            IModuleTypeRepository moduleTypeRepository)
+            IModuleTypeRepository moduleTypeRepository, 
+            ICommandSender commandSender, 
+            IQueryDispatcher queryDispatcher)
         {
             _siteRepository = siteRepository;
             _createSiteValidator = createSiteValidator;
@@ -72,6 +80,8 @@ namespace Weapsy.Services.Installation
             _createMenuValidator = createMenuValidator;
             _addMenuItemValidator = addMenuItemValidator;
             _moduleTypeRepository = moduleTypeRepository;
+            _commandSender = commandSender;
+            _queryDispatcher = queryDispatcher;
         }
 
         public void VerifySiteInstallation()
@@ -327,6 +337,28 @@ namespace Weapsy.Services.Installation
             }, _updateSiteDetailsValidator);
 
             _siteRepository.Update(site);
+        }
+
+        public async Task EnsureSiteInstalled(string name)
+        {
+            if (!await _queryDispatcher.DispatchAsync<IsSiteInstalled, bool>(new IsSiteInstalled { Name = name }))
+                await InstallSite(name);
+        }
+
+        private async Task InstallSite(string name)
+        {
+            var siteId = Guid.NewGuid();
+            var englishLanguageId = Guid.NewGuid();
+            var mainMenuId = Guid.NewGuid();
+            var homePageId = Guid.NewGuid();
+
+            _commandSender.Send<CreateSite, Site>(new CreateSite
+            {
+                Id = siteId,
+                Name = "Default"
+            });
+
+            //.....
         }
     }
 }

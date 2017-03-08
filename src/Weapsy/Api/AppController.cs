@@ -97,8 +97,10 @@ namespace Weapsy.Api
         public async Task<IActionResult> AdminEdit(Guid id)
         {
             var model = await _queryDispatcher.DispatchAsync<GetAppAdminModel, AppAdminModel>(new GetAppAdminModel {Id = id});
+
             if (model == null)
                 return NotFound();
+
             return Ok(model);
         }
     }

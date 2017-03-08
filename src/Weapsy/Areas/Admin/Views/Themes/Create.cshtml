@@ -1,0 +1,25 @@
+﻿@model Weapsy.Reporting.Themes.ThemeAdminModel
+
+@{
+    ViewBag.Title = Localizer["Title"];
+}
+
+@section scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/admin/apps/shared.js"></script>
+    <script src="~/js/admin/apps/create.js"></script>
+}
+
+<div class="page-header">
+    <h1>@Localizer["Title"]</h1>
+</div>
+
+<form id="createThemeForm" name="createThemeForm" data-ajax="true" data-ajax-method="POST" data-ajax-url="/Admin/Theme/Save" data-ajax-begin="weapsy.admin.createTheme.loading" data-ajax-success="weapsy.admin.apps.redirectToIndex" class="form-horizontal validate-form" role="form">
+    @await Html.PartialAsync("_Theme")
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="save" type="submit" class="btn btn-primary" title="@Localizer["Button_Save"]">@Localizer["Button_Save"]</button>
+            <a href="@Url.Action("Index", "Theme", new { area = "Admin" })" class="btn btn-default" title="@Localizer["Button_Cancel"]">@Localizer["Button_Cancel"]</a>
+        </div>
+    </div>
+</form>

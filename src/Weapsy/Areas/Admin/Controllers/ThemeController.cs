@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Weapsy.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Domain.Apps;
-using Weapsy.Domain.Apps.Commands;
+using Weapsy.Domain.Themes;
+using Weapsy.Domain.Themes.Commands;
 using Weapsy.Infrastructure.Commands;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Mvc.Context;
-using Weapsy.Reporting.Apps;
-using Weapsy.Reporting.Apps.Queries;
+using Weapsy.Reporting.Themes;
+using Weapsy.Reporting.Themes.Queries;
 
 namespace Weapsy.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class AppController : BaseAdminController
+    public class ThemeController : BaseAdminController
     {
         private readonly ICommandSender _commandSender;
         private readonly IQueryDispatcher _queryDispatcher;
 
-        public AppController(ICommandSender commandSender,
+        public ThemeController(ICommandSender commandSender,
             IQueryDispatcher queryDispatcher,
             IContextService contextService)
             : base(contextService)
@@ -31,25 +31,25 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModelList, IEnumerable<AppAdminListModel>>(new GetAppAdminModelList());
+            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<ThemeAdminModel>>(new GetAllForAdmin());
             return View(model);
         }
 
         public IActionResult Create()
         {
-            return View(new AppAdminModel());
+            return View(new ThemeAdminModel());
         }
 
-        public IActionResult Save(CreateApp model)
+        public IActionResult Save(CreateTheme model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateApp, App>(model);
+            _commandSender.Send<CreateTheme, Theme>(model);
             return new NoContentResult();
         }
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModel, AppAdminModel>(new GetAppAdminModel { Id = id });
+            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, ThemeAdminModel>(new GetForAdmin { Id = id });
 
             if (model == null)
                 return NotFound();
@@ -57,9 +57,9 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public IActionResult Update(UpdateAppDetails model)
+        public IActionResult Update(UpdateThemeDetails model)
         {
-            _commandSender.Send<UpdateAppDetails, App>(model);
+            _commandSender.Send<UpdateThemeDetails, Theme>(model);
             return new NoContentResult();
         }
     }

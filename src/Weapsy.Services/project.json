@@ -6,7 +6,8 @@
     "Microsoft.NETCore.App": "1.1.0",
     "NETStandard.Library": "1.6.1",
     "Weapsy.Domain": "1.0.0-*",
-    "Weapsy.Infrastructure": "1.0.0-*"
+    "Weapsy.Infrastructure": "1.0.0-*",
+    "Weapsy.Reporting": "1.0.0-*"
   },
 
   "frameworks": {

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Weapsy.Reporting.Themes.ThemeAdminModel>
+
+@{
+    ViewBag.Title = Localizer["Title"];
+}
+
+@section scripts{
+    <script src="~/lib/Sortable/Sortable.js"></script>
+    <script src="~/js/admin/apps/index.js"></script>
+}
+
+<div class="page-header">
+    <h1>@Localizer["Title"]</h1>
+</div>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>@Localizer["Grid_Name"]</th>
+            <th>@Localizer["Grid_Description"]</th>
+            @*<th class="text-center">&nbsp;</th>*@
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var theme in Model)
+    {
+        <tr>
+            <td>@theme.Name</td>
+            <td>@theme.Description</td>
+            @*<td class="text-center">
+                <a href="@Url.Action("Edit", "Theme", new { area = "Admin", id =  app.Id })" class="glyphicon glyphicon-edit options" title="@Localizer["Button_Edit"]"></a>
+                <a href="#" class="glyphicon glyphicon-remove options delete-app" data-toggle="modal" data-target="#confirm-delete" data-id="@app.Id" title="@Localizer["Button_Delete"]"></a>
+            </td>*@
+        </tr>
+    }
+    </tbody>
+</table>
+
+@*<div>
+    <a href="@Url.Action("Create", "Theme", new { area = "Admin" })" class="btn btn-primary" title="@Localizer["Button_NewTheme_Title"]">@Localizer["Button_NewTheme"]</a>
+</div>*@
+
+@*@await Html.PartialAsync("_ConfirmDelete")*@
+
+<div style="font-style: italic; margin-top: 20px;">
+    Temporarily read only.
+</div>

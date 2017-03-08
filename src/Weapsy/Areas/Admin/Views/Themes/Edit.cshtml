@@ -1,0 +1,36 @@
+﻿@model Weapsy.Reporting.Themes.ThemeAdminModel
+
+@{
+    ViewBag.Title = Localizer["Title"];
+}
+
+@section scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/admin/apps/shared.js"></script>
+    <script src="~/js/admin/apps/edit.js"></script>
+    <script>
+        $(document).ready(function () {
+            var nameRequiredMessage = '@Localizer["Validation_NameRequired"]';
+            var rangeLengthMessage = '@Localizer["Validation_RangeLength"]';
+            var alreadyInUseMessage = '@Localizer["Validation_AlreadyInUse"]';
+        });
+    </script>
+}
+
+<div class="page-header">
+    <h1>@Localizer["Title"]</h1>
+</div>
+
+<form id="editThemeForm" name="editThemeForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/Theme/Update" data-ajax-begin="weapsy.admin.editTheme.loading" data-ajax-success="weapsy.admin.apps.redirectToIndex" class="form-horizontal validate-form" role="form">
+    <input type="hidden" id="id" name="id" value="@Model.Id" />
+    @await Html.PartialAsync("_Theme")
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="save" type="submit" class="btn btn-primary" title="@Localizer["Button_Update"]">@Localizer["Button_Update"]</button>
+            <a id="deleteTheme" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" title="@Localizer["Button_Delete"]">@Localizer["Button_Delete"]</a>
+            <a href="@Url.Action("Index", "Theme", new { area = "Admin" })" class="btn btn-default" title="@Localizer["Button_Cancel"]">@Localizer["Button_Cancel"]</a>
+        </div>
+    </div>
+</form>
+
+@await Html.PartialAsync("_ConfirmDelete")
