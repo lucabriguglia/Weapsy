@@ -17,6 +17,7 @@ namespace Weapsy.Data.Entities
         public string EditUrl { get; set; }
         public ModuleTypeStatus Status { get; set; }
 
+        public virtual App App { get; set; }
         public virtual ICollection<Module> Modules { get; set; } = new List<Module>();
     }
 }

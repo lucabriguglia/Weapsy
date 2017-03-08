@@ -13,7 +13,7 @@ namespace Weapsy.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.1")
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<System.Guid>", b =>
@@ -79,8 +79,6 @@ namespace Weapsy.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("UserRole");
                 });
 
@@ -144,8 +142,6 @@ namespace Weapsy.Data.Migrations
                     b.Property<Guid>("UserId");
 
                     b.HasKey("DomainAggregateId", "SequenceNumber");
-
-                    b.HasIndex("DomainAggregateId");
 
                     b.ToTable("DomainEvent");
                 });
@@ -266,8 +262,6 @@ namespace Weapsy.Data.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.HasIndex("MenuItemId");
-
                     b.ToTable("MenuItemLocalisation");
                 });
 
@@ -278,8 +272,6 @@ namespace Weapsy.Data.Migrations
                     b.Property<Guid>("RoleId");
 
                     b.HasKey("MenuItemId", "RoleId");
-
-                    b.HasIndex("MenuItemId");
 
                     b.ToTable("MenuItemPermission");
                 });
@@ -331,6 +323,8 @@ namespace Weapsy.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppId");
+
                     b.ToTable("ModuleType");
                 });
 
@@ -380,8 +374,6 @@ namespace Weapsy.Data.Migrations
 
                     b.HasKey("PageId", "LanguageId");
 
-                    b.HasIndex("PageId");
-
                     b.ToTable("PageLocalisation");
                 });
 
@@ -423,8 +415,6 @@ namespace Weapsy.Data.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.HasIndex("PageModuleId");
-
                     b.ToTable("PageModuleLocalisation");
                 });
 
@@ -438,8 +428,6 @@ namespace Weapsy.Data.Migrations
 
                     b.HasKey("PageModuleId", "RoleId", "Type");
 
-                    b.HasIndex("PageModuleId");
-
                     b.ToTable("PageModulePermission");
                 });
 
@@ -452,8 +440,6 @@ namespace Weapsy.Data.Migrations
                     b.Property<int>("Type");
 
                     b.HasKey("PageId", "RoleId", "Type");
-
-                    b.HasIndex("PageId");
 
                     b.ToTable("PagePermission");
                 });
@@ -475,6 +461,7 @@ namespace Weapsy.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("Role");
@@ -529,8 +516,6 @@ namespace Weapsy.Data.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("SiteId", "LanguageId");
-
-                    b.HasIndex("SiteId");
 
                     b.ToTable("SiteLocalisation");
                 });
@@ -717,6 +702,14 @@ namespace Weapsy.Data.Migrations
                     b.HasOne("Weapsy.Data.Entities.Site", "Site")
                         .WithMany("Modules")
                         .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Weapsy.Data.Entities.ModuleType", b =>
+                {
+                    b.HasOne("Weapsy.Data.Entities.App", "App")
+                        .WithMany("ModuleTypes")
+                        .HasForeignKey("AppId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

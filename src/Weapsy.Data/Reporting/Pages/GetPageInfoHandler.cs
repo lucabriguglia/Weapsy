@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Domain.Apps;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
@@ -140,14 +141,21 @@ namespace Weapsy.Data.Reporting.Pages
 
         private async Task<ModuleModel> CreateModule(WeapsyDbContext context, PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
-            var module = context.Modules.FirstOrDefault(x => x.Id == pageModule.ModuleId && x.Status != ModuleStatus.Deleted);
+            var module = context.Modules
+                .Include(x => x.ModuleType).ThenInclude(x => x.App)
+                .FirstOrDefault(x => x.Id == pageModule.ModuleId && x.Status != ModuleStatus.Deleted);
 
             if (module == null)
                 return null;
 
-            var moduleType = context.ModuleTypes.FirstOrDefault(x => x.Id == module.ModuleTypeId && x.Status != ModuleTypeStatus.Deleted);
+            var moduleType = module.ModuleType;
 
-            if (moduleType == null)
+            if (moduleType == null || moduleType.Status == ModuleTypeStatus.Deleted)
+                return null;
+
+            var app = moduleType.App;
+
+            if (app == null || app.Status == AppStatus.Deleted)
                 return null;
 
             var moduleRoles = new Dictionary<PermissionType, IEnumerable<string>>();
@@ -194,7 +202,7 @@ namespace Weapsy.Data.Reporting.Pages
                     ViewType = moduleType.ViewType,
                     ViewName = moduleType.ViewName,
                     EditType = moduleType.EditType,
-                    EditUrl = moduleType.EditUrl
+                    EditUrl = $"{app.Folder}/{moduleType.EditUrl}"
                 },
                 Template = new ModuleTemplateModel
                 {

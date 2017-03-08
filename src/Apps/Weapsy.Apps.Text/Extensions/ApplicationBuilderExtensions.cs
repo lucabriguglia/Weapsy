@@ -46,7 +46,7 @@ namespace Weapsy.Apps.Text.Extensions
                     ViewType = ViewType.ViewComponent,
                     ViewName = "TextModule",
                     EditType = EditType.Modal,
-                    EditUrl = "Weapsy.Apps.Text/Home/Index"
+                    EditUrl = "Home/Index"
                 }
             };
 

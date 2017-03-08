@@ -68,26 +68,6 @@ namespace Weapsy.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModuleType",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    AppId = table.Column<Guid>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    EditType = table.Column<int>(nullable: false),
-                    EditUrl = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    ViewName = table.Column<string>(nullable: true),
-                    ViewType = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ModuleType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
@@ -170,6 +150,32 @@ namespace Weapsy.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ModuleType",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    AppId = table.Column<Guid>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    EditType = table.Column<int>(nullable: false),
+                    EditUrl = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    ViewName = table.Column<string>(nullable: true),
+                    ViewType = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ModuleType", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModuleType_App_AppId",
+                        column: x => x.AppId,
+                        principalTable: "App",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -256,33 +262,6 @@ namespace Weapsy.Data.Migrations
                     table.PrimaryKey("PK_Menu", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Menu_Site_SiteId",
-                        column: x => x.SiteId,
-                        principalTable: "Site",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Module",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    ModuleTypeId = table.Column<Guid>(nullable: false),
-                    SiteId = table.Column<Guid>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Module", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Module_ModuleType_ModuleTypeId",
-                        column: x => x.ModuleTypeId,
-                        principalTable: "ModuleType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Module_Site_SiteId",
                         column: x => x.SiteId,
                         principalTable: "Site",
                         principalColumn: "Id",
@@ -397,6 +376,33 @@ namespace Weapsy.Data.Migrations
                         name: "FK_UserRole_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Module",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ModuleTypeId = table.Column<Guid>(nullable: false),
+                    SiteId = table.Column<Guid>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Module", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Module_ModuleType_ModuleTypeId",
+                        column: x => x.ModuleTypeId,
+                        principalTable: "ModuleType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Module_Site_SiteId",
+                        column: x => x.SiteId,
+                        principalTable: "Site",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -601,16 +607,6 @@ namespace Weapsy.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRole_UserId",
-                table: "UserRole",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DomainEvent_DomainAggregateId",
-                table: "DomainEvent",
-                column: "DomainAggregateId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_EmailAccount_SiteId",
                 table: "EmailAccount",
                 column: "SiteId");
@@ -631,16 +627,6 @@ namespace Weapsy.Data.Migrations
                 column: "LanguageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MenuItemLocalisation_MenuItemId",
-                table: "MenuItemLocalisation",
-                column: "MenuItemId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MenuItemPermission_MenuItemId",
-                table: "MenuItemPermission",
-                column: "MenuItemId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Module_ModuleTypeId",
                 table: "Module",
                 column: "ModuleTypeId");
@@ -651,14 +637,14 @@ namespace Weapsy.Data.Migrations
                 column: "SiteId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ModuleType_AppId",
+                table: "ModuleType",
+                column: "AppId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Page_SiteId",
                 table: "Page",
                 column: "SiteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PageLocalisation_PageId",
-                table: "PageLocalisation",
-                column: "PageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PageModule_PageId",
@@ -671,29 +657,10 @@ namespace Weapsy.Data.Migrations
                 column: "LanguageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PageModuleLocalisation_PageModuleId",
-                table: "PageModuleLocalisation",
-                column: "PageModuleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PageModulePermission_PageModuleId",
-                table: "PageModulePermission",
-                column: "PageModuleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PagePermission_PageId",
-                table: "PagePermission",
-                column: "PageId");
-
-            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "Role",
-                column: "NormalizedName");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SiteLocalisation_SiteId",
-                table: "SiteLocalisation",
-                column: "SiteId");
+                column: "NormalizedName",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -723,9 +690,6 @@ namespace Weapsy.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserToken");
-
-            migrationBuilder.DropTable(
-                name: "App");
 
             migrationBuilder.DropTable(
                 name: "DomainEvent");
@@ -783,6 +747,9 @@ namespace Weapsy.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Menu");
+
+            migrationBuilder.DropTable(
+                name: "App");
 
             migrationBuilder.DropTable(
                 name: "Page");
