@@ -9,6 +9,7 @@ using Weapsy.Infrastructure.Caching;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Sites.Queries;
+using Weapsy.Domain.Themes;
 
 namespace Weapsy.Data.Reporting.Sites
 {
@@ -88,6 +89,16 @@ namespace Weapsy.Data.Reporting.Sites
                     }).ToListAsync();
 
                 model.Pages.AddRange(pages);
+
+                var themes = await context.Themes
+                    .Where(x => x.Status == ThemeStatus.Active)
+                    .Select(theme => new ThemeListAdminModel
+                    {
+                        Id = theme.Id,
+                        Name = theme.Name
+                    }).ToListAsync();
+
+                model.Themes.AddRange(themes);
 
                 return model;
             }

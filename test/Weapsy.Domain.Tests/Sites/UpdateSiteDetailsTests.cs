@@ -31,6 +31,8 @@ namespace Weapsy.Domain.Tests.Sites
                 MetaDescription = "Meta Description",
                 MetaKeywords = "Meta Keywords",
                 AddLanguageSlug = true,
+                HomePageId = Guid.NewGuid(),
+                ThemeId = Guid.NewGuid(),
                 SiteLocalisations = new List<SiteLocalisation>
                 {
                     new SiteLocalisation
@@ -83,6 +85,18 @@ namespace Weapsy.Domain.Tests.Sites
         public void Should_set_add_language_slug()
         {
             Assert.AreEqual(_command.AddLanguageSlug, _site.AddLanguageSlug);
+        }
+
+        [Test]
+        public void Should_set_home_page_id()
+        {
+            Assert.AreEqual(_command.HomePageId, _site.HomePageId);
+        }
+
+        [Test]
+        public void Should_set_theme_id()
+        {
+            Assert.AreEqual(_command.ThemeId, _site.ThemeId);
         }
 
         [Test]
@@ -155,6 +169,18 @@ namespace Weapsy.Domain.Tests.Sites
         public void Should_set_add_language_slug_in_site_details_updated_event()
         {
             Assert.AreEqual(_site.AddLanguageSlug, _event.AddLanguageSlug);
+        }
+
+        [Test]
+        public void Should_set_home_page_id_in_site_details_updated_event()
+        {
+            Assert.AreEqual(_site.HomePageId, _event.HomePageId);
+        }
+
+        [Test]
+        public void Should_set_theme_id_in_site_details_updated_event()
+        {
+            Assert.AreEqual(_site.ThemeId, _event.ThemeId);
         }
 
         [Test]

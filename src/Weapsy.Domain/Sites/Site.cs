@@ -69,7 +69,9 @@ namespace Weapsy.Domain.Sites
                 MetaDescription = MetaDescription,
                 MetaKeywords = MetaKeywords,
                 SiteLocalisations = SiteLocalisations,
-                AddLanguageSlug = AddLanguageSlug
+                AddLanguageSlug = AddLanguageSlug,
+                HomePageId = HomePageId,
+                ThemeId = ThemeId
             });
         }
 
@@ -80,6 +82,7 @@ namespace Weapsy.Domain.Sites
             MetaDescription = cmd.MetaDescription;
             MetaKeywords = cmd.MetaKeywords;
             HomePageId = cmd.HomePageId;
+            ThemeId = cmd.ThemeId;
             AddLanguageSlug = cmd.AddLanguageSlug;
 
             SetLocalisations(cmd.SiteLocalisations);

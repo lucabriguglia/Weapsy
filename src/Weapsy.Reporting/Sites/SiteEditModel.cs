@@ -19,6 +19,7 @@ namespace Weapsy.Reporting.Sites
 
         public List<SiteLocalisationAdminModel> SiteLocalisations { get; set; } = new List<SiteLocalisationAdminModel>();
         public List<PageListAdminModel> Pages { get; set; } = new List<PageListAdminModel>();
+        public List<ThemeListAdminModel> Themes { get; set; } = new List<ThemeListAdminModel>();
     }
 
     public class SiteLocalisationAdminModel
@@ -33,6 +34,12 @@ namespace Weapsy.Reporting.Sites
     }
 
     public class PageListAdminModel
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class ThemeListAdminModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

@@ -120,11 +120,21 @@
             <span style="font-style: italic;">* Language Not Active</span>
         }
     </div>
+
     <div id="Appearance" class="tab-pane">
-        <div style="font-style: italic;">
-            Coming soon.
-        </div>
+        <div class="form-group has-feedback">
+            <label for="ThemeId" class="col-md-2 control-label">Theme</label>
+            <div class="col-md-4">
+                <input id="originalThemeId" type="hidden" value="@Model.ThemeId" />
+                <select asp-for="ThemeId" asp-items="@(new SelectList(Model.Themes, "Id", "Name"))" class="form-control"></select>
+                <i class="form-control-feedback glyphicon"></i>
+            </div>
+            <div class="col-md-6 help-block">
+                <label id="ThemeId-error" for="ThemeId" class="text-danger" style="display:none;"></label>
+            </div>
+        </div>  
     </div>
+
     <div id="Advanced" class="tab-pane">
         <div class="form-group has-feedback">
             <label for="addLanguageSlug" class="col-md-2 control-label">Add Language Slug</label>
