@@ -29,6 +29,7 @@ using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Mvc.Extensions;
+using Weapsy.Reporting.Themes;
 
 namespace Weapsy
 {
@@ -155,6 +156,19 @@ namespace Weapsy
             app.UseTheme();
 
             app.UseStaticFiles();
+
+            foreach (var theme in queryDispatcher.DispatchAsync<GetActiveThemes, IEnumerable<ThemeInfo>>(new GetActiveThemes()).Result)
+            {
+                var contentPath = Path.Combine(hostingEnvironment.ContentRootPath, "Themes", theme.Folder, "wwwroot");
+                if (Directory.Exists(contentPath))
+                {
+                    app.UseStaticFiles(new StaticFileOptions
+                    {
+                        RequestPath = "/" + theme.Folder,
+                        FileProvider = new PhysicalFileProvider(contentPath)
+                    });
+                }
+            }
 
             foreach (var appDescriptor in AppLoader.Instance(hostingEnvironment).AppDescriptors)
             {
