@@ -21,7 +21,7 @@
             <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/themes/ui-lightness/jquery-ui.css"
                   asp-fallback-href="~/lib/jquery-ui/themes/ui-lightness/jquery-ui.css"
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />            
-            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+            <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         </environment>
         @*@Html.ApplicationInsightsJavaScript(TelemetryConfiguration)*@
     </head>
@@ -72,25 +72,22 @@
 <environment names="Staging,Production">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
             asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-            asp-fallback-test="window.jQuery">
-            
+            asp-fallback-test="window.jQuery">            
     </script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
             asp-fallback-src="~/lib/jquery-ui/jquery-ui.min.js"
-            asp-fallback-test="window.jQuery">
-            
+            asp-fallback-test="window.jQuery">            
     </script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
             asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-            asp-fallback-test="window.jQuery">
-            
+            asp-fallback-test="window.jQuery">            
     </script>
     <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.0.js"
             asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.js"
-            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-            
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">            
     </script>
-    <script src="~/js/app.min.js" asp-append-version="true"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/js/control-panel.js"></script>
 </environment>
 
 @await Html.PartialAsync("_ValidationScriptsPartial")

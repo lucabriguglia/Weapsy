@@ -28,6 +28,7 @@ using Weapsy.Data.Extensions;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Domain.Themes.Commands;
+using Weapsy.Mvc.Extensions;
 
 namespace Weapsy
 {
@@ -150,6 +151,8 @@ namespace Weapsy
             {
                 app.UseExceptionHandler("/error/500");
             }
+
+            app.UseTheme();
 
             app.UseStaticFiles();
 

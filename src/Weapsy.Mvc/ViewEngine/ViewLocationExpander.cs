@@ -6,11 +6,11 @@ namespace Weapsy.Mvc.ViewEngine
 {
     public class ViewLocationExpander : IViewLocationExpander
     {
-        private const string ThemeKey = "theme";
+        public const string ThemeKey = "Theme";
 
         public void PopulateValues(ViewLocationExpanderContext context)
         {
-            string theme = "Default";
+            string theme = context.ActionContext.HttpContext.Items[ThemeKey].ToString();
             context.Values[ThemeKey] = theme;
         }
 

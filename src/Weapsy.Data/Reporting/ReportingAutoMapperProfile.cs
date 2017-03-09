@@ -31,6 +31,7 @@ namespace Weapsy.Data.Reporting
             CreateMap<SiteLocalisation, SiteLocalisationAdminModel>();
             CreateMap<Site, SiteInfo>();
             CreateMap<Theme, ThemeAdminModel>();
+            CreateMap<Theme, ThemeInfo>();
             CreateMap<User, UserAdminModel>();
             CreateMap<User, UserAdminListModel>();
             CreateMap<User, UserInfo>();
