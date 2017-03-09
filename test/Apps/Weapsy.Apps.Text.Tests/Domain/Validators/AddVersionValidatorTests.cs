@@ -38,7 +38,7 @@ namespace Weapsy.Apps.Text.Tests.Domain.Validators
                 languageRulesMock.Object,
                 localisationValidator.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Id, command);
+            validator.ShouldHaveValidationErrorFor(x => x.ModuleId, command);
         }
 
         [Test]

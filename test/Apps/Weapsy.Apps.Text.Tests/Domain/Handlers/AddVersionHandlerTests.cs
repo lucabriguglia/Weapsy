@@ -31,22 +31,26 @@ namespace Weapsy.Apps.Text.Tests.Domain.Handlers
 
             var addVersionHandler = new AddVersionHandler(textModuleRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => addVersionHandler.Handle(command));
+            Assert.Throws<Exception>(() => addVersionHandler.Handle(command));
         }
 
         [Test]
         public void Should_validate_command_and_save_new_textModule()
         {
+            var textModule = TextModuleFactory.Get();
+
             var command = new AddVersion
             {
                 SiteId = Guid.NewGuid(),
-                ModuleId = Guid.NewGuid(),
+                ModuleId = textModule.ModuleId,
                 Id = Guid.NewGuid(),
-                Content = "Content"
+                Content = "Content",
+                Status = TextVersionStatus.Draft
             };
 
             var textModuleRepositoryMock = new Mock<ITextModuleRepository>();
-            textModuleRepositoryMock.Setup(x => x.Create(It.IsAny<TextModule>()));
+            textModuleRepositoryMock.Setup(x => x.GetByModuleId(command.ModuleId)).Returns(textModule);
+            textModuleRepositoryMock.Setup(x => x.Update(It.IsAny<TextModule>()));
 
             var validatorMock = new Mock<IValidator<AddVersion>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
@@ -55,7 +59,7 @@ namespace Weapsy.Apps.Text.Tests.Domain.Handlers
             addVersionHandler.Handle(command);
 
             validatorMock.Verify(x => x.Validate(command));
-            textModuleRepositoryMock.Verify(x => x.Create(It.IsAny<TextModule>()));
+            textModuleRepositoryMock.Verify(x => x.Update(It.IsAny<TextModule>()));
         }
     }
 }

@@ -28,8 +28,8 @@ namespace Weapsy.Apps.Text.Tests.Domain
             _command = new AddVersion
             {
                 SiteId = Guid.NewGuid(),
-                ModuleId = Guid.NewGuid(),
-                Id = Guid.NewGuid(),
+                ModuleId = _textModule.ModuleId,
+                Id = _textModule.Id,
                 VersionId = Guid.NewGuid(),
                 Content = "Content",
                 Description = "Description",
@@ -73,7 +73,7 @@ namespace Weapsy.Apps.Text.Tests.Domain
         }
 
         [Test]
-        public void Should_set_status_text_module_in_new_version()
+        public void Should_set_text_module_id_in_new_version()
         {
             Assert.AreEqual(_command.Id, _newVersion.TextModuleId);
         }

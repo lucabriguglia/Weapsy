@@ -53,6 +53,8 @@ namespace Weapsy.Apps.Text.Tests.Domain
 
             textModule.AddVersion(addVersionCommand, _addVersionValidatorMock.Object);
 
+            textModule.Events.Clear();
+
             return textModule;
         }
     }

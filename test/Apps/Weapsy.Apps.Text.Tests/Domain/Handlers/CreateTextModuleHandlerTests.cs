@@ -31,7 +31,7 @@ namespace Weapsy.Apps.Text.Tests.Domain.Handlers
 
             var createTextModuleHandler = new CreateTextModuleHandler(textModuleRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<ValidationException>(() => createTextModuleHandler.Handle(command));
+            Assert.Throws<Exception>(() => createTextModuleHandler.Handle(command));
         }
 
         [Test]
