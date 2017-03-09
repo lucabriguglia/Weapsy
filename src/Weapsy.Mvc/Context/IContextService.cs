@@ -1,5 +1,4 @@
-﻿using Weapsy.Domain.Languages;
-using Weapsy.Reporting.Languages;
+﻿using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Users;

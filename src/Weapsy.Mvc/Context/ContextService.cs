@@ -45,11 +45,11 @@ namespace Weapsy.Mvc.Context
             return GetInfo(LanguageInfoKey, () =>
             {
                 var languages = _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = GetCurrentSiteInfo().Id }).Result;
-                var userCoockie = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
+                var userCookie = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
-                if (!string.IsNullOrEmpty(userCoockie))
+                if (!string.IsNullOrEmpty(userCookie))
                 {
-                    var userCulture = userCoockie.Split('|')[0].Split('=')[1];
+                    var userCulture = userCookie.Split('|')[0].Split('=')[1];
 
                     var userLanguage = languages.FirstOrDefault(x => x.CultureName == userCulture);
 
@@ -63,7 +63,17 @@ namespace Weapsy.Mvc.Context
 
         public ThemeInfo GetCurrentThemeInfo()
         {
-            throw new NotImplementedException();
+            return GetInfo(ThemeInfoKey, () =>
+            {
+                var themes = _queryDispatcher.DispatchAsync<GetActiveThemes, IEnumerable<ThemeInfo>>(new GetActiveThemes()).Result;
+
+                var theme = themes.FirstOrDefault(x => x.Id == GetCurrentSiteInfo().ThemeId);
+
+                if (theme == null)
+                    return themes.FirstOrDefault();
+
+                return theme;
+            });
         }
 
         public UserInfo GetCurrentUserInfo()
