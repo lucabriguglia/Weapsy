@@ -27,6 +27,7 @@ using Microsoft.Extensions.FileProviders;
 using Weapsy.Data.Extensions;
 using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages.Queries;
+using Weapsy.Domain.Themes.Commands;
 
 namespace Weapsy
 {
@@ -125,6 +126,7 @@ namespace Weapsy
             IHostingEnvironment hostingEnvironment,
             ILoggerFactory loggerFactory,
             ISiteInstallationService siteInstallationService,
+            IThemeInstallationService themeInstallationService,
             ISiteRepository siteRepository,
             IQueryDispatcher queryDispatcher)
         {
@@ -177,6 +179,7 @@ namespace Weapsy
 
             app.UseIdentity();
 
+            themeInstallationService.EnsureThemeInstalled(new CreateTheme { Name = "Default", Folder = "Default" });
             siteInstallationService.VerifySiteInstallation();
 
             var site = siteRepository.GetByName("Default");
