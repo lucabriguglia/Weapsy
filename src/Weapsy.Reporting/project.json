@@ -8,13 +8,8 @@
   },
 
   "frameworks": {
-    "netcoreapp1.0": {
-      "dependencies": {
-        "Microsoft.NETCore.App": {
-          "version": "1.1.0",
-          "type": "platform"
-        }
-      }
+    "netstandard1.6": {
+      "imports": "dnxcore50"
     }
   }
 }
