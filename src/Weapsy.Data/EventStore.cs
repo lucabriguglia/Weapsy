@@ -41,7 +41,7 @@ namespace Weapsy.Data
 
                 var userId = Guid.Empty;
 
-                if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                 {
                     userId = context.Users
                         .Where(x => x.UserName == _httpContextAccessor.HttpContext.User.Identity.Name)
@@ -82,7 +82,7 @@ namespace Weapsy.Data
 
                 var userId = Guid.Empty;
 
-                if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
                 {
                     userId = await context.Users
                         .Where(x => x.UserName == _httpContextAccessor.HttpContext.User.Identity.Name)
