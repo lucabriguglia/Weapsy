@@ -179,7 +179,7 @@ namespace Weapsy
 
             app.UseIdentity();
 
-            themeInstallationService.EnsureThemeInstalled(new CreateTheme { Name = "Default", Folder = "Default" });
+            themeInstallationService.EnsureThemeInstalled(new CreateTheme { Name = "Default", Description = "Default Theme", Folder = "Default" });
             siteInstallationService.VerifySiteInstallation();
 
             var site = siteRepository.GetByName("Default");
