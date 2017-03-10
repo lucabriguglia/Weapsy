@@ -1,0 +1,19 @@
+﻿@model Weapsy.Reporting.Pages.PageInfo
+
+<div id="page" data-page-id="@Model.Page.Id" class="clearfix">
+    <div class="col-md-12 zone" data-zone-name="Content">
+        @await Component.InvokeAsync("Zone", new { model = Model.Zone("Header") })
+    </div>
+    <div class="col-md-4 zone" data-zone-name="Left">
+        @await Component.InvokeAsync("Zone", new { model = Model.Zone("Left") } )
+    </div>
+    <div class="col-md-4 zone" data-zone-name="Left">
+        @await Component.InvokeAsync("Zone", new { model = Model.Zone("Center") })
+    </div>
+    <div class="col-md-4 zone" data-zone-name="Right">
+        @await Component.InvokeAsync("Zone", new { model = Model.Zone("Right") })
+    </div>
+    <div class="col-md-12 zone" data-zone-name="Footer">
+        @await Component.InvokeAsync("Zone", new { model = Model.Zone("Footer") })
+    </div>
+</div>

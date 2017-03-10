@@ -164,7 +164,7 @@ namespace Weapsy
                 {
                     app.UseStaticFiles(new StaticFileOptions
                     {
-                        RequestPath = "/" + theme.Folder,
+                        RequestPath = "/Themes/" + theme.Folder,
                         FileProvider = new PhysicalFileProvider(contentPath)
                     });
                 }

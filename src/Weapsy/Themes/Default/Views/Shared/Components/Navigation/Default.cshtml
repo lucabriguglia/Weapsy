@@ -5,7 +5,7 @@
     {
         <li class="@(menuItem.Children.Any() ? "dropdown" : "")">
             <a data-toggle="@(menuItem.Children.Any() ? "dropdown" : "")" href="@menuItem.Url" title="@menuItem.Title">@menuItem.Text</a>
-            @await Html.PartialAsync("~/Views/Shared/Components/Navigation/_ChildrenPartial.cshtml", menuItem.Children)
+            @await Html.PartialAsync("_ChildrenPartial.cshtml", menuItem.Children)
         </li>        
     }
 </ul>
