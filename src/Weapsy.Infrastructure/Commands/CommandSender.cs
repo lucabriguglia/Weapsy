@@ -6,6 +6,7 @@ using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Infrastructure.Commands
 {
+    //needs refactoring (create private functions for duplicated code)
     public class CommandSender : ICommandSender
     {
         private readonly IResolver _resolver;

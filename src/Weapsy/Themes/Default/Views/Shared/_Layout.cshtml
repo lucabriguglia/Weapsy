@@ -1,31 +1,21 @@
-﻿@inject Weapsy.Mvc.Context.IContextService ContextService
+﻿@model Weapsy.Reporting.Pages.PageInfo
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewBag.Title</title>
-        <meta name="Description" content="@ViewBag.MetaDescription" />
-        <meta name="Keywords" content="@ViewBag.MetaKeywords" />
-
-        <environment names="Development">
-            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-            <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
-            <link rel="stylesheet" href="~/lib/jquery-ui/themes/ui-lightness/jquery-ui.css" />
-            <link rel="stylesheet" href="~/Themes/Default/css/site.css" />
-        </environment>
-        <environment names="Staging,Production">
-            <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
-                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-            <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
-            <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/themes/ui-lightness/jquery-ui.css"
-                  asp-fallback-href="~/lib/jquery-ui/themes/ui-lightness/jquery-ui.css"
-                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />            
-            <link rel="stylesheet" href="~/Themes/Default/css/site.css" asp-append-version="true" />
-        </environment>
-        @*@Html.ApplicationInsightsJavaScript(TelemetryConfiguration)*@
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Model.Page.Title</title>
+    <meta name="Description" content="@Model.Page.MetaDescription" />
+    <meta name="Keywords" content="@Model.Page.MetaKeywords" />
+    @await Html.PartialAsync("_StylesPartial")
+    <environment names="Development">
+        <link rel="stylesheet" href="~/Themes/Default/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">           
+        <link rel="stylesheet" href="~/Themes/Default/css/site.css" asp-append-version="true" />
+    </environment>
+    @*@Html.ApplicationInsightsJavaScript(TelemetryConfiguration)*@
+</head>
 <body>
 <div class="navbar navbar-inverse navbar-fixed-top">
     @await Component.InvokeAsync("ControlPanel")
@@ -51,48 +41,12 @@
     <hr/>
     <footer>
         <p class="pull-left">&copy; 2016 - Weapsy</p>
-        <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a>
-        </p>
+        <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a></p>
     </footer>
 </div>
-
-@await Html.PartialAsync("_AdminModal")
-@await Html.PartialAsync("_DeleteModuleModal")
 @await Html.PartialAsync("_ErrorModal")
-
-<environment names="Development">
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/jquery-ui/jquery-ui.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/lib/knockout/dist/knockout.js"></script>
-    <script src="~/js/app.js"></script>
-    <script src="~/js/control-panel.js"></script>
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-</environment>
-<environment names="Staging,Production">
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
-            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-            asp-fallback-test="window.jQuery">            
-    </script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
-            asp-fallback-src="~/lib/jquery-ui/jquery-ui.min.js"
-            asp-fallback-test="window.jQuery">            
-    </script>
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js"
-            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-            asp-fallback-test="window.jQuery">            
-    </script>
-    <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.4.0.js"
-            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.js"
-            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">            
-    </script>
-    <script src="~/js/app.js"></script>
-    <script src="~/js/control-panel.js"></script>
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-</environment>
-
+@await Html.PartialAsync("_ScriptsPartial")
 @await Html.PartialAsync("_ValidationScriptsPartial")
-
 @RenderSection("scripts", required: false)
 </body>
 </html>

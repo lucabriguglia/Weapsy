@@ -42,10 +42,6 @@ namespace Weapsy.Controllers
             if (pageInfo == null || !_securityService.IsUserAuthorized(User, pageInfo.Page.Roles[PermissionType.View]))
                 return NotFound();
 
-            ViewBag.Title = pageInfo.Page.Title;
-            ViewBag.MetaDescription = pageInfo.Page.MetaDescription;
-            ViewBag.MetaKeywords = pageInfo.Page.MetaKeywords;
-
             return View(pageInfo);
         }
 
