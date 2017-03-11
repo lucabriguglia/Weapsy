@@ -33,6 +33,7 @@ namespace Weapsy.Data.Reporting.Pages
             _queryDispatcher = queryDispatcher;
         }
 
+        //needs refactoring (using factories)
         public async Task<PageInfo> RetrieveAsync(GetPageInfo query)
         {
             return await _cacheManager.Get(string.Format(CacheKeys.PageInfoCacheKey, query.SiteId, query.PageId, query.LanguageId), async () =>
