@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Api;
 using Weapsy.Data.Domain;
 using Weapsy.Data.Reporting;
+using Weapsy.Infrastructure.Extensions;
 using Weapsy.Mvc.Apps;
 
 namespace Weapsy.Extensions

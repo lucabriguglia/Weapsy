@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@Model.Page.Title</title>
-    <meta name="Description" content="@Model.Page.MetaDescription" />
-    <meta name="Keywords" content="@Model.Page.MetaKeywords" />
+    <title>@ViewBag.Title</title>
+    <meta name="Description" content="@ViewBag.MetaDescription" />
+    <meta name="Keywords" content="@ViewBag.MetaKeywords" />
     @await Html.PartialAsync("_StylesPartial")
     <environment names="Development">
         <link rel="stylesheet" href="~/Themes/Default/css/site.css" />

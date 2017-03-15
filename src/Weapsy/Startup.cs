@@ -30,6 +30,7 @@ using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Mvc.Extensions;
 using Weapsy.Reporting.Themes;
+using Weapsy.Infrastructure.Extensions;
 
 namespace Weapsy
 {

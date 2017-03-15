@@ -19,7 +19,7 @@ namespace Weapsy.Mvc.Middleware
 
         public Task Invoke(HttpContext context)
         {
-            context.Request.HttpContext.Items[ViewLocationExpander.ThemeKey] = _contextService.GetCurrentThemeInfo().Folder;
+            context.Request.HttpContext.Items[ViewLocationExpander.ThemeKey] = "Default"; //_contextService.GetCurrentThemeInfo().Folder;
             return _next(context);
         }
     }
