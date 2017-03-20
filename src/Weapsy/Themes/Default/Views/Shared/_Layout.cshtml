@@ -44,9 +44,9 @@
         <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a></p>
     </footer>
 </div>
-@await Html.PartialAsync("_ErrorModal")
 @await Html.PartialAsync("_ScriptsPartial")
 @await Html.PartialAsync("_ValidationScriptsPartial")
 @RenderSection("scripts", required: false)
+@await Html.PartialAsync("_Modals")
 </body>
 </html>
