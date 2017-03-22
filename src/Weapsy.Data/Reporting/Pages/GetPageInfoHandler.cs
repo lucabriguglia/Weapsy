@@ -40,19 +40,12 @@ namespace Weapsy.Data.Reporting.Pages
             {
                 using (var context = _contextFactory.Create())
                 {
-                    var page = GetPage(context, query.SiteId, query.PageId);
+                    var page = await GetPage(context, query.SiteId, query.PageId);
 
                     if (page == null)
                         return null;
 
-                    var roles = new Dictionary<PermissionType, IEnumerable<string>>();
-                    foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
-                    {
-                        var pageRoleIds = page.PagePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
-                        var pageRoleNames = await _queryDispatcher
-                            .DispatchAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = pageRoleIds });
-                        roles.Add(permisisonType, pageRoleNames);
-                    }
+                    var roles = await GetRoles(page);
 
                     var site = await context.Sites.FirstOrDefaultAsync(x => x.Id == query.SiteId && x.Status == SiteStatus.Active);
 
@@ -103,6 +96,19 @@ namespace Weapsy.Data.Reporting.Pages
                     return result;
                 }
             });
+        }
+
+        private async Task<Dictionary<PermissionType, IEnumerable<string>>> GetRoles(Entities.Page page)
+        {
+            var roles = new Dictionary<PermissionType, IEnumerable<string>>();
+            foreach (PermissionType permisisonType in Enum.GetValues(typeof(PermissionType)))
+            {
+                var pageRoleIds = page.PagePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
+                var pageRoleNames = await _queryDispatcher
+                    .DispatchAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = pageRoleIds });
+                roles.Add(permisisonType, pageRoleNames);
+            }
+            return roles;
         }
 
         private async Task<ICollection<ZoneModel>> CreateZones(WeapsyDbContext context, Page page, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
@@ -214,21 +220,21 @@ namespace Weapsy.Data.Reporting.Pages
             return moduleModel;
         }
 
-        private Page GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
+        private async Task<Page> GetPage(WeapsyDbContext context, Guid siteId, Guid pageId)
         {
-            var page = context.Pages
+            var page = await context.Pages
                 .Include(x => x.PageLocalisations)
                 .Include(x => x.PagePermissions)
-                .FirstOrDefault(x => x.SiteId == siteId && x.Id == pageId && x.Status == PageStatus.Active);
+                .FirstOrDefaultAsync(x => x.SiteId == siteId && x.Id == pageId && x.Status == PageStatus.Active);
 
             if (page == null)
                 return null;
 
-            page.PageModules = context.PageModules
+            page.PageModules = await context.PageModules
                 .Include(y => y.PageModuleLocalisations)
                 .Include(y => y.PageModulePermissions)
                 .Where(x => x.PageId == pageId && x.Status == PageModuleStatus.Active)
-                .ToList();
+                .ToListAsync();
 
             return page;
         }

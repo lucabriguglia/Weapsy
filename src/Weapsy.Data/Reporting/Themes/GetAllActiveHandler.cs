@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -35,7 +36,19 @@ namespace Weapsy.Data.Reporting.Themes
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 
-                    return _mapper.Map<IEnumerable<ThemeInfo>>(entities);
+                    if (entities.Any())
+                        return _mapper.Map<IEnumerable<ThemeInfo>>(entities);
+
+                    return new List<ThemeInfo>
+                    {
+                        new ThemeInfo
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = "Deafult",
+                            Folder = "Default",
+                            SortOrder = 1
+                        }
+                    };
                 }
             });
         }
