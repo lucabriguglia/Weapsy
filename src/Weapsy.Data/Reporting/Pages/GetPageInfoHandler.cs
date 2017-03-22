@@ -80,15 +80,9 @@ namespace Weapsy.Data.Reporting.Pages
                             Title = title,
                             MetaDescription = metaDescription,
                             MetaKeywords = metaKeywords,
+                            Theme = "Default",
+                            Template = "Default",
                             Roles = roles
-                        },
-                        Theme = new ThemeModel
-                        {
-                            Name = "Default"
-                        },
-                        Template = new PageTemplateModel
-                        {
-                            ViewName = "Default"
                         },
                         Zones = await CreateZones(context, page, roles, query.LanguageId)
                     };
