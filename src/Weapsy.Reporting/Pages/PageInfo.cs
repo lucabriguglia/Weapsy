@@ -44,14 +44,9 @@ namespace Weapsy.Reporting.Pages
         public string Title { get; set; }
         public string Zone { get; set; }
         public int SortOrder { get; set; }
-        public ModuleTemplateModel Template { get; set; } = new ModuleTemplateModel();
+        public string Template { get; set; }
         public ModuleTypeModel ModuleType { get; set; } = new ModuleTypeModel();
         public Dictionary<PermissionType, IEnumerable<string>> Roles { get; set; }
-    }
-
-    public class ModuleTemplateModel
-    {
-        public string ViewName { get; set; } = "Default";
     }
 
     public class ModuleTypeModel

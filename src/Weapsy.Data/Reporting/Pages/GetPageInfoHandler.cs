@@ -142,9 +142,9 @@ namespace Weapsy.Data.Reporting.Pages
 
         private async Task<ModuleModel> CreateModule(WeapsyDbContext context, PageModule pageModule, Dictionary<PermissionType, IEnumerable<string>> roles, Guid languageId)
         {
-            var module = context.Modules
+            var module = await context.Modules
                 .Include(x => x.ModuleType).ThenInclude(x => x.App)
-                .FirstOrDefault(x => x.Id == pageModule.ModuleId && x.Status != ModuleStatus.Deleted);
+                .FirstOrDefaultAsync(x => x.Id == pageModule.ModuleId && x.Status != ModuleStatus.Deleted);
 
             if (module == null)
                 return null;
@@ -197,6 +197,7 @@ namespace Weapsy.Data.Reporting.Pages
                 Title = title,
                 Zone = pageModule.Zone,
                 SortOrder = pageModule.SortOrder,
+                Template = "Default",
                 Roles = moduleRoles,
                 ModuleType = new ModuleTypeModel
                 {
@@ -204,10 +205,6 @@ namespace Weapsy.Data.Reporting.Pages
                     ViewName = moduleType.ViewName,
                     EditType = moduleType.EditType,
                     EditUrl = $"{app.Folder}/{moduleType.EditUrl}"
-                },
-                Template = new ModuleTemplateModel
-                {
-                    ViewName = "Default"
                 }
             };
 

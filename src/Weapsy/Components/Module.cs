@@ -25,8 +25,8 @@ namespace Weapsy.Components
             if (!_securityService.IsUserAuthorized(User, model.Roles[PermissionType.View]))
                 return Content(string.Empty);
 
-            var viewName = !string.IsNullOrEmpty(model.Template.ViewName)
-                ? model.Template.ViewName
+            var viewName = !string.IsNullOrEmpty(model.Template)
+                ? model.Template
                 : "Default";
 
             return View(viewName, model);
