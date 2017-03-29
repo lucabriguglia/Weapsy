@@ -6,7 +6,6 @@ using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Infrastructure.Commands
 {
-    //needs refactoring (create private functions for duplicated code)
     public class CommandSender : ICommandSender
     {
         private readonly IResolver _resolver;
@@ -24,13 +23,7 @@ namespace Weapsy.Infrastructure.Commands
 
         public void Send<TCommand>(TCommand command, bool publishEvents = true) where TCommand : ICommand
         {
-            if (command == null)
-                throw new ArgumentNullException(nameof(command));
-
-            var commandHandler = _resolver.Resolve<ICommandHandler<TCommand>>();
-
-            if (commandHandler == null)
-                throw new Exception($"No handler found for command '{command.GetType().FullName}'");
+            var commandHandler = GetHandler<ICommandHandler<TCommand>, TCommand>(command);
 
             var events = commandHandler.Handle(command);
 
@@ -48,13 +41,7 @@ namespace Weapsy.Infrastructure.Commands
             where TCommand : ICommand
             where TAggregate : IAggregateRoot
         {
-            if (command == null)
-                throw new ArgumentNullException(nameof(command));
-
-            var commandHandler = _resolver.Resolve<ICommandHandler<TCommand>>();
-
-            if (commandHandler == null)
-                throw new Exception($"No handler found for command '{command.GetType().FullName}'");
+            var commandHandler = GetHandler<ICommandHandler<TCommand>, TCommand>(command);
 
             var events = commandHandler.Handle(command);
 
@@ -73,13 +60,7 @@ namespace Weapsy.Infrastructure.Commands
 
         public async Task SendAsync<TCommand>(TCommand command, bool publishEvents = true) where TCommand : ICommand
         {
-            if (command == null)
-                throw new ArgumentNullException(nameof(command));
-
-            var commandHandler = _resolver.Resolve<ICommandHandlerAsync<TCommand>>();
-
-            if (commandHandler == null)
-                throw new Exception($"No handler found for command '{command.GetType().FullName}'");
+            var commandHandler = GetHandler<ICommandHandlerAsync<TCommand>, TCommand>(command);
 
             var events = await commandHandler.HandleAsync(command);
 
@@ -97,13 +78,7 @@ namespace Weapsy.Infrastructure.Commands
             where TCommand : ICommand 
             where TAggregate : IAggregateRoot
         {
-            if (command == null)
-                throw new ArgumentNullException(nameof(command));
-
-            var commandHandler = _resolver.Resolve<ICommandHandlerAsync<TCommand>>();
-
-            if (commandHandler == null)
-                throw new Exception($"No handler found for command '{command.GetType().FullName}'");
+            var commandHandler = GetHandler<ICommandHandlerAsync<TCommand>, TCommand>(command);
 
             var events = await commandHandler.HandleAsync(command);
 
@@ -118,6 +93,19 @@ namespace Weapsy.Infrastructure.Commands
 
                 await _eventPublisher.PublishAsync(concreteEvent);
             }
+        }
+
+        private THandler GetHandler<THandler, TCommand>(TCommand command) where TCommand : ICommand 
+        {
+            if (command == null)
+                throw new ArgumentNullException(nameof(command));
+
+            var commandHandler = _resolver.Resolve<THandler>();
+
+            if (commandHandler == null)
+                throw new Exception($"No handler found for command '{command.GetType().FullName}'");
+
+            return commandHandler;
         }
     }
 }
