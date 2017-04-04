@@ -10,7 +10,7 @@ using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Reporting.Pages.Queries;
 
-namespace Weapsy.Extensions
+namespace Weapsy.Mvc.Extensions
 {
     public class PageSlugRoute : IRouter
     {
