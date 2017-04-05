@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Weapsy.Infrastructure.DependencyResolver;
 
@@ -15,10 +16,7 @@ namespace Weapsy.Infrastructure.Events
 
         public void Publish<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            if (@event == null)
-                throw new ArgumentNullException(nameof(@event));
-
-            var eventHandlers = _resolver.ResolveAll<IEventHandler<TEvent>>();
+            var eventHandlers = GetHandlers<IEventHandler<TEvent>, TEvent>(@event);
 
             foreach (var handler in eventHandlers)
                 handler.Handle(@event);
@@ -26,13 +24,20 @@ namespace Weapsy.Infrastructure.Events
 
         public async Task PublishAsync<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            if (@event == null)
-                throw new ArgumentNullException(nameof(@event));
-
-            var eventHandlers = _resolver.ResolveAll<IEventHandlerAsync<TEvent>>();
+            var eventHandlers = GetHandlers<IEventHandlerAsync<TEvent>, TEvent>(@event);
 
             foreach (var handler in eventHandlers)
                 await handler.HandleAsync(@event);
+        }
+
+        private IEnumerable<THandler> GetHandlers<THandler, TEvent>(TEvent @event) where TEvent : IEvent
+        {
+            if (@event == null)
+                throw new ArgumentNullException(nameof(@event));
+
+            var eventHandlers = _resolver.ResolveAll<THandler>();
+
+            return eventHandlers;
         }
     }
 }
