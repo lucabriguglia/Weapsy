@@ -29,7 +29,7 @@ namespace Weapsy.Infrastructure.Extensions
             obj.GetType().GetRuntimeProperty(name).SetValue(obj, value);
         }
 
-        public static IEnumerable<T> GetTypes<T>(this Assembly assembly)
+        public static IEnumerable<T> GetImplementationsOf<T>(this Assembly assembly)
         {
             var result = new List<T>();
 
@@ -46,7 +46,7 @@ namespace Weapsy.Infrastructure.Extensions
             return result;
         }
 
-        public static IEnumerable<T> GetTypes<T>(this IEnumerable<Assembly> assemblies)
+        public static IEnumerable<T> GetImplementationsOf<T>(this IEnumerable<Assembly> assemblies)
         {
             var result = new List<T>();
 

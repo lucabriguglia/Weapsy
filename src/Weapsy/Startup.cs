@@ -105,14 +105,14 @@ namespace Weapsy
 
             services.AddAutoMapper();
 
-            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<Mvc.Apps.IStartup>())
+            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Mvc.Apps.IStartup>())
             {
                 startup.ConfigureServices(services);
             }
 
             var builder = new ContainerBuilder();
 
-            foreach (var module in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<IModule>())
+            foreach (var module in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<IModule>())
             {
                 builder.RegisterModule(module);
             }
@@ -184,7 +184,7 @@ namespace Weapsy
                 }
             }
 
-            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<Mvc.Apps.IStartup>())
+            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Mvc.Apps.IStartup>())
             {
                 startup.Configure(app);
             }

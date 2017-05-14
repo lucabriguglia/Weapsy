@@ -21,7 +21,7 @@ namespace Weapsy.Extensions
                 cfg.AddProfile(new DomainAutoMapperProfile());
                 cfg.AddProfile(new ReportingAutoMapperProfile());
 
-                foreach (var profile in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetTypes<Profile>())
+                foreach (var profile in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Profile>())
                 {
                     cfg.AddProfile(profile);
                 }

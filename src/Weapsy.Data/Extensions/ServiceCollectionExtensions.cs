@@ -16,7 +16,7 @@ namespace Weapsy.Data.Extensions
             var connectionStringConfig = configuration.GetConnectionString("DefaultConnection");
 
             var currentAssembly = typeof(ServiceCollectionExtensions).GetTypeInfo().Assembly;
-            var dataProviders = currentAssembly.GetTypes<IDataProvider>();
+            var dataProviders = currentAssembly.GetImplementationsOf<IDataProvider>();
 
             var dataProvider = dataProviders.SingleOrDefault(x => x.Provider.ToString() == dataProviderConfig);
 
