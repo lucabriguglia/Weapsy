@@ -34,7 +34,7 @@ namespace Weapsy.Infrastructure.Extensions
             var result = new List<T>();
 
             var types = assembly.GetTypes()
-                .Where(t => t.GetTypeInfo().IsClass && typeof(T).IsAssignableFrom(t))
+                .Where(t => t.GetTypeInfo().IsClass && !t.GetTypeInfo().IsAbstract && typeof(T).IsAssignableFrom(t))
                 .ToList();
 
             foreach (var type in types)
@@ -53,7 +53,7 @@ namespace Weapsy.Infrastructure.Extensions
             foreach (var assembly in assemblies)
             {
                 var types = assembly.GetTypes()
-                    .Where(t => t.GetTypeInfo().IsClass && typeof(T).IsAssignableFrom(t))
+                    .Where(t => t.GetTypeInfo().IsClass && !t.GetTypeInfo().IsAbstract && typeof(T).IsAssignableFrom(t))
                     .ToList();
 
                 foreach (var type in types)
