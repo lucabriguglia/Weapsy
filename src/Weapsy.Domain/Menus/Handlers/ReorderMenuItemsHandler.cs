@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System;
 using Weapsy.Domain.Menus.Commands;
 using FluentValidation;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Events;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Menus.Handlers
 {

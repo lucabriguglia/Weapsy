@@ -12,11 +12,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Weapsy.Infrastructure\Weapsy.Infrastructure.csproj" />
+    <PackageReference Include="FluentValidation" Version="6.4.0-beta9" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="6.4.0-beta9" />
+    <ProjectReference Include="..\Weapsy.Framework\Weapsy.Framework.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,8 +7,8 @@ using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus;
 using Weapsy.Reporting.Menus;
 using Weapsy.Domain.Menus.Rules;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Menus.Queries;
 

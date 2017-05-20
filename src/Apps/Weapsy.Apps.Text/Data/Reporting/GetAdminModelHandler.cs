@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Reporting;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Weapsy.Reporting.Languages;

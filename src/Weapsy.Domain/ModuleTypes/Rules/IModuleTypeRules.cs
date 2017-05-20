@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.ModuleTypes.Rules
 {

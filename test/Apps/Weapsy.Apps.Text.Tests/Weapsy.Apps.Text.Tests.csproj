@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Apps\Weapsy.Apps.Text\Weapsy.Apps.Text.csproj" />
-    <ProjectReference Include="..\..\..\src\Weapsy.Infrastructure\Weapsy.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\src\Weapsy.Framework\Weapsy.Framework.csproj" />
   </ItemGroup>
 
   <ItemGroup>

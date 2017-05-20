@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Weapsy.Infrastructure.Configuration;
+using Weapsy.Framework.Configuration;
 
 namespace Weapsy.Apps.Text.Data.Providers
 {

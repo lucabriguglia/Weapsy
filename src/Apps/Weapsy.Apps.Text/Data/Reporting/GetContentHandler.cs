@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Reporting;
-using Weapsy.Infrastructure.Caching;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Caching;
+using Weapsy.Framework.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 

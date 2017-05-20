@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Reporting.Menus;
 using Weapsy.Mvc.Context;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Menus.Queries;
 
 namespace Weapsy.Areas.Admin.Controllers

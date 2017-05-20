@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Weapsy.Infrastructure.Queries;
 using System.Threading.Tasks;
 using Weapsy.Reporting.Users.Queries;
 using Weapsy.Reporting.Users;
@@ -7,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Users;
 using System.Linq;
 using System.Collections.Generic;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Users
 {

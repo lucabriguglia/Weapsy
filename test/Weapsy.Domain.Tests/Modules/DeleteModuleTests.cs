@@ -7,7 +7,6 @@ using Moq;
 using FluentValidation;
 using Weapsy.Domain.Modules.Commands;
 using FluentValidation.Results;
-using Weapsy.Infrastructure.Domain;
 
 namespace Weapsy.Domain.Tests.Modules
 {

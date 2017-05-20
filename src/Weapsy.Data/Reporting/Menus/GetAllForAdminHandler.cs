@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Menus;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 

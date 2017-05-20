@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Weapsy.Domain.Users.Commands;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Events;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Events;
 using System.Threading.Tasks;
 using Weapsy.Domain.Users.Events;
 

@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Domain.Themes.Commands;
 using System;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Events;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {

@@ -1,4 +1,4 @@
-﻿using Weapsy.Infrastructure.Domain;
+﻿using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Users.Events
 {

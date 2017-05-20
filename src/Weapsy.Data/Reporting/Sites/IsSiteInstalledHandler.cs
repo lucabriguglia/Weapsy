@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Sites;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Sites.Queries;
 
 namespace Weapsy.Data.Reporting.Sites

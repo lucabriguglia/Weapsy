@@ -8,8 +8,8 @@ using Weapsy.Reporting.Languages;
 using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Languages.Rules;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages.Queries;
 

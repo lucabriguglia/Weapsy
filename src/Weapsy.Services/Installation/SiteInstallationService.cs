@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Weapsy.Infrastructure.Identity;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Menus;
@@ -14,8 +13,9 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Identity;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Sites.Queries;
 
 namespace Weapsy.Services.Installation

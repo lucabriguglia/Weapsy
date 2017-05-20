@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Reporting.Roles.Queries
 {

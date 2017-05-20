@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Weapsy.Data\Weapsy.Data.csproj" />
+    <ProjectReference Include="..\Weapsy.Framework\Weapsy.Framework.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
@@ -27,7 +28,6 @@
     <ProjectReference Include="..\Weapsy.Mvc\Weapsy.Mvc.csproj" />
     <ProjectReference Include="..\Weapsy.Reporting\Weapsy.Reporting.csproj" />
     <ProjectReference Include="..\Weapsy.Services\Weapsy.Services.csproj" />
-    <ProjectReference Include="..\Weapsy.Infrastructure\Weapsy.Infrastructure.csproj" />
   </ItemGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">

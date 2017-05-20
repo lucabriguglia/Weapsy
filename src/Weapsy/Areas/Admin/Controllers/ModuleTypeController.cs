@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Weapsy.Mvc.Context;
 using Weapsy.Domain.ModuleTypes.Commands;
 using Weapsy.Domain.ModuleTypes;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Apps;
 using Weapsy.Reporting.Apps.Queries;
 

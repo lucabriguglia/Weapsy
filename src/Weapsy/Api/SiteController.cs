@@ -5,8 +5,8 @@ using Weapsy.Reporting.Sites;
 using Weapsy.Domain.Sites.Rules;
 using Weapsy.Domain.Sites.Commands;
 using Weapsy.Domain.Sites;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Sites.Queries;
 

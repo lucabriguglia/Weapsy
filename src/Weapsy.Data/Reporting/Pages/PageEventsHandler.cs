@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Weapsy.Domain.Pages.Events;
-using Weapsy.Infrastructure.Caching;
-using Weapsy.Infrastructure.Events;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Caching;
+using Weapsy.Framework.Events;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
 

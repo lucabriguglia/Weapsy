@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Weapsy.Data.Entities;
-using Weapsy.Infrastructure.Domain;
 using DomainEvent = Weapsy.Data.Entities.DomainEvent;
 using Microsoft.AspNetCore.Http;
+using Weapsy.Framework.Domain;
 
 namespace Weapsy.Data
 {

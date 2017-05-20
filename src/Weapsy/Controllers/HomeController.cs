@@ -7,7 +7,7 @@ using Weapsy.Mvc.Context;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Http;
 using Weapsy.Domain.Pages;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Pages.Queries;
 using Weapsy.Services.Security;
 

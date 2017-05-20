@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Domain.Themes;
-using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Themes.Queries;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Themes
 {

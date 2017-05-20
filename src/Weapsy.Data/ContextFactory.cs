@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Options;
-using Weapsy.Infrastructure.Configuration;
-using Weapsy.Infrastructure.DependencyResolver;
+using Weapsy.Framework.Configuration;
+using Weapsy.Framework.DependencyResolver;
 
 namespace Weapsy.Data
 {
     public class ContextFactory : IContextFactory
     {
-        private Infrastructure.Configuration.Data DataConfiguration { get; }
+        private Framework.Configuration.Data DataConfiguration { get; }
         private ConnectionStrings ConnectionStrings { get; }
         private readonly IResolver _resolver;
 
-        public ContextFactory(IOptions<Infrastructure.Configuration.Data> dataOptions,
+        public ContextFactory(IOptions<Framework.Configuration.Data> dataOptions,
             IResolver resolver, IOptions<ConnectionStrings> connectionStringsOption)
         {
             DataConfiguration = dataOptions.Value;

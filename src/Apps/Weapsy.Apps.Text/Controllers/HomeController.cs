@@ -6,8 +6,8 @@ using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Apps.Text.Domain;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Apps;
 
 namespace Weapsy.Apps.Text.Controllers

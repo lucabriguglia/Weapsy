@@ -2,8 +2,8 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using Weapsy.Domain.EmailAccounts.Commands;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Events;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.EmailAccounts.Handlers
 {

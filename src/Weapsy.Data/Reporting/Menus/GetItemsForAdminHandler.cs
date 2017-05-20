@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Weapsy.Domain.Menus;
-using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Framework.Queries;
 using MenuItem = Weapsy.Data.Entities.MenuItem;
 
 namespace Weapsy.Data.Reporting.Menus

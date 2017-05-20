@@ -12,8 +12,8 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using Weapsy.Domain.Pages.Handlers;
+using Weapsy.Framework.Events;
 using Weapsy.Tests.Factories;
-using Weapsy.Infrastructure.Events;
 
 namespace Weapsy.Domain.Tests.Pages.Handlers
 {

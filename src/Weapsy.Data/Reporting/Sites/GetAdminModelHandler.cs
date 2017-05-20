@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Sites;
-using Weapsy.Infrastructure.Caching;
-using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Sites.Queries;
 using Weapsy.Domain.Themes;
+using Weapsy.Framework.Caching;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Sites
 {

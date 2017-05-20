@@ -7,8 +7,8 @@ using Weapsy.Reporting.Apps;
 using Weapsy.Domain.Apps.Rules;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Apps.Queries;
 

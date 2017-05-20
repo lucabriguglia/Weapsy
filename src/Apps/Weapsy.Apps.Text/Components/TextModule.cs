@@ -7,8 +7,8 @@ using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Domain.Commands;
 using System;
 using Weapsy.Apps.Text.Domain;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Apps.Text.Components
 {

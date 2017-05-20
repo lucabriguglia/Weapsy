@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Framework.Domain;
 using Weapsy.Domain.Menus.Commands;
-using Weapsy.Infrastructure.Identity;
+using Weapsy.Framework.Identity;
 
 namespace Weapsy.Domain.Menus
 {

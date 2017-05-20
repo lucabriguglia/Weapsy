@@ -2,7 +2,7 @@
 using System;
 using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Modules.Rules;
-using Weapsy.Infrastructure.Commands;
+using Weapsy.Framework.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 

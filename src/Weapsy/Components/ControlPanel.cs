@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Apps;

@@ -1,8 +1,8 @@
 ﻿using System;
 using Weapsy.Domain.Themes;
 using Weapsy.Domain.Themes.Commands;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Themes.Queries;
 
 namespace Weapsy.Services.Installation

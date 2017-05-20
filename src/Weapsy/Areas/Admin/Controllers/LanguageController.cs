@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Weapsy.Mvc.Controllers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Languages;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages.Queries;

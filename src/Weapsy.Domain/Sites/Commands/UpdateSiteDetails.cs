@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Commands;
+using Weapsy.Framework.Commands;
 
 namespace Weapsy.Domain.Sites.Commands
 {

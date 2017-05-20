@@ -2,7 +2,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Apps;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Apps;
 using Weapsy.Reporting.Apps.Queries;
 

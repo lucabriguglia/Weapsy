@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Weapsy.Infrastructure.Queries;
 using System.Threading.Tasks;
 using Weapsy.Reporting.Roles.Queries;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Identity;
 using Weapsy.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using Weapsy.Framework.Identity;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Roles
 {

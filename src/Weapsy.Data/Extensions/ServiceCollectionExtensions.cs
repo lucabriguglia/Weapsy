@@ -4,7 +4,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Data.Entities;
-using Weapsy.Infrastructure.Extensions;
+using Weapsy.Framework.Extensions;
 
 namespace Weapsy.Data.Extensions
 {

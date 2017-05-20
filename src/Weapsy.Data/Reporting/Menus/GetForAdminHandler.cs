@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 

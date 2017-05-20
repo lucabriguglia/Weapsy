@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Themes;
-using Weapsy.Infrastructure.Caching;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Caching;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Languages.Queries;
 

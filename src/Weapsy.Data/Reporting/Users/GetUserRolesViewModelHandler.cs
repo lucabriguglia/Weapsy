@@ -1,10 +1,10 @@
-﻿using Weapsy.Infrastructure.Queries;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Weapsy.Reporting.Users.Queries;
 using Weapsy.Reporting.Users;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Weapsy.Data.Entities;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Users
 {

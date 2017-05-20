@@ -8,8 +8,8 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Mvc.Context;
 using AutoMapper;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Pages.Queries;
 
 namespace Weapsy.Areas.Admin.Controllers

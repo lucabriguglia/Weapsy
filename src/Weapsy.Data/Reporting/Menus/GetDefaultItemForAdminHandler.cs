@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus;
-using Weapsy.Infrastructure.Identity;
-using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 using System.Linq;
@@ -10,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Weapsy.Reporting.Roles.Queries;
 using System.Collections.Generic;
 using Weapsy.Data.Entities;
+using Weapsy.Framework.Identity;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Menus
 {

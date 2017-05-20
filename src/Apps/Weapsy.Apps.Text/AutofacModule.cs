@@ -2,10 +2,10 @@
 using Autofac;
 using FluentValidation;
 using Weapsy.Apps.Text.Data;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Events;
-using Weapsy.Infrastructure.Domain;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Events;
+using Weapsy.Framework.Domain;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Apps.Text
 {

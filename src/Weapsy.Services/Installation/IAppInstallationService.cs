@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.ModuleTypes.Commands;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Framework.Domain;
 
 namespace Weapsy.Services.Installation
 {

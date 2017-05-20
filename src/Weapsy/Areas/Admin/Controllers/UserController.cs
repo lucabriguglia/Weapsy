@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Weapsy.Data.Entities;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
-using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Users.Queries;
 using Weapsy.Reporting.Users;
 

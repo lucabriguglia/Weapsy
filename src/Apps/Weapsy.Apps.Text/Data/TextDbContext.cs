@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Weapsy.Apps.Text.Data.Entities;
-using Weapsy.Infrastructure.Configuration;
+using Weapsy.Framework.Configuration;
 
 namespace Weapsy.Apps.Text.Data
 {

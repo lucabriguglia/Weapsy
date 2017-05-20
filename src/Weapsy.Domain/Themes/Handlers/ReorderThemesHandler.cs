@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Framework.Domain;
 using Weapsy.Domain.Themes.Commands;
 using System;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Events;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {

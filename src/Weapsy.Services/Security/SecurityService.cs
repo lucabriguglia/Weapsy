@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
-using Weapsy.Infrastructure.Identity;
+using Weapsy.Framework.Identity;
 
 namespace Weapsy.Services.Security
 {

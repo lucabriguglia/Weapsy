@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Pages.Events
 {

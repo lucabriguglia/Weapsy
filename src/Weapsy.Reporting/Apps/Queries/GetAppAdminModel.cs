@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Reporting.Apps.Queries
 {

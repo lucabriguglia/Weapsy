@@ -5,8 +5,8 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using System.Collections.Generic;
+using Weapsy.Framework.Identity;
 using Weapsy.Tests.Factories;
-using Weapsy.Infrastructure.Identity;
 
 namespace Weapsy.Domain.Tests.Pages
 {

@@ -7,8 +7,8 @@ using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Rules;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.EmailAccounts.Queries;
 

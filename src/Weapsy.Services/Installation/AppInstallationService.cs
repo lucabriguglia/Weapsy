@@ -3,8 +3,8 @@ using Weapsy.Domain.Apps;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.ModuleTypes.Commands;
 using Weapsy.Domain.Apps.Commands;
-using Weapsy.Infrastructure.Commands;
-using Weapsy.Infrastructure.Queries;
+using Weapsy.Framework.Commands;
+using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Apps.Queries;
 
 namespace Weapsy.Services.Installation

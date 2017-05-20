@@ -16,7 +16,6 @@ using Microsoft.CodeAnalysis;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.ViewEngine;
 using Weapsy.Services;
-using Weapsy.Infrastructure.Configuration;
 using Weapsy.Reporting.Languages;
 using Weapsy.Domain.Sites;
 using Weapsy.Extensions;
@@ -25,12 +24,13 @@ using Weapsy.Mvc.Apps;
 using Autofac.Core;
 using Microsoft.Extensions.FileProviders;
 using Weapsy.Data.Extensions;
-using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Domain.Themes.Commands;
+using Weapsy.Framework.Configuration;
+using Weapsy.Framework.Extensions;
+using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Extensions;
 using Weapsy.Reporting.Themes;
-using Weapsy.Infrastructure.Extensions;
 
 namespace Weapsy
 {

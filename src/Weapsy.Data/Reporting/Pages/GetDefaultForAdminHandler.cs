@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
-using Weapsy.Infrastructure.Identity;
-using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Pages.Queries;
 using System.Linq;
@@ -12,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Weapsy.Reporting.Roles.Queries;
 using System.Collections.Generic;
 using Weapsy.Data.Entities;
+using Weapsy.Framework.Identity;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Pages
 {

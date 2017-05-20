@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Framework.Domain;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 

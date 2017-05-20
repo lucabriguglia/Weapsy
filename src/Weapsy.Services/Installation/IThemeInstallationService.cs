@@ -1,5 +1,5 @@
 ﻿using Weapsy.Domain.Themes.Commands;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Framework.Domain;
 
 namespace Weapsy.Services.Installation
 {

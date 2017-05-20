@@ -3,7 +3,8 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Apps.Text.Data;
-using Weapsy.Infrastructure.Extensions;
+using Weapsy.Framework.Extensions;
+using Weapsy.Framework.Extensions;
 
 namespace Weapsy.Apps.Text.Extensions
 {

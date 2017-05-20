@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Weapsy.Infrastructure.Domain;
+using Weapsy.Framework.Domain;
 
 namespace Weapsy.Services.Installation
 {

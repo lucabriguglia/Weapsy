@@ -1,6 +1,6 @@
 ﻿using Weapsy.Domain.ModuleTypes.Events;
-using Weapsy.Infrastructure.Caching;
-using Weapsy.Infrastructure.Events;
+using Weapsy.Framework.Caching;
+using Weapsy.Framework.Events;
 
 namespace Weapsy.Data.Reporting.Apps
 {

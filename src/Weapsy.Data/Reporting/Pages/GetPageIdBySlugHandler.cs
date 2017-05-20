@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Weapsy.Domain.Pages;
-using Weapsy.Infrastructure.Queries;
 using Weapsy.Reporting.Pages.Queries;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Pages
 {
