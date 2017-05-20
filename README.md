@@ -14,7 +14,12 @@ For any queries please visit my LinkedIn profile where you can find all my conta
 
 [![Join the chat at https://gitter.im/weapsy](https://badges.gitter.im/weapsy.svg)](https://gitter.im/weapsy/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
+# Build Status
+
+[![Build status](https://ci.appveyor.com/api/projects/status/cq61prgs6ta8e9hi/branch/master?svg=true)](https://ci.appveyor.com/project/lucabriguglia/weapsy/branch/master)
+
 # Demo
+
 Coming Soon
 
 # Roadmap
