@@ -9,7 +9,6 @@
     "knockout": "3.4.0",
     "Sortable": "1.4.2",
     "jquery-ui": "1.11.4",
-    "startbootstrap-sb-admin-2": "1.0.8",
     "font-awesome": "4.6.1"
   },
   "resolutions": {
