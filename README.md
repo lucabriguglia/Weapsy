@@ -37,13 +37,13 @@ https://github.com/weapsy/Weapsy/wiki
 
 # Prerequisites
 
-- Visual Studio 2015 Update 3
-- .NET Core 1.1 for Visual Studio (https://www.microsoft.com/net/download/core)
+- Visual Studio 2017
+- .NET Core 2.0 Preview 1 (https://www.microsoft.com/net/core/preview)
 
 # How to run on local
 
 - Open the Weapsy.sln solution in Visual Studio
-- Build the solution (default apps will be copied to the "Apps" folder)
+- Build the solution (default apps will be copied over to the "Apps" folder)
 - Choose the data provider of your choice in the appsettings file and modify the default connection string accordingly if needed.
 - Run (F5 or Ctrl+F5)
 - Login using these credentials:
