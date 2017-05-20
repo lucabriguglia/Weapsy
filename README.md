@@ -16,7 +16,7 @@ For any queries please visit my LinkedIn profile where you can find all my conta
 
 # Build Status
 
-[![Build status](https://ci.appveyor.com/api/projects/status/cq61prgs6ta8e9hi/branch/master?svg=true)](https://ci.appveyor.com/project/lucabriguglia/weapsy/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/ptwkjgk7gwledwh3/branch/master?svg=true)](https://ci.appveyor.com/project/lucabriguglia/weapsy/branch/master)
 
 # Demo
 
