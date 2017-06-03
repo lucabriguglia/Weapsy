@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -8,6 +6,7 @@ using Weapsy.Data.Entities;
 using DomainEvent = Weapsy.Data.Entities.DomainEvent;
 using Microsoft.AspNetCore.Http;
 using Weapsy.Framework.Domain;
+using Weapsy.Data.Extensions;
 
 namespace Weapsy.Data
 {
@@ -39,16 +38,6 @@ namespace Weapsy.Data
 
                 var currentSequenceCount = context.DomainEvents.Count(x => x.DomainAggregateId == @event.AggregateRootId);
 
-                var userId = Guid.Empty;
-
-                if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
-                {
-                    userId = context.Users
-                        .Where(x => x.UserName == _httpContextAccessor.HttpContext.User.Identity.Name)
-                        .Select(x => x.Id)
-                        .FirstOrDefault();
-                }
-
                 context.DomainEvents.Add(new DomainEvent
                 {
                     DomainAggregateId = @event.AggregateRootId,
@@ -56,7 +45,7 @@ namespace Weapsy.Data
                     Type = @event.GetType().AssemblyQualifiedName,
                     Body = JsonConvert.SerializeObject(@event),
                     TimeStamp = @event.TimeStamp,
-                    UserId = userId
+                    UserId = _httpContextAccessor.GetUserId(context)
                 });
 
                 context.SaveChanges();
@@ -80,16 +69,6 @@ namespace Weapsy.Data
 
                 var currentSequenceCount = await context.DomainEvents.CountAsync(x => x.DomainAggregateId == @event.AggregateRootId);
 
-                var userId = Guid.Empty;
-
-                if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
-                {
-                    userId = await context.Users
-                        .Where(x => x.UserName == _httpContextAccessor.HttpContext.User.Identity.Name)
-                        .Select(x => x.Id)
-                        .FirstOrDefaultAsync();
-                }
-
                 context.DomainEvents.Add(new DomainEvent
                 {
                     DomainAggregateId = @event.AggregateRootId,
@@ -97,7 +76,7 @@ namespace Weapsy.Data
                     Type = @event.GetType().AssemblyQualifiedName,
                     Body = JsonConvert.SerializeObject(@event),
                     TimeStamp = @event.TimeStamp,
-                    UserId = userId
+                    UserId = _httpContextAccessor.GetUserId(context)
                 });
 
                 await context.SaveChangesAsync();
