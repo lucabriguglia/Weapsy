@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Framework.Configuration
+﻿namespace Weapsy.Data.Configuration
 {
     public enum DataProvider
     {

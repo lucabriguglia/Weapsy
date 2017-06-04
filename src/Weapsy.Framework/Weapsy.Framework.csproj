@@ -15,6 +15,9 @@
     <PackageProjectUrl>https://github.com/Weapsy/Weapsy/tree/master/src/Weapsy.Framework</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Weapsy/Weapsy/tree/master/src/Weapsy.Framework</RepositoryUrl>
     <PackageTags>weapsy, .net core, ddd, cqrs</PackageTags>
+    <Version>1.0.1</Version>
+    <Authors>Luca Briguglia</Authors>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>

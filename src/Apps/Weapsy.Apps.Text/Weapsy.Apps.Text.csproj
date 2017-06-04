@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Weapsy.Data\Weapsy.Data.csproj" />
     <ProjectReference Include="..\..\Weapsy.Domain\Weapsy.Domain.csproj" />
     <ProjectReference Include="..\..\Weapsy.Framework\Weapsy.Framework.csproj" />
     <ProjectReference Include="..\..\Weapsy.Mvc\Weapsy.Mvc.csproj" />

@@ -26,7 +26,7 @@ using Microsoft.Extensions.FileProviders;
 using Weapsy.Data.Extensions;
 using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Domain.Themes.Commands;
-using Weapsy.Framework.Configuration;
+using Weapsy.Data.Configuration;
 using Weapsy.Framework.Extensions;
 using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Extensions;
