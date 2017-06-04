@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Weapsy.Tests.Factories;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus.Events;
-using Weapsy.Framework.Identity;
+using Weapsy.Domain.Roles.DefaultRoles;
 
 namespace Weapsy.Domain.Tests.Menus
 {

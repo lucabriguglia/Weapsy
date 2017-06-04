@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using Weapsy.Data.Entities;
-using Weapsy.Framework.Identity;
+using Weapsy.Domain.Roles.DefaultRoles;
 
 namespace Weapsy.Data.Extensions
 {

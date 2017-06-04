@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Pages.Commands;
-using Weapsy.Framework.Identity;
+using Weapsy.Domain.Roles.DefaultRoles;
 
 namespace Weapsy.Domain.Pages
 {

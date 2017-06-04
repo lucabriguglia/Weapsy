@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Weapsy.Reporting.Roles.Queries;
 using System.Collections.Generic;
 using Weapsy.Data.Entities;
-using Weapsy.Framework.Identity;
+using Weapsy.Domain.Roles.DefaultRoles;
 using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Menus

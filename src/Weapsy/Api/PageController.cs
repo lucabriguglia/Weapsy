@@ -6,7 +6,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
 using Weapsy.Framework.Commands;
-using Weapsy.Framework.Identity;
+using Weapsy.Domain.Roles.DefaultRoles;
 using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;

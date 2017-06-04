@@ -9,7 +9,19 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Weapsy.Framework</Description>
+    <Copyright>Luca Briguglia</Copyright>
+    <PackageProjectUrl>https://github.com/Weapsy/Weapsy/tree/master/src/Weapsy.Framework</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Weapsy/Weapsy/tree/master/src/Weapsy.Framework</RepositoryUrl>
+    <PackageTags>weapsy, .net core, ddd, cqrs</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Identity\**" />
+    <EmbeddedResource Remove="Identity\**" />
+    <None Remove="Identity\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.2.1" />

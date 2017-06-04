@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Weapsy.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using Weapsy.Framework.Identity;
+using Weapsy.Domain.Roles.DefaultRoles;
 using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Roles

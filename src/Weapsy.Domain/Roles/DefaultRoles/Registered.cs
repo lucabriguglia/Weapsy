@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Framework.Identity
+namespace Weapsy.Domain.Roles.DefaultRoles
 {
     public static class Registered
     {

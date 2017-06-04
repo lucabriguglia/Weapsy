@@ -14,7 +14,7 @@ using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
 using Weapsy.Framework.Commands;
-using Weapsy.Framework.Identity;
+using Weapsy.Domain.Roles.DefaultRoles;
 using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Sites.Queries;
 
