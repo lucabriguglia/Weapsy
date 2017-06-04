@@ -11,7 +11,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>Weapsy.Framework</Description>
-    <Copyright>Luca Briguglia</Copyright>
+    <Copyright>Copyright Luca Briguglia</Copyright>
     <PackageProjectUrl>https://github.com/Weapsy/Weapsy/tree/master/src/Weapsy.Framework</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Weapsy/Weapsy/tree/master/src/Weapsy.Framework</RepositoryUrl>
     <PackageTags>weapsy, .net core, ddd, cqrs</PackageTags>
