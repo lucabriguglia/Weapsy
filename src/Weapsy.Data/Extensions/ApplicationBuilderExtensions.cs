@@ -19,15 +19,13 @@ namespace Weapsy.Data.Extensions
             return app;
         }
 
-        public static async Task<IApplicationBuilder> EnsureIdentityCreated(this IApplicationBuilder app)
+        public static async Task<IApplicationBuilder> EnsureIdentityCreatedAsync(this IApplicationBuilder app)
         {
             var userManager = app.ApplicationServices.GetRequiredService<UserManager<User>>();
             var roleManager = app.ApplicationServices.GetRequiredService<RoleManager<Role>>();
 
-            if (!await roleManager.RoleExistsAsync(Administrator.Name))
-            {
-                await roleManager.CreateAsync(new Role
-                {
+            if (!await roleManager.RoleExistsAsync(Administrator.Name)) {
+                await roleManager.CreateAsync(new Role {
                     Id = Administrator.Id,
                     Name = Administrator.Name
                 });
@@ -35,16 +33,14 @@ namespace Weapsy.Data.Extensions
 
             var adminEmail = "admin@default.com";
 
-            if (await userManager.FindByEmailAsync(adminEmail) == null)
-            {
+            if (await userManager.FindByEmailAsync(adminEmail) == null) {
                 var user = new User { UserName = adminEmail, Email = adminEmail };
                 await userManager.CreateAsync(user, "Ab1234567!");
             }
 
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-            if (!await userManager.IsInRoleAsync(adminUser, Administrator.Name))
-            {
+            if (!await userManager.IsInRoleAsync(adminUser, Administrator.Name)) {
                 await userManager.AddToRoleAsync(adminUser, Administrator.Name);
             }
 

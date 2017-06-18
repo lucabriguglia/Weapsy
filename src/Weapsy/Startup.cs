@@ -43,10 +43,9 @@ namespace Weapsy
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsDevelopment())
-            {
+            if (env.IsDevelopment()) {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();
+                builder.AddUserSecrets<Startup>();
 
                 // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
                 builder.AddApplicationInsightsSettings(developerMode: true);
@@ -80,23 +79,18 @@ namespace Weapsy
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
-                .AddJsonOptions(options =>
-                {
+                .AddJsonOptions(options => {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 })
-                .AddRazorOptions(options =>
-                {
-                    foreach (var assembly in AppLoader.Instance(hostingEnvironment).AppAssemblies)
-                    {
+                .AddRazorOptions(options => {
+                    foreach (var assembly in AppLoader.Instance(hostingEnvironment).AppAssemblies) {
                         var reference = MetadataReference.CreateFromFile(assembly.Location);
                         options.AdditionalCompilationReferences.Add(reference);
                     }
                 });
 
-            services.Configure<RazorViewEngineOptions>(options =>
-            {
-                foreach (var assembly in AppLoader.Instance(hostingEnvironment).AppAssemblies)
-                {
+            services.Configure<RazorViewEngineOptions>(options => {
+                foreach (var assembly in AppLoader.Instance(hostingEnvironment).AppAssemblies) {
                     var embeddedFileProvider = new EmbeddedFileProvider(assembly, assembly.GetName().Name);
                     options.FileProviders.Add(embeddedFileProvider);
                 }
@@ -105,15 +99,13 @@ namespace Weapsy
 
             services.AddAutoMapper();
 
-            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Mvc.Apps.IStartup>())
-            {
+            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Mvc.Apps.IStartup>()) {
                 startup.ConfigureServices(services);
             }
 
             var builder = new ContainerBuilder();
 
-            foreach (var module in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<IModule>())
-            {
+            foreach (var module in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<IModule>()) {
                 builder.RegisterModule(module);
             }
 
@@ -134,23 +126,19 @@ namespace Weapsy
             IQueryDispatcher queryDispatcher)
         {
             app.EnsureDbCreated();
-            app.EnsureIdentityCreated();
+            app.EnsureIdentityCreatedAsync();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseApplicationInsightsRequestTelemetry();
-
             app.UseStatusCodePagesWithRedirects("~/error/{0}");
 
-            if (hostingEnvironment.IsDevelopment())
-            {
+            if (hostingEnvironment.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
             }
-            else
-            {
+            else {
                 app.UseExceptionHandler("/error/500");
             }
 
@@ -158,40 +146,32 @@ namespace Weapsy
 
             app.UseStaticFiles();
 
-            foreach (var theme in queryDispatcher.DispatchAsync<GetActiveThemes, IEnumerable<ThemeInfo>>(new GetActiveThemes()).Result)
-            {
+            foreach (var theme in queryDispatcher.DispatchAsync<GetActiveThemes, IEnumerable<ThemeInfo>>(new GetActiveThemes()).Result) {
                 var contentPath = Path.Combine(hostingEnvironment.ContentRootPath, "Themes", theme.Folder, "wwwroot");
-                if (Directory.Exists(contentPath))
-                {
-                    app.UseStaticFiles(new StaticFileOptions
-                    {
+                if (Directory.Exists(contentPath)) {
+                    app.UseStaticFiles(new StaticFileOptions {
                         RequestPath = "/Themes/" + theme.Folder,
                         FileProvider = new PhysicalFileProvider(contentPath)
                     });
                 }
             }
 
-            foreach (var appDescriptor in AppLoader.Instance(hostingEnvironment).AppDescriptors)
-            {
+            foreach (var appDescriptor in AppLoader.Instance(hostingEnvironment).AppDescriptors) {
                 var contentPath = Path.Combine(hostingEnvironment.ContentRootPath, "Apps", appDescriptor.Folder, "wwwroot");
-                if (Directory.Exists(contentPath))
-                {
-                    app.UseStaticFiles(new StaticFileOptions
-                    {
+                if (Directory.Exists(contentPath)) {
+                    app.UseStaticFiles(new StaticFileOptions {
                         RequestPath = "/" + appDescriptor.Folder,
                         FileProvider = new PhysicalFileProvider(contentPath)
                     });
                 }
             }
 
-            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Mvc.Apps.IStartup>())
-            {
+            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Mvc.Apps.IStartup>()) {
                 startup.Configure(app);
             }
 
             var applicationPartManager = app.ApplicationServices.GetRequiredService<ApplicationPartManager>();
-            Parallel.ForEach(AppLoader.Instance(hostingEnvironment).AppAssemblies, assembly =>
-            {
+            Parallel.ForEach(AppLoader.Instance(hostingEnvironment).AppAssemblies, assembly => {
                 applicationPartManager.ApplicationParts.Add(new AssemblyPart(assembly));
             });
 
