@@ -1,4 +1,4 @@
-﻿@model Weapsy.Reporting.Pages.PageInfo
+﻿@*@model Weapsy.Reporting.Pages.PageInfo*@
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,42 +11,42 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/Themes/Default/css/site.css" />
     </environment>
-    <environment names="Staging,Production">           
+    <environment names="Staging,Production">
         <link rel="stylesheet" href="~/Themes/Default/css/site.css" asp-append-version="true" />
     </environment>
     @*@Html.ApplicationInsightsJavaScript(TelemetryConfiguration)*@
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    @await Component.InvokeAsync("ControlPanel")
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="@Url.Action("Index", "Home", new {area = ""})" class="navbar-brand">Weapsy</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            @await Component.InvokeAsync("Navigation", new {name = "Main"})
-            @await Component.InvokeAsync("LanguageSelection")
-            @await Html.PartialAsync("_LoginPartial")
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        @await Component.InvokeAsync("ControlPanel")
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home", new {area = ""})" class="navbar-brand">Weapsy</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                @await Component.InvokeAsync("Navigation", new { name = "Main" })
+                @await Component.InvokeAsync("LanguageSelection")
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
         </div>
     </div>
-</div>
-<div class="container body-content">
-    @RenderBody()
-    <hr/>
-    <footer>
-        <p class="pull-left">&copy; 2016 - Weapsy</p>
-        <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a></p>
-    </footer>
-</div>
-@await Html.PartialAsync("_ScriptsPartial")
-@await Html.PartialAsync("_ValidationScriptsPartial")
-@RenderSection("scripts", required: false)
-@await Html.PartialAsync("_ModalsPartial")
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p class="pull-left">&copy; 2016 - Weapsy</p>
+            <p class="pull-right">powered by <a href="http://www.weapsy.org" title="Weapsy">Weapsy</a></p>
+        </footer>
+    </div>
+    @await Html.PartialAsync("_ScriptsPartial")
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @RenderSection("scripts", required: false)
+    @await Html.PartialAsync("_ModalsPartial")
 </body>
 </html>
