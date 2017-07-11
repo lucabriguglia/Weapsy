@@ -20,7 +20,7 @@ namespace Weapsy.Data.Reporting.Themes
         {
             using (var context = _contextFactory.Create())
             {
-                return context.Themes.Where(x => x.Name == query.Name && x.Status == ThemeStatus.Active).Any();
+                return context.Themes.Where(x => x.Name == query.Name).Any();
             }
         }
 
@@ -28,7 +28,7 @@ namespace Weapsy.Data.Reporting.Themes
         {
             using (var context = _contextFactory.Create())
             {
-                return await context.Themes.Where(x => x.Name == query.Name && x.Status == ThemeStatus.Active).AnyAsync();
+                return await context.Themes.Where(x => x.Name == query.Name).AnyAsync();
             }
         }
     }
