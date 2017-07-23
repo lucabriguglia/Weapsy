@@ -9,5 +9,7 @@ namespace Weapsy.Domain.Templates.Commands
         public string Name { get; set; }
         public string Description { get; set; }
         public string ViewName { get; set; }
+        public TemplateType Type { get; set; }
+        public Guid ThemeId { get; set; }
     }
 }

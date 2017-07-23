@@ -2,6 +2,7 @@
 using FluentValidation;
 using Weapsy.Domain.Templates.Commands;
 using Weapsy.Domain.Templates.Rules;
+using Weapsy.Domain.Themes.Rules;
 
 namespace Weapsy.Domain.Templates.Validators
 {
@@ -9,7 +10,8 @@ namespace Weapsy.Domain.Templates.Validators
     {
         private readonly ITemplateRules _templateRules;
 
-        public CreateTemplateValidator(ITemplateRules templateRules) : base(templateRules)
+        public CreateTemplateValidator(ITemplateRules templateRules, IThemeRules themeRules) 
+            : base(templateRules, themeRules)
         {
             _templateRules = templateRules;
 

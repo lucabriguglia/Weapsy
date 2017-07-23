@@ -9,6 +9,7 @@ using Weapsy.Framework.Caching;
 using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Languages.Queries;
+using Weapsy.Reporting.Themes.Queries;
 
 namespace Weapsy.Data.Reporting.Themes
 {

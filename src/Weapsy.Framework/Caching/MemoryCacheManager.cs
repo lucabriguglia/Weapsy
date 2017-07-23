@@ -6,7 +6,7 @@ namespace Weapsy.Framework.Caching
 {
     public class MemoryCacheManager : ICacheManager
 	{
-	    readonly IMemoryCache _memoryCache;
+	    private readonly IMemoryCache _memoryCache;
 
         public MemoryCacheManager(IMemoryCache memoryCache)
         {

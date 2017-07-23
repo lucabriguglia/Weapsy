@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Localization;
 using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Reporting.Sites.Queries;
+using Weapsy.Reporting.Themes.Queries;
 using Weapsy.Reporting.Users;
 
 namespace Weapsy.Mvc.Context

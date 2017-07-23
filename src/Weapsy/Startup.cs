@@ -31,6 +31,7 @@ using Weapsy.Framework.Extensions;
 using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Extensions;
 using Weapsy.Reporting.Themes;
+using Weapsy.Reporting.Themes.Queries;
 
 namespace Weapsy
 {

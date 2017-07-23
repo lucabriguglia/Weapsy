@@ -60,6 +60,12 @@ namespace Weapsy.Domain.Tests.Templates
         }
 
         [Test]
+        public void Should_set_type()
+        {
+            Assert.AreEqual(_command.Type, _template.Type);
+        }
+
+        [Test]
         public void Should_add_template_details_updated_event()
         {
             Assert.IsNotNull(_event);
@@ -87,6 +93,12 @@ namespace Weapsy.Domain.Tests.Templates
         public void Should_set_view_name_in_template_details_updated_event()
         {
             Assert.AreEqual(_template.ViewName, _event.ViewName);
+        }
+
+        [Test]
+        public void Should_set_type_in_template_details_updated_event()
+        {
+            Assert.AreEqual(_template.Type, _event.Type);
         }
     }
 }

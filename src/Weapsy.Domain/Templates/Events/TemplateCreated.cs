@@ -8,5 +8,6 @@ namespace Weapsy.Domain.Templates.Events
         public string Description { get; set; }
         public string ViewName { get; set; }
         public TemplateStatus Status { get; set; }
+        public TemplateType Type { get; set; }
     }
 }

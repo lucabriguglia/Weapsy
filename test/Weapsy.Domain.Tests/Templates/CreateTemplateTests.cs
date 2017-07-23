@@ -71,6 +71,12 @@ namespace Weapsy.Domain.Tests.Templates
         }
 
         [Test]
+        public void Should_set_type()
+        {
+            Assert.AreEqual(_command.Type, _template.Type);
+        }
+
+        [Test]
         public void Should_add_template_created_event()
         {
             Assert.IsNotNull(_event);
@@ -104,6 +110,12 @@ namespace Weapsy.Domain.Tests.Templates
         public void Should_set_status_in_template_created_event()
         {
             Assert.AreEqual(_template.Status, _event.Status);
+        }
+
+        [Test]
+        public void Should_set_type_in_template_created_event()
+        {
+            Assert.AreEqual(_template.Type, _event.Type);
         }
     }
 }
