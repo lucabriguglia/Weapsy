@@ -32,6 +32,7 @@ using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Extensions;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Themes.Queries;
+using Microsoft.Extensions.Options;
 
 namespace Weapsy
 {
@@ -68,6 +69,12 @@ namespace Weapsy
             var hostingEnvironment = services.BuildServiceProvider().GetService<IHostingEnvironment>();
 
             services.AddOptions();
+
+            services.Configure<Weapsy.Data.Configuration.Data>(c => {
+                c.Provider = (Data.Configuration.DataProvider)Enum.Parse(
+                    typeof(Data.Configuration.DataProvider), 
+                    Configuration.GetSection("Data")["Provider"]);
+            });
 
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
