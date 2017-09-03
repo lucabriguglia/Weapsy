@@ -56,10 +56,6 @@ https://github.com/weapsy/Weapsy/wiki
   - password: Ab1234567!
 - Database and seed data will be created automatically the first time you run the application.
 
-# NuGet Packages
-
-Weapsy.Framework is already available as separate NuGet package (https://www.nuget.org/packages/Weapsy.Framework).
-
 # How to contribute
 
 Please create issues to report bugs, suggest new functionalities, ask questions or just share your thoughts about the project. I will really appreciate your contribution, thanks.
