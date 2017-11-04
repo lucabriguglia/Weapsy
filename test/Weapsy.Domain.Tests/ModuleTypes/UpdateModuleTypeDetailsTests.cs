@@ -13,26 +13,26 @@ namespace Weapsy.Domain.Tests.ModuleTypes
     [TestFixture]
     public class UpdateModuleTypeDetailsTests
     {
-        private UpdateModuleTypeDetails _command;
-        private Mock<IValidator<UpdateModuleTypeDetails>> _validatorMock;
+        private UpdateModuleTypeDetailsCommand _command;
+        private Mock<IValidator<UpdateModuleTypeDetailsCommand>> _validatorMock;
         private ModuleType _moduleType;
-        private ModuleTypeDetailsUpdated _event;
+        private ModuleTypeDetailsUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new UpdateModuleTypeDetails
+            _command = new UpdateModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Title = "Title",
                 Description = "Description"
             };
-            _validatorMock = new Mock<IValidator<UpdateModuleTypeDetails>>();
+            _validatorMock = new Mock<IValidator<UpdateModuleTypeDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _moduleType = new ModuleType();
             _moduleType.UpdateDetails(_command, _validatorMock.Object);
-            _event = _moduleType.Events.OfType<ModuleTypeDetailsUpdated>().SingleOrDefault();
+            _event = _moduleType.Events.OfType<ModuleTypeDetailsUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]

@@ -6,7 +6,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Menus.Handlers
 {
-    public class SetMenuItemPermissionsHandler : ICommandHandler<SetMenuItemPermissions>
+    public class SetMenuItemPermissionsHandler : ICommandHandler<SetMenuItemPermissionsCommand>
     {
         private readonly IMenuRepository _menuRepository;
 
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _menuRepository = menuRepository;
         }
 
-        public IEnumerable<IEvent> Handle(SetMenuItemPermissions cmd)
+        public IEnumerable<IEvent> Handle(SetMenuItemPermissionsCommand cmd)
         {
             var menu = _menuRepository.GetById(cmd.SiteId, cmd.MenuId);
 

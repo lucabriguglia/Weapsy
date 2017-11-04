@@ -19,7 +19,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_if_page_id_is_empty()
         {
-            var updateMenuItem = new MenuItemDetails
+            var updateMenuItem = new MenuItemDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new MenuItemValidator<MenuItemDetailsCommand>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.PageId, updateMenuItem);
         }
@@ -45,7 +45,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_if_page_does_not_exist()
         {
-            var updateMenuItem = new MenuItemDetails
+            var updateMenuItem = new MenuItemDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -65,7 +65,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new MenuItemValidator<MenuItemDetailsCommand>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.PageId, updateMenuItem);
         }
@@ -73,7 +73,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_if_link_is_empty()
         {
-            var updateMenuItem = new MenuItemDetails
+            var updateMenuItem = new MenuItemDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -91,7 +91,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new MenuItemValidator<MenuItemDetailsCommand>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Link, updateMenuItem);
         }
@@ -102,7 +102,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var link = string.Empty;
             for (int i = 0; i < 251; i++) link += i.ToString();
 
-            var updateMenuItem = new MenuItemDetails
+            var updateMenuItem = new MenuItemDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -120,7 +120,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new MenuItemValidator<MenuItemDetailsCommand>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Link, updateMenuItem);
         }
@@ -131,7 +131,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var text = string.Empty;
             for (int i = 0; i < 101; i++) text += i.ToString();
 
-            var updateMenuItem = new MenuItemDetails
+            var updateMenuItem = new MenuItemDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -149,7 +149,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new MenuItemValidator<MenuItemDetailsCommand>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Text, updateMenuItem);
         }
@@ -160,7 +160,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var title = string.Empty;
             for (int i = 0; i < 101; i++) title += i.ToString();
 
-            var updateMenuItem = new MenuItemDetails
+            var updateMenuItem = new MenuItemDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -178,7 +178,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new MenuItemValidator<MenuItemDetailsCommand>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Title, updateMenuItem);
         }
@@ -192,9 +192,9 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var localisationValidatorMock = new Mock<IValidator<MenuItemLocalisation>>();
             var siteRulesMock = new Mock<ISiteRules>();
 
-            var validator = new MenuItemValidator<MenuItemDetails>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
+            var validator = new MenuItemValidator<MenuItemDetailsCommand>(siteRulesMock.Object, pageRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.MenuItemLocalisations, new MenuItemDetails());
+            validator.ShouldHaveValidationErrorFor(x => x.MenuItemLocalisations, new MenuItemDetailsCommand());
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_throw_exception_when_page_is_not_found()
         {
-            var command = new UpdatePageModuleDetails
+            var command = new UpdatePageModuleDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -40,7 +40,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns((Page)null);
 
-            var validatorMock = new Mock<IValidator<UpdatePageModuleDetails>>();
+            var validatorMock = new Mock<IValidator<UpdatePageModuleDetailsCommand>>();
 
             var createPageHandler = new UpdatePageModuleDetailsHandler(repositoryMock.Object, validatorMock.Object);
 
@@ -56,7 +56,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageId = Guid.NewGuid();
             var moduleId = Guid.NewGuid();
 
-            var addPageModuleCommand = new AddPageModule
+            var addPageModuleCommand = new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -65,11 +65,11 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 Title = "Title",
                 Zone = "Zone"
             };
-            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
+            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
             addPageModuleValidatorMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
             page.AddModule(addPageModuleCommand, addPageModuleValidatorMock.Object);
 
-            var command = new UpdatePageModuleDetails
+            var command = new UpdatePageModuleDetailsCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -93,7 +93,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
 
-            var validatorMock = new Mock<IValidator<UpdatePageModuleDetails>>();
+            var validatorMock = new Mock<IValidator<UpdatePageModuleDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Title", "Title Error") }));
 
             var createPageHandler = new UpdatePageModuleDetailsHandler(repositoryMock.Object, validatorMock.Object);
@@ -110,7 +110,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageId = Guid.NewGuid();
             var moduleId = Guid.NewGuid();
 
-            var addPageModuleCommand = new AddPageModule
+            var addPageModuleCommand = new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -119,11 +119,11 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 Title = "Title",
                 Zone = "Zone"
             };
-            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
+            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
             addPageModuleValidatorMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
             page.AddModule(addPageModuleCommand, addPageModuleValidatorMock.Object);
 
-            var command = new UpdatePageModuleDetails
+            var command = new UpdatePageModuleDetailsCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -147,7 +147,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
 
-            var validatorMock = new Mock<IValidator<UpdatePageModuleDetails>>();
+            var validatorMock = new Mock<IValidator<UpdatePageModuleDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createPageHandler = new UpdatePageModuleDetailsHandler(repositoryMock.Object, validatorMock.Object);

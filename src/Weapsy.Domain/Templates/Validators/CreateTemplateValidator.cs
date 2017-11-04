@@ -6,7 +6,7 @@ using Weapsy.Domain.Themes.Rules;
 
 namespace Weapsy.Domain.Templates.Validators
 {
-    public class CreateTemplateValidator : TemplateDetailsValidator<CreateTemplate>
+    public class CreateTemplateValidator : TemplateDetailsValidator<CreateTemplateCommand>
     {
         private readonly ITemplateRules _templateRules;
 

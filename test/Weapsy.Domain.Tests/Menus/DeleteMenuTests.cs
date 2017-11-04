@@ -16,13 +16,13 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_throw_exception_when_already_deleted()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "My Menu"
             };
-            var validatorMock = new Mock<IValidator<CreateMenu>>();
+            var validatorMock = new Mock<IValidator<CreateMenuCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
             var menu = Menu.CreateNew(command, validatorMock.Object);
 
@@ -34,13 +34,13 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_throw_exception_when_deleting_main_menu()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "Main"
             };
-            var validatorMock = new Mock<IValidator<CreateMenu>>();
+            var validatorMock = new Mock<IValidator<CreateMenuCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
             var menu = Menu.CreateNew(command, validatorMock.Object);
 
@@ -50,13 +50,13 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_set_menu_status_to_deleted()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "My Menu"
             };
-            var validatorMock = new Mock<IValidator<CreateMenu>>();
+            var validatorMock = new Mock<IValidator<CreateMenuCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
             var menu = Menu.CreateNew(command, validatorMock.Object);
 
@@ -68,19 +68,19 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_add_menu_deleted_event()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "My Menu"
             };
-            var validatorMock = new Mock<IValidator<CreateMenu>>();
+            var validatorMock = new Mock<IValidator<CreateMenuCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
             var menu = Menu.CreateNew(command, validatorMock.Object);
 
             menu.Delete();
 
-            var @event = menu.Events.OfType<MenuDeleted>().SingleOrDefault();
+            var @event = menu.Events.OfType<MenuDeletedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -88,19 +88,19 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_set_id_in_menu_deleted_event()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "My Menu"
             };
-            var validatorMock = new Mock<IValidator<CreateMenu>>();
+            var validatorMock = new Mock<IValidator<CreateMenuCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
             var menu = Menu.CreateNew(command, validatorMock.Object);
 
             menu.Delete();
 
-            var @event = menu.Events.OfType<MenuDeleted>().SingleOrDefault();
+            var @event = menu.Events.OfType<MenuDeletedEvent>().SingleOrDefault();
 
             Assert.AreEqual(menu.Id, @event.AggregateRootId);
         }
@@ -108,19 +108,19 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_set_site_id_in_menu_deleted_event()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "My Menu"
             };
-            var validatorMock = new Mock<IValidator<CreateMenu>>();
+            var validatorMock = new Mock<IValidator<CreateMenuCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
             var menu = Menu.CreateNew(command, validatorMock.Object);
 
             menu.Delete();
 
-            var @event = menu.Events.OfType<MenuDeleted>().SingleOrDefault();
+            var @event = menu.Events.OfType<MenuDeletedEvent>().SingleOrDefault();
 
             Assert.AreEqual(menu.SiteId, @event.SiteId);
         }

@@ -51,27 +51,27 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateEmailAccount model)
+        public IActionResult Post([FromBody] CreateEmailAccountCommand model)
         {
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateEmailAccount, EmailAccount>(model);
+            _commandSender.Send<CreateEmailAccountCommand, EmailAccount>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public IActionResult UpdateDetails([FromBody] UpdateEmailAccountDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdateEmailAccountDetailsCommand model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model);
+            _commandSender.Send<UpdateEmailAccountDetailsCommand, EmailAccount>(model);
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-           _commandSender.Send<DeleteEmailAccount, EmailAccount>(new DeleteEmailAccount
+           _commandSender.Send<DeleteEmailAccountCommand, EmailAccount>(new DeleteEmailAccountCommand
             {
                 SiteId = SiteId,
                 Id = id

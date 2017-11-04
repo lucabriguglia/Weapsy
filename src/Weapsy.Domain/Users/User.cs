@@ -22,13 +22,13 @@ namespace Weapsy.Domain.Users
 
         public User(){}
 
-        private User(CreateUser cmd) : base(cmd.Id)
+        private User(CreateUserCommand cmd) : base(cmd.Id)
         {
             Email = cmd.Email;
             UserName = cmd.UserName;
             Status = UserStatus.Active;
 
-            AddEvent(new UserCreated
+            AddEvent(new UserCreatedEvent
             {
                 AggregateRootId = Id,
                 Email = Email,
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Users
             });
         }
 
-        public static User CreateNew(CreateUser cmd, IValidator<CreateUser> validator)
+        public static User CreateNew(CreateUserCommand cmd, IValidator<CreateUserCommand> validator)
         {
             validator.ValidateCommand(cmd);
 

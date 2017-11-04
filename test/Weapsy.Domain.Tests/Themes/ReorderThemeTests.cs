@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Tests.Themes
             _themeId = Guid.NewGuid();
             _newSortOrder = 1;
 
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = _themeId,
                 Name = "Name",
@@ -32,7 +32,7 @@ namespace Weapsy.Domain.Tests.Themes
                 Folder = "Folder"
             };
 
-            var validatorMock = new Mock<IValidator<CreateTheme>>();
+            var validatorMock = new Mock<IValidator<CreateThemeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var sortOrderGeneratorMock = new Mock<IThemeSortOrderGenerator>();

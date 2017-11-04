@@ -13,8 +13,8 @@ namespace Weapsy.Domain.Tests.Themes
     [TestFixture]
     public class CreateThemeTests
     {
-        private CreateTheme _command;
-        private Mock<IValidator<CreateTheme>> _validatorMock;
+        private CreateThemeCommand _command;
+        private Mock<IValidator<CreateThemeCommand>> _validatorMock;
         private Mock<IThemeSortOrderGenerator> _sortOrderGeneratorMock;
         private Theme _theme;
         private ThemeCreated _event;
@@ -22,14 +22,14 @@ namespace Weapsy.Domain.Tests.Themes
         [SetUp]
         public void Setup()
         {
-            _command = new CreateTheme
+            _command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Description = "Description",
                 Folder = "Folder"
             };            
-            _validatorMock = new Mock<IValidator<CreateTheme>>();
+            _validatorMock = new Mock<IValidator<CreateThemeCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _sortOrderGeneratorMock = new Mock<IThemeSortOrderGenerator>();
             _sortOrderGeneratorMock.Setup(x => x.GenerateNextSortOrder()).Returns(4);

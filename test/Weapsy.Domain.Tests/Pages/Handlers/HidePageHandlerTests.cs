@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_throw_exception_when_page_is_not_found()
         {
-            var command = new HidePage
+            var command = new HidePageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns((Page)null);
 
-            var validatorMock = new Mock<IValidator<HidePage>>();
+            var validatorMock = new Mock<IValidator<HidePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var hidePageHandler = new HidePageHandler(repositoryMock.Object, validatorMock.Object);
@@ -35,7 +35,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_update_page()
         {
-            var command = new HidePage
+            var command = new HidePageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(pageMock.Object);
 
-            var validatorMock = new Mock<IValidator<HidePage>>();
+            var validatorMock = new Mock<IValidator<HidePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var hidePageHandler = new HidePageHandler(repositoryMock.Object, validatorMock.Object);

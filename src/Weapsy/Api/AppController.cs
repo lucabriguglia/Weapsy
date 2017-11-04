@@ -45,18 +45,18 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateApp model)
+        public IActionResult Post([FromBody] CreateAppCommand model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateApp, App>(model);
+            _commandSender.Send<CreateAppCommand, App>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public IActionResult UpdateDetails([FromBody] UpdateAppDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdateAppDetailsCommand model)
         {
-            _commandSender.Send<UpdateAppDetails, App>(model);
+            _commandSender.Send<UpdateAppDetailsCommand, App>(model);
             return new NoContentResult();
         }
 

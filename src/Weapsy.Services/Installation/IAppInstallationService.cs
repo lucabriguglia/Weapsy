@@ -7,6 +7,6 @@ namespace Weapsy.Services.Installation
 {
     public interface IAppInstallationService : IService
     {
-        void EnsureAppInstalled(CreateApp createApp, IEnumerable<CreateModuleType> createModuleTypes);
+        void EnsureAppInstalled(CreateAppCommand createApp, IEnumerable<CreateModuleTypeCommand> createModuleTypes);
     }
 }

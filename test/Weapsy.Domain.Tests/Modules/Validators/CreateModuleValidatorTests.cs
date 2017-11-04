@@ -25,7 +25,7 @@ namespace Weapsy.Domain.Tests.Modules.Validators
 
             var validator = new CreateModuleValidator(moduleRulesMock.Object, moduleTypeRules.Object, siteRulesMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Id, new CreateModule
+            validator.ShouldHaveValidationErrorFor(x => x.Id, new CreateModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = id,
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.Modules.Validators
         [Test]
         public void Should_have_validation_error_when_module_type_id_is_empty()
         {
-            var command = new CreateModule
+            var command = new CreateModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = Guid.Empty,
@@ -57,7 +57,7 @@ namespace Weapsy.Domain.Tests.Modules.Validators
         [Test]
         public void Should_have_validation_error_when_module_type_does_not_exist()
         {
-            var command = new CreateModule
+            var command = new CreateModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = Guid.NewGuid(),
@@ -83,7 +83,7 @@ namespace Weapsy.Domain.Tests.Modules.Validators
             var siteRulesMock = new Mock<ISiteRules>();
             var validator = new CreateModuleValidator(moduleRulesMock.Object, moduleTypeRules.Object, siteRulesMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Title, new CreateModule
+            validator.ShouldHaveValidationErrorFor(x => x.Title, new CreateModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = Guid.NewGuid(),
@@ -103,7 +103,7 @@ namespace Weapsy.Domain.Tests.Modules.Validators
             var title = "";
             for (int i = 0; i < 101; i++) title += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Title, new CreateModule
+            validator.ShouldHaveValidationErrorFor(x => x.Title, new CreateModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = Guid.NewGuid(),

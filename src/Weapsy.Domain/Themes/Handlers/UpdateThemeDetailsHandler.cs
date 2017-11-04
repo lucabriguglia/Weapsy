@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class UpdateThemeDetailsHandler : ICommandHandler<UpdateThemeDetails>
+    public class UpdateThemeDetailsHandler : ICommandHandler<UpdateThemeDetailsCommand>
     {
         private readonly IThemeRepository _themeRepository;
-        private readonly IValidator<UpdateThemeDetails> _validator;
+        private readonly IValidator<UpdateThemeDetailsCommand> _validator;
 
-        public UpdateThemeDetailsHandler(IThemeRepository themeRepository, IValidator<UpdateThemeDetails> validator)
+        public UpdateThemeDetailsHandler(IThemeRepository themeRepository, IValidator<UpdateThemeDetailsCommand> validator)
         {
             _themeRepository = themeRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateThemeDetails cmd)
+        public IEnumerable<IEvent> Handle(UpdateThemeDetailsCommand cmd)
         {
             var theme = _themeRepository.GetById(cmd.Id);
 

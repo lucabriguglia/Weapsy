@@ -3,7 +3,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class RemovePageModuleValidator : BaseSiteValidator<RemovePageModule>
+    public class RemovePageModuleValidator : BaseSiteValidator<RemovePageModuleCommand>
     {
         public RemovePageModuleValidator(ISiteRules siteRules)
             : base(siteRules)

@@ -13,7 +13,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
         [Test]
         public void Should_throw_exception_when_site_is_not_found()
         {
-            var command = new ReopenSite
+            var command = new ReopenSiteCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
         [Test]
         public void Should_update_site()
         {
-            var command = new ReopenSite
+            var command = new ReopenSiteCommand
             {
                 Id = Guid.NewGuid()
             };

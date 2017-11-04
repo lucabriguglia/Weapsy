@@ -4,7 +4,7 @@ using Weapsy.Domain.Themes.Rules;
 
 namespace Weapsy.Domain.Templates.Validators
 {
-    public class UpdateTemplateDetailsValidator : TemplateDetailsValidator<UpdateTemplateDetails>
+    public class UpdateTemplateDetailsValidator : TemplateDetailsValidator<UpdateTemplateDetailsCommand>
     {
         public UpdateTemplateDetailsValidator(ITemplateRules templateRules, IThemeRules themeRules) 
             : base(templateRules, themeRules)

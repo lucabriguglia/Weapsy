@@ -4,7 +4,7 @@ using Weapsy.Domain.ModuleTypes.Rules;
 
 namespace Weapsy.Domain.ModuleTypes.Validators
 {
-    public class ModuleTypeDetailsValidator<T> : AbstractValidator<T> where T : ModuleTypeDetails
+    public class ModuleTypeDetailsValidator<T> : AbstractValidator<T> where T : ModuleTypeDetailsCommand
     {
         private readonly IModuleTypeRules _moduleTypeRules;
 
@@ -43,7 +43,7 @@ namespace Weapsy.Domain.ModuleTypes.Validators
                 .When(c => !string.IsNullOrWhiteSpace(c.EditUrl));
         }
 
-        private bool HaveUniqueName(ModuleTypeDetails cmd, string name)
+        private bool HaveUniqueName(ModuleTypeDetailsCommand cmd, string name)
         {
             return _moduleTypeRules.IsModuleTypeNameUnique(name, cmd.Id);
         }
@@ -53,7 +53,7 @@ namespace Weapsy.Domain.ModuleTypes.Validators
             return _moduleTypeRules.IsModuleTypeNameValid(name);
         }
 
-        private bool HaveUniqueViewComponentName(ModuleTypeDetails cmd, string viewComponentName)
+        private bool HaveUniqueViewComponentName(ModuleTypeDetailsCommand cmd, string viewComponentName)
         {
             return _moduleTypeRules.IsModuleTypeViewComponentNameUnique(viewComponentName, cmd.Id);
         }

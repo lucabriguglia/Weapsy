@@ -6,7 +6,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Menus.Validators
 {
-    public class CreateMenuValidator : BaseSiteValidator<CreateMenu>
+    public class CreateMenuValidator : BaseSiteValidator<CreateMenuCommand>
     {
         private readonly IMenuRules _menuRules;
 
@@ -31,7 +31,7 @@ namespace Weapsy.Domain.Menus.Validators
             return _menuRules.IsMenuIdUnique(id);
         }
 
-        private bool HaveUniqueName(CreateMenu cmd, string name)
+        private bool HaveUniqueName(CreateMenuCommand cmd, string name)
         {
             return _menuRules.IsMenuNameUnique(cmd.SiteId, name);
         }

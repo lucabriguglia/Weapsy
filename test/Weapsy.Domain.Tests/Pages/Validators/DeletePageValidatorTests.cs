@@ -22,7 +22,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var validator = new DeletePageValidator(siteRulesMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Id, new DeletePage
+            validator.ShouldHaveValidationErrorFor(x => x.Id, new DeletePageCommand
             {
                 SiteId = siteId,
                 Id = pageId

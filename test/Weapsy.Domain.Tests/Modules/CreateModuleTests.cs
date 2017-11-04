@@ -13,25 +13,25 @@ namespace Weapsy.Domain.Tests.Modules
     [TestFixture]
     public class CreateModuleTests
     {
-        private CreateModule _command;
-        private Mock<IValidator<CreateModule>> _validatorMock;
+        private CreateModuleCommand _command;
+        private Mock<IValidator<CreateModuleCommand>> _validatorMock;
         private Module _module;
-        private ModuleCreated _event;
+        private ModuleCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateModule
+            _command = new CreateModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Title = "Title"
             };
-            _validatorMock = new Mock<IValidator<CreateModule>>();
+            _validatorMock = new Mock<IValidator<CreateModuleCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _module = Module.CreateNew(_command, _validatorMock.Object);
-            _event = _module.Events.OfType<ModuleCreated>().SingleOrDefault();
+            _event = _module.Events.OfType<ModuleCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         [Test]
         public void Should_have_error_when_site_id_already_exists()
         {
-            var command = new CreateSite
+            var command = new CreateSiteCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "My Site"
@@ -31,7 +31,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         [Test]
         public void Should_have_error_when_site_name_is_empty()
         {
-            var command = new CreateSite
+            var command = new CreateSiteCommand
             {
                 Id = Guid.NewGuid(),
                 Name = ""
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         [Test]
         public void Should_have_error_when_site_name_is_too_short()
         {
-            var command = new CreateSite
+            var command = new CreateSiteCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "My"
@@ -64,7 +64,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
             var name = "";
             for (int i = 0; i < 101; i++) name += i;
 
-            var command = new CreateSite
+            var command = new CreateSiteCommand
             {
                 Id = Guid.NewGuid(),
                 Name = name
@@ -79,7 +79,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         [Test]
         public void Should_have_error_when_site_name_already_exists()
         {
-            var command = new CreateSite
+            var command = new CreateSiteCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "My Site"
@@ -96,7 +96,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
         [Test]
         public void Should_have_error_when_site_name_is_not_valid()
         {
-            var command = new CreateSite
+            var command = new CreateSiteCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "My@Site"

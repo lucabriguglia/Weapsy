@@ -13,15 +13,15 @@ namespace Weapsy.Domain.Tests.Languages
     [TestFixture]
     public class UpdateLanguageDetailsTests
     {
-        private UpdateLanguageDetails _command;
-        private Mock<IValidator<UpdateLanguageDetails>> _validatorMock;
+        private UpdateLanguageDetailsCommand _command;
+        private Mock<IValidator<UpdateLanguageDetailsCommand>> _validatorMock;
         private Language _language;
-        private LanguageDetailsUpdated _event;
+        private LanguageDetailsUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new UpdateLanguageDetails
+            _command = new UpdateLanguageDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -29,11 +29,11 @@ namespace Weapsy.Domain.Tests.Languages
                 CultureName = "aa-bb",
                 Url = "url"
             };            
-            _validatorMock = new Mock<IValidator<UpdateLanguageDetails>>();
+            _validatorMock = new Mock<IValidator<UpdateLanguageDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _language = new Language();
             _language.UpdateDetails(_command, _validatorMock.Object);
-            _event = _language.Events.OfType<LanguageDetailsUpdated>().SingleOrDefault();
+            _event = _language.Events.OfType<LanguageDetailsUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]

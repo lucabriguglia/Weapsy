@@ -5,7 +5,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class DeletePageValidator : BaseSiteValidator<DeletePage>
+    public class DeletePageValidator : BaseSiteValidator<DeletePageCommand>
     {
         private readonly ISiteRules _siteRules;
 
@@ -19,7 +19,7 @@ namespace Weapsy.Domain.Pages.Validators
                     .WithMessage("Page is used as Home Page and cannot be deleted.");
         }
 
-        private bool NotBeInUseAsHomePage(DeletePage cmd, Guid pageId)
+        private bool NotBeInUseAsHomePage(DeletePageCommand cmd, Guid pageId)
         {
             return !_siteRules.IsPageSetAsHomePage(cmd.SiteId, pageId);
         }

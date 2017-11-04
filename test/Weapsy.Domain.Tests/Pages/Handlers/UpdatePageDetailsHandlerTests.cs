@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_throw_exception_when_page_is_not_found()
         {
-            var command = new UpdatePageDetails
+            var command = new UpdatePageDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns((Page)null);
 
-            var validatorMock = new Mock<IValidator<UpdatePageDetails>>();
+            var validatorMock = new Mock<IValidator<UpdatePageDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Url", "Url Error") }));
 
             var createPageHandler = new UpdatePageDetailsHandler(repositoryMock.Object, validatorMock.Object);
@@ -41,7 +41,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new UpdatePageDetails
+            var command = new UpdatePageDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(new Page());
 
-            var validatorMock = new Mock<IValidator<UpdatePageDetails>>();
+            var validatorMock = new Mock<IValidator<UpdatePageDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Url", "Url Error") }));
 
             var createPageHandler = new UpdatePageDetailsHandler(repositoryMock.Object, validatorMock.Object);
@@ -66,7 +66,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_validate_command_and_update_page()
         {
-            var command = new UpdatePageDetails
+            var command = new UpdatePageDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -80,7 +80,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(new Page());
 
-            var validatorMock = new Mock<IValidator<UpdatePageDetails>>();
+            var validatorMock = new Mock<IValidator<UpdatePageDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createPageHandler = new UpdatePageDetailsHandler(repositoryMock.Object, validatorMock.Object);

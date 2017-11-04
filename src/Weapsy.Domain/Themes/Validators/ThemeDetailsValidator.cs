@@ -4,7 +4,7 @@ using Weapsy.Domain.Themes.Rules;
 
 namespace Weapsy.Domain.Themes.Validators
 {
-    public class ThemeDetailsValidator<T> : AbstractValidator<T> where T : ThemeDetails
+    public class ThemeDetailsValidator<T> : AbstractValidator<T> where T : ThemeDetailsCommand
     {
         private readonly IThemeRules _themeRules;
 

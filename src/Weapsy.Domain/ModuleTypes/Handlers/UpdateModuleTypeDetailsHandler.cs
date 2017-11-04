@@ -7,19 +7,19 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.ModuleTypes.Handlers
 {
-    public class UpdateModuleTypeDetailsHandler : ICommandHandler<UpdateModuleTypeDetails>
+    public class UpdateModuleTypeDetailsHandler : ICommandHandler<UpdateModuleTypeDetailsCommand>
     {
         private readonly IModuleTypeRepository _moduleTypeRepository;
-        private readonly IValidator<UpdateModuleTypeDetails> _validator;
+        private readonly IValidator<UpdateModuleTypeDetailsCommand> _validator;
 
         public UpdateModuleTypeDetailsHandler(IModuleTypeRepository moduleTypeRepository,
-            IValidator<UpdateModuleTypeDetails> validator)
+            IValidator<UpdateModuleTypeDetailsCommand> validator)
         {
             _moduleTypeRepository = moduleTypeRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateModuleTypeDetails command)
+        public IEnumerable<IEvent> Handle(UpdateModuleTypeDetailsCommand command)
         {
             var page = _moduleTypeRepository.GetById(command.Id);
 

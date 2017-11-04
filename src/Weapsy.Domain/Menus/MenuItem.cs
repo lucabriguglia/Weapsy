@@ -23,7 +23,7 @@ namespace Weapsy.Domain.Menus
 
         public MenuItem() {}
 
-        public MenuItem(AddMenuItem cmd, int sortOrder) 
+        public MenuItem(AddMenuItemCommand cmd, int sortOrder) 
             : base(cmd.MenuItemId)
         {
             MenuId = cmd.MenuId;
@@ -39,7 +39,7 @@ namespace Weapsy.Domain.Menus
             SetPermisisons(cmd.MenuItemPermissions);
         }
 
-        public void Update(UpdateMenuItem cmd)
+        public void Update(UpdateMenuItemCommand cmd)
         {
             Type = cmd.Type;
             PageId = cmd.PageId;

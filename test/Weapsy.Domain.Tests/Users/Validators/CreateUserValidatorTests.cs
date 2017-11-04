@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Tests.Users.Validators
         [Test]
         public void Should_have_error_when_user_email_is_empty()
         {
-            var command = new CreateUser
+            var command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = "",
@@ -33,7 +33,7 @@ namespace Weapsy.Domain.Tests.Users.Validators
             var email = "";
             for (int i = 0; i < 251; i++) email += i;
 
-            var command = new CreateUser
+            var command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = email,
@@ -49,7 +49,7 @@ namespace Weapsy.Domain.Tests.Users.Validators
         [Test]
         public void Should_have_error_when_user_email_already_exists()
         {
-            var command = new CreateUser
+            var command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = "my@email.com",
@@ -67,7 +67,7 @@ namespace Weapsy.Domain.Tests.Users.Validators
         [Test]
         public void Should_have_error_when_user_name_is_empty()
         {
-            var command = new CreateUser
+            var command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = "my@email.com",
@@ -86,7 +86,7 @@ namespace Weapsy.Domain.Tests.Users.Validators
             var userName = "";
             for (int i = 0; i < 251; i++) userName += i;
 
-            var command = new CreateUser
+            var command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = "my@email.com",
@@ -102,7 +102,7 @@ namespace Weapsy.Domain.Tests.Users.Validators
         [Test]
         public void Should_have_error_when_user_name_already_exists()
         {
-            var command = new CreateUser
+            var command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = "my@email.com",

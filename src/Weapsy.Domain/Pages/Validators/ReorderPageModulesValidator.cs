@@ -3,7 +3,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class ReorderPageModulesValidator : BaseSiteValidator<ReorderPageModules>
+    public class ReorderPageModulesValidator : BaseSiteValidator<ReorderPageModulesCommand>
     {
         public ReorderPageModulesValidator(ISiteRules siteRules)
             : base(siteRules)

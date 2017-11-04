@@ -9,8 +9,8 @@ using Weapsy.Framework.Events;
 namespace Weapsy.Data.Reporting.Sites
 {
     public class SiteEventsHandler : 
-        IEventHandler<SiteCreated>,
-        IEventHandler<SiteDetailsUpdated>
+        IEventHandler<SiteCreatedEvent>,
+        IEventHandler<SiteDetailsUpdatedEvent>
     {
         private readonly IContextFactory _dbContextFactory;
         private readonly ICacheManager _cacheManager;
@@ -22,12 +22,12 @@ namespace Weapsy.Data.Reporting.Sites
             _cacheManager = cacheManager;
         }
 
-        public void Handle(SiteCreated @event)
+        public void Handle(SiteCreatedEvent @event)
         {
             ClearCache(@event.AggregateRootId, @event.Name);
         }
 
-        public void Handle(SiteDetailsUpdated @event)
+        public void Handle(SiteDetailsUpdatedEvent @event)
         {
             ClearCache(@event.AggregateRootId, @event.Name);
         }

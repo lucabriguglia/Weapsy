@@ -6,19 +6,19 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Templates.Handlers
 {
-    public class CreateTemplateHandler : ICommandHandler<CreateTemplate>
+    public class CreateTemplateHandler : ICommandHandler<CreateTemplateCommand>
     {
         private readonly ITemplateRepository _templateRepository;
-        private readonly IValidator<CreateTemplate> _validator;
+        private readonly IValidator<CreateTemplateCommand> _validator;
 
         public CreateTemplateHandler(ITemplateRepository templateRepository,
-            IValidator<CreateTemplate> validator)
+            IValidator<CreateTemplateCommand> validator)
         {
             _templateRepository = templateRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateTemplate command)
+        public IEnumerable<IEvent> Handle(CreateTemplateCommand command)
         {
             var template = Template.CreateNew(command, _validator);
 

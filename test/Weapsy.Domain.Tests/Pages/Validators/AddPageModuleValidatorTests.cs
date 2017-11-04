@@ -54,7 +54,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var siteRulesMock = new Mock<ISiteRules>();
             var validator = new AddPageModuleValidator(siteRulesMock.Object, moduleRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.ModuleId, new AddPageModule
+            validator.ShouldHaveValidationErrorFor(x => x.ModuleId, new AddPageModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -73,7 +73,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var siteRulesMock = new Mock<ISiteRules>();
             var validator = new AddPageModuleValidator(siteRulesMock.Object, moduleRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.ModuleId, new AddPageModule
+            validator.ShouldHaveValidationErrorFor(x => x.ModuleId, new AddPageModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -94,7 +94,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var title = "";
             for (int i = 0; i < 101; i++) title += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Title, new AddPageModule
+            validator.ShouldHaveValidationErrorFor(x => x.Title, new AddPageModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -112,7 +112,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var siteRulesMock = new Mock<ISiteRules>();
             var validator = new AddPageModuleValidator(siteRulesMock.Object, moduleRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Zone, new AddPageModule
+            validator.ShouldHaveValidationErrorFor(x => x.Zone, new AddPageModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -133,7 +133,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var zone = "";
             for (int i = 0; i < 101; i++) zone += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Zone, new AddPageModule
+            validator.ShouldHaveValidationErrorFor(x => x.Zone, new AddPageModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),

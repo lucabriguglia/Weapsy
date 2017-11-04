@@ -16,7 +16,7 @@ namespace Weapsy.Tests.Factories
 
         public static ModuleType ModuleType(Guid id, string name, string title, string description)
         {
-            var command = new CreateModuleType
+            var command = new CreateModuleTypeCommand
             {
                 Id = id,
                 Name = name,
@@ -24,7 +24,7 @@ namespace Weapsy.Tests.Factories
                 Description = description
             };
 
-            var validatorMock = new Mock<IValidator<CreateModuleType>>();
+            var validatorMock = new Mock<IValidator<CreateModuleTypeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             return Domain.ModuleTypes.ModuleType.CreateNew(command, validatorMock.Object);

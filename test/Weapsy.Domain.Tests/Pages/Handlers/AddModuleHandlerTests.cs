@@ -23,7 +23,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_create_module()
         {
-            var command = new AddModule
+            var command = new AddModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -37,10 +37,10 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             moduleRepositoryMock.Setup(x => x.Create(It.IsAny<Module>()));
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(new Page());
-            var createModuleValidatorMock = new Mock<IValidator<CreateModule>>();
-            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModule>())).Returns(new ValidationResult());
-            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
-            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModule>())).Returns(new ValidationResult());
+            var createModuleValidatorMock = new Mock<IValidator<CreateModuleCommand>>();
+            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModuleCommand>())).Returns(new ValidationResult());
+            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
+            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModuleCommand>())).Returns(new ValidationResult());
 
             var addModuleHandler = new AddModuleHandler(moduleRepositoryMock.Object,
                 pageRepositoryMock.Object,
@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_throw_exception_when_page_is_not_found()
         {
-            var command = new AddModule
+            var command = new AddModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -68,10 +68,10 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var moduleRepositoryMock = new Mock<IModuleRepository>();
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns((Page)null);
-            var createModuleValidatorMock = new Mock<IValidator<CreateModule>>();
-            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModule>())).Returns(new ValidationResult());
-            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
-            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModule>())).Returns(new ValidationResult());
+            var createModuleValidatorMock = new Mock<IValidator<CreateModuleCommand>>();
+            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModuleCommand>())).Returns(new ValidationResult());
+            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
+            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModuleCommand>())).Returns(new ValidationResult());
 
             var addModuleHandler = new AddModuleHandler(moduleRepositoryMock.Object, 
                 pageRepositoryMock.Object, 
@@ -84,7 +84,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_add_module_to_page()
         {
-            var command = new AddModule
+            var command = new AddModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -103,11 +103,11 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
             pageRepositoryMock.Setup(x => x.Update(It.IsAny<Page>()));
 
-            var createModuleValidatorMock = new Mock<IValidator<CreateModule>>();
-            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModule>())).Returns(new ValidationResult());
+            var createModuleValidatorMock = new Mock<IValidator<CreateModuleCommand>>();
+            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModuleCommand>())).Returns(new ValidationResult());
 
-            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
-            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModule>())).Returns(new ValidationResult());
+            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
+            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModuleCommand>())).Returns(new ValidationResult());
 
             var addModuleHandler = new AddModuleHandler(moduleRepositoryMock.Object,
                 pageRepositoryMock.Object,
@@ -116,7 +116,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             addModuleHandler.Handle(command);
 
-            var @event = page.Events.OfType<PageModuleAdded>().SingleOrDefault();
+            var @event = page.Events.OfType<PageModuleAddedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -124,7 +124,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_update_page()
         {
-            var command = new AddModule
+            var command = new AddModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -138,10 +138,10 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(new Page());
             pageRepositoryMock.Setup(x => x.Update(It.IsAny<Page>()));            
-            var createModuleValidatorMock = new Mock<IValidator<CreateModule>>();
-            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModule>())).Returns(new ValidationResult());
-            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
-            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModule>())).Returns(new ValidationResult());
+            var createModuleValidatorMock = new Mock<IValidator<CreateModuleCommand>>();
+            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModuleCommand>())).Returns(new ValidationResult());
+            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
+            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModuleCommand>())).Returns(new ValidationResult());
 
             var addModuleHandler = new AddModuleHandler(moduleRepositoryMock.Object,
                 pageRepositoryMock.Object,
@@ -156,7 +156,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_return_events()
         {
-            var command = new AddModule
+            var command = new AddModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -169,10 +169,10 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var moduleRepositoryMock = new Mock<IModuleRepository>();
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(new Page());
-            var createModuleValidatorMock = new Mock<IValidator<CreateModule>>();
-            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModule>())).Returns(new ValidationResult());
-            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
-            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModule>())).Returns(new ValidationResult());
+            var createModuleValidatorMock = new Mock<IValidator<CreateModuleCommand>>();
+            createModuleValidatorMock.Setup(x => x.Validate(It.IsAny<CreateModuleCommand>())).Returns(new ValidationResult());
+            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
+            addPageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<AddPageModuleCommand>())).Returns(new ValidationResult());
 
             var addModuleHandler = new AddModuleHandler(moduleRepositoryMock.Object,
                 pageRepositoryMock.Object,
@@ -182,8 +182,8 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var events = addModuleHandler.Handle(command);
 
             var enumerable = events as IList<IEvent> ?? events.ToList();
-            Assert.AreEqual(typeof(ModuleCreated), enumerable.FirstOrDefault().GetType());
-            Assert.AreEqual(typeof(PageModuleAdded), enumerable.Skip(1).FirstOrDefault().GetType());
+            Assert.AreEqual(typeof(ModuleCreatedEvent), enumerable.FirstOrDefault().GetType());
+            Assert.AreEqual(typeof(PageModuleAddedEvent), enumerable.Skip(1).FirstOrDefault().GetType());
         }
     }
 }

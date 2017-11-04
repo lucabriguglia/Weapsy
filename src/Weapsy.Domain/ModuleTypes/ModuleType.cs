@@ -20,13 +20,13 @@ namespace Weapsy.Domain.ModuleTypes
 
         public ModuleType(){}
 
-        private ModuleType(CreateModuleType cmd) : base(cmd.Id)
+        private ModuleType(CreateModuleTypeCommand cmd) : base(cmd.Id)
         {
             AppId = cmd.AppId;
             Status = ModuleTypeStatus.Active;
             UpdateDetails(cmd);
 
-            AddEvent(new ModuleTypeCreated
+            AddEvent(new ModuleTypeCreatedEvent
             {
                 AppId = AppId,
                 AggregateRootId = Id,
@@ -41,20 +41,20 @@ namespace Weapsy.Domain.ModuleTypes
             });
         }
 
-        public static ModuleType CreateNew(CreateModuleType cmd, IValidator<CreateModuleType> validator)
+        public static ModuleType CreateNew(CreateModuleTypeCommand cmd, IValidator<CreateModuleTypeCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
             return new ModuleType(cmd);
         }
 
-        public void UpdateDetails(UpdateModuleTypeDetails cmd, IValidator<UpdateModuleTypeDetails> validator)
+        public void UpdateDetails(UpdateModuleTypeDetailsCommand cmd, IValidator<UpdateModuleTypeDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
             UpdateDetails(cmd);
 
-            AddEvent(new ModuleTypeDetailsUpdated
+            AddEvent(new ModuleTypeDetailsUpdatedEvent
             {
                 AggregateRootId = Id,
                 Name = Name,
@@ -67,7 +67,7 @@ namespace Weapsy.Domain.ModuleTypes
             });
         }
 
-        private void UpdateDetails(ModuleTypeDetails cmd)
+        private void UpdateDetails(ModuleTypeDetailsCommand cmd)
         {
             Name = cmd.Name;
             Title = cmd.Title;
@@ -78,7 +78,7 @@ namespace Weapsy.Domain.ModuleTypes
             EditUrl = cmd.EditUrl;
         }
 
-        public void Delete(DeleteModuleType cmd, IValidator<DeleteModuleType> validator)
+        public void Delete(DeleteModuleTypeCommand cmd, IValidator<DeleteModuleTypeCommand> validator)
         {
             if (Status == ModuleTypeStatus.Deleted)
                 throw new Exception("Module type already deleted.");
@@ -87,7 +87,7 @@ namespace Weapsy.Domain.ModuleTypes
 
             Status = ModuleTypeStatus.Deleted;
 
-            AddEvent(new ModuleTypeDeleted
+            AddEvent(new ModuleTypeDeletedEvent
             {
                 AggregateRootId = Id
             });

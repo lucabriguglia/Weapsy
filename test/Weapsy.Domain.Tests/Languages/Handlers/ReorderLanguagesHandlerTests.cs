@@ -20,7 +20,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var language1Id = Guid.NewGuid();
             var language2Id = Guid.NewGuid();
 
-            var command = new ReorderLanguages
+            var command = new ReorderLanguagesCommand
             {
                 SiteId = siteId,
                 Languages = new List<Guid>
@@ -60,7 +60,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var siteId = Guid.NewGuid();
             var languageId = Guid.NewGuid();
 
-            var command = new ReorderLanguages
+            var command = new ReorderLanguagesCommand
             {
                 SiteId = siteId,
                 Languages = new List<Guid>
@@ -86,7 +86,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var siteId = Guid.NewGuid();
             var languageId = Guid.NewGuid();
 
-            var command = new ReorderLanguages
+            var command = new ReorderLanguagesCommand
             {
                 SiteId = siteId,
                 Languages = new List<Guid>

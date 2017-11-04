@@ -47,9 +47,9 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult Update(SiteAdminModel model)
         {
-            var command = _mapper.Map<UpdateSiteDetails>(model);
+            var command = _mapper.Map<UpdateSiteDetailsCommand>(model);
             command.SiteId = SiteId;
-            _commandSender.Send<UpdateSiteDetails, Site>(command);
+            _commandSender.Send<UpdateSiteDetailsCommand, Site>(command);
             return new NoContentResult();
         }
     }

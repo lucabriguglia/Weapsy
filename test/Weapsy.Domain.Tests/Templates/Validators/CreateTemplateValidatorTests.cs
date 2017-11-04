@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
         [Test]
         public void Should_have_validation_error_when_template_id_already_exists()
         {
-            var command = new CreateTemplate
+            var command = new CreateTemplateCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",

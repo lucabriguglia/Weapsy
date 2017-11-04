@@ -22,7 +22,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
 
             var validator = new HidePageValidator(siteRulesMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Id, new HidePage
+            validator.ShouldHaveValidationErrorFor(x => x.Id, new HidePageCommand
             {
                 SiteId = siteId,
                 Id = pageId

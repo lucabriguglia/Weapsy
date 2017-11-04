@@ -13,23 +13,23 @@ namespace Weapsy.Domain.Tests.Sites
     [TestFixture]
     public class CreateSiteTests
     {
-        private CreateSite _command;
-        private Mock<IValidator<CreateSite>> _validatorMock;
+        private CreateSiteCommand _command;
+        private Mock<IValidator<CreateSiteCommand>> _validatorMock;
         private Site _site;
-        private SiteCreated _event;
+        private SiteCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateSite
+            _command = new CreateSiteCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name"
             };
-            _validatorMock = new Mock<IValidator<CreateSite>>();
+            _validatorMock = new Mock<IValidator<CreateSiteCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _site = Site.CreateNew(_command, _validatorMock.Object);
-            _event = _site.Events.OfType<SiteCreated>().SingleOrDefault();
+            _event = _site.Events.OfType<SiteCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

@@ -23,7 +23,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var title = "";
             for (int i = 0; i < 251; i++) title += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Title, new UpdatePageModuleDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Title, new UpdatePageModuleDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),

@@ -7,19 +7,19 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class UpdatePageDetailsHandler : ICommandHandler<UpdatePageDetails>
+    public class UpdatePageDetailsHandler : ICommandHandler<UpdatePageDetailsCommand>
     {
         private readonly IPageRepository _pageRepository;
-        private readonly IValidator<UpdatePageDetails> _validator;
+        private readonly IValidator<UpdatePageDetailsCommand> _validator;
 
         public UpdatePageDetailsHandler(IPageRepository pageRepository,
-            IValidator<UpdatePageDetails> validator)
+            IValidator<UpdatePageDetailsCommand> validator)
         {
             _pageRepository = pageRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdatePageDetails command)
+        public IEnumerable<IEvent> Handle(UpdatePageDetailsCommand command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.Id);
 

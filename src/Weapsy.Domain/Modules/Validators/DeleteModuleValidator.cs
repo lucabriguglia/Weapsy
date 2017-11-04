@@ -6,7 +6,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Modules.Validators
 {
-    public class DeleteModuleValidator : AbstractValidator<DeleteModule>
+    public class DeleteModuleValidator : AbstractValidator<DeleteModuleCommand>
     {
         private readonly IModuleRules _moduleRules;
         private readonly ISiteRules _siteRules;

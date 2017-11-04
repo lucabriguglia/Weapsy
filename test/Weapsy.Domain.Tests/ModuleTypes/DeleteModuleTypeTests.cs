@@ -16,9 +16,9 @@ namespace Weapsy.Domain.Tests.ModuleTypes
         [Test]
         public void Should_throw_exception_when_already_deleted()
         {
-            var command = new DeleteModuleType();
+            var command = new DeleteModuleTypeCommand();
             var moduleType = new ModuleType();
-            var validatorMock = new Mock<IValidator<DeleteModuleType>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleTypeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
             
             moduleType.Delete(command, validatorMock.Object);
@@ -29,9 +29,9 @@ namespace Weapsy.Domain.Tests.ModuleTypes
         [Test]
         public void Should_validate_command()
         {
-            var command = new DeleteModuleType();
+            var command = new DeleteModuleTypeCommand();
             var moduleType = new ModuleType();
-            var validatorMock = new Mock<IValidator<DeleteModuleType>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleTypeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             moduleType.Delete(command, validatorMock.Object);
@@ -42,9 +42,9 @@ namespace Weapsy.Domain.Tests.ModuleTypes
         [Test]
         public void Should_set_module_type_status_to_deleted()
         {
-            var command = new DeleteModuleType();
+            var command = new DeleteModuleTypeCommand();
             var moduleType = new ModuleType();
-            var validatorMock = new Mock<IValidator<DeleteModuleType>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleTypeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             moduleType.Delete(command, validatorMock.Object);
@@ -55,14 +55,14 @@ namespace Weapsy.Domain.Tests.ModuleTypes
         [Test]
         public void Should_add_module_type_deleted_event()
         {
-            var command = new DeleteModuleType();
+            var command = new DeleteModuleTypeCommand();
             var moduleType = new ModuleType();
-            var validatorMock = new Mock<IValidator<DeleteModuleType>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleTypeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             moduleType.Delete(command, validatorMock.Object);
 
-            var @event = moduleType.Events.OfType<ModuleTypeDeleted>().SingleOrDefault();
+            var @event = moduleType.Events.OfType<ModuleTypeDeletedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -70,14 +70,14 @@ namespace Weapsy.Domain.Tests.ModuleTypes
         [Test]
         public void Should_set_id_in_module_type_deleted_event()
         {
-            var command = new DeleteModuleType();
+            var command = new DeleteModuleTypeCommand();
             var moduleType = new ModuleType();
-            var validatorMock = new Mock<IValidator<DeleteModuleType>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleTypeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             moduleType.Delete(command, validatorMock.Object);
 
-            var @event = moduleType.Events.OfType<ModuleTypeDeleted>().SingleOrDefault();
+            var @event = moduleType.Events.OfType<ModuleTypeDeletedEvent>().SingleOrDefault();
 
             Assert.AreEqual(moduleType.Id, @event.AggregateRootId);
         }

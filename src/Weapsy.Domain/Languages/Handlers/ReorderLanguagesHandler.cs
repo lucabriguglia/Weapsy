@@ -8,7 +8,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Languages.Handlers
 {
-    public class ReorderLanguagesHandler : ICommandHandler<ReorderLanguages>
+    public class ReorderLanguagesHandler : ICommandHandler<ReorderLanguagesCommand>
     {
         private readonly ILanguageRepository _languageRepository;
         private readonly ISiteRules _siteRules;
@@ -19,7 +19,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _siteRules = siteRules;
         }
 
-        public IEnumerable<IEvent> Handle(ReorderLanguages cmd)
+        public IEnumerable<IEvent> Handle(ReorderLanguagesCommand cmd)
         {
             if (!_siteRules.DoesSiteExist(cmd.SiteId))
                 throw new Exception("Site does not exist.");

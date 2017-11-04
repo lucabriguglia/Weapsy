@@ -23,19 +23,19 @@ namespace Weapsy.Tests.Factories
             if (languageId == Guid.Empty)
                 languageId = Guid.NewGuid();
 
-            var createCommand = new CreateMenu
+            var createCommand = new CreateMenuCommand
             {
                 SiteId = siteId,
                 Id = id,
                 Name = name
             };
 
-            var createValidatorMock = new Mock<IValidator<CreateMenu>>();
+            var createValidatorMock = new Mock<IValidator<CreateMenuCommand>>();
             createValidatorMock.Setup(x => x.Validate(createCommand)).Returns(new ValidationResult());
 
             var menu = Domain.Menus.Menu.CreateNew(createCommand, createValidatorMock.Object);
 
-            var addItemCommand = new AddMenuItem
+            var addItemCommand = new AddMenuItemCommand
             {
                 SiteId = menu.SiteId,
                 MenuId = menu.Id,
@@ -56,7 +56,7 @@ namespace Weapsy.Tests.Factories
                 }
             };
 
-            var addItemValidatorMock = new Mock<IValidator<AddMenuItem>>();
+            var addItemValidatorMock = new Mock<IValidator<AddMenuItemCommand>>();
             addItemValidatorMock.Setup(x => x.Validate(addItemCommand)).Returns(new ValidationResult());
 
             menu.AddMenuItem(addItemCommand, addItemValidatorMock.Object);

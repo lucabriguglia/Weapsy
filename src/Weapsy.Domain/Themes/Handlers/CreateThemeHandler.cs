@@ -6,14 +6,14 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class CreateThemeHandler : ICommandHandler<CreateTheme>
+    public class CreateThemeHandler : ICommandHandler<CreateThemeCommand>
     {
         private readonly IThemeRepository _themeRepository;
-        private readonly IValidator<CreateTheme> _validator;
+        private readonly IValidator<CreateThemeCommand> _validator;
         private readonly IThemeSortOrderGenerator _sortOrderGenerator;
 
         public CreateThemeHandler(IThemeRepository themeRepository,
-            IValidator<CreateTheme> validator,
+            IValidator<CreateThemeCommand> validator,
             IThemeSortOrderGenerator sortOrderGenerator)
         {
             _themeRepository = themeRepository;
@@ -21,7 +21,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _sortOrderGenerator = sortOrderGenerator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateTheme command)
+        public IEnumerable<IEvent> Handle(CreateThemeCommand command)
         {
             var theme = Theme.CreateNew(command, _validator, _sortOrderGenerator);
 

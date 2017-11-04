@@ -4,7 +4,7 @@ using Weapsy.Domain.Users.Rules;
 
 namespace Weapsy.Domain.Users.Validator
 {
-    public class CreateUserValidator : AbstractValidator<CreateUser>
+    public class CreateUserValidator : AbstractValidator<CreateUserCommand>
     {
         private readonly IUserRules _userRules;
 

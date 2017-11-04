@@ -6,18 +6,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Modules.Handlers
 {
-    public class CreateModuleHandler : ICommandHandler<CreateModule>
+    public class CreateModuleHandler : ICommandHandler<CreateModuleCommand>
     {
         private readonly IModuleRepository _moduleRepository;
-        private readonly IValidator<CreateModule> _validator;
+        private readonly IValidator<CreateModuleCommand> _validator;
 
-        public CreateModuleHandler(IModuleRepository moduleRepository, IValidator<CreateModule> validator)
+        public CreateModuleHandler(IModuleRepository moduleRepository, IValidator<CreateModuleCommand> validator)
         {
             _moduleRepository = moduleRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateModule command)
+        public IEnumerable<IEvent> Handle(CreateModuleCommand command)
         {
             var module = Module.CreateNew(command, _validator);
 

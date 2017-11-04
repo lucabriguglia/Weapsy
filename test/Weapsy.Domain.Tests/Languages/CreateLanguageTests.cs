@@ -13,16 +13,16 @@ namespace Weapsy.Domain.Tests.Languages
     [TestFixture]
     public class CreateLanguageTests
     {
-        private CreateLanguage _command;
-        private Mock<IValidator<CreateLanguage>> _validatorMock;
+        private CreateLanguageCommand _command;
+        private Mock<IValidator<CreateLanguageCommand>> _validatorMock;
         private Mock<ILanguageSortOrderGenerator> _sortOrderGeneratorMock;
         private Language _language;
-        private LanguageCreated _event;
+        private LanguageCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateLanguage
+            _command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -30,12 +30,12 @@ namespace Weapsy.Domain.Tests.Languages
                 CultureName = "aa-bb",
                 Url = "url"
             };            
-            _validatorMock = new Mock<IValidator<CreateLanguage>>();
+            _validatorMock = new Mock<IValidator<CreateLanguageCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();
             _sortOrderGeneratorMock.Setup(x => x.GenerateNextSortOrder(_command.SiteId)).Returns(4);
             _language = Language.CreateNew(_command, _validatorMock.Object, _sortOrderGeneratorMock.Object);
-            _event = _language.Events.OfType<LanguageCreated>().SingleOrDefault();
+            _event = _language.Events.OfType<LanguageCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

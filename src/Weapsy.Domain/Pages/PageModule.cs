@@ -41,7 +41,7 @@ namespace Weapsy.Domain.Pages
             SetPermissions(pageModulePermissions);
         }
 
-        public void UpdateDetails(UpdatePageModuleDetails cmd)
+        public void UpdateDetails(UpdatePageModuleDetailsCommand cmd)
         {
             Title = cmd.Title;
             InheritPermissions = cmd.InheritPermissions;

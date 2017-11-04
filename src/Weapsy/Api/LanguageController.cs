@@ -54,19 +54,19 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateLanguage model)
+        public async Task<IActionResult> Post([FromBody] CreateLanguageCommand model)
         {
             model.SiteId = SiteId;
-            await _commandSender.SendAsync<CreateLanguage, Language>(model);
+            await _commandSender.SendAsync<CreateLanguageCommand, Language>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public IActionResult UpdateDetails([FromBody] UpdateLanguageDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdateLanguageDetailsCommand model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<UpdateLanguageDetails, Language>(model);
+            _commandSender.Send<UpdateLanguageDetailsCommand, Language>(model);
             return new NoContentResult();
         }
 
@@ -74,7 +74,7 @@ namespace Weapsy.Api
         [Route("reorder")]
         public IActionResult ReorderLanguages([FromBody] List<Guid> model)
         {
-            _commandSender.Send<ReorderLanguages, Language>(new ReorderLanguages
+            _commandSender.Send<ReorderLanguagesCommand, Language>(new ReorderLanguagesCommand
             {
                 SiteId = SiteId,
                 Languages = model
@@ -86,7 +86,7 @@ namespace Weapsy.Api
         [Route("{id}/activate")]
         public IActionResult Activate(Guid id)
         {
-            _commandSender.Send<ActivateLanguage, Language>(new ActivateLanguage
+            _commandSender.Send<ActivateLanguageCommand, Language>(new ActivateLanguageCommand
             {
                 SiteId = SiteId,
                 Id = id
@@ -98,7 +98,7 @@ namespace Weapsy.Api
         [Route("{id}/hide")]
         public IActionResult Hide(Guid id)
         {
-            _commandSender.Send<HideLanguage, Language>(new HideLanguage
+            _commandSender.Send<HideLanguageCommand, Language>(new HideLanguageCommand
             {
                 SiteId = SiteId,
                 Id = id
@@ -109,7 +109,7 @@ namespace Weapsy.Api
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _commandSender.Send<DeleteLanguage, Language>(new DeleteLanguage
+            _commandSender.Send<DeleteLanguageCommand, Language>(new DeleteLanguageCommand
             {
                 SiteId = SiteId,
                 Id = id

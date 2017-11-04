@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new CreateApp
+            var command = new CreateAppCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
 
             var appRepositoryMock = new Mock<IAppRepository>();
 
-            var validatorMock = new Mock<IValidator<CreateApp>>();
+            var validatorMock = new Mock<IValidator<CreateAppCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var createAppHandler = new CreateAppHandler(appRepositoryMock.Object, validatorMock.Object);
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
         [Test]
         public void Should_validate_command_and_save_new_app()
         {
-            var command = new CreateApp
+            var command = new CreateAppCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -48,7 +48,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
             var appRepositoryMock = new Mock<IAppRepository>();
             appRepositoryMock.Setup(x => x.Create(It.IsAny<App>()));
 
-            var validatorMock = new Mock<IValidator<CreateApp>>();
+            var validatorMock = new Mock<IValidator<CreateAppCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createAppHandler = new CreateAppHandler(appRepositoryMock.Object, validatorMock.Object);

@@ -14,22 +14,22 @@ namespace Weapsy.Domain.Tests.Pages
     public class HidePageTests
     {
         private Page _page;
-        private Mock<IValidator<HidePage>> _validatorMock;
-        private HidePage _command;
-        private PageHidden _event;
+        private Mock<IValidator<HidePageCommand>> _validatorMock;
+        private HidePageCommand _command;
+        private PageHiddenEvent _event;
 
         [SetUp]
         public void SetUp()
         {
             _page = new Page();
-            _command = new HidePage();
+            _command = new HidePageCommand();
 
-            _validatorMock = new Mock<IValidator<HidePage>>();
+            _validatorMock = new Mock<IValidator<HidePageCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
             _page.Hide(_command, _validatorMock.Object);
 
-            _event = _page.Events.OfType<PageHidden>().SingleOrDefault();
+            _event = _page.Events.OfType<PageHiddenEvent>().SingleOrDefault();
         }
 
         [Test]
@@ -47,13 +47,13 @@ namespace Weapsy.Domain.Tests.Pages
         [Test]
         public void Should_throw_exception_when_deleted()
         {
-            var deletePageCommand = new DeletePage
+            var deletePageCommand = new DeletePageCommand
             {
                 SiteId = _page.SiteId,
                 Id = _page.Id
             };
 
-            var deletePageValidatorMock = new Mock<IValidator<DeletePage>>();
+            var deletePageValidatorMock = new Mock<IValidator<DeletePageCommand>>();
             deletePageValidatorMock.Setup(x => x.Validate(deletePageCommand)).Returns(new ValidationResult());
 
             _page.Delete(deletePageCommand, deletePageValidatorMock.Object);

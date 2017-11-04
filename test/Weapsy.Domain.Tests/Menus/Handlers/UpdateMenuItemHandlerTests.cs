@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
         [Test]
         public void Should_throw_exception_if_menu_not_found()
         {
-            var command = new UpdateMenuItem
+            var command = new UpdateMenuItemCommand
             {
                 MenuId = Guid.NewGuid()
             };
@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
             var menuRepositoryMock = new Mock<IMenuRepository>();
             menuRepositoryMock.Setup(x => x.GetById(command.MenuId)).Returns((Menu)null);
 
-            var validatorMock = new Mock<IValidator<UpdateMenuItem>>();
+            var validatorMock = new Mock<IValidator<UpdateMenuItemCommand>>();
 
             var handler = new UpdateMenuItemHandler(menuRepositoryMock.Object, validatorMock.Object);
 
@@ -34,7 +34,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
         [Test]
         public void Should_throw_exception_when_validation_fails()
         {
-            var command = new UpdateMenuItem
+            var command = new UpdateMenuItemCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -45,7 +45,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
             var menuRepositoryMock = new Mock<IMenuRepository>();
             menuRepositoryMock.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(new Menu());
 
-            var validatorMock = new Mock<IValidator<UpdateMenuItem>>();
+            var validatorMock = new Mock<IValidator<UpdateMenuItemCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var createMenuHandler = new UpdateMenuItemHandler(menuRepositoryMock.Object, validatorMock.Object);
@@ -60,7 +60,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
 
             var menuItemId = Guid.NewGuid();
 
-            var addMenuItemCommand = new AddMenuItem
+            var addMenuItemCommand = new AddMenuItemCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -87,12 +87,12 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
                 }
             };
 
-            var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItem>>();
+            var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItemCommand>>();
             addMenuItemValidatorMock.Setup(x => x.Validate(addMenuItemCommand)).Returns(new ValidationResult());
 
             menu.AddMenuItem(addMenuItemCommand, addMenuItemValidatorMock.Object);
 
-            var command = new UpdateMenuItem
+            var command = new UpdateMenuItemCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -104,7 +104,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
             menuRepositoryMock.Setup(x => x.GetById(command.SiteId, command.MenuId)).Returns(menu);
             menuRepositoryMock.Setup(x => x.Update(menu));
 
-            var validatorMock = new Mock<IValidator<UpdateMenuItem>>();
+            var validatorMock = new Mock<IValidator<UpdateMenuItemCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createMenuHandler = new UpdateMenuItemHandler(menuRepositoryMock.Object, validatorMock.Object);

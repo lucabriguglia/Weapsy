@@ -5,7 +5,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class HidePageValidator : BaseSiteValidator<HidePage>
+    public class HidePageValidator : BaseSiteValidator<HidePageCommand>
     {
         private readonly ISiteRules _siteRules;
 
@@ -19,7 +19,7 @@ namespace Weapsy.Domain.Pages.Validators
                     .WithMessage("Page is used as Home Page and cannot be hidden.");
         }
 
-        private bool NotBeInUseAsHomePage(HidePage cmd, Guid pageId)
+        private bool NotBeInUseAsHomePage(HidePageCommand cmd, Guid pageId)
         {
             return !_siteRules.IsPageSetAsHomePage(cmd.SiteId, pageId);
         }

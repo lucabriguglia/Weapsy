@@ -12,7 +12,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Validators
     [TestFixture]
     public class CreateEmailAccountValidatorTests
     {
-        private CreateEmailAccount _command;
+        private CreateEmailAccountCommand _command;
         private CreateEmailAccountValidator _validator;
         private Mock<IEmailAccountRules> _emailAccountRulesMock;
         private Mock<ISiteRules> _siteRulesMock;
@@ -20,7 +20,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Validators
         [SetUp]
         public void SetUp()
         {
-            _command = new CreateEmailAccount
+            _command = new CreateEmailAccountCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),

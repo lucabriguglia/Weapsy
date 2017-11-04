@@ -14,26 +14,26 @@ namespace Weapsy.Domain.Tests.Apps
     [TestFixture]
     public class UpdateAppDetailsTests
     {
-        private UpdateAppDetails _command;
-        private Mock<IValidator<UpdateAppDetails>> _validatorMock;
+        private UpdateAppDetailsCommand _command;
+        private Mock<IValidator<UpdateAppDetailsCommand>> _validatorMock;
         private App _app;
-        private AppDetailsUpdated _event;
+        private AppDetailsUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
             _app = AppFactory.App();
-            _command = new UpdateAppDetails
+            _command = new UpdateAppDetailsCommand
             {
                 Id = _app.Id,
                 Name = "New Name",
                 Description = "New Description",
                 Folder = "New Folder"
             };
-            _validatorMock = new Mock<IValidator<UpdateAppDetails>>();
+            _validatorMock = new Mock<IValidator<UpdateAppDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _app.UpdateDetails(_command, _validatorMock.Object);
-            _event = _app.Events.OfType<AppDetailsUpdated>().SingleOrDefault();
+            _event = _app.Events.OfType<AppDetailsUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]

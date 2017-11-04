@@ -16,16 +16,16 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
         [Test]
         public void Should_throw_exception_if_menu_not_found()
         {
-            var command = new ReorderMenuItems
+            var command = new ReorderMenuItemsCommand
             {
                 Id = Guid.NewGuid(),
-                MenuItems = new List<ReorderMenuItems.MenuItem>()
+                MenuItems = new List<ReorderMenuItemsCommand.MenuItem>()
             };
 
             var menuRepositoryMock = new Mock<IMenuRepository>();
             menuRepositoryMock.Setup(x => x.GetById(command.Id)).Returns((Menu)null);
 
-            var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
+            var validatorMock = new Mock<IValidator<ReorderMenuItemsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var handler = new ReorderMenuItemsHandler(menuRepositoryMock.Object, validatorMock.Object);
@@ -36,29 +36,29 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
         [Test]
         public void Should_save_menu_when_reorder_menu_items()
         {
-            var createMenuCommand = new CreateMenu
+            var createMenuCommand = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "My Menu"
             };
 
-            var createMenuValidatorMock = new Mock<IValidator<CreateMenu>>();
+            var createMenuValidatorMock = new Mock<IValidator<CreateMenuCommand>>();
             createMenuValidatorMock.Setup(x => x.Validate(createMenuCommand)).Returns(new ValidationResult());
 
             var menu = Menu.CreateNew(createMenuCommand, createMenuValidatorMock.Object);
 
-            var reorderMenuItemsCommand = new ReorderMenuItems
+            var reorderMenuItemsCommand = new ReorderMenuItemsCommand
             {
                 Id = Guid.NewGuid(),
-                MenuItems = new List<ReorderMenuItems.MenuItem>()
+                MenuItems = new List<ReorderMenuItemsCommand.MenuItem>()
             };
 
             var menuRepositoryMock = new Mock<IMenuRepository>();
             menuRepositoryMock.Setup(x => x.GetById(It.IsAny<Guid>())).Returns(menu);
             menuRepositoryMock.Setup(x => x.Update(It.IsAny<Menu>()));
 
-            var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
+            var validatorMock = new Mock<IValidator<ReorderMenuItemsCommand>>();
             validatorMock.Setup(x => x.Validate(reorderMenuItemsCommand)).Returns(new ValidationResult());
 
             var createMenuHandler = new ReorderMenuItemsHandler(menuRepositoryMock.Object, validatorMock.Object);

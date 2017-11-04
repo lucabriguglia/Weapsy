@@ -14,16 +14,16 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class AddPageModuleTests
     {
-        private AddPageModule _command;
-        private Mock<IValidator<AddPageModule>> _validatorMock;
+        private AddPageModuleCommand _command;
+        private Mock<IValidator<AddPageModuleCommand>> _validatorMock;
         private Page _page;
-        private PageModuleAdded _event;
+        private PageModuleAddedEvent _event;
         private PageModule _pageModule;
 
         [SetUp]
         public void Setup()
         {
-            _command = new AddPageModule
+            _command = new AddPageModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -33,11 +33,11 @@ namespace Weapsy.Domain.Tests.Pages
                 Zone = "Zone",
                 SortOrder = 1
             };
-            _validatorMock = new Mock<IValidator<AddPageModule>>();
+            _validatorMock = new Mock<IValidator<AddPageModuleCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _page = new Page();
             _page.AddModule(_command, _validatorMock.Object);
-            _event = _page.Events.OfType<PageModuleAdded>().SingleOrDefault();
+            _event = _page.Events.OfType<PageModuleAddedEvent>().SingleOrDefault();
             _pageModule = _page.PageModules.FirstOrDefault(x => x.Id == _command.PageModuleId);
         }
 
@@ -136,7 +136,7 @@ namespace Weapsy.Domain.Tests.Pages
         {
             _command.ModuleId = Guid.NewGuid();
             _page.AddModule(_command, _validatorMock.Object);
-            _event = _page.Events.OfType<PageModuleAdded>().FirstOrDefault(x => x.ModuleId == _command.ModuleId);
+            _event = _page.Events.OfType<PageModuleAddedEvent>().FirstOrDefault(x => x.ModuleId == _command.ModuleId);
             Assert.NotNull(_event.ReorderedModules.FirstOrDefault(x => x.ModuleId == _pageModule.ModuleId));
         }
 

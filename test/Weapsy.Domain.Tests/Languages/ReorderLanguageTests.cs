@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Languages
         private Language _language;
         private Guid _languageId;
         private int _newSortOrder;
-        private LanguageReordered _event;
+        private LanguageReorderedEvent _event;
 
         [SetUp]
         public void Setup()
@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Tests.Languages
             _languageId = Guid.NewGuid();
             _newSortOrder = 1;
 
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = _languageId,
@@ -33,7 +33,7 @@ namespace Weapsy.Domain.Tests.Languages
                 Url = "url"
             };
 
-            var validatorMock = new Mock<IValidator<CreateLanguage>>();
+            var validatorMock = new Mock<IValidator<CreateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();
@@ -43,7 +43,7 @@ namespace Weapsy.Domain.Tests.Languages
             
             _language.Reorder(_newSortOrder);
 
-            _event = _language.Events.OfType<LanguageReordered>().SingleOrDefault();
+            _event = _language.Events.OfType<LanguageReorderedEvent>().SingleOrDefault();
         }
 
         [Test]
@@ -79,12 +79,12 @@ namespace Weapsy.Domain.Tests.Languages
         [Test]
         public void Should_throw_exception_if_language_is_deleted()
         {
-            var deleteLanguageCommand = new DeleteLanguage
+            var deleteLanguageCommand = new DeleteLanguageCommand
             {
                 SiteId = _language.SiteId,
                 Id = _language.Id
             };
-            var deleteLanguageValidatorMock = new Mock<IValidator<DeleteLanguage>>();
+            var deleteLanguageValidatorMock = new Mock<IValidator<DeleteLanguageCommand>>();
             deleteLanguageValidatorMock.Setup(x => x.Validate(deleteLanguageCommand)).Returns(new ValidationResult());
             _language.Delete(deleteLanguageCommand, deleteLanguageValidatorMock.Object);
             Assert.Throws<Exception>(() => _language.Reorder(1));

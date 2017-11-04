@@ -7,19 +7,19 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Sites.Handlers
 {
-    public class UpdateSiteDetailsHandler : ICommandHandler<UpdateSiteDetails>
+    public class UpdateSiteDetailsHandler : ICommandHandler<UpdateSiteDetailsCommand>
     {
         private readonly ISiteRepository _siteRepository;
-        private readonly IValidator<UpdateSiteDetails> _validator;
+        private readonly IValidator<UpdateSiteDetailsCommand> _validator;
 
         public UpdateSiteDetailsHandler(ISiteRepository siteRepository,
-            IValidator<UpdateSiteDetails> validator)
+            IValidator<UpdateSiteDetailsCommand> validator)
         {
             _siteRepository = siteRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateSiteDetails cmd)
+        public IEnumerable<IEvent> Handle(UpdateSiteDetailsCommand cmd)
         {
             var site = _siteRepository.GetById(cmd.SiteId);
 

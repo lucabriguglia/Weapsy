@@ -16,7 +16,7 @@ namespace Weapsy.Tests.Factories
 
         public static App App(Guid id, string name, string description, string folder)
         {
-            var command = new CreateApp
+            var command = new CreateAppCommand
             {
                 Id = id,
                 Name = name,
@@ -24,7 +24,7 @@ namespace Weapsy.Tests.Factories
                 Folder = folder
             };
 
-            var validatorMock = new Mock<IValidator<CreateApp>>();
+            var validatorMock = new Mock<IValidator<CreateAppCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             return Domain.Apps.App.CreateNew(command, validatorMock.Object);

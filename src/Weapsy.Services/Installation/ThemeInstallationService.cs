@@ -19,7 +19,7 @@ namespace Weapsy.Services.Installation
             _queryDispatcher = queryDispatcher;
         }
 
-        public void EnsureThemeInstalled(CreateTheme createTheme)
+        public void EnsureThemeInstalled(CreateThemeCommand createTheme)
         {
             if (_queryDispatcher.Dispatch<IsThemeInstalled, bool>(new IsThemeInstalled { Name = createTheme.Name }))
                 return;
@@ -28,8 +28,8 @@ namespace Weapsy.Services.Installation
 
             createTheme.Id = newThemeId;
 
-            _commandSender.Send<CreateTheme, Theme>(createTheme, false);
-            _commandSender.Send<ActivateTheme, Theme>(new ActivateTheme { Id = newThemeId }, false);
+            _commandSender.Send<CreateThemeCommand, Theme>(createTheme, false);
+            _commandSender.Send<ActivateThemeCommand, Theme>(new ActivateThemeCommand { Id = newThemeId }, false);
         }
     }
 }

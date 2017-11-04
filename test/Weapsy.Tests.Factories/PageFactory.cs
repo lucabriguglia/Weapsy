@@ -23,7 +23,7 @@ namespace Weapsy.Tests.Factories
             if (moduleId == Guid.Empty)
                 moduleId = Guid.NewGuid();
 
-            var createCommand = new CreatePage
+            var createCommand = new CreatePageCommand
             {
                 SiteId = siteId,
                 Id = id,
@@ -45,12 +45,12 @@ namespace Weapsy.Tests.Factories
                 }
             };
 
-            var createValidatorMock = new Mock<IValidator<CreatePage>>();
+            var createValidatorMock = new Mock<IValidator<CreatePageCommand>>();
             createValidatorMock.Setup(x => x.Validate(createCommand)).Returns(new ValidationResult());
 
             var page = Domain.Pages.Page.CreateNew(createCommand, createValidatorMock.Object);
 
-            var addModuleCommand = new AddPageModule
+            var addModuleCommand = new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = id,
@@ -61,7 +61,7 @@ namespace Weapsy.Tests.Factories
                 SortOrder = 1
             };
 
-            var addModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
+            var addModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
             addModuleValidatorMock.Setup(x => x.Validate(addModuleCommand)).Returns(new ValidationResult());
 
             page.AddModule(addModuleCommand, addModuleValidatorMock.Object);

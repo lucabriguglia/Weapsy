@@ -69,7 +69,7 @@ namespace Weapsy.Api
         public IActionResult Post([FromBody] string name)
         {
             var newMenuId = Guid.NewGuid();
-            _commandSender.Send<CreateMenu, Menu>(new CreateMenu
+            _commandSender.Send<CreateMenuCommand, Menu>(new CreateMenuCommand
             {
                 SiteId = SiteId,
                 Id = newMenuId,
@@ -80,33 +80,33 @@ namespace Weapsy.Api
 
         [HttpPut]
         [Route("{id}/addItem")]
-        public IActionResult AddItem(Guid id, [FromBody] AddMenuItem model)
+        public IActionResult AddItem(Guid id, [FromBody] AddMenuItemCommand model)
         {
             model.SiteId = SiteId;
             model.MenuId = id;
             model.MenuItemId = Guid.NewGuid();
 
-            _commandSender.Send<AddMenuItem, Menu>(model);
+            _commandSender.Send<AddMenuItemCommand, Menu>(model);
 
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/updateItem")]
-        public IActionResult UpdateItem(Guid id, [FromBody] UpdateMenuItem model)
+        public IActionResult UpdateItem(Guid id, [FromBody] UpdateMenuItemCommand model)
         {
             model.SiteId = SiteId;
             model.MenuId = id;
-            _commandSender.Send<UpdateMenuItem, Menu>(model);
+            _commandSender.Send<UpdateMenuItemCommand, Menu>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/reorder")]
-        public IActionResult Reorder(Guid id, [FromBody] List<ReorderMenuItems.MenuItem> model)
+        public IActionResult Reorder(Guid id, [FromBody] List<ReorderMenuItemsCommand.MenuItem> model)
         {
-            var command = new ReorderMenuItems { SiteId = SiteId, Id = id, MenuItems = model };
-            _commandSender.Send<ReorderMenuItems, Menu>(command);
+            var command = new ReorderMenuItemsCommand { SiteId = SiteId, Id = id, MenuItems = model };
+            _commandSender.Send<ReorderMenuItemsCommand, Menu>(command);
             return new NoContentResult();
         }
 
@@ -114,7 +114,7 @@ namespace Weapsy.Api
         [Route("{id}/item/{itemId}")]
         public IActionResult DeleteItem(Guid id, Guid itemId)
         {
-            _commandSender.Send<RemoveMenuItem, Menu>(new RemoveMenuItem
+            _commandSender.Send<RemoveMenuItemCommand, Menu>(new RemoveMenuItemCommand
             {
                 SiteId = SiteId,
                 MenuId = id,

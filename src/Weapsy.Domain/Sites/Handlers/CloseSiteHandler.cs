@@ -6,7 +6,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Sites.Handlers
 {
-    public class CloseSiteHandler : ICommandHandler<CloseSite>
+    public class CloseSiteHandler : ICommandHandler<CloseSiteCommand>
     {
         private readonly ISiteRepository _siteRepository;
 
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _siteRepository = siteRepository;
         }
 
-        public IEnumerable<IEvent> Handle(CloseSite command)
+        public IEnumerable<IEvent> Handle(CloseSiteCommand command)
         {
             var site = _siteRepository.GetById(command.Id);
 

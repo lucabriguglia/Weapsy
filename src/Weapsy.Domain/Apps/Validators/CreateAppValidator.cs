@@ -5,7 +5,7 @@ using Weapsy.Domain.Apps.Rules;
 
 namespace Weapsy.Domain.Apps.Validators
 {
-    public class CreateAppValidator : AppDetailsValidator<CreateApp>
+    public class CreateAppValidator : AppDetailsValidator<CreateAppCommand>
     {
         private readonly IAppRules _appRules;
 

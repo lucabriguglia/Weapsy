@@ -16,11 +16,11 @@ namespace Weapsy.Domain.Tests.Menus
     public class UpdateMenuItemTests
     {
         private Menu _menu;
-        private UpdateMenuItem _command;
-        private Mock<IValidator<UpdateMenuItem>> _validatorMock;
+        private UpdateMenuItemCommand _command;
+        private Mock<IValidator<UpdateMenuItemCommand>> _validatorMock;
         private MenuItem _menuItem;
         private MenuItemLocalisation _firstMenuItemLocalisation;
-        private MenuItemUpdated _event;
+        private MenuItemUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Tests.Menus
 
             var menuItemId = Guid.NewGuid();
 
-            var addMenuItemCommand = new AddMenuItem
+            var addMenuItemCommand = new AddMenuItemCommand
             {
                 SiteId = _menu.SiteId,
                 MenuId = Guid.NewGuid(),
@@ -56,12 +56,12 @@ namespace Weapsy.Domain.Tests.Menus
                 }
             };
 
-            var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItem>>();
+            var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItemCommand>>();
             addMenuItemValidatorMock.Setup(x => x.Validate(addMenuItemCommand)).Returns(new ValidationResult());
 
             _menu.AddMenuItem(addMenuItemCommand, addMenuItemValidatorMock.Object);
 
-            _command = new UpdateMenuItem
+            _command = new UpdateMenuItemCommand
             {
                 SiteId = _menu.SiteId,
                 MenuId = _menu.Id,
@@ -83,7 +83,7 @@ namespace Weapsy.Domain.Tests.Menus
                 }
             };
 
-            _validatorMock = new Mock<IValidator<UpdateMenuItem>>();
+            _validatorMock = new Mock<IValidator<UpdateMenuItemCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
             _menu.UpdateMenuItem(_command, _validatorMock.Object);
@@ -92,7 +92,7 @@ namespace Weapsy.Domain.Tests.Menus
 
             _firstMenuItemLocalisation = _menuItem.MenuItemLocalisations.FirstOrDefault();
 
-            _event = _menu.Events.OfType<MenuItemUpdated>().SingleOrDefault();
+            _event = _menu.Events.OfType<MenuItemUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]
@@ -188,7 +188,7 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_throw_exception_if_menu_item_does_not_exist()
         {
-            _command = new UpdateMenuItem
+            _command = new UpdateMenuItemCommand
             {
                 MenuItemId = Guid.NewGuid(),
             };

@@ -14,16 +14,16 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class UpdatePageDetailsTests
     {
-        private UpdatePageDetails _command;
-        private Mock<IValidator<UpdatePageDetails>> _validatorMock;
+        private UpdatePageDetailsCommand _command;
+        private Mock<IValidator<UpdatePageDetailsCommand>> _validatorMock;
         private Page _page;
-        private PageDetailsUpdated _event;
+        private PageDetailsUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
             var pageId = Guid.NewGuid();
-            _command = new UpdatePageDetails
+            _command = new UpdatePageDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = pageId,
@@ -52,11 +52,11 @@ namespace Weapsy.Domain.Tests.Pages
                     }
                 }
             };
-            _validatorMock = new Mock<IValidator<UpdatePageDetails>>();
+            _validatorMock = new Mock<IValidator<UpdatePageDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _page = new Page();
             _page.UpdateDetails(_command, _validatorMock.Object);
-            _event = _page.Events.OfType<PageDetailsUpdated>().SingleOrDefault();
+            _event = _page.Events.OfType<PageDetailsUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]

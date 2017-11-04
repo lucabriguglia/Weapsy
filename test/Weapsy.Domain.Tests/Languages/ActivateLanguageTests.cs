@@ -17,8 +17,8 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_call_validator()
         {
             var language = new Language();
-            var command = new ActivateLanguage();
-            var validatorMock = new Mock<IValidator<ActivateLanguage>>();
+            var command = new ActivateLanguageCommand();
+            var validatorMock = new Mock<IValidator<ActivateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Activate(command, validatorMock.Object);
@@ -30,8 +30,8 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_throw_exception_when_already_activated()
         {
             var language = new Language();
-            var command = new ActivateLanguage();
-            var validatorMock = new Mock<IValidator<ActivateLanguage>>();
+            var command = new ActivateLanguageCommand();
+            var validatorMock = new Mock<IValidator<ActivateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Activate(command, validatorMock.Object);
@@ -43,8 +43,8 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_set_language_status_to_activated()
         {
             var language = new Language();
-            var command = new ActivateLanguage();
-            var validatorMock = new Mock<IValidator<ActivateLanguage>>();
+            var command = new ActivateLanguageCommand();
+            var validatorMock = new Mock<IValidator<ActivateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Activate(command, validatorMock.Object);
@@ -56,13 +56,13 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_add_language_activated_event()
         {
             var language = new Language();
-            var command = new ActivateLanguage();
-            var validatorMock = new Mock<IValidator<ActivateLanguage>>();
+            var command = new ActivateLanguageCommand();
+            var validatorMock = new Mock<IValidator<ActivateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Activate(command, validatorMock.Object);
 
-            var @event = language.Events.OfType<LanguageActivated>().SingleOrDefault();
+            var @event = language.Events.OfType<LanguageActivatedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -71,13 +71,13 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_set_id_in_language_activated_event()
         {
             var language = new Language();
-            var command = new ActivateLanguage();
-            var validatorMock = new Mock<IValidator<ActivateLanguage>>();
+            var command = new ActivateLanguageCommand();
+            var validatorMock = new Mock<IValidator<ActivateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Activate(command, validatorMock.Object);
 
-            var @event = language.Events.OfType<LanguageActivated>().SingleOrDefault();
+            var @event = language.Events.OfType<LanguageActivatedEvent>().SingleOrDefault();
 
             Assert.AreEqual(language.Id, @event.AggregateRootId);
         }
@@ -86,13 +86,13 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_set_site_id_in_language_activated_event()
         {
             var language = new Language();
-            var command = new ActivateLanguage();
-            var validatorMock = new Mock<IValidator<ActivateLanguage>>();
+            var command = new ActivateLanguageCommand();
+            var validatorMock = new Mock<IValidator<ActivateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Activate(command, validatorMock.Object);
 
-            var @event = language.Events.OfType<LanguageActivated>().SingleOrDefault();
+            var @event = language.Events.OfType<LanguageActivatedEvent>().SingleOrDefault();
 
             Assert.AreEqual(language.SiteId, @event.SiteId);
         }

@@ -9,7 +9,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Sites.Validators
 {
-    public class UpdateSiteDetailsValidator : AbstractValidator<UpdateSiteDetails>
+    public class UpdateSiteDetailsValidator : AbstractValidator<UpdateSiteDetailsCommand>
     {
         private readonly ISiteRules _siteRules;
         private readonly ILanguageRules _languageRules;
@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Sites.Validators
                 .SetCollectionValidator(_localisationValidator);
         }
 
-        private bool BeAnExistingPage(UpdateSiteDetails cmd, Guid pageId)
+        private bool BeAnExistingPage(UpdateSiteDetailsCommand cmd, Guid pageId)
         {
             return _pageRules.DoesPageExist(cmd.SiteId, pageId);
         }
@@ -70,7 +70,7 @@ namespace Weapsy.Domain.Sites.Validators
         //    return _siteRules.IsSiteUrlValid(url);
         //}
 
-        private bool IncludeAllSupportedLanguages(UpdateSiteDetails cmd, IEnumerable<SiteLocalisation> siteLocalisations)
+        private bool IncludeAllSupportedLanguages(UpdateSiteDetailsCommand cmd, IEnumerable<SiteLocalisation> siteLocalisations)
         {
             return _languageRules.AreAllSupportedLanguagesIncluded(cmd.SiteId, siteLocalisations.Select(x => x.LanguageId));
         }

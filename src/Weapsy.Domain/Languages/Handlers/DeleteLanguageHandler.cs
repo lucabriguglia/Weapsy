@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Languages.Handlers
 {
-    public class DeleteLanguageHandler : ICommandHandler<DeleteLanguage>
+    public class DeleteLanguageHandler : ICommandHandler<DeleteLanguageCommand>
     {
         private readonly ILanguageRepository _languageRepository;
-        private readonly IValidator<DeleteLanguage> _validator;
+        private readonly IValidator<DeleteLanguageCommand> _validator;
 
-        public DeleteLanguageHandler(ILanguageRepository languageRepository, IValidator<DeleteLanguage> validator)
+        public DeleteLanguageHandler(ILanguageRepository languageRepository, IValidator<DeleteLanguageCommand> validator)
         {
             _languageRepository = languageRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteLanguage command)
+        public IEnumerable<IEvent> Handle(DeleteLanguageCommand command)
         {
             var language = _languageRepository.GetById(command.SiteId, command.Id);
 

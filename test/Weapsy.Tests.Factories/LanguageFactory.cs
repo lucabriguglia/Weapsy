@@ -16,7 +16,7 @@ namespace Weapsy.Tests.Factories
 
         public static Language Language(Guid siteId, Guid id, string name, string cultureName, string url)
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = siteId,
                 Id = id,
@@ -25,7 +25,7 @@ namespace Weapsy.Tests.Factories
                 Url = url
             };
 
-            var validatorMock = new Mock<IValidator<CreateLanguage>>();
+            var validatorMock = new Mock<IValidator<CreateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();

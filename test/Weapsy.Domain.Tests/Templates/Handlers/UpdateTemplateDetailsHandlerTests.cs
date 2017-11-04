@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
         [Test]
         public void Should_throw_exception_when_template_is_not_found()
         {
-            var command = new UpdateTemplateDetails
+            var command = new UpdateTemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
             var templateRepositoryMock = new Mock<ITemplateRepository>();
             templateRepositoryMock.Setup(x => x.GetById(command.Id)).Returns((Template)null);
 
-            var validatorMock = new Mock<IValidator<UpdateTemplateDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateTemplateDetailsCommand>>();
 
             var createTemplateHandler = new UpdateTemplateDetailsHandler(templateRepositoryMock.Object, validatorMock.Object);
 
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new UpdateTemplateDetails
+            var command = new UpdateTemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -48,7 +48,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
             var templateRepositoryMock = new Mock<ITemplateRepository>();
             templateRepositoryMock.Setup(x => x.GetById(command.Id)).Returns(new Template());
 
-            var validatorMock = new Mock<IValidator<UpdateTemplateDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateTemplateDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Name", "Name Error") }));
 
             var createTemplateHandler = new UpdateTemplateDetailsHandler(templateRepositoryMock.Object, validatorMock.Object);
@@ -59,7 +59,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
         [Test]
         public void Should_validate_command_and_save_new_template()
         {
-            var command = new UpdateTemplateDetails
+            var command = new UpdateTemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
             templateRepositoryMock.Setup(x => x.GetById(command.Id)).Returns(new Template());
             templateRepositoryMock.Setup(x => x.Update(It.IsAny<Template>()));
 
-            var validatorMock = new Mock<IValidator<UpdateTemplateDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateTemplateDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createTemplateHandler = new UpdateTemplateDetailsHandler(templateRepositoryMock.Object, validatorMock.Object);

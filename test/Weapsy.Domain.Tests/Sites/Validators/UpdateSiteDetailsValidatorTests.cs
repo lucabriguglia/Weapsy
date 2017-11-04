@@ -32,7 +32,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
                 pageRulesMock.Object,
                 localisationValidatorMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.HomePageId, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.HomePageId, new UpdateSiteDetailsCommand
             {
                 SiteId = siteId,
                 HomePageId = homePageId
@@ -52,7 +52,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
                 pageRulesMock.Object,
                 localisationValidatorMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = string.Empty,
@@ -78,7 +78,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
             var url = "";
             for (int i = 0; i < 51; i++) url += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = url,
@@ -106,7 +106,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
                 pageRulesMock.Object,
                 localisationValidatorMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetailsCommand
             {
                 SiteId = siteId,
                 Url = url,
@@ -134,7 +134,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
                 pageRulesMock.Object,
                 localisationValidatorMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Url, new UpdateSiteDetailsCommand
             {
                 SiteId = siteId,
                 Url = url,
@@ -159,7 +159,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
             var title = "";
             for (int i = 0; i < 251; i++) title += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Title, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Title, new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = "url",
@@ -184,7 +184,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
             var metaDescription = "";
             for (int i = 0; i < 501; i++) metaDescription += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.MetaDescription, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.MetaDescription, new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = "url",
@@ -209,7 +209,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
             var metaKeywords = "";
             for (int i = 0; i < 501; i++) metaKeywords += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.MetaKeywords, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.MetaKeywords, new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = "url",
@@ -232,7 +232,7 @@ namespace Weapsy.Domain.Tests.Sites.Validators
                 pageRulesMock.Object,
                 localisationValidatorMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.SiteLocalisations, new UpdateSiteDetails
+            validator.ShouldHaveValidationErrorFor(x => x.SiteLocalisations, new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Title = "Title",

@@ -10,12 +10,12 @@ using Weapsy.Reporting.Languages.Queries;
 namespace Weapsy.Data.Reporting.Menus
 {
     public class MenuEventsHandler :
-        IEventHandler<MenuCreated>,
-        IEventHandler<MenuItemAdded>,
-        IEventHandler<MenuItemUpdated>,
-        IEventHandler<MenuItemRemoved>,
-        IEventHandler<MenuItemsReordered>,
-        IEventHandler<MenuDeleted>        
+        IEventHandler<MenuCreatedEvent>,
+        IEventHandler<MenuItemAddedEvent>,
+        IEventHandler<MenuItemUpdatedEvent>,
+        IEventHandler<MenuItemRemovedEvent>,
+        IEventHandler<MenuItemsReorderedEvent>,
+        IEventHandler<MenuDeletedEvent>        
     {
         private readonly ICacheManager _cacheManager;
         private readonly IQueryDispatcher _queryDispatcher;
@@ -27,32 +27,32 @@ namespace Weapsy.Data.Reporting.Menus
             _queryDispatcher = queryDispatcher;
         }
 
-        public void Handle(MenuCreated @event)
+        public void Handle(MenuCreatedEvent @event)
         {
             ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuItemAdded @event)
+        public void Handle(MenuItemAddedEvent @event)
         {
             ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuItemUpdated @event)
+        public void Handle(MenuItemUpdatedEvent @event)
         {
             ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuItemRemoved @event)
+        public void Handle(MenuItemRemovedEvent @event)
         {
             ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuItemsReordered @event)
+        public void Handle(MenuItemsReorderedEvent @event)
         {
             ClearCache(@event.SiteId, @event.Name);
         }
 
-        public void Handle(MenuDeleted @event)
+        public void Handle(MenuDeletedEvent @event)
         {
             ClearCache(@event.SiteId, @event.Name);
         }

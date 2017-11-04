@@ -7,19 +7,19 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Languages.Handlers
 {
-    public class UpdateLanguageDetailsHandler : ICommandHandler<UpdateLanguageDetails>
+    public class UpdateLanguageDetailsHandler : ICommandHandler<UpdateLanguageDetailsCommand>
     {
         private readonly ILanguageRepository _languageRepository;
-        private readonly IValidator<UpdateLanguageDetails> _validator;
+        private readonly IValidator<UpdateLanguageDetailsCommand> _validator;
 
         public UpdateLanguageDetailsHandler(ILanguageRepository languageRepository, 
-            IValidator<UpdateLanguageDetails> validator)
+            IValidator<UpdateLanguageDetailsCommand> validator)
         {
             _languageRepository = languageRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateLanguageDetails command)
+        public IEnumerable<IEvent> Handle(UpdateLanguageDetailsCommand command)
         {
             var language = _languageRepository.GetById(command.SiteId, command.Id);
 

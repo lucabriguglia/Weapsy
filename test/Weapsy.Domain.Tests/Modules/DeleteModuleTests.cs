@@ -16,13 +16,13 @@ namespace Weapsy.Domain.Tests.Modules
         [Test]
         public void Should_throw_exception_when_already_deleted()
         {
-            var command = new DeleteModule
+            var command = new DeleteModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
             };
 
-            var validatorMock = new Mock<IValidator<DeleteModule>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var module = new Module();
@@ -35,13 +35,13 @@ namespace Weapsy.Domain.Tests.Modules
         [Test]
         public void Should_call_validator()
         {
-            var command = new DeleteModule
+            var command = new DeleteModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
             };
 
-            var validatorMock = new Mock<IValidator<DeleteModule>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var module = new Module();
@@ -54,13 +54,13 @@ namespace Weapsy.Domain.Tests.Modules
         [Test]
         public void Should_set_module_status_to_deleted()
         {
-            var command = new DeleteModule
+            var command = new DeleteModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
             };
 
-            var validatorMock = new Mock<IValidator<DeleteModule>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var module = new Module();
@@ -73,20 +73,20 @@ namespace Weapsy.Domain.Tests.Modules
         [Test]
         public void Should_add_module_deleted_event()
         {
-            var command = new DeleteModule
+            var command = new DeleteModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
             };
 
-            var validatorMock = new Mock<IValidator<DeleteModule>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var module = new Module();
 
             module.Delete(command, validatorMock.Object);
 
-            var @event = module.Events.OfType<ModuleDeleted>().SingleOrDefault();
+            var @event = module.Events.OfType<ModuleDeletedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -94,20 +94,20 @@ namespace Weapsy.Domain.Tests.Modules
         [Test]
         public void Should_set_id_in_module_deleted_event()
         {
-            var command = new DeleteModule
+            var command = new DeleteModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
             };
 
-            var validatorMock = new Mock<IValidator<DeleteModule>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var module = new Module();
 
             module.Delete(command, validatorMock.Object);
 
-            var @event = module.Events.OfType<ModuleDeleted>().SingleOrDefault();
+            var @event = module.Events.OfType<ModuleDeletedEvent>().SingleOrDefault();
 
             Assert.AreEqual(module.Id, @event.AggregateRootId);
         }
@@ -115,20 +115,20 @@ namespace Weapsy.Domain.Tests.Modules
         [Test]
         public void Should_set_site_id_in_module_deleted_event()
         {
-            var command = new DeleteModule
+            var command = new DeleteModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
             };
 
-            var validatorMock = new Mock<IValidator<DeleteModule>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var module = new Module();
 
             module.Delete(command, validatorMock.Object);
 
-            var @event = module.Events.OfType<ModuleDeleted>().SingleOrDefault();
+            var @event = module.Events.OfType<ModuleDeletedEvent>().SingleOrDefault();
 
             Assert.AreEqual(module.SiteId, @event.SiteId);
         }

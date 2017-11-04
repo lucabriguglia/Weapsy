@@ -6,7 +6,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.EmailAccounts.Validators
 {
-    public class CreateEmailAccountValidator : EmailAccountDetailsValidator<CreateEmailAccount>
+    public class CreateEmailAccountValidator : EmailAccountDetailsValidator<CreateEmailAccountCommand>
     {
         private readonly IEmailAccountRules _emailAccountRules;
 

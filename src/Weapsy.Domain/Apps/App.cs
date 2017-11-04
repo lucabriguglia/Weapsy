@@ -20,14 +20,14 @@ namespace Weapsy.Domain.Apps
 
         public App() { }
 
-        private App(CreateApp cmd) : base(cmd.Id)
+        private App(CreateAppCommand cmd) : base(cmd.Id)
         {
             Name = cmd.Name;
             Description = cmd.Description;
             Folder = cmd.Folder;
             Status = AppStatus.Active;
 
-            AddEvent(new AppCreated
+            AddEvent(new AppCreatedEvent
             {
                 AggregateRootId = Id,
                 Name = Name,
@@ -37,14 +37,14 @@ namespace Weapsy.Domain.Apps
             });
         }
 
-        public static App CreateNew(CreateApp cmd, IValidator<CreateApp> validator)
+        public static App CreateNew(CreateAppCommand cmd, IValidator<CreateAppCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
             return new App(cmd);
         }
 
-        public void UpdateDetails(UpdateAppDetails cmd, IValidator<UpdateAppDetails> validator)
+        public void UpdateDetails(UpdateAppDetailsCommand cmd, IValidator<UpdateAppDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -52,7 +52,7 @@ namespace Weapsy.Domain.Apps
             Description = cmd.Description;
             Folder = cmd.Folder;
 
-            AddEvent(new AppDetailsUpdated
+            AddEvent(new AppDetailsUpdatedEvent
             {
                 AggregateRootId = Id,
                 Name = Name,

@@ -7,7 +7,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class ReorderThemesHandler : ICommandHandler<ReorderThemes>
+    public class ReorderThemesHandler : ICommandHandler<ReorderThemesCommand>
     {
         private readonly IThemeRepository _themeRepository;
 
@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _themeRepository = themeRepository;
         }
 
-        public IEnumerable<IEvent> Handle(ReorderThemes cmd)
+        public IEnumerable<IEvent> Handle(ReorderThemesCommand cmd)
         {
             var events = new List<IDomainEvent>();
             var updatedThemes = new List<Theme>();

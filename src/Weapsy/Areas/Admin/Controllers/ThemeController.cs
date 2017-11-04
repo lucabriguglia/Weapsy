@@ -40,10 +40,10 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(new ThemeAdminModel());
         }
 
-        public IActionResult Save(CreateTheme model)
+        public IActionResult Save(CreateThemeCommand model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateTheme, Theme>(model);
+            _commandSender.Send<CreateThemeCommand, Theme>(model);
             return new NoContentResult();
         }
 
@@ -57,9 +57,9 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public IActionResult Update(UpdateThemeDetails model)
+        public IActionResult Update(UpdateThemeDetailsCommand model)
         {
-            _commandSender.Send<UpdateThemeDetails, Theme>(model);
+            _commandSender.Send<UpdateThemeDetailsCommand, Theme>(model);
             return new NoContentResult();
         }
     }

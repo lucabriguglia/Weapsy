@@ -16,16 +16,16 @@ namespace Weapsy.Domain.Tests.Menus
     public class RemoveMenuItemTests
     {
         private Menu _menu;
-        private RemoveMenuItem _command;
-        private MenuItemRemoved _event;
-        private Mock<IValidator<RemoveMenuItem>> _validatorMock;
+        private RemoveMenuItemCommand _command;
+        private MenuItemRemovedEvent _event;
+        private Mock<IValidator<RemoveMenuItemCommand>> _validatorMock;
 
         [SetUp]
         public void Setup()
         {
             _menu = new Menu();
 
-            var addMenuItemCommand = new AddMenuItem
+            var addMenuItemCommand = new AddMenuItemCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),
@@ -52,23 +52,23 @@ namespace Weapsy.Domain.Tests.Menus
                 }
             };
 
-            var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItem>>();
+            var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItemCommand>>();
             addMenuItemValidatorMock.Setup(x => x.Validate(addMenuItemCommand)).Returns(new ValidationResult());
 
             _menu.AddMenuItem(addMenuItemCommand, addMenuItemValidatorMock.Object);
 
-            _command = new RemoveMenuItem
+            _command = new RemoveMenuItemCommand
             {
                 MenuId = _menu.Id,
                 MenuItemId = addMenuItemCommand.MenuItemId
             };
 
-            _validatorMock = new Mock<IValidator<RemoveMenuItem>>();
+            _validatorMock = new Mock<IValidator<RemoveMenuItemCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
             _menu.RemoveMenuItem(_command, _validatorMock.Object);
 
-            _event = _menu.Events.OfType<MenuItemRemoved>().SingleOrDefault();
+            _event = _menu.Events.OfType<MenuItemRemovedEvent>().SingleOrDefault();
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_throw_exception_if_menu_item_does_not_exist()
         {
-            _command = new RemoveMenuItem
+            _command = new RemoveMenuItemCommand
             {
                 MenuId = _menu.Id,
                 MenuItemId = Guid.NewGuid()

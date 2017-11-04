@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Apps.Handlers
 {
-    public class UpdateAppDetailsHandler : ICommandHandler<UpdateAppDetails>
+    public class UpdateAppDetailsHandler : ICommandHandler<UpdateAppDetailsCommand>
     {
         private readonly IAppRepository _repository;
-        private readonly IValidator<UpdateAppDetails> _validator;
+        private readonly IValidator<UpdateAppDetailsCommand> _validator;
 
-        public UpdateAppDetailsHandler(IAppRepository repository, IValidator<UpdateAppDetails> validator)
+        public UpdateAppDetailsHandler(IAppRepository repository, IValidator<UpdateAppDetailsCommand> validator)
         {
             _repository = repository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateAppDetails cmd)
+        public IEnumerable<IEvent> Handle(UpdateAppDetailsCommand cmd)
         {
             var app = _repository.GetById(cmd.Id);
 

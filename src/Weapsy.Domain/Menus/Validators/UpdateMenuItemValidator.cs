@@ -6,7 +6,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Menus.Validators
 {
-    public class UpdateMenuItemValidator : MenuItemValidator<UpdateMenuItem>
+    public class UpdateMenuItemValidator : MenuItemValidator<UpdateMenuItemCommand>
     {
         public UpdateMenuItemValidator(ISiteRules siteRules, 
             IPageRules pageRules, 

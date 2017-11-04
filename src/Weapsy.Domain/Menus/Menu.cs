@@ -19,13 +19,13 @@ namespace Weapsy.Domain.Menus
         {
         }
 
-        private Menu(CreateMenu cmd) : base(cmd.Id)
+        private Menu(CreateMenuCommand cmd) : base(cmd.Id)
         {
             SiteId = cmd.SiteId;
             Name = cmd.Name;
             Status = MenuStatus.Active;
 
-            AddEvent(new MenuCreated
+            AddEvent(new MenuCreatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -34,7 +34,7 @@ namespace Weapsy.Domain.Menus
             });
         }
 
-        public static Menu CreateNew(CreateMenu cmd, IValidator<CreateMenu> validator)
+        public static Menu CreateNew(CreateMenuCommand cmd, IValidator<CreateMenuCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Menus
             throw new NotImplementedException();
         }
 
-        public void AddMenuItem(AddMenuItem cmd, IValidator<AddMenuItem> validator)
+        public void AddMenuItem(AddMenuItemCommand cmd, IValidator<AddMenuItemCommand> validator)
         {
             if (MenuItems.FirstOrDefault(x => x.Id == cmd.MenuItemId) != null)
                 throw new Exception("Menu item already added");
@@ -57,7 +57,7 @@ namespace Weapsy.Domain.Menus
 
             MenuItems.Add(new MenuItem(cmd, sortOrder));
 
-            AddEvent(new MenuItemAdded
+            AddEvent(new MenuItemAddedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -66,7 +66,7 @@ namespace Weapsy.Domain.Menus
             });
         }
 
-        public void UpdateMenuItem(UpdateMenuItem cmd, IValidator<UpdateMenuItem> validator)
+        public void UpdateMenuItem(UpdateMenuItemCommand cmd, IValidator<UpdateMenuItemCommand> validator)
         {
             var menuItem = MenuItems.FirstOrDefault(x => x.Id == cmd.MenuItemId);
 
@@ -77,7 +77,7 @@ namespace Weapsy.Domain.Menus
 
             menuItem.Update(cmd);
 
-            AddEvent(new MenuItemUpdated
+            AddEvent(new MenuItemUpdatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -86,11 +86,11 @@ namespace Weapsy.Domain.Menus
             });
         }
 
-        public void ReorderMenuItems(ReorderMenuItems cmd, IValidator<ReorderMenuItems> validator)
+        public void ReorderMenuItems(ReorderMenuItemsCommand cmd, IValidator<ReorderMenuItemsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
-            var reorderedMenuItems = new List<MenuItemsReordered.MenuItem>();
+            var reorderedMenuItems = new List<MenuItemsReorderedEvent.MenuItem>();
 
             var groupsByParent = cmd.MenuItems.GroupBy(x => x.ParentId).ToList();
 
@@ -118,7 +118,7 @@ namespace Weapsy.Domain.Menus
 
                     menuItem.Reorder(parentId, sortOrder);
 
-                    reorderedMenuItems.Add(new MenuItemsReordered.MenuItem
+                    reorderedMenuItems.Add(new MenuItemsReorderedEvent.MenuItem
                     {
                         Id = id,
                         ParentId = parentId,
@@ -127,7 +127,7 @@ namespace Weapsy.Domain.Menus
                 }
             }
 
-            AddEvent(new MenuItemsReordered
+            AddEvent(new MenuItemsReorderedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -136,7 +136,7 @@ namespace Weapsy.Domain.Menus
             });
         }
 
-        public void RemoveMenuItem(RemoveMenuItem cmd, IValidator<RemoveMenuItem> validator)
+        public void RemoveMenuItem(RemoveMenuItemCommand cmd, IValidator<RemoveMenuItemCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -147,7 +147,7 @@ namespace Weapsy.Domain.Menus
 
             MarkMenuItemAsDeleted(menuItemToRemove);
 
-            AddEvent(new MenuItemRemoved
+            AddEvent(new MenuItemRemovedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -168,7 +168,7 @@ namespace Weapsy.Domain.Menus
                 MarkMenuItemAsDeleted(subMenuItem);
         }
 
-        public void SetMenuItemPermissions(SetMenuItemPermissions cmd)
+        public void SetMenuItemPermissions(SetMenuItemPermissionsCommand cmd)
         {
             var menuItem = MenuItems.FirstOrDefault(x => x.Id == cmd.MenuItemId);
 
@@ -177,7 +177,7 @@ namespace Weapsy.Domain.Menus
 
             menuItem.SetPermisisons(cmd.MenuItemPermissions);
 
-            Events.Add(new MenuItemPermissionsSet
+            Events.Add(new MenuItemPermissionsSetEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -196,7 +196,7 @@ namespace Weapsy.Domain.Menus
 
             Status = MenuStatus.Deleted;
 
-            AddEvent(new MenuDeleted
+            AddEvent(new MenuDeletedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,

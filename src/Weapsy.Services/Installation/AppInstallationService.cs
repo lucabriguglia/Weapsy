@@ -21,15 +21,15 @@ namespace Weapsy.Services.Installation
             _queryDispatcher = queryDispatcher;
         }
 
-        public void EnsureAppInstalled(CreateApp createApp, IEnumerable<CreateModuleType> createModuleTypes)
+        public void EnsureAppInstalled(CreateAppCommand createApp, IEnumerable<CreateModuleTypeCommand> createModuleTypes)
         {
             if (_queryDispatcher.Dispatch<IsAppInstalled, bool>(new IsAppInstalled { Name = createApp.Name }))
                 return;
 
-            _commandSender.Send<CreateApp, App>(createApp, false);
+            _commandSender.Send<CreateAppCommand, App>(createApp, false);
 
             foreach (var createModuleType in createModuleTypes)
-                _commandSender.Send<CreateModuleType, ModuleType>(createModuleType, false);
+                _commandSender.Send<CreateModuleTypeCommand, ModuleType>(createModuleType, false);
         }
     }
 }

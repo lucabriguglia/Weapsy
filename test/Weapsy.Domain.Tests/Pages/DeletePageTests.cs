@@ -17,8 +17,8 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_call_validator()
         {
             var page = new Page();
-            var command = new DeletePage();
-            var validatorMock = new Mock<IValidator<DeletePage>>();
+            var command = new DeletePageCommand();
+            var validatorMock = new Mock<IValidator<DeletePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Delete(command, validatorMock.Object);
@@ -30,8 +30,8 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_throw_exception_when_already_deleted()
         {
             var page = new Page();
-            var command = new DeletePage();
-            var validatorMock = new Mock<IValidator<DeletePage>>();
+            var command = new DeletePageCommand();
+            var validatorMock = new Mock<IValidator<DeletePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Delete(command, validatorMock.Object);
@@ -43,8 +43,8 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_page_status_to_deleted()
         {
             var page = new Page();
-            var command = new DeletePage();
-            var validatorMock = new Mock<IValidator<DeletePage>>();
+            var command = new DeletePageCommand();
+            var validatorMock = new Mock<IValidator<DeletePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Delete(command, validatorMock.Object);
@@ -56,13 +56,13 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_add_page_deleted_event()
         {
             var page = new Page();
-            var command = new DeletePage();
-            var validatorMock = new Mock<IValidator<DeletePage>>();
+            var command = new DeletePageCommand();
+            var validatorMock = new Mock<IValidator<DeletePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Delete(command, validatorMock.Object);
 
-            var @event = page.Events.OfType<PageDeleted>().SingleOrDefault();
+            var @event = page.Events.OfType<PageDeletedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -71,13 +71,13 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_id_in_page_deleted_event()
         {
             var page = new Page();
-            var command = new DeletePage();
-            var validatorMock = new Mock<IValidator<DeletePage>>();
+            var command = new DeletePageCommand();
+            var validatorMock = new Mock<IValidator<DeletePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Delete(command, validatorMock.Object);
 
-            var @event = page.Events.OfType<PageDeleted>().SingleOrDefault();
+            var @event = page.Events.OfType<PageDeletedEvent>().SingleOrDefault();
 
             Assert.AreEqual(page.Id, @event.AggregateRootId);
         }
@@ -86,13 +86,13 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_site_id_in_page_deleted_event()
         {
             var page = new Page();
-            var command = new DeletePage();
-            var validatorMock = new Mock<IValidator<DeletePage>>();
+            var command = new DeletePageCommand();
+            var validatorMock = new Mock<IValidator<DeletePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Delete(command, validatorMock.Object);
 
-            var @event = page.Events.OfType<PageDeleted>().SingleOrDefault();
+            var @event = page.Events.OfType<PageDeletedEvent>().SingleOrDefault();
 
             Assert.AreEqual(page.SiteId, @event.SiteId);
         }

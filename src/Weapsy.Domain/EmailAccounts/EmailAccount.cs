@@ -21,7 +21,7 @@ namespace Weapsy.Domain.EmailAccounts
 
         public EmailAccount() { }
 
-        private EmailAccount(CreateEmailAccount cmd) : base(cmd.Id)
+        private EmailAccount(CreateEmailAccountCommand cmd) : base(cmd.Id)
         {
             SiteId = cmd.SiteId;
             Address = cmd.Address;
@@ -34,7 +34,7 @@ namespace Weapsy.Domain.EmailAccounts
             Ssl = cmd.Ssl;
             Status = EmailAccountStatus.Active;
 
-            AddEvent(new EmailAccountCreated
+            AddEvent(new EmailAccountCreatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -50,14 +50,14 @@ namespace Weapsy.Domain.EmailAccounts
             });
         }
 
-        public static EmailAccount CreateNew(CreateEmailAccount cmd, IValidator<CreateEmailAccount> validator)
+        public static EmailAccount CreateNew(CreateEmailAccountCommand cmd, IValidator<CreateEmailAccountCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
             return new EmailAccount(cmd);
         }
 
-        public void UpdateDetails(UpdateEmailAccountDetails cmd, IValidator<UpdateEmailAccountDetails> validator)
+        public void UpdateDetails(UpdateEmailAccountDetailsCommand cmd, IValidator<UpdateEmailAccountDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -70,7 +70,7 @@ namespace Weapsy.Domain.EmailAccounts
             DefaultCredentials = cmd.DefaultCredentials;
             Ssl = cmd.Ssl;
 
-            AddEvent(new EmailAccountDetailsUpdated
+            AddEvent(new EmailAccountDetailsUpdatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -85,7 +85,7 @@ namespace Weapsy.Domain.EmailAccounts
             });
         }
 
-        public void Delete(DeleteEmailAccount cmd, IValidator<DeleteEmailAccount> validator)
+        public void Delete(DeleteEmailAccountCommand cmd, IValidator<DeleteEmailAccountCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -94,7 +94,7 @@ namespace Weapsy.Domain.EmailAccounts
 
             Status = EmailAccountStatus.Deleted;
 
-            AddEvent(new EmailAccountDeleted
+            AddEvent(new EmailAccountDeletedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id

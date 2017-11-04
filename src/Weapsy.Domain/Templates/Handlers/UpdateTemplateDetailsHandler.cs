@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Templates.Handlers
 {
-    public class UpdateTemplateDetailsHandler : ICommandHandler<UpdateTemplateDetails>
+    public class UpdateTemplateDetailsHandler : ICommandHandler<UpdateTemplateDetailsCommand>
     {
         private readonly ITemplateRepository _templateRepository;
-        private readonly IValidator<UpdateTemplateDetails> _validator;
+        private readonly IValidator<UpdateTemplateDetailsCommand> _validator;
 
-        public UpdateTemplateDetailsHandler(ITemplateRepository templateRepository, IValidator<UpdateTemplateDetails> validator)
+        public UpdateTemplateDetailsHandler(ITemplateRepository templateRepository, IValidator<UpdateTemplateDetailsCommand> validator)
         {
             _templateRepository = templateRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateTemplateDetails cmd)
+        public IEnumerable<IEvent> Handle(UpdateTemplateDetailsCommand cmd)
         {
             var template = _templateRepository.GetById(cmd.Id);
 

@@ -6,7 +6,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Languages.Validators
 {
-    public class CreateLanguageValidator : LanguageDetailsValidator<CreateLanguage>
+    public class CreateLanguageValidator : LanguageDetailsValidator<CreateLanguageCommand>
     {
         private readonly ILanguageRules _languageRules;
 

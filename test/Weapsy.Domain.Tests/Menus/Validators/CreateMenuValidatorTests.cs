@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_when_menu_id_is_empty()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.Empty,
                 Id = Guid.NewGuid(),
@@ -33,7 +33,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_when_menu_id_already_exists()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_when_menu_name_is_empty()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_when_menu_name_is_too_short()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -92,7 +92,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
             var name = "";
             for (int i = 0; i < 101; i++) name += i;
 
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -110,7 +110,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_when_menu_name_is_not_valid()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -130,7 +130,7 @@ namespace Weapsy.Domain.Tests.Menus.Validators
         [Test]
         public void Should_have_validation_error_when_menu_name_is_not_unique()
         {
-            var command = new CreateMenu
+            var command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),

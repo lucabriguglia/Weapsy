@@ -16,7 +16,7 @@ namespace Weapsy.Tests.Factories
 
         public static Theme Theme(Guid id, string name, string description, string folder)
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = id,
                 Name = name,
@@ -24,7 +24,7 @@ namespace Weapsy.Tests.Factories
                 Folder = folder
             };
 
-            var validatorMock = new Mock<IValidator<CreateTheme>>();
+            var validatorMock = new Mock<IValidator<CreateThemeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var sortOrderGeneratorMock = new Mock<IThemeSortOrderGenerator>();

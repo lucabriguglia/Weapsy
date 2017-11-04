@@ -13,7 +13,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
         [Test]
         public void Should_throw_exception_when_theme_is_not_found()
         {
-            var command = new HideTheme
+            var command = new HideThemeCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
         [Test]
         public void Should_update_theme()
         {
-            var command = new HideTheme
+            var command = new HideThemeCommand
             {
                 Id = Guid.NewGuid()
             };

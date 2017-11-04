@@ -5,7 +5,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Sites.Validators
 {
-    public class CreateSiteValidator : AbstractValidator<CreateSite>
+    public class CreateSiteValidator : AbstractValidator<CreateSiteCommand>
     {
         private readonly ISiteRules _siteRules;
 

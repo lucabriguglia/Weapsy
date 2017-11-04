@@ -39,9 +39,9 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateModuleType model)
+        public IActionResult Post([FromBody] CreateModuleTypeCommand model)
         {
-            _commandSender.Send<CreateModuleType, ModuleType>(model);
+            _commandSender.Send<CreateModuleTypeCommand, ModuleType>(model);
             return new NoContentResult();
         }
 

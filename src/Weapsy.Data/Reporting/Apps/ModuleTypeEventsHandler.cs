@@ -5,8 +5,8 @@ using Weapsy.Framework.Events;
 namespace Weapsy.Data.Reporting.Apps
 {
     public class ModuleTypeEventsHandler : 
-        IEventHandler<ModuleTypeCreated>,
-        IEventHandler<ModuleTypeDetailsUpdated>
+        IEventHandler<ModuleTypeCreatedEvent>,
+        IEventHandler<ModuleTypeDetailsUpdatedEvent>
     {
         private readonly ICacheManager _cacheManager;
 
@@ -15,12 +15,12 @@ namespace Weapsy.Data.Reporting.Apps
             _cacheManager = cacheManager;
         }
 
-        public void Handle(ModuleTypeCreated @event)
+        public void Handle(ModuleTypeCreatedEvent @event)
         {
             ClearCache();
         }
 
-        public void Handle(ModuleTypeDetailsUpdated @event)
+        public void Handle(ModuleTypeDetailsUpdatedEvent @event)
         {
             ClearCache();
         }

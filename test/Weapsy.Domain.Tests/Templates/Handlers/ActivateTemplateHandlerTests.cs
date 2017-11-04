@@ -13,7 +13,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
         [Test]
         public void Should_throw_exception_when_template_is_not_found()
         {
-            var command = new ActivateTemplate
+            var command = new ActivateTemplateCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Tests.Templates.Handlers
         [Test]
         public void Should_update_template()
         {
-            var command = new ActivateTemplate
+            var command = new ActivateTemplateCommand
             {
                 Id = Guid.NewGuid()
             };

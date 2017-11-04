@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new CreatePage {
+            var command = new CreatePageCommand {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -25,7 +25,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var repositoryMock = new Mock<IPageRepository>();
 
-            var validatorMock = new Mock<IValidator<CreatePage>>();
+            var validatorMock = new Mock<IValidator<CreatePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var createPageHandler = new CreatePageHandler(repositoryMock.Object, validatorMock.Object);
@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_validate_command_and_save_new_page()
         {
-            var command = new CreatePage
+            var command = new CreatePageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -47,7 +47,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var repositoryMock = new Mock<IPageRepository>();
             repositoryMock.Setup(x => x.Create(It.IsAny<Page>()));
 
-            var validatorMock = new Mock<IValidator<CreatePage>>();
+            var validatorMock = new Mock<IValidator<CreatePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createPageHandler = new CreatePageHandler(repositoryMock.Object, validatorMock.Object);

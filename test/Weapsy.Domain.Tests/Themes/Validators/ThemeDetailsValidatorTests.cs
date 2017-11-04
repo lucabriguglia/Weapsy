@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_theme_name_is_empty()
         {
-            var command = new ThemeDetails
+            var command = new ThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -23,7 +23,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             };
 
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new ThemeDetailsValidator<ThemeDetails>(themeRulesMock.Object);
+            var validator = new ThemeDetailsValidator<ThemeDetailsCommand>(themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -34,7 +34,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var name = "";
             for (int i = 0; i < 101; i++) name += i;
 
-            var command = new ThemeDetails
+            var command = new ThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = name,
@@ -43,7 +43,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             };
 
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new ThemeDetailsValidator<ThemeDetails>(themeRulesMock.Object);
+            var validator = new ThemeDetailsValidator<ThemeDetailsCommand>(themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -51,7 +51,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_theme_name_is_not_unique()
         {
-            var command = new ThemeDetails
+            var command = new ThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -62,7 +62,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var themeRulesMock = new Mock<IThemeRules>();
             themeRulesMock.Setup(x => x.IsThemeNameUnique(command.Name, Guid.Empty)).Returns(false);
 
-            var validator = new ThemeDetailsValidator<ThemeDetails>(themeRulesMock.Object);
+            var validator = new ThemeDetailsValidator<ThemeDetailsCommand>(themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -73,7 +73,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var description = "";
             for (int i = 0; i < 251; i++) description += i;
 
-            var command = new ThemeDetails
+            var command = new ThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -82,7 +82,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             };
 
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new ThemeDetailsValidator<ThemeDetails>(themeRulesMock.Object);
+            var validator = new ThemeDetailsValidator<ThemeDetailsCommand>(themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Description, command);
         }
@@ -90,7 +90,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_folder_is_empty()
         {
-            var command = new ThemeDetails
+            var command = new ThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -99,7 +99,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             };
 
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new ThemeDetailsValidator<ThemeDetails>(themeRulesMock.Object);
+            var validator = new ThemeDetailsValidator<ThemeDetailsCommand>(themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Folder, command);
         }
@@ -110,7 +110,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var folder = "";
             for (int i = 0; i < 251; i++) folder += i;
 
-            var command = new ThemeDetails
+            var command = new ThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -119,7 +119,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             };
 
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new ThemeDetailsValidator<ThemeDetails>(themeRulesMock.Object);
+            var validator = new ThemeDetailsValidator<ThemeDetailsCommand>(themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Folder, command);
         }
@@ -127,7 +127,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_folder_is_not_valid()
         {
-            var command = new ThemeDetails
+            var command = new ThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -138,7 +138,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var themeRulesMock = new Mock<IThemeRules>();
             themeRulesMock.Setup(x => x.IsThemeFolderValid(command.Description)).Returns(false);
 
-            var validator = new ThemeDetailsValidator<ThemeDetails>(themeRulesMock.Object);
+            var validator = new ThemeDetailsValidator<ThemeDetailsCommand>(themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Folder, command);
         }
@@ -146,7 +146,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_folder_is_not_unique()
         {
-            var command = new ThemeDetails
+            var command = new ThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -157,7 +157,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var themeRulesMock = new Mock<IThemeRules>();
             themeRulesMock.Setup(x => x.IsThemeFolderUnique(command.Description, Guid.Empty)).Returns(false);
 
-            var validator = new ThemeDetailsValidator<ThemeDetails>(themeRulesMock.Object);
+            var validator = new ThemeDetailsValidator<ThemeDetailsCommand>(themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Folder, command);
         }

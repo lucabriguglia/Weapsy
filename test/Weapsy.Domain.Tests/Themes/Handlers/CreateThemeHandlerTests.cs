@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
 
             var themeRepositoryMock = new Mock<IThemeRepository>();
 
-            var validatorMock = new Mock<IValidator<CreateTheme>>();
+            var validatorMock = new Mock<IValidator<CreateThemeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var sortOrderGeneratorMock = new Mock<IThemeSortOrderGenerator>();
@@ -39,7 +39,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
         [Test]
         public void Should_validate_command_and_save_new_theme()
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -50,7 +50,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
             var themeRepositoryMock = new Mock<IThemeRepository>();
             themeRepositoryMock.Setup(x => x.Create(It.IsAny<Theme>()));
 
-            var validatorMock = new Mock<IValidator<CreateTheme>>();
+            var validatorMock = new Mock<IValidator<CreateThemeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var sortOrderGeneratorMock = new Mock<IThemeSortOrderGenerator>();

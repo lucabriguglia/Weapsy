@@ -46,67 +46,67 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreatePage model)
+        public IActionResult Post([FromBody] CreatePageCommand model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<CreatePage, Page>(model);
+            _commandSender.Send<CreatePageCommand, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public IActionResult UpdateDetails([FromBody] UpdatePageDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdatePageDetailsCommand model)
         {
             model.SiteId = SiteId;
-             _commandSender.Send<UpdatePageDetails, Page>(model);
+             _commandSender.Send<UpdatePageDetailsCommand, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/add-module")]
-        public IActionResult AddModule([FromBody] AddModule model)
+        public IActionResult AddModule([FromBody] AddModuleCommand model)
         {
             model.SiteId = SiteId;
             var defaultViewRoleIds = new List<Guid> { Administrator.Id };
             var defaultEditRoleIds = new List<Guid> { Administrator.Id };
             model.SetPageModulePermissions(defaultViewRoleIds, defaultEditRoleIds);
-            _commandSender.Send<AddModule, Page>(model);
+            _commandSender.Send<AddModuleCommand, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/remove-module")]
-        public IActionResult RemoveModule([FromBody] RemoveModule model)
+        public IActionResult RemoveModule([FromBody] RemoveModuleCommand model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<RemoveModule, Page>(model);
+            _commandSender.Send<RemoveModuleCommand, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/reorder-modules")]
-        public IActionResult ReorderPageModules([FromBody] ReorderPageModules model)
+        public IActionResult ReorderPageModules([FromBody] ReorderPageModulesCommand model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<ReorderPageModules, Page>(model);
+            _commandSender.Send<ReorderPageModulesCommand, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/set-permissions")]
-        public IActionResult SetPermissions([FromBody] SetPagePermissions model)
+        public IActionResult SetPermissions([FromBody] SetPagePermissionsCommand model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<SetPagePermissions, Page>(model);
+            _commandSender.Send<SetPagePermissionsCommand, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/set-module-permissions")]
-        public IActionResult SetModulePermissions([FromBody] SetPageModulePermissions model)
+        public IActionResult SetModulePermissions([FromBody] SetPageModulePermissionsCommand model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<SetPageModulePermissions, Page>(model);
+            _commandSender.Send<SetPageModulePermissionsCommand, Page>(model);
             return new NoContentResult();
         }
 
@@ -114,7 +114,7 @@ namespace Weapsy.Api
         [Route("{id}/activate")]
         public IActionResult Activate(Guid id)
         {
-            _commandSender.Send<ActivatePage, Page>(new ActivatePage
+            _commandSender.Send<ActivatePageCommand, Page>(new ActivatePageCommand
             {
                 SiteId = SiteId,
                 Id = id
@@ -126,7 +126,7 @@ namespace Weapsy.Api
         [Route("{id}/hide")]
         public IActionResult Hide(Guid id)
         {
-            _commandSender.Send<HidePage, Page>(new HidePage
+            _commandSender.Send<HidePageCommand, Page>(new HidePageCommand
             {
                 SiteId = SiteId,
                 Id = id
@@ -137,7 +137,7 @@ namespace Weapsy.Api
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _commandSender.Send<DeletePage, Page>(new DeletePage
+            _commandSender.Send<DeletePageCommand, Page>(new DeletePageCommand
             {
                 SiteId = SiteId,
                 Id = id
