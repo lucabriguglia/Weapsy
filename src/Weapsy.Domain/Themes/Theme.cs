@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Themes
 
         public Theme(){}
 
-        private Theme(CreateTheme cmd, IThemeSortOrderGenerator themeSortOrderGenerator)
+        private Theme(CreateThemeCommand cmd, IThemeSortOrderGenerator themeSortOrderGenerator)
             : base(cmd.Id)
         {
             Name = cmd.Name;
@@ -36,8 +36,8 @@ namespace Weapsy.Domain.Themes
             });
         }
 
-        public static Theme CreateNew(CreateTheme cmd,
-            IValidator<CreateTheme> validator,            
+        public static Theme CreateNew(CreateThemeCommand cmd,
+            IValidator<CreateThemeCommand> validator,            
             IThemeSortOrderGenerator sortOrderGenerator)
         {
             validator.ValidateCommand(cmd);
@@ -45,7 +45,7 @@ namespace Weapsy.Domain.Themes
             return new Theme(cmd, sortOrderGenerator);
         }
 
-        public void UpdateDetails(UpdateThemeDetails cmd, IValidator<UpdateThemeDetails> validator)
+        public void UpdateDetails(UpdateThemeDetailsCommand cmd, IValidator<UpdateThemeDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 

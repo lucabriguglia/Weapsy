@@ -6,7 +6,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class SetPagePermissionsHandler : ICommandHandler<SetPagePermissions>
+    public class SetPagePermissionsHandler : ICommandHandler<SetPagePermissionsCommand>
     {
         private readonly IPageRepository _pageRepository;
 
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _pageRepository = pageRepository;
         }
 
-        public IEnumerable<IEvent> Handle(SetPagePermissions command)
+        public IEnumerable<IEvent> Handle(SetPagePermissionsCommand command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.Id);
 

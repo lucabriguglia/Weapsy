@@ -6,7 +6,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class AddPageModuleValidator : BaseSiteValidator<AddPageModule>
+    public class AddPageModuleValidator : BaseSiteValidator<AddPageModuleCommand>
     {
         private readonly IModuleRules _moduleRules;
 
@@ -28,7 +28,7 @@ namespace Weapsy.Domain.Pages.Validators
                 .Length(1, 100).WithMessage("Zone cannot have more than 100 characters.");
         }
 
-        private bool BeAnExistingModule(AddPageModule cmd, Guid moduleId)
+        private bool BeAnExistingModule(AddPageModuleCommand cmd, Guid moduleId)
         {
             return _moduleRules.DoesModuleExist(cmd.SiteId, moduleId);
         }

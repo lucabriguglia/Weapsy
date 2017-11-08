@@ -15,9 +15,9 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         public void Should_have_error_when_module_type_name_is_empty()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = string.Empty,
@@ -30,12 +30,12 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         public void Should_have_error_when_module_type_name_is_too_long()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
             var name = "";
             for (int i = 0; i < 101; i++) name += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = name,
@@ -52,9 +52,9 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
             var moduleTypeRules = new Mock<IModuleTypeRules>();
             moduleTypeRules.Setup(x => x.IsModuleTypeNameValid(name)).Returns(false);
 
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = name,
@@ -72,9 +72,9 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
             var moduleTypeRules = new Mock<IModuleTypeRules>();
             moduleTypeRules.Setup(x => x.IsModuleTypeNameUnique(name, moduleTypeId)).Returns(false);
 
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetailsCommand
             {
                 Id = moduleTypeId,
                 Name = name
@@ -85,12 +85,12 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         public void Should_have_error_when_module_type_title_is_too_long()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
             var title = "";
             for (int i = 0; i < 251; i++) title += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Title, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Title, new ModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -103,12 +103,12 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         public void Should_have_error_when_module_type_description_is_too_long()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
             var description = "";
             for (int i = 0; i < 501; i++) description += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Description, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Description, new ModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -121,12 +121,12 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         public void Should_have_error_when_module_type_edit_url_is_too_long()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
             var editUrl = "";
             for (int i = 0; i < 101; i++) editUrl += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.EditUrl, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.EditUrl, new ModuleTypeDetailsCommand
             {
                 EditUrl = editUrl
             });
@@ -136,9 +136,9 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         public void Should_have_error_when_module_type_view_name_is_empty()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetailsCommand
             {
                 ViewName = string.Empty
             });
@@ -148,12 +148,12 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         public void Should_have_error_when_module_type_view_name_is_too_long()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
             var viewName = "";
             for (int i = 0; i < 101; i++) viewName += i;
 
-            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.Name, new ModuleTypeDetailsCommand
             {
                 Name = viewName
             });
@@ -169,9 +169,9 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
             var moduleTypeRules = new Mock<IModuleTypeRules>();
             moduleTypeRules.Setup(x => x.IsModuleTypeViewComponentNameUnique(viewName, moduleTypeId)).Returns(false);
 
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.ViewName, new ModuleTypeDetails
+            validator.ShouldHaveValidationErrorFor(x => x.ViewName, new ModuleTypeDetailsCommand
             {
                 Id = moduleTypeId,
                 Name = viewName,
@@ -183,18 +183,18 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         public void Should_have_error_when_module_type_view_type_is_empty()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.ViewType, new ModuleTypeDetails {});
+            validator.ShouldHaveValidationErrorFor(x => x.ViewType, new ModuleTypeDetailsCommand {});
         }
 
         [Test]
         public void Should_have_error_when_module_type_edit_type_is_empty()
         {
             var moduleTypeRules = new Mock<IModuleTypeRules>();
-            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetails>(moduleTypeRules.Object);
+            var validator = new ModuleTypeDetailsValidator<ModuleTypeDetailsCommand>(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.EditType, new ModuleTypeDetails { });
+            validator.ShouldHaveValidationErrorFor(x => x.EditType, new ModuleTypeDetailsCommand { });
         }
     }
 }

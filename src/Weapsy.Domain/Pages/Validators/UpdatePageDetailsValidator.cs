@@ -6,7 +6,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class UpdatePageDetailsValidator : PageDetailsValidator<UpdatePageDetails>
+    public class UpdatePageDetailsValidator : PageDetailsValidator<UpdatePageDetailsCommand>
     {
         public UpdatePageDetailsValidator(IPageRules pageRules, 
             ISiteRules siteRules,

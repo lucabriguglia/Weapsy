@@ -12,11 +12,11 @@ namespace Weapsy.Api
     {
         public ApiAutoMapperProfile()
         {
-            CreateMap<PageAdminModel, CreatePage>().ForMember(x => x.PagePermissions, opt => opt.Ignore());
+            CreateMap<PageAdminModel, CreatePageCommand>().ForMember(x => x.PagePermissions, opt => opt.Ignore());
             CreateMap<PageLocalisationAdminModel, PageLocalisation>();
-            CreateMap<PageAdminModel, UpdatePageDetails>().ForMember(x => x.PagePermissions, opt => opt.Ignore());
-            CreateMap<PageModuleAdminModel, UpdatePageModuleDetails>().ForMember(x => x.PageModulePermissions, opt => opt.Ignore());
-            CreateMap<SiteAdminModel, UpdateSiteDetails>();
+            CreateMap<PageAdminModel, UpdatePageDetailsCommand>().ForMember(x => x.PagePermissions, opt => opt.Ignore());
+            CreateMap<PageModuleAdminModel, UpdatePageModuleDetailsCommand>().ForMember(x => x.PageModulePermissions, opt => opt.Ignore());
+            CreateMap<SiteAdminModel, UpdateSiteDetailsCommand>();
             CreateMap<SiteLocalisationAdminModel, SiteLocalisation>();
         }
     }

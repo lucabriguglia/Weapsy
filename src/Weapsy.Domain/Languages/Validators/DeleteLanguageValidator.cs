@@ -3,7 +3,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Languages.Validators
 {
-    public class DeleteLanguageValidator : BaseSiteValidator<DeleteLanguage>
+    public class DeleteLanguageValidator : BaseSiteValidator<DeleteLanguageCommand>
     {
         public DeleteLanguageValidator(ISiteRules siteRules)
             : base(siteRules)

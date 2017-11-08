@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class HidePageHandler : ICommandHandler<HidePage>
+    public class HidePageHandler : ICommandHandler<HidePageCommand>
     {
         private readonly IPageRepository _pageRepository;
-        private readonly IValidator<HidePage> _validator;
+        private readonly IValidator<HidePageCommand> _validator;
 
-        public HidePageHandler(IPageRepository pageRepository, IValidator<HidePage> validator)
+        public HidePageHandler(IPageRepository pageRepository, IValidator<HidePageCommand> validator)
         {
             _pageRepository = pageRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(HidePage command)
+        public IEnumerable<IEvent> Handle(HidePageCommand command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.Id);
 

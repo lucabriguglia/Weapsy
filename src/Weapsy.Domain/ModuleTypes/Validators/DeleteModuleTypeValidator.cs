@@ -5,7 +5,7 @@ using Weapsy.Domain.ModuleTypes.Rules;
 
 namespace Weapsy.Domain.ModuleTypes.Validators
 {
-    public class DeleteModuleTypeValidator : AbstractValidator<DeleteModuleType>
+    public class DeleteModuleTypeValidator : AbstractValidator<DeleteModuleTypeCommand>
     {
         private readonly IModuleTypeRules _moduleTypeRules;
 

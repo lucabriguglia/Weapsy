@@ -13,10 +13,10 @@ namespace Weapsy.Domain.Tests.Menus
     [TestFixture]
     public class SetMenuItemPermissionsTests
     {
-        private SetMenuItemPermissions _command;
+        private SetMenuItemPermissionsCommand _command;
         private Menu _menu;
         private MenuItem _menuItem;
-        private MenuItemPermissionsSet _event;
+        private MenuItemPermissionsSetEvent _event;
 
         [SetUp]
         public void Setup()
@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Tests.Menus
             _menu = MenuFactory.Menu(siteId, menuId, menuName, "My Item", "My Item Localised", menuItemId);
             _menuItem = _menu.MenuItems.FirstOrDefault(x => x.Id == menuItemId);
 
-            _command = new SetMenuItemPermissions
+            _command = new SetMenuItemPermissionsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = menuId,
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Tests.Menus
 
             _menu.SetMenuItemPermissions(_command);
 
-            _event = _menu.Events.OfType<MenuItemPermissionsSet>().SingleOrDefault();
+            _event = _menu.Events.OfType<MenuItemPermissionsSetEvent>().SingleOrDefault();
         }
 
         [Test]

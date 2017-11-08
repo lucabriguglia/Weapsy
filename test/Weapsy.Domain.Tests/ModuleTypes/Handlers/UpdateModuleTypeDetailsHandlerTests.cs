@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
         [Test]
         public void Should_throw_exception_when_module_type_is_not_found()
         {
-            var command = new UpdateModuleTypeDetails
+            var command = new UpdateModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
             var repositoryMock = new Mock<IModuleTypeRepository>();
             repositoryMock.Setup(x => x.GetById(command.Id)).Returns((ModuleType)null);
 
-            var validatorMock = new Mock<IValidator<UpdateModuleTypeDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateModuleTypeDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createModuleTypeHandler = new UpdateModuleTypeDetailsHandler(repositoryMock.Object, validatorMock.Object);
@@ -38,7 +38,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new UpdateModuleTypeDetails
+            var command = new UpdateModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -49,7 +49,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
             var repositoryMock = new Mock<IModuleTypeRepository>();
             repositoryMock.Setup(x => x.GetById(command.Id)).Returns(new ModuleType());
 
-            var validatorMock = new Mock<IValidator<UpdateModuleTypeDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateModuleTypeDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Name", "Name Error") }));
 
             var createModuleTypeHandler = new UpdateModuleTypeDetailsHandler(repositoryMock.Object, validatorMock.Object);
@@ -60,7 +60,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
         [Test]
         public void Should_validate_command_and_update_module_type()
         {
-            var command = new UpdateModuleTypeDetails
+            var command = new UpdateModuleTypeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
             var repositoryMock = new Mock<IModuleTypeRepository>();
             repositoryMock.Setup(x => x.GetById(command.Id)).Returns(new ModuleType());
 
-            var validatorMock = new Mock<IValidator<UpdateModuleTypeDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateModuleTypeDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createModuleTypeHandler = new UpdateModuleTypeDetailsHandler(repositoryMock.Object, validatorMock.Object);

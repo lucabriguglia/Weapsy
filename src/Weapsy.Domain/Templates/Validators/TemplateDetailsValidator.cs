@@ -6,7 +6,7 @@ using Weapsy.Domain.Themes.Rules;
 
 namespace Weapsy.Domain.Templates.Validators
 {
-    public class TemplateDetailsValidator<T> : AbstractValidator<T> where T : TemplateDetails
+    public class TemplateDetailsValidator<T> : AbstractValidator<T> where T : TemplateDetailsCommand
     {
         private readonly ITemplateRules _templateRules;
         private readonly IThemeRules _themeRules;
@@ -41,7 +41,7 @@ namespace Weapsy.Domain.Templates.Validators
             return _themeRules.DoesThemeExist(themeId);
         }
 
-        private bool HaveUniqueName(TemplateDetails cmd, string name)
+        private bool HaveUniqueName(TemplateDetailsCommand cmd, string name)
         {
             return _templateRules.IsTemplateNameUnique(name, cmd.Id);
         }

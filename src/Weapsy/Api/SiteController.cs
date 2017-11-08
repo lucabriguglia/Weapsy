@@ -44,25 +44,25 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateSite model)
+        public IActionResult Post([FromBody] CreateSiteCommand model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateSite, Site>(model);
+            _commandSender.Send<CreateSiteCommand, Site>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public IActionResult UpdateDetails([FromBody] UpdateSiteDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdateSiteDetailsCommand model)
         {
-            _commandSender.Send<UpdateSiteDetails, Site>(model);
+            _commandSender.Send<UpdateSiteDetailsCommand, Site>(model);
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _commandSender.Send<DeleteSite, Site>(new DeleteSite { Id = id });
+            _commandSender.Send<DeleteSiteCommand, Site>(new DeleteSiteCommand { Id = id });
             return new NoContentResult();
         }
 

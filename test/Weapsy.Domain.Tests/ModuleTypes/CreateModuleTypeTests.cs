@@ -13,15 +13,15 @@ namespace Weapsy.Domain.Tests.ModuleTypes
     [TestFixture]
     public class CreateModuleTypeTests
     {
-        private CreateModuleType _command;
-        private Mock<IValidator<CreateModuleType>> _validatorMock;
+        private CreateModuleTypeCommand _command;
+        private Mock<IValidator<CreateModuleTypeCommand>> _validatorMock;
         private ModuleType _moduleType;
-        private ModuleTypeCreated _event;
+        private ModuleTypeCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateModuleType
+            _command = new CreateModuleTypeCommand
             {
                 AppId = Guid.Empty,
                 Id = Guid.NewGuid(),
@@ -33,10 +33,10 @@ namespace Weapsy.Domain.Tests.ModuleTypes
                 EditType = EditType.Page,
                 EditUrl = "EditUrl"
             };            
-            _validatorMock = new Mock<IValidator<CreateModuleType>>();
+            _validatorMock = new Mock<IValidator<CreateModuleTypeCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _moduleType = ModuleType.CreateNew(_command, _validatorMock.Object);
-            _event = _moduleType.Events.OfType<ModuleTypeCreated>().SingleOrDefault();
+            _event = _moduleType.Events.OfType<ModuleTypeCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

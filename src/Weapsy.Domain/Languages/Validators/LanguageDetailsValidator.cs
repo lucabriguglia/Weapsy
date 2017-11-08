@@ -5,7 +5,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Languages.Validators
 {
-    public class LanguageDetailsValidator<T> : BaseSiteValidator<T> where T : LanguageDetails
+    public class LanguageDetailsValidator<T> : BaseSiteValidator<T> where T : LanguageDetailsCommand
     {
         private readonly ILanguageRules _languageRules;
 
@@ -38,7 +38,7 @@ namespace Weapsy.Domain.Languages.Validators
             return _languageRules.IsLanguageNameValid(name);
         }
 
-        private bool HaveUniqueName(LanguageDetails cmd, string name)
+        private bool HaveUniqueName(LanguageDetailsCommand cmd, string name)
         {
             return _languageRules.IsLanguageNameUnique(cmd.SiteId, name, cmd.Id);
         }
@@ -48,7 +48,7 @@ namespace Weapsy.Domain.Languages.Validators
             return _languageRules.IsCultureNameValid(cultureName);
         }
 
-        private bool HaveUniqueCultureName(LanguageDetails cmd, string cultureName)
+        private bool HaveUniqueCultureName(LanguageDetailsCommand cmd, string cultureName)
         {
             return _languageRules.IsCultureNameUnique(cmd.SiteId, cultureName, cmd.Id);
         }
@@ -58,7 +58,7 @@ namespace Weapsy.Domain.Languages.Validators
             return _languageRules.IsLanguageUrlValid(url);
         }
 
-        private bool HaveUniqueLanguageUrl(LanguageDetails cmd, string url)
+        private bool HaveUniqueLanguageUrl(LanguageDetailsCommand cmd, string url)
         {
             return _languageRules.IsLanguageUrlUnique(cmd.SiteId, url, cmd.Id);
         }

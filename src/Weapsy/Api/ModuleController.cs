@@ -36,7 +36,7 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateModule model)
+        public IActionResult Post([FromBody] CreateModuleCommand model)
         {
             throw new NotImplementedException();
         }

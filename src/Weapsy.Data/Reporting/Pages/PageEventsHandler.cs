@@ -10,15 +10,15 @@ using Weapsy.Reporting.Languages.Queries;
 namespace Weapsy.Data.Reporting.Pages
 {
     public class PageEventsHandler : 
-        IEventHandler<PageCreated>,
-        IEventHandler<PageDeleted>,
-        IEventHandler<PageActivated>,
-        IEventHandler<PageDetailsUpdated>,
-        IEventHandler<PageHidden>,
-        IEventHandler<PageModuleAdded>,
-        IEventHandler<PageModuleDetailsUpdated>,
-        IEventHandler<PageModulesReordered>,
-        IEventHandler<PageModuleRemoved>
+        IEventHandler<PageCreatedEvent>,
+        IEventHandler<PageDeletedEvent>,
+        IEventHandler<PageActivatedEvent>,
+        IEventHandler<PageDetailsUpdatedEvent>,
+        IEventHandler<PageHiddenEvent>,
+        IEventHandler<PageModuleAddedEvent>,
+        IEventHandler<PageModuleDetailsUpdatedEvent>,
+        IEventHandler<PageModulesReorderedEvent>,
+        IEventHandler<PageModuleRemovedEvent>
     {
         private readonly ICacheManager _cacheManager;
         private readonly IQueryDispatcher _queryDispatcher;
@@ -30,48 +30,48 @@ namespace Weapsy.Data.Reporting.Pages
             _queryDispatcher = queryDispatcher;
         }
 
-        public void Handle(PageCreated @event)
+        public void Handle(PageCreatedEvent @event)
         {
         }
 
-        public void Handle(PageDetailsUpdated @event)
-        {
-            ClearPageCache(@event.SiteId, @event.AggregateRootId);
-        }
-
-        public void Handle(PageDeleted @event)
+        public void Handle(PageDetailsUpdatedEvent @event)
         {
             ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageActivated @event)
+        public void Handle(PageDeletedEvent @event)
         {
             ClearPageCache(@event.SiteId, @event.AggregateRootId);
-            ClearMenuCache(@event.SiteId);
         }
 
-        public void Handle(PageHidden @event)
+        public void Handle(PageActivatedEvent @event)
         {
             ClearPageCache(@event.SiteId, @event.AggregateRootId);
             ClearMenuCache(@event.SiteId);
         }
 
-        public void Handle(PageModuleAdded @event)
+        public void Handle(PageHiddenEvent @event)
+        {
+            ClearPageCache(@event.SiteId, @event.AggregateRootId);
+            ClearMenuCache(@event.SiteId);
+        }
+
+        public void Handle(PageModuleAddedEvent @event)
         {
             ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageModuleDetailsUpdated @event)
+        public void Handle(PageModuleDetailsUpdatedEvent @event)
         {
             ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageModulesReordered @event)
+        public void Handle(PageModulesReorderedEvent @event)
         {
             ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }
 
-        public void Handle(PageModuleRemoved @event)
+        public void Handle(PageModuleRemovedEvent @event)
         {
             ClearPageCache(@event.SiteId, @event.AggregateRootId);
         }

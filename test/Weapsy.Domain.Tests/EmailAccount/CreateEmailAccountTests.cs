@@ -13,15 +13,15 @@ namespace Weapsy.Domain.Tests.EmailAccount
     [TestFixture]
     public class CreateEmailAccountTests
     {
-        private CreateEmailAccount _command;
-        private Mock<IValidator<CreateEmailAccount>> _validatorMock;
+        private CreateEmailAccountCommand _command;
+        private Mock<IValidator<CreateEmailAccountCommand>> _validatorMock;
         private EmailAccounts.EmailAccount _emailAccount;
-        private EmailAccountCreated _event;
+        private EmailAccountCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateEmailAccount
+            _command = new CreateEmailAccountCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -34,10 +34,10 @@ namespace Weapsy.Domain.Tests.EmailAccount
                 DefaultCredentials = true,
                 Ssl = true
             };            
-            _validatorMock = new Mock<IValidator<CreateEmailAccount>>();
+            _validatorMock = new Mock<IValidator<CreateEmailAccountCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _emailAccount = EmailAccounts.EmailAccount.CreateNew(_command, _validatorMock.Object);
-            _event = _emailAccount.Events.OfType<EmailAccountCreated>().SingleOrDefault();
+            _event = _emailAccount.Events.OfType<EmailAccountCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

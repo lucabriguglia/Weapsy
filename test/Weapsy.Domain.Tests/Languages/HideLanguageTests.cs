@@ -17,8 +17,8 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_call_validator()
         {
             var language = new Language();
-            var command = new HideLanguage();
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var command = new HideLanguageCommand();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Hide(command, validatorMock.Object);
@@ -30,8 +30,8 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_throw_exception_when_already_hidden()
         {
             var language = new Language();
-            var command = new HideLanguage();
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var command = new HideLanguageCommand();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Hide(command, validatorMock.Object);
@@ -43,16 +43,16 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_throw_exception_when_deleted()
         {
             var language = new Language();
-            var command = new HideLanguage();
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var command = new HideLanguageCommand();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
-            var deleteLanguageCommand = new DeleteLanguage
+            var deleteLanguageCommand = new DeleteLanguageCommand
             {
                 SiteId = language.SiteId,
                 Id = language.Id
             };
-            var deleteLanguageValidatorMock = new Mock<IValidator<DeleteLanguage>>();
+            var deleteLanguageValidatorMock = new Mock<IValidator<DeleteLanguageCommand>>();
             deleteLanguageValidatorMock.Setup(x => x.Validate(deleteLanguageCommand)).Returns(new ValidationResult());
             language.Delete(deleteLanguageCommand, deleteLanguageValidatorMock.Object);
 
@@ -63,8 +63,8 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_set_language_status_to_hidden()
         {
             var language = new Language();
-            var command = new HideLanguage();
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var command = new HideLanguageCommand();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Hide(command, validatorMock.Object);
@@ -76,13 +76,13 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_add_language_hidden_event()
         {
             var language = new Language();
-            var command = new HideLanguage();
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var command = new HideLanguageCommand();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Hide(command, validatorMock.Object);
 
-            var @event = language.Events.OfType<LanguageHidden>().SingleOrDefault();
+            var @event = language.Events.OfType<LanguageHiddenEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -91,13 +91,13 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_set_id_in_language_hidden_event()
         {
             var language = new Language();
-            var command = new HideLanguage();
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var command = new HideLanguageCommand();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Hide(command, validatorMock.Object);
 
-            var @event = language.Events.OfType<LanguageHidden>().SingleOrDefault();
+            var @event = language.Events.OfType<LanguageHiddenEvent>().SingleOrDefault();
 
             Assert.AreEqual(language.Id, @event.AggregateRootId);
         }
@@ -106,13 +106,13 @@ namespace Weapsy.Domain.Tests.Languages
         public void Should_set_site_id_in_language_hidden_event()
         {
             var language = new Language();
-            var command = new HideLanguage();
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var command = new HideLanguageCommand();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             language.Hide(command, validatorMock.Object);
 
-            var @event = language.Events.OfType<LanguageHidden>().SingleOrDefault();
+            var @event = language.Events.OfType<LanguageHiddenEvent>().SingleOrDefault();
 
             Assert.AreEqual(language.SiteId, @event.SiteId);
         }

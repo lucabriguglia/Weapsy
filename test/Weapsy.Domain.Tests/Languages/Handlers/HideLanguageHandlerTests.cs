@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
         [Test]
         public void Should_throw_exception_when_language_is_not_found()
         {
-            var command = new HideLanguage
+            var command = new HideLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var repositoryMock = new Mock<ILanguageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns((Language)null);
 
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var hideLanguageHandler = new HideLanguageHandler(repositoryMock.Object, validatorMock.Object);
@@ -35,7 +35,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
         [Test]
         public void Should_update_language()
         {
-            var command = new HideLanguage
+            var command = new HideLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var repositoryMock = new Mock<ILanguageRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(languageMock.Object);
 
-            var validatorMock = new Mock<IValidator<HideLanguage>>();
+            var validatorMock = new Mock<IValidator<HideLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var hideLanguageHandler = new HideLanguageHandler(repositoryMock.Object, validatorMock.Object);

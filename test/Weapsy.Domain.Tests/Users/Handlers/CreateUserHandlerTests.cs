@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Tests.Users.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new CreateUser
+            var command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = "my@email.com",
@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Tests.Users.Handlers
 
             var userRepositoryMock = new Mock<IUserRepository>();
 
-            var validatorMock = new Mock<IValidator<CreateUser>>();
+            var validatorMock = new Mock<IValidator<CreateUserCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var createUserHandler = new CreateUserHandler(userRepositoryMock.Object, validatorMock.Object);
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.Users.Handlers
         [Test]
         public async Task Should_validate_command_and_save_new_user()
         {
-            var command = new CreateUser
+            var command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = "my@email.com",
@@ -47,7 +47,7 @@ namespace Weapsy.Domain.Tests.Users.Handlers
             var userRepositoryMock = new Mock<IUserRepository>();
             userRepositoryMock.Setup(x => x.CreateAsync(It.IsAny<User>())).Returns(Task.FromResult(false));
 
-            var validatorMock = new Mock<IValidator<CreateUser>>();
+            var validatorMock = new Mock<IValidator<CreateUserCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createUserHandler = new CreateUserHandler(userRepositoryMock.Object, validatorMock.Object);

@@ -7,7 +7,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Menus.Handlers
 {
-    public class PageCreatedHandler : IEventHandler<PageCreated>
+    public class PageCreatedHandler : IEventHandler<PageCreatedEvent>
     {
         private readonly ICommandSender _commandSender;
         private readonly ILanguageRepository _languageRepository;
@@ -19,11 +19,11 @@ namespace Weapsy.Domain.Menus.Handlers
             _languageRepository = languageRepository;
         }
 
-        public void Handle(PageCreated @event)
+        public void Handle(PageCreatedEvent @event)
         {
             foreach (var menuId in @event.MenuIds)
             {
-                var command = new AddMenuItem
+                var command = new AddMenuItemCommand
                 {
                     SiteId = @event.SiteId,
                     MenuId = menuId,
@@ -41,7 +41,7 @@ namespace Weapsy.Domain.Menus.Handlers
                     });
                 }
 
-                _commandSender.Send<AddMenuItem, Menu>(command);
+                _commandSender.Send<AddMenuItemCommand, Menu>(command);
             }
         }
     }

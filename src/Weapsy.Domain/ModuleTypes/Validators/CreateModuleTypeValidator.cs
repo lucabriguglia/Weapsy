@@ -6,7 +6,7 @@ using Weapsy.Domain.Apps.Rules;
 
 namespace Weapsy.Domain.ModuleTypes.Validators
 {
-    public class CreateModuleTypeValidator : ModuleTypeDetailsValidator<CreateModuleType>
+    public class CreateModuleTypeValidator : ModuleTypeDetailsValidator<CreateModuleTypeCommand>
     {
         private readonly IModuleTypeRules _moduleTypeRules;
         private readonly IAppRules _appRules;

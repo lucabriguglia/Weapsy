@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Menus.Handlers
 {
-    public class ReorderMenuItemsHandler : ICommandHandler<ReorderMenuItems>
+    public class ReorderMenuItemsHandler : ICommandHandler<ReorderMenuItemsCommand>
     {
         private readonly IMenuRepository _menuRepository;
-        private readonly IValidator<ReorderMenuItems> _validator;
+        private readonly IValidator<ReorderMenuItemsCommand> _validator;
 
-        public ReorderMenuItemsHandler(IMenuRepository menuRepository, IValidator<ReorderMenuItems> validator)
+        public ReorderMenuItemsHandler(IMenuRepository menuRepository, IValidator<ReorderMenuItemsCommand> validator)
         {
             _menuRepository = menuRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(ReorderMenuItems command)
+        public IEnumerable<IEvent> Handle(ReorderMenuItemsCommand command)
         {
             var menu = _menuRepository.GetById(command.Id);
 

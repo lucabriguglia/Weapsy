@@ -14,16 +14,16 @@ namespace Weapsy.Domain.Tests.Sites
     [TestFixture]
     public class UpdateSiteDetailsTests
     {
-        private UpdateSiteDetails _command;
-        private Mock<IValidator<UpdateSiteDetails>> _validatorMock;
+        private UpdateSiteDetailsCommand _command;
+        private Mock<IValidator<UpdateSiteDetailsCommand>> _validatorMock;
         private Site _site;
-        private SiteDetailsUpdated _event;
+        private SiteDetailsUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
             var siteId = Guid.NewGuid();
-            _command = new UpdateSiteDetails
+            _command = new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = "url",
@@ -44,11 +44,11 @@ namespace Weapsy.Domain.Tests.Sites
                     }
                 }
             };
-            _validatorMock = new Mock<IValidator<UpdateSiteDetails>>();
+            _validatorMock = new Mock<IValidator<UpdateSiteDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _site = new Site();
             _site.UpdateDetails(_command, _validatorMock.Object);
-            _event = _site.Events.OfType<SiteDetailsUpdated>().SingleOrDefault();
+            _event = _site.Events.OfType<SiteDetailsUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]

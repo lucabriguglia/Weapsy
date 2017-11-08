@@ -4,7 +4,7 @@ using Weapsy.Domain.Apps.Rules;
 
 namespace Weapsy.Domain.Apps.Validators
 {
-    public class AppDetailsValidator<T> : AbstractValidator<T> where T : AppDetails
+    public class AppDetailsValidator<T> : AbstractValidator<T> where T : AppDetailsCommand
     {
         private readonly IAppRules _appRules;
 
@@ -28,7 +28,7 @@ namespace Weapsy.Domain.Apps.Validators
                 .Must(HaveUniqueFolder).WithMessage("A app with the same folder already exists.");
         }
 
-        private bool HaveUniqueName(AppDetails cmd, string name)
+        private bool HaveUniqueName(AppDetailsCommand cmd, string name)
         {
             return _appRules.IsAppNameUnique(name, cmd.Id);
         }
@@ -38,7 +38,7 @@ namespace Weapsy.Domain.Apps.Validators
             return _appRules.IsAppFolderValid(folder);
         }
 
-        private bool HaveUniqueFolder(AppDetails cmd, string folder)
+        private bool HaveUniqueFolder(AppDetailsCommand cmd, string folder)
         {
             return _appRules.IsAppFolderUnique(folder, cmd.Id);
         }

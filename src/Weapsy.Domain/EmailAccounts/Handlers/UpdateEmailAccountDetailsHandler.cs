@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.EmailAccounts.Handlers
 {
-    public class UpdateEmailAccountDetailsHandler : ICommandHandler<UpdateEmailAccountDetails>
+    public class UpdateEmailAccountDetailsHandler : ICommandHandler<UpdateEmailAccountDetailsCommand>
     {
         private readonly IEmailAccountRepository _emailAccountRepository;
-        private readonly IValidator<UpdateEmailAccountDetails> _validator;
+        private readonly IValidator<UpdateEmailAccountDetailsCommand> _validator;
 
-        public UpdateEmailAccountDetailsHandler(IEmailAccountRepository emailAccountRepository, IValidator<UpdateEmailAccountDetails> validator)
+        public UpdateEmailAccountDetailsHandler(IEmailAccountRepository emailAccountRepository, IValidator<UpdateEmailAccountDetailsCommand> validator)
         {
             _emailAccountRepository = emailAccountRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateEmailAccountDetails command)
+        public IEnumerable<IEvent> Handle(UpdateEmailAccountDetailsCommand command)
         {
             var emailAccount = _emailAccountRepository.GetById(command.SiteId, command.Id);
 

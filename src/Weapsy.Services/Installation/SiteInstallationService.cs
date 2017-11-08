@@ -24,41 +24,41 @@ namespace Weapsy.Services.Installation
     public class SiteInstallationService : ISiteInstallationService
     {
         private readonly ISiteRepository _siteRepository;
-        private readonly IValidator<CreateSite> _createSiteValidator;
-        private readonly IValidator<UpdateSiteDetails> _updateSiteDetailsValidator;
+        private readonly IValidator<CreateSiteCommand> _createSiteValidator;
+        private readonly IValidator<UpdateSiteDetailsCommand> _updateSiteDetailsValidator;
         private readonly ILanguageRepository _languageRepository;
-        private readonly IValidator<CreateLanguage> _createLanguageValidator;
-        private readonly IValidator<ActivateLanguage> _activateLanguageValidator;
+        private readonly IValidator<CreateLanguageCommand> _createLanguageValidator;
+        private readonly IValidator<ActivateLanguageCommand> _activateLanguageValidator;
         private readonly ILanguageSortOrderGenerator _languageSortOrderGenerator;
         private readonly IPageRepository _pageRepository;
-        private readonly IValidator<CreatePage> _createPageValidator;
-        private readonly IValidator<ActivatePage> _activatePageValidator;
-        private readonly IValidator<AddPageModule> _addPageModuleValidator;
+        private readonly IValidator<CreatePageCommand> _createPageValidator;
+        private readonly IValidator<ActivatePageCommand> _activatePageValidator;
+        private readonly IValidator<AddPageModuleCommand> _addPageModuleValidator;
         private readonly IModuleRepository _moduleRepository;
-        private readonly IValidator<CreateModule> _createModuleValidator;
+        private readonly IValidator<CreateModuleCommand> _createModuleValidator;
         private readonly IMenuRepository _menuRepository;
-        private readonly IValidator<CreateMenu> _createMenuValidator;
-        private readonly IValidator<AddMenuItem> _addMenuItemValidator;
+        private readonly IValidator<CreateMenuCommand> _createMenuValidator;
+        private readonly IValidator<AddMenuItemCommand> _addMenuItemValidator;
         private readonly IModuleTypeRepository _moduleTypeRepository;
         private readonly ICommandSender _commandSender;
         private readonly IQueryDispatcher _queryDispatcher;
 
         public SiteInstallationService(ISiteRepository siteRepository,
-            IValidator<CreateSite> createSiteValidator,
-            IValidator<UpdateSiteDetails> updateSiteDetailsValidator,
+            IValidator<CreateSiteCommand> createSiteValidator,
+            IValidator<UpdateSiteDetailsCommand> updateSiteDetailsValidator,
             ILanguageRepository languageRepository,
-            IValidator<CreateLanguage> createLanguageValidator,
-            IValidator<ActivateLanguage> activateLanguageValidator,
+            IValidator<CreateLanguageCommand> createLanguageValidator,
+            IValidator<ActivateLanguageCommand> activateLanguageValidator,
             ILanguageSortOrderGenerator languageSortOrderGenerator,
             IPageRepository pageRepository,
-            IValidator<CreatePage> createPageValidator,
-            IValidator<ActivatePage> activatePageValidator,
-            IValidator<AddPageModule> addPageModuleValidator,
+            IValidator<CreatePageCommand> createPageValidator,
+            IValidator<ActivatePageCommand> activatePageValidator,
+            IValidator<AddPageModuleCommand> addPageModuleValidator,
             IModuleRepository moduleRepository,
-            IValidator<CreateModule> createModuleValidator,
+            IValidator<CreateModuleCommand> createModuleValidator,
             IMenuRepository menuRepository,
-            IValidator<CreateMenu> createMenuValidator,
-            IValidator<AddMenuItem> addMenuItemValidator,
+            IValidator<CreateMenuCommand> createMenuValidator,
+            IValidator<AddMenuItemCommand> addMenuItemValidator,
             IModuleTypeRepository moduleTypeRepository, 
             ICommandSender commandSender, 
             IQueryDispatcher queryDispatcher)
@@ -99,7 +99,7 @@ namespace Weapsy.Services.Installation
 
             // ===== Site ===== //
 
-            var site = Site.CreateNew(new CreateSite
+            var site = Site.CreateNew(new CreateSiteCommand
             {
                 Id = siteId,
                 Name = "Default"
@@ -109,7 +109,7 @@ namespace Weapsy.Services.Installation
 
             // ===== Languages ===== //
 
-            var language = Language.CreateNew(new CreateLanguage
+            var language = Language.CreateNew(new CreateLanguageCommand
             {
                 SiteId = siteId,
                 Id = englishLanguageId,
@@ -118,7 +118,7 @@ namespace Weapsy.Services.Installation
                 Url = "en"
             }, _createLanguageValidator, _languageSortOrderGenerator);
 
-            language.Activate(new ActivateLanguage
+            language.Activate(new ActivateLanguageCommand
             {
                 SiteId = siteId,
                 Id = englishLanguageId
@@ -149,7 +149,7 @@ namespace Weapsy.Services.Installation
                 Type = PermissionType.Edit
             });
 
-            var homePage = Page.CreateNew(new CreatePage
+            var homePage = Page.CreateNew(new CreatePageCommand
             {
                 SiteId = siteId,
                 Id = homePageId,
@@ -165,7 +165,7 @@ namespace Weapsy.Services.Installation
                 PagePermissions = pagePermisisons
             }, _createPageValidator);
 
-            homePage.Activate(new ActivatePage
+            homePage.Activate(new ActivatePageCommand
             {
                 SiteId = siteId,
                 Id = homePageId
@@ -181,7 +181,7 @@ namespace Weapsy.Services.Installation
 
             var contentModuleId = Guid.NewGuid();
 
-            var contentModule = Module.CreateNew(new CreateModule
+            var contentModule = Module.CreateNew(new CreateModuleCommand
             {
                 SiteId = siteId,
                 ModuleTypeId = textModuleType.Id,
@@ -195,7 +195,7 @@ namespace Weapsy.Services.Installation
 
             var leftModuleId = Guid.NewGuid();
 
-            var leftModule = Module.CreateNew(new CreateModule
+            var leftModule = Module.CreateNew(new CreateModuleCommand
             {
                 SiteId = siteId,
                 ModuleTypeId = textModuleType.Id,
@@ -209,7 +209,7 @@ namespace Weapsy.Services.Installation
 
             var rightModuleId = Guid.NewGuid();
 
-            var rightModule = Module.CreateNew(new CreateModule
+            var rightModule = Module.CreateNew(new CreateModuleCommand
             {
                 SiteId = siteId,
                 ModuleTypeId = textModuleType.Id,
@@ -242,7 +242,7 @@ namespace Weapsy.Services.Installation
                 Type = PermissionType.Edit
             });
 
-            homePage.AddModule(new AddPageModule
+            homePage.AddModule(new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = homePageId,
@@ -254,7 +254,7 @@ namespace Weapsy.Services.Installation
                 PageModulePermissions = pageModulePermisisons
             }, _addPageModuleValidator);
 
-            homePage.AddModule(new AddPageModule
+            homePage.AddModule(new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = homePageId,
@@ -266,7 +266,7 @@ namespace Weapsy.Services.Installation
                 PageModulePermissions = pageModulePermisisons
             }, _addPageModuleValidator);
 
-            homePage.AddModule(new AddPageModule
+            homePage.AddModule(new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = homePageId,
@@ -282,14 +282,14 @@ namespace Weapsy.Services.Installation
 
             // ===== Menus ===== //
 
-            var mainMenu = Menu.CreateNew(new CreateMenu
+            var mainMenu = Menu.CreateNew(new CreateMenuCommand
             {
                 SiteId = siteId,
                 Id = mainMenuId,
                 Name = "Main"
             }, _createMenuValidator);
 
-            mainMenu.AddMenuItem(new AddMenuItem
+            mainMenu.AddMenuItem(new AddMenuItemCommand
             {
                 SiteId = siteId,
                 MenuId = mainMenuId,
@@ -319,7 +319,7 @@ namespace Weapsy.Services.Installation
 
             // ===== Update Site ===== //
 
-            site.UpdateDetails(new UpdateSiteDetails
+            site.UpdateDetails(new UpdateSiteDetailsCommand
             {
                 SiteId = siteId,
                 HomePageId = homePageId,
@@ -352,7 +352,7 @@ namespace Weapsy.Services.Installation
             var mainMenuId = Guid.NewGuid();
             var homePageId = Guid.NewGuid();
 
-            _commandSender.Send<CreateSite, Site>(new CreateSite
+            _commandSender.Send<CreateSiteCommand, Site>(new CreateSiteCommand
             {
                 Id = siteId,
                 Name = "Default"

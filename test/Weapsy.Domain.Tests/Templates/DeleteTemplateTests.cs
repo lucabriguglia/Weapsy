@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Tests.Templates
 
             template.Delete();
 
-            var @event = template.Events.OfType<TemplateDeleted>().SingleOrDefault();
+            var @event = template.Events.OfType<TemplateDeletedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -48,7 +48,7 @@ namespace Weapsy.Domain.Tests.Templates
 
             template.Delete();
 
-            var @event = template.Events.OfType<TemplateDeleted>().SingleOrDefault();
+            var @event = template.Events.OfType<TemplateDeletedEvent>().SingleOrDefault();
 
             Assert.AreEqual(template.Id, @event.AggregateRootId);
         }

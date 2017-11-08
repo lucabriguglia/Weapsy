@@ -23,7 +23,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_throw_exception_when_page_is_not_found()
         {
-            var command = new RemoveModule
+            var command = new RemoveModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -36,11 +36,11 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns((Page)null);
 
-            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
-            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
+            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModuleCommand>>();
+            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModuleCommand>())).Returns(new ValidationResult());
 
-            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModule>>();
-            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModule>())).Returns(new ValidationResult());
+            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModuleCommand>>();
+            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModuleCommand>())).Returns(new ValidationResult());
 
             var removeModuleHandler = new RemoveModuleHandler(moduleRepositoryMock.Object, pageRepositoryMock.Object, deleteModuleValidatorMock.Object, removePageModuleValidatorMock.Object);
 
@@ -50,7 +50,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_remove_module_from_page()
         {
-            var command = new RemoveModule
+            var command = new RemoveModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -66,11 +66,11 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
             pageRepositoryMock.Setup(x => x.Update(It.IsAny<Page>()));
 
-            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
-            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
+            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModuleCommand>>();
+            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModuleCommand>())).Returns(new ValidationResult());
 
-            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModule>>();
-            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModule>())).Returns(new ValidationResult());
+            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModuleCommand>>();
+            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModuleCommand>())).Returns(new ValidationResult());
 
             var removeModuleHandler = new RemoveModuleHandler(moduleRepositoryMock.Object, 
                 pageRepositoryMock.Object, 
@@ -79,7 +79,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             removeModuleHandler.Handle(command);
 
-            var @event = page.Events.OfType<PageModuleRemoved>().SingleOrDefault();
+            var @event = page.Events.OfType<PageModuleRemovedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -87,7 +87,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]       
         public void Should_update_page()
         {
-            var command = new RemoveModule
+            var command = new RemoveModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
@@ -103,11 +103,11 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
             pageRepositoryMock.Setup(x => x.Update(It.IsAny<Page>()));
 
-            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
-            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
+            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModuleCommand>>();
+            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModuleCommand>())).Returns(new ValidationResult());
 
-            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModule>>();
-            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModule>())).Returns(new ValidationResult());
+            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModuleCommand>>();
+            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModuleCommand>())).Returns(new ValidationResult());
 
             var removeModuleHandler = new RemoveModuleHandler(moduleRepositoryMock.Object, 
                 pageRepositoryMock.Object, 
@@ -129,7 +129,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             var page = PageFactory.Page(siteId, pageId, "Name", pageModuleId, moduleId);
 
-            var command = new RemoveModule
+            var command = new RemoveModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -144,11 +144,11 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
 
-            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
-            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
+            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModuleCommand>>();
+            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModuleCommand>())).Returns(new ValidationResult());
 
-            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModule>>();
-            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModule>())).Returns(new ValidationResult());
+            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModuleCommand>>();
+            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModuleCommand>())).Returns(new ValidationResult());
 
             var removeModuleHandler = new RemoveModuleHandler(moduleRepositoryMock.Object, pageRepositoryMock.Object, deleteModuleValidatorMock.Object, removePageModuleValidatorMock.Object);
 
@@ -160,18 +160,18 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
         [Test]
         public void Should_delete_module_if_not_used_in_other_pages()
         {
-            var command = new RemoveModule
+            var command = new RemoveModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 PageId = Guid.NewGuid(),
                 ModuleId = Guid.NewGuid()
             };
 
-            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
-            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
+            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModuleCommand>>();
+            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModuleCommand>())).Returns(new ValidationResult());
 
-            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModule>>();
-            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModule>())).Returns(new ValidationResult());
+            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModuleCommand>>();
+            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModuleCommand>())).Returns(new ValidationResult());
 
             var moduleRepositoryMock = new Mock<IModuleRepository>();
             moduleRepositoryMock.Setup(x => x.GetCountByModuleId(command.ModuleId)).Returns(1);
@@ -197,7 +197,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageId = Guid.NewGuid();
             var moduleId = Guid.NewGuid();
 
-            var addPageModuleCommand = new AddPageModule
+            var addPageModuleCommand = new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -208,12 +208,12 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 Title = "Title"
             };
 
-            var addPageModuleValidatoMock = new Mock<IValidator<AddPageModule>>();
+            var addPageModuleValidatoMock = new Mock<IValidator<AddPageModuleCommand>>();
             addPageModuleValidatoMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
 
             var page = PageFactory.Page(siteId, pageId, "My Page", Guid.NewGuid(), addPageModuleCommand.ModuleId);
 
-            var command = new RemoveModule
+            var command = new RemoveModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -228,11 +228,11 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
 
-            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
-            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
+            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModuleCommand>>();
+            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModuleCommand>())).Returns(new ValidationResult());
 
-            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModule>>();
-            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModule>())).Returns(new ValidationResult());
+            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModuleCommand>>();
+            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModuleCommand>())).Returns(new ValidationResult());
 
             var removeModuleHandler = new RemoveModuleHandler(moduleRepositoryMock.Object, 
                 pageRepositoryMock.Object, 
@@ -251,7 +251,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageId = Guid.NewGuid();
             var moduleId = Guid.NewGuid();
 
-            var addPageModuleCommand = new AddPageModule
+            var addPageModuleCommand = new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -262,7 +262,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 Title = "Title"
             };
 
-            var addPageModuleValidatoMock = new Mock<IValidator<AddPageModule>>();
+            var addPageModuleValidatoMock = new Mock<IValidator<AddPageModuleCommand>>();
             addPageModuleValidatoMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
 
             var page = new Page();
@@ -271,7 +271,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             page.Events.Clear();
 
-            var command = new RemoveModule
+            var command = new RemoveModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -285,17 +285,17 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
 
-            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
-            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
+            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModuleCommand>>();
+            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModuleCommand>())).Returns(new ValidationResult());
 
-            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModule>>();
-            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModule>())).Returns(new ValidationResult());
+            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModuleCommand>>();
+            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModuleCommand>())).Returns(new ValidationResult());
 
             var removeModuleHandler = new RemoveModuleHandler(moduleRepositoryMock.Object, pageRepositoryMock.Object, deleteModuleValidatorMock.Object, removePageModuleValidatorMock.Object);
 
             var events = removeModuleHandler.Handle(command);
 
-            Assert.AreEqual(typeof(PageModuleRemoved), events.FirstOrDefault().GetType());
+            Assert.AreEqual(typeof(PageModuleRemovedEvent), events.FirstOrDefault().GetType());
         }
 
         [Test]
@@ -305,7 +305,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageId = Guid.NewGuid();
             var moduleId = Guid.NewGuid();
 
-            var addPageModuleCommand = new AddPageModule
+            var addPageModuleCommand = new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -316,7 +316,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
                 Title = "Title"
             };
 
-            var addPageModuleValidatoMock = new Mock<IValidator<AddPageModule>>();
+            var addPageModuleValidatoMock = new Mock<IValidator<AddPageModuleCommand>>();
             addPageModuleValidatoMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
 
             var page = new Page();
@@ -325,7 +325,7 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
 
             page.Events.Clear();
 
-            var command = new RemoveModule
+            var command = new RemoveModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -339,19 +339,19 @@ namespace Weapsy.Domain.Tests.Pages.Handlers
             var pageRepositoryMock = new Mock<IPageRepository>();
             pageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.PageId)).Returns(page);
 
-            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModule>>();
-            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModule>())).Returns(new ValidationResult());
+            var deleteModuleValidatorMock = new Mock<IValidator<DeleteModuleCommand>>();
+            deleteModuleValidatorMock.Setup(x => x.Validate(It.IsAny<DeleteModuleCommand>())).Returns(new ValidationResult());
 
-            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModule>>();
-            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModule>())).Returns(new ValidationResult());
+            var removePageModuleValidatorMock = new Mock<IValidator<RemovePageModuleCommand>>();
+            removePageModuleValidatorMock.Setup(x => x.Validate(It.IsAny<RemovePageModuleCommand>())).Returns(new ValidationResult());
 
             var removeModuleHandler = new RemoveModuleHandler(moduleRepositoryMock.Object, pageRepositoryMock.Object, deleteModuleValidatorMock.Object, removePageModuleValidatorMock.Object);
 
             var events = removeModuleHandler.Handle(command);
 
             var enumerable = events as IList<IEvent> ?? events.ToList();
-            Assert.AreEqual(typeof(PageModuleRemoved), enumerable.FirstOrDefault().GetType());
-            Assert.AreEqual(typeof(ModuleDeleted), enumerable.Skip(1).FirstOrDefault().GetType());
+            Assert.AreEqual(typeof(PageModuleRemovedEvent), enumerable.FirstOrDefault().GetType());
+            Assert.AreEqual(typeof(ModuleDeletedEvent), enumerable.Skip(1).FirstOrDefault().GetType());
         }
     }
 }

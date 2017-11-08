@@ -45,18 +45,18 @@ namespace Weapsy.Api
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateTheme model)
+        public IActionResult Post([FromBody] CreateThemeCommand model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateTheme, Theme>(model);
+            _commandSender.Send<CreateThemeCommand, Theme>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/update")]
-        public IActionResult UpdateDetails([FromBody] UpdateThemeDetails model)
+        public IActionResult UpdateDetails([FromBody] UpdateThemeDetailsCommand model)
         {
-            _commandSender.Send<UpdateThemeDetails, Theme>(model);
+            _commandSender.Send<UpdateThemeDetailsCommand, Theme>(model);
             return new NoContentResult();
         }
 
@@ -64,7 +64,7 @@ namespace Weapsy.Api
         [Route("reorder")]
         public IActionResult ReorderThemes([FromBody] List<Guid> model)
         {
-            _commandSender.Send<ReorderThemes, Theme>(new ReorderThemes { Themes = model });
+            _commandSender.Send<ReorderThemesCommand, Theme>(new ReorderThemesCommand { Themes = model });
             return new NoContentResult();
         }
 
@@ -72,7 +72,7 @@ namespace Weapsy.Api
         [Route("{id}/activate")]
         public IActionResult Activate(Guid id)
         {
-            _commandSender.Send<ActivateTheme, Theme>(new ActivateTheme { Id = id });
+            _commandSender.Send<ActivateThemeCommand, Theme>(new ActivateThemeCommand { Id = id });
             return new NoContentResult();
         }
 
@@ -80,14 +80,14 @@ namespace Weapsy.Api
         [Route("{id}/hide")]
         public IActionResult Hide(Guid id)
         {
-            _commandSender.Send<HideTheme, Theme>(new HideTheme { Id = id });
+            _commandSender.Send<HideThemeCommand, Theme>(new HideThemeCommand { Id = id });
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _commandSender.Send<DeleteTheme, Theme>(new DeleteTheme { Id = id });
+            _commandSender.Send<DeleteThemeCommand, Theme>(new DeleteThemeCommand { Id = id });
             return new NoContentResult();
         }
 

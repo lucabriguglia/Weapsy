@@ -13,25 +13,25 @@ namespace Weapsy.Domain.Tests.Templates
     [TestFixture]
     public class CreateTemplateTests
     {
-        private CreateTemplate _command;
-        private Mock<IValidator<CreateTemplate>> _validatorMock;
+        private CreateTemplateCommand _command;
+        private Mock<IValidator<CreateTemplateCommand>> _validatorMock;
         private Template _template;
-        private TemplateCreated _event;
+        private TemplateCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateTemplate
+            _command = new CreateTemplateCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Description = "Description",
                 ViewName = "ViewName"
             };            
-            _validatorMock = new Mock<IValidator<CreateTemplate>>();
+            _validatorMock = new Mock<IValidator<CreateTemplateCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _template = Template.CreateNew(_command, _validatorMock.Object);
-            _event = _template.Events.OfType<TemplateCreated>().SingleOrDefault();
+            _event = _template.Events.OfType<TemplateCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

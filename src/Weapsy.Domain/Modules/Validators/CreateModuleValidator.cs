@@ -7,7 +7,7 @@ using Weapsy.Domain.ModuleTypes.Rules;
 
 namespace Weapsy.Domain.Modules.Validators
 {
-    public class CreateModuleValidator : AbstractValidator<CreateModule>
+    public class CreateModuleValidator : AbstractValidator<CreateModuleCommand>
     {
         private readonly IModuleRules _moduleRules;
         private readonly IModuleTypeRules _moduleTypeRules;

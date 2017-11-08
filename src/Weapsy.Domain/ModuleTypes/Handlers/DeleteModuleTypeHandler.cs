@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.ModuleTypes.Handlers
 {
-    public class DeleteModuleTypeHandler : ICommandHandler<DeleteModuleType>
+    public class DeleteModuleTypeHandler : ICommandHandler<DeleteModuleTypeCommand>
     {
         private readonly IModuleTypeRepository _moduleTypeRepository;
-        private readonly IValidator<DeleteModuleType> _validator;
+        private readonly IValidator<DeleteModuleTypeCommand> _validator;
 
-        public DeleteModuleTypeHandler(IModuleTypeRepository moduleTypeRepository, IValidator<DeleteModuleType> validator)
+        public DeleteModuleTypeHandler(IModuleTypeRepository moduleTypeRepository, IValidator<DeleteModuleTypeCommand> validator)
         {
             _moduleTypeRepository = moduleTypeRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteModuleType command)
+        public IEnumerable<IEvent> Handle(DeleteModuleTypeCommand command)
         {
             var moduleType = _moduleTypeRepository.GetById(command.Id);
 

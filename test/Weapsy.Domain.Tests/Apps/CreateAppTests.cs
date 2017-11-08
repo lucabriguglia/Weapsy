@@ -13,25 +13,25 @@ namespace Weapsy.Domain.Tests.Apps
     [TestFixture]
     public class CreateAppTests
     {
-        private CreateApp _command;
-        private Mock<IValidator<CreateApp>> _validatorMock;
+        private CreateAppCommand _command;
+        private Mock<IValidator<CreateAppCommand>> _validatorMock;
         private App _app;
-        private AppCreated _event;
+        private AppCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateApp
+            _command = new CreateAppCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Description = "Description",
                 Folder = "Folder"
             };            
-            _validatorMock = new Mock<IValidator<CreateApp>>();
+            _validatorMock = new Mock<IValidator<CreateAppCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _app = App.CreateNew(_command, _validatorMock.Object);
-            _event = _app.Events.OfType<AppCreated>().SingleOrDefault();
+            _event = _app.Events.OfType<AppCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

@@ -13,24 +13,24 @@ namespace Weapsy.Domain.Tests.Menus
     [TestFixture]
     public class CreateMenuTests
     {
-        private CreateMenu _command;
-        private Mock<IValidator<CreateMenu>> _validatorMock;
+        private CreateMenuCommand _command;
+        private Mock<IValidator<CreateMenuCommand>> _validatorMock;
         private Menu _menu;
-        private MenuCreated _event;
+        private MenuCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateMenu
+            _command = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "My Menu"
             };
-            _validatorMock = new Mock<IValidator<CreateMenu>>();
+            _validatorMock = new Mock<IValidator<CreateMenuCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _menu = Menu.CreateNew(_command, _validatorMock.Object);
-            _event = _menu.Events.OfType<MenuCreated>().SingleOrDefault();
+            _event = _menu.Events.OfType<MenuCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

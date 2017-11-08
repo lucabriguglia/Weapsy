@@ -13,24 +13,24 @@ namespace Weapsy.Domain.Tests.Users
     [TestFixture]
     public class CreateUserTests
     {
-        private CreateUser _command;
-        private Mock<IValidator<CreateUser>> _validatorMock;
+        private CreateUserCommand _command;
+        private Mock<IValidator<CreateUserCommand>> _validatorMock;
         private User _user;
-        private UserCreated _event;
+        private UserCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new CreateUser
+            _command = new CreateUserCommand
             {
                 Id = Guid.NewGuid(),
                 Email = "my@email.com",
                 UserName = "my"
             };
-            _validatorMock = new Mock<IValidator<CreateUser>>();
+            _validatorMock = new Mock<IValidator<CreateUserCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _user = User.CreateNew(_command, _validatorMock.Object);
-            _event = _user.Events.OfType<UserCreated>().SingleOrDefault();
+            _event = _user.Events.OfType<UserCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

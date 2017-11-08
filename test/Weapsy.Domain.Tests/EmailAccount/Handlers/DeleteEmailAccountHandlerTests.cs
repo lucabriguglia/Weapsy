@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
         [Test]
         public void Should_throw_exception_when_email_account_is_not_found()
         {
-            var command = new DeleteEmailAccount
+            var command = new DeleteEmailAccountCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
             var repositoryMock = new Mock<IEmailAccountRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns((EmailAccounts.EmailAccount)null);
 
-            var validatorMock = new Mock<IValidator<DeleteEmailAccount>>();
+            var validatorMock = new Mock<IValidator<DeleteEmailAccountCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var deleteEmailAccountHandler = new DeleteEmailAccountHandler(repositoryMock.Object, validatorMock.Object);
@@ -35,7 +35,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
         [Test]
         public void Should_update_emailAccount()
         {
-            var command = new DeleteEmailAccount
+            var command = new DeleteEmailAccountCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid()
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
             var repositoryMock = new Mock<IEmailAccountRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(emailAccountMock.Object);
 
-            var validatorMock = new Mock<IValidator<DeleteEmailAccount>>();
+            var validatorMock = new Mock<IValidator<DeleteEmailAccountCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var deleteEmailAccountHandler = new DeleteEmailAccountHandler(repositoryMock.Object, validatorMock.Object);

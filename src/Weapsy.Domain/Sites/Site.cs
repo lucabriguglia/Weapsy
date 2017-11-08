@@ -29,12 +29,12 @@ namespace Weapsy.Domain.Sites
         {
         }
 
-        private Site(CreateSite cmd) : base(cmd.Id)
+        private Site(CreateSiteCommand cmd) : base(cmd.Id)
         {
             Name = cmd.Name;
             Status = SiteStatus.Active;
 
-            AddEvent(new SiteCreated
+            AddEvent(new SiteCreatedEvent
             {
                 AggregateRootId = Id,
                 Name = Name,
@@ -42,7 +42,7 @@ namespace Weapsy.Domain.Sites
             });
         }
 
-        public static Site CreateNew(CreateSite cmd, IValidator<CreateSite> validator)
+        public static Site CreateNew(CreateSiteCommand cmd, IValidator<CreateSiteCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -54,13 +54,13 @@ namespace Weapsy.Domain.Sites
             throw new NotImplementedException();
         }
 
-        public void UpdateDetails(UpdateSiteDetails cmd, IValidator<UpdateSiteDetails> validator)
+        public void UpdateDetails(UpdateSiteDetailsCommand cmd, IValidator<UpdateSiteDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
             SetSiteDetails(cmd);
 
-            AddEvent(new SiteDetailsUpdated
+            AddEvent(new SiteDetailsUpdatedEvent
             {
                 AggregateRootId = Id,
                 Name = Name,
@@ -75,7 +75,7 @@ namespace Weapsy.Domain.Sites
             });
         }
 
-        private void SetSiteDetails(UpdateSiteDetails cmd)
+        private void SetSiteDetails(UpdateSiteDetailsCommand cmd)
         {
             Url = cmd.Url;
             Title = cmd.Title;
@@ -115,7 +115,7 @@ namespace Weapsy.Domain.Sites
 
             Status = SiteStatus.Closed;
 
-            AddEvent(new SiteClosed
+            AddEvent(new SiteClosedEvent
             {
                 Name = Name,
                 AggregateRootId = Id
@@ -134,7 +134,7 @@ namespace Weapsy.Domain.Sites
 
             Status = SiteStatus.Active;
 
-            AddEvent(new SiteReopened
+            AddEvent(new SiteReopenedEvent
             {
                 Name = Name,
                 AggregateRootId = Id
@@ -148,7 +148,7 @@ namespace Weapsy.Domain.Sites
 
             Status = SiteStatus.Deleted;
 
-            AddEvent(new SiteDeleted
+            AddEvent(new SiteDeletedEvent
             {
                 Name = Name,
                 AggregateRootId = Id

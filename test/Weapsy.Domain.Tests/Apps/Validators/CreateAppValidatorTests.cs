@@ -12,7 +12,7 @@ namespace Weapsy.Domain.Tests.Apps.Validators
     [TestFixture]
     public class CreateAppValidatorTests
     {
-        private CreateApp _command;
+        private CreateAppCommand _command;
         private CreateAppValidator _validator;
         private Mock<IAppRules> _appRulesMock;
         private Mock<ISiteRules> _siteRulesMock;
@@ -20,7 +20,7 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         [SetUp]
         public void SetUp()
         {
-            _command = new CreateApp
+            _command = new CreateAppCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",

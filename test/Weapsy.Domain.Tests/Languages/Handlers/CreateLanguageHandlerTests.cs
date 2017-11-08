@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -28,7 +28,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
 
             var languageRepositoryMock = new Mock<ILanguageRepository>();
 
-            var validatorMock = new Mock<IValidator<CreateLanguage>>();
+            var validatorMock = new Mock<IValidator<CreateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();
@@ -41,7 +41,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
         [Test]
         public async Task Should_validate_command_and_save_new_language()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var languageRepositoryMock = new Mock<ILanguageRepository>();
             languageRepositoryMock.Setup(x => x.CreateAsync(It.IsAny<Language>())).Returns(Task.FromResult(false));
 
-            var validatorMock = new Mock<IValidator<CreateLanguage>>();
+            var validatorMock = new Mock<IValidator<CreateLanguageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var sortOrderGeneratorMock = new Mock<ILanguageSortOrderGenerator>();

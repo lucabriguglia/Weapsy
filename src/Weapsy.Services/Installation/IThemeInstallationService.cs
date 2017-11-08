@@ -5,6 +5,6 @@ namespace Weapsy.Services.Installation
 {
     public interface IThemeInstallationService : IService
     {
-        void EnsureThemeInstalled(CreateTheme createTheme);
+        void EnsureThemeInstalled(CreateThemeCommand createTheme);
     }
 }

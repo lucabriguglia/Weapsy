@@ -16,14 +16,14 @@ namespace Weapsy.Tests.Factories
 
         public static EmailAccount EmailAccount(Guid siteId, Guid id, string address)
         {
-            var command = new CreateEmailAccount
+            var command = new CreateEmailAccountCommand
             {
                 SiteId = siteId,
                 Id = id,
                 Address = address,
             };
 
-            var validatorMock = new Mock<IValidator<CreateEmailAccount>>();
+            var validatorMock = new Mock<IValidator<CreateEmailAccountCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             return Domain.EmailAccounts.EmailAccount.CreateNew(command, validatorMock.Object);

@@ -7,7 +7,7 @@ using Weapsy.Domain.Users.Events;
 
 namespace Weapsy.Domain.Users.Handlers
 {
-    public class AddUserToRoleHandler : ICommandHandlerAsync<AddUserToRole>
+    public class AddUserToRoleHandler : ICommandHandlerAsync<AddUserToRoleCommand>
     {
         private readonly IUserRepository _userRepository;
 
@@ -16,13 +16,13 @@ namespace Weapsy.Domain.Users.Handlers
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<IEvent>> HandleAsync(AddUserToRole command)
+        public async Task<IEnumerable<IEvent>> HandleAsync(AddUserToRoleCommand command)
         {
             await _userRepository.AddToRoleAsync(command.Id, command.RoleName);
 
             return new List<IEvent>
             {
-                new UserAddedToRole
+                new UserAddedToRoleEvent
                 {
                     AggregateRootId = command.Id,
                     RoleName = command.RoleName

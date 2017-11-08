@@ -6,7 +6,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Sites.Handlers
 {
-    public class DeleteSiteHandler : ICommandHandler<DeleteSite>
+    public class DeleteSiteHandler : ICommandHandler<DeleteSiteCommand>
     {
         private readonly ISiteRepository _siteRepository;
 
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _siteRepository = siteRepository;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteSite command)
+        public IEnumerable<IEvent> Handle(DeleteSiteCommand command)
         {
             var site = _siteRepository.GetById(command.Id);
 

@@ -13,26 +13,26 @@ namespace Weapsy.Domain.Tests.Templates
     [TestFixture]
     public class UpdateTemplateDetailsTests
     {
-        private UpdateTemplateDetails _command;
-        private Mock<IValidator<UpdateTemplateDetails>> _validatorMock;
+        private UpdateTemplateDetailsCommand _command;
+        private Mock<IValidator<UpdateTemplateDetailsCommand>> _validatorMock;
         private Template _template;
-        private TemplateDetailsUpdated _event;
+        private TemplateDetailsUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new UpdateTemplateDetails
+            _command = new UpdateTemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Description = "Description",
                 ViewName = "viewName"
             };            
-            _validatorMock = new Mock<IValidator<UpdateTemplateDetails>>();
+            _validatorMock = new Mock<IValidator<UpdateTemplateDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _template = new Template();
             _template.UpdateDetails(_command, _validatorMock.Object);
-            _event = _template.Events.OfType<TemplateDetailsUpdated>().SingleOrDefault();
+            _event = _template.Events.OfType<TemplateDetailsUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]

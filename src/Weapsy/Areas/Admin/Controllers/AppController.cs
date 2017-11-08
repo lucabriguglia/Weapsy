@@ -40,10 +40,10 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(new AppAdminModel());
         }
 
-        public IActionResult Save(CreateApp model)
+        public IActionResult Save(CreateAppCommand model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateApp, App>(model);
+            _commandSender.Send<CreateAppCommand, App>(model);
             return new NoContentResult();
         }
 
@@ -57,9 +57,9 @@ namespace Weapsy.Areas.Admin.Controllers
             return View(model);
         }
 
-        public IActionResult Update(UpdateAppDetails model)
+        public IActionResult Update(UpdateAppDetailsCommand model)
         {
-            _commandSender.Send<UpdateAppDetails, App>(model);
+            _commandSender.Send<UpdateAppDetailsCommand, App>(model);
             return new NoContentResult();
         }
     }

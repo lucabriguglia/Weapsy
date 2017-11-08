@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new UpdateAppDetails
+            var command = new UpdateAppDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
             var repositoryMock = new Mock<IAppRepository>();
             repositoryMock.Setup(x => x.GetById(command.Id)).Returns(new App());
 
-            var validatorMock = new Mock<IValidator<UpdateAppDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateAppDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var createAppHandler = new UpdateAppDetailsHandler(repositoryMock.Object, validatorMock.Object);
@@ -38,7 +38,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
         [Test]
         public void Should_validate_command_and_update_app()
         {
-            var command = new UpdateAppDetails
+            var command = new UpdateAppDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -49,7 +49,7 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
             var repositoryMock = new Mock<IAppRepository>();
             repositoryMock.Setup(x => x.GetById(command.Id)).Returns(new App());
 
-            var validatorMock = new Mock<IValidator<UpdateAppDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateAppDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createAppHandler = new UpdateAppDetailsHandler(repositoryMock.Object, validatorMock.Object);

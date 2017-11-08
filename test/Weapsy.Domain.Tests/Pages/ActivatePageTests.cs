@@ -17,8 +17,8 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_call_validator()
         {
             var page = new Page();
-            var command = new ActivatePage();
-            var validatorMock = new Mock<IValidator<ActivatePage>>();
+            var command = new ActivatePageCommand();
+            var validatorMock = new Mock<IValidator<ActivatePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Activate(command, validatorMock.Object);
@@ -30,8 +30,8 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_throw_exception_when_already_activated()
         {
             var page = new Page();
-            var command = new ActivatePage();
-            var validatorMock = new Mock<IValidator<ActivatePage>>();
+            var command = new ActivatePageCommand();
+            var validatorMock = new Mock<IValidator<ActivatePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Activate(command, validatorMock.Object);
@@ -43,8 +43,8 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_page_status_to_activated()
         {
             var page = new Page();
-            var command = new ActivatePage();
-            var validatorMock = new Mock<IValidator<ActivatePage>>();
+            var command = new ActivatePageCommand();
+            var validatorMock = new Mock<IValidator<ActivatePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Activate(command, validatorMock.Object);
@@ -56,13 +56,13 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_add_page_activated_event()
         {
             var page = new Page();
-            var command = new ActivatePage();
-            var validatorMock = new Mock<IValidator<ActivatePage>>();
+            var command = new ActivatePageCommand();
+            var validatorMock = new Mock<IValidator<ActivatePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Activate(command, validatorMock.Object);
 
-            var @event = page.Events.OfType<PageActivated>().SingleOrDefault();
+            var @event = page.Events.OfType<PageActivatedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -71,13 +71,13 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_id_in_page_activated_event()
         {
             var page = new Page();
-            var command = new ActivatePage();
-            var validatorMock = new Mock<IValidator<ActivatePage>>();
+            var command = new ActivatePageCommand();
+            var validatorMock = new Mock<IValidator<ActivatePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Activate(command, validatorMock.Object);
 
-            var @event = page.Events.OfType<PageActivated>().SingleOrDefault();
+            var @event = page.Events.OfType<PageActivatedEvent>().SingleOrDefault();
 
             Assert.AreEqual(page.Id, @event.AggregateRootId);
         }
@@ -86,13 +86,13 @@ namespace Weapsy.Domain.Tests.Pages
         public void Should_set_site_id_in_page_activated_event()
         {
             var page = new Page();
-            var command = new ActivatePage();
-            var validatorMock = new Mock<IValidator<ActivatePage>>();
+            var command = new ActivatePageCommand();
+            var validatorMock = new Mock<IValidator<ActivatePageCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             page.Activate(command, validatorMock.Object);
 
-            var @event = page.Events.OfType<PageActivated>().SingleOrDefault();
+            var @event = page.Events.OfType<PageActivatedEvent>().SingleOrDefault();
 
             Assert.AreEqual(page.SiteId, @event.SiteId);
         }

@@ -50,7 +50,7 @@ namespace Weapsy.Domain.Tests.Sites
             site.Close();
             site.Reopen();
 
-            var @event = site.Events.OfType<SiteReopened>().SingleOrDefault();
+            var @event = site.Events.OfType<SiteReopenedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -63,7 +63,7 @@ namespace Weapsy.Domain.Tests.Sites
             site.Close();
             site.Reopen();
 
-            var @event = site.Events.OfType<SiteReopened>().SingleOrDefault();
+            var @event = site.Events.OfType<SiteReopenedEvent>().SingleOrDefault();
 
             Assert.AreEqual(site.Id, @event.AggregateRootId);
         }
@@ -76,7 +76,7 @@ namespace Weapsy.Domain.Tests.Sites
             site.Close();
             site.Reopen();
 
-            var @event = site.Events.OfType<SiteReopened>().SingleOrDefault();
+            var @event = site.Events.OfType<SiteReopenedEvent>().SingleOrDefault();
 
             Assert.AreEqual(site.Name, @event.Name);
         }

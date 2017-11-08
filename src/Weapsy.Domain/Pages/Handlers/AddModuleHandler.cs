@@ -12,17 +12,17 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class AddModuleHandler : ICommandHandler<AddModule>
+    public class AddModuleHandler : ICommandHandler<AddModuleCommand>
     {
         private readonly IModuleRepository _moduleRepository;
         private readonly IPageRepository _pageRepository;
-        private readonly IValidator<CreateModule> _createModuleValidator;
-        private readonly IValidator<AddPageModule> _addPageModuleValidator;
+        private readonly IValidator<CreateModuleCommand> _createModuleValidator;
+        private readonly IValidator<AddPageModuleCommand> _addPageModuleValidator;
 
         public AddModuleHandler(IModuleRepository moduleRepository,
             IPageRepository pageRepository,
-            IValidator<CreateModule> createModuleValidator,
-            IValidator<AddPageModule> addPageModuleValidator)
+            IValidator<CreateModuleCommand> createModuleValidator,
+            IValidator<AddPageModuleCommand> addPageModuleValidator)
         {
             _moduleRepository = moduleRepository;
             _pageRepository = pageRepository;
@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _addPageModuleValidator = addPageModuleValidator;
         }
 
-        public IEnumerable<IEvent> Handle(AddModule cmd)
+        public IEnumerable<IEvent> Handle(AddModuleCommand cmd)
         {
             var events = new List<IDomainEvent>();
 
@@ -44,7 +44,7 @@ namespace Weapsy.Domain.Pages.Handlers
 
                 var moduleId = Guid.NewGuid();
 
-                var module = Module.CreateNew(new CreateModule
+                var module = Module.CreateNew(new CreateModuleCommand
                 {
                     SiteId = cmd.SiteId,
                     ModuleTypeId = cmd.ModuleTypeId,
@@ -54,7 +54,7 @@ namespace Weapsy.Domain.Pages.Handlers
                 _moduleRepository.Create(module);
                 events.AddRange(module.Events);
 
-                page.AddModule(new AddPageModule
+                page.AddModule(new AddPageModuleCommand
                 {
                     SiteId = cmd.SiteId,
                     PageId = cmd.PageId,

@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Tests.Templates
 
             template.Activate();
 
-            var @event = template.Events.OfType<TemplateActivated>().SingleOrDefault();
+            var @event = template.Events.OfType<TemplateActivatedEvent>().SingleOrDefault();
 
             Assert.IsNotNull(@event);
         }
@@ -48,7 +48,7 @@ namespace Weapsy.Domain.Tests.Templates
 
             template.Activate();
 
-            var @event = template.Events.OfType<TemplateActivated>().SingleOrDefault();
+            var @event = template.Events.OfType<TemplateActivatedEvent>().SingleOrDefault();
 
             Assert.AreEqual(template.Id, @event.AggregateRootId);
         }

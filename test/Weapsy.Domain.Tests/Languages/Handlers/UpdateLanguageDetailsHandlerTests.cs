@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
         [Test]
         public void Should_throw_exception_when_language_is_not_found()
         {
-            var command = new UpdateLanguageDetails
+            var command = new UpdateLanguageDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -28,7 +28,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var languageRepositoryMock = new Mock<ILanguageRepository>();
             languageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns((Language)null);
 
-            var validatorMock = new Mock<IValidator<UpdateLanguageDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateLanguageDetailsCommand>>();
 
             var createLanguageHandler = new UpdateLanguageDetailsHandler(languageRepositoryMock.Object, validatorMock.Object);
 
@@ -38,7 +38,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new UpdateLanguageDetails
+            var command = new UpdateLanguageDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -50,7 +50,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             var languageRepositoryMock = new Mock<ILanguageRepository>();
             languageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(new Language());
 
-            var validatorMock = new Mock<IValidator<UpdateLanguageDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateLanguageDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Name", "Name Error") }));
 
             var createLanguageHandler = new UpdateLanguageDetailsHandler(languageRepositoryMock.Object, validatorMock.Object);
@@ -61,7 +61,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
         [Test]
         public void Should_validate_command_and_save_new_language()
         {
-            var command = new UpdateLanguageDetails
+            var command = new UpdateLanguageDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -74,7 +74,7 @@ namespace Weapsy.Domain.Tests.Languages.Handlers
             languageRepositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(new Language());
             languageRepositoryMock.Setup(x => x.Update(It.IsAny<Language>()));
 
-            var validatorMock = new Mock<IValidator<UpdateLanguageDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateLanguageDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createLanguageHandler = new UpdateLanguageDetailsHandler(languageRepositoryMock.Object, validatorMock.Object);

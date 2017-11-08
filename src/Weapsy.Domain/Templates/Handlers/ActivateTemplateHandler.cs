@@ -6,7 +6,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Templates.Handlers
 {
-    public class ActivateTemplateHandler : ICommandHandler<ActivateTemplate>
+    public class ActivateTemplateHandler : ICommandHandler<ActivateTemplateCommand>
     {
         private readonly ITemplateRepository _templateRepository;
 
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _templateRepository = templateRepository;
         }
 
-        public IEnumerable<IEvent> Handle(ActivateTemplate command)
+        public IEnumerable<IEvent> Handle(ActivateTemplateCommand command)
         {
             var template = _templateRepository.GetById(command.Id);
 

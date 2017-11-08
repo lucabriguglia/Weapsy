@@ -12,15 +12,15 @@ namespace Weapsy.Domain.Tests.EmailAccount.Validators
     [TestFixture]
     public class EmailAccountDetailsValidatorTests
     {
-        private EmailAccountDetails _command;
-        private EmailAccountDetailsValidator<EmailAccountDetails> _validator;
+        private EmailAccountDetailsCommand _command;
+        private EmailAccountDetailsValidator<EmailAccountDetailsCommand> _validator;
         private Mock<IEmailAccountRules> _emailAccountRulesMock;
         private Mock<ISiteRules> _siteRulesMock;
 
         [SetUp]
         public void SetUp()
         {
-            _command = new EmailAccountDetails
+            _command = new EmailAccountDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -40,7 +40,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Validators
             _siteRulesMock = new Mock<ISiteRules>();
             _siteRulesMock.Setup(x => x.DoesSiteExist(_command.SiteId)).Returns(true);
 
-            _validator = new EmailAccountDetailsValidator<EmailAccountDetails>(_emailAccountRulesMock.Object, _siteRulesMock.Object);
+            _validator = new EmailAccountDetailsValidator<EmailAccountDetailsCommand>(_emailAccountRulesMock.Object, _siteRulesMock.Object);
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Validators
         {
             _emailAccountRulesMock = new Mock<IEmailAccountRules>();
             _emailAccountRulesMock.Setup(x => x.IsEmailAccountAddressUnique(_command.SiteId, _command.Address, Guid.Empty)).Returns(false);
-            _validator = new EmailAccountDetailsValidator<EmailAccountDetails>(_emailAccountRulesMock.Object, _siteRulesMock.Object);
+            _validator = new EmailAccountDetailsValidator<EmailAccountDetailsCommand>(_emailAccountRulesMock.Object, _siteRulesMock.Object);
             _validator.ShouldHaveValidationErrorFor(x => x.Address, _command);
         }
 

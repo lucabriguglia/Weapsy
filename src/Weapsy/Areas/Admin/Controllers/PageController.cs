@@ -53,12 +53,12 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult Save(PageAdminModel model)
         {
-            var command = _mapper.Map<CreatePage>(model);
+            var command = _mapper.Map<CreatePageCommand>(model);
             command.SiteId = SiteId;
             command.Id = Guid.NewGuid();
             command.PagePermissions = model.PagePermissions.ToDomain();
             command.MenuIds = model.Menus.ToCommand();
-            _commandSender.Send<CreatePage, Page>(command);
+            _commandSender.Send<CreatePageCommand, Page>(command);
             return new NoContentResult();
         }
 
@@ -78,10 +78,10 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult Update(PageAdminModel model)
         {
-            var command = _mapper.Map<UpdatePageDetails>(model);
+            var command = _mapper.Map<UpdatePageDetailsCommand>(model);
             command.SiteId = SiteId;
             command.PagePermissions = model.PagePermissions.ToDomain();
-            _commandSender.Send<UpdatePageDetails, Page>(command);
+            _commandSender.Send<UpdatePageDetailsCommand, Page>(command);
             return new NoContentResult();
         }
 
@@ -102,10 +102,10 @@ namespace Weapsy.Areas.Admin.Controllers
 
         public IActionResult UpdateModule(PageModuleAdminModel model)
         {
-            var command = _mapper.Map<UpdatePageModuleDetails>(model);
+            var command = _mapper.Map<UpdatePageModuleDetailsCommand>(model);
             command.SiteId = SiteId;
             command.PageModulePermissions = model.PageModulePermissions.ToDomain();
-            _commandSender.Send<UpdatePageModuleDetails, Page>(command);
+            _commandSender.Send<UpdatePageModuleDetailsCommand, Page>(command);
             return new NoContentResult();
         }
     }

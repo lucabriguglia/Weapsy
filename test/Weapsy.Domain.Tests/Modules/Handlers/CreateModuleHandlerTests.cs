@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Modules.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new CreateModule
+            var command = new CreateModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = Guid.NewGuid(),
@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Tests.Modules.Handlers
 
             var repositoryMock = new Mock<IModuleRepository>();
 
-            var validatorMock = new Mock<IValidator<CreateModule>>();
+            var validatorMock = new Mock<IValidator<CreateModuleCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var createModuleHandler = new CreateModuleHandler(repositoryMock.Object, validatorMock.Object);
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.Modules.Handlers
         [Test]
         public void Should_validate_command_and_save_new_module()
         {
-            var command = new CreateModule
+            var command = new CreateModuleCommand
             {
                 SiteId = Guid.NewGuid(),
                 ModuleTypeId = Guid.NewGuid(),
@@ -48,7 +48,7 @@ namespace Weapsy.Domain.Tests.Modules.Handlers
             var repositoryMock = new Mock<IModuleRepository>();
             repositoryMock.Setup(x => x.Create(It.IsAny<Module>()));
 
-            var validatorMock = new Mock<IValidator<CreateModule>>();
+            var validatorMock = new Mock<IValidator<CreateModuleCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createModuleHandler = new CreateModuleHandler(repositoryMock.Object, validatorMock.Object);

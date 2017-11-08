@@ -8,7 +8,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class PageDetailsValidator<T> : BaseSiteValidator<T> where T : PageDetails
+    public class PageDetailsValidator<T> : BaseSiteValidator<T> where T : PageDetailsCommand
     {
         private readonly IPageRules _pageRules;
         private readonly ILanguageRules _languageRules;
@@ -57,7 +57,7 @@ namespace Weapsy.Domain.Pages.Validators
                 .SetCollectionValidator(localisationValidator);
         }
 
-        private bool HaveUniqueName(PageDetails cmd, string name)
+        private bool HaveUniqueName(PageDetailsCommand cmd, string name)
         {
             return _pageRules.IsPageNameUnique(cmd.SiteId, name, cmd.Id);
         }
@@ -67,7 +67,7 @@ namespace Weapsy.Domain.Pages.Validators
             return _pageRules.IsPageNameValid(name);
         }
 
-        private bool HaveUniqueSlug(PageDetails cmd, string url)
+        private bool HaveUniqueSlug(PageDetailsCommand cmd, string url)
         {
             return _pageRules.IsSlugUnique(cmd.SiteId, url, cmd.Id);
         }
@@ -82,12 +82,12 @@ namespace Weapsy.Domain.Pages.Validators
             return !_pageRules.IsPageUrlReserved(url);
         }
 
-        private bool IncludeAllSupportedLanguages(PageDetails cmd, IEnumerable<PageLocalisation> pageLocalisations)
+        private bool IncludeAllSupportedLanguages(PageDetailsCommand cmd, IEnumerable<PageLocalisation> pageLocalisations)
         {
             return _languageRules.AreAllSupportedLanguagesIncluded(cmd.SiteId, pageLocalisations.Select(x => x.LanguageId));
         }
 
-        private bool IncludeUniqueSlugs(PageDetails cmd, IEnumerable<PageLocalisation> pageLocalisations)
+        private bool IncludeUniqueSlugs(PageDetailsCommand cmd, IEnumerable<PageLocalisation> pageLocalisations)
         {
             return pageLocalisations.All(pageLocalisation => _pageRules.IsSlugUnique(cmd.SiteId, pageLocalisation.Url, cmd.Id));
         }

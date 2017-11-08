@@ -7,14 +7,14 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Languages.Handlers
 {
-    public class CreateLanguageHandler : ICommandHandlerAsync<CreateLanguage>
+    public class CreateLanguageHandler : ICommandHandlerAsync<CreateLanguageCommand>
     {
         private readonly ILanguageRepository _languageRepository;
-        private readonly IValidator<CreateLanguage> _validator;
+        private readonly IValidator<CreateLanguageCommand> _validator;
         private readonly ILanguageSortOrderGenerator _sortOrderGenerator;
 
         public CreateLanguageHandler(ILanguageRepository languageRepository,
-            IValidator<CreateLanguage> validator,
+            IValidator<CreateLanguageCommand> validator,
             ILanguageSortOrderGenerator sortOrderGenerator)
         {
             _languageRepository = languageRepository;
@@ -22,7 +22,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _sortOrderGenerator = sortOrderGenerator;
         }
 
-        public async Task<IEnumerable<IEvent>> HandleAsync(CreateLanguage command)
+        public async Task<IEnumerable<IEvent>> HandleAsync(CreateLanguageCommand command)
         {
             var language = Language.CreateNew(command, _validator, _sortOrderGenerator);
 

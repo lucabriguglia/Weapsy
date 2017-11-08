@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_language_id_already_exists()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -36,7 +36,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_site_id_is_empty()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.Empty,
                 Id = Guid.NewGuid(),
@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_site_does_not_exist()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -77,7 +77,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_language_name_is_empty()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -96,7 +96,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_language_name_is_too_short()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -118,7 +118,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
             var name = "";
             for (int i = 0; i < 101; i++) name += i;
 
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -137,7 +137,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_language_name_is_not_valid()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -159,7 +159,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_language_name_is_not_unique()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -181,7 +181,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_culture_name_is_empty()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -200,7 +200,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_culture_name_is_too_short()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -222,7 +222,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
             var cultureName = "";
             for (int i = 0; i < 101; i++) cultureName += i;
 
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -241,7 +241,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_culture_name_is_not_valid()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -263,7 +263,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_culture_name_is_not_unique()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -285,7 +285,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_url_is_empty()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -304,7 +304,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_url_is_too_short()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -326,7 +326,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
             var url = "";
             for (int i = 0; i < 101; i++) url += i;
 
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -345,7 +345,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_url_is_not_valid()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -367,7 +367,7 @@ namespace Weapsy.Domain.Tests.Languages.Validators
         [Test]
         public void Should_have_validation_error_when_url_is_not_unique()
         {
-            var command = new CreateLanguage
+            var command = new CreateLanguageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),

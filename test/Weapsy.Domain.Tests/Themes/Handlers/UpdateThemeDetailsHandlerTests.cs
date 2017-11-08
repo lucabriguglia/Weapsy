@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
         [Test]
         public void Should_throw_exception_when_theme_is_not_found()
         {
-            var command = new UpdateThemeDetails
+            var command = new UpdateThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
             var themeRepositoryMock = new Mock<IThemeRepository>();
             themeRepositoryMock.Setup(x => x.GetById(command.Id)).Returns((Theme)null);
 
-            var validatorMock = new Mock<IValidator<UpdateThemeDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateThemeDetailsCommand>>();
 
             var createThemeHandler = new UpdateThemeDetailsHandler(themeRepositoryMock.Object, validatorMock.Object);
 
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new UpdateThemeDetails
+            var command = new UpdateThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -48,7 +48,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
             var themeRepositoryMock = new Mock<IThemeRepository>();
             themeRepositoryMock.Setup(x => x.GetById(command.Id)).Returns(new Theme());
 
-            var validatorMock = new Mock<IValidator<UpdateThemeDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateThemeDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Name", "Name Error") }));
 
             var createThemeHandler = new UpdateThemeDetailsHandler(themeRepositoryMock.Object, validatorMock.Object);
@@ -59,7 +59,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
         [Test]
         public void Should_validate_command_and_save_new_theme()
         {
-            var command = new UpdateThemeDetails
+            var command = new UpdateThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
             themeRepositoryMock.Setup(x => x.GetById(command.Id)).Returns(new Theme());
             themeRepositoryMock.Setup(x => x.Update(It.IsAny<Theme>()));
 
-            var validatorMock = new Mock<IValidator<UpdateThemeDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateThemeDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createThemeHandler = new UpdateThemeDetailsHandler(themeRepositoryMock.Object, validatorMock.Object);

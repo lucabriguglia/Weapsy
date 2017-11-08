@@ -14,14 +14,14 @@ namespace Weapsy.Domain.Tests.EmailAccount
     public class DeleteEmailAccountTests
     {
         private EmailAccounts.EmailAccount _emailAccount;
-        private Mock<IValidator<DeleteEmailAccount>> _validatorMock;
-        private DeleteEmailAccount _command;
-        private EmailAccountDeleted _event;
+        private Mock<IValidator<DeleteEmailAccountCommand>> _validatorMock;
+        private DeleteEmailAccountCommand _command;
+        private EmailAccountDeletedEvent _event;
 
         [SetUp]
         public void SetUp()
         {
-            var createEmailAccountCommand = new CreateEmailAccount
+            var createEmailAccountCommand = new CreateEmailAccountCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -34,22 +34,22 @@ namespace Weapsy.Domain.Tests.EmailAccount
                 DefaultCredentials = true,
                 Ssl = true
             };
-            var createEmailAccountValidatorMock = new Mock<IValidator<CreateEmailAccount>>();
+            var createEmailAccountValidatorMock = new Mock<IValidator<CreateEmailAccountCommand>>();
             createEmailAccountValidatorMock.Setup(x => x.Validate(createEmailAccountCommand)).Returns(new ValidationResult());
             _emailAccount = EmailAccounts.EmailAccount.CreateNew(createEmailAccountCommand, createEmailAccountValidatorMock.Object);
 
-            _command = new DeleteEmailAccount
+            _command = new DeleteEmailAccountCommand
             {
                 SiteId = _emailAccount.SiteId,
                 Id = _emailAccount.Id
             };
 
-            _validatorMock = new Mock<IValidator<DeleteEmailAccount>>();
+            _validatorMock = new Mock<IValidator<DeleteEmailAccountCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
             _emailAccount.Delete(_command, _validatorMock.Object);
 
-            _event = _emailAccount.Events.OfType<EmailAccountDeleted>().SingleOrDefault();
+            _event = _emailAccount.Events.OfType<EmailAccountDeletedEvent>().SingleOrDefault();
         }
 
         [Test]

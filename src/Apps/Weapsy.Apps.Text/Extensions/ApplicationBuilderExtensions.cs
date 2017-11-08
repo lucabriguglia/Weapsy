@@ -26,7 +26,7 @@ namespace Weapsy.Apps.Text.Extensions
         {
             var appInstallationService = builder.ApplicationServices.GetRequiredService<IAppInstallationService>();
 
-            var createApp = new CreateApp
+            var createApp = new CreateAppCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Weapsy.Apps.Text",
@@ -34,9 +34,9 @@ namespace Weapsy.Apps.Text.Extensions
                 Folder = "Weapsy.Apps.Text"
             };
 
-            var createModuleTypes = new List<CreateModuleType>
+            var createModuleTypes = new List<CreateModuleTypeCommand>
             {
-                new CreateModuleType
+                new CreateModuleTypeCommand
                 {
                     AppId = createApp.Id,
                     Id = Guid.NewGuid(),

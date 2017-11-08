@@ -5,7 +5,7 @@ using Weapsy.Domain.Themes.Rules;
 
 namespace Weapsy.Domain.Themes.Validators
 {
-    public class CreateThemeValidator : ThemeDetailsValidator<CreateTheme>
+    public class CreateThemeValidator : ThemeDetailsValidator<CreateThemeCommand>
     {
         private readonly IThemeRules _themeRules;
 

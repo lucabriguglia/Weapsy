@@ -60,7 +60,7 @@ namespace Weapsy.Api
         [Route("{id}/add-to-role")]
         public async Task<IActionResult> AddToRole(Guid id, [FromBody]string roleName)
         {
-            await _commandSender.SendAsync<AddUserToRole, User>(new AddUserToRole { Id = id, RoleName = roleName });
+            await _commandSender.SendAsync<AddUserToRoleCommand, User>(new AddUserToRoleCommand { Id = id, RoleName = roleName });
             return new NoContentResult();
         }
 
@@ -68,7 +68,7 @@ namespace Weapsy.Api
         [Route("{id}/remove-from-role")]
         public async Task<IActionResult> RemoveFromRole(Guid id, [FromBody]string roleName)
         {
-            await _commandSender.SendAsync<RemoveUserFromRole, User>(new RemoveUserFromRole { Id = id, RoleName = roleName });
+            await _commandSender.SendAsync<RemoveUserFromRoleCommand, User>(new RemoveUserFromRoleCommand { Id = id, RoleName = roleName });
             return new NoContentResult();
         }
 

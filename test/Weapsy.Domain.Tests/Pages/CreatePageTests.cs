@@ -14,16 +14,16 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class CreatePageTests
     {
-        private CreatePage _command;
-        private Mock<IValidator<CreatePage>> _validatorMock;
+        private CreatePageCommand _command;
+        private Mock<IValidator<CreatePageCommand>> _validatorMock;
         private Page _page;
-        private PageCreated _event;
+        private PageCreatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
             var pageId = Guid.NewGuid();
-            _command = new CreatePage
+            _command = new CreatePageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = pageId,
@@ -57,10 +57,10 @@ namespace Weapsy.Domain.Tests.Pages
                     Guid.NewGuid()
                 }
             };
-            _validatorMock = new Mock<IValidator<CreatePage>>();
+            _validatorMock = new Mock<IValidator<CreatePageCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _page = Page.CreateNew(_command, _validatorMock.Object);
-            _event = _page.Events.OfType<PageCreated>().SingleOrDefault();
+            _event = _page.Events.OfType<PageCreatedEvent>().SingleOrDefault();
         }
 
         [Test]

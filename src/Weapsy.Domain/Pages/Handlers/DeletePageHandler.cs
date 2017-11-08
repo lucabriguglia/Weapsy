@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class DeletePageHandler : ICommandHandler<DeletePage>
+    public class DeletePageHandler : ICommandHandler<DeletePageCommand>
     {
         private readonly IPageRepository _pageRepository;
-        private readonly IValidator<DeletePage> _validator;
+        private readonly IValidator<DeletePageCommand> _validator;
 
-        public DeletePageHandler(IPageRepository pageRepository, IValidator<DeletePage> validator)
+        public DeletePageHandler(IPageRepository pageRepository, IValidator<DeletePageCommand> validator)
         {
             _pageRepository = pageRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeletePage command)
+        public IEnumerable<IEvent> Handle(DeletePageCommand command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.Id);
 

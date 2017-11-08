@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Menus.Handlers
 {
-    public class RemoveMenuItemHandler : ICommandHandler<RemoveMenuItem>
+    public class RemoveMenuItemHandler : ICommandHandler<RemoveMenuItemCommand>
     {
         private readonly IMenuRepository _menuRepository;
-        private readonly IValidator<RemoveMenuItem> _validator;
+        private readonly IValidator<RemoveMenuItemCommand> _validator;
 
-        public RemoveMenuItemHandler(IMenuRepository menuRepository, IValidator<RemoveMenuItem> validator)
+        public RemoveMenuItemHandler(IMenuRepository menuRepository, IValidator<RemoveMenuItemCommand> validator)
         {
             _menuRepository = menuRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(RemoveMenuItem command)
+        public IEnumerable<IEvent> Handle(RemoveMenuItemCommand command)
         {
             var menu = _menuRepository.GetById(command.MenuId);
 

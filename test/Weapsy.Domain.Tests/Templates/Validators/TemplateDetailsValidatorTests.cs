@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
         {
             var themeId = Guid.NewGuid();
 
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -31,7 +31,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
             var themeRulesMock = new Mock<IThemeRules>();
             themeRulesMock.Setup(r => r.DoesThemeExist(themeId)).Returns(false);
 
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.ThemeId, command);
         }
@@ -39,7 +39,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
         [Test]
         public void Should_have_validation_error_when_template_name_is_empty()
         {
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -49,7 +49,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
 
             var templateRulesMock = new Mock<ITemplateRules>();
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -60,7 +60,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
             var name = "";
             for (var i = 0; i < 101; i++) name += i;
 
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = name,
@@ -70,7 +70,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
 
             var templateRulesMock = new Mock<ITemplateRules>();
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -78,7 +78,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
         [Test]
         public void Should_have_validation_error_when_template_name_is_not_unique()
         {
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -91,7 +91,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
 
             var themeRulesMock = new Mock<IThemeRules>();
 
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -102,7 +102,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
             var description = "";
             for (int i = 0; i < 251; i++) description += i;
 
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -112,7 +112,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
 
             var templateRulesMock = new Mock<ITemplateRules>();
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.Description, command);
         }
@@ -120,7 +120,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
         [Test]
         public void Should_have_validation_error_when_view_name_is_empty()
         {
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -130,7 +130,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
 
             var templateRulesMock = new Mock<ITemplateRules>();
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.ViewName, command);
         }
@@ -141,7 +141,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
             var viewName = "";
             for (int i = 0; i < 251; i++) viewName += i;
 
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -151,7 +151,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
 
             var templateRulesMock = new Mock<ITemplateRules>();
             var themeRulesMock = new Mock<IThemeRules>();
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.ViewName, command);
         }
@@ -159,7 +159,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
         [Test]
         public void Should_have_validation_error_when_view_name_is_not_valid()
         {
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -172,7 +172,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
 
             var themeRulesMock = new Mock<IThemeRules>();
 
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.ViewName, command);
         }
@@ -180,7 +180,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
         [Test]
         public void Should_have_validation_error_when_view_name_is_not_unique()
         {
-            var command = new TemplateDetails
+            var command = new TemplateDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -193,7 +193,7 @@ namespace Weapsy.Domain.Tests.Templates.Validators
 
             var themeRulesMock = new Mock<IThemeRules>();
 
-            var validator = new TemplateDetailsValidator<TemplateDetails>(templateRulesMock.Object, themeRulesMock.Object);
+            var validator = new TemplateDetailsValidator<TemplateDetailsCommand>(templateRulesMock.Object, themeRulesMock.Object);
 
             validator.ShouldHaveValidationErrorFor(x => x.ViewName, command);
         }

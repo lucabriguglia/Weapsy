@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
         [Test]
         public void Should_throw_exception_when_module_type_is_not_found()
         {
-            var command = new DeleteModuleType
+            var command = new DeleteModuleTypeCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -24,7 +24,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
             var repositoryMock = new Mock<IModuleTypeRepository>();
             repositoryMock.Setup(x => x.GetById(command.Id)).Returns((ModuleType)null);
 
-            var validatorMock = new Mock<IValidator<DeleteModuleType>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleTypeCommand>>();
 
             var deleteModuleTypeHandler = new DeleteModuleTypeHandler(repositoryMock.Object, validatorMock.Object);
 
@@ -34,7 +34,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new DeleteModuleType
+            var command = new DeleteModuleTypeCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -44,7 +44,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
             var repositoryMock = new Mock<IModuleTypeRepository>();
             repositoryMock.Setup(x => x.GetById(command.Id)).Returns(moduleTypeMock.Object);
 
-            var validatorMock = new Mock<IValidator<DeleteModuleType>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleTypeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
 
             var deleteModuleTypeHandler = new DeleteModuleTypeHandler(repositoryMock.Object, validatorMock.Object);
@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
         [Test]
         public void Should_update_module_type()
         {
-            var command = new DeleteModuleType
+            var command = new DeleteModuleTypeCommand
             {
                 Id = Guid.NewGuid()
             };
@@ -65,7 +65,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Handlers
             var repositoryMock = new Mock<IModuleTypeRepository>();
             repositoryMock.Setup(x => x.GetById(command.Id)).Returns(moduleTypeMock.Object);
 
-            var validatorMock = new Mock<IValidator<DeleteModuleType>>();
+            var validatorMock = new Mock<IValidator<DeleteModuleTypeCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var deleteModuleTypeHandler = new DeleteModuleTypeHandler(repositoryMock.Object, validatorMock.Object);

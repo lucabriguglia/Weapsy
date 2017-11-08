@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
         [Test]
         public void Should_throw_exception_when_email_account_is_not_found()
         {
-            var command = new UpdateEmailAccountDetails
+            var command = new UpdateEmailAccountDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -33,7 +33,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
             var emailAccountRepositoryMock = new Mock<IEmailAccountRepository>();
             emailAccountRepositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns((EmailAccounts.EmailAccount)null);
 
-            var validatorMock = new Mock<IValidator<UpdateEmailAccountDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateEmailAccountDetailsCommand>>();
 
             var createEmailAccountHandler = new UpdateEmailAccountDetailsHandler(emailAccountRepositoryMock.Object, validatorMock.Object);
 
@@ -43,7 +43,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new UpdateEmailAccountDetails
+            var command = new UpdateEmailAccountDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -60,7 +60,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
             var emailAccountRepositoryMock = new Mock<IEmailAccountRepository>();
             emailAccountRepositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(new EmailAccounts.EmailAccount());
 
-            var validatorMock = new Mock<IValidator<UpdateEmailAccountDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateEmailAccountDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Address", "Address Error") }));
 
             var createEmailAccountHandler = new UpdateEmailAccountDetailsHandler(emailAccountRepositoryMock.Object, validatorMock.Object);
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
         [Test]
         public void Should_validate_command_and_save_new_email_account()
         {
-            var command = new UpdateEmailAccountDetails
+            var command = new UpdateEmailAccountDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -89,7 +89,7 @@ namespace Weapsy.Domain.Tests.EmailAccount.Handlers
             emailAccountRepositoryMock.Setup(x => x.GetById(command.SiteId, command.Id)).Returns(new EmailAccounts.EmailAccount());
             emailAccountRepositoryMock.Setup(x => x.Update(It.IsAny<EmailAccounts.EmailAccount>()));
 
-            var validatorMock = new Mock<IValidator<UpdateEmailAccountDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateEmailAccountDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createEmailAccountHandler = new UpdateEmailAccountDetailsHandler(emailAccountRepositoryMock.Object, validatorMock.Object);

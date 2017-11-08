@@ -18,7 +18,7 @@ namespace Weapsy.Domain.Languages
 
         public Language(){}
 
-        private Language(CreateLanguage cmd, ILanguageSortOrderGenerator languageSortOrderGenerator)
+        private Language(CreateLanguageCommand cmd, ILanguageSortOrderGenerator languageSortOrderGenerator)
             : base(cmd.Id)
         {
             SiteId = cmd.SiteId;
@@ -28,7 +28,7 @@ namespace Weapsy.Domain.Languages
             SortOrder = languageSortOrderGenerator.GenerateNextSortOrder(cmd.SiteId);
             Status = LanguageStatus.Hidden;
 
-            AddEvent(new LanguageCreated
+            AddEvent(new LanguageCreatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -40,8 +40,8 @@ namespace Weapsy.Domain.Languages
             });
         }
 
-        public static Language CreateNew(CreateLanguage cmd,
-            IValidator<CreateLanguage> validator,
+        public static Language CreateNew(CreateLanguageCommand cmd,
+            IValidator<CreateLanguageCommand> validator,
             ILanguageSortOrderGenerator sortOrderGenerator)
         {
             validator.ValidateCommand(cmd);
@@ -49,7 +49,7 @@ namespace Weapsy.Domain.Languages
             return new Language(cmd, sortOrderGenerator);
         }
 
-        public void UpdateDetails(UpdateLanguageDetails cmd, IValidator<UpdateLanguageDetails> validator)
+        public void UpdateDetails(UpdateLanguageDetailsCommand cmd, IValidator<UpdateLanguageDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -57,7 +57,7 @@ namespace Weapsy.Domain.Languages
             CultureName = cmd.CultureName;
             Url = cmd.Url;
 
-            AddEvent(new LanguageDetailsUpdated
+            AddEvent(new LanguageDetailsUpdatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -74,7 +74,7 @@ namespace Weapsy.Domain.Languages
 
             SortOrder = sortOrder;
 
-            AddEvent(new LanguageReordered
+            AddEvent(new LanguageReorderedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -82,7 +82,7 @@ namespace Weapsy.Domain.Languages
             });
         }
 
-        public void Activate(ActivateLanguage cmd, IValidator<ActivateLanguage> validator)
+        public void Activate(ActivateLanguageCommand cmd, IValidator<ActivateLanguageCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -91,14 +91,14 @@ namespace Weapsy.Domain.Languages
 
             Status = LanguageStatus.Active;
 
-            AddEvent(new LanguageActivated
+            AddEvent(new LanguageActivatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id
             });
         }
 
-        public void Hide(HideLanguage cmd, IValidator<HideLanguage> validator)
+        public void Hide(HideLanguageCommand cmd, IValidator<HideLanguageCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -110,14 +110,14 @@ namespace Weapsy.Domain.Languages
 
             Status = LanguageStatus.Hidden;
 
-            AddEvent(new LanguageHidden
+            AddEvent(new LanguageHiddenEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id
             });
         }
 
-        public void Delete(DeleteLanguage cmd, IValidator<DeleteLanguage> validator)
+        public void Delete(DeleteLanguageCommand cmd, IValidator<DeleteLanguageCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -126,7 +126,7 @@ namespace Weapsy.Domain.Languages
 
             Status = LanguageStatus.Deleted;
 
-            AddEvent(new LanguageDeleted
+            AddEvent(new LanguageDeletedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id

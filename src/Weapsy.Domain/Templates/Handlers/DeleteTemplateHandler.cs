@@ -6,7 +6,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Templates.Handlers
 {
-    public class DeleteTemplateHandler : ICommandHandler<DeleteTemplate>
+    public class DeleteTemplateHandler : ICommandHandler<DeleteTemplateCommand>
     {
         private readonly ITemplateRepository _templateRepository;
 
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _templateRepository = templateRepository;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteTemplate command)
+        public IEnumerable<IEvent> Handle(DeleteTemplateCommand command)
         {
             var template = _templateRepository.GetById(command.Id);
 

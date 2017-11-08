@@ -15,11 +15,11 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class UpdatePageModuleDetailsTests
     {
-        private UpdatePageModuleDetails _command;
-        private Mock<IValidator<UpdatePageModuleDetails>> _validatorMock;
+        private UpdatePageModuleDetailsCommand _command;
+        private Mock<IValidator<UpdatePageModuleDetailsCommand>> _validatorMock;
         private Page _page;
         private PageModule _pageModule;
-        private PageModuleDetailsUpdated _event;
+        private PageModuleDetailsUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Tests.Pages
             var pageId = Guid.NewGuid();
             var moduleId = Guid.NewGuid();
 
-            var addPageModuleCommand = new AddPageModule
+            var addPageModuleCommand = new AddPageModuleCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -39,11 +39,11 @@ namespace Weapsy.Domain.Tests.Pages
                 Title = "Title",
                 Zone = "Zone"
             };
-            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModule>>();
+            var addPageModuleValidatorMock = new Mock<IValidator<AddPageModuleCommand>>();
             addPageModuleValidatorMock.Setup(x => x.Validate(addPageModuleCommand)).Returns(new ValidationResult());
             _page.AddModule(addPageModuleCommand, addPageModuleValidatorMock.Object);
 
-            _command = new UpdatePageModuleDetails
+            _command = new UpdatePageModuleDetailsCommand
             {
                 SiteId = siteId,
                 PageId = pageId,
@@ -67,11 +67,11 @@ namespace Weapsy.Domain.Tests.Pages
                     }
                 }
             };
-            _validatorMock = new Mock<IValidator<UpdatePageModuleDetails>>();
+            _validatorMock = new Mock<IValidator<UpdatePageModuleDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _page.UpdateModule(_command, _validatorMock.Object);
             _pageModule = _page.PageModules.FirstOrDefault(x => x.ModuleId == moduleId);
-            _event = _page.Events.OfType<PageModuleDetailsUpdated>().SingleOrDefault();
+            _event = _page.Events.OfType<PageModuleDetailsUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]

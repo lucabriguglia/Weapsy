@@ -12,15 +12,15 @@ namespace Weapsy.Domain.Tests.Apps.Validators
     [TestFixture]
     public class AppDetailsValidatorTests
     {
-        private AppDetails _command;
-        private AppDetailsValidator<AppDetails> _validator;
+        private AppDetailsCommand _command;
+        private AppDetailsValidator<AppDetailsCommand> _validator;
         private Mock<IAppRules> _appRulesMock;
         private Mock<ISiteRules> _siteRulesMock;
 
         [SetUp]
         public void SetUp()
         {
-            _command = new AppDetails
+            _command = new AppDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -31,7 +31,7 @@ namespace Weapsy.Domain.Tests.Apps.Validators
             _appRulesMock = new Mock<IAppRules>();
             _appRulesMock.Setup(x => x.IsAppIdUnique(_command.Id)).Returns(true);
 
-            _validator = new AppDetailsValidator<AppDetails>(_appRulesMock.Object);
+            _validator = new AppDetailsValidator<AppDetailsCommand>(_appRulesMock.Object);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         {
             _appRulesMock = new Mock<IAppRules>();
             _appRulesMock.Setup(x => x.IsAppNameUnique(_command.Name, Guid.Empty)).Returns(false);
-            _validator = new AppDetailsValidator<AppDetails>(_appRulesMock.Object);
+            _validator = new AppDetailsValidator<AppDetailsCommand>(_appRulesMock.Object);
             _validator.ShouldHaveValidationErrorFor(x => x.Name, _command);
         }
 
@@ -89,7 +89,7 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         {
             _appRulesMock = new Mock<IAppRules>();
             _appRulesMock.Setup(x => x.IsAppFolderUnique(_command.Folder, Guid.Empty)).Returns(false);
-            _validator = new AppDetailsValidator<AppDetails>(_appRulesMock.Object);
+            _validator = new AppDetailsValidator<AppDetailsCommand>(_appRulesMock.Object);
             _validator.ShouldHaveValidationErrorFor(x => x.Folder, _command);
         }
 
@@ -98,7 +98,7 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         {
             _appRulesMock = new Mock<IAppRules>();
             _appRulesMock.Setup(x => x.IsAppFolderValid(_command.Folder)).Returns(false);
-            _validator = new AppDetailsValidator<AppDetails>(_appRulesMock.Object);
+            _validator = new AppDetailsValidator<AppDetailsCommand>(_appRulesMock.Object);
             _validator.ShouldHaveValidationErrorFor(x => x.Folder, _command);
         }
     }

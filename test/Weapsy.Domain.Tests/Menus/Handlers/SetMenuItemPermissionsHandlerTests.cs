@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
         [Test]
         public void Should_throw_exception_when_menu_is_not_found()
         {
-            var command = new SetMenuItemPermissions
+            var command = new SetMenuItemPermissionsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid()
@@ -32,7 +32,7 @@ namespace Weapsy.Domain.Tests.Menus.Handlers
         [Test]
         public void Should_update_menu()
         {
-            var command = new SetMenuItemPermissions
+            var command = new SetMenuItemPermissionsCommand
             {
                 SiteId = Guid.NewGuid(),
                 MenuId = Guid.NewGuid(),

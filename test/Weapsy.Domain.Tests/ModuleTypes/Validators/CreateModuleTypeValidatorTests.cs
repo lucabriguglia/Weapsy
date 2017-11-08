@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         [Test]
         public void Should_have_validation_error_when_module_type_id_already_exists()
         {
-            var command = new CreateModuleType
+            var command = new CreateModuleTypeCommand
             {
                 AppId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -37,7 +37,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         [Test]
         public void Should_have_validation_error_when_app_id_is_empty()
         {
-            var command = new CreateModuleType
+            var command = new CreateModuleTypeCommand
             {
                 AppId = Guid.Empty,
                 Id = Guid.NewGuid(),
@@ -56,7 +56,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
         [Test]
         public void Should_have_validation_error_when_app_does_not_exist()
         {
-            var command = new CreateModuleType
+            var command = new CreateModuleTypeCommand
             {
                 AppId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),

@@ -13,22 +13,22 @@ namespace Weapsy.Domain.Tests.Themes
     [TestFixture]
     public class UpdateThemeDetailsTests
     {
-        private UpdateThemeDetails _command;
-        private Mock<IValidator<UpdateThemeDetails>> _validatorMock;
+        private UpdateThemeDetailsCommand _command;
+        private Mock<IValidator<UpdateThemeDetailsCommand>> _validatorMock;
         private Theme _theme;
         private ThemeDetailsUpdated _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new UpdateThemeDetails
+            _command = new UpdateThemeDetailsCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
                 Description = "Description",
                 Folder = "folder"
             };            
-            _validatorMock = new Mock<IValidator<UpdateThemeDetails>>();
+            _validatorMock = new Mock<IValidator<UpdateThemeDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _theme = new Theme();
             _theme.UpdateDetails(_command, _validatorMock.Object);

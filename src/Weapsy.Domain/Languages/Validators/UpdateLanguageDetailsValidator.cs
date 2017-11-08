@@ -4,7 +4,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Languages.Validators
 {
-    public class UpdateLanguageDetailsValidator : LanguageDetailsValidator<UpdateLanguageDetails>
+    public class UpdateLanguageDetailsValidator : LanguageDetailsValidator<UpdateLanguageDetailsCommand>
     {
         public UpdateLanguageDetailsValidator(ILanguageRules languageRules, ISiteRules siteRules)
             : base (languageRules, siteRules)

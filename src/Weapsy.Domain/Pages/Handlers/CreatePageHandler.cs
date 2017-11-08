@@ -6,19 +6,19 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class CreatePageHandler : ICommandHandler<CreatePage>
+    public class CreatePageHandler : ICommandHandler<CreatePageCommand>
     {
         private readonly IPageRepository _pageRepository;
-        private readonly IValidator<CreatePage> _validator;
+        private readonly IValidator<CreatePageCommand> _validator;
 
         public CreatePageHandler(IPageRepository pageRepository,
-            IValidator<CreatePage> validator)
+            IValidator<CreatePageCommand> validator)
         {
             _pageRepository = pageRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreatePage command)
+        public IEnumerable<IEvent> Handle(CreatePageCommand command)
         {
             var page = Page.CreateNew(command, _validator);
 

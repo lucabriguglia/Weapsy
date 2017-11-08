@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_theme_id_already_exists()
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -35,7 +35,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_theme_name_is_empty()
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = string.Empty,
@@ -55,7 +55,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var name = "";
             for (int i = 0; i < 101; i++) name += i;
 
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = name,
@@ -72,7 +72,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_theme_name_is_not_unique()
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -94,7 +94,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var description = "";
             for (int i = 0; i < 251; i++) description += i;
 
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -111,7 +111,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_folder_is_empty()
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -131,7 +131,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
             var folder = "";
             for (int i = 0; i < 251; i++) folder += i;
 
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -148,7 +148,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_folder_is_not_valid()
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -167,7 +167,7 @@ namespace Weapsy.Domain.Tests.Themes.Validators
         [Test]
         public void Should_have_validation_error_when_folder_is_not_unique()
         {
-            var command = new CreateTheme
+            var command = new CreateThemeCommand
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",

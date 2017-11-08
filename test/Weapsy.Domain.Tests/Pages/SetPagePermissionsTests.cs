@@ -13,9 +13,9 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class SetPagePermissionsTests
     {
-        private SetPagePermissions _command;
+        private SetPagePermissionsCommand _command;
         private Page _page;
-        private PagePermissionsSet _event;
+        private PagePermissionsSetEvent _event;
 
         [SetUp]
         public void Setup()
@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Tests.Pages
 
             _page = PageFactory.Page(siteId, pageId, pageName);
 
-            _command = new SetPagePermissions
+            _command = new SetPagePermissionsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = pageId,
@@ -43,7 +43,7 @@ namespace Weapsy.Domain.Tests.Pages
 
             _page.SetPagePermissions(_command);
 
-            _event = _page.Events.OfType<PagePermissionsSet>().SingleOrDefault();
+            _event = _page.Events.OfType<PagePermissionsSetEvent>().SingleOrDefault();
         }
 
         [Test]

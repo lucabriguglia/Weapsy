@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Modules
             Title = title;
             Status = ModuleStatus.Active;
 
-            AddEvent(new ModuleCreated
+            AddEvent(new ModuleCreatedEvent
             {
                 SiteId = SiteId,
                 ModuleTypeId = ModuleTypeId,
@@ -45,14 +45,14 @@ namespace Weapsy.Domain.Modules
             return new Module(siteId, moduleTypeId, id, title);
         }
 
-        private Module(CreateModule cmd) : base(cmd.Id)
+        private Module(CreateModuleCommand cmd) : base(cmd.Id)
         {
             SiteId = cmd.SiteId;
             ModuleTypeId = cmd.ModuleTypeId;
             Title = cmd.Title;
             Status = ModuleStatus.Active;
 
-            AddEvent(new ModuleCreated
+            AddEvent(new ModuleCreatedEvent
             {
                 SiteId = SiteId,
                 ModuleTypeId = ModuleTypeId,
@@ -62,7 +62,7 @@ namespace Weapsy.Domain.Modules
             });
         }
 
-        public static Module CreateNew(CreateModule cmd, IValidator<CreateModule> validator)
+        public static Module CreateNew(CreateModuleCommand cmd, IValidator<CreateModuleCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -74,7 +74,7 @@ namespace Weapsy.Domain.Modules
             throw new NotImplementedException();
         }
 
-        public void Delete(DeleteModule cmd, IValidator<DeleteModule> validator)
+        public void Delete(DeleteModuleCommand cmd, IValidator<DeleteModuleCommand> validator)
         {
             if (Status == ModuleStatus.Deleted)
                 throw new Exception("Module already deleted");
@@ -83,7 +83,7 @@ namespace Weapsy.Domain.Modules
 
             Status = ModuleStatus.Deleted;
 
-            AddEvent(new ModuleDeleted
+            AddEvent(new ModuleDeletedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id
@@ -97,7 +97,7 @@ namespace Weapsy.Domain.Modules
 
             Status = ModuleStatus.Deleted;
 
-            AddEvent(new ModuleDeleted
+            AddEvent(new ModuleDeletedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id

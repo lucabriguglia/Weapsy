@@ -6,19 +6,19 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.EmailAccounts.Handlers
 {
-    public class CreateEmailAccountHandler : ICommandHandler<CreateEmailAccount>
+    public class CreateEmailAccountHandler : ICommandHandler<CreateEmailAccountCommand>
     {
         private readonly IEmailAccountRepository _emailAccountRepository;
-        private readonly IValidator<CreateEmailAccount> _validator;
+        private readonly IValidator<CreateEmailAccountCommand> _validator;
 
         public CreateEmailAccountHandler(IEmailAccountRepository emailAccountRepository,
-            IValidator<CreateEmailAccount> validator)
+            IValidator<CreateEmailAccountCommand> validator)
         {
             _emailAccountRepository = emailAccountRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateEmailAccount command)
+        public IEnumerable<IEvent> Handle(CreateEmailAccountCommand command)
         {
             var emailAccount = EmailAccount.CreateNew(command, _validator);
 

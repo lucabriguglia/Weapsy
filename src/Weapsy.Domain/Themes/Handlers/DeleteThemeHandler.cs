@@ -6,7 +6,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class DeleteThemeHandler : ICommandHandler<DeleteTheme>
+    public class DeleteThemeHandler : ICommandHandler<DeleteThemeCommand>
     {
         private readonly IThemeRepository _themeRepository;
 
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _themeRepository = themeRepository;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteTheme command)
+        public IEnumerable<IEvent> Handle(DeleteThemeCommand command)
         {
             var theme = _themeRepository.GetById(command.Id);
 

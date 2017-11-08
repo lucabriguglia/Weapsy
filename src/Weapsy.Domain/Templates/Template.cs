@@ -18,7 +18,7 @@ namespace Weapsy.Domain.Templates
 
         public Template() { }
 
-        private Template(CreateTemplate cmd)
+        private Template(CreateTemplateCommand cmd)
             : base(cmd.Id)
         {
             Name = cmd.Name;
@@ -27,7 +27,7 @@ namespace Weapsy.Domain.Templates
             Status = TemplateStatus.Hidden;
             Type = cmd.Type;
 
-            AddEvent(new TemplateCreated
+            AddEvent(new TemplateCreatedEvent
             {
                 AggregateRootId = Id,
                 Name = Name,
@@ -38,14 +38,14 @@ namespace Weapsy.Domain.Templates
             });
         }
 
-        public static Template CreateNew(CreateTemplate cmd, IValidator<CreateTemplate> validator)
+        public static Template CreateNew(CreateTemplateCommand cmd, IValidator<CreateTemplateCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
             return new Template(cmd);
         }
 
-        public void UpdateDetails(UpdateTemplateDetails cmd, IValidator<UpdateTemplateDetails> validator)
+        public void UpdateDetails(UpdateTemplateDetailsCommand cmd, IValidator<UpdateTemplateDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -54,7 +54,7 @@ namespace Weapsy.Domain.Templates
             ViewName = cmd.ViewName;
             Type = cmd.Type;
 
-            AddEvent(new TemplateDetailsUpdated
+            AddEvent(new TemplateDetailsUpdatedEvent
             {
                 AggregateRootId = Id,
                 Name = Name,
@@ -71,7 +71,7 @@ namespace Weapsy.Domain.Templates
 
             Status = TemplateStatus.Active;
 
-            AddEvent(new TemplateActivated
+            AddEvent(new TemplateActivatedEvent
             {
                 AggregateRootId = Id
             });
@@ -84,7 +84,7 @@ namespace Weapsy.Domain.Templates
 
             Status = TemplateStatus.Deleted;
 
-            AddEvent(new TemplateDeleted
+            AddEvent(new TemplateDeletedEvent
             {
                 AggregateRootId = Id
             });

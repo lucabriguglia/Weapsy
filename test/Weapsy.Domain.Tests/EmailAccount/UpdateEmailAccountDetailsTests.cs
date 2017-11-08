@@ -12,15 +12,15 @@ namespace Weapsy.Domain.Tests.EmailAccount
     [TestFixture]
     public class UpdateEmailAccountDetailsTests
     {
-        private UpdateEmailAccountDetails _command;
-        private Mock<IValidator<UpdateEmailAccountDetails>> _validatorMock;
+        private UpdateEmailAccountDetailsCommand _command;
+        private Mock<IValidator<UpdateEmailAccountDetailsCommand>> _validatorMock;
         private EmailAccounts.EmailAccount _emailAccount;
-        private EmailAccountDetailsUpdated _event;
+        private EmailAccountDetailsUpdatedEvent _event;
 
         [SetUp]
         public void Setup()
         {
-            _command = new UpdateEmailAccountDetails
+            _command = new UpdateEmailAccountDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
@@ -33,11 +33,11 @@ namespace Weapsy.Domain.Tests.EmailAccount
                 DefaultCredentials = true,
                 Ssl = true
             };            
-            _validatorMock = new Mock<IValidator<UpdateEmailAccountDetails>>();
+            _validatorMock = new Mock<IValidator<UpdateEmailAccountDetailsCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             _emailAccount = new EmailAccounts.EmailAccount();
             _emailAccount.UpdateDetails(_command, _validatorMock.Object);
-            _event = _emailAccount.Events.OfType<EmailAccountDetailsUpdated>().SingleOrDefault();
+            _event = _emailAccount.Events.OfType<EmailAccountDetailsUpdatedEvent>().SingleOrDefault();
         }
 
         [Test]

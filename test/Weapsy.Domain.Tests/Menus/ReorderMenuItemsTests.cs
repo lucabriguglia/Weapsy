@@ -14,8 +14,8 @@ namespace Weapsy.Domain.Tests.Menus
     [TestFixture]
     public class ReorderMenuItemsTests
     {
-        private ReorderMenuItems _command;
-        private Mock<IValidator<ReorderMenuItems>> _validatorMock;
+        private ReorderMenuItemsCommand _command;
+        private Mock<IValidator<ReorderMenuItemsCommand>> _validatorMock;
         private Menu _menu;
         private MenuItem _menuItem1;
         private MenuItem _menuItem2;
@@ -24,19 +24,19 @@ namespace Weapsy.Domain.Tests.Menus
         [SetUp]
         public void Setup()
         {
-            var createMenuCommand = new CreateMenu
+            var createMenuCommand = new CreateMenuCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = Guid.NewGuid(),
                 Name = "My Menu"
             };
 
-            var createMenuValidatorMock = new Mock<IValidator<CreateMenu>>();
+            var createMenuValidatorMock = new Mock<IValidator<CreateMenuCommand>>();
             createMenuValidatorMock.Setup(x => x.Validate(createMenuCommand)).Returns(new ValidationResult());
 
             _menu = Menu.CreateNew(createMenuCommand, createMenuValidatorMock.Object);
 
-            var addMenuItem1 = new AddMenuItem
+            var addMenuItem1 = new AddMenuItemCommand
             {
                 SiteId = _menu.SiteId,
                 MenuId = _menu.Id,
@@ -46,7 +46,7 @@ namespace Weapsy.Domain.Tests.Menus
                 Text = "Menu Item 1"
             };
 
-            var addMenuItem2 = new AddMenuItem
+            var addMenuItem2 = new AddMenuItemCommand
             {
                 SiteId = _menu.SiteId,
                 MenuId = _menu.Id,
@@ -56,7 +56,7 @@ namespace Weapsy.Domain.Tests.Menus
                 Text = "Menu Item 2"
             };
 
-            var addMenuItem3 = new AddMenuItem
+            var addMenuItem3 = new AddMenuItemCommand
             {
                 SiteId = _menu.SiteId,
                 MenuId = _menu.Id,
@@ -66,7 +66,7 @@ namespace Weapsy.Domain.Tests.Menus
                 Text = "Menu Item 3"
             };
 
-            var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItem>>();
+            var addMenuItemValidatorMock = new Mock<IValidator<AddMenuItemCommand>>();
             addMenuItemValidatorMock.Setup(x => x.Validate(addMenuItem1)).Returns(new ValidationResult());
             addMenuItemValidatorMock.Setup(x => x.Validate(addMenuItem2)).Returns(new ValidationResult());
             addMenuItemValidatorMock.Setup(x => x.Validate(addMenuItem3)).Returns(new ValidationResult());
@@ -75,21 +75,21 @@ namespace Weapsy.Domain.Tests.Menus
             _menu.AddMenuItem(addMenuItem2, addMenuItemValidatorMock.Object);
             _menu.AddMenuItem(addMenuItem3, addMenuItemValidatorMock.Object);
 
-            _command = new ReorderMenuItems
+            _command = new ReorderMenuItemsCommand
             {
                 Id = _menu.Id,
-                MenuItems = new List<ReorderMenuItems.MenuItem>
+                MenuItems = new List<ReorderMenuItemsCommand.MenuItem>
                 {
-                    new ReorderMenuItems.MenuItem
+                    new ReorderMenuItemsCommand.MenuItem
                     {
                         Id = addMenuItem1.MenuItemId
                     },
-                    new ReorderMenuItems.MenuItem
+                    new ReorderMenuItemsCommand.MenuItem
                     {
                         Id = addMenuItem3.MenuItemId,
                         ParentId = addMenuItem1.MenuItemId
                     },
-                    new ReorderMenuItems.MenuItem
+                    new ReorderMenuItemsCommand.MenuItem
                     {
                         Id = addMenuItem2.MenuItemId,
                         ParentId = addMenuItem1.MenuItemId
@@ -97,7 +97,7 @@ namespace Weapsy.Domain.Tests.Menus
                 }
             };
 
-            var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
+            var validatorMock = new Mock<IValidator<ReorderMenuItemsCommand>>();
             validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
             _menu.ReorderMenuItems(_command, validatorMock.Object);
@@ -128,18 +128,18 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_throw_exception_if_parent_menu_item_does_not_exist()
         {
-            _command = new ReorderMenuItems
+            _command = new ReorderMenuItemsCommand
             {
                 Id = _menu.Id,
-                MenuItems = new List<ReorderMenuItems.MenuItem>
+                MenuItems = new List<ReorderMenuItemsCommand.MenuItem>
                 {
-                    new ReorderMenuItems.MenuItem
+                    new ReorderMenuItemsCommand.MenuItem
                     {
                         ParentId = Guid.NewGuid()
                     }
                 }
             };
-            var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
+            var validatorMock = new Mock<IValidator<ReorderMenuItemsCommand>>();
             validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             Assert.Throws<Exception>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
         }
@@ -147,18 +147,18 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_throw_exception_if_menu_item_does_not_exist()
         {
-            _command = new ReorderMenuItems
+            _command = new ReorderMenuItemsCommand
             {
                 Id = _menu.Id,
-                MenuItems = new List<ReorderMenuItems.MenuItem>
+                MenuItems = new List<ReorderMenuItemsCommand.MenuItem>
                 {
-                    new ReorderMenuItems.MenuItem
+                    new ReorderMenuItemsCommand.MenuItem
                     {
                         Id = Guid.NewGuid()
                     }
                 }
             };
-            var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
+            var validatorMock = new Mock<IValidator<ReorderMenuItemsCommand>>();
             validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             Assert.Throws<Exception>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
         }
@@ -168,7 +168,7 @@ namespace Weapsy.Domain.Tests.Menus
         {
             var menuItem = _menu.MenuItems.FirstOrDefault(x => x.Id == _command.MenuItems.FirstOrDefault().Id);
             typeof(MenuItem).GetTypeInfo().GetProperty("Status").SetValue(menuItem, MenuItemStatus.Deleted);
-            var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
+            var validatorMock = new Mock<IValidator<ReorderMenuItemsCommand>>();
             validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
             Assert.Throws<Exception>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
         }

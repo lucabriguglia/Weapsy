@@ -18,7 +18,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
             var theme1Id = Guid.NewGuid();
             var theme2Id = Guid.NewGuid();
 
-            var command = new ReorderThemes
+            var command = new ReorderThemesCommand
             {
                 Themes = new List<Guid>
                 {
@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Tests.Themes.Handlers
         {
             var themeId = Guid.NewGuid();
 
-            var command = new ReorderThemes
+            var command = new ReorderThemesCommand
             {
                 Themes = new List<Guid>
                 {

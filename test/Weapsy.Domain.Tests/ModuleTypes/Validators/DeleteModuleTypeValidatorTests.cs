@@ -17,7 +17,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
             var moduleTypeRules = new Mock<IModuleTypeRules>();
             var validator = new DeleteModuleTypeValidator(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Id, new DeleteModuleType
+            validator.ShouldHaveValidationErrorFor(x => x.Id, new DeleteModuleTypeCommand
             {
                 Id = Guid.Empty
             });
@@ -33,7 +33,7 @@ namespace Weapsy.Domain.Tests.ModuleTypes.Validators
 
             var validator = new DeleteModuleTypeValidator(moduleTypeRules.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Id, new DeleteModuleType
+            validator.ShouldHaveValidationErrorFor(x => x.Id, new DeleteModuleTypeCommand
             {
                 Id = moduleTypeId
             });

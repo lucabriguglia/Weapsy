@@ -28,14 +28,14 @@ namespace Weapsy.Domain.Pages
 
         public Page() {}
 
-        private Page(CreatePage cmd) : base(cmd.Id)
+        private Page(CreatePageCommand cmd) : base(cmd.Id)
         {
             SiteId = cmd.SiteId;
             Status = PageStatus.Hidden;
 
             SetPageDetails(cmd);
 
-            AddEvent(new PageCreated
+            AddEvent(new PageCreatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -51,20 +51,20 @@ namespace Weapsy.Domain.Pages
             });
         }
 
-        public static Page CreateNew(CreatePage cmd, IValidator<CreatePage> validator)
+        public static Page CreateNew(CreatePageCommand cmd, IValidator<CreatePageCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
             return new Page(cmd);
         }
 
-        public void UpdateDetails(UpdatePageDetails cmd, IValidator<UpdatePageDetails> validator)
+        public void UpdateDetails(UpdatePageDetailsCommand cmd, IValidator<UpdatePageDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
             SetPageDetails(cmd);
 
-            AddEvent(new PageDetailsUpdated
+            AddEvent(new PageDetailsUpdatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -78,7 +78,7 @@ namespace Weapsy.Domain.Pages
             });
         }
 
-        private void SetPageDetails(PageDetails cmd)
+        private void SetPageDetails(PageDetailsCommand cmd)
         {
             Name = cmd.Name;
             Url = cmd.Url;
@@ -134,7 +134,7 @@ namespace Weapsy.Domain.Pages
             PageLocalisations.Add(localisation);
         }
 
-        public void AddModule(AddPageModule cmd, IValidator<AddPageModule> validator)
+        public void AddModule(AddPageModuleCommand cmd, IValidator<AddPageModuleCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -147,12 +147,12 @@ namespace Weapsy.Domain.Pages
             if (alreadyAddedPageModule != null && alreadyAddedPageModule.Status != PageModuleStatus.Deleted)
                 throw new Exception("Module already added.");
 
-            var reorderedModules = new List<PageModuleAdded.ReorderedModule>();
+            var reorderedModules = new List<PageModuleAddedEvent.ReorderedModule>();
 
             foreach (var existingPageModule in PageModules.Where(x => x.Zone == pageModule.Zone && x.SortOrder >= pageModule.SortOrder))
             {
                 existingPageModule.Reorder(existingPageModule.Zone, existingPageModule.SortOrder + 1);
-                reorderedModules.Add(new PageModuleAdded.ReorderedModule
+                reorderedModules.Add(new PageModuleAddedEvent.ReorderedModule
                 {
                     ModuleId = existingPageModule.ModuleId,
                     SortOrder = existingPageModule.SortOrder
@@ -161,7 +161,7 @@ namespace Weapsy.Domain.Pages
 
             PageModules.Add(pageModule);
 
-            AddEvent(new PageModuleAdded
+            AddEvent(new PageModuleAddedEvent
             {
                 SiteId = SiteId,
                 PageModuleId = pageModule.Id,
@@ -175,11 +175,11 @@ namespace Weapsy.Domain.Pages
             });
         }
 
-        public void ReorderPageModules(ReorderPageModules cmd, IValidator<ReorderPageModules> validator)
+        public void ReorderPageModules(ReorderPageModulesCommand cmd, IValidator<ReorderPageModulesCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
-            var reorderedPageModules = new List<PageModulesReordered.PageModule>();
+            var reorderedPageModules = new List<PageModulesReorderedEvent.PageModule>();
 
             foreach (var zone in cmd.Zones)
             {
@@ -199,7 +199,7 @@ namespace Weapsy.Domain.Pages
 
                     pageModule.Reorder(zoneName, sortOrder);
 
-                    reorderedPageModules.Add(new PageModulesReordered.PageModule
+                    reorderedPageModules.Add(new PageModulesReorderedEvent.PageModule
                     {
                         ModuleId = pageModule.ModuleId,
                         Zone = zoneName,
@@ -208,7 +208,7 @@ namespace Weapsy.Domain.Pages
                 }
             }
 
-            AddEvent(new PageModulesReordered
+            AddEvent(new PageModulesReorderedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -216,7 +216,7 @@ namespace Weapsy.Domain.Pages
             });
         }
 
-        public void UpdateModule(UpdatePageModuleDetails cmd, IValidator<UpdatePageModuleDetails> validator)
+        public void UpdateModule(UpdatePageModuleDetailsCommand cmd, IValidator<UpdatePageModuleDetailsCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -227,7 +227,7 @@ namespace Weapsy.Domain.Pages
 
             pageModule.UpdateDetails(cmd);
 
-            AddEvent(new PageModuleDetailsUpdated
+            AddEvent(new PageModuleDetailsUpdatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -235,7 +235,7 @@ namespace Weapsy.Domain.Pages
             });
         }
 
-        public void RemoveModule(RemovePageModule cmd, IValidator<RemovePageModule> validator)
+        public void RemoveModule(RemovePageModuleCommand cmd, IValidator<RemovePageModuleCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -246,7 +246,7 @@ namespace Weapsy.Domain.Pages
 
             pageModule.Delete();
 
-            AddEvent(new PageModuleRemoved
+            AddEvent(new PageModuleRemovedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -255,11 +255,11 @@ namespace Weapsy.Domain.Pages
             });
         }
 
-        public void SetPagePermissions(SetPagePermissions cmd)
+        public void SetPagePermissions(SetPagePermissionsCommand cmd)
         {
             SetPermissions(cmd.PagePermissions);
 
-            AddEvent(new PagePermissionsSet
+            AddEvent(new PagePermissionsSetEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -267,7 +267,7 @@ namespace Weapsy.Domain.Pages
             });
         }
 
-        public void SetModulePermissions(SetPageModulePermissions cmd)
+        public void SetModulePermissions(SetPageModulePermissionsCommand cmd)
         {
             var pageModule = PageModules.FirstOrDefault(x => x.Id == cmd.PageModuleId);
 
@@ -276,7 +276,7 @@ namespace Weapsy.Domain.Pages
 
             pageModule.SetPermissions(cmd.PageModulePermissions);
 
-            AddEvent(new PageModulePermissionsSet
+            AddEvent(new PageModulePermissionsSetEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
@@ -285,7 +285,7 @@ namespace Weapsy.Domain.Pages
             });
         }
 
-        public void Activate(ActivatePage cmd, IValidator<ActivatePage> validator)
+        public void Activate(ActivatePageCommand cmd, IValidator<ActivatePageCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -294,14 +294,14 @@ namespace Weapsy.Domain.Pages
 
             Status = PageStatus.Active;
 
-            AddEvent(new PageActivated
+            AddEvent(new PageActivatedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id
             });
         }
 
-        public void Hide(HidePage cmd, IValidator<HidePage> validator)
+        public void Hide(HidePageCommand cmd, IValidator<HidePageCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -313,14 +313,14 @@ namespace Weapsy.Domain.Pages
 
             Status = PageStatus.Hidden;
 
-            AddEvent(new PageHidden
+            AddEvent(new PageHiddenEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id
             });
         }
 
-        public void Delete(DeletePage cmd, IValidator<DeletePage> validator)
+        public void Delete(DeletePageCommand cmd, IValidator<DeletePageCommand> validator)
         {
             validator.ValidateCommand(cmd);
 
@@ -329,7 +329,7 @@ namespace Weapsy.Domain.Pages
 
             Status = PageStatus.Deleted;
 
-            AddEvent(new PageDeleted
+            AddEvent(new PageDeletedEvent
             {
                 SiteId = SiteId,
                 AggregateRootId = Id

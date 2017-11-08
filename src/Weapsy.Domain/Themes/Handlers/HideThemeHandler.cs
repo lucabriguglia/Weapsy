@@ -6,7 +6,7 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class HideThemeHandler : ICommandHandler<HideTheme>
+    public class HideThemeHandler : ICommandHandler<HideThemeCommand>
     {
         private readonly IThemeRepository _themeRepository;
 
@@ -15,7 +15,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _themeRepository = themeRepository;
         }
 
-        public IEnumerable<IEvent> Handle(HideTheme command)
+        public IEnumerable<IEvent> Handle(HideThemeCommand command)
         {
             var theme = _themeRepository.GetById(command.Id);
 

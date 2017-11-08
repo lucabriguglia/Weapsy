@@ -7,7 +7,7 @@ using Weapsy.Domain.Languages.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class CreatePageValidator : PageDetailsValidator<CreatePage>
+    public class CreatePageValidator : PageDetailsValidator<CreatePageCommand>
     {
         private readonly IPageRules _pageRules;
 

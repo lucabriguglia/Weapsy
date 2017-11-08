@@ -4,7 +4,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.EmailAccounts.Validators
 {
-    public class UpdateEmailAccountDetailsValidator : EmailAccountDetailsValidator<UpdateEmailAccountDetails>
+    public class UpdateEmailAccountDetailsValidator : EmailAccountDetailsValidator<UpdateEmailAccountDetailsCommand>
     {
         public UpdateEmailAccountDetailsValidator(IEmailAccountRules emailAccountRules, ISiteRules siteRules)
             : base(emailAccountRules, siteRules)

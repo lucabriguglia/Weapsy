@@ -7,7 +7,7 @@ using Weapsy.Domain.Users.Events;
 
 namespace Weapsy.Domain.Users.Handlers
 {
-    public class RemoveUserFromRoleHandler : ICommandHandlerAsync<RemoveUserFromRole>
+    public class RemoveUserFromRoleHandler : ICommandHandlerAsync<RemoveUserFromRoleCommand>
     {
         private readonly IUserRepository _userRepository;
 
@@ -16,13 +16,13 @@ namespace Weapsy.Domain.Users.Handlers
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<IEvent>> HandleAsync(RemoveUserFromRole command)
+        public async Task<IEnumerable<IEvent>> HandleAsync(RemoveUserFromRoleCommand command)
         {
             await _userRepository.RemoveFromRoleAsync(command.Id, command.RoleName);
 
             return new List<IEvent>
             {
-                new UserRemovedFromRole
+                new UserRemovedFromRoleEvent
                 {
                     AggregateRootId = command.Id,
                     RoleName = command.RoleName

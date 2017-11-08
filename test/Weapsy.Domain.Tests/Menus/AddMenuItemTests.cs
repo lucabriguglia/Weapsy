@@ -15,18 +15,18 @@ namespace Weapsy.Domain.Tests.Menus
     public class AddMenuItemTests
     {
         private Menu _menu;
-        private AddMenuItem _command;
-        private Mock<IValidator<AddMenuItem>> _validatorMock;
+        private AddMenuItemCommand _command;
+        private Mock<IValidator<AddMenuItemCommand>> _validatorMock;
         private MenuItem _menuItem;
         private MenuItemLocalisation _firstMenuItemLocalisation;
-        private MenuItemAdded _event;
+        private MenuItemAddedEvent _event;
 
         [SetUp]
         public void Setup()
         {
             _menu = new Menu();
 
-            _command = new AddMenuItem
+            _command = new AddMenuItemCommand
             {
                 SiteId = _menu.SiteId,
                 MenuId = Guid.NewGuid(),
@@ -53,7 +53,7 @@ namespace Weapsy.Domain.Tests.Menus
                 }
             };
 
-            _validatorMock = new Mock<IValidator<AddMenuItem>>();
+            _validatorMock = new Mock<IValidator<AddMenuItemCommand>>();
             _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
 
             _menu.AddMenuItem(_command, _validatorMock.Object);
@@ -62,7 +62,7 @@ namespace Weapsy.Domain.Tests.Menus
 
             _firstMenuItemLocalisation = _menuItem.MenuItemLocalisations.FirstOrDefault();
 
-            _event = _menu.Events.OfType<MenuItemAdded>().SingleOrDefault();
+            _event = _menu.Events.OfType<MenuItemAddedEvent>().SingleOrDefault();
         }
 
         [Test]

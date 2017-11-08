@@ -5,7 +5,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.EmailAccounts.Validators
 {
-    public class EmailAccountDetailsValidator<T> : BaseSiteValidator<T> where T : EmailAccountDetails
+    public class EmailAccountDetailsValidator<T> : BaseSiteValidator<T> where T : EmailAccountDetailsCommand
     {
         private readonly IEmailAccountRules _emailAccountRules;
 
@@ -42,7 +42,7 @@ namespace Weapsy.Domain.EmailAccounts.Validators
                 .When(x => x.DefaultCredentials == false);
         }
 
-        private bool HaveUniqueAddress(EmailAccountDetails cmd, string name)
+        private bool HaveUniqueAddress(EmailAccountDetailsCommand cmd, string name)
         {
             return _emailAccountRules.IsEmailAccountAddressUnique(cmd.SiteId, name);
         }

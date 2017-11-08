@@ -4,7 +4,7 @@ using Weapsy.Domain.Sites.Rules;
 
 namespace Weapsy.Domain.Pages.Validators
 {
-    public class UpdatePageModuleDetailsValidator : BaseSiteValidator<UpdatePageModuleDetails>
+    public class UpdatePageModuleDetailsValidator : BaseSiteValidator<UpdatePageModuleDetailsCommand>
     {
         private readonly IValidator<PageModuleLocalisation> _localisationValidator;
 

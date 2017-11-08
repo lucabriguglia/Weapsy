@@ -7,18 +7,18 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.EmailAccounts.Handlers
 {
-    public class DeleteEmailAccountHandler : ICommandHandler<DeleteEmailAccount>
+    public class DeleteEmailAccountHandler : ICommandHandler<DeleteEmailAccountCommand>
     {
         private readonly IEmailAccountRepository _emailAccountRepository;
-        private readonly IValidator<DeleteEmailAccount> _validator;
+        private readonly IValidator<DeleteEmailAccountCommand> _validator;
 
-        public DeleteEmailAccountHandler(IEmailAccountRepository emailAccountRepository, IValidator<DeleteEmailAccount> validator)
+        public DeleteEmailAccountHandler(IEmailAccountRepository emailAccountRepository, IValidator<DeleteEmailAccountCommand> validator)
         {
             _emailAccountRepository = emailAccountRepository;
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteEmailAccount command)
+        public IEnumerable<IEvent> Handle(DeleteEmailAccountCommand command)
         {
             var emailAccount = _emailAccountRepository.GetById(command.SiteId, command.Id);
 

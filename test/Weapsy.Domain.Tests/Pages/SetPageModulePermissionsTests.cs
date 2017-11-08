@@ -13,10 +13,10 @@ namespace Weapsy.Domain.Tests.Pages
     [TestFixture]
     public class SetPageModulePermissionsTests
     {
-        private SetPageModulePermissions _command;
+        private SetPageModulePermissionsCommand _command;
         private Page _page;
         private PageModule _pageModule;
-        private PageModulePermissionsSet _event;
+        private PageModulePermissionsSetEvent _event;
 
         [SetUp]
         public void Setup()
@@ -29,7 +29,7 @@ namespace Weapsy.Domain.Tests.Pages
             _page = PageFactory.Page(siteId, pageId, pageName, pageModuleId);
             _pageModule = _page.PageModules.FirstOrDefault(x => x.Id == pageModuleId);
 
-            _command = new SetPageModulePermissions
+            _command = new SetPageModulePermissionsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = pageId,
@@ -47,7 +47,7 @@ namespace Weapsy.Domain.Tests.Pages
 
             _page.SetModulePermissions(_command);
 
-            _event = _page.Events.OfType<PageModulePermissionsSet>().SingleOrDefault();
+            _event = _page.Events.OfType<PageModulePermissionsSetEvent>().SingleOrDefault();
         }
 
         [Test]

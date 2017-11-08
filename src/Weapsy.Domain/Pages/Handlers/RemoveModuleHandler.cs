@@ -12,17 +12,17 @@ using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class RemoveModuleHandler : ICommandHandler<RemoveModule>
+    public class RemoveModuleHandler : ICommandHandler<RemoveModuleCommand>
     {
         private readonly IModuleRepository _moduleRepository;
         private readonly IPageRepository _pageRepository;
-        private readonly IValidator<DeleteModule> _deleteModuleValidator;
-        private readonly IValidator<RemovePageModule> _removePageModuleValidator;
+        private readonly IValidator<DeleteModuleCommand> _deleteModuleValidator;
+        private readonly IValidator<RemovePageModuleCommand> _removePageModuleValidator;
 
         public RemoveModuleHandler(IModuleRepository moduleRepository, 
             IPageRepository pageRepository, 
-            IValidator<DeleteModule> deleteModuleValidator,
-            IValidator<RemovePageModule> removePageModuleValidator)
+            IValidator<DeleteModuleCommand> deleteModuleValidator,
+            IValidator<RemovePageModuleCommand> removePageModuleValidator)
         {
             _moduleRepository = moduleRepository;
             _pageRepository = pageRepository;
@@ -30,7 +30,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _removePageModuleValidator = removePageModuleValidator;
         }
 
-        public IEnumerable<IEvent> Handle(RemoveModule cmd)
+        public IEnumerable<IEvent> Handle(RemoveModuleCommand cmd)
         {
             var events = new List<IDomainEvent>();
 
@@ -44,7 +44,7 @@ namespace Weapsy.Domain.Pages.Handlers
                 if (module == null)
                     throw new Exception("Module not found");
 
-                page.RemoveModule(new RemovePageModule
+                page.RemoveModule(new RemovePageModuleCommand
                 {
                     SiteId = cmd.SiteId,
                     PageId = cmd.PageId,

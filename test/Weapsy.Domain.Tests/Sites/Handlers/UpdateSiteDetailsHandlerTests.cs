@@ -16,7 +16,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
         [Test]
         public void Should_throw_exception_when_site_is_not_found()
         {
-            var command = new UpdateSiteDetails
+            var command = new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = "url",
@@ -28,7 +28,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
             var repositoryMock = new Mock<ISiteRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId)).Returns((Site)null);
 
-            var validatorMock = new Mock<IValidator<UpdateSiteDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateSiteDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Url", "Url Error") }));
 
             var createSiteHandler = new UpdateSiteDetailsHandler(repositoryMock.Object, validatorMock.Object);
@@ -39,7 +39,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
         [Test]
         public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new UpdateSiteDetails
+            var command = new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = string.Empty,
@@ -51,7 +51,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
             var repositoryMock = new Mock<ISiteRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId)).Returns(new Site());
 
-            var validatorMock = new Mock<IValidator<UpdateSiteDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateSiteDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Url", "Url Error") }));
 
             var createSiteHandler = new UpdateSiteDetailsHandler(repositoryMock.Object, validatorMock.Object);
@@ -62,7 +62,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
         [Test]
         public void Should_validate_command_and_update_site()
         {
-            var command = new UpdateSiteDetails
+            var command = new UpdateSiteDetailsCommand
             {
                 SiteId = Guid.NewGuid(),
                 Url = "url",
@@ -74,7 +74,7 @@ namespace Weapsy.Domain.Tests.Sites.Handlers
             var repositoryMock = new Mock<ISiteRepository>();
             repositoryMock.Setup(x => x.GetById(command.SiteId)).Returns(new Site());
 
-            var validatorMock = new Mock<IValidator<UpdateSiteDetails>>();
+            var validatorMock = new Mock<IValidator<UpdateSiteDetailsCommand>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createSiteHandler = new UpdateSiteDetailsHandler(repositoryMock.Object, validatorMock.Object);

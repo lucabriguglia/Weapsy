@@ -28,7 +28,7 @@ namespace Weapsy.Domain.Tests.Pages.Validators
             var localisationValidatorMock = new Mock<IValidator<PageLocalisation>>();
             var validator = new CreatePageValidator(pageRulesMock.Object, siteRulesMock.Object, languageRulesMock.Object, localisationValidatorMock.Object);
 
-            validator.ShouldHaveValidationErrorFor(x => x.Id, new CreatePage
+            validator.ShouldHaveValidationErrorFor(x => x.Id, new CreatePageCommand
             {
                 SiteId = Guid.NewGuid(),
                 Id = id,
