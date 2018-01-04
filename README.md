@@ -16,8 +16,7 @@ For any queries please visit my LinkedIn profile where you can find all my conta
 
 # Weapsy.Mediator
 
-I'm creating a separate mediator library that will be used in the CMS once completed with the logic for domain and event sourcing:
-https://github.com/Weapsy/Weapsy.Mediator
+I have created a separate mediator library that will be used in the CMS: https://github.com/Weapsy/Weapsy.Mediator
 
 # Build Status
 
