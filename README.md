@@ -2,9 +2,9 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ptwkjgk7gwledwh3/branch/master?svg=true)](https://ci.appveyor.com/project/lucabriguglia/weapsy/branch/master)
 
-[![Join the chat at https://gitter.im/weapsy](https://badges.gitter.im/weapsy.svg)](https://gitter.im/weapsy/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-
 Weapsy is an ASP.NET Core CMS based on DDD and CQRS.
+
+[![Join the chat at https://gitter.im/weapsy](https://badges.gitter.im/weapsy.svg)](https://gitter.im/weapsy/Lobby?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
 
 # Demo
 
