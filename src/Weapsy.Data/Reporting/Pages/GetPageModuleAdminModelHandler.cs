@@ -8,7 +8,9 @@ using Weapsy.Reporting.Pages.Queries;
 using System.Linq;
 using Weapsy.Reporting.Roles.Queries;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using Weapsy.Data.Entities;
+using Weapsy.Data.TempIdentity;
 using Weapsy.Domain.Roles.DefaultRoles;
 using Weapsy.Framework.Queries;
 
@@ -76,7 +78,7 @@ namespace Weapsy.Data.Reporting.Pages
                     });
                 }
 
-                foreach (var role in await _queryDispatcher.DispatchAsync<GetAllRoles, IEnumerable<Role>>(new GetAllRoles()))
+                foreach (var role in await _queryDispatcher.DispatchAsync<GetAllRoles, IEnumerable<ApplicationRole>>(new GetAllRoles()))
                 {
                     var pageModulePermission = new PageModulePermissionModel
                     {

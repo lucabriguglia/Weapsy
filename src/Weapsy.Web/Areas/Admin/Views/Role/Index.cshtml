@@ -1,0 +1,34 @@
+﻿@using Weapsy.Data.Entities
+@using Weapsy.Data.TempIdentity
+@model IEnumerable<Weapsy.Data.TempIdentity.ApplicationRole>
+
+@{
+    ViewBag.Title = "Roles";
+}
+
+@section scripts{
+    <script src="~/js/admin/roles/index.js"></script>
+}
+
+<div class="page-header">
+    <h1>Roles</h1>
+</div>
+
+<ul id="roles" class="list-group">
+@foreach (var role in Model)
+{
+    <li id="@role.Id" class="list-group-item">
+        <span>@role.Name</span>
+        <div class="pull-right">
+            <a href="/admin/role/edit/@role.Id" class="glyphicon glyphicon-edit" title="Edit"></a>
+            <a href="#" class="glyphicon glyphicon-remove delete-role" data-toggle="modal" data-target="#confirm-delete" data-id="@role.Id" title="Delete"></a>
+        </div>
+    </li>
+}
+</ul>
+
+<div>
+    <a href="@Url.Action("Create", "Role", new { area = "Admin" })" class="btn btn-primary" title="New Role">New Role</a>
+</div>
+
+@await Html.PartialAsync("_ConfirmDelete")

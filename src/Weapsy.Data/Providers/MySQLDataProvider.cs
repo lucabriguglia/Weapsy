@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MySQL.Data.EntityFrameworkCore.Extensions;
 using Weapsy.Data.Configuration;
 
 namespace Weapsy.Data.Providers

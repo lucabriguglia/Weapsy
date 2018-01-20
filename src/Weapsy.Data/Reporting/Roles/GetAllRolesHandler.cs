@@ -5,39 +5,40 @@ using System.Collections.Generic;
 using Weapsy.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
+using Weapsy.Data.TempIdentity;
 using Weapsy.Domain.Roles.DefaultRoles;
 using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Roles
 {
-    public class GetAllRolesHandler : IQueryHandlerAsync<GetAllRoles, IEnumerable<Role>>
+    public class GetAllRolesHandler : IQueryHandlerAsync<GetAllRoles, IEnumerable<ApplicationRole>>
     {
-        private readonly RoleManager<Role> _roleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IMapper _mapper;
 
-        public GetAllRolesHandler(RoleManager<Role> roleManager, IMapper mapper)
+        public GetAllRolesHandler(RoleManager<ApplicationRole> roleManager, IMapper mapper)
         {
             _roleManager = roleManager;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Role>> RetrieveAsync(GetAllRoles query)
+        public async Task<IEnumerable<ApplicationRole>> RetrieveAsync(GetAllRoles query)
         {
             var result = _roleManager.Roles.ToList();
 
-            result.Add(new Role
+            result.Add(new ApplicationRole
             {
                 Id = Everyone.Id,
                 Name = Everyone.Name
             });
 
-            result.Add(new Role
+            result.Add(new ApplicationRole
             {
                 Id = Registered.Id,
                 Name = Registered.Name
             });
 
-            result.Add(new Role
+            result.Add(new ApplicationRole
             {
                 Id = Anonymous.Id,
                 Name = Anonymous.Name

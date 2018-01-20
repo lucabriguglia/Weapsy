@@ -11,14 +11,14 @@ namespace Weapsy.Data.Reporting.Roles
 {
     public class GetRoleNamesFromRoleIdsHandler : IQueryHandlerAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>
     {
-        private readonly RoleManager<Role> _roleManager;
-        private readonly IMapper _mapper;
+        //private readonly RoleManager<ApplicationRole> _roleManager;
+        //private readonly IMapper _mapper;
 
-        public GetRoleNamesFromRoleIdsHandler(RoleManager<Role> roleManager, IMapper mapper)
-        {
-            _roleManager = roleManager;
-            _mapper = mapper;
-        }
+        //public GetRoleNamesFromRoleIdsHandler(RoleManager<ApplicationRole> roleManager, IMapper mapper)
+        //{
+        //    _roleManager = roleManager;
+        //    _mapper = mapper;
+        //}
 
         public async Task<IEnumerable<string>> RetrieveAsync(GetRoleNamesFromRoleIds query)
         {
@@ -38,15 +38,15 @@ namespace Weapsy.Data.Reporting.Roles
                 {
                     result.Add(Anonymous.Name);
                 }
-                else
-                {
-                    var role = await _roleManager.FindByIdAsync(roleId.ToString());
+                //else
+                //{
+                //    var role = await _roleManager.FindByIdAsync(roleId.ToString());
 
-                    if (role != null)
-                    {
-                        result.Add(role.Name);
-                    }
-                }
+                //    if (role != null)
+                //    {
+                //        result.Add(role.Name);
+                //    }
+                //}
             }
 
             return result;

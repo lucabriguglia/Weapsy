@@ -25,7 +25,7 @@ namespace Weapsy.Data.Reporting.Users
             {
                 var model = new UserAdminModel
                 {
-                    AllRoles = await context.Roles.Select(x => x.Name).ToListAsync()
+                    //AllRoles = await context.Roles.Select(x => x.Name).ToListAsync()
                 };
 
                 return model;

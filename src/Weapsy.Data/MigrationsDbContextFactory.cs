@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Weapsy.Data
 {
-    public class MigrationsDbContextFactory : IDbContextFactory<WeapsyDbContext>
+    public class MigrationsDbContextFactory : IDesignTimeDbContextFactory<WeapsyDbContext>
     {
-        public WeapsyDbContext Create(DbContextFactoryOptions options)
+        public WeapsyDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<WeapsyDbContext>();
             builder.UseSqlServer("UsedForMigrationsOnlyUntilClassLibraryBugIsFixed");

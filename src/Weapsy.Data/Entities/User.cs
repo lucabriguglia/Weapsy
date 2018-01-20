@@ -1,11 +1,13 @@
 ﻿using System;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Weapsy.Domain.Users;
 
 namespace Weapsy.Data.Entities
 {
-    public class User : IdentityUser<Guid>
+    public class User
     {
+        public Guid Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
         public string DisplayName { get; set; }
         public string Prefix { get; set; }
         public string FirstName { get; set; }

@@ -1,0 +1,40 @@
+﻿@using Weapsy.Data.TempIdentity
+@model Weapsy.Data.TempIdentity.ApplicationRole
+
+@{
+    ViewBag.Title = "Edit Role";
+}
+
+@section scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/js/admin/roles/shared.js"></script>
+    <script src="~/js/admin/roles/edit.js"></script>
+}
+
+<div class="page-header">
+    <h1>Edit Role</h1>
+</div>
+
+<form id="editRoleForm" name="editRoleForm" data-ajax="true" data-ajax-method="PUT" data-ajax-url="/Admin/Role/Update" data-ajax-loading="#savingRole" data-ajax-success="weapsy.admin.roles.redirectToIndex" class="form-horizontal validate-form" role="form">
+    <input type="hidden" id="id" name="id" value="@Model.Id" />
+
+    @await Html.PartialAsync("_Role")
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="save" type="submit" class="btn btn-primary" title="Save">Save</button>
+            <a id="deleteRole" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" title="Delete">Delete</a>
+            <a href="@Url.Action("Index", "Role", new { area = "Admin" })" class="btn btn-default" title="Cancel">Cancel</a>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <span id="savingRole" style="display:none;">
+                Saving...
+            </span>
+        </div>
+    </div>
+</form>
+
+@await Html.PartialAsync("_ConfirmDelete")

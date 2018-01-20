@@ -1,11 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Weapsy.Data.Entities;
 
 namespace Weapsy.Data
 {
-    public class WeapsyDbContext : IdentityDbContext<User, Role, Guid>
+    public class WeapsyDbContext : DbContext
     {
         public WeapsyDbContext(DbContextOptions<WeapsyDbContext> options)
             : base(options)
@@ -86,24 +84,6 @@ namespace Weapsy.Data
 
             builder.Entity<User>()
                 .ToTable("User");
-
-            builder.Entity<Role>()
-                .ToTable("Role");
-
-            builder.Entity<IdentityUserClaim<Guid>>()
-                .ToTable("UserClaim");
-
-            builder.Entity<IdentityUserRole<Guid>>()
-                .ToTable("UserRole");
-
-            builder.Entity<IdentityUserLogin<Guid>>()
-                .ToTable("UserLogin");
-
-            builder.Entity<IdentityUserToken<Guid>>()
-                .ToTable("UserToken");
-
-            builder.Entity<IdentityRoleClaim<Guid>>()
-                .ToTable("RoleClaim");
         }
 
         public DbSet<App> Apps { get; set; }
@@ -126,5 +106,6 @@ namespace Weapsy.Data
         public DbSet<Site> Sites { get; set; }
         public DbSet<SiteLocalisation> SiteLocalisations { get; set; }
         public DbSet<Theme> Themes { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

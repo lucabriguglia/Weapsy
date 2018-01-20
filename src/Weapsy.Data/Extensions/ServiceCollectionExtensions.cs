@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Data.Entities;
@@ -10,7 +11,7 @@ namespace Weapsy.Data.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddEntityFramework(this IServiceCollection services, IConfigurationRoot configuration)
+        public static IServiceCollection AddEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
             var dataProviderConfig = configuration.GetSection("Data")["Provider"];
             var connectionStringConfig = configuration.GetConnectionString("DefaultConnection");
@@ -21,10 +22,6 @@ namespace Weapsy.Data.Extensions
             var dataProvider = dataProviders.SingleOrDefault(x => x.Provider.ToString() == dataProviderConfig);
 
             dataProvider.RegisterDbContext(services, connectionStringConfig);
-
-            services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<WeapsyDbContext, Guid>()
-                .AddDefaultTokenProviders();
 
             return services;
         }

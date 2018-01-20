@@ -1,0 +1,15 @@
+﻿@using Weapsy.Data.Entities
+@using Weapsy.Data.TempIdentity
+@model Weapsy.Data.TempIdentity.ApplicationRole
+
+<div class="form-group has-feedback">
+    <label for="name" class="col-md-2 control-label">Name</label>
+    <div class="col-md-4">
+        <input id="originalName" type="hidden" value="@Model.Name" />
+        <input id="name" name="name" type="text" class="form-control" placeholder="Enter Name" value="@Model.Name">
+        <i class="form-control-feedback glyphicon"></i>
+    </div>
+    <div class="col-md-6 help-block">
+        <label id="name-error" for="name" class="text-danger" style="display:none;"></label>
+    </div>
+</div>

@@ -4,17 +4,18 @@ using Weapsy.Reporting.Users;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Weapsy.Data.Entities;
+using Weapsy.Data.TempIdentity;
 using Weapsy.Framework.Queries;
 
 namespace Weapsy.Data.Reporting.Users
 {
     public class GetUserRolesViewModelHandler : IQueryHandlerAsync<GetUserRolesViewModel, UserRolesViewModel>
     {
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public GetUserRolesViewModelHandler(UserManager<User> userManager,
-            RoleManager<Role> roleManager)
+        public GetUserRolesViewModelHandler(UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
