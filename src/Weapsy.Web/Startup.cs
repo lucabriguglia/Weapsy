@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region Usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -39,8 +41,11 @@ using Weapsy.Services.Installation;
 using Weapsy.Web.Extensions;
 using Weapsy.Web.Services;
 
+#endregion
+
 namespace Weapsy.Web
 {
+    // TODO: Mess to be cleaned up. Everything will be moved to Weapsy.Mvc project.
     public class Startup
     {
         public Startup(IConfiguration configuration)
