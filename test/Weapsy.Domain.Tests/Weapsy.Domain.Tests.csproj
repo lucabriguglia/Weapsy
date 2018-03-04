@@ -9,11 +9,11 @@
     <PackageReference Include="Moq" Version="4.8.1" />
     <PackageReference Include="NUnit" Version="3.9.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
+    <PackageReference Include="Weapsy.Cqrs" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Weapsy.Domain\Weapsy.Domain.csproj" />
-    <ProjectReference Include="..\..\src\Weapsy.Framework\Weapsy.Framework.csproj" />
     <ProjectReference Include="..\Weapsy.Tests.Factories\Weapsy.Tests.Factories.csproj" />
   </ItemGroup>
 

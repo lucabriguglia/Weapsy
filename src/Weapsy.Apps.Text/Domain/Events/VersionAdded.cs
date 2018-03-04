@@ -1,5 +1,7 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
+using System.Collections.Generic;
+using Weapsy.Apps.Text.Domain.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Apps.Text.Domain.Events
 {
@@ -11,5 +13,14 @@ namespace Weapsy.Apps.Text.Domain.Events
         public string Content { get; set; }
         public string Description { get; set; }
         public TextVersionStatus Status { get; set; }
+
+        public IList<AddVersion.VersionLocalisation> VersionLocalisations { get; set; } = new List<AddVersion.VersionLocalisation>();
+
+        public class VersionLocalisation
+        {
+            public Guid LanguageId { get; set; }
+            public string LanguageName { get; set; }
+            public string Content { get; set; }
+        }
     }
 }

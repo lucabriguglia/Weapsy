@@ -3,9 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Cqrs;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.Sites;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Sites.Queries;
 
@@ -16,12 +17,12 @@ namespace Weapsy.Data.Reporting.Sites
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _queryDispatcher;
 
         public GetSiteInfoHandler(IContextFactory contextFactory, 
             IMapper mapper, 
             ICacheManager cacheManager, 
-            IQueryDispatcher queryDispatcher)
+            IDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Languages.Rules;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Languages;
@@ -18,32 +17,29 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class LanguageController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly ILanguageRules _languageRules;
 
-        public LanguageController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public LanguageController(IDispatcher dispatcher,
             ILanguageRules languageRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _languageRules = languageRules;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive {SiteId = SiteId});
+            var model = await _dispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive {SiteId = SiteId});
             return Ok(model);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var languages = await _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = SiteId });
+            var languages = await _dispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = SiteId });
 
             var language = languages.FirstOrDefault(x => x.Id == id);
 
@@ -57,7 +53,7 @@ namespace Weapsy.Web.Api
         public async Task<IActionResult> Post([FromBody] CreateLanguage model)
         {
             model.SiteId = SiteId;
-            await _commandSender.SendAsync<CreateLanguage, Language>(model);
+            await _dispatcher.SendAndPublishAsync<CreateLanguage, Language>(model);
             return new NoContentResult();
         }
 
@@ -66,7 +62,7 @@ namespace Weapsy.Web.Api
         public IActionResult UpdateDetails([FromBody] UpdateLanguageDetails model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<UpdateLanguageDetails, Language>(model);
+            _dispatcher.SendAndPublish<UpdateLanguageDetails, Language>(model);
             return new NoContentResult();
         }
 
@@ -74,11 +70,15 @@ namespace Weapsy.Web.Api
         [Route("reorder")]
         public IActionResult ReorderLanguages([FromBody] List<Guid> model)
         {
-            _commandSender.Send<ReorderLanguages, Language>(new ReorderLanguages
+            for (var i = 0; i < model.Count; i++)
             {
-                SiteId = SiteId,
-                Languages = model
-            });
+                _dispatcher.SendAndPublish<ReorderLanguage, Language>(new ReorderLanguage
+                {
+                    AggregateRootId = model[i],
+                    SiteId = SiteId,
+                    Order = i + 1
+                });
+            }
             return new NoContentResult();
         }
 
@@ -86,7 +86,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/activate")]
         public IActionResult Activate(Guid id)
         {
-            _commandSender.Send<ActivateLanguage, Language>(new ActivateLanguage
+            _dispatcher.SendAndPublish<ActivateLanguage, Language>(new ActivateLanguage
             {
                 SiteId = SiteId,
                 Id = id
@@ -98,7 +98,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/hide")]
         public IActionResult Hide(Guid id)
         {
-            _commandSender.Send<HideLanguage, Language>(new HideLanguage
+            _dispatcher.SendAndPublish<HideLanguage, Language>(new HideLanguage
             {
                 SiteId = SiteId,
                 Id = id
@@ -109,7 +109,7 @@ namespace Weapsy.Web.Api
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _commandSender.Send<DeleteLanguage, Language>(new DeleteLanguage
+            _dispatcher.SendAndPublish<DeleteLanguage, Language>(new DeleteLanguage
             {
                 SiteId = SiteId,
                 Id = id
@@ -169,7 +169,7 @@ namespace Weapsy.Web.Api
         [Route("admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var models = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<LanguageAdminModel>>(new GetAllForAdmin { SiteId = SiteId });
+            var models = await _dispatcher.GetResultAsync<GetAllForAdmin, IEnumerable<LanguageAdminModel>>(new GetAllForAdmin { SiteId = SiteId });
             return Ok(models);
         }
 
@@ -177,7 +177,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, LanguageAdminModel>(new GetForAdmin { SiteId = SiteId, Id = id});
+            var model = await _dispatcher.GetResultAsync<GetForAdmin, LanguageAdminModel>(new GetForAdmin { SiteId = SiteId, Id = id});
 
             if (model == null)
                 return NotFound();

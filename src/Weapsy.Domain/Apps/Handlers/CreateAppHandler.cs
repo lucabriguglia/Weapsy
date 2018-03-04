@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using FluentValidation;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Apps.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Apps.Handlers
 {
-    public class CreateAppHandler : ICommandHandler<CreateApp>
+    public class CreateAppHandler : ICommandHandlerWithAggregate<CreateApp>
     {
         private readonly IAppRepository _appRepository;
         private readonly IValidator<CreateApp> _validator;
@@ -18,13 +17,13 @@ namespace Weapsy.Domain.Apps.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateApp command)
+        public IAggregateRoot Handle(CreateApp command)
         {
             var app = App.CreateNew(command, _validator);
 
             _appRepository.Create(app);
 
-            return app.Events;
+            return app;
         }
     }
 }

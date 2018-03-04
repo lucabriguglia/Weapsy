@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Pages.Events
@@ -11,7 +12,7 @@ namespace Weapsy.Domain.Pages.Events
 
         public class PageModule
         {
-            public Guid ModuleId { get; set; }
+            public Guid PageModuleId { get; set; }
             public string Zone { get; set; }
             public int SortOrder { get; set; }
         }

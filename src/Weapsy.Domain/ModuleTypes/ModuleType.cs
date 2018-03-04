@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentValidation;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.ModuleTypes.Commands;
 using Weapsy.Domain.ModuleTypes.Events;
@@ -8,7 +9,7 @@ namespace Weapsy.Domain.ModuleTypes
 {
     public class ModuleType : AggregateRoot
     {
-        public Guid AppId { get; private set; }
+        public Guid? AppId { get; private set; }
         public string Name { get; private set; }
         public string Title { get; private set; }
         public string Description { get; private set; }
@@ -22,22 +23,18 @@ namespace Weapsy.Domain.ModuleTypes
 
         private ModuleType(CreateModuleType cmd) : base(cmd.Id)
         {
-            AppId = cmd.AppId;
-            Status = ModuleTypeStatus.Active;
-            UpdateDetails(cmd);
-
             AddEvent(new ModuleTypeCreated
             {
-                AppId = AppId,
+                AppId = cmd.AppId,
                 AggregateRootId = Id,
-                Name = Name,
-                Title = Title,
-                Description = Description,
-                ViewType = ViewType,
-                ViewName = ViewName,
-                EditType = EditType,
-                EditUrl = EditUrl,
-                Status = Status
+                Name = cmd.Name,
+                Title = cmd.Title,
+                Description = cmd.Description,
+                ViewType = cmd.ViewType,
+                ViewName = cmd.ViewName,
+                EditType = cmd.EditType,
+                EditUrl = cmd.EditUrl,
+                Status = ModuleTypeStatus.Active
             });
         }
 
@@ -52,30 +49,17 @@ namespace Weapsy.Domain.ModuleTypes
         {
             validator.ValidateCommand(cmd);
 
-            UpdateDetails(cmd);
-
             AddEvent(new ModuleTypeDetailsUpdated
             {
                 AggregateRootId = Id,
-                Name = Name,
-                Title = Title,
-                Description = Description,
-                ViewType = ViewType,
-                ViewName = ViewName,
-                EditType = EditType,
-                EditUrl = EditUrl,
+                Name = cmd.Name,
+                Title = cmd.Title,
+                Description = cmd.Description,
+                ViewType = cmd.ViewType,
+                ViewName = cmd.ViewName,
+                EditType = cmd.EditType,
+                EditUrl = cmd.EditUrl
             });
-        }
-
-        private void UpdateDetails(ModuleTypeDetails cmd)
-        {
-            Name = cmd.Name;
-            Title = cmd.Title;
-            Description = cmd.Description;
-            ViewType = cmd.ViewType;
-            ViewName = cmd.ViewName;
-            EditType = cmd.EditType;
-            EditUrl = cmd.EditUrl;
         }
 
         public void Delete(DeleteModuleType cmd, IValidator<DeleteModuleType> validator)
@@ -84,8 +68,6 @@ namespace Weapsy.Domain.ModuleTypes
                 throw new Exception("Module type already deleted.");
 
             validator.ValidateCommand(cmd);
-
-            Status = ModuleTypeStatus.Deleted;
 
             AddEvent(new ModuleTypeDeleted
             {
@@ -96,6 +78,36 @@ namespace Weapsy.Domain.ModuleTypes
         public void Restore()
         {
             throw new NotImplementedException();
+        }
+
+        private void Apply(ModuleTypeCreated @event)
+        {
+            Id = @event.AggregateRootId;
+            AppId = @event.AppId;
+            Status = @event.Status;
+            Name = @event.Name;
+            Title = @event.Title;
+            Description = @event.Description;
+            ViewType = @event.ViewType;
+            ViewName = @event.ViewName;
+            EditType = @event.EditType;
+            EditUrl = @event.EditUrl;
+        }
+
+        private void Apply(ModuleTypeDetailsUpdated @event)
+        {
+            Name = @event.Name;
+            Title = @event.Title;
+            Description = @event.Description;
+            ViewType = @event.ViewType;
+            ViewName = @event.ViewName;
+            EditType = @event.EditType;
+            EditUrl = @event.EditUrl;
+        }
+
+        private void Apply(ModuleTypeDeleted @event)
+        {
+            Status = ModuleTypeStatus.Deleted;
         }
     }
 }

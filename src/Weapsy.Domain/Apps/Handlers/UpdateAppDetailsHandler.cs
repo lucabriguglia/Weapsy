@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Domain.Apps.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Apps.Handlers
 {
-    public class UpdateAppDetailsHandler : ICommandHandler<UpdateAppDetails>
+    public class UpdateAppDetailsHandler : ICommandHandlerWithAggregate<UpdateAppDetails>
     {
         private readonly IAppRepository _repository;
         private readonly IValidator<UpdateAppDetails> _validator;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Apps.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateAppDetails cmd)
+        public IAggregateRoot Handle(UpdateAppDetails cmd)
         {
             var app = _repository.GetById(cmd.Id);
 
@@ -29,7 +28,7 @@ namespace Weapsy.Domain.Apps.Handlers
 
             _repository.Update(app);
 
-            return app.Events;
+            return app;
         }
     }
 }

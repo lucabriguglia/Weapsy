@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Framework.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Sites.Commands
 {
-    public class UpdateSiteDetails : ICommand
+    public class UpdateSiteDetails : DomainCommand
     {
         public Guid SiteId { get; set; }
         public string Url { get; set; }

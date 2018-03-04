@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Templates.Commands;
 using Weapsy.Domain.Templates.Events;
@@ -18,23 +19,16 @@ namespace Weapsy.Domain.Templates
 
         public Template() { }
 
-        private Template(CreateTemplate cmd)
-            : base(cmd.Id)
+        private Template(CreateTemplate cmd) : base(cmd.Id)
         {
-            Name = cmd.Name;
-            Description = cmd.Description;
-            ViewName = cmd.ViewName;
-            Status = TemplateStatus.Hidden;
-            Type = cmd.Type;
-
             AddEvent(new TemplateCreated
             {
                 AggregateRootId = Id,
-                Name = Name,
-                Description = Description,
-                ViewName = ViewName,
-                Status = Status,
-                Type = Type
+                Name = cmd.Name,
+                Description = cmd.Description,
+                ViewName = cmd.ViewName,
+                Status = TemplateStatus.Hidden,
+                Type = cmd.Type
             });
         }
 
@@ -49,18 +43,13 @@ namespace Weapsy.Domain.Templates
         {
             validator.ValidateCommand(cmd);
 
-            Name = cmd.Name;
-            Description = cmd.Description;
-            ViewName = cmd.ViewName;
-            Type = cmd.Type;
-
             AddEvent(new TemplateDetailsUpdated
             {
                 AggregateRootId = Id,
-                Name = Name,
-                Description = Description,
-                ViewName = ViewName,
-                Type = Type
+                Name = cmd.Name,
+                Description = cmd.Description,
+                ViewName = cmd.ViewName,
+                Type = cmd.Type
             });
         }
 
@@ -68,8 +57,6 @@ namespace Weapsy.Domain.Templates
         {
             if (Status == TemplateStatus.Active)
                 throw new Exception("Template already active.");
-
-            Status = TemplateStatus.Active;
 
             AddEvent(new TemplateActivated
             {
@@ -82,8 +69,6 @@ namespace Weapsy.Domain.Templates
             if (Status == TemplateStatus.Deleted)
                 throw new Exception("Template already deleted.");
 
-            Status = TemplateStatus.Deleted;
-
             AddEvent(new TemplateDeleted
             {
                 AggregateRootId = Id
@@ -93,6 +78,33 @@ namespace Weapsy.Domain.Templates
         public void Restore()
         {
             throw new NotImplementedException();
+        }
+
+        private void Apply(TemplateActivated @event)
+        {
+            Status = TemplateStatus.Active;
+        }
+
+        private void Apply(TemplateCreated @event)
+        {
+            Name = @event.Name;
+            Description = @event.Description;
+            ViewName = @event.ViewName;
+            Status = @event.Status;
+            Type = @event.Type;
+        }
+
+        private void Apply(TemplateDeleted @event)
+        {
+            Status = TemplateStatus.Deleted;
+        }
+
+        private void Apply(TemplateDetailsUpdated @event)
+        {
+            Name = @event.Name;
+            Description = @event.Description;
+            ViewName = @event.ViewName;
+            Type = @event.Type;
         }
     }
 }

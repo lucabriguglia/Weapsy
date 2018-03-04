@@ -26,7 +26,7 @@ namespace Weapsy.Domain.Menus.Validators
             _localisationValidator = localisationValidator;
 
             RuleFor(c => c.PageId)
-                .NotEmpty().WithMessage("Page is required")
+                .NotEmpty().WithMessage("Page is required.")
                 .Must(BeAnExistingPage).WithMessage("Page does not exist.")
                 .When(c => c.Type == MenuItemType.Page);
 

@@ -1,9 +1,8 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Apps.Text.Domain.Rules
 {
-    public interface ITextModuleRules : IRules<TextModule>
+    public interface ITextModuleRules
     {
         bool IsTextModuleIdUnique(Guid id);
     }

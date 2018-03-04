@@ -216,13 +216,13 @@ namespace Weapsy.Domain.Tests.Pages
         [Test]
         public void Should_set_page_localisations_in_page_created_event()
         {
-            Assert.AreEqual(_page.PageLocalisations, _event.PageLocalisations);
+            Assert.AreEqual(_command.PageLocalisations, _event.PageLocalisations);
         }
 
         [Test]
         public void Should_set_page_permissions_in_page_created_event()
         {
-            Assert.AreEqual(_page.PagePermissions, _event.PagePermissions);
+            Assert.AreEqual(_command.PagePermissions, _event.PagePermissions);
         }
 
         [Test]

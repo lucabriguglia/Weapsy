@@ -5,6 +5,7 @@ using Weapsy.Framework.Domain;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus.Events;
 using System.Linq;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Menus
 {
@@ -21,16 +22,12 @@ namespace Weapsy.Domain.Menus
 
         private Menu(CreateMenu cmd) : base(cmd.Id)
         {
-            SiteId = cmd.SiteId;
-            Name = cmd.Name;
-            Status = MenuStatus.Active;
-
             AddEvent(new MenuCreated
             {
-                SiteId = SiteId,
+                SiteId = cmd.SiteId,
                 AggregateRootId = Id,
-                Name = Name,
-                Status = Status
+                Name = cmd.Name,
+                Status = MenuStatus.Active
             });
         }
 
@@ -54,15 +51,14 @@ namespace Weapsy.Domain.Menus
             validator.ValidateCommand(cmd);
 
             var sortOrder = MenuItems.Count(x => x.ParentId == Guid.Empty) + 1;
-
-            MenuItems.Add(new MenuItem(cmd, sortOrder));
+            var newMenuItem = new MenuItem(cmd, sortOrder);;
 
             AddEvent(new MenuItemAdded
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
                 Name = Name,
-                MenuItem = MenuItems.Single(x => x.Id == cmd.MenuItemId)
+                MenuItem = newMenuItem
             });
         }
 
@@ -75,14 +71,12 @@ namespace Weapsy.Domain.Menus
 
             validator.ValidateCommand(cmd);
 
-            menuItem.Update(cmd);
-
             AddEvent(new MenuItemUpdated
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
-                Name = Name,
-                MenuItem = menuItem
+                MenuName = Name,
+                MenuItem = new MenuItem(cmd, menuItem.SortOrder)
             });
         }
 
@@ -99,7 +93,7 @@ namespace Weapsy.Domain.Menus
                 var parentId = group.Key;
 
                 if (parentId != Guid.Empty && MenuItems.FirstOrDefault(x => x.Id == parentId) == null)
-                    throw new Exception("Parent menu item not found.");
+                    throw new ApplicationException("Parent menu item not found.");
 
                 var items = group.ToList();
 
@@ -111,12 +105,10 @@ namespace Weapsy.Domain.Menus
                     var menuItem = MenuItems.FirstOrDefault(x => x.Id == id);
 
                     if (menuItem == null || menuItem.Status == MenuItemStatus.Deleted)
-                        throw new Exception("Menu item not found.");
+                        throw new ApplicationException("Menu item not found.");
 
                     if (menuItem.ParentId == parentId && menuItem.SortOrder == sortOrder)
                         continue;
-
-                    menuItem.Reorder(parentId, sortOrder);
 
                     reorderedMenuItems.Add(new MenuItemsReordered.MenuItem
                     {
@@ -145,8 +137,6 @@ namespace Weapsy.Domain.Menus
             if (menuItemToRemove == null || menuItemToRemove.Status == MenuItemStatus.Deleted)
                 throw new Exception("Menu item to remove not found.");
 
-            MarkMenuItemAsDeleted(menuItemToRemove);
-
             AddEvent(new MenuItemRemoved
             {
                 SiteId = SiteId,
@@ -156,26 +146,12 @@ namespace Weapsy.Domain.Menus
             });
         }
 
-        private void MarkMenuItemAsDeleted(MenuItem menuItem)
-        {
-            menuItem.Delete();
-
-            var subMenuItemsToDelete = MenuItems
-                .Where(x => x.ParentId == menuItem.Id && x.Status == MenuItemStatus.Active)
-                .ToList();
-
-            foreach (var subMenuItem in subMenuItemsToDelete)
-                MarkMenuItemAsDeleted(subMenuItem);
-        }
-
         public void SetMenuItemPermissions(SetMenuItemPermissions cmd)
         {
             var menuItem = MenuItems.FirstOrDefault(x => x.Id == cmd.MenuItemId);
 
             if (menuItem == null)
                 throw new Exception("Menu item not found.");
-
-            menuItem.SetPermisisons(cmd.MenuItemPermissions);
 
             Events.Add(new MenuItemPermissionsSet
             {
@@ -194,8 +170,6 @@ namespace Weapsy.Domain.Menus
             if (Name.ToLowerInvariant() == "main")
                 throw new Exception("Main menu cannot be deleted.");
 
-            Status = MenuStatus.Deleted;
-
             AddEvent(new MenuDeleted
             {
                 SiteId = SiteId,
@@ -207,6 +181,65 @@ namespace Weapsy.Domain.Menus
         public void Restore()
         {
             throw new NotImplementedException();
+        }
+
+        private void Apply(MenuCreated @event)
+        {
+            Id = @event.AggregateRootId;
+            SiteId = @event.SiteId;
+            Name = @event.Name;
+            Status = @event.Status;
+        }
+
+        private void Apply(MenuItemAdded @event)
+        {
+            MenuItems.Add(@event.MenuItem);
+        }
+
+        private void Apply(MenuItemUpdated @event)
+        {
+            var menuItem = MenuItems.FirstOrDefault(x => x.Id == @event.MenuItem.Id);
+            menuItem?.Update(@event.MenuItem);
+        }
+
+        private void Apply(MenuItemsReordered @event)
+        {
+            foreach (var item in @event.MenuItems)
+            {
+                var menuItem = MenuItems.FirstOrDefault(x => x.Id == item.Id);
+                menuItem?.Reorder(item.ParentId, item.SortOrder);
+            }
+        }
+
+        private void Apply(MenuItemRemoved @event)
+        {
+            var menuItem = MenuItems.FirstOrDefault(x => x.Id == @event.MenuItemId);
+            if (menuItem != null)
+                MarkMenuItemAsDeleted(menuItem);
+        }
+
+        private void MarkMenuItemAsDeleted(MenuItem menuItem)
+        {
+            menuItem.Delete();
+
+            var subMenuItemsToDelete = MenuItems
+                .Where(x => x.ParentId == menuItem.Id && x.Status == MenuItemStatus.Active)
+                .ToList();
+
+            foreach (var subMenuItem in subMenuItemsToDelete)
+                MarkMenuItemAsDeleted(subMenuItem);
+        }
+
+        private void Apply(MenuItemPermissionsSet @event)
+        {
+            var menuItem = MenuItems.FirstOrDefault(x => x.Id == @event.MenuItemId);
+            menuItem?.SetPermisisons(@event.MenuItemPermissions);
+
+        }
+
+        private void Apply(MenuDeleted @event)
+        {
+            Status = MenuStatus.Deleted;
         }
     }
 }

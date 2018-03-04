@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Templates.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Templates.Handlers
 {
-    public class DeleteTemplateHandler : ICommandHandler<DeleteTemplate>
+    public class DeleteTemplateHandler : ICommandHandlerWithAggregate<DeleteTemplate>
     {
         private readonly ITemplateRepository _templateRepository;
 
@@ -15,7 +14,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _templateRepository = templateRepository;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteTemplate command)
+        public IAggregateRoot Handle(DeleteTemplate command)
         {
             var template = _templateRepository.GetById(command.Id);
 
@@ -26,7 +25,7 @@ namespace Weapsy.Domain.Templates.Handlers
 
             _templateRepository.Update(template);
 
-            return template.Events;
+            return template;
         }
     }
 }

@@ -1,13 +1,11 @@
-using System.Collections.Generic;
-using Weapsy.Framework.Domain;
 using Weapsy.Domain.Themes.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class ReorderThemesHandler : ICommandHandler<ReorderThemes>
+    public class ReorderThemesHandler : ICommandHandlerWithAggregate<ReorderTheme>
     {
         private readonly IThemeRepository _themeRepository;
 
@@ -16,32 +14,17 @@ namespace Weapsy.Domain.Themes.Handlers
             _themeRepository = themeRepository;
         }
 
-        public IEnumerable<IEvent> Handle(ReorderThemes cmd)
+        public IAggregateRoot Handle(ReorderTheme cmd)
         {
-            var events = new List<IDomainEvent>();
-            var updatedThemes = new List<Theme>();
+            var language = _themeRepository.GetById(cmd.AggregateRootId);
 
-            for (int i = 0; i < cmd.Themes.Count; i++)
-            {
-                var themeId = cmd.Themes[i];
-                var sortOrder = i + 1;
+            if (language == null)
+                throw new Exception("Theme not found.");
 
-                var theme = _themeRepository.GetById(themeId);
+            language.Reorder(cmd.Order);
+            _themeRepository.Update(language);
 
-                if (theme == null)
-                    throw new Exception("Theme not found.");
-
-                if (theme.SortOrder != sortOrder)
-                {
-                    theme.Reorder(sortOrder);
-                    updatedThemes.Add(theme);
-                    events.AddRange(theme.Events);
-                }
-            }
-
-            _themeRepository.Update(updatedThemes);
-
-            return events;
+            return language;
         }
     }
 }

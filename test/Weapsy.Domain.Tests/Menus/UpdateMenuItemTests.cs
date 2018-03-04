@@ -158,7 +158,7 @@ namespace Weapsy.Domain.Tests.Menus
         [Test]
         public void Should_set_link_in_menu_item_added_event()
         {
-            Assert.AreEqual(_menuItem.Type, _event.MenuItem.Type);
+            Assert.AreEqual(_command.Type, _event.MenuItem.Type);
         }
 
         [Test]
@@ -177,12 +177,6 @@ namespace Weapsy.Domain.Tests.Menus
         public void Should_set_sort_order_in_menu_item_added_event()
         {
             Assert.AreEqual(_menuItem.SortOrder, _event.MenuItem.SortOrder);
-        }
-
-        [Test]
-        public void Should_set_localisations_in_menu_item_added_event()
-        {
-            Assert.AreEqual(_menuItem.MenuItemLocalisations, _event.MenuItem.MenuItemLocalisations);
         }
 
         [Test]

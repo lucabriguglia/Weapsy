@@ -1,8 +1,6 @@
-﻿using Weapsy.Framework.Domain;
-
-namespace Weapsy.Domain.Users
+﻿namespace Weapsy.Domain.Users
 {
-    public class Address : ValueObject
+    public class Address
     {
         public string Unit { get; private set; }
         public string Street { get; private set; }

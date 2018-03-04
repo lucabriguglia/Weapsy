@@ -6,7 +6,7 @@ using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 using MenuItem = Weapsy.Data.Entities.MenuItem;
 
 namespace Weapsy.Data.Reporting.Menus

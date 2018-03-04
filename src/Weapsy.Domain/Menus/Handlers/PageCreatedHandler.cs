@@ -1,21 +1,22 @@
 using System;
+using Weapsy.Cqrs;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Events;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Pages.Events;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Menus.Handlers
 {
     public class PageCreatedHandler : IEventHandler<PageCreated>
     {
-        private readonly ICommandSender _commandSender;
+        private readonly IDispatcher _dispatcher;
         private readonly ILanguageRepository _languageRepository;
 
-        public PageCreatedHandler(ICommandSender commandSender, 
+        public PageCreatedHandler(IDispatcher dispatcher, 
             ILanguageRepository languageRepository)
         {
-            _commandSender = commandSender;
+            _dispatcher = dispatcher;
             _languageRepository = languageRepository;
         }
 
@@ -41,7 +42,7 @@ namespace Weapsy.Domain.Menus.Handlers
                     });
                 }
 
-                _commandSender.Send<AddMenuItem, Menu>(command);
+                _dispatcher.SendAndPublish<AddMenuItem, Menu>(command);
             }
         }
     }

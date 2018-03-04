@@ -1,9 +1,9 @@
 ﻿using System;
-using Weapsy.Framework.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Sites.Commands
 {
-    public class ReopenSite : ICommand
+    public class ReopenSite : DomainCommand
     {
         public Guid Id { get; set; }
     }

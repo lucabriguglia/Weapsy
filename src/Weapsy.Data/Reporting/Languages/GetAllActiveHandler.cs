@@ -3,11 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.Languages;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
+using ICacheManager = Weapsy.Data.Caching.ICacheManager;
 
 namespace Weapsy.Data.Reporting.Languages
 {

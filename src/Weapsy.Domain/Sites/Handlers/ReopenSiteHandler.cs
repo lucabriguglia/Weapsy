@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Sites.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Sites.Handlers
 {
-    public class ReopenSiteHandler : ICommandHandler<ReopenSite>
+    public class ReopenSiteHandler : ICommandHandlerWithAggregate<ReopenSite>
     {
         private readonly ISiteRepository _siteRepository;
 
@@ -15,7 +14,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _siteRepository = siteRepository;
         }
 
-        public IEnumerable<IEvent> Handle(ReopenSite command)
+        public IAggregateRoot Handle(ReopenSite command)
         {
             var site = _siteRepository.GetById(command.Id);
 
@@ -26,7 +25,7 @@ namespace Weapsy.Domain.Sites.Handlers
 
             _siteRepository.Update(site);
 
-            return site.Events;
+            return site;
         }
     }
 }

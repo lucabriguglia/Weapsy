@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.EmailAccounts.Events
 {

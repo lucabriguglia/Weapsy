@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Menus;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus.Rules;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Menus;
@@ -17,18 +16,15 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class MenuController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;       
+        private readonly IDispatcher _dispatcher;  
         private readonly IMenuRules _menuRules;
 
-        public MenuController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,          
+        public MenuController(IDispatcher dispatcher,         
             IMenuRules menuRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _menuRules = menuRules;            
         }
 
@@ -36,7 +32,7 @@ namespace Weapsy.Web.Api
         [Route("{name}")]
         public async Task<IActionResult> Get(string name)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetViewModel, IEnumerable<MenuViewModel>>(new GetViewModel
+            var model = await _dispatcher.GetResultAsync<GetViewModel, IEnumerable<MenuViewModel>>(new GetViewModel
             {
                 SiteId = SiteId,
                 Name = name
@@ -48,7 +44,7 @@ namespace Weapsy.Web.Api
         [Route("admin")]
         public async Task<IActionResult> GetAllForAdmin()
         {
-            var models = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<MenuAdminModel>>(new GetAllForAdmin
+            var models = await _dispatcher.GetResultAsync<GetAllForAdmin, IEnumerable<MenuAdminModel>>(new GetAllForAdmin
             {
                 SiteId = SiteId
             });
@@ -57,7 +53,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/items")]
         public async Task<IActionResult> GetItemsForAdmin(Guid id)
         {
-            var models = await _queryDispatcher.DispatchAsync<GetItemsForAdmin, IEnumerable<MenuItemAdminListModel>>(new GetItemsForAdmin
+            var models = await _dispatcher.GetResultAsync<GetItemsForAdmin, IEnumerable<MenuItemAdminListModel>>(new GetItemsForAdmin
             {
                 SiteId = SiteId,
                 Id = id
@@ -69,7 +65,7 @@ namespace Weapsy.Web.Api
         public IActionResult Post([FromBody] string name)
         {
             var newMenuId = Guid.NewGuid();
-            _commandSender.Send<CreateMenu, Menu>(new CreateMenu
+            _dispatcher.SendAndPublish<CreateMenu, Menu>(new CreateMenu
             {
                 SiteId = SiteId,
                 Id = newMenuId,
@@ -86,7 +82,7 @@ namespace Weapsy.Web.Api
             model.MenuId = id;
             model.MenuItemId = Guid.NewGuid();
 
-            _commandSender.Send<AddMenuItem, Menu>(model);
+            _dispatcher.SendAndPublish<AddMenuItem, Menu>(model);
 
             return new NoContentResult();
         }
@@ -97,7 +93,7 @@ namespace Weapsy.Web.Api
         {
             model.SiteId = SiteId;
             model.MenuId = id;
-            _commandSender.Send<UpdateMenuItem, Menu>(model);
+            _dispatcher.SendAndPublish<UpdateMenuItem, Menu>(model);
             return new NoContentResult();
         }
 
@@ -106,7 +102,7 @@ namespace Weapsy.Web.Api
         public IActionResult Reorder(Guid id, [FromBody] List<ReorderMenuItems.MenuItem> model)
         {
             var command = new ReorderMenuItems { SiteId = SiteId, Id = id, MenuItems = model };
-            _commandSender.Send<ReorderMenuItems, Menu>(command);
+            _dispatcher.SendAndPublish<ReorderMenuItems, Menu>(command);
             return new NoContentResult();
         }
 
@@ -114,7 +110,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/item/{itemId}")]
         public IActionResult DeleteItem(Guid id, Guid itemId)
         {
-            _commandSender.Send<RemoveMenuItem, Menu>(new RemoveMenuItem
+            _dispatcher.SendAndPublish<RemoveMenuItem, Menu>(new RemoveMenuItem
             {
                 SiteId = SiteId,
                 MenuId = id,
@@ -143,7 +139,7 @@ namespace Weapsy.Web.Api
         [Route("admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var models = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<MenuAdminModel>>(new GetAllForAdmin { SiteId = SiteId });
+            var models = await _dispatcher.GetResultAsync<GetAllForAdmin, IEnumerable<MenuAdminModel>>(new GetAllForAdmin { SiteId = SiteId });
             return Ok(models);
         }
 
@@ -151,7 +147,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, MenuAdminModel>(new GetForAdmin
+            var model = await _dispatcher.GetResultAsync<GetForAdmin, MenuAdminModel>(new GetForAdmin
             {
                 SiteId = SiteId,
                 Id = id
@@ -167,7 +163,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit-item/{itemId}")]
         public async Task<IActionResult> AdminEditItem(Guid id, Guid itemId)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetItemForAdmin, MenuItemAdminModel>(new GetItemForAdmin
+            var model = await _dispatcher.GetResultAsync<GetItemForAdmin, MenuItemAdminModel>(new GetItemForAdmin
             {
                 SiteId = SiteId,
                 MenuId = id,
@@ -184,7 +180,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit-default-item")]
         public async Task<IActionResult> AdminEditDefaultItem(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetDefaultItemForAdmin, MenuItemAdminModel>(new GetDefaultItemForAdmin
+            var model = await _dispatcher.GetResultAsync<GetDefaultItemForAdmin, MenuItemAdminModel>(new GetDefaultItemForAdmin
             {
                 SiteId = SiteId,
                 MenuId = id

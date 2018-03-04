@@ -1,9 +1,9 @@
 ﻿using System;
-using Weapsy.Framework.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Templates.Commands
 {
-    public class DeleteTemplate : ICommand
+    public class DeleteTemplate : DomainCommand
     {
         public Guid Id { get; set; }
     }

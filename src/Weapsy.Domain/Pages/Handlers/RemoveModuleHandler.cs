@@ -1,18 +1,17 @@
 using System;
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Framework.Domain;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Pages.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 //using System.Transactions;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class RemoveModuleHandler : ICommandHandler<RemoveModule>
+    public class RemoveModuleHandler : ICommandHandlerWithAggregate<RemoveModule>
     {
         private readonly IModuleRepository _moduleRepository;
         private readonly IPageRepository _pageRepository;
@@ -30,9 +29,9 @@ namespace Weapsy.Domain.Pages.Handlers
             _removePageModuleValidator = removePageModuleValidator;
         }
 
-        public IEnumerable<IEvent> Handle(RemoveModule cmd)
+        public IAggregateRoot Handle(RemoveModule cmd)
         {
-            var events = new List<IDomainEvent>();
+            //var events = new List<IDomainEvent>();
 
             //using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
             //{
@@ -40,9 +39,9 @@ namespace Weapsy.Domain.Pages.Handlers
                 if (page == null)
                     throw new Exception("Page not found");
 
-                var module = _moduleRepository.GetById(cmd.SiteId, cmd.ModuleId);
-                if (module == null)
-                    throw new Exception("Module not found");
+                //var module = _moduleRepository.GetById(cmd.SiteId, cmd.ModuleId);
+                //if (module == null)
+                //    throw new Exception("Module not found");
 
                 page.RemoveModule(new RemovePageModule
                 {
@@ -50,20 +49,20 @@ namespace Weapsy.Domain.Pages.Handlers
                     PageId = cmd.PageId,
                     ModuleId = cmd.ModuleId
                 }, _removePageModuleValidator);
-                events.AddRange(page.Events);
+                //events.AddRange(page.Events);
                 _pageRepository.Update(page);
 
-                if (_moduleRepository.GetCountByModuleId(cmd.ModuleId) == 1)
-                {
-                    module.Delete();
-                    events.AddRange(module.Events);
-                    _moduleRepository.Update(module);
-                }
+                //if (_moduleRepository.GetCountByModuleId(cmd.ModuleId) == 1)
+                //{
+                //    module.Delete();
+                //    events.AddRange(module.Events);
+                //    _moduleRepository.Update(module);
+                //}
 
             //    scope.Complete();
             //}
 
-            return events;
+            return page;
         }
     }
 }

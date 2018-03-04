@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Domain.Templates.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Templates.Handlers
 {
-    public class UpdateTemplateDetailsHandler : ICommandHandler<UpdateTemplateDetails>
+    public class UpdateTemplateDetailsHandler : ICommandHandlerWithAggregate<UpdateTemplateDetails>
     {
         private readonly ITemplateRepository _templateRepository;
         private readonly IValidator<UpdateTemplateDetails> _validator;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Templates.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateTemplateDetails cmd)
+        public IAggregateRoot Handle(UpdateTemplateDetails cmd)
         {
             var template = _templateRepository.GetById(cmd.Id);
 
@@ -29,7 +28,7 @@ namespace Weapsy.Domain.Templates.Handlers
 
             _templateRepository.Update(template);
 
-            return template.Events;
+            return template;
         }
     }
 }

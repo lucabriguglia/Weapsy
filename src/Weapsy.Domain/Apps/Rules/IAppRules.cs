@@ -1,9 +1,8 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Apps.Rules
 {
-    public interface IAppRules : IRules<App>
+    public interface IAppRules
     {
         bool DoesAppExist(Guid id);
         bool IsAppIdUnique(Guid id);

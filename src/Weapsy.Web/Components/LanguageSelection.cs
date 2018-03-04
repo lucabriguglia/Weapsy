@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages;
@@ -12,18 +12,18 @@ namespace Weapsy.Web.Components
     [ViewComponent(Name = "LanguageSelection")]
     public class LanguageSelectionViewComponent : BaseViewComponent
     {
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
-        public LanguageSelectionViewComponent(IQueryDispatcher queryDispatcher,
+        public LanguageSelectionViewComponent(IDispatcher dispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string viewName = "Default")
         {
-            var languages = await _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = SiteId });
+            var languages = await _dispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = SiteId });
             return View(viewName, languages);
         }
     }

@@ -1,13 +1,12 @@
 using FluentValidation;
 using System;
-using System.Collections.Generic;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.EmailAccounts.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.EmailAccounts.Handlers
 {
-    public class DeleteEmailAccountHandler : ICommandHandler<DeleteEmailAccount>
+    public class DeleteEmailAccountHandler : ICommandHandlerWithAggregate<DeleteEmailAccount>
     {
         private readonly IEmailAccountRepository _emailAccountRepository;
         private readonly IValidator<DeleteEmailAccount> _validator;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.EmailAccounts.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteEmailAccount command)
+        public IAggregateRoot Handle(DeleteEmailAccount command)
         {
             var emailAccount = _emailAccountRepository.GetById(command.SiteId, command.Id);
 
@@ -29,7 +28,7 @@ namespace Weapsy.Domain.EmailAccounts.Handlers
 
             _emailAccountRepository.Update(emailAccount);
 
-            return emailAccount.Events;
+            return emailAccount;
         }
     }
 }

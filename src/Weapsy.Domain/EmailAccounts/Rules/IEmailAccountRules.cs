@@ -1,9 +1,8 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.EmailAccounts.Rules
 {
-    public interface IEmailAccountRules : IRules<EmailAccount>
+    public interface IEmailAccountRules
     {
         bool DoesEmailAccountExist(Guid siteId, Guid id);
         bool IsEmailAccountIdUnique(Guid id);

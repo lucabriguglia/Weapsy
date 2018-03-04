@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Sites
 {
-    public interface ISiteRepository : IRepository<Site>
+    public interface ISiteRepository
     {
         Site GetById(Guid id);
         Site GetByName(string name);

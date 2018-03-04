@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts.Events;
@@ -23,30 +24,19 @@ namespace Weapsy.Domain.EmailAccounts
 
         private EmailAccount(CreateEmailAccount cmd) : base(cmd.Id)
         {
-            SiteId = cmd.SiteId;
-            Address = cmd.Address;
-            DisplayName = cmd.DisplayName;
-            Host = cmd.Host;
-            Port = cmd.Port;
-            UserName = cmd.UserName;
-            Password = cmd.Password;
-            DefaultCredentials = cmd.DefaultCredentials;
-            Ssl = cmd.Ssl;
-            Status = EmailAccountStatus.Active;
-
             AddEvent(new EmailAccountCreated
             {
-                SiteId = SiteId,
+                SiteId = cmd.SiteId,
                 AggregateRootId = Id,
-                Address = Address,
-                DisplayName = DisplayName,
-                Host = Host,
-                Port = Port,
-                UserName = UserName,
-                Password = Password,
-                DefaultCredentials = DefaultCredentials,
-                Ssl = Ssl,
-                Status = Status
+                Address = cmd.Address,
+                DisplayName = cmd.DisplayName,
+                Host = cmd.Host,
+                Port = cmd.Port,
+                UserName = cmd.UserName,
+                Password = cmd.Password,
+                DefaultCredentials = cmd.DefaultCredentials,
+                Ssl = cmd.Ssl,
+                Status = EmailAccountStatus.Active
             });
         }
 
@@ -61,27 +51,18 @@ namespace Weapsy.Domain.EmailAccounts
         {
             validator.ValidateCommand(cmd);
 
-            Address = cmd.Address;
-            DisplayName = cmd.DisplayName;
-            Host = cmd.Host;
-            Port = cmd.Port;
-            UserName = cmd.UserName;
-            Password = cmd.Password;
-            DefaultCredentials = cmd.DefaultCredentials;
-            Ssl = cmd.Ssl;
-
             AddEvent(new EmailAccountDetailsUpdated
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
-                Address = Address,
-                DisplayName = DisplayName,
-                Host = Host,
-                Port = Port,
-                UserName = UserName,
-                Password = Password,
-                DefaultCredentials = DefaultCredentials,
-                Ssl = Ssl
+                Address = cmd.Address,
+                DisplayName = cmd.DisplayName,
+                Host = cmd.Host,
+                Port = cmd.Port,
+                UserName = cmd.UserName,
+                Password = cmd.Password,
+                DefaultCredentials = cmd.DefaultCredentials,
+                Ssl = cmd.Ssl
             });
         }
 
@@ -92,13 +73,43 @@ namespace Weapsy.Domain.EmailAccounts
             if (Status == EmailAccountStatus.Deleted)
                 throw new Exception("Email account already deleted.");
 
-            Status = EmailAccountStatus.Deleted;
-
             AddEvent(new EmailAccountDeleted
             {
                 SiteId = SiteId,
                 AggregateRootId = Id
             });
+        }
+
+        private void Apply(EmailAccountCreated @event)
+        {
+            Id = @event.AggregateRootId;
+            SiteId = @event.SiteId;
+            Address = @event.Address;
+            DisplayName = @event.DisplayName;
+            Host = @event.Host;
+            Port = @event.Port;
+            UserName = @event.UserName;
+            Password = @event.Password;
+            DefaultCredentials = @event.DefaultCredentials;
+            Ssl = @event.Ssl;
+            Status = EmailAccountStatus.Active;
+        }
+
+        private void Apply(EmailAccountDetailsUpdated @event)
+        {
+            Address = @event.Address;
+            DisplayName = @event.DisplayName;
+            Host = @event.Host;
+            Port = @event.Port;
+            UserName = @event.UserName;
+            Password = @event.Password;
+            DefaultCredentials = @event.DefaultCredentials;
+            Ssl = @event.Ssl;
+        }
+
+        private void Apply(EmailAccountDeleted @event)
+        {
+            Status = EmailAccountStatus.Deleted;
         }
     }
 }

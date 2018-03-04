@@ -12,6 +12,7 @@ using Weapsy.Data.Domain;
 
 namespace Weapsy.Data.Tests.Repositories
 {
+    [Ignore("To be removed")]
     [TestFixture]
     public class MenuRepositoryTests
     {

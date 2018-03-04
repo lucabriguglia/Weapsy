@@ -1,5 +1,5 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Apps.Text.Domain.Events
 {
@@ -9,5 +9,7 @@ namespace Weapsy.Apps.Text.Domain.Events
         public Guid ModuleId { get; set; }
         public Guid VersionId { get; set; }
         public string Content { get; set; }
+        public TextModuleStatus Status { get; set; }
+        public TextVersionStatus VersionStatus { get; set; }
     }
 }

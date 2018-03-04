@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Cqrs;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Modules;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Sites;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Pages.Queries;
 using Page = Weapsy.Data.Entities.Page;
@@ -22,11 +23,11 @@ namespace Weapsy.Data.Reporting.Pages
     {
         private readonly IContextFactory _contextFactory;
         private readonly ICacheManager _cacheManager;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _queryDispatcher;
 
         public GetPageInfoHandler(IContextFactory contextFactory,
             ICacheManager cacheManager,
-            IQueryDispatcher queryDispatcher)
+            IDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _cacheManager = cacheManager;
@@ -99,7 +100,7 @@ namespace Weapsy.Data.Reporting.Pages
             {
                 var pageRoleIds = page.PagePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
                 var pageRoleNames = await _queryDispatcher
-                    .DispatchAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = pageRoleIds });
+                    .GetResultAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = pageRoleIds });
                 roles.Add(permisisonType, pageRoleNames);
             }
             return roles;
@@ -171,7 +172,7 @@ namespace Weapsy.Data.Reporting.Pages
                 {
                     var pageRoleIds = pageModule.PageModulePermissions.Where(x => x.Type == permisisonType).Select(x => x.RoleId);
                     var pageRoles = await _queryDispatcher
-                            .DispatchAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = pageRoleIds });
+                            .GetResultAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = pageRoleIds });
                     moduleRoles.Add(permisisonType, pageRoles);
                 }
             }

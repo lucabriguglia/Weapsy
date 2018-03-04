@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Domain.Languages.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Languages.Handlers
 {
-    public class UpdateLanguageDetailsHandler : ICommandHandler<UpdateLanguageDetails>
+    public class UpdateLanguageDetailsHandler : ICommandHandlerWithAggregate<UpdateLanguageDetails>
     {
         private readonly ILanguageRepository _languageRepository;
         private readonly IValidator<UpdateLanguageDetails> _validator;
@@ -19,7 +18,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateLanguageDetails command)
+        public IAggregateRoot Handle(UpdateLanguageDetails command)
         {
             var language = _languageRepository.GetById(command.SiteId, command.Id);
 
@@ -30,7 +29,7 @@ namespace Weapsy.Domain.Languages.Handlers
 
             _languageRepository.Update(language);
 
-            return language.Events;
+            return language;
         }
     }
 }

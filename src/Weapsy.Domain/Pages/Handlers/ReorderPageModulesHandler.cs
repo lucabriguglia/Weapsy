@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using Weapsy.Domain.Pages.Commands;
 using System;
 using FluentValidation;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class ReorderPageModulesHandler : ICommandHandler<ReorderPageModules>
+    public class ReorderPageModulesHandler : ICommandHandlerWithAggregate<ReorderPageModules>
     {
         private readonly IPageRepository _pageRepository;
         private readonly IValidator<ReorderPageModules> _validator;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(ReorderPageModules cmd)
+        public IAggregateRoot Handle(ReorderPageModules cmd)
         {
             var page = _pageRepository.GetById(cmd.SiteId, cmd.PageId);
 
@@ -29,7 +28,7 @@ namespace Weapsy.Domain.Pages.Handlers
 
             _pageRepository.Update(page);
 
-            return page.Events;
+            return page;
         }
     }
 }

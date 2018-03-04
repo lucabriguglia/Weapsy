@@ -1,13 +1,11 @@
-using System.Collections.Generic;
 using Weapsy.Domain.Users.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 using System.Threading.Tasks;
-using Weapsy.Domain.Users.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Users.Handlers
 {
-    public class AddUserToRoleHandler : ICommandHandlerAsync<AddUserToRole>
+    public class AddUserToRoleHandler : ICommandHandlerWithAggregateAsync<AddUserToRole>
     {
         private readonly IUserRepository _userRepository;
 
@@ -16,18 +14,11 @@ namespace Weapsy.Domain.Users.Handlers
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<IEvent>> HandleAsync(AddUserToRole command)
+        public async Task<IAggregateRoot> HandleAsync(AddUserToRole command)
         {
             await _userRepository.AddToRoleAsync(command.Id, command.RoleName);
 
-            return new List<IEvent>
-            {
-                new UserAddedToRole
-                {
-                    AggregateRootId = command.Id,
-                    RoleName = command.RoleName
-                }
-            };
+            return new User();
         }
     }
 }

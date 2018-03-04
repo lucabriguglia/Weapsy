@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using Weapsy.Domain.Menus.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Menus.Handlers
 {
-    public class SetMenuItemPermissionsHandler : ICommandHandler<SetMenuItemPermissions>
+    public class SetMenuItemPermissionsHandler : ICommandHandlerWithAggregate<SetMenuItemPermissions>
     {
         private readonly IMenuRepository _menuRepository;
 
@@ -15,7 +14,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _menuRepository = menuRepository;
         }
 
-        public IEnumerable<IEvent> Handle(SetMenuItemPermissions cmd)
+        public IAggregateRoot Handle(SetMenuItemPermissions cmd)
         {
             var menu = _menuRepository.GetById(cmd.SiteId, cmd.MenuId);
 
@@ -26,7 +25,7 @@ namespace Weapsy.Domain.Menus.Handlers
 
             _menuRepository.Update(menu);
 
-            return menu.Events;
+            return menu;
         }
     }
 }

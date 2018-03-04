@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps.Rules;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Apps;
@@ -17,18 +16,15 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class AppController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly IAppRules _appRules;
 
-        public AppController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public AppController(IDispatcher dispatcher,
             IAppRules appRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _appRules = appRules;
         }
 
@@ -48,7 +44,7 @@ namespace Weapsy.Web.Api
         public IActionResult Post([FromBody] CreateApp model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateApp, App>(model);
+            _dispatcher.SendAndPublish<CreateApp, App>(model);
             return new NoContentResult();
         }
 
@@ -56,7 +52,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/update")]
         public IActionResult UpdateDetails([FromBody] UpdateAppDetails model)
         {
-            _commandSender.Send<UpdateAppDetails, App>(model);
+            _dispatcher.SendAndPublish<UpdateAppDetails, App>(model);
             return new NoContentResult();
         }
 
@@ -88,7 +84,7 @@ namespace Weapsy.Web.Api
         [Route("admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModelList, IEnumerable<AppAdminListModel>>(new GetAppAdminModelList());
+            var model = await _dispatcher.GetResultAsync<GetAppAdminModelList, IEnumerable<AppAdminListModel>>(new GetAppAdminModelList());
             return Ok(model);
         }
 
@@ -96,7 +92,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModel, AppAdminModel>(new GetAppAdminModel {Id = id});
+            var model = await _dispatcher.GetResultAsync<GetAppAdminModel, AppAdminModel>(new GetAppAdminModel {Id = id});
 
             if (model == null)
                 return NotFound();

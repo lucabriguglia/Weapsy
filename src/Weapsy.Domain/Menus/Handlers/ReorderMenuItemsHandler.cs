@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using System;
 using Weapsy.Domain.Menus.Commands;
 using FluentValidation;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Menus.Handlers
 {
-    public class ReorderMenuItemsHandler : ICommandHandler<ReorderMenuItems>
+    public class ReorderMenuItemsHandler : ICommandHandlerWithAggregate<ReorderMenuItems>
     {
         private readonly IMenuRepository _menuRepository;
         private readonly IValidator<ReorderMenuItems> _validator;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Menus.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(ReorderMenuItems command)
+        public IAggregateRoot Handle(ReorderMenuItems command)
         {
             var menu = _menuRepository.GetById(command.Id);
 
@@ -29,7 +28,7 @@ namespace Weapsy.Domain.Menus.Handlers
 
             _menuRepository.Update(menu);
 
-            return menu.Events;
+            return menu;
         }
     }
 }

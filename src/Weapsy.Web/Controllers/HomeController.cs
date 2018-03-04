@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Pages;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Pages;
@@ -15,15 +15,15 @@ namespace Weapsy.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly ISecurityService _securityService;
 
-        public HomeController(IQueryDispatcher queryDispatcher,
+        public HomeController(IDispatcher dispatcher,
             ISecurityService securityService,
             IContextService contextService)
             : base(contextService)
         {
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _securityService = securityService;            
         }
 
@@ -32,7 +32,7 @@ namespace Weapsy.Web.Controllers
             if (pageId == Guid.Empty)
                 return NotFound();
 
-            var pageInfo = await _queryDispatcher.DispatchAsync<GetPageInfo, PageInfo>(new GetPageInfo
+            var pageInfo = await _dispatcher.GetResultAsync<GetPageInfo, PageInfo>(new GetPageInfo
             {
                 SiteId = SiteId,
                 PageId = pageId,

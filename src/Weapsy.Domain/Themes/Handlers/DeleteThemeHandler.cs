@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Themes.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class DeleteThemeHandler : ICommandHandler<DeleteTheme>
+    public class DeleteThemeHandler : ICommandHandlerWithAggregate<DeleteTheme>
     {
         private readonly IThemeRepository _themeRepository;
 
@@ -15,7 +14,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _themeRepository = themeRepository;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteTheme command)
+        public IAggregateRoot Handle(DeleteTheme command)
         {
             var theme = _themeRepository.GetById(command.Id);
 
@@ -26,7 +25,7 @@ namespace Weapsy.Domain.Themes.Handlers
 
             _themeRepository.Update(theme);
 
-            return theme.Events;
+            return theme;
         }
     }
 }

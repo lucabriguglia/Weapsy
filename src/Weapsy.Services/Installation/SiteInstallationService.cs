@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Menus;
@@ -13,9 +14,7 @@ using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
-using Weapsy.Framework.Commands;
 using Weapsy.Domain.Roles.DefaultRoles;
-using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Sites.Queries;
 
 namespace Weapsy.Services.Installation
@@ -40,8 +39,7 @@ namespace Weapsy.Services.Installation
         private readonly IValidator<CreateMenu> _createMenuValidator;
         private readonly IValidator<AddMenuItem> _addMenuItemValidator;
         private readonly IModuleTypeRepository _moduleTypeRepository;
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
         public SiteInstallationService(ISiteRepository siteRepository,
             IValidator<CreateSite> createSiteValidator,
@@ -60,8 +58,7 @@ namespace Weapsy.Services.Installation
             IValidator<CreateMenu> createMenuValidator,
             IValidator<AddMenuItem> addMenuItemValidator,
             IModuleTypeRepository moduleTypeRepository, 
-            ICommandSender commandSender, 
-            IQueryDispatcher queryDispatcher)
+            IDispatcher dispatcher)
         {
             _siteRepository = siteRepository;
             _createSiteValidator = createSiteValidator;
@@ -80,8 +77,7 @@ namespace Weapsy.Services.Installation
             _createMenuValidator = createMenuValidator;
             _addMenuItemValidator = addMenuItemValidator;
             _moduleTypeRepository = moduleTypeRepository;
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
 
         public void VerifySiteInstallation()
@@ -341,7 +337,7 @@ namespace Weapsy.Services.Installation
 
         public async Task EnsureSiteInstalled(string name)
         {
-            if (!await _queryDispatcher.DispatchAsync<IsSiteInstalled, bool>(new IsSiteInstalled { Name = name }))
+            if (!await _dispatcher.GetResultAsync<IsSiteInstalled, bool>(new IsSiteInstalled { Name = name }))
                 await InstallSite(name);
         }
 
@@ -352,7 +348,7 @@ namespace Weapsy.Services.Installation
             var mainMenuId = Guid.NewGuid();
             var homePageId = Guid.NewGuid();
 
-            _commandSender.Send<CreateSite, Site>(new CreateSite
+            _dispatcher.SendAndPublish<CreateSite, Site>(new CreateSite
             {
                 Id = siteId,
                 Name = "Default"

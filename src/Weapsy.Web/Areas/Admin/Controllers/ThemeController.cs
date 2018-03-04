@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Themes;
 using Weapsy.Domain.Themes.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Themes;
@@ -16,22 +15,18 @@ namespace Weapsy.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class ThemeController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
-        public ThemeController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public ThemeController(IDispatcher dispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
-
 
         public async Task<IActionResult> Index()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<ThemeAdminModel>>(new GetAllForAdmin());
+            var model = await _dispatcher.GetResultAsync<GetAllForAdmin, IEnumerable<ThemeAdminModel>>(new GetAllForAdmin());
             return View(model);
         }
 
@@ -43,13 +38,13 @@ namespace Weapsy.Web.Areas.Admin.Controllers
         public IActionResult Save(CreateTheme model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateTheme, Theme>(model);
+            _dispatcher.SendAndPublish<CreateTheme, Theme>(model);
             return new NoContentResult();
         }
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, ThemeAdminModel>(new GetForAdmin { Id = id });
+            var model = await _dispatcher.GetResultAsync<GetForAdmin, ThemeAdminModel>(new GetForAdmin { Id = id });
 
             if (model == null)
                 return NotFound();
@@ -59,7 +54,7 @@ namespace Weapsy.Web.Areas.Admin.Controllers
 
         public IActionResult Update(UpdateThemeDetails model)
         {
-            _commandSender.Send<UpdateThemeDetails, Theme>(model);
+            _dispatcher.SendAndPublish<UpdateThemeDetails, Theme>(model);
             return new NoContentResult();
         }
     }

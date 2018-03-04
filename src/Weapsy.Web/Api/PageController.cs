@@ -2,35 +2,34 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
+using Weapsy.Domain.Modules;
+using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Rules;
 using Weapsy.Domain.Roles.DefaultRoles;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Pages;
 using Weapsy.Reporting.Pages.Queries;
+using Weapsy.Web.Api.Models;
 
 namespace Weapsy.Web.Api
 {
     [Route("api/[controller]")]
     public class PageController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;      
+        private readonly IDispatcher _dispatcher;   
         private readonly IPageRules _pageRules;
 
-        public PageController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,           
+        public PageController(IDispatcher dispatcher,           
             IPageRules pageRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
+            _dispatcher = dispatcher;
             _pageRules = pageRules;
-            _queryDispatcher = queryDispatcher;
         }
 
         [HttpGet]
@@ -49,7 +48,7 @@ namespace Weapsy.Web.Api
         public IActionResult Post([FromBody] CreatePage model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<CreatePage, Page>(model);
+            _dispatcher.SendAndPublish<CreatePage, Page>(model);
             return new NoContentResult();
         }
 
@@ -58,19 +57,43 @@ namespace Weapsy.Web.Api
         public IActionResult UpdateDetails([FromBody] UpdatePageDetails model)
         {
             model.SiteId = SiteId;
-             _commandSender.Send<UpdatePageDetails, Page>(model);
+             _dispatcher.SendAndPublish<UpdatePageDetails, Page>(model);
             return new NoContentResult();
         }
 
         [HttpPut]
         [Route("{id}/add-module")]
-        public IActionResult AddModule([FromBody] AddModule model)
+        public IActionResult AddModule([FromBody] AddModuleModel model)
         {
-            model.SiteId = SiteId;
             var defaultViewRoleIds = new List<Guid> { Administrator.Id };
             var defaultEditRoleIds = new List<Guid> { Administrator.Id };
             model.SetPageModulePermissions(defaultViewRoleIds, defaultEditRoleIds);
-            _commandSender.Send<AddModule, Page>(model);
+            model.SiteId = SiteId;
+
+            var moduleId = Guid.NewGuid();
+
+            var createModule = new CreateModule
+            {
+                SiteId = model.SiteId,
+                ModuleTypeId = model.ModuleTypeId,
+                Id = moduleId,
+                Title = model.Title
+            };
+            _dispatcher.SendAndPublish<CreateModule, Module>(createModule);
+
+            var addPageModule = new AddPageModule
+            {
+                SiteId = model.SiteId,
+                PageId = model.PageId,
+                ModuleId = moduleId,
+                PageModuleId = Guid.NewGuid(),
+                Title = model.Title,
+                Zone = model.Zone,
+                SortOrder = model.SortOrder,
+                PageModulePermissions = model.PageModulePermissions
+            };
+            _dispatcher.SendAndPublish<AddPageModule, Page>(addPageModule);
+
             return new NoContentResult();
         }
 
@@ -79,7 +102,7 @@ namespace Weapsy.Web.Api
         public IActionResult RemoveModule([FromBody] RemoveModule model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<RemoveModule, Page>(model);
+            _dispatcher.SendAndPublish<RemoveModule, Page>(model);
             return new NoContentResult();
         }
 
@@ -88,7 +111,7 @@ namespace Weapsy.Web.Api
         public IActionResult ReorderPageModules([FromBody] ReorderPageModules model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<ReorderPageModules, Page>(model);
+            _dispatcher.SendAndPublish<ReorderPageModules, Page>(model);
             return new NoContentResult();
         }
 
@@ -97,7 +120,7 @@ namespace Weapsy.Web.Api
         public IActionResult SetPermissions([FromBody] SetPagePermissions model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<SetPagePermissions, Page>(model);
+            _dispatcher.SendAndPublish<SetPagePermissions, Page>(model);
             return new NoContentResult();
         }
 
@@ -106,7 +129,7 @@ namespace Weapsy.Web.Api
         public IActionResult SetModulePermissions([FromBody] SetPageModulePermissions model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<SetPageModulePermissions, Page>(model);
+            _dispatcher.SendAndPublish<SetPageModulePermissions, Page>(model);
             return new NoContentResult();
         }
 
@@ -114,7 +137,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/activate")]
         public IActionResult Activate(Guid id)
         {
-            _commandSender.Send<ActivatePage, Page>(new ActivatePage
+            _dispatcher.SendAndPublish<ActivatePage, Page>(new ActivatePage
             {
                 SiteId = SiteId,
                 Id = id
@@ -126,7 +149,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/hide")]
         public IActionResult Hide(Guid id)
         {
-            _commandSender.Send<HidePage, Page>(new HidePage
+            _dispatcher.SendAndPublish<HidePage, Page>(new HidePage
             {
                 SiteId = SiteId,
                 Id = id
@@ -137,7 +160,7 @@ namespace Weapsy.Web.Api
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _commandSender.Send<DeletePage, Page>(new DeletePage
+            _dispatcher.SendAndPublish<DeletePage, Page>(new DeletePage
             {
                 SiteId = SiteId,
                 Id = id
@@ -189,7 +212,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/view")]
         public async Task<IActionResult> ViewById(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetPageInfo, PageInfo>(new GetPageInfo
+            var model = await _dispatcher.GetResultAsync<GetPageInfo, PageInfo>(new GetPageInfo
             {
                 SiteId = SiteId,
                 PageId = id
@@ -212,7 +235,7 @@ namespace Weapsy.Web.Api
         [Route("admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<PageAdminListModel>>(new GetAllForAdmin
+            var model = await _dispatcher.GetResultAsync<GetAllForAdmin, IEnumerable<PageAdminListModel>>(new GetAllForAdmin
             {
                 SiteId = SiteId
             });
@@ -223,7 +246,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, PageAdminModel>(new GetForAdmin
+            var model = await _dispatcher.GetResultAsync<GetForAdmin, PageAdminModel>(new GetForAdmin
             {
                 SiteId = SiteId,
                 Id = id

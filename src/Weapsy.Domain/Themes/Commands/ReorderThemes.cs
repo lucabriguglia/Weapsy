@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Weapsy.Framework.Commands;
-
-namespace Weapsy.Domain.Themes.Commands
+﻿namespace Weapsy.Domain.Themes.Commands
 {
-    public class ReorderThemes : ICommand
+    public class ReorderTheme : BaseSiteCommand
     {
-        public IList<Guid> Themes { get; set; }
+        public int Order { get; set; }
     }
 }

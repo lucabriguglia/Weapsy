@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Data.TempIdentity;
 using Weapsy.Domain.Users;
 using Weapsy.Domain.Users.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Users;
@@ -17,18 +16,15 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class UserController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public UserController(IDispatcher dispatcher,
             UserManager<ApplicationUser> userManager,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _userManager = userManager;
         }
 
@@ -61,7 +57,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/add-to-role")]
         public async Task<IActionResult> AddToRole(Guid id, [FromBody]string roleName)
         {
-            await _commandSender.SendAsync<AddUserToRole, User>(new AddUserToRole { Id = id, RoleName = roleName });
+            await _dispatcher.SendAndPublishAsync<AddUserToRole, User>(new AddUserToRole { Id = id, RoleName = roleName });
             return new NoContentResult();
         }
 
@@ -69,7 +65,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/remove-from-role")]
         public async Task<IActionResult> RemoveFromRole(Guid id, [FromBody]string roleName)
         {
-            await _commandSender.SendAsync<RemoveUserFromRole, User>(new RemoveUserFromRole { Id = id, RoleName = roleName });
+            await _dispatcher.SendAndPublishAsync<RemoveUserFromRole, User>(new RemoveUserFromRole { Id = id, RoleName = roleName });
             return new NoContentResult();
         }
 
@@ -97,7 +93,7 @@ namespace Weapsy.Web.Api
                 NumberOfUsers = numberOfUsers
             };
 
-            var model = await _queryDispatcher.DispatchAsync<GetUsersAdminViewModel, UsersAdminViewModel>(query);
+            var model = await _dispatcher.GetResultAsync<GetUsersAdminViewModel, UsersAdminViewModel>(query);
 
             return Ok(model);
         }
@@ -111,7 +107,7 @@ namespace Weapsy.Web.Api
                 Id = id
             };
 
-            var model = await _queryDispatcher.DispatchAsync<GetUserAdminModel, UserAdminModel>(query);
+            var model = await _dispatcher.GetResultAsync<GetUserAdminModel, UserAdminModel>(query);
 
             if (model == null)
                 return NotFound();

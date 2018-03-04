@@ -1,12 +1,12 @@
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentValidation;
 using Weapsy.Apps.Text.Domain.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Apps.Text.Domain.Handlers
 {
-    public class CreateTextModuleHandler : ICommandHandler<CreateTextModule>
+    public class CreateTextModuleHandler : ICommandHandlerWithAggregateAsync<CreateTextModule>
     {
         private readonly ITextModuleRepository _textModuleRepository;
         private readonly IValidator<CreateTextModule> _validator;
@@ -18,13 +18,13 @@ namespace Weapsy.Apps.Text.Domain.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateTextModule command)
+        public async Task<IAggregateRoot> HandleAsync(CreateTextModule command)
         {
             var textModule = TextModule.CreateNew(command, _validator);
 
-            _textModuleRepository.Create(textModule);
+            await _textModuleRepository.CreateAsync(textModule);
 
-            return textModule.Events;
+            return textModule;
         }
     }
 }

@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Weapsy.Cqrs" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Weapsy.Domain\Weapsy.Domain.csproj" />
-    <ProjectReference Include="..\Weapsy.Framework\Weapsy.Framework.csproj" />
   </ItemGroup>
 
 </Project>

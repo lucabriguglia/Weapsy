@@ -1,9 +1,9 @@
 ﻿using System;
-using Weapsy.Framework.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.ModuleTypes.Commands
 {
-    public class ModuleTypeDetails : ICommand
+    public class ModuleTypeDetails : DomainCommand
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

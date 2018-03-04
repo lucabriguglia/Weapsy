@@ -1,4 +1,4 @@
-﻿using Weapsy.Framework.Queries;
+﻿using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Reporting.Apps.Queries
 {

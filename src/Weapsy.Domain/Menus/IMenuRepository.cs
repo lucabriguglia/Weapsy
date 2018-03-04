@@ -1,9 +1,8 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Menus
 {
-    public interface IMenuRepository : IRepository<Menu>
+    public interface IMenuRepository
     {
         Menu GetById(Guid id);
         Menu GetById(Guid siteId, Guid id);

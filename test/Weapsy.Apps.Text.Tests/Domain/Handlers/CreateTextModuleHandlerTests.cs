@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
@@ -31,11 +32,11 @@ namespace Weapsy.Apps.Text.Tests.Domain.Handlers
 
             var createTextModuleHandler = new CreateTextModuleHandler(textModuleRepositoryMock.Object, validatorMock.Object);
 
-            Assert.Throws<Exception>(() => createTextModuleHandler.Handle(command));
+            Assert.ThrowsAsync<Exception>(async () => await createTextModuleHandler.HandleAsync(command));
         }
 
         [Test]
-        public void Should_validate_command_and_save_new_textModule()
+        public async Task Should_validate_command_and_save_new_textModule()
         {
             var command = new CreateTextModule
             {
@@ -46,16 +47,18 @@ namespace Weapsy.Apps.Text.Tests.Domain.Handlers
             };
 
             var textModuleRepositoryMock = new Mock<ITextModuleRepository>();
-            textModuleRepositoryMock.Setup(x => x.Create(It.IsAny<TextModule>()));
+            textModuleRepositoryMock
+                .Setup(x => x.CreateAsync(It.IsAny<TextModule>()))
+                .Returns(Task.CompletedTask);
 
             var validatorMock = new Mock<IValidator<CreateTextModule>>();
             validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
 
             var createTextModuleHandler = new CreateTextModuleHandler(textModuleRepositoryMock.Object, validatorMock.Object);
-            createTextModuleHandler.Handle(command);
+            await createTextModuleHandler.HandleAsync(command);
 
             validatorMock.Verify(x => x.Validate(command));
-            textModuleRepositoryMock.Verify(x => x.Create(It.IsAny<TextModule>()));
+            textModuleRepositoryMock.Verify(x => x.CreateAsync(It.IsAny<TextModule>()));
         }
     }
 }

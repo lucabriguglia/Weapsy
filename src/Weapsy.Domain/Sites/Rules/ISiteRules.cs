@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Sites.Rules
 {
-    public interface ISiteRules : IRules<Site>
+    public interface ISiteRules
     {
         bool DoesSiteExist(Guid id);
         bool IsSiteIdUnique(Guid id);

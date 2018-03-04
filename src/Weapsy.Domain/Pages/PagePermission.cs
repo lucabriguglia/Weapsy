@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Pages
 {
-    public class PagePermission : ValueObject
+    public class PagePermission
     {
         public Guid PageId { get; set; }  
         public PermissionType Type { get; set; }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Menus.Commands;
+using Weapsy.Domain.Menus.Events;
 using Weapsy.Domain.Roles.DefaultRoles;
 
 namespace Weapsy.Domain.Menus
@@ -23,7 +25,7 @@ namespace Weapsy.Domain.Menus
 
         public MenuItem() {}
 
-        public MenuItem(AddMenuItem cmd, int sortOrder) 
+        public MenuItem(MenuItemDetails cmd, int sortOrder) 
             : base(cmd.MenuItemId)
         {
             MenuId = cmd.MenuId;
@@ -39,17 +41,29 @@ namespace Weapsy.Domain.Menus
             SetPermisisons(cmd.MenuItemPermissions);
         }
 
-        public void Update(UpdateMenuItem cmd)
+        public void Update(MenuItem menuItem)
         {
-            Type = cmd.Type;
-            PageId = cmd.PageId;
-            Link = cmd.Link;
-            Text = cmd.Text;
-            Title = cmd.Title;
+            Type = menuItem.Type;
+            PageId = menuItem.PageId;
+            Link = menuItem.Link;
+            Text = menuItem.Text;
+            Title = menuItem.Title;
 
-            SetLocalisations(cmd.MenuItemLocalisations);
-            SetPermisisons(cmd.MenuItemPermissions);
+            SetLocalisations(menuItem.MenuItemLocalisations);
+            SetPermisisons(menuItem.MenuItemPermissions);
         }
+
+        //public void Update(UpdateMenuItem cmd)
+        //{
+        //    Type = cmd.Type;
+        //    PageId = cmd.PageId;
+        //    Link = cmd.Link;
+        //    Text = cmd.Text;
+        //    Title = cmd.Title;
+
+        //    SetLocalisations(cmd.MenuItemLocalisations);
+        //    SetPermisisons(cmd.MenuItemPermissions);
+        //}
 
         private void SetLocalisations(IEnumerable<MenuItemLocalisation> localisations)
         {

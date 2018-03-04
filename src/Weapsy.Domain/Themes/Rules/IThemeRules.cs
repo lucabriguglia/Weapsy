@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Themes.Rules
 {
-    public interface IThemeRules : IRules<Theme>
+    public interface IThemeRules
     {
         bool DoesThemeExist(Guid id);
         bool IsThemeIdUnique(Guid id);

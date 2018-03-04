@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Menus;
@@ -15,22 +15,22 @@ namespace Weapsy.Web.Components
     public class NavigationViewComponent : BaseViewComponent
     {
         private readonly IContextService _contextService;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly ISecurityService _securityService;
 
         public NavigationViewComponent(IContextService contextService,
-            IQueryDispatcher queryDispatcher,
+            IDispatcher dispatcher,
             ISecurityService securityService)
             : base(contextService)
         {
             _contextService = contextService;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _securityService = securityService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(string name, string viewName = "Default")
         {
-            var viewModel = await _queryDispatcher.DispatchAsync<GetViewModel, MenuViewModel>(new GetViewModel
+            var viewModel = await _dispatcher.GetResultAsync<GetViewModel, MenuViewModel>(new GetViewModel
             {
                 SiteId = SiteId,
                 Name = name,

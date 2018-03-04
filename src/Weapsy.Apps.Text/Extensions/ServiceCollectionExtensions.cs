@@ -3,13 +3,13 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Apps.Text.Data;
-using Weapsy.Framework.Extensions;
+using Weapsy.Mvc.Extensions;
 
 namespace Weapsy.Apps.Text.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddEntityFramework(this IServiceCollection services, IConfigurationRoot configuration)
+        public static IServiceCollection AddEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
             var dataProviderConfig = configuration.GetSection("Data")["Provider"];
             var connectionStringConfig = configuration.GetConnectionString("DefaultConnection");

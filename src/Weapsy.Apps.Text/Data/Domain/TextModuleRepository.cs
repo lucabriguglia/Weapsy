@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Apps.Text.Domain;
@@ -8,7 +9,7 @@ using TextModuleDbEntity = Weapsy.Apps.Text.Data.Entities.TextModule;
 using TextVersionDbEntity = Weapsy.Apps.Text.Data.Entities.TextVersion;
 using TextLocalisationDbEntity = Weapsy.Apps.Text.Data.Entities.TextLocalisation;
 
-namespace Weapsy.Apps.Text.Data
+namespace Weapsy.Apps.Text.Data.Domain
 {
     public class TextModuleRepository : ITextModuleRepository
     {
@@ -41,13 +42,13 @@ namespace Weapsy.Apps.Text.Data
             }
         }
 
-        public void Create(TextModule text)
+        public async Task CreateAsync(TextModule text)
         {
             using (var context = _dbContextFactory.Create())
             {
                 var textDbEntity = _mapper.Map<TextModuleDbEntity>(text);
                 context.TextModules.Add(textDbEntity);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 

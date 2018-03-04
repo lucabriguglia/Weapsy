@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Modules.Rules;
-using Weapsy.Framework.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 
@@ -11,15 +11,15 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class ModuleController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
+        private readonly IDispatcher _dispatcher;
         private readonly IModuleRules _moduleRules;
 
-        public ModuleController(ICommandSender commandSender,          
+        public ModuleController(IDispatcher dispatcher,          
             IModuleRules moduleRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;         
+            _dispatcher = dispatcher;         
             _moduleRules = moduleRules;
         }
 

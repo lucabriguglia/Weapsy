@@ -1,9 +1,8 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.EmailAccounts
 {
-    public interface IEmailAccountRepository : IRepository<EmailAccount>
+    public interface IEmailAccountRepository
     {
         EmailAccount GetById(Guid id);
         EmailAccount GetById(Guid siteId, Guid id);

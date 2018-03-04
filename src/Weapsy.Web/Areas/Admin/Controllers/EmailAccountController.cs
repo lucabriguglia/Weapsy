@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.EmailAccounts;
@@ -16,21 +15,18 @@ namespace Weapsy.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class EmailAccountController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
-        public EmailAccountController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public EmailAccountController(IDispatcher dispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
 
         public async Task<IActionResult> Index()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllEmailAccounts, IEnumerable<EmailAccountModel>>(new GetAllEmailAccounts { SiteId = SiteId });
+            var model = await _dispatcher.GetResultAsync<GetAllEmailAccounts, IEnumerable<EmailAccountModel>>(new GetAllEmailAccounts { SiteId = SiteId });
             return View(model);
         }
 
@@ -44,13 +40,13 @@ namespace Weapsy.Web.Areas.Admin.Controllers
         {
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateEmailAccount, EmailAccount>(model);
+            _dispatcher.SendAndPublish<CreateEmailAccount, EmailAccount>(model);
             return new NoContentResult();
         }
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetEmailAccount, EmailAccountModel>(new GetEmailAccount { SiteId = SiteId, Id = id });
+            var model = await _dispatcher.GetResultAsync<GetEmailAccount, EmailAccountModel>(new GetEmailAccount { SiteId = SiteId, Id = id });
 
             if (model == null)
                 return NotFound();
@@ -61,7 +57,7 @@ namespace Weapsy.Web.Areas.Admin.Controllers
         public IActionResult Update(UpdateEmailAccountDetails model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model);
+            _dispatcher.SendAndPublish<UpdateEmailAccountDetails, EmailAccount>(model);
             return new NoContentResult();
         }
     }

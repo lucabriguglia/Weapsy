@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Menus;
@@ -13,13 +13,13 @@ namespace Weapsy.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class MenuController : BaseAdminController
     {
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
-        public MenuController(IQueryDispatcher queryDispatcher,
+        public MenuController(IDispatcher dispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
 
         public async Task<IActionResult> Index()
@@ -42,7 +42,7 @@ namespace Weapsy.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, MenuAdminModel>(new GetForAdmin
+            var model = await _dispatcher.GetResultAsync<GetForAdmin, MenuAdminModel>(new GetForAdmin
             {
                 SiteId = SiteId,
                 Id = id

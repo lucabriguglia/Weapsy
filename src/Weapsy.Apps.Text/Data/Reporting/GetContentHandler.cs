@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Reporting;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Cqrs.Queries;
+using Weapsy.Data.Caching;
 
 namespace Weapsy.Apps.Text.Data.Reporting
 {

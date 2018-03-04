@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Users
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository
     {
         User GetById(Guid id);
         User GetByEmail(string email);

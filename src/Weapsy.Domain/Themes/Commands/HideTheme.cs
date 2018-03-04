@@ -1,9 +1,9 @@
 ﻿using System;
-using Weapsy.Framework.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Themes.Commands
 {
-    public class HideTheme : ICommand
+    public class HideTheme : DomainCommand
     {
         public Guid Id { get; set; }
     }

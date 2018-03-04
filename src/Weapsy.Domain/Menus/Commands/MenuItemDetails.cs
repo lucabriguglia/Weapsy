@@ -13,6 +13,6 @@ namespace Weapsy.Domain.Menus.Commands
         public string Text { get; set; }
         public string Title { get; set; }
         public IList<MenuItemLocalisation> MenuItemLocalisations { get; set; } = new List<MenuItemLocalisation>();
-        public List<MenuItemPermission> MenuItemPermissions { get; set; } = new List<MenuItemPermission>();
+        public IList<MenuItemPermission> MenuItemPermissions { get; set; } = new List<MenuItemPermission>();
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Sites.Commands;
 using Weapsy.Domain.Sites.Rules;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Sites;
@@ -15,18 +14,15 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class SiteController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly ISiteRules _siteRules;
 
-        public SiteController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public SiteController(IDispatcher dispatcher,
             ISiteRules siteRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _siteRules = siteRules;
             
         }
@@ -47,7 +43,7 @@ namespace Weapsy.Web.Api
         public IActionResult Post([FromBody] CreateSite model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateSite, Site>(model);
+            _dispatcher.SendAndPublish<CreateSite, Site>(model);
             return new NoContentResult();
         }
 
@@ -55,14 +51,14 @@ namespace Weapsy.Web.Api
         [Route("{id}/update")]
         public IActionResult UpdateDetails([FromBody] UpdateSiteDetails model)
         {
-            _commandSender.Send<UpdateSiteDetails, Site>(model);
+            _dispatcher.SendAndPublish<UpdateSiteDetails, Site>(model);
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _commandSender.Send<DeleteSite, Site>(new DeleteSite { Id = id });
+            _dispatcher.SendAndPublish<DeleteSite, Site>(new DeleteSite { Id = id });
             return new NoContentResult();
         }
 
@@ -78,7 +74,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit")]
         public IActionResult AdminEdit(Guid id)
         {
-            var model = _queryDispatcher.DispatchAsync<GetAdminModel, SiteAdminModel>(new GetAdminModel { Id = id });
+            var model = _dispatcher.GetResultAsync<GetAdminModel, SiteAdminModel>(new GetAdminModel { Id = id });
 
             if (model == null)
                 return NotFound();

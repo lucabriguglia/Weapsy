@@ -6,8 +6,7 @@ using Weapsy.Apps.Text.Reporting;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Mvc.Context;
 using Weapsy.Apps.Text.Domain;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs;
 using Weapsy.Mvc.Apps;
 
 namespace Weapsy.Apps.Text.Controllers
@@ -15,21 +14,18 @@ namespace Weapsy.Apps.Text.Controllers
     [App("Weapsy.Apps.Text")]
     public class HomeController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
-        public HomeController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public HomeController(IDispatcher dispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
 
         public async Task<IActionResult> Index(Guid moduleId)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAdminModel, AddVersion>(new GetAdminModel
+            var model = await _dispatcher.GetResultAsync<GetAdminModel, AddVersion>(new GetAdminModel
             {
                 SiteId = SiteId,
                 ModuleId = moduleId,
@@ -42,7 +38,7 @@ namespace Weapsy.Apps.Text.Controllers
         {
             model.SiteId = SiteId;
             model.VersionId = Guid.NewGuid();
-            _commandSender.Send<AddVersion, TextModule>(model);
+            _dispatcher.SendAndPublish<AddVersion, TextModule>(model);
             return Ok(string.Empty);
         }
     }

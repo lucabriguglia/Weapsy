@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using FluentValidation;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Themes.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class CreateThemeHandler : ICommandHandler<CreateTheme>
+    public class CreateThemeHandler : ICommandHandlerWithAggregate<CreateTheme>
     {
         private readonly IThemeRepository _themeRepository;
         private readonly IValidator<CreateTheme> _validator;
@@ -21,13 +20,13 @@ namespace Weapsy.Domain.Themes.Handlers
             _sortOrderGenerator = sortOrderGenerator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateTheme command)
+        public IAggregateRoot Handle(CreateTheme command)
         {
             var theme = Theme.CreateNew(command, _validator, _sortOrderGenerator);
 
             _themeRepository.Create(theme);
 
-            return theme.Events;
+            return theme;
         }
     }
 }

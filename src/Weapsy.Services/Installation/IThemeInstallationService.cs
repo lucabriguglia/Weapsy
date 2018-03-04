@@ -1,9 +1,8 @@
 ﻿using Weapsy.Domain.Themes.Commands;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Services.Installation
 {
-    public interface IThemeInstallationService : IService
+    public interface IThemeInstallationService
     {
         void EnsureThemeInstalled(CreateTheme createTheme);
     }

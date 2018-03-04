@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Domain.ModuleTypes.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.ModuleTypes.Handlers
 {
-    public class UpdateModuleTypeDetailsHandler : ICommandHandler<UpdateModuleTypeDetails>
+    public class UpdateModuleTypeDetailsHandler : ICommandHandlerWithAggregate<UpdateModuleTypeDetails>
     {
         private readonly IModuleTypeRepository _moduleTypeRepository;
         private readonly IValidator<UpdateModuleTypeDetails> _validator;
@@ -19,18 +18,18 @@ namespace Weapsy.Domain.ModuleTypes.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateModuleTypeDetails command)
+        public IAggregateRoot Handle(UpdateModuleTypeDetails command)
         {
-            var page = _moduleTypeRepository.GetById(command.Id);
+            var moduleType = _moduleTypeRepository.GetById(command.Id);
 
-            if (page == null)
+            if (moduleType == null)
                 throw new Exception("Module Type not found");
 
-            page.UpdateDetails(command, _validator);
+            moduleType.UpdateDetails(command, _validator);
 
-            _moduleTypeRepository.Update(page);
+            _moduleTypeRepository.Update(moduleType);
 
-            return page.Events;
+            return moduleType;
         }
     }
 }

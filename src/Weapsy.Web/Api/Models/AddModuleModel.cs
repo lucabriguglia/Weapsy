@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Weapsy.Domain.Pages;
 
-namespace Weapsy.Domain.Pages.Commands
+namespace Weapsy.Web.Api.Models
 {
-    public class AddModule : BaseSiteCommand
+    public class AddModuleModel
     {
+        public Guid SiteId { get; set; }
         public Guid PageId { get; set; }
         public Guid ModuleTypeId { get; set; }
         public string Zone { get; set; }

@@ -133,11 +133,5 @@ namespace Weapsy.Domain.Tests.Pages
         {
             Assert.AreEqual(_page.Id, _event.AggregateRootId);
         }
-
-        [Test]
-        public void Should_set_page_module_in_page_module_details_updated_event()
-        {
-            Assert.AreEqual(_pageModule, _event.PageModule);
-        }
     }
 }

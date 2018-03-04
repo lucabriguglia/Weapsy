@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Weapsy.Cqrs;
+using Weapsy.Cqrs.Events;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.Pages.Events;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Events;
-using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
 
@@ -21,10 +21,10 @@ namespace Weapsy.Data.Reporting.Pages
         IEventHandler<PageModuleRemoved>
     {
         private readonly ICacheManager _cacheManager;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _queryDispatcher;
 
         public PageEventsHandler(ICacheManager cacheManager, 
-            IQueryDispatcher queryDispatcher)
+            IDispatcher queryDispatcher)
         {
             _cacheManager = cacheManager;
             _queryDispatcher = queryDispatcher;
@@ -78,7 +78,7 @@ namespace Weapsy.Data.Reporting.Pages
 
         private void ClearPageCache(Guid siteId, Guid pageId)
         {
-            var languages = _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = siteId }).Result;
+            var languages = _queryDispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = siteId }).Result;
             foreach (var language in languages)
                 _cacheManager.Remove(string.Format(CacheKeys.PageInfoCacheKey, siteId, pageId, language.Id));
 
@@ -87,7 +87,7 @@ namespace Weapsy.Data.Reporting.Pages
 
         private void ClearMenuCache(Guid siteId)
         {
-            var languages = _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = siteId }).Result;
+            var languages = _queryDispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = siteId }).Result;
             foreach (var language in languages)
                 _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, "Main", language.Id));
 

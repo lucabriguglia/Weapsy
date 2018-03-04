@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentValidation;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users.Events;
@@ -24,16 +25,12 @@ namespace Weapsy.Domain.Users
 
         private User(CreateUser cmd) : base(cmd.Id)
         {
-            Email = cmd.Email;
-            UserName = cmd.UserName;
-            Status = UserStatus.Active;
-
             AddEvent(new UserCreated
             {
                 AggregateRootId = Id,
-                Email = Email,
-                UserName = UserName,
-                Status = Status
+                Email = cmd.Email,
+                UserName = cmd.UserName,
+                Status = UserStatus.Active
             });
         }
 
@@ -42,6 +39,14 @@ namespace Weapsy.Domain.Users
             validator.ValidateCommand(cmd);
 
             return new User(cmd);
+        }
+
+        private void Apply(UserCreated @event)
+        {
+            Id = @event.AggregateRootId;
+            Email = @event.Email;
+            UserName = @event.UserName;
+            Status = @event.Status;
         }
     }
 }

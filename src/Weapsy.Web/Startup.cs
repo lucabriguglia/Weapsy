@@ -17,14 +17,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using Weapsy.Cqrs;
+using Weapsy.Cqrs.EventStore.EF;
+using Weapsy.Cqrs.EventStore.EF.SqlServer;
+using Weapsy.Cqrs.Extensions;
 using Weapsy.Data;
 using Weapsy.Data.Configuration;
 using Weapsy.Data.Extensions;
 using Weapsy.Data.TempIdentity;
 using Weapsy.Domain.Sites;
 using Weapsy.Domain.Themes.Commands;
-using Weapsy.Framework.Extensions;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Apps;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Extensions;
@@ -58,6 +60,9 @@ namespace Weapsy.Web
             var hostingEnvironment = services.BuildServiceProvider().GetService<IHostingEnvironment>();
 
             services.AddOptions();
+
+            services.AddWeapsyCqrs();
+            services.AddWeapsyCqrsEventStore(Configuration);
 
             services.Configure<Weapsy.Data.Configuration.Data>(c => {
                 c.Provider = (Data.Configuration.DataProvider)Enum.Parse(
@@ -105,13 +110,15 @@ namespace Weapsy.Web
 
             services.AddAutoMapper();
 
-            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Mvc.Apps.IStartup>()) {
-                startup.ConfigureServices(services);
+            foreach (var startup in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<Mvc.Apps.IStartup>())
+            {
+                startup.ConfigureServices(services, Configuration);
             }
 
             var builder = new ContainerBuilder();
 
-            foreach (var module in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<IModule>()) {
+            foreach (var module in AppLoader.Instance(hostingEnvironment).AppAssemblies.GetImplementationsOf<IModule>())
+            {
                 builder.RegisterModule(module);
             }
 
@@ -129,14 +136,16 @@ namespace Weapsy.Web
             ISiteInstallationService siteInstallationService,
             IThemeInstallationService themeInstallationService,
             ISiteRepository siteRepository,
-            IQueryDispatcher queryDispatcher,
+            IDispatcher dispatcher,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             ApplicationDbContext applicationDbCopntext,
-            WeapsyDbContext weapsyDbContext)
+            WeapsyDbContext weapsyDbContext, 
+            EventStoreDbContext eventStoreDbContext)
         {
             weapsyDbContext.Database.Migrate();
             applicationDbCopntext.Database.Migrate();
+            eventStoreDbContext.Database.Migrate();
 
             //app.EnsureDbCreated();
             app.EnsureIdentityCreatedAsync(userManager, roleManager);
@@ -151,7 +160,8 @@ namespace Weapsy.Web
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
             }
-            else {
+            else
+            {
                 app.UseExceptionHandler("/error/500");
             }
 
@@ -159,7 +169,7 @@ namespace Weapsy.Web
 
             app.UseStaticFiles();
 
-            foreach (var theme in queryDispatcher.DispatchAsync<GetActiveThemes, IEnumerable<ThemeInfo>>(new GetActiveThemes()).Result) {
+            foreach (var theme in dispatcher.GetResultAsync<GetActiveThemes, IEnumerable<ThemeInfo>>(new GetActiveThemes()).GetAwaiter().GetResult()) {
                 var contentPath = Path.Combine(hostingEnvironment.ContentRootPath, "Themes", theme.Folder, "wwwroot");
                 if (Directory.Exists(contentPath)) {
                     app.UseStaticFiles(new StaticFileOptions {
@@ -194,7 +204,7 @@ namespace Weapsy.Web
             siteInstallationService.VerifySiteInstallation();
 
             var site = siteRepository.GetByName("Default");
-            var activeLanguages = queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = site.Id }).Result;
+            var activeLanguages = dispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = site.Id }).GetAwaiter().GetResult();
 
             app.AddRoutes();
             app.AddLocalisation(activeLanguages);

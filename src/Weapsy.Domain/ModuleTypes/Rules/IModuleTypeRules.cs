@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.ModuleTypes.Rules
 {
-    public interface IModuleTypeRules : IRules<ModuleType>
+    public interface IModuleTypeRules
     {
         bool DoesModuleTypeExist(Guid id);
         bool IsModuleTypeIdUnique(Guid id);

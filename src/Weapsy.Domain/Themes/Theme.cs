@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Domain.Themes.Events;
@@ -16,23 +17,16 @@ namespace Weapsy.Domain.Themes
 
         public Theme(){}
 
-        private Theme(CreateTheme cmd, IThemeSortOrderGenerator themeSortOrderGenerator)
-            : base(cmd.Id)
+        private Theme(CreateTheme cmd, IThemeSortOrderGenerator themeSortOrderGenerator) : base(cmd.Id)
         {
-            Name = cmd.Name;
-            Description = cmd.Description;
-            Folder = cmd.Folder;
-            SortOrder = themeSortOrderGenerator.GenerateNextSortOrder();
-            Status = ThemeStatus.Hidden;
-
             AddEvent(new ThemeCreated
             {
                 AggregateRootId = Id,
-                Name = Name,
-                Description = Description,
-                Folder = Folder,
-                SortOrder = SortOrder,
-                Status = Status
+                Name = cmd.Name,
+                Description = cmd.Description,
+                Folder = cmd.Folder,
+                SortOrder = themeSortOrderGenerator.GenerateNextSortOrder(),
+                Status = ThemeStatus.Hidden
             });
         }
 
@@ -49,16 +43,12 @@ namespace Weapsy.Domain.Themes
         {
             validator.ValidateCommand(cmd);
 
-            Name = cmd.Name;
-            Description = cmd.Description;
-            Folder = cmd.Folder;
-
             AddEvent(new ThemeDetailsUpdated
             {
                 AggregateRootId = Id,
-                Name = Name,
-                Description = Description,
-                Folder = Folder
+                Name = cmd.Name,
+                Description = cmd.Description,
+                Folder = cmd.Folder
             });
         }
 
@@ -66,8 +56,6 @@ namespace Weapsy.Domain.Themes
         {
             if (Status == ThemeStatus.Deleted)
                 throw new Exception("Theme is deleted and cannot be reordered.");
-
-            SortOrder = sortOrder;
 
             AddEvent(new ThemeReordered
             {
@@ -80,8 +68,6 @@ namespace Weapsy.Domain.Themes
         {
             if (Status == ThemeStatus.Active)
                 throw new Exception("Theme already active.");
-
-            Status = ThemeStatus.Active;
 
             AddEvent(new ThemeActivated
             {
@@ -97,8 +83,6 @@ namespace Weapsy.Domain.Themes
             if (Status == ThemeStatus.Deleted)
                 throw new Exception("Theme is deleted.");
 
-            Status = ThemeStatus.Hidden;
-
             AddEvent(new ThemeHidden
             {
                 AggregateRootId = Id
@@ -110,8 +94,6 @@ namespace Weapsy.Domain.Themes
             if (Status == ThemeStatus.Deleted)
                 throw new Exception("Theme already deleted.");
 
-            Status = ThemeStatus.Deleted;
-
             AddEvent(new ThemeDeleted
             {
                 AggregateRootId = Id
@@ -121,6 +103,42 @@ namespace Weapsy.Domain.Themes
         public void Restore()
         {
             throw new NotImplementedException();
+        }
+
+        private void Apply(ThemeActivated @event)
+        {
+            Status = ThemeStatus.Active;
+        }
+
+        private void Apply(ThemeCreated @event)
+        {
+            Name = @event.Name;
+            Description = @event.Description;
+            Folder = @event.Folder;
+            SortOrder = @event.SortOrder;
+            Status = @event.Status;
+        }
+
+        private void Apply(ThemeDeleted @event)
+        {
+            Status = ThemeStatus.Deleted;
+        }
+
+        private void Apply(ThemeDetailsUpdated @event)
+        {
+            Name = @event.Name;
+            Description = @event.Description;
+            Folder = @event.Folder;
+        }
+
+        private void Apply(ThemeHidden @event)
+        {
+            Status = ThemeStatus.Hidden;
+        }
+
+        private void Apply(ThemeReordered @event)
+        {
+            SortOrder = @event.SortOrder;
         }
     }
 }

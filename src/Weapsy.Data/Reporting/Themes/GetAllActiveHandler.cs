@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.Themes;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 using Weapsy.Reporting.Themes;
-using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Reporting.Themes.Queries;
 
 namespace Weapsy.Data.Reporting.Themes

@@ -96,48 +96,42 @@ namespace Weapsy.Domain.Tests.Pages
         }
 
         [Test]
-        public void Should_set_module_id_in_page_module_added_event()
-        {
-            Assert.AreEqual(_pageModule.ModuleId, _event.ModuleId);
-        }
-
-        [Test]
         public void Should_set_page_module_id_in_page_module_added_event()
         {
-            Assert.AreEqual(_pageModule.Id, _event.PageModuleId);
+            Assert.AreEqual(_pageModule.Id, _event.PageModule.Id);
         }
 
         [Test]
         public void Should_set_title_in_page_module_added_event()
         {
-            Assert.AreEqual(_pageModule.Title, _event.Title);
+            Assert.AreEqual(_pageModule.Title, _event.PageModule.Title);
         }
 
         [Test]
         public void Should_set_zone_in_page_module_added_event()
         {
-            Assert.AreEqual(_pageModule.Zone, _event.Zone);
+            Assert.AreEqual(_pageModule.Zone, _event.PageModule.Zone);
         }
 
         [Test]
         public void Should_set_zsort_order_in_page_module_added_event()
         {
-            Assert.AreEqual(_pageModule.SortOrder, _event.SortOrder);
+            Assert.AreEqual(_pageModule.SortOrder, _event.PageModule.SortOrder);
         }
 
         [Test]
         public void Should_set_status_in_page_module_added_event()
         {
-            Assert.AreEqual(_pageModule.Status, _event.PageModuleStatus);
+            Assert.AreEqual(_pageModule.Status, _event.PageModule.Status);
         }
 
         [Test]
         public void Should_set_reordered_modules_in_page_module_added_event()
         {
-            _command.ModuleId = Guid.NewGuid();
+            _command.PageModuleId = Guid.NewGuid();
             _page.AddModule(_command, _validatorMock.Object);
-            _event = _page.Events.OfType<PageModuleAdded>().FirstOrDefault(x => x.ModuleId == _command.ModuleId);
-            Assert.NotNull(_event.ReorderedModules.FirstOrDefault(x => x.ModuleId == _pageModule.ModuleId));
+            _event = _page.Events.OfType<PageModuleAdded>().FirstOrDefault(x => x.PageModule.Id == _command.PageModuleId);
+            Assert.NotNull(_event.ReorderedModules.FirstOrDefault(x => x.PageModuleId == _pageModule.Id));
         }
 
         [Test]

@@ -4,26 +4,26 @@ using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Languages;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Localization;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs;
 using Weapsy.Reporting.Languages.Queries;
 using Weapsy.Reporting.Sites.Queries;
 using Weapsy.Reporting.Themes.Queries;
 using Weapsy.Reporting.Users;
+using System.Linq;
 
 namespace Weapsy.Mvc.Context
 {
     public class ContextService : IContextService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
         public ContextService(IHttpContextAccessor httpContextAccessor, 
-            IQueryDispatcher queryDispatcher)
+            IDispatcher dispatcher)
         {
             _httpContextAccessor = httpContextAccessor;
-            _queryDispatcher = queryDispatcher;           
+            _dispatcher = dispatcher;           
         }
 
         private const string SiteInfoKey = "Weapsy|SiteInfo";
@@ -33,7 +33,7 @@ namespace Weapsy.Mvc.Context
 
         public SiteInfo GetCurrentSiteInfo()
         {
-            return GetInfo(SiteInfoKey, () => _queryDispatcher.DispatchAsync<GetSiteInfo, SiteInfo>(new GetSiteInfo { Name = "Default" }).Result);
+            return GetInfo(SiteInfoKey, () => _dispatcher.GetResultAsync<GetSiteInfo, SiteInfo>(new GetSiteInfo { Name = "Default" }).Result);
         }
 
         public void SetLanguageInfo(LanguageInfo languageInfo)
@@ -45,7 +45,7 @@ namespace Weapsy.Mvc.Context
         {
             return GetInfo(LanguageInfoKey, () =>
             {
-                var languages = _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = GetCurrentSiteInfo().Id }).Result;
+                var languages = _dispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = GetCurrentSiteInfo().Id }).Result;
                 var userCookie = _httpContextAccessor.HttpContext.Request.Cookies[CookieRequestCultureProvider.DefaultCookieName];
 
                 if (!string.IsNullOrEmpty(userCookie))
@@ -66,7 +66,7 @@ namespace Weapsy.Mvc.Context
         {
             return GetInfo(ThemeInfoKey, () =>
             {
-                var themes = _queryDispatcher.DispatchAsync<GetActiveThemes, IEnumerable<ThemeInfo>>(new GetActiveThemes()).Result;
+                var themes = _dispatcher.GetResultAsync<GetActiveThemes, IEnumerable<ThemeInfo>>(new GetActiveThemes()).Result;
 
                 var theme = themes.FirstOrDefault(x => x.Id == GetCurrentSiteInfo().ThemeId);
 

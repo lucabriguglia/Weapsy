@@ -2,7 +2,6 @@
 using Autofac;
 using Weapsy.Data;
 using Weapsy.Domain.Sites.Commands;
-using Weapsy.Framework.Domain;
 using Weapsy.Reporting.Apps.Queries;
 using Weapsy.Services.Mail;
 
@@ -12,7 +11,7 @@ namespace Weapsy.Web
     {
         protected override void Load(ContainerBuilder builder)
         {
-            var infrastructureAssembly = typeof(AggregateRoot).GetTypeInfo().Assembly;
+            //var infrastructureAssembly = typeof(AggregateRoot).GetTypeInfo().Assembly;
             var domainAssembly = typeof(CreateSite).GetTypeInfo().Assembly;
             var dataAssembly = typeof(IDataProvider).GetTypeInfo().Assembly;
             var reportingAssembly = typeof(GetAppAdminModel).GetTypeInfo().Assembly;
@@ -34,7 +33,7 @@ namespace Weapsy.Web
             //builder.RegisterAssemblyTypes(reportingAssembly).AsClosedTypesOf(typeof(IEventHandler<>));
             //builder.RegisterAssemblyTypes(reportingAssembly).AsClosedTypesOf(typeof(IEventHandlerAsync<>));
 
-            builder.RegisterAssemblyTypes(infrastructureAssembly).AsImplementedInterfaces();
+            //builder.RegisterAssemblyTypes(infrastructureAssembly).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(domainAssembly).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(dataAssembly).AsImplementedInterfaces();
             builder.RegisterAssemblyTypes(reportingAssembly).AsImplementedInterfaces();

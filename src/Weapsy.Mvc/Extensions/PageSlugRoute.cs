@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
@@ -27,14 +27,14 @@ namespace Weapsy.Mvc.Extensions
             string path = GetPath(context);
 
             var contextService = context.HttpContext.RequestServices.GetService<IContextService>();
-            var queryDispatcher = context.HttpContext.RequestServices.GetService<IQueryDispatcher>();
+            var dispatcher = context.HttpContext.RequestServices.GetService<IDispatcher>();
 
             var pathParts = path.Split('/');
             var languageSlug = pathParts.Length > 1 ? pathParts[0] : path;
             var pageSlug = path;
 
             var site = contextService.GetCurrentSiteInfo();
-            var languages = await queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = site.Id });
+            var languages = await dispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = site.Id });
             var language = languages.FirstOrDefault(x => x.Url == languageSlug);
             Guid? pageId = null;
 
@@ -49,10 +49,10 @@ namespace Weapsy.Mvc.Extensions
             }
 
             if (!string.IsNullOrEmpty(pageSlug))
-                pageId = await queryDispatcher.DispatchAsync<GetPageIdBySlug, Guid?>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug, LanguageId = language.Id });
+                pageId = await dispatcher.GetResultAsync<GetPageIdBySlug, Guid?>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug, LanguageId = language.Id });
 
             if (pageId == null && !string.IsNullOrEmpty(pageSlug))
-                pageId = await queryDispatcher.DispatchAsync<GetPageIdBySlug, Guid?>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug });
+                pageId = await dispatcher.GetResultAsync<GetPageIdBySlug, Guid?>(new GetPageIdBySlug { SiteId = site.Id, Slug = pageSlug });
 
             if (pageId == null && string.IsNullOrEmpty(pageSlug))
                 pageId = site.HomePageId;

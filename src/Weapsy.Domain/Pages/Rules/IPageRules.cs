@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Pages.Rules
 {
-    public interface IPageRules : IRules<Page>
+    public interface IPageRules
     {
         bool DoesPageExist(Guid id);
         bool DoesPageExist(Guid siteId, Guid pageId);

@@ -1,13 +1,12 @@
 using FluentValidation;
 using System;
-using System.Collections.Generic;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Languages.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Languages.Handlers
 {
-    public class DeleteLanguageHandler : ICommandHandler<DeleteLanguage>
+    public class DeleteLanguageHandler : ICommandHandlerWithAggregate<DeleteLanguage>
     {
         private readonly ILanguageRepository _languageRepository;
         private readonly IValidator<DeleteLanguage> _validator;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Languages.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteLanguage command)
+        public IAggregateRoot Handle(DeleteLanguage command)
         {
             var language = _languageRepository.GetById(command.SiteId, command.Id);
 
@@ -29,7 +28,7 @@ namespace Weapsy.Domain.Languages.Handlers
 
             _languageRepository.Update(language);
 
-            return language.Events;
+            return language;
         }
     }
 }

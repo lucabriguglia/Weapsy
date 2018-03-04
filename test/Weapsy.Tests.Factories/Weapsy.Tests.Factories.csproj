@@ -6,11 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Moq" Version="4.8.1" />
+    <PackageReference Include="Weapsy.Cqrs" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Weapsy.Domain\Weapsy.Domain.csproj" />
-    <ProjectReference Include="..\..\src\Weapsy.Framework\Weapsy.Framework.csproj" />
   </ItemGroup>
 
 </Project>

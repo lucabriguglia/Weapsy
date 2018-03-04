@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Modules.Commands;
 using Weapsy.Domain.Modules.Events;
@@ -25,18 +26,13 @@ namespace Weapsy.Domain.Modules
 
         private Module(Guid siteId, Guid moduleTypeId, Guid id, string title) : base(id)
         {
-            SiteId = siteId;
-            ModuleTypeId = moduleTypeId;
-            Title = title;
-            Status = ModuleStatus.Active;
-
             AddEvent(new ModuleCreated
             {
-                SiteId = SiteId,
-                ModuleTypeId = ModuleTypeId,
+                SiteId = siteId,
+                ModuleTypeId = moduleTypeId,
                 AggregateRootId = Id,
-                Title = Title,
-                Status = Status
+                Title = title,
+                Status = ModuleStatus.Active
             });
         }
 
@@ -47,18 +43,13 @@ namespace Weapsy.Domain.Modules
 
         private Module(CreateModule cmd) : base(cmd.Id)
         {
-            SiteId = cmd.SiteId;
-            ModuleTypeId = cmd.ModuleTypeId;
-            Title = cmd.Title;
-            Status = ModuleStatus.Active;
-
             AddEvent(new ModuleCreated
             {
-                SiteId = SiteId,
-                ModuleTypeId = ModuleTypeId,
+                SiteId = cmd.SiteId,
+                ModuleTypeId = cmd.ModuleTypeId,
                 AggregateRootId = Id,
-                Title = Title,
-                Status = Status
+                Title = cmd.Title,
+                Status = ModuleStatus.Active
             });
         }
 
@@ -81,8 +72,6 @@ namespace Weapsy.Domain.Modules
 
             validator.ValidateCommand(cmd);
 
-            Status = ModuleStatus.Deleted;
-
             AddEvent(new ModuleDeleted
             {
                 SiteId = SiteId,
@@ -95,8 +84,6 @@ namespace Weapsy.Domain.Modules
             if (Status == ModuleStatus.Deleted)
                 throw new Exception("Module already deleted");
 
-            Status = ModuleStatus.Deleted;
-
             AddEvent(new ModuleDeleted
             {
                 SiteId = SiteId,
@@ -107,6 +94,19 @@ namespace Weapsy.Domain.Modules
         public void Restore()
         {
             throw new NotImplementedException();
+        }
+
+        private void Apply(ModuleCreated @event)
+        {
+            SiteId = @event.SiteId;
+            ModuleTypeId = @event.ModuleTypeId;
+            Title = @event.Title;
+            Status = @event.Status;
+        }
+
+        private void Apply(ModuleDeleted @event)
+        {
+            Status = ModuleStatus.Deleted;
         }
     }
 }

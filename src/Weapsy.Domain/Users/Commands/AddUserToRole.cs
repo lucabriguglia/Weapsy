@@ -1,9 +1,9 @@
 ﻿using System;
-using Weapsy.Framework.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Users.Commands
 {
-    public class AddUserToRole : ICommand
+    public class AddUserToRole : DomainCommand
     {
         public Guid Id { get; set; }
         public string RoleName { get; set; }

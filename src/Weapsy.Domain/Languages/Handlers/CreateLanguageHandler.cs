@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentValidation;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Languages.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Languages.Handlers
 {
-    public class CreateLanguageHandler : ICommandHandlerAsync<CreateLanguage>
+    public class CreateLanguageHandler : ICommandHandlerWithAggregateAsync<CreateLanguage>
     {
         private readonly ILanguageRepository _languageRepository;
         private readonly IValidator<CreateLanguage> _validator;
@@ -22,13 +21,13 @@ namespace Weapsy.Domain.Languages.Handlers
             _sortOrderGenerator = sortOrderGenerator;
         }
 
-        public async Task<IEnumerable<IEvent>> HandleAsync(CreateLanguage command)
+        public async Task<IAggregateRoot> HandleAsync(CreateLanguage command)
         {
             var language = Language.CreateNew(command, _validator, _sortOrderGenerator);
 
             await _languageRepository.CreateAsync(language);
 
-            return language.Events;
+            return language;
         }
     }
 }

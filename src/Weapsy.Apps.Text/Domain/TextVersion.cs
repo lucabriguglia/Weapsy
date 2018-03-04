@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Weapsy.Framework.Domain;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Apps.Text.Domain
 {

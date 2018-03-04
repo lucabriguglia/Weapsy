@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Pages.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Pages;
@@ -17,24 +16,21 @@ namespace Weapsy.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class PageController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly IMapper _mapper;
 
-        public PageController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public PageController(IDispatcher dispatcher,
             IMapper mapper,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _mapper = mapper;            
         }
 
         public async Task<IActionResult> Index()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<PageAdminListModel>>(new GetAllForAdmin
+            var model = await _dispatcher.GetResultAsync<GetAllForAdmin, IEnumerable<PageAdminListModel>>(new GetAllForAdmin
             {
                 SiteId = SiteId
             });
@@ -43,7 +39,7 @@ namespace Weapsy.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetDefaultForAdmin, PageAdminModel>(new GetDefaultForAdmin
+            var model = await _dispatcher.GetResultAsync<GetDefaultForAdmin, PageAdminModel>(new GetDefaultForAdmin
             {
                 SiteId = SiteId
             });
@@ -58,13 +54,13 @@ namespace Weapsy.Web.Areas.Admin.Controllers
             command.Id = Guid.NewGuid();
             command.PagePermissions = model.PagePermissions.ToDomain();
             command.MenuIds = model.Menus.ToCommand();
-            _commandSender.Send<CreatePage, Page>(command);
+            _dispatcher.SendAndPublish<CreatePage, Page>(command);
             return new NoContentResult();
         }
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, PageAdminModel>(new GetForAdmin
+            var model = await _dispatcher.GetResultAsync<GetForAdmin, PageAdminModel>(new GetForAdmin
             {
                 SiteId = SiteId,
                 Id = id
@@ -81,13 +77,13 @@ namespace Weapsy.Web.Areas.Admin.Controllers
             var command = _mapper.Map<UpdatePageDetails>(model);
             command.SiteId = SiteId;
             command.PagePermissions = model.PagePermissions.ToDomain();
-            _commandSender.Send<UpdatePageDetails, Page>(command);
+            _dispatcher.SendAndPublish<UpdatePageDetails, Page>(command);
             return new NoContentResult();
         }
 
         public async Task<IActionResult> EditModule(Guid pageId, Guid pageModuleId)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetPageModuleAdminModel, PageModuleAdminModel>(new GetPageModuleAdminModel
+            var model = await _dispatcher.GetResultAsync<GetPageModuleAdminModel, PageModuleAdminModel>(new GetPageModuleAdminModel
             {
                 SiteId = SiteId,
                 PageId = pageId,
@@ -105,7 +101,7 @@ namespace Weapsy.Web.Areas.Admin.Controllers
             var command = _mapper.Map<UpdatePageModuleDetails>(model);
             command.SiteId = SiteId;
             command.PageModulePermissions = model.PageModulePermissions.ToDomain();
-            _commandSender.Send<UpdatePageModuleDetails, Page>(command);
+            _dispatcher.SendAndPublish<UpdatePageModuleDetails, Page>(command);
             return new NoContentResult();
         }
     }

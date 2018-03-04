@@ -1,13 +1,13 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
+using System.Threading.Tasks;
 
 namespace Weapsy.Apps.Text.Domain
 {
-    public interface ITextModuleRepository : IRepository<TextModule>
+    public interface ITextModuleRepository
     {
         TextModule GetById(Guid id);
         TextModule GetByModuleId(Guid moduleId);
-        void Create(TextModule text);
+        Task CreateAsync(TextModule text);
         void Update(TextModule text);
     }
 }

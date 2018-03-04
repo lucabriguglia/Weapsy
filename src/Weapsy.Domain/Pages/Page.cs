@@ -5,6 +5,7 @@ using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using System.Collections.Generic;
 using System.Linq;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Pages
 {
@@ -30,24 +31,19 @@ namespace Weapsy.Domain.Pages
 
         private Page(CreatePage cmd) : base(cmd.Id)
         {
-            SiteId = cmd.SiteId;
-            Status = PageStatus.Hidden;
-
-            SetPageDetails(cmd);
-
             AddEvent(new PageCreated
             {
-                SiteId = SiteId,
                 AggregateRootId = Id,
-                Name = Name,
-                Url = Url,
-                Title = Title,
-                MetaDescription = MetaDescription,
-                MetaKeywords = MetaKeywords,
-                PageLocalisations = PageLocalisations,
-                PagePermissions = PagePermissions,
-                Status = Status,
-                MenuIds = cmd.MenuIds
+                SiteId = cmd.SiteId,               
+                Name = cmd.Name,
+                Url = cmd.Url,
+                Title = cmd.Title,
+                MetaDescription = cmd.MetaDescription,
+                MetaKeywords = cmd.MetaKeywords,
+                PageLocalisations = cmd.PageLocalisations,
+                PagePermissions = cmd.PagePermissions,
+                MenuIds = cmd.MenuIds,
+                Status = PageStatus.Hidden
             });
         }
 
@@ -62,76 +58,18 @@ namespace Weapsy.Domain.Pages
         {
             validator.ValidateCommand(cmd);
 
-            SetPageDetails(cmd);
-
             AddEvent(new PageDetailsUpdated
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
-                Name = Name,
-                Url = Url,
-                Title = Title,
-                MetaDescription = MetaDescription,
-                MetaKeywords = MetaKeywords,
-                PageLocalisations = PageLocalisations,
-                PagePermissions = PagePermissions
+                Name = cmd.Name,
+                Url = cmd.Url,
+                Title = cmd.Title,
+                MetaDescription = cmd.MetaDescription,
+                MetaKeywords = cmd.MetaKeywords,
+                PageLocalisations = cmd.PageLocalisations,
+                PagePermissions = cmd.PagePermissions
             });
-        }
-
-        private void SetPageDetails(PageDetails cmd)
-        {
-            Name = cmd.Name;
-            Url = cmd.Url;
-            Title = cmd.Title;
-            MetaDescription = cmd.MetaDescription;
-            MetaKeywords = cmd.MetaKeywords;
-
-            SetLocalisations(cmd.PageLocalisations);
-            SetPermissions(cmd.PagePermissions);
-        }
-
-        private void SetLocalisations(IEnumerable<PageLocalisation> pageLocalisations)
-        {
-            PageLocalisations.Clear();
-
-            foreach (var localisation in pageLocalisations)
-            {
-                AddLocalisation(new PageLocalisation
-                {
-                    PageId = Id,
-                    LanguageId = localisation.LanguageId,
-                    Url = localisation.Url,
-                    Title = localisation.Title,
-                    MetaDescription = localisation.MetaDescription,
-                    MetaKeywords = localisation.MetaKeywords
-                });
-            }
-        }
-
-        private void SetPermissions(IEnumerable<PagePermission> pagePermissions)
-        {
-            PagePermissions.Clear();
-
-            foreach (var permission in pagePermissions)
-            {
-                if (PagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
-                {
-                    PagePermissions.Add(new PagePermission
-                    {
-                        PageId = Id,
-                        RoleId = permission.RoleId,
-                        Type = permission.Type
-                    });
-                }
-            }
-        }
-
-        private void AddLocalisation(PageLocalisation localisation)
-        {
-            if (PageLocalisations.FirstOrDefault(x => x.LanguageId == localisation.LanguageId) != null)
-                throw new Exception("Language already added.");
-
-            PageLocalisations.Add(localisation);
         }
 
         public void AddModule(AddPageModule cmd, IValidator<AddPageModule> validator)
@@ -143,7 +81,7 @@ namespace Weapsy.Domain.Pages
 
         public void AddModule(PageModule pageModule)
         {
-            var alreadyAddedPageModule = PageModules.FirstOrDefault(x => x.ModuleId == pageModule.ModuleId);
+            var alreadyAddedPageModule = PageModules.FirstOrDefault(x => x.Id == pageModule.Id);
             if (alreadyAddedPageModule != null && alreadyAddedPageModule.Status != PageModuleStatus.Deleted)
                 throw new Exception("Module already added.");
 
@@ -151,26 +89,19 @@ namespace Weapsy.Domain.Pages
 
             foreach (var existingPageModule in PageModules.Where(x => x.Zone == pageModule.Zone && x.SortOrder >= pageModule.SortOrder))
             {
-                existingPageModule.Reorder(existingPageModule.Zone, existingPageModule.SortOrder + 1);
                 reorderedModules.Add(new PageModuleAdded.ReorderedModule
                 {
-                    ModuleId = existingPageModule.ModuleId,
-                    SortOrder = existingPageModule.SortOrder
+                    PageModuleId = existingPageModule.Id,
+                    Zone = existingPageModule.Zone,
+                    SortOrder = existingPageModule.SortOrder + 1
                 });
             }
 
-            PageModules.Add(pageModule);
-
             AddEvent(new PageModuleAdded
             {
-                SiteId = SiteId,
-                PageModuleId = pageModule.Id,
-                ModuleId = pageModule.ModuleId,
                 AggregateRootId = Id,
-                Title = pageModule.Title,
-                Zone = pageModule.Zone,
-                SortOrder = pageModule.SortOrder,
-                PageModuleStatus = PageModuleStatus.Active,
+                SiteId = SiteId,
+                PageModule = pageModule,
                 ReorderedModules = reorderedModules
             });
         }
@@ -197,11 +128,9 @@ namespace Weapsy.Domain.Pages
                     if (pageModule.Zone == zoneName && pageModule.SortOrder == sortOrder)
                         continue;
 
-                    pageModule.Reorder(zoneName, sortOrder);
-
                     reorderedPageModules.Add(new PageModulesReordered.PageModule
                     {
-                        ModuleId = pageModule.ModuleId,
+                        PageModuleId = pageModule.Id,
                         Zone = zoneName,
                         SortOrder = sortOrder
                     });
@@ -225,13 +154,16 @@ namespace Weapsy.Domain.Pages
             if (pageModule == null || pageModule.Status == PageModuleStatus.Deleted)
                 throw new Exception("Page module not found.");
 
-            pageModule.UpdateDetails(cmd);
-
             AddEvent(new PageModuleDetailsUpdated
             {
-                SiteId = SiteId,
                 AggregateRootId = Id,
-                PageModule = pageModule
+                SiteId = SiteId,
+                PageId = cmd.PageId,
+                PageModuleId = pageModule.Id,
+                Title = cmd.Title,
+                InheritPermissions = cmd.InheritPermissions,
+                PageModuleLocalisations = cmd.PageModuleLocalisations,
+                PageModulePermissions = cmd.PageModulePermissions
             });
         }
 
@@ -244,8 +176,6 @@ namespace Weapsy.Domain.Pages
             if (pageModule == null || pageModule.Status == PageModuleStatus.Deleted)
                 throw new Exception("Page module not found.");
 
-            pageModule.Delete();
-
             AddEvent(new PageModuleRemoved
             {
                 SiteId = SiteId,
@@ -257,8 +187,6 @@ namespace Weapsy.Domain.Pages
 
         public void SetPagePermissions(SetPagePermissions cmd)
         {
-            SetPermissions(cmd.PagePermissions);
-
             AddEvent(new PagePermissionsSet
             {
                 SiteId = SiteId,
@@ -273,8 +201,6 @@ namespace Weapsy.Domain.Pages
 
             if (pageModule == null || pageModule.Status == PageModuleStatus.Deleted)
                 throw new Exception("Page module not found.");
-
-            pageModule.SetPermissions(cmd.PageModulePermissions);
 
             AddEvent(new PageModulePermissionsSet
             {
@@ -291,8 +217,6 @@ namespace Weapsy.Domain.Pages
 
             if (Status == PageStatus.Active)
                 throw new Exception("Page already active.");
-
-            Status = PageStatus.Active;
 
             AddEvent(new PageActivated
             {
@@ -311,8 +235,6 @@ namespace Weapsy.Domain.Pages
             if (Status == PageStatus.Deleted)
                 throw new Exception("Page is deleted.");
 
-            Status = PageStatus.Hidden;
-
             AddEvent(new PageHidden
             {
                 SiteId = SiteId,
@@ -327,8 +249,6 @@ namespace Weapsy.Domain.Pages
             if (Status == PageStatus.Deleted)
                 throw new Exception("Page already deleted.");
 
-            Status = PageStatus.Deleted;
-
             AddEvent(new PageDeleted
             {
                 SiteId = SiteId,
@@ -339,6 +259,132 @@ namespace Weapsy.Domain.Pages
         public void Restore()
         {
             throw new NotImplementedException();
+        }
+
+        private void Apply(PageActivated @event)
+        {
+            Status = PageStatus.Active;
+        }
+
+        private void Apply(PageCreated @event)
+        {
+            Id = @event.AggregateRootId;
+            SiteId = @event.SiteId;
+            Status = @event.Status;
+
+            UpdatePageDetails(@event);
+        }
+
+        private void Apply(PageDeleted @event)
+        {
+            Status = PageStatus.Deleted;
+        }
+
+        private void Apply(PageDetailsUpdated @event)
+        {
+            UpdatePageDetails(@event);
+        }
+
+        private void Apply(PageHidden @event)
+        {
+            Status = PageStatus.Hidden;
+        }
+
+        private void Apply(PageModuleAdded @event)
+        {
+            PageModules.Add(@event.PageModule);
+
+            foreach (var reorderedModule in @event.ReorderedModules)
+            {
+                var pageModule = PageModules.FirstOrDefault(x => x.Id == reorderedModule.PageModuleId);
+                pageModule?.Reorder(reorderedModule.Zone, reorderedModule.SortOrder);
+            }
+        }
+
+        private void Apply(PageModuleDetailsUpdated @event)
+        {
+            var pageModule = PageModules.FirstOrDefault(x => x.Id == @event.PageModuleId);
+            pageModule?.UpdateDetails(@event);
+        }
+
+        private void Apply(PageModulePermissionsSet @event)
+        {
+            var pageModule = PageModules.FirstOrDefault(x => x.Id == @event.PageModuleId);
+            pageModule?.SetPermissions(@event.PageModulePermissions);
+        }
+
+        private void Apply(PageModuleRemoved @event)
+        {
+            var pageModule = PageModules.FirstOrDefault(x => x.Id == @event.PageModuleId);
+            pageModule?.Delete();
+        }
+
+        private void Apply(PageModulesReordered @event)
+        {
+            foreach (var reorderedPageModule in @event.PageModules)
+            {
+                var pageModule = PageModules.FirstOrDefault(x => x.Id == reorderedPageModule.PageModuleId);
+                pageModule?.Reorder(reorderedPageModule.Zone, reorderedPageModule.SortOrder);
+            }
+        }
+
+        private void Apply(PagePermissionsSet @event)
+        {
+            SetPermissions(@event.PagePermissions);
+        }
+
+        private void UpdatePageDetails(PageDetailsBase @event)
+        {
+            Name = @event.Name;
+            Url = @event.Url;
+            Title = @event.Title;
+            MetaDescription = @event.MetaDescription;
+            MetaKeywords = @event.MetaKeywords;
+
+            SetLocalisations(@event.PageLocalisations);
+            SetPermissions(@event.PagePermissions);
+        }
+
+        private void SetLocalisations(IEnumerable<PageLocalisation> pageLocalisations)
+        {
+            PageLocalisations.Clear();
+
+            foreach (var localisation in pageLocalisations)
+            {
+                AddLocalisation(new PageLocalisation
+                {
+                    PageId = Id,
+                    LanguageId = localisation.LanguageId,
+                    Url = localisation.Url,
+                    Title = localisation.Title,
+                    MetaDescription = localisation.MetaDescription,
+                    MetaKeywords = localisation.MetaKeywords
+                });
+            }
+        }
+
+        private void AddLocalisation(PageLocalisation localisation)
+        {
+            if (PageLocalisations.FirstOrDefault(x => x.LanguageId == localisation.LanguageId) == null)
+                PageLocalisations.Add(localisation);
+        }
+
+        private void SetPermissions(IEnumerable<PagePermission> pagePermissions)
+        {
+            PagePermissions.Clear();
+
+            foreach (var permission in pagePermissions)
+            {
+                if (PagePermissions.FirstOrDefault(x => x.RoleId == permission.RoleId && x.Type == permission.Type) == null)
+                {
+                    PagePermissions.Add(new PagePermission
+                    {
+                        PageId = Id,
+                        RoleId = permission.RoleId,
+                        Type = permission.Type
+                    });
+                }
+            }
         }
     }
 }

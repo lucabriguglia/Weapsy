@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using Weapsy.Data.TempIdentity;
 using Weapsy.Domain.Roles.DefaultRoles;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Data.Reporting.Roles
 {

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Themes;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Domain.Themes.Rules;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Themes;
@@ -17,18 +16,15 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class ThemeController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly IThemeRules _themeRules;
 
-        public ThemeController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,           
+        public ThemeController(IDispatcher dispatcher,          
             IThemeRules themeRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _themeRules = themeRules;
         }
 
@@ -48,7 +44,7 @@ namespace Weapsy.Web.Api
         public IActionResult Post([FromBody] CreateTheme model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateTheme, Theme>(model);
+            _dispatcher.SendAndPublish<CreateTheme, Theme>(model);
             return new NoContentResult();
         }
 
@@ -56,7 +52,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/update")]
         public IActionResult UpdateDetails([FromBody] UpdateThemeDetails model)
         {
-            _commandSender.Send<UpdateThemeDetails, Theme>(model);
+            _dispatcher.SendAndPublish<UpdateThemeDetails, Theme>(model);
             return new NoContentResult();
         }
 
@@ -64,7 +60,15 @@ namespace Weapsy.Web.Api
         [Route("reorder")]
         public IActionResult ReorderThemes([FromBody] List<Guid> model)
         {
-            _commandSender.Send<ReorderThemes, Theme>(new ReorderThemes { Themes = model });
+            for (var i = 0; i < model.Count; i++)
+            {
+                _dispatcher.SendAndPublish<ReorderTheme, Theme>(new ReorderTheme
+                {
+                    AggregateRootId = model[i],
+                    SiteId = SiteId,
+                    Order = i + 1
+                });
+            }
             return new NoContentResult();
         }
 
@@ -72,7 +76,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/activate")]
         public IActionResult Activate(Guid id)
         {
-            _commandSender.Send<ActivateTheme, Theme>(new ActivateTheme { Id = id });
+            _dispatcher.SendAndPublish<ActivateTheme, Theme>(new ActivateTheme { Id = id });
             return new NoContentResult();
         }
 
@@ -80,14 +84,14 @@ namespace Weapsy.Web.Api
         [Route("{id}/hide")]
         public IActionResult Hide(Guid id)
         {
-            _commandSender.Send<HideTheme, Theme>(new HideTheme { Id = id });
+            _dispatcher.SendAndPublish<HideTheme, Theme>(new HideTheme { Id = id });
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _commandSender.Send<DeleteTheme, Theme>(new DeleteTheme { Id = id });
+            _dispatcher.SendAndPublish<DeleteTheme, Theme>(new DeleteTheme { Id = id });
             return new NoContentResult();
         }
 
@@ -119,7 +123,7 @@ namespace Weapsy.Web.Api
         [Route("admin-list")]
         public async Task<IActionResult> AdminList()
         {
-            var models = await _queryDispatcher.DispatchAsync<GetAllForAdmin, IEnumerable<ThemeAdminModel>>(new GetAllForAdmin());
+            var models = await _dispatcher.GetResultAsync<GetAllForAdmin, IEnumerable<ThemeAdminModel>>(new GetAllForAdmin());
             return Ok(models);
         }
 
@@ -127,7 +131,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetForAdmin, ThemeAdminModel>(new GetForAdmin { Id = id });
+            var model = await _dispatcher.GetResultAsync<GetForAdmin, ThemeAdminModel>(new GetForAdmin { Id = id });
 
             if (model == null)
                 return NotFound();

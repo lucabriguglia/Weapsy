@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Menus
 {
-    public class MenuItemLocalisation : ValueObject
+    public class MenuItemLocalisation
     {
         public Guid MenuItemId { get; set; }
         public Guid LanguageId { get; set; }

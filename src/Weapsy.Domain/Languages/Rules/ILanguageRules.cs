@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Languages.Rules
 {
-    public interface ILanguageRules : IRules<Language>
+    public interface ILanguageRules
     {
         bool DoesLanguageExist(Guid id);
         bool DoesLanguageExist(Guid siteId, Guid id);

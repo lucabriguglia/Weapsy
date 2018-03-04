@@ -11,6 +11,13 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
+    <PackageReference Include="Weapsy.Cqrs" Version="2.1.2" />
+    <PackageReference Include="Weapsy.Cqrs.EventStore.CosmosDB.MongoDB" Version="2.1.2" />
+    <PackageReference Include="Weapsy.Cqrs.EventStore.CosmosDB.Sql" Version="2.1.2" />
+    <PackageReference Include="Weapsy.Cqrs.EventStore.EF.MySql" Version="2.1.2" />
+    <PackageReference Include="Weapsy.Cqrs.EventStore.EF.PostgreSql" Version="2.1.2" />
+    <PackageReference Include="Weapsy.Cqrs.EventStore.EF.Sqlite" Version="2.1.2" />
+    <PackageReference Include="Weapsy.Cqrs.EventStore.EF.SqlServer" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +29,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Weapsy.Data\Weapsy.Data.csproj" />
     <ProjectReference Include="..\Weapsy.Domain\Weapsy.Domain.csproj" />
-    <ProjectReference Include="..\Weapsy.Framework\Weapsy.Framework.csproj" />
     <ProjectReference Include="..\Weapsy.Mvc\Weapsy.Mvc.csproj" />
     <ProjectReference Include="..\Weapsy.Reporting\Weapsy.Reporting.csproj" />
     <ProjectReference Include="..\Weapsy.Services\Weapsy.Services.csproj" />

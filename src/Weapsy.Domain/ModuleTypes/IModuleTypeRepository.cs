@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.ModuleTypes
 {
-    public interface IModuleTypeRepository : IRepository<ModuleType>
+    public interface IModuleTypeRepository
     {
         ModuleType GetById(Guid id);
         ModuleType GetByName(string name);

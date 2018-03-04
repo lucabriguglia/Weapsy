@@ -8,6 +8,7 @@ using SiteDbEntity = Weapsy.Data.Entities.Site;
 
 namespace Weapsy.Data.Tests.Repositories
 {
+    [Ignore("To be removed")]
     [TestFixture]
     public class SiteRepositoryTests
     {

@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using Weapsy.Apps.Text.Domain;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Reporting;
-using Weapsy.Framework.Queries;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Weapsy.Cqrs;
+using Weapsy.Cqrs.Queries;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
 
@@ -15,12 +16,12 @@ namespace Weapsy.Apps.Text.Data.Reporting
     public class GetAdminModelHandler : IQueryHandlerAsync<GetAdminModel, AddVersion>
     {
         private readonly IContextFactory _contextFactory;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
-        public GetAdminModelHandler(IContextFactory contextFactory, IQueryDispatcher queryDispatcher)
+        public GetAdminModelHandler(IContextFactory contextFactory, IDispatcher dispatcher)
         {
             _contextFactory = contextFactory;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
 
         public async Task<AddVersion> RetrieveAsync(GetAdminModel query)
@@ -52,7 +53,7 @@ namespace Weapsy.Apps.Text.Data.Reporting
                     Description = version.Description
                 };
 
-                var languages = await _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = query.SiteId });
+                var languages = await _dispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = query.SiteId });
 
                 foreach (var language in languages)
                 {

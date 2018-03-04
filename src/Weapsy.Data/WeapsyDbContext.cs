@@ -17,13 +17,6 @@ namespace Weapsy.Data
             builder.Entity<App>()
                 .ToTable("App");
 
-            builder.Entity<DomainAggregate>()
-                .ToTable("DomainAggregate");
-
-            builder.Entity<DomainEvent>()
-                .ToTable("DomainEvent")
-                .HasKey(x => new { x.DomainAggregateId, x.SequenceNumber });
-
             builder.Entity<EmailAccount>()
                 .ToTable("EmailAccount");
 
@@ -87,8 +80,6 @@ namespace Weapsy.Data
         }
 
         public DbSet<App> Apps { get; set; }
-        public DbSet<DomainAggregate> DomainAggregates { get; set; }
-        public DbSet<DomainEvent> DomainEvents { get; set; }
         public DbSet<EmailAccount> EmailAccounts { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Menu> Menus { get; set; }

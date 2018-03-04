@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Apps.Text.Domain.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Apps.Text.Domain.Handlers
 {
-    public class AddVersionHandler : ICommandHandler<AddVersion>
+    public class AddVersionHandler : ICommandHandlerWithAggregate<AddVersion>
     {
         private readonly ITextModuleRepository _textModuleRepository;
         private readonly IValidator<AddVersion> _validator;
@@ -19,7 +18,7 @@ namespace Weapsy.Apps.Text.Domain.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(AddVersion command)
+        public IAggregateRoot Handle(AddVersion command)
         {
             var textModule = _textModuleRepository.GetByModuleId(command.ModuleId);
 
@@ -30,7 +29,7 @@ namespace Weapsy.Apps.Text.Domain.Handlers
 
             _textModuleRepository.Update(textModule);
 
-            return textModule.Events;
+            return textModule;
         }
     }
 }

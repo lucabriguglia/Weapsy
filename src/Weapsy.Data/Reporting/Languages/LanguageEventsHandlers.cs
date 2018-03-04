@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Weapsy.Cqrs.Events;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.Languages.Events;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Data.Reporting.Languages
 {

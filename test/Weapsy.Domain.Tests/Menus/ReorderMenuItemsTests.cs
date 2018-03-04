@@ -141,7 +141,7 @@ namespace Weapsy.Domain.Tests.Menus
             };
             var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
             validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
-            Assert.Throws<Exception>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
+            Assert.Throws<ApplicationException>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
         }
 
         [Test]
@@ -160,7 +160,7 @@ namespace Weapsy.Domain.Tests.Menus
             };
             var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
             validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
-            Assert.Throws<Exception>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
+            Assert.Throws<ApplicationException>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace Weapsy.Domain.Tests.Menus
             typeof(MenuItem).GetTypeInfo().GetProperty("Status").SetValue(menuItem, MenuItemStatus.Deleted);
             var validatorMock = new Mock<IValidator<ReorderMenuItems>>();
             validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
-            Assert.Throws<Exception>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
+            Assert.Throws<ApplicationException>(() => _menu.ReorderMenuItems(_command, validatorMock.Object));
         }
     }
 }

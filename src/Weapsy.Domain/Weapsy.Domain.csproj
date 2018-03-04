@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Weapsy.Framework\Weapsy.Framework.csproj" />
+    <PackageReference Include="FluentValidation" Version="7.4.0" />
+    <PackageReference Include="Weapsy.Cqrs" Version="2.1.2" />
   </ItemGroup>
 
 </Project>

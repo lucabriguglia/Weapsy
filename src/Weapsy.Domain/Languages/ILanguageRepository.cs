@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Languages
 {
-    public interface ILanguageRepository : IRepository<Language>
+    public interface ILanguageRepository
     {
         Language GetById(Guid id);
         Language GetById(Guid siteId, Guid id);
@@ -18,6 +17,5 @@ namespace Weapsy.Domain.Languages
         void Create(Language language);
         Task CreateAsync(Language language);
         void Update(Language language);
-        void Update(IEnumerable<Language> languages);
     }
 }

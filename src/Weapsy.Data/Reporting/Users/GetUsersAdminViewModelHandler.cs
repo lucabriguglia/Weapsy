@@ -6,7 +6,7 @@ using Weapsy.Reporting.Users;
 using System.Linq;
 using System;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Data.Reporting.Users
 {

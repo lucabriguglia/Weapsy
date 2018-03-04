@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Domain.Themes.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Themes.Handlers
 {
-    public class UpdateThemeDetailsHandler : ICommandHandler<UpdateThemeDetails>
+    public class UpdateThemeDetailsHandler : ICommandHandlerWithAggregate<UpdateThemeDetails>
     {
         private readonly IThemeRepository _themeRepository;
         private readonly IValidator<UpdateThemeDetails> _validator;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.Themes.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateThemeDetails cmd)
+        public IAggregateRoot Handle(UpdateThemeDetails cmd)
         {
             var theme = _themeRepository.GetById(cmd.Id);
 
@@ -29,7 +28,7 @@ namespace Weapsy.Domain.Themes.Handlers
 
             _themeRepository.Update(theme);
 
-            return theme.Events;
+            return theme;
         }
     }
 }

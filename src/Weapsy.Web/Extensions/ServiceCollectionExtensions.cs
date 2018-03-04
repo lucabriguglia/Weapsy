@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Weapsy.Data.Domain;
 using Weapsy.Data.Reporting;
-using Weapsy.Framework.Extensions;
 using Weapsy.Mvc.Apps;
+using Weapsy.Mvc.Extensions;
 using Weapsy.Web.Api;
 
 namespace Weapsy.Web.Extensions

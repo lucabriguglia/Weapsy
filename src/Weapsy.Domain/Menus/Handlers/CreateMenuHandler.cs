@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using FluentValidation;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Menus.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Menus.Handlers
 {
-    public class CreateMenuHandler : ICommandHandler<CreateMenu>
+    public class CreateMenuHandler : ICommandHandlerWithAggregate<CreateMenu>
     {
         private readonly IMenuRepository _menuRepository;
         private readonly IValidator<CreateMenu> _validator;
@@ -18,13 +17,13 @@ namespace Weapsy.Domain.Menus.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateMenu command)
+        public IAggregateRoot Handle(CreateMenu command)
         {
             var menu = Menu.CreateNew(command, _validator);
 
             _menuRepository.Create(menu);
 
-            return menu.Events;
+            return menu;
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Weapsy.Cqrs;
+using Weapsy.Cqrs.Events;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.Menus.Events;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Events;
-using Weapsy.Framework.Queries;
 using Weapsy.Reporting.Languages;
 using Weapsy.Reporting.Languages.Queries;
 
@@ -18,10 +18,10 @@ namespace Weapsy.Data.Reporting.Menus
         IEventHandler<MenuDeleted>        
     {
         private readonly ICacheManager _cacheManager;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _queryDispatcher;
 
         public MenuEventsHandler(ICacheManager cacheManager, 
-            IQueryDispatcher queryDispatcher)
+            IDispatcher queryDispatcher)
         {
             _cacheManager = cacheManager;
             _queryDispatcher = queryDispatcher;
@@ -39,7 +39,7 @@ namespace Weapsy.Data.Reporting.Menus
 
         public void Handle(MenuItemUpdated @event)
         {
-            ClearCache(@event.SiteId, @event.Name);
+            ClearCache(@event.SiteId, @event.MenuName);
         }
 
         public void Handle(MenuItemRemoved @event)
@@ -59,7 +59,7 @@ namespace Weapsy.Data.Reporting.Menus
 
         private void ClearCache(Guid siteId, string name)
         {
-            var languages = _queryDispatcher.DispatchAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = siteId }).Result;
+            var languages = _queryDispatcher.GetResultAsync<GetAllActive, IEnumerable<LanguageInfo>>(new GetAllActive { SiteId = siteId }).Result;
             foreach (var language in languages)
                 _cacheManager.Remove(string.Format(CacheKeys.MenuCacheKey, siteId, name, language.Id));
 

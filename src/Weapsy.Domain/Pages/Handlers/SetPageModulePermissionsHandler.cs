@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Pages.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class SetPageModulePermissionsHandler : ICommandHandler<SetPageModulePermissions>
+    public class SetPageModulePermissionsHandler : ICommandHandlerWithAggregate<SetPageModulePermissions>
     {
         private readonly IPageRepository _pageRepository;
 
@@ -15,7 +14,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _pageRepository = pageRepository;
         }
 
-        public IEnumerable<IEvent> Handle(SetPageModulePermissions command)
+        public IAggregateRoot Handle(SetPageModulePermissions command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.Id);
 
@@ -26,7 +25,7 @@ namespace Weapsy.Domain.Pages.Handlers
 
             _pageRepository.Update(page);
 
-            return page.Events;
+            return page;
         }
     }
 }

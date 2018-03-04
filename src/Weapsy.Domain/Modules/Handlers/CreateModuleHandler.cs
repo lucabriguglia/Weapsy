@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using FluentValidation;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Modules.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.Modules.Handlers
 {
-    public class CreateModuleHandler : ICommandHandler<CreateModule>
+    public class CreateModuleHandler : ICommandHandlerWithAggregate<CreateModule>
     {
         private readonly IModuleRepository _moduleRepository;
         private readonly IValidator<CreateModule> _validator;
@@ -17,13 +16,13 @@ namespace Weapsy.Domain.Modules.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(CreateModule command)
+        public IAggregateRoot Handle(CreateModule command)
         {
             var module = Module.CreateNew(command, _validator);
 
             _moduleRepository.Create(module);
 
-            return module.Events;
+            return module;
         }
     }
 }

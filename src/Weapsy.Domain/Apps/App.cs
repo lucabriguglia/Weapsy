@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using System;
-using Weapsy.Framework.Domain;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps.Events;
+using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Apps
 {
@@ -22,18 +22,13 @@ namespace Weapsy.Domain.Apps
 
         private App(CreateApp cmd) : base(cmd.Id)
         {
-            Name = cmd.Name;
-            Description = cmd.Description;
-            Folder = cmd.Folder;
-            Status = AppStatus.Active;
-
             AddEvent(new AppCreated
             {
                 AggregateRootId = Id,
-                Name = Name,
-                Description = Description,
-                Folder = Folder,
-                Status = Status
+                Name = cmd.Name,
+                Description = cmd.Description,
+                Folder = cmd.Folder,
+                Status = AppStatus.Active
             });
         }
 
@@ -48,27 +43,29 @@ namespace Weapsy.Domain.Apps
         {
             validator.ValidateCommand(cmd);
 
-            Name = cmd.Name;
-            Description = cmd.Description;
-            Folder = cmd.Folder;
-
             AddEvent(new AppDetailsUpdated
             {
                 AggregateRootId = Id,
-                Name = Name,
-                Description = Description,
-                Folder = Folder
+                Name = cmd.Name,
+                Description = cmd.Description,
+                Folder = cmd.Folder
             });
         }
 
-        public void Delete()
+        private void Apply(AppCreated @event)
         {
-            throw new NotImplementedException();
+            Id = @event.AggregateRootId;
+            Name = @event.Name;
+            Description = @event.Description;
+            Folder = @event.Folder;
+            Status = AppStatus.Active;
         }
 
-        public void Restore()
+        private void Apply(AppDetailsUpdated @event)
         {
-            throw new NotImplementedException();
+            Name = @event.Name;
+            Description = @event.Description;
+            Folder = @event.Folder;
         }
     }
 }

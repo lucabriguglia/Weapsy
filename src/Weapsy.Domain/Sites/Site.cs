@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Sites.Commands;
 using Weapsy.Domain.Sites.Events;
@@ -31,14 +32,11 @@ namespace Weapsy.Domain.Sites
 
         private Site(CreateSite cmd) : base(cmd.Id)
         {
-            Name = cmd.Name;
-            Status = SiteStatus.Active;
-
             AddEvent(new SiteCreated
             {
                 AggregateRootId = Id,
-                Name = Name,
-                Status = Status
+                Name = cmd.Name,
+                Status = SiteStatus.Active
             });
         }
 
@@ -58,49 +56,19 @@ namespace Weapsy.Domain.Sites
         {
             validator.ValidateCommand(cmd);
 
-            SetSiteDetails(cmd);
-
             AddEvent(new SiteDetailsUpdated
             {
                 AggregateRootId = Id,
                 Name = Name,
-                Url = Url,
-                Title = Title,
-                MetaDescription = MetaDescription,
-                MetaKeywords = MetaKeywords,
-                SiteLocalisations = SiteLocalisations,
-                AddLanguageSlug = AddLanguageSlug,
-                HomePageId = HomePageId,
-                ThemeId = ThemeId
+                Url = cmd.Url,
+                Title = cmd.Title,
+                MetaDescription = cmd.MetaDescription,
+                MetaKeywords = cmd.MetaKeywords,
+                SiteLocalisations = cmd.SiteLocalisations,
+                AddLanguageSlug = cmd.AddLanguageSlug,
+                HomePageId = cmd.HomePageId,
+                ThemeId = cmd.ThemeId
             });
-        }
-
-        private void SetSiteDetails(UpdateSiteDetails cmd)
-        {
-            Url = cmd.Url;
-            Title = cmd.Title;
-            MetaDescription = cmd.MetaDescription;
-            MetaKeywords = cmd.MetaKeywords;
-            HomePageId = cmd.HomePageId;
-            ThemeId = cmd.ThemeId;
-            AddLanguageSlug = cmd.AddLanguageSlug;
-
-            SetLocalisations(cmd.SiteLocalisations);
-        }
-
-        private void SetLocalisations(IEnumerable<SiteLocalisation> localisations)
-        {
-            SiteLocalisations.Clear();
-
-            foreach (var localisation in localisations)
-            {
-                if (SiteLocalisations.FirstOrDefault(x => x.LanguageId == localisation.LanguageId) != null)
-                    continue;
-
-                localisation.SiteId = Id;
-
-                SiteLocalisations.Add(localisation);
-            }
         }
 
         public void Close()
@@ -112,8 +80,6 @@ namespace Weapsy.Domain.Sites
                 case SiteStatus.Deleted:
                     throw new Exception("Site is deleted.");
             }
-
-            Status = SiteStatus.Closed;
 
             AddEvent(new SiteClosed
             {
@@ -132,8 +98,6 @@ namespace Weapsy.Domain.Sites
                     throw new Exception("Site is deleted.");
             }
 
-            Status = SiteStatus.Active;
-
             AddEvent(new SiteReopened
             {
                 Name = Name,
@@ -146,8 +110,6 @@ namespace Weapsy.Domain.Sites
             if (Status == SiteStatus.Deleted)
                 throw new Exception("Site already deleted.");
 
-            Status = SiteStatus.Deleted;
-
             AddEvent(new SiteDeleted
             {
                 Name = Name,
@@ -158,6 +120,62 @@ namespace Weapsy.Domain.Sites
         public void Restore()
         {
             throw new NotImplementedException();
+        }
+
+        private void Apply(SiteClosed @event)
+        {
+            Status = SiteStatus.Closed;
+        }
+
+        private void Apply(SiteCreated @event)
+        {
+            Id = @event.AggregateRootId;
+            Name = @event.Name;
+            Status = @event.Status;
+
+        }
+
+        private void Apply(SiteDeleted @event)
+        {
+            Status = SiteStatus.Deleted;
+        }
+
+        private void Apply(SiteDetailsUpdated @event)
+        {
+            SetSiteDetails(@event);
+        }
+
+        private void Apply(SiteReopened @event)
+        {
+            Status = SiteStatus.Active;
+        }
+
+        private void SetSiteDetails(SiteDetailsUpdated @event)
+        {
+            Url = @event.Url;
+            Title = @event.Title;
+            MetaDescription = @event.MetaDescription;
+            MetaKeywords = @event.MetaKeywords;
+            HomePageId = @event.HomePageId;
+            ThemeId = @event.ThemeId;
+            AddLanguageSlug = @event.AddLanguageSlug;
+
+            SetLocalisations(@event.SiteLocalisations);
+        }
+
+        private void SetLocalisations(IEnumerable<SiteLocalisation> localisations)
+        {
+            SiteLocalisations.Clear();
+
+            foreach (var localisation in localisations)
+            {
+                if (SiteLocalisations.FirstOrDefault(x => x.LanguageId == localisation.LanguageId) != null)
+                    continue;
+
+                localisation.SiteId = Id;
+
+                SiteLocalisations.Add(localisation);
+            }
         }
     }
 }

@@ -3,11 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.ModuleTypes;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 using Weapsy.Reporting.Apps;
 using Weapsy.Reporting.Apps.Queries;
+using ICacheManager = Weapsy.Data.Caching.ICacheManager;
 
 namespace Weapsy.Data.Reporting.Apps
 {

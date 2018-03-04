@@ -1,9 +1,8 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Modules
 {
-    public interface IModuleRepository : IRepository<Module>
+    public interface IModuleRepository
     {
         Module GetById(Guid id);
         Module GetById(Guid siteId, Guid id);

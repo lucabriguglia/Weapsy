@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs;
 using Weapsy.Mvc.Components;
 using Weapsy.Mvc.Context;
 using Weapsy.Reporting.Apps;
@@ -13,19 +13,19 @@ namespace Weapsy.Web.Components
     public class ControlPanelViewComponent : BaseViewComponent
     {
         private readonly IContextService _contextService;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
         public ControlPanelViewComponent(IContextService contextService,
-            IQueryDispatcher queryDispatcher)
+            IDispatcher dispatcher)
             : base(contextService)
         {
             _contextService = contextService;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetControlPanelModel, IEnumerable<ModuleTypeControlPanelModel>>(new GetControlPanelModel());
+            var model = await _dispatcher.GetResultAsync<GetControlPanelModel, IEnumerable<ModuleTypeControlPanelModel>>(new GetControlPanelModel());
             return View(model);
         }
     }

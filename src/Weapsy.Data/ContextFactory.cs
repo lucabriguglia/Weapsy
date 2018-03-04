@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Options;
+using Weapsy.Cqrs.Dependencies;
 using Weapsy.Data.Configuration;
-using Weapsy.Framework.DependencyResolver;
 
 namespace Weapsy.Data
 {

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.EmailAccounts;
 using Weapsy.Domain.EmailAccounts.Commands;
 using Weapsy.Domain.EmailAccounts.Rules;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.EmailAccounts;
@@ -17,32 +16,29 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class EmailAccountController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly IEmailAccountRules _emailAccountRules;
 
-        public EmailAccountController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public EmailAccountController(IDispatcher dispatcher,
             IEmailAccountRules emailAccountRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _emailAccountRules = emailAccountRules;            
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAllEmailAccounts, IEnumerable<EmailAccountModel>>(new GetAllEmailAccounts { SiteId = SiteId });
+            var model = await _dispatcher.GetResultAsync<GetAllEmailAccounts, IEnumerable<EmailAccountModel>>(new GetAllEmailAccounts { SiteId = SiteId });
             return Ok(model);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetEmailAccount, EmailAccountModel>(new GetEmailAccount { SiteId = SiteId, Id = id });
+            var model = await _dispatcher.GetResultAsync<GetEmailAccount, EmailAccountModel>(new GetEmailAccount { SiteId = SiteId, Id = id });
 
             if (model == null)
                 return NotFound();
@@ -55,7 +51,7 @@ namespace Weapsy.Web.Api
         {
             model.SiteId = SiteId;
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateEmailAccount, EmailAccount>(model);
+            _dispatcher.SendAndPublish<CreateEmailAccount, EmailAccount>(model);
             return new NoContentResult();
         }
 
@@ -64,14 +60,14 @@ namespace Weapsy.Web.Api
         public IActionResult UpdateDetails([FromBody] UpdateEmailAccountDetails model)
         {
             model.SiteId = SiteId;
-            _commandSender.Send<UpdateEmailAccountDetails, EmailAccount>(model);
+            _dispatcher.SendAndPublish<UpdateEmailAccountDetails, EmailAccount>(model);
             return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-           _commandSender.Send<DeleteEmailAccount, EmailAccount>(new DeleteEmailAccount
+           _dispatcher.SendAndPublish<DeleteEmailAccount, EmailAccount>(new DeleteEmailAccount
             {
                 SiteId = SiteId,
                 Id = id

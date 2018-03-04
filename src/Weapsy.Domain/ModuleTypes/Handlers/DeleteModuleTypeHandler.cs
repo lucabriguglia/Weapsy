@@ -1,13 +1,12 @@
 using FluentValidation;
 using System;
-using System.Collections.Generic;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.ModuleTypes.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
 
 namespace Weapsy.Domain.ModuleTypes.Handlers
 {
-    public class DeleteModuleTypeHandler : ICommandHandler<DeleteModuleType>
+    public class DeleteModuleTypeHandler : ICommandHandlerWithAggregate<DeleteModuleType>
     {
         private readonly IModuleTypeRepository _moduleTypeRepository;
         private readonly IValidator<DeleteModuleType> _validator;
@@ -18,7 +17,7 @@ namespace Weapsy.Domain.ModuleTypes.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(DeleteModuleType command)
+        public IAggregateRoot Handle(DeleteModuleType command)
         {
             var moduleType = _moduleTypeRepository.GetById(command.Id);
 
@@ -29,7 +28,7 @@ namespace Weapsy.Domain.ModuleTypes.Handlers
 
             _moduleTypeRepository.Update(moduleType);
 
-            return moduleType.Events;
+            return moduleType;
         }
     }
 }

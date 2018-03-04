@@ -188,28 +188,13 @@ namespace Weapsy.Domain.Tests.Pages
         [Test]
         public void Should_set_page_localisations_in_page_details_updated_event()
         {
-            Assert.AreEqual(_page.PageLocalisations, _event.PageLocalisations);
+            Assert.AreEqual(_command.PageLocalisations, _event.PageLocalisations);
         }
 
         [Test]
         public void Should_set_page_permissions_in_page_created_event()
         {
-            Assert.AreEqual(_page.PagePermissions, _event.PagePermissions);
-        }
-
-        [Test]
-        public void Should_throw_exception_if_language_is_already_added_to_page_localisations()
-        {
-            var languageId = Guid.NewGuid();
-            _command.PageLocalisations.Add(new PageLocalisation
-            {
-                LanguageId = languageId
-            });
-            _command.PageLocalisations.Add(new PageLocalisation
-            {
-                LanguageId = languageId
-            });
-            Assert.Throws<Exception>(() => _page.UpdateDetails(_command, _validatorMock.Object));
+            Assert.AreEqual(_command.PagePermissions, _event.PagePermissions);
         }
     }
 }

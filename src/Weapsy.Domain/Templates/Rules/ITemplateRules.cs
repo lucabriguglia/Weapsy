@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Templates.Rules
 {
-    public interface ITemplateRules : IRules<Template>
+    public interface ITemplateRules
     {
         bool DoesTemplateExist(Guid id);
         bool IsTemplateIdUnique(Guid id);

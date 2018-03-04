@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.ModuleTypes;
 using Weapsy.Domain.ModuleTypes.Commands;
 using Weapsy.Domain.ModuleTypes.Rules;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Apps;
@@ -17,18 +16,15 @@ namespace Weapsy.Web.Api
     [Route("api/[controller]")]
     public class ModuleTypeController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
         private readonly IModuleTypeRules _moduleTypeRules;
 
-        public ModuleTypeController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,            
+        public ModuleTypeController(IDispatcher dispatcher,          
             IModuleTypeRules moduleTypeRules,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
             _moduleTypeRules = moduleTypeRules;
         }
 
@@ -41,7 +37,7 @@ namespace Weapsy.Web.Api
         [HttpPost]
         public IActionResult Post([FromBody] CreateModuleType model)
         {
-            _commandSender.Send<CreateModuleType, ModuleType>(model);
+            _dispatcher.SendAndPublish<CreateModuleType, ModuleType>(model);
             return new NoContentResult();
         }
 
@@ -73,7 +69,7 @@ namespace Weapsy.Web.Api
         [Route("{appId}/admin-list")]
         public async Task<IActionResult> AdminList(Guid appId)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetModuleTypeAdminListModel, IEnumerable<ModuleTypeAdminListModel>>(new GetModuleTypeAdminListModel
+            var model = await _dispatcher.GetResultAsync<GetModuleTypeAdminListModel, IEnumerable<ModuleTypeAdminListModel>>(new GetModuleTypeAdminListModel
             {
                 AppId = appId
             });
@@ -85,7 +81,7 @@ namespace Weapsy.Web.Api
         [Route("{id}/admin-edit")]
         public async Task<IActionResult> AdminEdit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetModuleTypeAdminModel, ModuleTypeAdminModel>(new GetModuleTypeAdminModel
+            var model = await _dispatcher.GetResultAsync<GetModuleTypeAdminModel, ModuleTypeAdminModel>(new GetModuleTypeAdminModel
             {
                 Id = id
             });

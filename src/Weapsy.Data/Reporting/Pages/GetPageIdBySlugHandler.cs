@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Weapsy.Domain.Pages;
 using Weapsy.Reporting.Pages.Queries;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Data.Reporting.Pages
 {

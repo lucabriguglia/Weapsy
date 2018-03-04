@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using FluentValidation;
+﻿using FluentValidation;
 using Weapsy.Domain.Pages.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Pages.Handlers
 {
-    public class UpdatePageModuleDetailsHandler : ICommandHandler<UpdatePageModuleDetails>
+    public class UpdatePageModuleDetailsHandler : ICommandHandlerWithAggregate<UpdatePageModuleDetails>
     {
         private readonly IPageRepository _pageRepository;
         private readonly IValidator<UpdatePageModuleDetails> _validator;
@@ -19,7 +18,7 @@ namespace Weapsy.Domain.Pages.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdatePageModuleDetails command)
+        public IAggregateRoot Handle(UpdatePageModuleDetails command)
         {
             var page = _pageRepository.GetById(command.SiteId, command.PageId);
 
@@ -30,7 +29,7 @@ namespace Weapsy.Domain.Pages.Handlers
 
             _pageRepository.Update(page);
 
-            return page.Events;
+            return page;
         }
     }
 }

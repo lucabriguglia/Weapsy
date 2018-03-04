@@ -9,13 +9,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="6.10.5" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="6.10.6" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
+    <PackageReference Include="Weapsy.Cqrs" Version="2.1.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Weapsy.Domain\Weapsy.Domain.csproj" />
-    <ProjectReference Include="..\Weapsy.Framework\Weapsy.Framework.csproj" />
     <ProjectReference Include="..\Weapsy.Reporting\Weapsy.Reporting.csproj" />
   </ItemGroup>
 

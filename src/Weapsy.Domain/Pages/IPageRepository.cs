@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Pages
 {
-    public interface IPageRepository : IRepository<Page>
+    public interface IPageRepository
     {
         Page GetById(Guid id);
         Page GetById(Guid siteId, Guid id);

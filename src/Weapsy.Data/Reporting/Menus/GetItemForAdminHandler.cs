@@ -8,19 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using Weapsy.Reporting.Roles.Queries;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Weapsy.Cqrs;
 using Weapsy.Data.Entities;
 using Weapsy.Data.TempIdentity;
 using Weapsy.Domain.Roles.DefaultRoles;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Data.Reporting.Menus
 {
     public class GetItemForAdminHandler : IQueryHandlerAsync<GetItemForAdmin, MenuItemAdminModel>
     {
         private readonly IContextFactory _contextFactory;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _queryDispatcher;
 
-        public GetItemForAdminHandler(IContextFactory contextFactory, IQueryDispatcher queryDispatcher)
+        public GetItemForAdminHandler(IContextFactory contextFactory, IDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _queryDispatcher = queryDispatcher;
@@ -82,7 +83,7 @@ namespace Weapsy.Data.Reporting.Menus
                     });
                 }
 
-                foreach (var role in await _queryDispatcher.DispatchAsync<GetAllRoles, IEnumerable<ApplicationRole>>(new GetAllRoles()))
+                foreach (var role in await _queryDispatcher.GetResultAsync<GetAllRoles, IEnumerable<ApplicationRole>>(new GetAllRoles()))
                 {
                     bool selected = menuItem.MenuItemPermissions.FirstOrDefault(x => x.RoleId == role.Id) != null;
 

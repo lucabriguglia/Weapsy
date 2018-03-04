@@ -9,20 +9,20 @@ namespace Weapsy.Apps.Text.Data
     {
         private ConnectionStrings ConnectionStrings { get; set; }
 
-        public TextDbContext(IOptions<ConnectionStrings> settings)
-        {
-            ConnectionStrings = settings.Value;
-        }
+        //public TextDbContext(IOptions<ConnectionStrings> settings)
+        //{
+        //    ConnectionStrings = settings.Value;
+        //}
 
         public TextDbContext(DbContextOptions<TextDbContext> options) : base(options) {}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
-        {
-            if (ConnectionStrings != null && !string.IsNullOrEmpty(ConnectionStrings.DefaultConnection))
-                builder.UseSqlServer(ConnectionStrings.DefaultConnection);
+        //protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        //{
+        //    if (ConnectionStrings != null && !string.IsNullOrEmpty(ConnectionStrings.DefaultConnection))
+        //        builder.UseSqlServer(ConnectionStrings.DefaultConnection);
 
-            base.OnConfiguring(builder);
-        }
+        //    base.OnConfiguring(builder);
+        //}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

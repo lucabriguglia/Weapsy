@@ -1,9 +1,9 @@
 ﻿using System;
-using Weapsy.Framework.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.ModuleTypes.Commands
 {
-    public class DeleteModuleType : ICommand
+    public class DeleteModuleType : DomainCommand
     {
         public Guid Id { get; set; }
     }

@@ -2,14 +2,15 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Languages;
 using Weapsy.Domain.Pages;
 using Weapsy.Domain.Sites;
 using Weapsy.Reporting.Sites;
 using Weapsy.Reporting.Sites.Queries;
 using Weapsy.Domain.Themes;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
+using Weapsy.Data.Caching;
 
 namespace Weapsy.Data.Reporting.Sites
 {
@@ -18,12 +19,12 @@ namespace Weapsy.Data.Reporting.Sites
         private readonly IContextFactory _contextFactory;
         private readonly IMapper _mapper;
         private readonly ICacheManager _cacheManager;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _queryDispatcher;
 
         public GetAdminModelHandler(IContextFactory contextFactory, 
             IMapper mapper, 
             ICacheManager cacheManager, 
-            IQueryDispatcher queryDispatcher)
+            IDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _mapper = mapper;

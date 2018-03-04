@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using FluentValidation;
+﻿using FluentValidation;
 using Weapsy.Domain.Sites.Commands;
 using System;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Events;
+using Weapsy.Cqrs.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Sites.Handlers
 {
-    public class UpdateSiteDetailsHandler : ICommandHandler<UpdateSiteDetails>
+    public class UpdateSiteDetailsHandler : ICommandHandlerWithAggregate<UpdateSiteDetails>
     {
         private readonly ISiteRepository _siteRepository;
         private readonly IValidator<UpdateSiteDetails> _validator;
@@ -19,7 +18,7 @@ namespace Weapsy.Domain.Sites.Handlers
             _validator = validator;
         }
 
-        public IEnumerable<IEvent> Handle(UpdateSiteDetails cmd)
+        public IAggregateRoot Handle(UpdateSiteDetails cmd)
         {
             var site = _siteRepository.GetById(cmd.SiteId);
 
@@ -30,7 +29,7 @@ namespace Weapsy.Domain.Sites.Handlers
 
             _siteRepository.Update(site);
 
-            return site.Events;
+            return site;
         }
     }
 }

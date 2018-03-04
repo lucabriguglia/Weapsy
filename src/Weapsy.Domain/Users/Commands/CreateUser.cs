@@ -1,9 +1,9 @@
 ﻿using System;
-using Weapsy.Framework.Commands;
+using Weapsy.Cqrs.Domain;
 
 namespace Weapsy.Domain.Users.Commands
 {
-    public class CreateUser : ICommand
+    public class CreateUser : DomainCommand
     {
         public Guid Id { get; set; }
         public string Email { get; set; }

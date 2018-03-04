@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Cqrs;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
-using Weapsy.Framework.Commands;
-using Weapsy.Framework.Queries;
 using Weapsy.Mvc.Context;
 using Weapsy.Mvc.Controllers;
 using Weapsy.Reporting.Apps;
@@ -16,22 +15,19 @@ namespace Weapsy.Web.Areas.Admin.Controllers
     [Area("Admin")]
     public class AppController : BaseAdminController
     {
-        private readonly ICommandSender _commandSender;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _dispatcher;
 
-        public AppController(ICommandSender commandSender,
-            IQueryDispatcher queryDispatcher,
+        public AppController(IDispatcher dispatcher,
             IContextService contextService)
             : base(contextService)
         {
-            _commandSender = commandSender;
-            _queryDispatcher = queryDispatcher;
+            _dispatcher = dispatcher;
         }
 
 
         public async Task<IActionResult> Index()
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModelList, IEnumerable<AppAdminListModel>>(new GetAppAdminModelList());
+            var model = await _dispatcher.GetResultAsync<GetAppAdminModelList, IEnumerable<AppAdminListModel>>(new GetAppAdminModelList());
             return View(model);
         }
 
@@ -43,13 +39,13 @@ namespace Weapsy.Web.Areas.Admin.Controllers
         public IActionResult Save(CreateApp model)
         {
             model.Id = Guid.NewGuid();
-            _commandSender.Send<CreateApp, App>(model);
+            _dispatcher.SendAndPublish<CreateApp, App>(model);
             return new NoContentResult();
         }
 
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = await _queryDispatcher.DispatchAsync<GetAppAdminModel, AppAdminModel>(new GetAppAdminModel { Id = id });
+            var model = await _dispatcher.GetResultAsync<GetAppAdminModel, AppAdminModel>(new GetAppAdminModel { Id = id });
 
             if (model == null)
                 return NotFound();
@@ -59,7 +55,7 @@ namespace Weapsy.Web.Areas.Admin.Controllers
 
         public IActionResult Update(UpdateAppDetails model)
         {
-            _commandSender.Send<UpdateAppDetails, App>(model);
+            _dispatcher.SendAndPublish<UpdateAppDetails, App>(model);
             return new NoContentResult();
         }
     }

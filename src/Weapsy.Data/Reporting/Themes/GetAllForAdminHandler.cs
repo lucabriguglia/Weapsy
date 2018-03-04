@@ -6,7 +6,7 @@ using Weapsy.Domain.Themes;
 using Weapsy.Reporting.Themes;
 using Weapsy.Reporting.Themes.Queries;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Data.Reporting.Themes
 {

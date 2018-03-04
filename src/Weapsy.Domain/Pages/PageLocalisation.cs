@@ -3,7 +3,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Pages
 {
-    public class PageLocalisation : ValueObject
+    public class PageLocalisation
     {
         public Guid PageId { get; set; }
         public Guid LanguageId { get; set; }

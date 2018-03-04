@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Services.Installation
 {
-    public interface ISiteInstallationService : IService
+    public interface ISiteInstallationService
     {
         void VerifySiteInstallation();
         void InstallDefaultSite();

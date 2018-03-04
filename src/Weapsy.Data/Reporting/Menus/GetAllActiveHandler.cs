@@ -7,9 +7,10 @@ using Weapsy.Reporting.Menus;
 using Weapsy.Reporting.Menus.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Weapsy.Cqrs;
+using Weapsy.Data.Caching;
 using Weapsy.Domain.Pages;
-using Weapsy.Framework.Caching;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 using Language = Weapsy.Data.Entities.Language;
 using Menu = Weapsy.Data.Entities.Menu;
 using MenuItem = Weapsy.Data.Entities.MenuItem;
@@ -21,11 +22,11 @@ namespace Weapsy.Data.Reporting.Menus
     {
         private readonly IContextFactory _contextFactory;
         private readonly ICacheManager _cacheManager;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _queryDispatcher;
 
         public GetViewModelHandler(IContextFactory contextFactory, 
             ICacheManager cacheManager, 
-            IQueryDispatcher queryDispatcher)
+            IDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _cacheManager = cacheManager;
@@ -123,7 +124,7 @@ namespace Weapsy.Data.Reporting.Menus
                 }
 
                 var menuItemRoleNames = await _queryDispatcher
-                    .DispatchAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = menuItemRoleIds });
+                    .GetResultAsync<GetRoleNamesFromRoleIds, IEnumerable<string>>(new GetRoleNamesFromRoleIds { RoleIds = menuItemRoleIds });
 
                 var menuItemModel = new MenuViewModel.MenuItem
                 {

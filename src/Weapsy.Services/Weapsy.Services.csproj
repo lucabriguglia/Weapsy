@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.4.0" />
+    <PackageReference Include="Weapsy.Cqrs" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Weapsy.Domain\Weapsy.Domain.csproj" />
-    <ProjectReference Include="..\Weapsy.Framework\Weapsy.Framework.csproj" />
     <ProjectReference Include="..\Weapsy.Reporting\Weapsy.Reporting.csproj" />
   </ItemGroup>
 

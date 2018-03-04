@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Weapsy.Data.Entities;
 using Weapsy.Data.TempIdentity;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Data.Reporting.Users
 {

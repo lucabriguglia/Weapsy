@@ -6,7 +6,7 @@ using Weapsy.Reporting.EmailAccounts;
 using Weapsy.Reporting.EmailAccounts.Queries;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Data.Reporting.EmailAccounts
 {

@@ -9,19 +9,20 @@ using System.Linq;
 using Weapsy.Reporting.Roles.Queries;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Weapsy.Cqrs;
 using Weapsy.Data.Entities;
 using Weapsy.Data.TempIdentity;
 using Weapsy.Domain.Roles.DefaultRoles;
-using Weapsy.Framework.Queries;
+using Weapsy.Cqrs.Queries;
 
 namespace Weapsy.Data.Reporting.Pages
 {
     public class GetForAdminHandler : IQueryHandlerAsync<GetForAdmin, PageAdminModel>
     {
         private readonly IContextFactory _contextFactory;
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IDispatcher _queryDispatcher;
 
-        public GetForAdminHandler(IContextFactory contextFactory, IQueryDispatcher queryDispatcher)
+        public GetForAdminHandler(IContextFactory contextFactory, IDispatcher queryDispatcher)
         {
             _contextFactory = contextFactory;
             _queryDispatcher = queryDispatcher;
@@ -87,7 +88,7 @@ namespace Weapsy.Data.Reporting.Pages
                     });
                 }
 
-                foreach (var role in await _queryDispatcher.DispatchAsync<GetAllRoles, IEnumerable<ApplicationRole>>(new GetAllRoles()))
+                foreach (var role in await _queryDispatcher.GetResultAsync<GetAllRoles, IEnumerable<ApplicationRole>>(new GetAllRoles()))
                 {
                     var pagePermission = new PagePermissionModel
                     {

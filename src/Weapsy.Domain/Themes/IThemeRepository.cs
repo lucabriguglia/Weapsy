@@ -4,7 +4,7 @@ using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Themes
 {
-    public interface IThemeRepository : IRepository<Theme>
+    public interface IThemeRepository
     {
         Theme GetById(Guid id);
         Theme GetByName(string name);

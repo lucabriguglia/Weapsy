@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Pages.Commands;
+using Weapsy.Domain.Pages.Events;
 using Weapsy.Domain.Roles.DefaultRoles;
 
 namespace Weapsy.Domain.Pages
@@ -41,13 +43,13 @@ namespace Weapsy.Domain.Pages
             SetPermissions(pageModulePermissions);
         }
 
-        public void UpdateDetails(UpdatePageModuleDetails cmd)
+        public void UpdateDetails(PageModuleDetailsUpdated @event)
         {
-            Title = cmd.Title;
-            InheritPermissions = cmd.InheritPermissions;
+            Title = @event.Title;
+            InheritPermissions = @event.InheritPermissions;
 
-            SetLocalisations(cmd.PageModuleLocalisations);
-            SetPermissions(cmd.PageModulePermissions);
+            SetLocalisations(@event.PageModuleLocalisations);
+            SetPermissions(@event.PageModulePermissions);
         }
 
         private void SetLocalisations(IList<PageModuleLocalisation> pageModuleLocalisations)

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using Weapsy.Cqrs.Domain;
 using Weapsy.Framework.Domain;
 using Weapsy.Domain.Languages.Commands;
 using Weapsy.Domain.Languages.Events;
@@ -21,22 +22,15 @@ namespace Weapsy.Domain.Languages
         private Language(CreateLanguage cmd, ILanguageSortOrderGenerator languageSortOrderGenerator)
             : base(cmd.Id)
         {
-            SiteId = cmd.SiteId;
-            Name = cmd.Name;
-            CultureName = cmd.CultureName;
-            Url = cmd.Url;
-            SortOrder = languageSortOrderGenerator.GenerateNextSortOrder(cmd.SiteId);
-            Status = LanguageStatus.Hidden;
-
             AddEvent(new LanguageCreated
             {
-                SiteId = SiteId,
+                SiteId = cmd.SiteId,
                 AggregateRootId = Id,
-                Name = Name,
-                CultureName = CultureName,
-                Url = Url,
-                SortOrder = SortOrder,
-                Status = Status
+                Name = cmd.Name,
+                CultureName = cmd.CultureName,
+                Url = cmd.Url,
+                SortOrder = languageSortOrderGenerator.GenerateNextSortOrder(cmd.SiteId),
+                Status = LanguageStatus.Hidden
             });
         }
 
@@ -53,17 +47,13 @@ namespace Weapsy.Domain.Languages
         {
             validator.ValidateCommand(cmd);
 
-            Name = cmd.Name;
-            CultureName = cmd.CultureName;
-            Url = cmd.Url;
-
             AddEvent(new LanguageDetailsUpdated
             {
                 SiteId = SiteId,
                 AggregateRootId = Id,
-                Name = Name,
-                CultureName = CultureName,
-                Url = Url
+                Name = cmd.Name,
+                CultureName = cmd.CultureName,
+                Url = cmd.Url
             });
         }
 
@@ -71,8 +61,6 @@ namespace Weapsy.Domain.Languages
         {
             if (Status == LanguageStatus.Deleted)
                 throw new Exception("Language is deleted and cannot be reordered.");
-
-            SortOrder = sortOrder;
 
             AddEvent(new LanguageReordered
             {
@@ -88,8 +76,6 @@ namespace Weapsy.Domain.Languages
 
             if (Status == LanguageStatus.Active)
                 throw new Exception("Language already active.");
-
-            Status = LanguageStatus.Active;
 
             AddEvent(new LanguageActivated
             {
@@ -108,8 +94,6 @@ namespace Weapsy.Domain.Languages
             if (Status == LanguageStatus.Deleted)
                 throw new Exception("Language is deleted.");
 
-            Status = LanguageStatus.Hidden;
-
             AddEvent(new LanguageHidden
             {
                 SiteId = SiteId,
@@ -124,8 +108,6 @@ namespace Weapsy.Domain.Languages
             if (Status == LanguageStatus.Deleted)
                 throw new Exception("Language already deleted.");
 
-            Status = LanguageStatus.Deleted;
-
             AddEvent(new LanguageDeleted
             {
                 SiteId = SiteId,
@@ -136,6 +118,44 @@ namespace Weapsy.Domain.Languages
         public void Restore()
         {
             throw new NotImplementedException();
+        }
+
+        private void Apply(LanguageCreated @event)
+        {
+            Id = @event.AggregateRootId;
+            SiteId = @event.SiteId;
+            Name = @event.Name;
+            CultureName = @event.CultureName;
+            Url = @event.Url;
+            SortOrder = @event.SortOrder;
+            Status = @event.Status;
+        }
+
+        private void Apply(LanguageDetailsUpdated @event)
+        {
+            Name = @event.Name;
+            CultureName = @event.CultureName;
+            Url = @event.Url;
+        }
+
+        private void Apply(LanguageReordered @event)
+        {
+            SortOrder = @event.SortOrder;
+        }
+
+        private void Apply(LanguageActivated @event)
+        {
+            Status = LanguageStatus.Active;
+        }
+
+        private void Apply(LanguageHidden @event)
+        {
+            Status = LanguageStatus.Hidden;
+        }
+
+        private void Apply(LanguageDeleted @event)
+        {
+            Status = LanguageStatus.Deleted;
         }
     }
 }
