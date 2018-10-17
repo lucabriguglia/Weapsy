@@ -36,8 +36,10 @@ gulp.task('clean-apps', function () {
 
 gulp.task('copy-apps', ['clean-apps'], function () {
     apps.forEach(function (app) {
-        gulp.src([paths.devApps + app + '/Views/**/*.*', paths.devApps + app + '/wwwroot/**/*.*'], { base: app })
-            .pipe(gulp.dest(paths.clientApps + "Apps/" + app));
+        gulp.src(paths.devApps + app + '/wwwroot/**/*.*')
+            .pipe(gulp.dest(paths.clientApps + app + '/wwwroot/'));
+        gulp.src(paths.devApps + app + '/Views/**/*.*')
+            .pipe(gulp.dest(paths.clientApps + app + '/Views/'));
         gulp.src(paths.devApps + app + '/bin/Debug/netcoreapp2.0/**/*.*')
             .pipe(gulp.dest(paths.clientApps + app));
     });
