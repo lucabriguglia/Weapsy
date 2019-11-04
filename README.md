@@ -1,4 +1,4 @@
-# WEAPSY WILL BE COMPLETELY REFACTORED (no timeline yet)
+# PROGRESS ON NEXT VERSION > [VNEXT](https://github.com/lucabriguglia/Weapsy/tree/vnext)
 
 # Weapsy
 
