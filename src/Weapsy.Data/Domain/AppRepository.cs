@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Weapsy.Domain.Apps;
 using AppDbEntity = Weapsy.Data.Entities.App;
 
@@ -47,23 +49,23 @@ namespace Weapsy.Data.Domain
             }
         }
 
-        public void Create(App app)
+        public async Task CreateAsync(App app)
         {
             using (var context = _dbContextFactory.Create())
             {
                 var dbEntity = _mapper.Map<AppDbEntity>(app);
                 context.Apps.Add(dbEntity);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 
-        public void Update(App app)
+        public async Task UpdateAsync(App app)
         {
             using (var context = _dbContextFactory.Create())
             {
-                var dbEntity = context.Apps.FirstOrDefault(x => x.Id.Equals(app.Id));
-                dbEntity = _mapper.Map(app, dbEntity);
-                context.SaveChanges();
+                var dbEntity = await context.Apps.FirstOrDefaultAsync(x => x.Id.Equals(app.Id));
+                _mapper.Map(app, dbEntity);
+                await context.SaveChangesAsync();
             }
         }
     }

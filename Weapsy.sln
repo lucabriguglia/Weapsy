@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A5AF2C2D-FB7D-4AD3-831B-DDFC4A5EF7BD}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B88B263-F58
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain", "src\Weapsy.Domain\Weapsy.Domain.csproj", "{F7DFD89A-A653-42AC-86C3-44700C2D4B06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models", "src\Weapsy.Domain\Weapsy.Domain.Models.csproj", "{F7DFD89A-A653-42AC-86C3-44700C2D4B06}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Framework", "src\Weapsy.Framework\Weapsy.Framework.csproj", "{1C546A1B-106B-45B1-B28B-1179E2BB2B2A}"
 EndProject
@@ -37,6 +37,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Tests", "test\Weapsy.Domain.Tests\Weapsy.Domain.Tests.csproj", "{C008E83C-75A8-4F4F-B410-370B9DB23426}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Tests.Factories", "test\Weapsy.Tests.Factories\Weapsy.Tests.Factories.csproj", "{45D79923-056B-4DDB-A08A-4EFE3B0318BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Application", "src\Weapsy.Application\Weapsy.Application.csproj", "{B491622E-1B0F-4EB8-9646-F054ADB277F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Services", "src\Weapsy.Domain.Services\Weapsy.Domain.Services.csproj", "{0CF1DAD5-057D-48C1-864B-CF4228C4935D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Rules", "src\Weapsy.Domain.Rules\Weapsy.Domain.Rules.csproj", "{F16C2C28-0D4B-48D4-B98D-7A8B19AAF490}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +98,18 @@ Global
 		{45D79923-056B-4DDB-A08A-4EFE3B0318BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45D79923-056B-4DDB-A08A-4EFE3B0318BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45D79923-056B-4DDB-A08A-4EFE3B0318BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B491622E-1B0F-4EB8-9646-F054ADB277F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B491622E-1B0F-4EB8-9646-F054ADB277F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B491622E-1B0F-4EB8-9646-F054ADB277F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B491622E-1B0F-4EB8-9646-F054ADB277F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF1DAD5-057D-48C1-864B-CF4228C4935D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF1DAD5-057D-48C1-864B-CF4228C4935D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF1DAD5-057D-48C1-864B-CF4228C4935D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF1DAD5-057D-48C1-864B-CF4228C4935D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F16C2C28-0D4B-48D4-B98D-7A8B19AAF490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F16C2C28-0D4B-48D4-B98D-7A8B19AAF490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F16C2C28-0D4B-48D4-B98D-7A8B19AAF490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F16C2C28-0D4B-48D4-B98D-7A8B19AAF490}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +127,9 @@ Global
 		{FCC60581-4A6D-45FD-AB03-DC24A11ACA24} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{C008E83C-75A8-4F4F-B410-370B9DB23426} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{45D79923-056B-4DDB-A08A-4EFE3B0318BD} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
+		{B491622E-1B0F-4EB8-9646-F054ADB277F2} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{0CF1DAD5-057D-48C1-864B-CF4228C4935D} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{F16C2C28-0D4B-48D4-B98D-7A8B19AAF490} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E96E64F-F82B-469C-B1BC-D943F2BCA036}

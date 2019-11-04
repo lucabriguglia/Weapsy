@@ -22,7 +22,7 @@ namespace Weapsy.Services.Installation
             if (_dispatcher.GetResult<IsAppInstalled, bool>(new IsAppInstalled { Name = createApp.Name }))
                 return;
 
-            _dispatcher.SendAndPublish<CreateApp, App>(createApp);
+            _dispatcher.SendAndPublishAsync<CreateApp, App>(createApp).GetAwaiter().GetResult();
 
             foreach (var createModuleType in createModuleTypes)
                 _dispatcher.SendAndPublish<CreateModuleType, ModuleType>(createModuleType);

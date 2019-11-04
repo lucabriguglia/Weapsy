@@ -1,6 +1,5 @@
 ﻿using System;
 using FluentValidation;
-using Weapsy.Framework.Domain;
 using Weapsy.Domain.Pages.Commands;
 using Weapsy.Domain.Pages.Events;
 using System.Collections.Generic;

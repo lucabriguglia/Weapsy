@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentValidation;
-using Weapsy.Framework.Domain;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus.Events;
 using System.Linq;

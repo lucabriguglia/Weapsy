@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Cqrs.Domain;
-using Weapsy.Framework.Domain;
 using Weapsy.Domain.Templates.Commands;
 using Weapsy.Domain.Templates.Events;
 
@@ -17,7 +16,9 @@ namespace Weapsy.Domain.Templates
         public TemplateStatus Status { get; private set; }
         public TemplateType Type { get; private set; }
 
-        public Template() { }
+        public Template()
+        {
+        }
 
         private Template(CreateTemplate cmd) : base(cmd.Id)
         {

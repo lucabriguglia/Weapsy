@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using Weapsy.Cqrs.Domain;
+﻿using Weapsy.Cqrs.Domain;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps.Events;
-using Weapsy.Framework.Domain;
+
+// ReSharper disable UnusedMember.Local
 
 namespace Weapsy.Domain.Apps
 {
@@ -18,9 +18,11 @@ namespace Weapsy.Domain.Apps
         //public string AdminAction { get; private set; }
         //public string DashboardIcon { get; private set; }    
 
-        public App() { }
+        public App()
+        {
+        }
 
-        private App(CreateApp cmd) : base(cmd.Id)
+        public App(CreateApp cmd) : base(cmd.Id)
         {
             AddEvent(new AppCreated
             {
@@ -32,17 +34,8 @@ namespace Weapsy.Domain.Apps
             });
         }
 
-        public static App CreateNew(CreateApp cmd, IValidator<CreateApp> validator)
+        public void UpdateDetails(UpdateAppDetails cmd)
         {
-            validator.ValidateCommand(cmd);
-
-            return new App(cmd);
-        }
-
-        public void UpdateDetails(UpdateAppDetails cmd, IValidator<UpdateAppDetails> validator)
-        {
-            validator.ValidateCommand(cmd);
-
             AddEvent(new AppDetailsUpdated
             {
                 AggregateRootId = Id,
@@ -58,7 +51,7 @@ namespace Weapsy.Domain.Apps
             Name = @event.Name;
             Description = @event.Description;
             Folder = @event.Folder;
-            Status = AppStatus.Active;
+            Status = @event.Status;
         }
 
         private void Apply(AppDetailsUpdated @event)

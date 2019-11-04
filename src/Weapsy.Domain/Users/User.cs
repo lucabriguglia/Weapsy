@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentValidation;
 using Weapsy.Cqrs.Domain;
-using Weapsy.Framework.Domain;
 using Weapsy.Domain.Users.Commands;
 using Weapsy.Domain.Users.Events;
 
@@ -21,7 +20,9 @@ namespace Weapsy.Domain.Users
         public IList<Address> Addresses { get; private set; } = new List<Address>();
         public IList<ContactNumber> ContactNumbers { get; private set; } = new List<ContactNumber>();
 
-        public User(){}
+        public User()
+        {
+        }
 
         private User(CreateUser cmd) : base(cmd.Id)
         {

@@ -1,22 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
-using Weapsy.Domain.Apps.Handlers;
+using Weapsy.Domain.Apps.Commands.Handlers;
+using Weapsy.Domain.Apps.Events;
 
 namespace Weapsy.Domain.Tests.Apps.Handlers
 {
     [TestFixture]
     public class CreateAppHandlerTests
     {
-        [Test]
-        public void Should_throw_validation_exception_when_validation_fails()
+        private CreateApp _command;
+        private Mock<IAppRepository> _appRepositoryMock;
+        private Mock<IValidator<CreateApp>> _validatorMock;
+        private CreateAppHandler _sut;
+        private App _savedApp;
+
+        [SetUp]
+        public void SetUp()
         {
-            var command = new CreateApp
+            _command = new CreateApp
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
@@ -24,38 +34,55 @@ namespace Weapsy.Domain.Tests.Apps.Handlers
                 Folder = "Folder"
             };
 
-            var appRepositoryMock = new Mock<IAppRepository>();
+            _appRepositoryMock = new Mock<IAppRepository>();
+            _appRepositoryMock
+                .Setup(x => x.CreateAsync(It.IsAny<App>()))
+                .Callback<App>(app => _savedApp = app)
+                .Returns(Task.CompletedTask);
 
-            var validatorMock = new Mock<IValidator<CreateApp>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
+            _validatorMock = new Mock<IValidator<CreateApp>>();
+            _validatorMock
+                .Setup(x => x.ValidateAsync(_command, CancellationToken.None))
+                .ReturnsAsync(new ValidationResult());
 
-            var createAppHandler = new CreateAppHandler(appRepositoryMock.Object, validatorMock.Object);
-
-            Assert.Throws<Exception>(() => createAppHandler.Handle(command));
+            _sut = new CreateAppHandler(_appRepositoryMock.Object, _validatorMock.Object);
         }
 
         [Test]
-        public void Should_validate_command_and_save_new_app()
+        public void Should_throw_validation_exception_when_validation_fails()
         {
-            var command = new CreateApp
-            {
-                Id = Guid.NewGuid(),
-                Name = "Name",
-                Description = "Description",
-                Folder = "Folder"
-            };
+            _validatorMock
+                .Setup(x => x.ValidateAsync(_command, CancellationToken.None))
+                .ReturnsAsync(new ValidationResult(new List<ValidationFailure>
+                {
+                    new ValidationFailure("Id", "Id Error")
+                }));
 
-            var appRepositoryMock = new Mock<IAppRepository>();
-            appRepositoryMock.Setup(x => x.Create(It.IsAny<App>()));
+            Assert.ThrowsAsync<Exception>(async () => await _sut.HandleAsync(_command));
+        }
 
-            var validatorMock = new Mock<IValidator<CreateApp>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
+        [Test]
+        public async Task Should_validate_command()
+        {
+            await _sut.HandleAsync(_command);
 
-            var createAppHandler = new CreateAppHandler(appRepositoryMock.Object, validatorMock.Object);
-            createAppHandler.Handle(command);
+            _validatorMock.Verify(x => x.ValidateAsync(_command, CancellationToken.None), Times.Once);
+        }
 
-            validatorMock.Verify(x => x.Validate(command));
-            appRepositoryMock.Verify(x => x.Create(It.IsAny<App>()));
+        [Test]
+        public async Task Should_save_new_app()
+        {
+            await _sut.HandleAsync(_command);
+
+            Assert.NotNull(_savedApp.Events.OfType<AppCreated>().SingleOrDefault());
+        }
+
+        [Test]
+        public async Task Should_return_saved_app()
+        {
+            var actual = await _sut.HandleAsync(_command);
+
+            Assert.AreEqual(_savedApp, actual);
         }
     }
 }

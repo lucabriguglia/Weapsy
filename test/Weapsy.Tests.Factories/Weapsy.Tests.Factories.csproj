@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Weapsy.Domain\Weapsy.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Weapsy.Domain\Weapsy.Domain.Models.csproj" />
   </ItemGroup>
 
 </Project>

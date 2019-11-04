@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Weapsy.Cqrs.Domain;
-using Weapsy.Framework.Domain;
 using Weapsy.Domain.Menus.Commands;
 using Weapsy.Domain.Menus.Events;
 using Weapsy.Domain.Roles.DefaultRoles;

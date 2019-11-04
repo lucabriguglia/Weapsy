@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using Weapsy.Cqrs.Commands;
 
-namespace Weapsy.Framework.Domain
+namespace Weapsy.Domain
 {
     public static class ValidatorExtensions
     {
@@ -17,7 +18,18 @@ namespace Weapsy.Framework.Domain
             var validationResult = validator.Validate(command);
 
             if (!validationResult.IsValid)
-                throw new Exception(BuildErrorMesage(validationResult.Errors));
+                throw new ApplicationException(BuildErrorMesage(validationResult.Errors));
+        }
+
+        public static async Task ValidateCommandAsync<TCommand>(this IValidator<TCommand> validator, TCommand command) where TCommand : ICommand
+        {
+            if (command == null)
+                throw new ArgumentNullException(nameof(command));
+
+            var validationResult = await validator.ValidateAsync(command);
+
+            if (!validationResult.IsValid)
+                throw new ApplicationException(BuildErrorMesage(validationResult.Errors));
         }
 
         private static string BuildErrorMesage(IEnumerable<ValidationFailure> errors)

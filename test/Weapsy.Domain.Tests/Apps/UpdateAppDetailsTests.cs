@@ -1,9 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
-using Moq;
-using FluentValidation;
-using FluentValidation.Results;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps.Events;
@@ -15,14 +11,14 @@ namespace Weapsy.Domain.Tests.Apps
     public class UpdateAppDetailsTests
     {
         private UpdateAppDetails _command;
-        private Mock<IValidator<UpdateAppDetails>> _validatorMock;
         private App _app;
         private AppDetailsUpdated _event;
 
         [SetUp]
         public void Setup()
         {
-            _app = AppFactory.App();
+            _app = AppFactory.CreateApp();
+
             _command = new UpdateAppDetails
             {
                 Id = _app.Id,
@@ -30,16 +26,10 @@ namespace Weapsy.Domain.Tests.Apps
                 Description = "New Description",
                 Folder = "New Folder"
             };
-            _validatorMock = new Mock<IValidator<UpdateAppDetails>>();
-            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
-            _app.UpdateDetails(_command, _validatorMock.Object);
-            _event = _app.Events.OfType<AppDetailsUpdated>().SingleOrDefault();
-        }
 
-        [Test]
-        public void Should_validate_command()
-        {
-            _validatorMock.Verify(x => x.Validate(_command));
+            _app.UpdateDetails(_command);
+
+            _event = _app.Events.OfType<AppDetailsUpdated>().SingleOrDefault();
         }
 
         [Test]

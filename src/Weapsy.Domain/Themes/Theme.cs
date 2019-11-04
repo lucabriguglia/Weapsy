@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using System;
 using Weapsy.Cqrs.Domain;
-using Weapsy.Framework.Domain;
 using Weapsy.Domain.Themes.Commands;
 using Weapsy.Domain.Themes.Events;
 

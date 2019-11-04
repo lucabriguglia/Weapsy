@@ -27,8 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Weapsy.Application\Weapsy.Application.csproj" />
     <ProjectReference Include="..\Weapsy.Data\Weapsy.Data.csproj" />
-    <ProjectReference Include="..\Weapsy.Domain\Weapsy.Domain.csproj" />
+    <ProjectReference Include="..\Weapsy.Domain\Weapsy.Domain.Models.csproj" />
     <ProjectReference Include="..\Weapsy.Mvc\Weapsy.Mvc.csproj" />
     <ProjectReference Include="..\Weapsy.Reporting\Weapsy.Reporting.csproj" />
     <ProjectReference Include="..\Weapsy.Services\Weapsy.Services.csproj" />

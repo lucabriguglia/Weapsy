@@ -1,62 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
-using Weapsy.Domain.Apps.Handlers;
+using Weapsy.Domain.Apps.Commands.Handlers;
+using Weapsy.Domain.Apps.Events;
+using Weapsy.Tests.Factories;
 
 namespace Weapsy.Domain.Tests.Apps.Handlers
 {
     [TestFixture]
     public class UpdateAppDetailsHandlerTests
     {
-        [Test]
-        public void Should_throw_validation_exception_when_validation_fails()
+        private UpdateAppDetails _command;
+        private Mock<IAppRepository> _appRepositoryMock;
+        private Mock<IValidator<UpdateAppDetails>> _validatorMock;
+        private UpdateAppDetailsHandler _sut;
+        private App _app;
+        private App _updatedApp;
+
+        [SetUp]
+        public void SetUp()
         {
-            var command = new UpdateAppDetails
+            _app = AppFactory.CreateApp();
+
+            _command = new UpdateAppDetails
             {
-                Id = Guid.NewGuid(),
-                Name = "Name",
-                Description = "Description",
-                Folder = "Folder"
+                Id = _app.Id,
+                Name = "New Name",
+                Description = "New Description",
+                Folder = "New Folder"
             };
 
-            var repositoryMock = new Mock<IAppRepository>();
-            repositoryMock.Setup(x => x.GetById(command.Id)).Returns(new App());
+            _appRepositoryMock = new Mock<IAppRepository>();
+            _appRepositoryMock
+                .Setup(x => x.GetById(_command.Id))
+                .Returns(_app);
+            _appRepositoryMock
+                .Setup(x => x.UpdateAsync(It.IsAny<App>()))
+                .Callback<App>(app => _updatedApp = app)
+                .Returns(Task.CompletedTask);
 
-            var validatorMock = new Mock<IValidator<UpdateAppDetails>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Id", "Id Error") }));
+            _validatorMock = new Mock<IValidator<UpdateAppDetails>>();
+            _validatorMock
+                .Setup(x => x.ValidateAsync(_command, CancellationToken.None))
+                .ReturnsAsync(new ValidationResult());
 
-            var createAppHandler = new UpdateAppDetailsHandler(repositoryMock.Object, validatorMock.Object);
-
-            Assert.Throws<Exception>(() => createAppHandler.Handle(command));
+            _sut = new UpdateAppDetailsHandler(_appRepositoryMock.Object, _validatorMock.Object);
         }
 
         [Test]
-        public void Should_validate_command_and_update_app()
+        public void Should_throw_application_exception_when_app_is_not_found()
         {
-            var command = new UpdateAppDetails
-            {
-                Id = Guid.NewGuid(),
-                Name = "Name",
-                Description = "Description",
-                Folder = "Folder"
-            };
+            _appRepositoryMock
+                .Setup(x => x.GetById(_command.Id))
+                .Returns(default(App));
 
-            var repositoryMock = new Mock<IAppRepository>();
-            repositoryMock.Setup(x => x.GetById(command.Id)).Returns(new App());
+            Assert.ThrowsAsync<ApplicationException>(async () => await _sut.HandleAsync(_command));
+        }
 
-            var validatorMock = new Mock<IValidator<UpdateAppDetails>>();
-            validatorMock.Setup(x => x.Validate(command)).Returns(new ValidationResult());
+        [Test]
+        public void Should_throw_application_exception_when_validation_fails()
+        {
+            _validatorMock
+                .Setup(x => x.ValidateAsync(_command, CancellationToken.None))
+                .ReturnsAsync(new ValidationResult(new List<ValidationFailure>
+                {
+                    new ValidationFailure("Name", "Name Error")
+                }));
 
-            var createAppHandler = new UpdateAppDetailsHandler(repositoryMock.Object, validatorMock.Object);
-            createAppHandler.Handle(command);
+            Assert.ThrowsAsync<ApplicationException>(async () => await _sut.HandleAsync(_command));
+        }
 
-            validatorMock.Verify(x => x.Validate(command));
-            repositoryMock.Verify(x => x.Update(It.IsAny<App>()));
+        [Test]
+        public async Task Should_validate_command()
+        {
+            await _sut.HandleAsync(_command);
+
+            _validatorMock.Verify(x => x.ValidateAsync(_command, CancellationToken.None), Times.Once);
+        }
+
+        [Test]
+        public async Task Should_update_app()
+        {
+            await _sut.HandleAsync(_command);
+
+            Assert.NotNull(_updatedApp.Events.OfType<AppDetailsUpdated>().FirstOrDefault());
+        }
+
+        [Test]
+        public async Task Should_return_updated_app()
+        {
+            var actual = await _sut.HandleAsync(_command);
+
+            Assert.AreEqual(_updatedApp, actual);
         }
     }
 }

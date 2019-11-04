@@ -5,7 +5,7 @@ using System.Linq;
 using Weapsy.Apps.Text.Domain.Commands;
 using Weapsy.Apps.Text.Domain.Events;
 using Weapsy.Cqrs.Domain;
-using Weapsy.Framework.Domain;
+using Weapsy.Domain;
 
 namespace Weapsy.Apps.Text.Domain
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Themes
 {

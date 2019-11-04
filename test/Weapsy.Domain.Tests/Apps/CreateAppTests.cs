@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Linq;
 using NUnit.Framework;
-using Moq;
-using FluentValidation;
-using FluentValidation.Results;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps.Events;
@@ -14,7 +11,6 @@ namespace Weapsy.Domain.Tests.Apps
     public class CreateAppTests
     {
         private CreateApp _command;
-        private Mock<IValidator<CreateApp>> _validatorMock;
         private App _app;
         private AppCreated _event;
 
@@ -28,16 +24,10 @@ namespace Weapsy.Domain.Tests.Apps
                 Description = "Description",
                 Folder = "Folder"
             };            
-            _validatorMock = new Mock<IValidator<CreateApp>>();
-            _validatorMock.Setup(x => x.Validate(_command)).Returns(new ValidationResult());
-            _app = App.CreateNew(_command, _validatorMock.Object);
-            _event = _app.Events.OfType<AppCreated>().SingleOrDefault();
-        }
 
-        [Test]
-        public void Should_validate_command()
-        {
-            _validatorMock.Verify(x => x.Validate(_command));
+            _app = new App(_command);
+
+            _event = _app.Events.OfType<AppCreated>().SingleOrDefault();
         }
 
         [Test]

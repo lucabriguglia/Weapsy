@@ -1,11 +1,11 @@
+using System.Threading.Tasks;
 using FluentValidation;
 using Weapsy.Cqrs.Commands;
 using Weapsy.Cqrs.Domain;
-using Weapsy.Domain.Apps.Commands;
 
-namespace Weapsy.Domain.Apps.Handlers
+namespace Weapsy.Domain.Apps.Commands.Handlers
 {
-    public class CreateAppHandler : ICommandHandlerWithAggregate<CreateApp>
+    public class CreateAppHandler : ICommandHandlerWithAggregateAsync<CreateApp>
     {
         private readonly IAppRepository _appRepository;
         private readonly IValidator<CreateApp> _validator;
@@ -17,11 +17,13 @@ namespace Weapsy.Domain.Apps.Handlers
             _validator = validator;
         }
 
-        public IAggregateRoot Handle(CreateApp command)
+        public async Task<IAggregateRoot> HandleAsync(CreateApp command)
         {
-            var app = App.CreateNew(command, _validator);
+            await _validator.ValidateCommandAsync(command);
 
-            _appRepository.Create(app);
+            var app = new App(command);
+
+            await _appRepository.CreateAsync(app);
 
             return app;
         }

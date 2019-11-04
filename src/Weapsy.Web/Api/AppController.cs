@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Weapsy.Application;
 using Weapsy.Cqrs;
 using Weapsy.Domain.Apps;
 using Weapsy.Domain.Apps.Commands;
@@ -19,13 +20,17 @@ namespace Weapsy.Web.Api
         private readonly IDispatcher _dispatcher;
         private readonly IAppRules _appRules;
 
+        private readonly IAppService _appService;
+
         public AppController(IDispatcher dispatcher,
             IAppRules appRules,
-            IContextService contextService)
+            IContextService contextService, 
+            IAppService appService)
             : base(contextService)
         {
             _dispatcher = dispatcher;
             _appRules = appRules;
+            _appService = appService;
         }
 
         [HttpGet]

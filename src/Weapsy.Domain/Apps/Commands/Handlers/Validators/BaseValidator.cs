@@ -1,26 +1,34 @@
 ﻿using FluentValidation;
-using Weapsy.Domain.Apps.Commands;
 using Weapsy.Domain.Apps.Rules;
 
-namespace Weapsy.Domain.Apps.Validators
+namespace Weapsy.Domain.Apps.Commands.Handlers.Validators
 {
-    public class AppDetailsValidator<T> : AbstractValidator<T> where T : AppDetails
+    public class BaseValidator<T> : AbstractValidator<T> where T : AppDetails
     {
         private readonly IAppRules _appRules;
 
-        public AppDetailsValidator(IAppRules appRules)
+        public BaseValidator(IAppRules appRules)
         {
             _appRules = appRules;
+        }
 
+        protected void ValidateName()
+        {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("App name is required.")
                 .Length(1, 100).WithMessage("App name length must be between 1 and 100 characters.")
                 .Must(HaveUniqueName).WithMessage("A app with the same name already exists.");
+        }
 
+        protected void ValidateDescription()
+        {
             RuleFor(c => c.Description)
                 .Length(1, 4000).WithMessage("Culture name length must be between 1 and 4000 characters.")
                 .When(c => !string.IsNullOrWhiteSpace(c.Description));
+        }
 
+        protected void ValidateFolder()
+        {
             RuleFor(c => c.Folder)
                 .NotEmpty().WithMessage("App folder is required.")
                 .Length(1, 100).WithMessage("App url length must be between 1 and 100 characters.")

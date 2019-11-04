@@ -1,5 +1,4 @@
 ﻿using System;
-using Weapsy.Framework.Domain;
 
 namespace Weapsy.Domain.Menus
 {

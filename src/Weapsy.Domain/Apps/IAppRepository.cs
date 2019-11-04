@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Weapsy.Domain.Apps
 {
@@ -7,7 +8,7 @@ namespace Weapsy.Domain.Apps
         App GetById(Guid id);
         App GetByName(string name);
         App GetByFolder(string folder);
-        void Create(App app);
-        void Update(App app);
+        Task CreateAsync(App app);
+        Task UpdateAsync(App app);
     }
 }

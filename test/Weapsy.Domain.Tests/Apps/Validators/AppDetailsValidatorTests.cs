@@ -3,7 +3,6 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using Weapsy.Domain.Apps.Commands;
-using Weapsy.Domain.Apps.Validators;
 using Weapsy.Domain.Apps.Rules;
 using Weapsy.Domain.Sites.Rules;
 
@@ -20,7 +19,7 @@ namespace Weapsy.Domain.Tests.Apps.Validators
         [SetUp]
         public void SetUp()
         {
-            _command = new AppDetails
+            _command = new CreateApp
             {
                 Id = Guid.NewGuid(),
                 Name = "Name",
