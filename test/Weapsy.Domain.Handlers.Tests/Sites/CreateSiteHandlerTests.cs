@@ -1,5 +1,8 @@
-﻿namespace Weapsy.Domain.Handlers.Tests
+﻿using NUnit.Framework;
+
+namespace Weapsy.Domain.Handlers.Tests
 {
+    [TestFixture]
     public class CreateSiteHandlerTests
     {
     }

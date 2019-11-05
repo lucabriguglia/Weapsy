@@ -13,10 +13,7 @@ namespace Weapsy.Domain.Handlers.Sites.Validators
         public CreateSiteValidator(ISiteRules siteRules)
         {
             _siteRules = siteRules;
-        }
 
-        public CreateSiteValidator()
-        {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Site name is required.")
                 .Length(1, 100).WithMessage("Site name length must be between 1 and 100 characters.")
