@@ -8,11 +8,11 @@ namespace Weapsy.Domain.Handlers.Sites.Validators
 {
     public class CreateSiteValidator : AbstractValidator<CreateSite>
     {
-        private readonly ISiteRules _siteRules;
+        private readonly ISiteRules _rules;
 
-        public CreateSiteValidator(ISiteRules siteRules)
+        public CreateSiteValidator(ISiteRules rules)
         {
-            _siteRules = siteRules;
+            _rules = rules;
 
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Site name is required.")
@@ -22,7 +22,7 @@ namespace Weapsy.Domain.Handlers.Sites.Validators
 
         private Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
         {
-            return _siteRules.IsNameUniqueAsync(name);
+            return _rules.IsNameUniqueAsync(name);
         }
     }
 }

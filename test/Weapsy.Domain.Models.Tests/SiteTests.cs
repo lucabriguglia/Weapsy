@@ -8,7 +8,7 @@ namespace Weapsy.Domain.Models.Tests
     [TestFixture]
     public class SiteTests
     {
-        private Site _site;
+        private Site _sut;
         private CreateSite _command;
 
         [SetUp]
@@ -20,19 +20,19 @@ namespace Weapsy.Domain.Models.Tests
                 Name = "My Site"
             };
 
-            _site = new Site(_command);
+            _sut = new Site(_command);
         }
 
         [Test]
         public void SetsId()
         {
-            Assert.AreEqual(_command.AggregateRootId, _site.Id);
+            Assert.AreEqual(_command.AggregateRootId, _sut.Id);
         }
 
         [Test]
         public void SetsName()
         {
-            Assert.AreEqual(_command.Name, _site.Name);
+            Assert.AreEqual(_command.Name, _sut.Name);
         }
     }
 }

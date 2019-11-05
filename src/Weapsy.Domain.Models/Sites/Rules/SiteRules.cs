@@ -4,11 +4,16 @@ namespace Weapsy.Domain.Models.Sites.Rules
 {
     public class SiteRules : ISiteRules
     {
-        public Task<bool> IsNameUniqueAsync(string name)
-        {
-            // TO DO: Check the database
+        private readonly ISiteRepository _repository;
 
-            return Task.FromResult(true);
+        public SiteRules(ISiteRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<bool> IsNameUniqueAsync(string name)
+        {
+            return await _repository.AnyByNameAsync(name) == false;
         }
     }
 }
