@@ -18,10 +18,10 @@ namespace Weapsy.Domain.Handlers
             var validationResult = await validator.ValidateAsync(command);
 
             if (!validationResult.IsValid)
-                throw new Exception(BuildErrorMesage(validationResult.Errors));
+                throw new Exception(BuildErrorMessage(validationResult.Errors));
         }
 
-        private static string BuildErrorMesage(IEnumerable<ValidationFailure> errors)
+        private static string BuildErrorMessage(IEnumerable<ValidationFailure> errors)
         {
             var errorsText = errors.Select(x => $"\r\n - {x.ErrorMessage}").ToArray();
             return $"Validation failed: {string.Join("", errorsText)}";

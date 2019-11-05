@@ -1,15 +1,16 @@
-﻿using AutoFixture;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;
 using Kledex.Commands;
 using Moq;
 using NUnit.Framework;
-using System.Threading;
-using System.Threading.Tasks;
+using Weapsy.Domain.Handlers.Sites;
 using Weapsy.Domain.Models.Sites;
 using Weapsy.Domain.Models.Sites.Commands;
 
-namespace Weapsy.Domain.Handlers.Tests
+namespace Weapsy.Domain.Handlers.Tests.Sites
 {
     [TestFixture]
     public class CreateSiteHandlerTests

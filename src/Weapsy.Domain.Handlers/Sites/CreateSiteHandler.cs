@@ -4,7 +4,7 @@ using Kledex.Commands;
 using Weapsy.Domain.Models.Sites;
 using Weapsy.Domain.Models.Sites.Commands;
 
-namespace Weapsy.Domain.Handlers
+namespace Weapsy.Domain.Handlers.Sites
 {
     public class CreateSiteHandler : ICommandHandlerAsync<CreateSite>
     {
