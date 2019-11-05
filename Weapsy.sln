@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Models.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Handlers.Tests", "test\Weapsy.Domain.Handlers.Tests\Weapsy.Domain.Handlers.Tests.csproj", "{B21C1732-988C-4FC4-BB30-69D5B3147D1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Data", "src\Weapsy.Data\Weapsy.Data.csproj", "{DC653A94-6ACD-45FC-925C-4BC924FC203F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{B21C1732-988C-4FC4-BB30-69D5B3147D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21C1732-988C-4FC4-BB30-69D5B3147D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B21C1732-988C-4FC4-BB30-69D5B3147D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{D5923C98-E378-4305-BD1A-122C6F3E8B39} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{B21C1732-988C-4FC4-BB30-69D5B3147D1B} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
+		{DC653A94-6ACD-45FC-925C-4BC924FC203F} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E96E64F-F82B-469C-B1BC-D943F2BCA036}
