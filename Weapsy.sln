@@ -14,15 +14,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B88B263-F58
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Models", "src\Weapsy.Domain.Models\Weapsy.Domain.Models.csproj", "{54747CC7-E507-4058-8DA7-4DDE3CB970C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models", "src\Weapsy.Domain.Models\Weapsy.Domain.Models.csproj", "{54747CC7-E507-4058-8DA7-4DDE3CB970C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Handlers", "src\Weapsy.Domain.Handlers\Weapsy.Domain.Handlers.csproj", "{D5923C98-E378-4305-BD1A-122C6F3E8B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Handlers", "src\Weapsy.Domain.Handlers\Weapsy.Domain.Handlers.csproj", "{D5923C98-E378-4305-BD1A-122C6F3E8B39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Models.Tests", "test\Weapsy.Domain.Models.Tests\Weapsy.Domain.Models.Tests.csproj", "{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models.Tests", "test\Weapsy.Domain.Models.Tests\Weapsy.Domain.Models.Tests.csproj", "{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Handlers.Tests", "test\Weapsy.Domain.Handlers.Tests\Weapsy.Domain.Handlers.Tests.csproj", "{B21C1732-988C-4FC4-BB30-69D5B3147D1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Handlers.Tests", "test\Weapsy.Domain.Handlers.Tests\Weapsy.Domain.Handlers.Tests.csproj", "{B21C1732-988C-4FC4-BB30-69D5B3147D1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Data", "src\Weapsy.Data\Weapsy.Data.csproj", "{DC653A94-6ACD-45FC-925C-4BC924FC203F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Data", "src\Weapsy.Data\Weapsy.Data.csproj", "{DC653A94-6ACD-45FC-925C-4BC924FC203F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Reporting.Models", "src\Weapsy.Reporting.Models\Weapsy.Reporting.Models.csproj", "{2DA70893-1B06-417D-BC56-1E85DB1A2CF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Reporting.Handlers", "src\Weapsy.Reporting.Handlers\Weapsy.Reporting.Handlers.csproj", "{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Repositories", "src\Weapsy.Domain.Repositories\Weapsy.Domain.Repositories.csproj", "{C338619D-4E3A-4E8D-BEEA-842BE631271E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +56,18 @@ Global
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DA70893-1B06-417D-BC56-1E85DB1A2CF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DA70893-1B06-417D-BC56-1E85DB1A2CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DA70893-1B06-417D-BC56-1E85DB1A2CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DA70893-1B06-417D-BC56-1E85DB1A2CF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C338619D-4E3A-4E8D-BEEA-842BE631271E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C338619D-4E3A-4E8D-BEEA-842BE631271E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C338619D-4E3A-4E8D-BEEA-842BE631271E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C338619D-4E3A-4E8D-BEEA-842BE631271E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +78,9 @@ Global
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{B21C1732-988C-4FC4-BB30-69D5B3147D1B} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{2DA70893-1B06-417D-BC56-1E85DB1A2CF3} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{C338619D-4E3A-4E8D-BEEA-842BE631271E} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E96E64F-F82B-469C-B1BC-D943F2BCA036}

@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Kledex" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Weapsy.Data\Weapsy.Data.csproj" />
+    <ProjectReference Include="..\Weapsy.Reporting.Models\Weapsy.Reporting.Models.csproj" />
+  </ItemGroup>
+
+</Project>
