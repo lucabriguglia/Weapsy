@@ -1,4 +1,4 @@
-# PROGRESS ON NEXT VERSION > [VNEXT](https://github.com/lucabriguglia/Weapsy/tree/vnext)
+# PROGRESS ON REFACTORING > [VNEXT](https://github.com/lucabriguglia/Weapsy/tree/vnext)
 
 # Weapsy
 
