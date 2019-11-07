@@ -2,7 +2,7 @@
 
 namespace Weapsy.Reporting.Models.Sites
 {
-    public class SiteModel
+    public class SiteInfo
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

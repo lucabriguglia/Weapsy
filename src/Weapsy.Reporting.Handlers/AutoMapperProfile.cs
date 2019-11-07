@@ -8,8 +8,8 @@ namespace Weapsy.Reporting.Handlers
     {
         public AutoMapperProfile()
         {
-            CreateMap<SiteModel, SiteEntity>();
-            CreateMap<SiteEntity, SiteModel>();
+            CreateMap<SiteInfo, SiteEntity>();
+            CreateMap<SiteEntity, SiteInfo>();
         }
     }
 }

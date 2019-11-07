@@ -2,7 +2,7 @@
 
 namespace Weapsy.Reporting.Models.Sites.Queries
 {
-    public class GetSiteByName : IQuery<SiteModel>
+    public class GetSiteInfo : IQuery<SiteInfo>
     {
         public string SiteName { get; set; }
     }
