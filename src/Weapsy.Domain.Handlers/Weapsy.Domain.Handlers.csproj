@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.5.1" />
-    <PackageReference Include="Kledex" Version="2.0.0" />
+    <PackageReference Include="Kledex" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
