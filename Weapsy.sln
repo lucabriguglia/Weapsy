@@ -32,6 +32,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Repositories"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Web", "src\Weapsy.Web\Weapsy.Web.csproj", "{5478008A-0C38-4211-9CF8-CCF0226DE439}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Validators", "src\Weapsy.Domain.Validators\Weapsy.Domain.Validators.csproj", "{E3564CF5-CF17-42FE-A085-34D008C090E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Validators.Tests", "test\Weapsy.Domain.Validators.Tests\Weapsy.Domain.Validators.Tests.csproj", "{35B98163-4743-4977-8A79-9F341435D544}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +78,14 @@ Global
 		{5478008A-0C38-4211-9CF8-CCF0226DE439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5478008A-0C38-4211-9CF8-CCF0226DE439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5478008A-0C38-4211-9CF8-CCF0226DE439}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3564CF5-CF17-42FE-A085-34D008C090E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3564CF5-CF17-42FE-A085-34D008C090E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3564CF5-CF17-42FE-A085-34D008C090E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3564CF5-CF17-42FE-A085-34D008C090E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35B98163-4743-4977-8A79-9F341435D544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35B98163-4743-4977-8A79-9F341435D544}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35B98163-4743-4977-8A79-9F341435D544}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35B98163-4743-4977-8A79-9F341435D544}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +100,8 @@ Global
 		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{C338619D-4E3A-4E8D-BEEA-842BE631271E} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{5478008A-0C38-4211-9CF8-CCF0226DE439} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{E3564CF5-CF17-42FE-A085-34D008C090E2} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{35B98163-4743-4977-8A79-9F341435D544} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E96E64F-F82B-469C-B1BC-D943F2BCA036}

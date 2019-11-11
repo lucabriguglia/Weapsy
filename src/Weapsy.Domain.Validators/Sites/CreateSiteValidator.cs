@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Weapsy.Domain.Models.Sites.Commands;
 using Weapsy.Domain.Models.Sites.Rules;
 
-namespace Weapsy.Domain.Handlers.Sites.Validators
+namespace Weapsy.Domain.Validators.Sites
 {
     public class CreateSiteValidator : AbstractValidator<CreateSite>
     {
