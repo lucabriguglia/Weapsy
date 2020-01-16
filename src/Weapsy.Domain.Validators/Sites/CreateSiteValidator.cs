@@ -16,8 +16,8 @@ namespace Weapsy.Domain.Validators.Sites
 
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Site name is required.")
-                .Length(1, 100).WithMessage("Site name length must be between 1 and 100 characters.")
-                .MustAsync(HaveUniqueName).WithMessage($"A site with the same name already exists.");
+                .Length(1, 100).WithMessage(c => { return $"Site name length must be between 1 and 100 characters. Current length {c.Name.Length}."; })
+                .MustAsync(HaveUniqueName).WithMessage(c => { return $"A site with the name \"{c.Name}\" already exists."; });
         }
 
         private Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
