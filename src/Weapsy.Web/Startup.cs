@@ -44,7 +44,7 @@ namespace Weapsy.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddWeapsy();
+            services.AddWeapsy(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

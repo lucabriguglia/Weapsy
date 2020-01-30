@@ -1,6 +1,8 @@
 ﻿using Kledex.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Weapsy.Data.Extensions;
 using Weapsy.Domain.Handlers.Sites;
 using Weapsy.Domain.Models.Sites.Commands;
 using Weapsy.Domain.Repositories;
@@ -12,7 +14,7 @@ namespace Weapsy.Web.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IWeapsyServiceBuilder AddWeapsy(this IServiceCollection services)
+        public static IWeapsyServiceBuilder AddWeapsy(this IServiceCollection services, IConfiguration configuration)
         {
             if (services == null)
                 throw new ArgumentNullException(nameof(services));
@@ -23,6 +25,8 @@ namespace Weapsy.Web.Extensions
                 typeof(SiteRepository),
                 typeof(GetSiteInfo),
                 typeof(GetSiteInfoHandler));
+
+            services.AddWeapsyData(configuration);
 
             return new WeapsyServiceBuilder(services);
         }
