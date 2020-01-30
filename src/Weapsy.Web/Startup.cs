@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Web.Data;
@@ -11,6 +8,7 @@ using Weapsy.Web.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Weapsy.Web.Extensions;
 
 namespace Weapsy.Web
 {
@@ -45,6 +43,8 @@ namespace Weapsy.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddWeapsy();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,6 +94,8 @@ namespace Weapsy.Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            app.UseWeapsy();
         }
     }
 }

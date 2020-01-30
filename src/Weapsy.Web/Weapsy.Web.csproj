@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Kledex" Version="2.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
@@ -31,6 +32,16 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Weapsy.Data\Weapsy.Data.csproj" />
+    <ProjectReference Include="..\Weapsy.Domain.Handlers\Weapsy.Domain.Handlers.csproj" />
+    <ProjectReference Include="..\Weapsy.Domain.Models\Weapsy.Domain.Models.csproj" />
+    <ProjectReference Include="..\Weapsy.Domain.Repositories\Weapsy.Domain.Repositories.csproj" />
+    <ProjectReference Include="..\Weapsy.Domain.Validators\Weapsy.Domain.Validators.csproj" />
+    <ProjectReference Include="..\Weapsy.Reporting.Handlers\Weapsy.Reporting.Handlers.csproj" />
+    <ProjectReference Include="..\Weapsy.Reporting.Models\Weapsy.Reporting.Models.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
