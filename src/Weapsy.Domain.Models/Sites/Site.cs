@@ -17,5 +17,10 @@ namespace Weapsy.Domain.Models.Sites
             Id = Guid.NewGuid();
             Name = command.Name;
         }
+
+        public void Update(UpdateSite command)
+        {
+            Name = command.Name;
+        }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using Kledex.Commands;
 using Weapsy.Domain.Models.Sites.Commands;
 
 namespace Weapsy.Domain.Services.Sites
 {
     public interface ISiteService
     {
-        Task CreateAsync(CreateSite command);
-        Task UpdateAsync(UpdateSite command);
+        Task<CommandResponse> CreateAsync(CreateSite command);
+        Task<CommandResponse> UpdateAsync(UpdateSite command);
     }
 }

@@ -1,47 +1,65 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using FluentValidation;
+using Kledex.Commands;
+using Microsoft.EntityFrameworkCore;
 using Weapsy.Data;
-using Weapsy.Data.Entities;
 using Weapsy.Domain.Models.Sites;
 using Weapsy.Domain.Models.Sites.Commands;
+using Weapsy.Domain.Models.Sites.Events;
 
 namespace Weapsy.Domain.Services.Sites
 {
     public class SiteService : ISiteService
     {
         private readonly WeapsyDbContext _dbContext;
-        private readonly IMapper _mapper;
         private readonly IValidator<CreateSite> _createSiteValidator;
         private readonly IValidator<UpdateSite> _updateSiteValidator;
 
-        public SiteService(WeapsyDbContext dbContext, 
-            IMapper mapper, 
+        public SiteService(WeapsyDbContext dbContext,
             IValidator<CreateSite> createSiteValidator, 
             IValidator<UpdateSite> updateSiteValidator)
         {
             _dbContext = dbContext;
-            _mapper = mapper;
             _createSiteValidator = createSiteValidator;
             _updateSiteValidator = updateSiteValidator;
         }
 
-        public async Task CreateAsync(CreateSite command)
+        public async Task<CommandResponse> CreateAsync(CreateSite command)
         {
             await _createSiteValidator.ValidateAndThrowAsync(command);
 
             var site = new Site(command);
-            var siteEntity = _mapper.Map<SiteEntity>(site);
 
-            _dbContext.Sites.Add(siteEntity);
+            _dbContext.Sites.Add(site);
 
             await _dbContext.SaveChangesAsync();
+
+            return new CommandResponse(new SiteCreated
+            {
+                Name = site.Name
+            });
         }
 
-        public Task UpdateAsync(UpdateSite command)
+        public async Task<CommandResponse> UpdateAsync(UpdateSite command)
         {
-            throw new NotImplementedException();
+            var site = await _dbContext.Sites.FirstAsync(x => x.Id == command.Id);
+
+            if (site == null)
+            {
+                throw new ApplicationException($"Site with Id {command.Id} not found.");
+            }
+
+            await _updateSiteValidator.ValidateAndThrowAsync(command);
+
+            site.Update(command);
+
+            await _dbContext.SaveChangesAsync();
+
+            return new CommandResponse(new SiteUpdated
+            {
+                Id = site.Id
+            });
         }
     }
 }

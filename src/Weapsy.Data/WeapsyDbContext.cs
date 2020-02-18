@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Weapsy.Data.Entities;
+using Weapsy.Domain.Models.Sites;
 
 namespace Weapsy.Data
 {
@@ -14,10 +14,10 @@ namespace Weapsy.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<SiteEntity>()
+            builder.Entity<Site>()
                 .ToTable("Site");
         }
 
-        public DbSet<SiteEntity> Sites { get; set; }
+        public DbSet<Site> Sites { get; set; }
     }
 }

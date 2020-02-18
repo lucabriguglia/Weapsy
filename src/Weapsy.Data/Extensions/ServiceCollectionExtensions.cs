@@ -38,7 +38,7 @@ namespace Weapsy.Data.Extensions
                 .AddClasses()
                 .AsImplementedInterfaces());
 
-            var provider = services.BuildServiceProvider().GetServices<IDatabaseProvider>().Single(x => x.Provider.ToString() == dataProvider);
+            var provider = services.BuildServiceProvider().GetServices<IDatabaseProvider>().Single(x => x.ProviderType.ToString() == dataProvider);
             provider.RegisterDbContext(services, connectionString);
 
             return services;
