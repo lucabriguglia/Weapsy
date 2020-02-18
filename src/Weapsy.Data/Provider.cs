@@ -1,6 +1,6 @@
 ﻿namespace Weapsy.Data
 {
-    public enum ProviderType
+    public enum Provider
     {
         SqlServer,
         Sqlite,

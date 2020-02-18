@@ -19,13 +19,13 @@ namespace Weapsy.Domain.Services.Sites.Validators
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Site name is required.")
-                .Length(1, 100).WithMessage(c => $"Site name length must be between 1 and 100 characters. Current length {c.Name.Length}.")
+                .Length(1, 100).WithMessage(c => $"Site name length must be between 1 and 100 characters. Current length is {c.Name.Length}.")
                 .MustAsync(HaveUniqueName).WithMessage(c => $"A site with the name \"{c.Name}\" already exists.");
         }
 
-        private Task<bool> HaveUniqueName(string name, CancellationToken cancellationToken)
+        private Task<bool> HaveUniqueName(SiteCommandBase command, string name, CancellationToken cancellationToken)
         {
-            return _rules.IsNameUniqueAsync(name);
+            return _rules.IsNameUniqueAsync(name, command.Id);
         }
     }
 }

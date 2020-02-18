@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Weapsy.Domain.Models\Weapsy.Domain.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Validators\" />
+  </ItemGroup>
+
 </Project>

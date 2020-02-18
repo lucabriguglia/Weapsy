@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{186F12D9-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models.Tests", "test\Weapsy.Domain.Models.Tests\Weapsy.Domain.Models.Tests.csproj", "{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Handlers.Tests", "test\Weapsy.Domain.Handlers.Tests\Weapsy.Domain.Handlers.Tests.csproj", "{B21C1732-988C-4FC4-BB30-69D5B3147D1B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Data", "src\Weapsy.Data\Weapsy.Data.csproj", "{DC653A94-6ACD-45FC-925C-4BC924FC203F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Reporting.Models", "src\Weapsy.Reporting.Models\Weapsy.Reporting.Models.csproj", "{2DA70893-1B06-417D-BC56-1E85DB1A2CF3}"
@@ -32,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Reporting", "src\Wea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models", "src\Weapsy.Domain.Models\Weapsy.Domain.Models.csproj", "{38E8F140-EC73-4665-98D3-26DB6345104F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Services", "src\Weapsy.Domain.Services\Weapsy.Domain.Services.csproj", "{0E3F757C-2E11-48C3-B54F-EFC060F20AE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Services", "src\Weapsy.Domain.Services\Weapsy.Domain.Services.csproj", "{0E3F757C-2E11-48C3-B54F-EFC060F20AE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,10 +42,6 @@ Global
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B21C1732-988C-4FC4-BB30-69D5B3147D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B21C1732-988C-4FC4-BB30-69D5B3147D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B21C1732-988C-4FC4-BB30-69D5B3147D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B21C1732-988C-4FC4-BB30-69D5B3147D1B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -86,7 +80,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
-		{B21C1732-988C-4FC4-BB30-69D5B3147D1B} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{2DA70893-1B06-417D-BC56-1E85DB1A2CF3} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}

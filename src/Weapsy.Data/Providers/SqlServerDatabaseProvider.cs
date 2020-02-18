@@ -5,7 +5,7 @@ namespace Weapsy.Data.Providers
 {
     public class SqlServerDatabaseProvider : IDatabaseProvider
     {
-        public ProviderType ProviderType { get; } = ProviderType.SqlServer;
+        public Provider ProviderType { get; } = Provider.SqlServer;
 
         public IServiceCollection RegisterDbContext(IServiceCollection services, string connectionString)
         {
