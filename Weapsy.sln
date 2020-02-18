@@ -14,10 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4B88B263-F58
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models", "src\Weapsy.Domain.Models\Weapsy.Domain.Models.csproj", "{54747CC7-E507-4058-8DA7-4DDE3CB970C1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Handlers", "src\Weapsy.Domain.Handlers\Weapsy.Domain.Handlers.csproj", "{D5923C98-E378-4305-BD1A-122C6F3E8B39}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models.Tests", "test\Weapsy.Domain.Models.Tests\Weapsy.Domain.Models.Tests.csproj", "{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Handlers.Tests", "test\Weapsy.Domain.Handlers.Tests\Weapsy.Domain.Handlers.Tests.csproj", "{B21C1732-988C-4FC4-BB30-69D5B3147D1B}"
@@ -28,13 +24,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Reporting.Models", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Reporting.Handlers", "src\Weapsy.Reporting.Handlers\Weapsy.Reporting.Handlers.csproj", "{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Repositories", "src\Weapsy.Domain.Repositories\Weapsy.Domain.Repositories.csproj", "{C338619D-4E3A-4E8D-BEEA-842BE631271E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Web", "src\Weapsy.Web\Weapsy.Web.csproj", "{5478008A-0C38-4211-9CF8-CCF0226DE439}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Web", "src\Weapsy.Web\Weapsy.Web.csproj", "{5478008A-0C38-4211-9CF8-CCF0226DE439}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Validators.Tests", "test\Weapsy.Domain.Validators.Tests\Weapsy.Domain.Validators.Tests.csproj", "{35B98163-4743-4977-8A79-9F341435D544}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Validators", "src\Weapsy.Domain.Validators\Weapsy.Domain.Validators.csproj", "{E3564CF5-CF17-42FE-A085-34D008C090E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Reporting", "src\Weapsy.Reporting\Weapsy.Reporting.csproj", "{3F58DF2F-3872-418B-8BE0-5A9B53F4E2C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Validators.Tests", "test\Weapsy.Domain.Validators.Tests\Weapsy.Domain.Validators.Tests.csproj", "{35B98163-4743-4977-8A79-9F341435D544}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models", "src\Weapsy.Domain.Models\Weapsy.Domain.Models.csproj", "{38E8F140-EC73-4665-98D3-26DB6345104F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Domain.Services", "src\Weapsy.Domain.Services\Weapsy.Domain.Services.csproj", "{0E3F757C-2E11-48C3-B54F-EFC060F20AE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +40,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{54747CC7-E507-4058-8DA7-4DDE3CB970C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54747CC7-E507-4058-8DA7-4DDE3CB970C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54747CC7-E507-4058-8DA7-4DDE3CB970C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54747CC7-E507-4058-8DA7-4DDE3CB970C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5923C98-E378-4305-BD1A-122C6F3E8B39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5923C98-E378-4305-BD1A-122C6F3E8B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5923C98-E378-4305-BD1A-122C6F3E8B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5923C98-E378-4305-BD1A-122C6F3E8B39}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,38 +60,41 @@ Global
 		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C338619D-4E3A-4E8D-BEEA-842BE631271E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C338619D-4E3A-4E8D-BEEA-842BE631271E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C338619D-4E3A-4E8D-BEEA-842BE631271E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C338619D-4E3A-4E8D-BEEA-842BE631271E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5478008A-0C38-4211-9CF8-CCF0226DE439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5478008A-0C38-4211-9CF8-CCF0226DE439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5478008A-0C38-4211-9CF8-CCF0226DE439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5478008A-0C38-4211-9CF8-CCF0226DE439}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3564CF5-CF17-42FE-A085-34D008C090E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3564CF5-CF17-42FE-A085-34D008C090E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3564CF5-CF17-42FE-A085-34D008C090E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3564CF5-CF17-42FE-A085-34D008C090E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35B98163-4743-4977-8A79-9F341435D544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{35B98163-4743-4977-8A79-9F341435D544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35B98163-4743-4977-8A79-9F341435D544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35B98163-4743-4977-8A79-9F341435D544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F58DF2F-3872-418B-8BE0-5A9B53F4E2C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F58DF2F-3872-418B-8BE0-5A9B53F4E2C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F58DF2F-3872-418B-8BE0-5A9B53F4E2C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F58DF2F-3872-418B-8BE0-5A9B53F4E2C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E8F140-EC73-4665-98D3-26DB6345104F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E8F140-EC73-4665-98D3-26DB6345104F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E8F140-EC73-4665-98D3-26DB6345104F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E8F140-EC73-4665-98D3-26DB6345104F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E3F757C-2E11-48C3-B54F-EFC060F20AE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E3F757C-2E11-48C3-B54F-EFC060F20AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E3F757C-2E11-48C3-B54F-EFC060F20AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E3F757C-2E11-48C3-B54F-EFC060F20AE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{54747CC7-E507-4058-8DA7-4DDE3CB970C1} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
-		{D5923C98-E378-4305-BD1A-122C6F3E8B39} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{7AA55F33-BEDD-4F30-8A6C-D7CF5380A2ED} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{B21C1732-988C-4FC4-BB30-69D5B3147D1B} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
 		{DC653A94-6ACD-45FC-925C-4BC924FC203F} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{2DA70893-1B06-417D-BC56-1E85DB1A2CF3} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{B853279B-FDC1-4AF2-B8F4-2C9CF4E364F7} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
-		{C338619D-4E3A-4E8D-BEEA-842BE631271E} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{5478008A-0C38-4211-9CF8-CCF0226DE439} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
-		{E3564CF5-CF17-42FE-A085-34D008C090E2} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 		{35B98163-4743-4977-8A79-9F341435D544} = {186F12D9-DAFF-47BC-83E1-33A1BBD2D57F}
+		{3F58DF2F-3872-418B-8BE0-5A9B53F4E2C2} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{38E8F140-EC73-4665-98D3-26DB6345104F} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
+		{0E3F757C-2E11-48C3-B54F-EFC060F20AE0} = {4B88B263-F583-45FA-8185-8A1388A0A5BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E96E64F-F82B-469C-B1BC-D943F2BCA036}

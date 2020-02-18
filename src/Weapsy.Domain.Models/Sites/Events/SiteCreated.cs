@@ -1,8 +1,6 @@
-﻿using Kledex.Domain;
-
-namespace Weapsy.Domain.Models.Sites.Events
+﻿namespace Weapsy.Domain.Models.Sites.Events
 {
-    public class SiteCreated : DomainEvent
+    public class SiteCreated
     {
         public string Name { get; set; }
     }

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Weapsy.Domain.Models.Sites.Rules
+namespace Weapsy.Domain.Services.Sites.Rules
 {
     public interface ISiteRules
     {

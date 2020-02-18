@@ -2,7 +2,7 @@
 using Weapsy.Data.Entities;
 using Weapsy.Domain.Models.Sites;
 
-namespace Weapsy.Domain.Repositories
+namespace Weapsy.Domain.Services
 {
     public class AutoMapperProfile : Profile
     {

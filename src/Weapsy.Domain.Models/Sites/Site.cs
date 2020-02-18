@@ -1,11 +1,11 @@
-﻿using Kledex.Domain;
+﻿using System;
 using Weapsy.Domain.Models.Sites.Commands;
-using Weapsy.Domain.Models.Sites.Events;
 
 namespace Weapsy.Domain.Models.Sites
 {
-    public class Site : AggregateRoot
+    public class Site
     {
+        public Guid Id { get; private set; }
         public string Name { get; private set; }
 
         public Site()
@@ -14,17 +14,8 @@ namespace Weapsy.Domain.Models.Sites
 
         public Site(CreateSite command)
         {
-            AddAndApplyEvent(new SiteCreated
-            {
-                AggregateRootId = command.AggregateRootId,
-                Name = command.Name
-            });
-        }
-
-        private void Apply(SiteCreated @event)
-        {
-            Id = @event.AggregateRootId;
-            Name = @event.Name;
+            Id = Guid.NewGuid();
+            Name = command.Name;
         }
     }
 }
