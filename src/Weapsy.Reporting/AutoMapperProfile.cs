@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Weapsy.Data.Entities;
+using Weapsy.Domain.Models.Sites;
 using Weapsy.Reporting.Models.Sites;
 
 namespace Weapsy.Reporting.Handlers
@@ -8,8 +8,8 @@ namespace Weapsy.Reporting.Handlers
     {
         public AutoMapperProfile()
         {
-            CreateMap<SiteInfo, SiteEntity>();
-            CreateMap<SiteEntity, SiteInfo>();
+            CreateMap<SiteInfo, Site>();
+            CreateMap<Site, SiteInfo>();
         }
     }
 }

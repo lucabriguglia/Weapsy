@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Kledex.Queries;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Weapsy.Data;
@@ -8,7 +7,7 @@ using Weapsy.Reporting.Models.Sites.Queries;
 
 namespace Weapsy.Reporting.Handlers
 {
-    public class GetSiteInfoHandler : IQueryHandlerAsync<GetSiteInfo, SiteInfo>
+    public class GetSiteInfoHandler
     {
         private readonly IDbContextFactory _dbContextFactory;
         private readonly IMapper _mapper;

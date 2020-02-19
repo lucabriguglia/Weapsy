@@ -4,7 +4,6 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Weapsy.Core;
 using Weapsy.Data;
-using Weapsy.Domain.Models;
 using Weapsy.Domain.Models.Sites;
 using Weapsy.Domain.Models.Sites.Commands;
 using Weapsy.Domain.Models.Sites.Events;

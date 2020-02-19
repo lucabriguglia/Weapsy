@@ -7,18 +7,18 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Weapsy.Core
 {
-    public class Dispatcher : IDispatcher
+    public class Processor : IProcessor
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IMapper _mapper;
 
-        public Dispatcher(IServiceProvider serviceProvider, IMapper mapper)
+        public Processor(IServiceProvider serviceProvider, IMapper mapper)
         {
             _serviceProvider = serviceProvider;
             _mapper = mapper;
         }
 
-        public async Task DispatchAsync(Func<Task<CommandResponse>> action)
+        public async Task ProcessAsync(Func<Task<CommandResponse>> action)
         {
             var response = await action();
 

@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using Weapsy.Domain.Models.Sites;
-using Weapsy.Domain.Models.Sites.Commands;
 
 namespace Weapsy.Domain.Models.Tests
 {
