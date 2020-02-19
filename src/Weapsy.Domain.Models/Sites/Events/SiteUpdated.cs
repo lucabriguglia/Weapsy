@@ -1,10 +1,9 @@
-﻿using System;
-using Kledex.Events;
+﻿using Weapsy.Core;
 
 namespace Weapsy.Domain.Models.Sites.Events
 {
-    public class SiteUpdated :Event
+    public class SiteUpdated : Event
     {
-        public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Kledex.Commands;
+﻿using Weapsy.Core;
 
 namespace Weapsy.Domain.Models.Pages.Commands
 {

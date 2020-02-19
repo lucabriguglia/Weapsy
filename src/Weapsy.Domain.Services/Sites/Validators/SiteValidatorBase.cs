@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
-using Weapsy.Domain.Models.Sites.Commands;
 using Weapsy.Domain.Services.Sites.Rules;
 
 namespace Weapsy.Domain.Services.Sites.Validators

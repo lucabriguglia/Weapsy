@@ -1,11 +1,9 @@
-﻿using System;
-using Kledex.Commands;
+﻿using Weapsy.Core;
 
 namespace Weapsy.Domain.Models.Sites.Commands
 {
-    public abstract class SiteCommandBase : Command
+    public class SiteCommandBase : Command
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace Weapsy.Domain.Models.Sites
 
         public Site(CreateSite command)
         {
-            Id = Guid.NewGuid();
+            Id = command.SiteId;
             Name = command.Name;
         }
 

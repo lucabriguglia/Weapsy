@@ -1,4 +1,4 @@
-﻿using Kledex.Events;
+﻿using Weapsy.Core;
 
 namespace Weapsy.Domain.Models.Pages.Events
 {

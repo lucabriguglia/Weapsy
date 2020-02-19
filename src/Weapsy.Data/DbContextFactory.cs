@@ -1,4 +1,4 @@
-﻿using Kledex.Dependencies;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
@@ -8,18 +8,18 @@ namespace Weapsy.Data
 {
     public class DbContextFactory : IDbContextFactory
     {
-        private readonly IResolver _resolver;
+        private readonly IServiceProvider _serviceProvider;
         private readonly DataOptions _dataOptions;
 
-        public DbContextFactory(IResolver resolver, IOptions<DataOptions> dataOptions)
+        public DbContextFactory(IServiceProvider serviceProvider, IOptions<DataOptions> dataOptions)
         {
-            _resolver = resolver;
+            _serviceProvider = serviceProvider;
             _dataOptions = dataOptions.Value;
         }
 
         public WeapsyDbContext Create()
         {
-            var dataProvider = _resolver.ResolveAll<IDatabaseProvider>().SingleOrDefault(x => x.ProviderType.ToString() == _dataOptions.Provider);
+            var dataProvider = _serviceProvider.GetServices<IDatabaseProvider>().SingleOrDefault(x => x.ProviderType.ToString() == _dataOptions.Provider);
 
             if (dataProvider == null)
                 throw new Exception("The Database Provider entry in appsettings.json is empty or the one specified has not been found!");
