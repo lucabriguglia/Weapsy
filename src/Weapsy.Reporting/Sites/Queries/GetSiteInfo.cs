@@ -1,4 +1,4 @@
-﻿namespace Weapsy.Reporting.Models.Sites.Queries
+﻿namespace Weapsy.Reporting.Sites.Queries
 {
     public class GetSiteInfo
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Reporting.Models.Sites
+namespace Weapsy.Reporting.Sites.Models
 {
     public class SiteInfo
     {

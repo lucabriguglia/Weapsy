@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using System;
-using Weapsy.Data.Extensions;
 
 namespace Weapsy.Web.Extensions
 {

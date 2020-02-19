@@ -1,5 +1,4 @@
-﻿using Kledex.Extensions;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Weapsy.Data.Extensions;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Weapsy.Core
+namespace Weapsy.Core.Domain
 {
     public class Processor : IProcessor
     {

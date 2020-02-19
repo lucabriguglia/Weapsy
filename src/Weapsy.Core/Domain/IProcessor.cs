@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Weapsy.Core
+namespace Weapsy.Core.Domain
 {
     public interface IProcessor
     {

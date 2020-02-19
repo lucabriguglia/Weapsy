@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Weapsy.Core
+namespace Weapsy.Core.Domain
 {
-    public interface ICommand
+    public interface IEvent
     {
         Guid SiteId { get; set; }
         string UserId { get; set; }

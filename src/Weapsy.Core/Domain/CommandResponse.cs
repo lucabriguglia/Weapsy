@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Weapsy.Core
+namespace Weapsy.Core.Domain
 {
     public class CommandResponse
     {

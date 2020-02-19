@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Weapsy.Core;
+using Weapsy.Core.Domain;
 using Weapsy.Data;
 using Weapsy.Domain.Models.Sites;
 using Weapsy.Domain.Models.Sites.Commands;

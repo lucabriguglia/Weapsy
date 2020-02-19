@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Weapsy.Domain.Models.Sites;
-using Weapsy.Reporting.Models.Sites;
+using Weapsy.Reporting.Sites.Models;
 
-namespace Weapsy.Reporting.Handlers
+namespace Weapsy.Reporting
 {
     public class AutoMapperProfile : Profile
     {

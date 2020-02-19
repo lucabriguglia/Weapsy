@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Weapsy.Core;
+using Weapsy.Core.Domain;
 using Weapsy.Domain.Models.Sites.Commands;
 using Weapsy.Domain.Services.Sites;
 

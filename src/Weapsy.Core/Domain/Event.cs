@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Weapsy.Core
+namespace Weapsy.Core.Domain
 {
     public abstract class Event : IEvent
     {
