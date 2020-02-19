@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
+using Weapsy.Domain.Models.Sites.Commands;
 using Weapsy.Domain.Services.Sites.Rules;
 
 namespace Weapsy.Domain.Services.Sites.Validators
@@ -24,7 +25,7 @@ namespace Weapsy.Domain.Services.Sites.Validators
 
         private Task<bool> HaveUniqueName(SiteCommandBase command, string name, CancellationToken cancellationToken)
         {
-            return _rules.IsNameUniqueAsync(name, command.Id);
+            return _rules.IsNameUniqueAsync(name, command.SiteId);
         }
     }
 }

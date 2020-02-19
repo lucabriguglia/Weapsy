@@ -13,7 +13,7 @@ namespace Weapsy.Web.Extensions
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            builder.EnsureDatabaseCreated();
+            //builder.EnsureDatabaseCreated();
 
             return new WeapsyAppBuilder(builder);
         }

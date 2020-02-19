@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Web", "src\Weapsy.Web\Weapsy.Web.csproj", "{5478008A-0C38-4211-9CF8-CCF0226DE439}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Validators.Tests", "test\Weapsy.Domain.Validators.Tests\Weapsy.Domain.Validators.Tests.csproj", "{35B98163-4743-4977-8A79-9F341435D544}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Services.Tests", "test\Weapsy.Domain.Services.Tests\Weapsy.Domain.Services.Tests.csproj", "{35B98163-4743-4977-8A79-9F341435D544}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Reporting", "src\Weapsy.Reporting\Weapsy.Reporting.csproj", "{3F58DF2F-3872-418B-8BE0-5A9B53F4E2C2}"
 EndProject
@@ -26,9 +26,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Models", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Domain.Services", "src\Weapsy.Domain.Services\Weapsy.Domain.Services.csproj", "{0E3F757C-2E11-48C3-B54F-EFC060F20AE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Data", "src\Weapsy.Data\Weapsy.Data.csproj", "{84606593-AE1C-4A18-9915-305F51AC9B31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Data", "src\Weapsy.Data\Weapsy.Data.csproj", "{84606593-AE1C-4A18-9915-305F51AC9B31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapsy.Core", "src\Weapsy.Core\Weapsy.Core.csproj", "{D37AE08F-F2CF-40B4-855A-608D57394E0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Weapsy.Core", "src\Weapsy.Core\Weapsy.Core.csproj", "{D37AE08F-F2CF-40B4-855A-608D57394E0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

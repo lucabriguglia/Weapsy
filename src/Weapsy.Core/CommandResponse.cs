@@ -9,8 +9,7 @@ namespace Weapsy.Core
 
         public CommandResponse(params IEvent[] events)
         {
-            var list = events.ToList();
-            Events = list;
+            Events = events.ToList();
         }
     }
 }

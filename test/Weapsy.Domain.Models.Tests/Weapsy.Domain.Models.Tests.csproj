@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Weapsy.Domain.Models\Weapsy.Domain.Models.csproj" />
+  </ItemGroup>
+
 </Project>

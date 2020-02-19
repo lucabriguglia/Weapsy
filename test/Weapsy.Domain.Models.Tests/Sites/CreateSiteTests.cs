@@ -1,10 +1,12 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
+using NUnit.Framework;
+using Weapsy.Domain.Models.Sites;
+using Weapsy.Domain.Models.Sites.Commands;
 
-namespace Weapsy.Domain.Models.Tests
+namespace Weapsy.Domain.Models.Tests.Sites
 {
     [TestFixture]
-    public class SiteTests
+    public class CreateSiteTests
     {
         private Site _sut;
         private CreateSite _command;
@@ -14,7 +16,7 @@ namespace Weapsy.Domain.Models.Tests
         {
             _command = new CreateSite
             {
-                AggregateRootId = Guid.NewGuid(),
+                SiteId = Guid.NewGuid(),
                 Name = "My Site"
             };
 
@@ -24,7 +26,7 @@ namespace Weapsy.Domain.Models.Tests
         [Test]
         public void SetsId()
         {
-            Assert.AreEqual(_command.AggregateRootId, _sut.Id);
+            Assert.AreEqual(_command.SiteId, _sut.Id);
         }
 
         [Test]
