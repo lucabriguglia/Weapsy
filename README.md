@@ -1,5 +1,3 @@
-# PROGRESS ON REFACTORING > [VNEXT2](https://github.com/lucabriguglia/Weapsy/tree/vnext2)
-
 # Weapsy
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ptwkjgk7gwledwh3/branch/master?svg=true)](https://ci.appveyor.com/project/lucabriguglia/weapsy/branch/master)
