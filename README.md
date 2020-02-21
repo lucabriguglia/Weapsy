@@ -1,3 +1,5 @@
+# THIS REPOSITORY IS NO LONGER MAINTAINED
+
 # Weapsy
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ptwkjgk7gwledwh3/branch/master?svg=true)](https://ci.appveyor.com/project/lucabriguglia/weapsy/branch/master)
