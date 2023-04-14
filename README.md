@@ -1,6 +1,6 @@
-# THIS REPOSITORY IS NO LONGER MAINTAINED
+# PROJECT NO LONGER MAINTAINED
 
-# This project is replaced by [Atles](https://github.com/lucabriguglia/Atles).
+IT WAS MADE PRIVATE WHEN IT HAD **754 STARS** AND THEN MADE PUBLIC AGAIN FOR ARCHIVE PURPOSES
 
 # Weapsy
 
